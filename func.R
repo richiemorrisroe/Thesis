@@ -13,10 +13,10 @@ fact.xtab
 }
 FactorCor <- function (x) {
   res <- x$score.cor
-  allnames <- attr(x$weights, "dimnames")
-  factnames <- allnames[[2]]
+  #allnames <- attr(x$loadings, "dimnames")
+  factnames <- colnames(x$loadings)
   res <- as.data.frame(res)
-  #colnames(res) <- factnames
+  names(res) <- factnames
   res.x <- xtable(res)
 }
 ExtractLoadings <- function (x, loadings=0.3) {
