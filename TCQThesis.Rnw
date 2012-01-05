@@ -1393,19 +1393,23 @@ bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
 print(FactorXtab(bam2c.fact1))
 @ 
 
+The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
 
 
 <<bam2cfact2, echo=FALSE, results=tex>>=
 bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2c.fact2))
 @ 
-A. 
+As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
+
+PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
 
 <<bam2cfact2cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2c.fact2))
 @ 
 
-As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
+As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
 
 <<bam2cfact3, echo=FALSE, results=tex>>=
 bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
@@ -1413,36 +1417,162 @@ print(FactorXtab(bam2c.fact3))
 @ 
 
 
+PA1: "BAM13" "BAM14" "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items appear to relate to the safety of medicines, and so this factor is named thusly. 
+
+PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
+
 <<bam2cfact3cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2c.fact3))
 @ 
 
-
-<<bam2cfact4, echo=FALSE, results=tex>>=
-bam2c.fact4 <- fa(na.omit(bamall2c), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact4))
-@ 
-
-<<bam2cfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact4))
-@ 
+The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
 
 
-<<bam2cfact5, echo=FALSE, results=tex>>=
-bam2c.fact5 <- fa(na.omit(bamall2c), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact5))
-@ 
 
-
-<<bam2cfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact5))
-@ 
-
-As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another.
 
 \subsection{Split D}
 \label{sec:split-d}
 
+<<tcq2dscalesplit, echo=FALSE, results=hide>>=
+tcqall2d <- tcq2d[,17:52]
+bamall2d <- tcq2d[,53:70]
+@ 
+
+\begin{figure}
+	\centering
+<<tcq2dparallel, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1,2))
+tcq2d.para <- fa.parallel(na.omit(tcqall2d))
+tcq2d.vss <- VSS(na.omit(tcqall2d))
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split D)}
+	\label{fig:tcq2dparallel}
+\end{figure}
+
+
+<<tcq2dfact5, echo=FALSE, results=tex>>=
+tcq2d.fact.5 <- fa(na.omit(tcqall2d), nfactors=5, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.5))
+@ 
+\caption{Five factor Solution, TCQ 2 (Split D), Oblimin Rotation}
+\label{tab:tcq2dfivefactor}
+
+
+
+
+
+
+Table\ref{tab:tcq2dfactorcor5}. 
+
+<<tcq2dfactorcor5, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2d.fact.5))
+@ 
+
+Table \ref{tab:tcq2dfactorcor5} 
+
+
+
+<<tcq2dfact6, echo=FALSE, results=tex>>=
+tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.6))
+@ 
+\caption{Six factor Solution, TCQ 2 (Split D), Oblimin Rotation}
+\label{tab:tcq2d.sixfactor}
+
+
+\ref{tab:tcq2dfact6} 
+
+
+
+<<tcq2dfactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2d.fact.6))
+@ 
+\caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
+\label{tab:tcq2d.sixfactorcorr}
+
+(Table \ref{tab:tcq2.sixfactorcorr} )
+
+
+
+<<tcq2dfact7, echo=FALSE, results=tex>>=
+tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.7))
+@ 
+
+
+
+\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
+\label{tab:tcq2dsevenfactor}
+
+
+\ref{tab:tcq2c7factorcorr}.
+
+<<tcq2c7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2c.fact.7))
+@ 
+
+
+<<tcq2cfitindices, echo=FALSE, results=tex>>=
+tcq2cFit5 <- FitIndices(tcq2c.fact.5)
+tcq2cFit6 <- FitIndices(tcq2c.fact.6)
+tcq2cFit7 <- FitIndices(tcq2c.fact.7)
+tcq2cfit <- as.data.frame(cbind(tcq2cFit5, tcq2cFit6, tcq2cFit7))
+print(xtable(tcq2cfit))
+@ 
+\caption{Fit Indices, TCQ 2 (Split C)}
+\label{tab:tcq2cfit}
+
+It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+
+<<bam2cparallel, echo=FALSE, fig=TRUE>>=
+bam2c.para <- fa.parallel(na.omit(bamall2c))
+bam2c.vss <- VSS(na.omit(bamall2c))
+@ 
+
+The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+<<bam2afact1, echo=FALSE, results=tex>>=
+bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
+print(FactorXtab(bam2c.fact1))
+@ 
+
+The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
+
+
+<<bam2cfact2, echo=FALSE, results=tex>>=
+bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2c.fact2))
+@ 
+As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
+
+PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
+
+<<bam2cfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact2))
+@ 
+
+As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
+
+<<bam2cfact3, echo=FALSE, results=tex>>=
+bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2c.fact3))
+@ 
+
+
+PA1: "BAM13" "BAM14" "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items appear to relate to the safety of medicines, and so this factor is named thusly. 
+
+PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
+
+<<bam2cfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact3))
+@ 
 
 
 \subsection{Structural Equation Modelling}
