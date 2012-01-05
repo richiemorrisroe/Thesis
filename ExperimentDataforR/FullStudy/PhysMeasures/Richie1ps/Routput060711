@@ -1,0 +1,398 @@
+
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i486-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> .help.ESS <- help
+> options(STERM='iESS', editor='emacsclient')
+> list.files()
+  [1] "experiment040711Rda"      "experimentwithts0307.Rda"
+  [3] "Richie-100-19563.txt"     "Richie-101-7837.txt"     
+  [5] "Richie-103-5669.txt"      "Richie-104-9548.txt"     
+  [7] "Richie-105-3725.txt"      "Richie-10-6334.txt"      
+  [9] "Richie-106-7521.txt"      "Richie-107-2983.txt"     
+ [11] "Richie-108-27122.txt"     "Richie-109-3687.txt"     
+ [13] "Richie-110-7706.txt"      "Richie-111-9782.txt"     
+ [15] "Richie-11-4181.txt"       "Richie-1-2456.txt"       
+ [17] "Richie-12-7327.txt"       "Richie-13-4010.txt"      
+ [19] "Richie-14-2634.txt"       "Richie-15-7443.txt"      
+ [21] "Richie-16-5682.txt"       "Richie-17-2232.txt"      
+ [23] "Richie-18-3101.txt"       "Richie-19-1101.txt"      
+ [25] "Richie-20-1089.txt"       "Richie-21-6936.txt"      
+ [27] "Richie-2-1903.txt"        "Richie-22-8273.txt"      
+ [29] "Richie-23-9876.txt"       "Richie-24-2212.txt"      
+ [31] "Richie-25-2928.txt"       "Richie-26-1911.txt"      
+ [33] "Richie-27-9120.txt"       "Richie-28-1956.txt"      
+ [35] "Richie-29-4242.txt"       "Richie-30-11012.txt"     
+ [37] "Richie-31-6647.txt"       "Richie-3-1879.txt"       
+ [39] "Richie-32-2679.txt"       "Richie-33-1321.txt"      
+ [41] "Richie-34-1810.txt"       "Richie-35-2069.txt"      
+ [43] "Richie-36-1991.txt"       "Richie-37-6542.txt"      
+ [45] "Richie-38-0856.txt"       "Richie-39-7787.txt"      
+ [47] "Richie-40-5456.txt"       "Richie-41-0405.txt"      
+ [49] "Richie-42-4228.txt"       "Richie-43-19912.txt"     
+ [51] "Richie-44-0606.txt"       "Richie-45-6691.txt"      
+ [53] "Richie-4-5701.txt"        "Richie-46-1923.txt"      
+ [55] "Richie-47-1748.txt"       "Richie-48-2610.txt"      
+ [57] "Richie-49-11012.txt"      "Richie-50-1224.txt"      
+ [59] "Richie-51-1212.txt"       "Richie-52-1617.txt"      
+ [61] "Richie-5-2712.txt"        "Richie-53-1209.txt"      
+ [63] "Richie-54-1103.txt"       "Richie-55-2510.txt"      
+ [65] "Richie-56-1986.txt"       "Richie-57-8888.txt"      
+ [67] "Richie-58-5923.txt"       "Richie-59-98762.txt"     
+ [69] "Richie-6-0317.txt"        "Richie-60-9853.txt"      
+ [71] "Richie-61-1987.txt"       "Richie-62-1970.txt"      
+ [73] "Richie-63-0833.txt"       "Richie-64-3497.txt"      
+ [75] "Richie-65-8421.txt"       "Richie-66-5440.txt"      
+ [77] "Richie-67-5262.txt"       "Richie-68-1358.txt"      
+ [79] "Richie-69-7141.txt"       "Richie-70-5324.txt"      
+ [81] "Richie-7-1243.txt"        "Richie-71-8206.txt"      
+ [83] "Richie-72-19562.txt"      "Richie-73-0705.txt"      
+ [85] "Richie-74-2245.txt"       "Richie-75-5328.txt"      
+ [87] "Richie-76-3049.txt"       "Richie-77-5209.txt"      
+ [89] "Richie-78-1580.txt"       "Richie-79-7198.txt"      
+ [91] "Richie-80-3580.txt"       "Richie-81-2345.txt"      
+ [93] "Richie-82-6955.txt"       "Richie-83-4062.txt"      
+ [95] "Richie-8-4325.txt"        "Richie-84-4662.txt"      
+ [97] "Richie-85-4892.txt"       "Richie-86-0473.txt"      
+ [99] "Richie-87-6536.txt"       "Richie-88-1004.txt"      
+[101] "Richie-89-1234.txt"       "Richie-90-3190.txt"      
+[103] "Richie-91-2385.txt"       "Richie-9-2003.txt"       
+[105] "Richie-92-4391.txt"       "Richie-93-7983.txt"      
+[107] "Richie-94-1843.txt"       "Richie-95-4278.txt"      
+[109] "Richie-96-1717.txt"       "Richie-97-1604.txt"      
+[111] "Richie-98-0234.txt"       "Richie-99-5533.txt"      
+[113] "unneeded"                
+> list.files(pattern="Rda")
+[1] "experiment040711Rda"      "experimentwithts0307.Rda"
+> load("experiment040711Rda")
+> colnames(phys1321) <- c("GSR1321", "ECG1321")
+> colnames(phys1321) <- c("GSR1321", "ECG1321")
+> 
+> @ 
+Error: unexpected '@' in "@"
+> <<tsimport, echo=FALSE, results=hide>>=
+Error: unexpected input in "<<"
+> phys2456 <- read.table("Richie-1-2456.txt")
+> colnames(phys2456) <- c("GSR2456", "ECG2456")
+> phys1903 <- read.table("Richie-2-1903.txt" )
+> colnames(phys1903) <- c("GSR1903", "ECG1903")
+> phys1879 <- read.table("Richie-3-1879.txt" )
+> colnames(phys1879) <- c("GSR1879", "ECG1879")
+> phys5701 <- read.table("Richie-4-5701.txt")
+> colnames(phys5701) <- c("GSR5701", "ECG5701")
+> phys0317 <- read.table("Richie-6-0317.txt")
+> colnames(phys0317) <- c("GSR0317", "ECG0317")
+> phys1243 <- read.table( "Richie-7-1243.txt")
+> colnames(phys1243) <- c("GSR1243", "ECG1243")
+> phys4325 <- read.table("Richie-8-4325.txt")
+> colnames(phys4325) <- c("GSR4325", "ECG4325")
+> phys2003 <- read.table("Richie-9-2003.txt" )
+> colnames(phys2003) <- c("GSR2003", "ECG2003")
+> phys6334 <- read.table("Richie-10-6334.txt"  )
+> colnames(phys6334) <- c("GSR6334", "ECG6334")
+> phys4181 <- read.table("Richie-11-4181.txt" )
+> colnames(phys4181) <- c("GSR4181", "ECG4181")
+> phys7327 <- read.table("Richie-12-7327.txt")
+> colnames(phys7327) <- c("GSR7327", "ECG7327")
+> phys4010 <- read.table("Richie-13-4010.txt")
+> colnames(phys4010) <- c("GSR4010", "ECG4010")
+> phys2634 <- read.table("Richie-14-2634.txt")
+> colnames(phys2634) <- c("GSR2634", "ECG2634")
+>  phys7443 <- read.table("Richie-15-7443.txt")
+> colnames(phys7443) <- c("GSR7443", "ECG7443")
+>  phys5682 <- read.table("Richie-16-5682.txt")
+> colnames(phys5682) <- c("GSR5682", "ECG5682")
+>  phys2232 <- read.table("Richie-17-2232.txt")
+> colnames(phys2232) <- c("GSR2232", "ECG2232")
+>  phys3101 <- read.table("Richie-18-3101.txt")
+> colnames(phys3101) <- c("GSR3101", "ECG3101")
+>  phys1101 <- read.table("Richie-19-1101.txt")
+> colnames(phys1101) <- c("GSR1101", "ECG1101")
+>  phys1089 <- read.table("Richie-20-1089.txt")
+> colnames(phys1089) <- c("GSR1089", "ECG1089")
+>  phys6936 <- read.table("Richie-21-6936.txt")
+> colnames(phys6936) <- c("GSR6936", "ECG6936")
+>  phys8273 <- read.table("Richie-22-8273.txt")
+> colnames(phys8273) <- c("GSR8273", "ECG8273")
+>  phys9876 <- read.table("Richie-23-9786.txt")
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'Richie-23-9786.txt': No such file or directory
+> colnames(phys9786) <- c("GSR9786", "ECG9786")
+Error in colnames(phys9786) <- c("GSR9786", "ECG9786") : 
+  object 'phys9786' not found
+>  phys2212 <- read.table("Richie-24-2212.txt")
+> colnames(phys2212) <- c("GSR2212", "ECG2212")
+>  phys2928 <- read.table("Richie-25-2928.txt")
+> colnames(phys2928) <- c("GSR2928", "ECG2928")
+>  phys1911 <- read.table("Richie-26-1911.txt")
+> colnames(phys1911) <- c("GSR1911", "ECG1911")
+>  phys9120 <- read.table("Richie-27-9120.txt")
+> colnames(phys9120) <- c("GSR9120", "ECG9120")
+>  phys1956 <- read.table("Richie-28-1956.txt")
+> colnames(phys1956) <- c("GSR1956", "ECG1956")
+>  phys4242 <- read.table("Richie-29-4242.txt")
+> colnames(phys4242) <- c("GSR4242", "ECG4242")
+>  phys11012 <- read.table("Richie-30-11012.txt")
+> colnames(phys11012) <- c("GSR11012", "ECG11012")
+>  phys6647 <- read.table( "Richie-31-6647.txt")
+> colnames(phys6647) <- c("GSR6647", "ECG6647")
+>  phys2679 <- read.table( "Richie-32-2679.txt")
+> colnames(phys2679) <- c("GSR2679", "ECG2679")
+>  phys1321 <- read.table( "Richie-33-1321.txt")
+> colnames(phys1321) <- c("GSR1321", "ECG1321")
+>  phys1810 <- read.table( "Richie-34-1810.txt")
+> colnames(phys1810) <- c("GSR1810", "ECG1810")
+>  phys2069 <- read.table( "Richie-35-2069.txt")
+> colnames(phys2069) <- c("GSR2069", "ECG2069")
+>  phys1991 <- read.table( "Richie-36-1991.txt")
+> colnames(phys1991) <- c("GSR1991", "ECG1991")
+>  phys6542 <- read.table("Richie-37-6542.txt")
+> colnames(phys6542) <- c("GSR6542", "ECG6542")
+>  phys0856 <- read.table("Richie-38-0856.txt")
+> colnames(phys0856) <- c("GSR0856", "ECG0856")
+>  phys7787 <- read.table( "Richie-39-7787.txt")
+> colnames(phys7787) <- c("GSR7787", "ECG7787")
+>  phys5456 <- read.table( "Richie-40-5456.txt")
+> colnames(phys7787) <- c("GSR7787", "ECG7787")
+>  phys0405 <- read.table("Richie-41-0405.txt")
+> colnames(phys0405) <- c("GSR0405", "ECG0405")
+> phys4228 <- read.table( "Richie-42-4228.txt")
+> colnames(phys4228) <- c("GSR4228", "ECG4228")
+> phys19912 <- read.table( "Richie-43-19912.txt")
+> colnames(phys19912) <- c("GSR19912", "ECG19912")
+> phys0606 <- read.table( "Richie-44-0606.txt")
+> colnames(phys0606) <- c("GSR0606", "ECG0606")
+>  phys6691 <- read.table( "Richie-45-6691.txt")
+> colnames(phys6691) <- c("GSR6691", "ECG6691")
+>  phys1923 <- read.table( "Richie-46-1923.txt")
+> colnames(phys1923) <- c("GSR1923", "ECG1923")
+>  phys1748 <- read.table( "Richie-47-1748.txt")
+> colnames(phys1748) <- c("GSR1748", "ECG1748")
+>  phys2610 <- read.table( "Richie-48-2610.txt")
+> colnames(phys2610) <- c("GSR2610", "ECG2610")
+>  phys11012 <- read.table( "Richie-49-11012.txt")
+> colnames(phys11012) <- c("GSR11012", "ECG11012")
+>  phys1224 <- read.table( "Richie-50-1224.txt")
+> colnames(phys1224) <- c("GSR1224", "ECG1224")
+>  phys1212 <- read.table( "Richie-51-1212.txt")
+> colnames(phys1212) <- c("GSR1212", "ECG1212")
+> phys1617 <- read.table( "Richie-52-1617.txt")
+> colnames(phys1617) <- c("GSR1617", "ECG1617")
+> phys1209 <- read.table( "Richie-53-1209.txt")
+> colnames(phys1209) <- c("GSR1209", "ECG1209")
+> phys1103 <- read.table( "Richie-54-1103.txt")
+> colnames(phys1103) <- c("GSR1103", "ECG1103")
+> phys2510 <- read.table( "Richie-55-2510.txt")
+> colnames(phys2510) <- c("GSR2510", "ECG2510")
+> phys1986 <- read.table( "Richie-56-1986.txt")
+> colnames(phys1986) <- c("GSR1986", "ECG1986")
+> phys8888 <- read.table( "Richie-57-8888.txt")
+> colnames(phys8888) <- c("GSR8888", "ECG8888")
+> phys5923 <- read.table( "Richie-58-5923.txt")
+> colnames(phys5923) <- c("GSR5923", "ECG5923")
+> phys97862 <- read.table("Richie-59-98762.txt")
+> colnames(phys98762) <- c("GSR98762", "ECG98762")
+Error in colnames(phys98762) <- c("GSR98762", "ECG98762") : 
+  object 'phys98762' not found
+> phys9853 <- read.table( "Richie-60-9853.txt")
+> colnames(phys9853) <- c("GSR9853", "ECG9853")
+> phys1987 <- read.table( "Richie-61-1987.txt")
+> colnames(phys1987) <- c("GSR1987", "ECG1987")
+> phys1970 <- read.table( "Richie-62-1970.txt")
+> colnames(phys1970) <- c("GSR1970", "ECG1970")
+> phys0833 <- read.table("Richie-63-0833.txt")
+> colnames(phys0833) <- c("GSR0833", "ECG0833")
+> phys3497 <- read.table( "Richie-64-3497.txt")
+> colnames(phys3497) <- c("GSR3497", "ECG3497")
+> phys8421 <- read.table("Richie-65-8421.txt")
+> colnames(phys8421) <- c("GSR8421", "ECG8421")
+> phys8421 <- read.table("Richie-66-5440.txt")
+> colnames(phys8421) <- c("GSR8421", "ECG8421")
+> phys5262 <- read.table("Richie-67-5262.txt")
+> colnames(phys5262) <- c("GSR5262", "ECG5262")
+> phys1358 <-  read.table("Richie-68-1358.txt")
+> colnames(phys1358) <- c("GSR1358", "ECG1358")
+> phys7141 <- read.table( "Richie-69-7141.txt")
+> colnames(phys7141) <- c("GSR7141", "ECG7141")
+> phys5324 <- read.table( "Richie-70-5324.txt")
+> colnames(phys5324) <- c("GSR5324", "ECG5324")
+> phys8206 <- read.table( "Richie-71-8206.txt")
+> colnames(phys8206) <- c("GSR8206", "ECG8206")
+> phys19562 <- read.table( "Richie-72-19562.txt")
+> colnames(phys19562) <- c("GSR19562", "ECG19562")
+> phys0705 <- read.table( "Richie-73-0705.txt")
+> colnames(phys0705) <- c("GSR0705", "ECG0705")
+> phys2245 <- read.table("Richie-74-2245.txt")
+> colnames(phys2245) <- c("GSR2245", "ECG2245")
+> phys5328 <- read.table( "Richie-75-5328.txt")
+> colnames(phys5328) <- c("GSR5328", "ECG5328")
+> phys3049 <- read.table( "Richie-76-3049.txt")
+> colnames(phys3049) <- c("GSR3049", "ECG3049")
+> phys5209 <- read.table( "Richie-77-5209.txt")
+> colnames(phys5209) <- c("GSR5209", "ECG5209")
+> phys1580 <- read.table( "Richie-78-1580.txt")
+> colnames(phys1580) <- c("GSR1580", "ECG1580")
+> phys7198 <- read.table( "Richie-79-7198.txt")
+> colnames(phys7198) <- c("GSR7198", "ECG7198")
+> phys3580 <- read.table( "Richie-80-3580.txt")
+> colnames(phys3580) <- c("GSR3580", "ECG3580")
+> phys2345 <- read.table( "Richie-81-2345.txt")
+> colnames(phys2345) <- c("GSR2345", "ECG2345")
+> phys6955 <- read.table("Richie-82-6955.txt")
+> colnames(phys6955) <- c("GSR6955", "ECG6955")
+> phys4062 <- read.table( "Richie-83-4062.txt")
+> colnames(phys4062) <- c("GSR4062", "ECG4062")
+> phys4662 <- read.table( "Richie-84-4662.txt")
+> colnames(phys4662) <- c("GSR4662", "ECG4662")
+> phys4892 <- read.table("Richie-85-4892.txt")
+> colnames(phys4892) <- c("GSR4892", "ECG4892")
+> phys0473 <- read.table("Richie-86-0473.txt")
+> colnames(phys0473) <- c("GSR0473", "ECG0473")
+> phys6536 <- read.table( "Richie-87-6536.txt")
+> colnames(phys6536) <- c("GSR6536", "ECG6536")
+> phys1004 <- read.table( "Richie-88-1004.txt")
+> colnames(phys1004) <- c("GSR1004", "ECG1004")
+> phys1234 <- read.table( "Richie-89-1234.txt")
+> colnames(phys1234) <- c("GSR1234", "ECG1234")
+> phys3190 <- read.table( "Richie-90-3190.txt")
+> colnames(phys3190) <- c("GSR3190", "ECG3190")
+> phys2385 <- read.table( "Richie-91-2385.txt")
+> colnames(phys2385) <- c("GSR2385", "ECG2385")
+> phys4391 <- read.table( "Richie-92-4391.txt")
+> colnames(phys4391) <- c("GSR4391", "ECG4391")
+> phys7983 <- read.table( "Richie-93-7983.txt")
+> colnames(phys7983) <- c("GSR7983", "ECG7983")
+> phys1843 <- read.table( "Richie-94-1843.txt")
+> colnames(phys1843) <- c("GSR1843", "ECG1843")
+> phys4278 <- read.table( "Richie-95-4278.txt")
+> colnames(phys4278) <- c("GSR4278", "ECG4278")
+> phys1717 <- read.table( "Richie-96-1717.txt")
+> colnames(phys1717) <- c("GSR1717", "ECG1717")
+> phys1604 <- read.table( "Richie-97-1604.txt")
+> colnames(phys1604) <- c("GSR1604", "ECG1604")
+> phys0234 <- read.table( "Richie-98-0234.txt")
+> colnames(phys0234) <- c("GSR0234", "ECG0234")
+> phys5533 <- read.table( "Richie-99-5533.txt")
+> colnames(phys5533) <- c("GSR5533", "ECG5533")
+> phys19563 <- read.table("Richie-100-19563.txt")
+> colnames(phys19563) <- c("GSR19563", "ECG19563")
+> phys7837 <- read.table( "Richie-101-7837.txt")
+> colnames(phys7837) <- c("GSR7837", "ECG7837")
+> phys5669 <- read.table("Richie-103-5669.txt")
+> colnames(phys5669) <- c("GSR5669", "ECG5669")
+> phys9548 <- read.table( "Richie-104-9548.txt")
+> colnames(phys9548) <- c("GSR9548", "ECG9548")
+> phys3725 <- read.table( "Richie-105-3725.txt")
+> colnames(phys3725) <- c("GSR3725", "ECG3725")
+> phys7521 <- read.table( "Richie-106-7521.txt")
+> colnames(phys7521) <- c("GSR7521", "ECG7521")
+> phys2983 <- read.table( "Richie-107-2983.txt")
+> colnames(phys2983) <- c("GSR2983", "ECG2983")
+> phys27122 <- read.table( "Richie-108-27122.txt")
+> colnames(phys27122) <- c("GSR27122", "ECG27122")
+> phys3687 <- read.csv( "Richie-109-3687.txt")
+> colnames(phys3687) <- c("GSR3687", "ECG3687")
+Error in names(x) <- value : 
+  'names' attribute [2] must be the same length as the vector [1]
+> phys7706 <- read.table( "Richie-110-7706.txt")
+> colnames(phys7706) <- c("GSR7706", "ECG7706")
+> phys9782 <- read.table("Richie-111-9782.txt")
+> phys9876 <- read.table("Richie-23-9786.txt")
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'Richie-23-9786.txt': No such file or directory
+> list.files()
+  [1] "experiment040711Rda"      "experimentwithts0307.Rda"
+  [3] "Richie-100-19563.txt"     "Richie-101-7837.txt"     
+  [5] "Richie-103-5669.txt"      "Richie-104-9548.txt"     
+  [7] "Richie-105-3725.txt"      "Richie-10-6334.txt"      
+  [9] "Richie-106-7521.txt"      "Richie-107-2983.txt"     
+ [11] "Richie-108-27122.txt"     "Richie-109-3687.txt"     
+ [13] "Richie-110-7706.txt"      "Richie-111-9782.txt"     
+ [15] "Richie-11-4181.txt"       "Richie-1-2456.txt"       
+ [17] "Richie-12-7327.txt"       "Richie-13-4010.txt"      
+ [19] "Richie-14-2634.txt"       "Richie-15-7443.txt"      
+ [21] "Richie-16-5682.txt"       "Richie-17-2232.txt"      
+ [23] "Richie-18-3101.txt"       "Richie-19-1101.txt"      
+ [25] "Richie-20-1089.txt"       "Richie-21-6936.txt"      
+ [27] "Richie-2-1903.txt"        "Richie-22-8273.txt"      
+ [29] "Richie-23-9876.txt"       "Richie-24-2212.txt"      
+ [31] "Richie-25-2928.txt"       "Richie-26-1911.txt"      
+ [33] "Richie-27-9120.txt"       "Richie-28-1956.txt"      
+ [35] "Richie-29-4242.txt"       "Richie-30-11012.txt"     
+ [37] "Richie-31-6647.txt"       "Richie-3-1879.txt"       
+ [39] "Richie-32-2679.txt"       "Richie-33-1321.txt"      
+ [41] "Richie-34-1810.txt"       "Richie-35-2069.txt"      
+ [43] "Richie-36-1991.txt"       "Richie-37-6542.txt"      
+ [45] "Richie-38-0856.txt"       "Richie-39-7787.txt"      
+ [47] "Richie-40-5456.txt"       "Richie-41-0405.txt"      
+ [49] "Richie-42-4228.txt"       "Richie-43-19912.txt"     
+ [51] "Richie-44-0606.txt"       "Richie-45-6691.txt"      
+ [53] "Richie-4-5701.txt"        "Richie-46-1923.txt"      
+ [55] "Richie-47-1748.txt"       "Richie-48-2610.txt"      
+ [57] "Richie-49-11012.txt"      "Richie-50-1224.txt"      
+ [59] "Richie-51-1212.txt"       "Richie-52-1617.txt"      
+ [61] "Richie-5-2712.txt"        "Richie-53-1209.txt"      
+ [63] "Richie-54-1103.txt"       "Richie-55-2510.txt"      
+ [65] "Richie-56-1986.txt"       "Richie-57-8888.txt"      
+ [67] "Richie-58-5923.txt"       "Richie-59-98762.txt"     
+ [69] "Richie-6-0317.txt"        "Richie-60-9853.txt"      
+ [71] "Richie-61-1987.txt"       "Richie-62-1970.txt"      
+ [73] "Richie-63-0833.txt"       "Richie-64-3497.txt"      
+ [75] "Richie-65-8421.txt"       "Richie-66-5440.txt"      
+ [77] "Richie-67-5262.txt"       "Richie-68-1358.txt"      
+ [79] "Richie-69-7141.txt"       "Richie-70-5324.txt"      
+ [81] "Richie-7-1243.txt"        "Richie-71-8206.txt"      
+ [83] "Richie-72-19562.txt"      "Richie-73-0705.txt"      
+ [85] "Richie-74-2245.txt"       "Richie-75-5328.txt"      
+ [87] "Richie-76-3049.txt"       "Richie-77-5209.txt"      
+ [89] "Richie-78-1580.txt"       "Richie-79-7198.txt"      
+ [91] "Richie-80-3580.txt"       "Richie-81-2345.txt"      
+ [93] "Richie-82-6955.txt"       "Richie-83-4062.txt"      
+ [95] "Richie-8-4325.txt"        "Richie-84-4662.txt"      
+ [97] "Richie-85-4892.txt"       "Richie-86-0473.txt"      
+ [99] "Richie-87-6536.txt"       "Richie-88-1004.txt"      
+[101] "Richie-89-1234.txt"       "Richie-90-3190.txt"      
+[103] "Richie-91-2385.txt"       "Richie-9-2003.txt"       
+[105] "Richie-92-4391.txt"       "Richie-93-7983.txt"      
+[107] "Richie-94-1843.txt"       "Richie-95-4278.txt"      
+[109] "Richie-96-1717.txt"       "Richie-97-1604.txt"      
+[111] "Richie-98-0234.txt"       "Richie-99-5533.txt"      
+[113] "Routput060711"            "unneeded"                
+> str(phys3867)
+Error in str(phys3867) : object 'phys3867' not found
+> str(phys3687)
+'data.frame':	16057 obs. of  1 variable:
+ $ X8.72345.2.76337: Factor w/ 15966 levels "10.0098\t0.00946045\t",..: 15873 15870 15871 15869 15872 15874 15875 15876 15877 15878 ...
+> phys3687 <- read.csv( "Richie-109-3687.txt")
+> str(phys3687)
+'data.frame':	16057 obs. of  1 variable:
+ $ X8.72345.2.76337: Factor w/ 15966 levels "10.0098\t0.00946045\t",..: 15873 15870 15871 15869 15872 15874 15875 15876 15877 15878 ...
+> phys3687 <- read.csv( "Richie-109-3687.txt")
+> str(phys3687)
+'data.frame':	16057 obs. of  1 variable:
+ $ X8.72345.2.76337: Factor w/ 15966 levels "10.0098\t0.00946045\t",..: 15873 15870 15871 15869 15872 15874 15875 15876 15877 15878 ...
+> str(phys7706)
+'data.frame':	14160 obs. of  2 variables:
+ $ GSR7706: num  5.62 5.62 5.61 5.6 5.59 ...
+ $ ECG7706: num  0.379 0.477 0.232 0.247 0.245 ...
+> 
