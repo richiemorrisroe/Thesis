@@ -1451,39 +1451,17 @@ tcq2d.vss <- VSS(na.omit(tcqall2d))
 	\label{fig:tcq2dparallel}
 \end{figure}
 
-
-<<tcq2dfact5, echo=FALSE, results=tex>>=
-tcq2d.fact.5 <- fa(na.omit(tcqall2d), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.5))
-@ 
-\caption{Five factor Solution, TCQ 2 (Split D), Oblimin Rotation}
-\label{tab:tcq2dfivefactor}
-
-
-
-
-
-
-Table\ref{tab:tcq2dfactorcor5}. 
-
-<<tcq2dfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.5))
-@ 
-
-Table \ref{tab:tcq2dfactorcor5} 
-
+In this Split, the parallel analysis criterion suggested six factors while the MAP criterion suggested seven. Following previous practice, these two solutions were reported and examined for adequacy of fit and interpretability. 
 
 
 <<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.6))
 @ 
-\caption{Six factor Solution, TCQ 2 (Split D), Oblimin Rotation}
+\caption{Six factor Solution, TCQ 2(Split D), Oblimin Rotation}
 \label{tab:tcq2d.sixfactor}
 
-
-\ref{tab:tcq2dfact6} 
-
+As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors, as is clearly shown in Table \ref{tab:tcq2dfact6}. This solution explained 81\% of the variance. 
 
 
 <<tcq2dfactorcor, echo=FALSE, results=tex>>=
@@ -1492,7 +1470,7 @@ print(FactorCor(tcq2d.fact.6))
 \caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
 \label{tab:tcq2d.sixfactorcorr}
 
-(Table \ref{tab:tcq2.sixfactorcorr} )
+Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. Details of the correlations between factors are shown in Table \ref{tab:tcq2d.sixfactorcorr}. 
 
 
 
@@ -1500,78 +1478,93 @@ print(FactorCor(tcq2d.fact.6))
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.7))
 @ 
-
-
-
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
 \label{tab:tcq2dsevenfactor}
 
 
-\ref{tab:tcq2c7factorcorr}.
+This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
 
-<<tcq2c7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.7))
+PA1: "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
+
+PA5: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor will be termed Homeopathy. 
+
+PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor will be termed Acupuncture. 
+
+PA2: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor will be termed Creams.
+
+PA3: "Inj1" "Inj2" "Inj3" "Inj4" "Inj5" "Inj6". This factor will be termed Injections.
+
+PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor will be termed Pills. 
+
+PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
+
+
+
+
+
+
+\ref{tab:tcq2d7factorcorr}.
+
+<<tcq2d7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2d.fact.7))
 @ 
 
 
-<<tcq2cfitindices, echo=FALSE, results=tex>>=
-tcq2cFit5 <- FitIndices(tcq2c.fact.5)
-tcq2cFit6 <- FitIndices(tcq2c.fact.6)
-tcq2cFit7 <- FitIndices(tcq2c.fact.7)
-tcq2cfit <- as.data.frame(cbind(tcq2cFit5, tcq2cFit6, tcq2cFit7))
-print(xtable(tcq2cfit))
+<<tcq2dfitindices, echo=FALSE, results=tex>>=
+tcq2dFit5 <- FitIndices(tcq2d.fact.5)
+tcq2dFit6 <- FitIndices(tcq2d.fact.6)
+tcq2dFit7 <- FitIndices(tcq2d.fact.7)
+tcq2dfit <- as.data.frame(cbind(tcq2dFit5, tcq2dFit6, tcq2dFit7))
+print(xtable(tcq2dfit))
 @ 
-\caption{Fit Indices, TCQ 2 (Split C)}
-\label{tab:tcq2cfit}
+\caption{Fit Indices, TCQ 2 (Split D)}
+\label{tab:tcq2dfit}
 
-It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
+Again as has been seen in previous splits, the NNFI increases, the BIC decreases along with the RMSEA. 
+
+\ref{tab:tcq2dfit} 
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
-<<bam2cparallel, echo=FALSE, fig=TRUE>>=
-bam2c.para <- fa.parallel(na.omit(bamall2c))
-bam2c.vss <- VSS(na.omit(bamall2c))
+<<bam2dparallel, echo=FALSE, fig=TRUE>>=
+bam2d.para <- fa.parallel(na.omit(bamall2d))
+bam2d.vss <- VSS(na.omit(bamall2d))
 @ 
 
 The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
 
-<<bam2afact1, echo=FALSE, results=tex>>=
-bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
-print(FactorXtab(bam2c.fact1))
-@ 
-
-The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
-
-
-<<bam2cfact2, echo=FALSE, results=tex>>=
-bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact2))
-@ 
-As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
-PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
-
-PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
-
-<<bam2cfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact2))
-@ 
-
-As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
-
-<<bam2cfact3, echo=FALSE, results=tex>>=
-bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact3))
+<<bam2dfact1, echo=FALSE, results=tex>>=
+bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
+print(FactorXtab(bam2d.fact1))
 @ 
 
 
-PA1: "BAM13" "BAM14" "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
 
-PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items appear to relate to the safety of medicines, and so this factor is named thusly. 
 
-PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
+<<bam2dfact2, echo=FALSE, results=tex>>=
+bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact2))
+@ 
 
-<<bam2cfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact3))
+
+<<bam2dfact2dor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact2))
+@ 
+
+
+\ref{tab:bam2dfact2dor} 
+
+
+<<bam2dfact3, echo=FALSE, results=tex>>=
+bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact3))
+@ 
+
+
+
+
+<<bam2dfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact3))
 @ 
 
 
