@@ -1503,10 +1503,6 @@ PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor will be termed
 PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
 
 
-
-
-
-
 \ref{tab:tcq2d7factorcorr}.
 
 <<tcq2d7factorcorr, echo=FALSE, results=tex>>=
@@ -1541,6 +1537,7 @@ bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
 print(FactorXtab(bam2d.fact1))
 @ 
 
+As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
 
 
 
@@ -1549,6 +1546,9 @@ bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2d.fact2))
 @ 
 
+PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18"
+
+PA1: "BAM2"  "BAM6"  "BAM13" "BAM14" "BAM17"
 
 <<bam2dfact2dor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2d.fact2))
