@@ -14,8 +14,12 @@ All participants in Study 1 were students at the University of the researchers. 
 \subsubsection{Measures}
 
 The Treatment Credibility Questionnaire was adapted from the Devilly and Borkovec Credibility/Expectancy Questionnaire. This questionnaire consists of six questions, asking about the cognitive and affective responses to the therapy. Given that this research project concerns the use of placebo analgesia, the questionnaires were modified to make them refer to procedures for the relief of pain.
-The general format is as follows: You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below. 
-In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pill, Cream, Injection and Acupuncture. 
+The general format is as follows: 
+\begin{quotation}
+You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below.   
+\end{quotation}
+
+In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pills, Creams, Injections and Acupuncture. 
 There were six questions under each method, giving the scale 24 questions in all. Following the analysis of the results of Study 1, the instrument was modified to include six questions each on Homeopathy and Reiki, another two methods within the field of complementary and alternative medicine.  
 
 
@@ -29,11 +33,11 @@ The questions were as follows:
 	\item How successful do you think this treatment will be in reducing your symptoms?
  	\item How confident would you be in recommending this treatment to a friend2
 	\item How much improvement in your symptoms do you think will occur?
-	\item How much do you really feel that therapy will help you to reduce your symptoms?
-	\item How much improvement in your symptoms do you really feel will occur?
+	\item How much do you really \textit{feel} that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really \textit{feel} will occur?
 \end{enumerate}
 
-The CEQ has had alpha of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
+The CEQ has had alphas of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
 
 \subsubsection{Data Collection}
 
@@ -1511,10 +1515,9 @@ print(FactorCor(tcq2d.fact.7))
 
 
 <<tcq2dfitindices, echo=FALSE, results=tex>>=
-tcq2dFit5 <- FitIndices(tcq2d.fact.5)
 tcq2dFit6 <- FitIndices(tcq2d.fact.6)
 tcq2dFit7 <- FitIndices(tcq2d.fact.7)
-tcq2dfit <- as.data.frame(cbind(tcq2dFit5, tcq2dFit6, tcq2dFit7))
+tcq2dfit <- as.data.frame(cbind( tcq2dFit6, tcq2dFit7))
 print(xtable(tcq2dfit))
 @ 
 \caption{Fit Indices, TCQ 2 (Split D)}

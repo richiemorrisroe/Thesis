@@ -16,7 +16,7 @@ FactorCor <- function (x) {
   #allnames <- attr(x$loadings, "dimnames")
   factnames <- colnames(x$loadings)
   res <- as.data.frame(res)
-  names(res) <- factnames
+  #names(res) <- factnames
   res.x <- xtable(res)
 }
 ExtractLoadings <- function (x, loadings=0.3) {
@@ -68,4 +68,28 @@ FitIndices <- function (x) {
                      paste(substitute(x),"-90CInt", sep=""),
                      paste(substitute(x),"+90CInt", sep=""))
   res
+}
+MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
+  orthrotations <- c("none", "varimax", "quartimax", "bentlerT", "geominT" )
+  obliquerotations <- c("promax", "oblimin",
+          "simplimax", "bentlerQ", "geominQ", "biquartimin")
+  allrot <- c(orthrotations, obliquerotations)
+  meth <- c("minres", "wls", "gls", "pa", "mls")
+  Scores <- c("regression", "Thurstone", "Anderson", "Bartlett", "tenBerge")
+  fno <- factors
+  rotlist <- list()
+  for (i in seq_along(along.with=allrot)) {
+   x <- fa(na.omit(data), nfactors=fno, rotate=i, fm="ml")
+  assign(paste("rot", i,sep=""), value=x)
+  
+   rotlist[[i]] <- get(paste("rot", i, sep=""))
+}
+  rotlist
+  fmlist <- list()
+  for (j in seq_along(along.with=meth)) {
+    y <- fa(na.omit(data), nfactors=fno, rotate="oblimin", fm=meth)
+    assign(paste("meth", j, sep=""), value=y)
+    fmlist[[i]] <- get(paste("meth", j, sep=""))
+}
+  methrotlist <- c(fmlist, rotlist)
 }
