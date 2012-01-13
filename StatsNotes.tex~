@@ -1,0 +1,154 @@
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "ThesisMasterFile120211.tex~"
+%%% End: 
+\section{Statistics Notes}
+
+\subsection{Looking for Validity or testing it}
+Antonakis \& Dietz
+Personality and Individual Differences (2010)
+Tarvis \& Aronsen - aim of science is not to prove theories right but wrong.
+Utility of new measure is determined by incremental validity.
+Needs to be theory driven, to ensure that appropriate control variables are selected.
+Include as many as possible, to control for omitted variable bias.
+Nested F tests then used to compare fits of models with and without particular predictors.
+Theory driven approaches are better than procedures such as stepwise regression.
+Important that assumptions of regressions are met.
+Study aims to use Monte Carlo techniques to show consequences of using bad methods.
+Reanalyse data of Warwick et al (2010) to show points.
+Warwick appeared to show incremental validity of Emotional Intelligence measures
+over and above congitive ability and personality.
+Four flaws with methods
+\begin{enumerate}
+
+\item Claimed to use hierarchical regressions, but noted use of stepwise procedures. Did not report all variables used or what controls were
+\item Categorised a continuous variable, using 50-60\% of data, and repeated their analyses.
+\item Residuals were heteroscedastic, no note of this made in the paper
+\item Did not correct for imperfectly measured variables
+
+\end{enumerate}
+
+Although problems with these approaches have been pointed out, they are typically not attended to in psychology.
+Stepwise regression is not consistent with a theory driven approach.
+It produces wrong F tests, biased R2 and wrong p-values
+Authors unable to reproduce findings claimed by origninal authors.
+Warwick appears to have used unstated cutoffs for entry and exit from stepwise procedure, authors could not reproduce beta values.
+Authors conducted MC studies (20 replicates) varying n from 20-45, an varying predictors from 2 to 9.
+All variables sampled from the standard normal (0,1).
+Also included a random heteroscedastic error term, conditional on one of the predictors.
+Stepwise regression was used, with a backwards algorithm and a significance cutoff of .2 for exit from the model. 
+The procedure found r2 between .14 and .37 from essentially noise variables.
+As sample size increased, the r2 tended to decrease (does this mean that sw reg is only a problem with small samples?)
+Warwick deleted parts of the sample, and conducted extreme scores analysis. Such procedures are flawed, and dichomtizing a continuous variables never works out well.
+Another MC study showed that when any removal of data took place the correlations tended to be attenuated. 
+P values increased along with sample size, even when no relationship was present.
+An MC procedure with simple regression and a robust variance estimator recovered the estimates almost precisely, while the stepwise procedure was consistently wrong. 
+
+Heteroscedasity causes problems with regression - it biases variance estimates which makes t and F statistics incorrect. Robust variance estimators are needed to deal with this problem. 
+Methods such as errors-in-variables regression can be used to deal with imperfectly measured predictors. Unless this is done, sample estimates will not converge to the population values.
+The authors then re-analysed the Warwick paper with better methods. 
+They used errors-in-variables regression, along with bootstrapped standard errors (n=1000) to correct for heteroscedasity.
+
+The results indicated that the AEIS was not incrementally valid, above cognitive ability an personality. 
+
+\subsection{Testing aPoint Null Hypothesis}
+Berger \& Selke, JASA(1987)
+
+Come back to this when you have more time -very mathematical - looks very useful though.
+
+
+\subsection{Latent Variables in Psychology and the Social Sciences}
+Kenneth A. Bollen.
+Annual Review of Psychology (2002)
+
+Many abstract concepts studied by scientists cannot be directly measured. For such constructs, a latent variable approach is needed.
+Latent variables (LV) in science also allow us to reason about casuality more abstractly.
+Skinner (1976) is perhaps the most famous critic of latent variable approaches. 
+Although LV models are common, there is no single definition of one. Definitions are tied to particular models, and this retards our understanding. 
+Goals of this paper are:
+\begin{enumerate}
+
+\item Review the major definitions of LV in Psych and Soc Sciences
+\item formalise a general definition of LV
+\item examine statistical models of LV in the light of this
+\item discuss issues that emerge when using LV. 
+
+\end{enumerate}
+
+\subsubsection{Nonformal Definitions}
+
+One definition of LV considers them hypothetical constructs.
+They are assumed to come from the mind of the researcher.
+Constructs are not real, but they are based on real things which the construct attempts to model.
+Another definition of LV is that they are unmeasurable variables. 
+Problem is that this presupposes that LV's can never be measured.
+Another definition is that LV's are tools for the pasimonous description of data.
+These definitions appear well suited for exploratory analysis, not confirmatory ones. 
+
+\subsubsection{Formal Definitions}
+
+Local Independence
+
+This definition represents the LV as the cause of the correlations between observed variables. When LV's are constant, the OV's are independent.
+Correlations between variables should be 0 when controlling for the LV.
+Assumptions of this definition include:
+1) errors are independent
+2) OV's have no direct effects on one another
+3) there are at least 2 OV's.
+4) LV's have direct effects on OV's.
+5) OV's do not directly affect the latent trait.
+
+Expected Value
+
+This definition is most commonly associated with classical test theory (CTT). LV is referred to as true score. 
+True score is the average of all responses if the same experiment was conducted an infinite amount of times.
+Real score is equal to true score + errors.
+
+1) scale is defined by E(y)
+2) errors are zero centred and uncorrelated
+3) true scores have direct effects on OV's
+4) OV's do not directly affect the LV's.
+5) OV's do not have any direct effects on one another.
+
+Nondeterministic function of observed variables.
+
+A variable is latent if the equations for the model cannot be manipulated in order to make the LV a function of observed variables only. 
+We may be able tpo predict, but we cannot predict exactly.
+This model permits correlated errors and OV's which directly affect one another. 
+
+Sample Realisation
+
+This is inspired by the simplest definition of a latent variable.
+A latent variable is a variable for which there is no realisation for at least some of the experimental units in a sample.
+All variables are latent until data is collected.
+
+\subsubsection{Properties of Latent Variables}
+
+Two types - propter hoc and post hoc - propter are derived from theory, post hoc account for the results.
+LV's can also differ on the scale on which they are measured - categorical, continuous or hybrid. 
+Another issue is whether or not the variables can be identified - this normally involves fixing some values a priori.
+Yet another issue is indeterminancy. This can only be resolved as n goes to infinity, when OV's go to infinity or when variables are perfectly measured. 
+THe distinction between casual and effect indicators.
+Causal indicators directly affect the latent variables.
+Effect indicators are effects of the LV's.
+Recently, tests for distinguishing between these two kinds have become available (Bollen \&Ting 2000).
+
+\subsubsection{Latent Variables in Statistical Models}
+
+A common example of LV's in stats are the error terms in a multiple regression model.
+To get rid of LV's we would need to eliminate practically all statistical analyses based on the general linear model.
+All LV's need to be centered and scaled to ensure identifiability, and this is a subjective act.
+
+These issues are even clearer in logistic regression, as the binary outcome is modelled using a continuous function which is a LV.
+Similarly, we need to make assumptions about the errors in order to identify the model.
+
+The author notes that factor analysis is the predominant model thought of as latent within psychology.
+In FA we scale both loadings and errors to be N(0,1). EFA and CFA show the differences between pre specified and post-specified LV's.
+In FA, as the number of indicators of each factor increase, the indeterminancy is lessened. 
+
+Latent Curve Models - These models are used for longitudinal and repeated-measures designs, and have alpha and beta as latent parameters.
+IRT models are another example of LV models. They differ in that they use a nonlinear term to estimate the parameters, but they still use the common standardization approach i.e. N(0,1). 
+
+Latent Class models - these differ in that both observed and latent variables are categorical.
+These models rely on local independence, and share the notion of exploratory or confirmatory LV's with factor analysis.

@@ -1,0 +1,263 @@
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "ThesisMasterFile120211.tex~"
+%%% End: 
+\section{Statistics Notes}
+
+\subsection{Looking for Validity or testing it}
+Antonakis \& Dietz
+Personality and Individual Differences (2010)
+Tarvis \& Aronsen - aim of science is not to prove theories right but wrong.
+Utility of new measure is determined by incremental validity.
+Needs to be theory driven, to ensure that appropriate control variables are selected.
+Include as many as possible, to control for omitted variable bias.
+Nested F tests then used to compare fits of models with and without particular predictors.
+Theory driven approaches are better than procedures such as stepwise regression.
+Important that assumptions of regressions are met.
+Study aims to use Monte Carlo techniques to show consequences of using bad methods.
+Reanalyse data of Warwick et al (2010) to show points.
+Warwick appeared to show incremental validity of Emotional Intelligence measures
+over and above congitive ability and personality.
+Four flaws with methods
+\begin{enumerate}
+
+\item Claimed to use hierarchical regressions, but noted use of stepwise procedures. Did not report all variables used or what controls were
+\item Categorised a continuous variable, using 50-60\% of data, and repeated their analyses.
+\item Residuals were heteroscedastic, no note of this made in the paper
+\item Did not correct for imperfectly measured variables
+
+\end{enumerate}
+
+Although problems with these approaches have been pointed out, they are typically not attended to in psychology.
+Stepwise regression is not consistent with a theory driven approach.
+It produces wrong F tests, biased R2 and wrong p-values
+Authors unable to reproduce findings claimed by origninal authors.
+Warwick appears to have used unstated cutoffs for entry and exit from stepwise procedure, authors could not reproduce beta values.
+Authors conducted MC studies (20 replicates) varying n from 20-45, an varying predictors from 2 to 9.
+All variables sampled from the standard normal (0,1).
+Also included a random heteroscedastic error term, conditional on one of the predictors.
+Stepwise regression was used, with a backwards algorithm and a significance cutoff of .2 for exit from the model. 
+The procedure found r2 between .14 and .37 from essentially noise variables.
+As sample size increased, the r2 tended to decrease (does this mean that sw reg is only a problem with small samples?)
+Warwick deleted parts of the sample, and conducted extreme scores analysis. Such procedures are flawed, and dichomtizing a continuous variables never works out well.
+Another MC study showed that when any removal of data took place the correlations tended to be attenuated. 
+P values increased along with sample size, even when no relationship was present.
+An MC procedure with simple regression and a robust variance estimator recovered the estimates almost precisely, while the stepwise procedure was consistently wrong. 
+
+Heteroscedasity causes problems with regression - it biases variance estimates which makes t and F statistics incorrect. Robust variance estimators are needed to deal with this problem. 
+Methods such as errors-in-variables regression can be used to deal with imperfectly measured predictors. Unless this is done, sample estimates will not converge to the population values.
+The authors then re-analysed the Warwick paper with better methods. 
+They used errors-in-variables regression, along with bootstrapped standard errors (n=1000) to correct for heteroscedasity.
+
+The results indicated that the AEIS was not incrementally valid, above cognitive ability an personality. 
+
+\subsection{Testing aPoint Null Hypothesis}
+Berger \& Selke, JASA(1987)
+
+Come back to this when you have more time -very mathematical - looks very useful though.
+
+
+\subsection{Latent Variables in Psychology and the Social Sciences}
+Kenneth A. Bollen.
+Annual Review of Psychology (2002)
+
+Many abstract concepts studied by scientists cannot be directly measured. For such constructs, a latent variable approach is needed.
+Latent variables (LV) in science also allow us to reason about casuality more abstractly.
+Skinner (1976) is perhaps the most famous critic of latent variable approaches. 
+Although LV models are common, there is no single definition of one. Definitions are tied to particular models, and this retards our understanding. 
+Goals of this paper are:
+\begin{enumerate}
+
+\item Review the major definitions of LV in Psych and Soc Sciences
+\item formalise a general definition of LV
+\item examine statistical models of LV in the light of this
+\item discuss issues that emerge when using LV. 
+
+\end{enumerate}
+
+\subsubsection{Nonformal Definitions}
+
+One definition of LV considers them hypothetical constructs.
+They are assumed to come from the mind of the researcher.
+Constructs are not real, but they are based on real things which the construct attempts to model.
+Another definition of LV is that they are unmeasurable variables. 
+Problem is that this presupposes that LV's can never be measured.
+Another definition is that LV's are tools for the pasimonous description of data.
+These definitions appear well suited for exploratory analysis, not confirmatory ones. 
+
+\subsubsection{Formal Definitions}
+
+Local Independence
+
+This definition represents the LV as the cause of the correlations between observed variables. When LV's are constant, the OV's are independent.
+Correlations between variables should be 0 when controlling for the LV.
+Assumptions of this definition include:
+1) errors are independent
+2) OV's have no direct effects on one another
+3) there are at least 2 OV's.
+4) LV's have direct effects on OV's.
+5) OV's do not directly affect the latent trait.
+
+Expected Value
+
+This definition is most commonly associated with classical test theory (CTT). LV is referred to as true score. 
+True score is the average of all responses if the same experiment was conducted an infinite amount of times.
+Real score is equal to true score + errors.
+
+1) scale is defined by E(y)
+2) errors are zero centred and uncorrelated
+3) true scores have direct effects on OV's
+4) OV's do not directly affect the LV's.
+5) OV's do not have any direct effects on one another.
+
+Nondeterministic function of observed variables.
+
+A variable is latent if the equations for the model cannot be manipulated in order to make the LV a function of observed variables only. 
+We may be able tpo predict, but we cannot predict exactly.
+This model permits correlated errors and OV's which directly affect one another. 
+
+Sample Realisation
+
+This is inspired by the simplest definition of a latent variable.
+A latent variable is a variable for which there is no realisation for at least some of the experimental units in a sample.
+All variables are latent until data is collected.
+
+\subsubsection{Properties of Latent Variables}
+
+Two types - propter hoc and post hoc - propter are derived from theory, post hoc account for the results.
+LV's can also differ on the scale on which they are measured - categorical, continuous or hybrid. 
+Another issue is whether or not the variables can be identified - this normally involves fixing some values a priori.
+Yet another issue is indeterminancy. This can only be resolved as n goes to infinity, when OV's go to infinity or when variables are perfectly measured. 
+THe distinction between casual and effect indicators.
+Causal indicators directly affect the latent variables.
+Effect indicators are effects of the LV's.
+Recently, tests for distinguishing between these two kinds have become available (Bollen \&Ting 2000).
+
+\subsubsection{Latent Variables in Statistical Models}
+
+A common example of LV's in stats are the error terms in a multiple regression model.
+To get rid of LV's we would need to eliminate practically all statistical analyses based on the general linear model.
+All LV's need to be centered and scaled to ensure identifiability, and this is a subjective act.
+
+These issues are even clearer in logistic regression, as the binary outcome is modelled using a continuous function which is a LV.
+Similarly, we need to make assumptions about the errors in order to identify the model.
+
+The author notes that factor analysis is the predominant model thought of as latent within psychology.
+In FA we scale both loadings and errors to be N(0,1). EFA and CFA show the differences between pre specified and post-specified LV's.
+In FA, as the number of indicators of each factor increase, the indeterminancy is lessened. 
+
+Latent Curve Models - These models are used for longitudinal and repeated-measures designs, and have alpha and beta as latent parameters.
+IRT models are another example of LV models. They differ in that they use a nonlinear term to estimate the parameters, but they still use the common standardization approach i.e. N(0,1). 
+
+Latent Class models - these differ in that both observed and latent variables are categorical.
+These models rely on local independence, and share the notion of exploratory or confirmatory LV's with factor analysis.
+
+SEM models can encompass almost all of the models considered already. 
+They have similiar definitions and purposes as those models considered above.
+
+Defining a variable as latent is difficult and depends on the definition we adopt.
+The author notes that the sample realisation definition can encompass all these varying definitions. 
+
+\subsection{Attack of the Psychometricians}
+Denny Borsboom
+Psychometrika (2006)
+
+Embretson noted recently that IRT has still not made a large impact on psychology and most tests are still based on CTT.
+Psychometrics has been unsuccessful at changing research methods within psychology.
+This paper looks at the reasons behind this odd situation, and suggests ways in which this problem could be remedied.
+
+The author notes that PCA is often used as a latent variable technique, when in fact it is a data-reduction technique. 
+Uses the example of the Big Five, and notes that these components are caused by the indicators, rather than the other way around.
+Such theories require a CFA model rather than a PCA one.
+McCrae 1996 notes that the failure of CFA on the Big Five theory - implies that CFA cannot be used to measure personality (this is bollocks, it means that your model is wrong).
+
+The comparision of group scores across some factor requires that the measurement model be invariant across these groups. However, this is not often tested, and so conclusions drawn from this are fatally flawed.
+Author notes that regressions on the indicators do not demonstrate measurement invariance but rather predictive invariance.
+Milsapp (1997) - showed that predictive invariance does not imply measurement invariance.
+
+There are three broad classes of obstacles to the union of psychology and psychometrics.
+
+Operationalisation rules
+
+Fundamentally, the indicators are not the constructs. We can model the constructs using them, but they are not the same. However, many psychologists appear to believe that they are, at least in practice.
+
+Indicators for constructs are often summed, and then analysed as though they were a veridical representation of the construct.
+
+Classical Test Theory
+
+Unfortunately, CTT still dominates in psychology. CTT assumes that there is a true score which represents the construct under study, and so draws attention away from the relationship between measures and constructs. 
+The author uses the wiespread use of the IAT before any model was constructed as an example of this.
+
+Refers to Blanton et al (2006) for a comprehensive critque of the model.
+
+Construct validity
+
+Many important questions are subsumed under the heading of construct validity.
+If we do not know what a test measures, then why are we using it?
+
+The author notes that psychometrics is risky, and has a tendency to disprove the assumptions of the researcher.
+Often, papers from this kind of work find it hard to get published in either the psychological or psychometric literature.
+Author notes that a paper involving simple matrix algebra was rejected as it was perceived to be too difficult for the audience.
+
+Author also notes that psychologists do not receive very much mathematical training - he contrasts this with economists, who do get a lot of mathematical training. 
+He also notes that the lack of IRT models in SPSS and its terrible defaults are a large factor in the continued retardation of psychometric progress within psychology. 
+Author notes that psychometrics is perceived as limiting, rather than widening the scope of research activities available to psychologists.
+
+Another issue is that psychometric models require large numbers of participants, while simple sumscores require little.
+
+Lack of Strong Theories
+
+If we wish to measure some construct, and devise a yes/no scale for it, how do we regard the items.
+
+As a sample from a larger population of items related to the trait?
+As a behavioural construct measured by the items?
+A latent variable approach?
+
+If we assume an LV approach, then what is the relation between the measure and the construct? Is it monotonic, smooth or erratic? Can we use a N(0,1) standarisation or do we need a different approach?
+
+Researchers make such decisions all the time, but there is no coherent theory which guides their decisions, so they may be poor or idiosyncratic.
+The author notes the increasing trend towards formalism in some areas of psychology, as well as the growth of open source statistical software. 
+The author encourages psychometricians to write good textbooks, as this is the only experience most psychologists have with psychometrics.
+He also encourages psychometricians to read and publish widely within psychology, in order to spread the good word.
+He urges psychometricians to start builing measurement theories in order to advance progress in psychology.
+He also suggests the integration of mathematical psychology and psychometrics, two disciplines who have much in common. 
+Psychological testing has real world consequences, and as such, should be treated far more seriously than it is at present.
+
+\subsection{The End of Construct Validity}
+Denny Borsboom et al
+
+Construct validity claims that the meaning of a construct is given by the laws in which the construct plays a role. Unfortunately, this approach did not work, given that there are no nomological networks in which general intelligence plays a role.
+In order to define a nomological network, we must divide the world into theoretical and observational statements.
+The properties are related to one another in a nomological network.
+This approach has not been successful, as theoretical and observational sentences are difficult to seperate, as observation presumes theory and theory presume observation. 
+Another issue is that there are no laws in psychology which connect theoretical statements to one another. Even though it did not work, this theory has left behind a number of statements which hold back progress in psychological measurement.
+1) the idea that validity involves the interpretation of test scores.
+2) the idea that validity is a property of interpretations rather than tests
+3) The idea that validity is a function of evidence that can be brought to bear on these propositions.
+
+The authors argue that validity does not refer to test score interpretations, but rather to a property of tests.
+Test valdiity is not a function of evidence but rather a function of truth.
+In order to measure test validity, a realist approach needs to be taken.
+The term construct is used in two contradictory ways - firstly to refer to a term used in a theory, and secondly to what the theory is attempting to measure. 
+
+The issue is that even denying that a test measures anything at all can be an interpretation which has high construct validity.
+It is not only important that tests should have evidence, it is more important that it be true.
+Theories can be wrong, even when they match (some) of the evidence - this does not mean that the theory is valid.
+Two approaches:
+Operationalisation - what is measured is identical to the measurement instrument
+Representationalism - numbers are assigned to preserve some kind of ordered relationship between the properties of particular objects.
+Representationalism does not require that the measurements be identical to the measure, but it does not deny this principle either.
+That being said, all measurement is subject to error, but these can be modelled by some measurement techniques. 
+
+There is another way - realism - states that measurement instruments are sensitive to the properties of objects, but are not perfectly attuned with them. The authors claim that what matters is how the measure works rather than properties of the interpretation of tests.
+
+The word construct and its double meanings are confusing, and should be avoided.
+
+Most psychological models are reflective measure models, which posit that a particular property unerlies the responses to particular test items. However, if the measure is to be correct, then the scores shoul depend on the property being measured, and should be sensitive to variations underlying it.
+In order to ensure validity, the processes underlying the responses must be understood. 
+
+A major issue with psychological measurement is that we do not know if individual change over time and inter-individual differences between two people at the same time are equivalent. 
+Molenaar et al 2003 - if a 2 factor model fits some, and a three factor model fits others, then a group analysis may show a 1 factor model.
+Changes in temperature all result from the same process, while changes in responses on psychological tests may result from any number of different causes. 
+Psychometrics need to be formal models of test behaviour, not mathematical representations and reductions of test scores.  
