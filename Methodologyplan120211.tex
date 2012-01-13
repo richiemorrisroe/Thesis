@@ -1,0 +1,636 @@
+
+\section{Introduction}
+
+In this section, the methods used in this thesis will be described, along with the procedures for all of the research carried out, followed by a description of the statistical analyses used in this research. This chapter will consist of the following sections, representing the core parts of the thesis.
+
+\begin{enumerate}
+\item Firstly, the approach towards quantitative data will be elucidated at a high level.
+\item Secondly, the approach taken towards the analysis of qualitative data will be described.
+\item Thirdly, the tensions and points of commonality between these approaches will be enumerated.
+\item Fourthly, the design and collection of all the peices of  research will be described.
+\item Finally, the specific analyses carried out on all of the data will be explicated. 
+\end{enumerate}
+
+\section{Quantitative Research Methodology}
+
+This thesis consisted mostly of quantitative approaches towards eluciating information from data collected from people, as befits the discipline of psychology. This approach was taken for the following reasons. Firstly, the placebo response (and indeed response to medical treatment more generally) is a very noisy phenomenon \cite{Singer2005}, subject to many sources of error and bias (described in Chapter 2 under the heading of the Concept of the Placebo). Secondly, in terms of experimental analysis (where the major hypothesis of this thesis was tested) in order to determine the predictive validity of the IAT's developed in this research, a quantitative approach was necessary. 
+
+\subsection{General Statistical Approach}
+
+In most psychological research, the primary outcome can be expressed either through words or numbers (and visual representations of numbers, such as graphs). In this section, the general approach taken towards the analysis of numerical data taken will be described, background information on the methodologies used in this thesis will be given. 
+To begin, the forms of data reduction and model fitting used for observational and survey data will be described. Following this, the approach taken towards the analysis of reaction time data shall be detailed, and the measurement of all experimental data points will be explicated. 
+
+This section will also distinguish between Bayesian, frequentist and likelihoodist approaches to the analysis of statistical data (and the differing theories of probability implied by this more generally).
+
+\subsection{Psychometric Considerations}
+
+This project involved a considerable amount of psychometric work, as the major part of it was the development and testing of two measures, one implicit association test and one expectancy questionnaire. This section will detail the approaches taken to the modelling of this data. 
+
+
+\subsubsection{Explicit Measures}
+
+The use of self report measures of personality and attitude has been standard practice in psychology for over one hundred years. In this time, well developed methodologies have been developed for the design and analysis of these measures. 
+
+The primary concerns for these measures was its validity and reliability. The validity can be assessed by correlational analyses with other measures which are theoretically related to the measure under study, but the ultimate test of the validity of the measures created came from the experimental part of this research. 
+
+That being said, the reliability of the measure was assessed by the use of reliability indices (such as cronbach's alpha) \cite{sass2010comparative} along with factor analysis, structural equation modelling and item response theory methods. Each of these will be dealt with in turn. In addition, a number of different scoring methods were applied to the data arising from these peices of research and these methods and their implications are discussed below.  
+
+
+\subsubsection{Latent Variables}
+
+Latent variables are a primary focus within psychometrics and psychology more generally\cite{bollen2002latent}\cite{borsboom2006attack}. The essence of the concept is that psychological tools such as self report measures are imperfect \cite{edwards2000nature}. They are not pure measures of whatever construct is under investigation, they also tap into elements such as context, social desirability, response patterns and a myriad of other biases and heuristics \cite{borsboom2006attack}. The latent variable approach is extremely common because of this, and forms the core of factor analysis, item response theory and structural equation modelling techniques \cite{bollen2002latent}. However, some psychometricians would argue that factor analysis is a data reduction technique rather than a latent variable technique \cite{borsboom2006attack} In classical test theory (factor analysis, reliability analysis), a latent variable is often referred to as a ``true score'', that is, the score that would be obtained for a participant given an infinite number of replications of the study \cite{bollen2002latent,edwards2000nature}. Indeed, the error terms in a multiple regression model can also be regarded as latent variables \cite{bollen2002latent}.
+
+ The approach necessitates that a number of impure measures of a construct are collected (for example, items on a self report measure)\cite{edwards2000nature}. By examining what these items have in common (by either their correlations or a non-linear function of the response patterns) a better estimation of the construct can be derived\cite{borsboom2006attack}. This derived measure is then taken to be a better measure of the construct. 
+
+There are two main perspectives on latent variables. The first is the reflective model of latent variables, where the measures are believed to reflect the underlying construct. The second model is the formative model which suggests that latent variables are formed of the measures observed\cite{bollen2002latent,edwards2000nature}. 
+
+The first model reflects a positivistic concept of latent variables (i.e. that they exist within people and psychological measures elicit them) while the second represents a more constructivist approach (latent variables are constructed from our measures, and do not necessarily correspond to anything that exists within people). 
+
+Although these approaches suggest very different conceptions of psychological measurement and psychology, they do not matter in practice. In practice, the essence of a good psychological measure (or latent variable) is twofold. They explain some facet of behaviour better than the alternatives, and they allow us to predict the response to new situations. On this matter, this peice of research takes a pragmatic approach.  
+
+\subsubsection{Factor Analysis}
+
+Factor analysis has a long history in psychology, and is now over one hundred years old. Despite this, there are still a number of issues and controversies which surround the technique \cite{henson2006use}\cite{sass2010comparative}. Essentially, factor analysis is an attempt to approximate a correlation matrix with a smaller matrix of parameters. These hypothesised latent variables tend to be called factors or components.
+
+ One of the first controversies surrounding factor analysis is the dispute between factor analysis proper and principal components analysis\cite{henson2006use}. The major difference between factor analysis and principal components analysis is that in factor analysis, only the variance common across items (or communalities) is analysed, while in PCA, all of the variance is analysed. PCA tends to work better for data reduction, and indeed this is the reason why it was developed \cite{borsboom2006attack}. 
+
+For this reason, throughout this research only factor analytic methods were used for psychometric purposes. Even though the two methods aim at different goals, as the sample size increases the differences tend to become much less, to the point where some have suggested that in practice, the choice of one over the other is somewhat arbitrary \cite{henson2006use}. This is because with PCA, all of the elements of the matrix are used in the reduction process, while in FA, only the off-diagonal elements are used, and the difference between these two approaches lessens as $N$ grows larger. That being said, it is often useful to know on how much of the variance the factor model is based (and also how much is left out) and this is only provided by factor analysis proper.
+
+The second issue surrounding factor analysis concerns determination of the number of factors to extract\cite{zwick1986comparison}. This is an important issue, as theory and practice are likely to be held back if an incorrect choice is made. The issue is not that there are no criteria on which to base a principled decision, but rather that the different criteria often do not agree, and it is thus ultimately left to the informed opinion of the researcher which factor solution is to be preferred. All of the decision criteria will be reviewed in turn, and their advantages and disadvantages will be listed \cite{henson2006use} . 
+
+The first, and most popular criterion is surprisingly the least useful\cite{zwick1986comparison}. This rule is called eigenvalues greater than one criterion and recommends keeping all factors whose eigenvalues are greater than one. The issue with this rule is that is tends to over-factor the data, and does not take account of the differences between data-sets. This rule's popularity may have more to do with its default nature in popular statistical packages rather than any principled examination of the options available. 
+
+The second criterion often used is the scree plot technique, which was popularised by Raymond Cattell. This criterion recommends that the eigenvalues of all factors should be plotted against their number, and only factors before the drop off in eigenvalues should be used. This criterion has a number of advantages. It is available in all statistical packages, it can be used without any special training and it tends to give results which are somewhat, if not totally accurate. Its major disadvantage is that it relies upon the interpretation of the researcher, but given the strong emphasis on interpretation throughout factor analytic literature (and indeed statistical practice more generally) this should not be regarded as too much of a handicap. 
+
+The next criterion which can be used is that of parallel analysis. Parallel analysis is a Monte Carlo technique which simulates a data matrix of equal size and shape to the matrix under study, and plots the eigenvalues of these simulated factors against those of the matrix of investigation. The point where the simulated line meets the real line marks the number of factors which should be extracted. Parallel analysis is one of the better techniques for assessment of the number of factors to extract, and it can often give very accurate results. 
+
+Its major disadvantage is that it tends not to be available in many statistical packages, and that it can often over factor the data-set. However, there is some evidence \cite{beauducel2001problems} that parallel analysis can underextract factors when there is pronounced oblique structure, so both possibilities need to be kept in mind. That being said, it does produce some of the most accurate results in simulation studies so it is a useful tool nonetheless \cite{zwick1986comparison}.
+
+Another useful criterion is that of the Minimum Average Partial Criterion (MAP) which extracts factors from the data-set until only random variance is extracted. Again, this is an accurate criterion  \cite{zwick1986comparison} which is little used as it is not available in popular statistical programs. The only problem that  has been found with this criterion is that it tends to under-extract factors. %However, with the use of this criterion as a lower bound, and parallel analysis as an upper bound, then the decision of how many factors to retain can be made much easier. [I found this, but the literature does not appear to have as many examples of it]
+
+This leads on to the major point and issue with much factor analytic research today, whereby one decision rule is used to the exclusion of all others. Many researchers have recommended the use of multiple decision criteria, but this does not appear to be am approach utilised by many in the literature \cite{henson2006use}\cite{sass2010comparative}. However, this is the approach which has been taken in this research. This work will use parallel analysis, the MAP criterion and examination of scree plots to ensure that all relevant factor solutions are examined.
+
+However, the ultimate test of a factor solution (without using other methodologies, such as Structural Equation Modelling) \cite{joreskog1978structural} is its theoretical clarity and interpretability, and this will be the first test used for all proposed factor solutions. Following the extraction and analysis of each of these factor structures, structural equation modelling techniques were employed to assess their success at recreating the observed covariance matrix. 
+
+Another area of dispute amongst researchers in the factor analytic field is which method of rotation to use\cite{sass2010comparative}. As the eigenvalues are only defined up to an arbitrary constant, these rotations do not have any substantive impact on the factor matrix, except that they can make it easier to interpret. 
+
+Rotations are commonly applied to factor solutions in order to reduce items loading on multiple factors, and to aid in the discovery of simple structure\cite{henson2006use}. One problem with rotations is that there are an infinite number of rotations which could be applied to the data, which all explain equal amounts of the variance, so it is difficult to show that the right rotation has been chosen.  
+
+Rotations can be divided into two classes, orthogonal and oblique\cite{sass2010comparative}. Orthogonal rotations return uncorrelated factors, while oblique rotations allow the factors to be correlated. Given that most psychological measures are correlated with one another, one would expect oblique rotations to be more common. However, the default appears to be orthogonal rotations, as they are apparently easier to interpret\cite{henson2006use}. 
+
+Oblique rotations, do however, have one large advantage over orthogonal rotations. When oblique rotations are performed, if the factors are truly uncorrelated, then this will be shown by the output of the procedure\cite{venables2002modern}. However, no such advantage applies to orthogonal rotations, and for this reason, oblique rotations are preferred throughout this piece of research. 
+
+\subsubsection{Structural Equation Modelling}
+
+Structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions\cite{fabrigar1999evaluating}. As has been explained above, the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiences.
+
+SEM was developed by Joreskog in the early 1970's \cite{joreskog1978structural}. It provides a means of testing hypothesised relationships between latent and manifest variables. In practice, the result of a factor analysis is regarded as a measurement model of the data. 
+
+This is combined with a structural model (which describes how the latent variables relate to one another and to the manifest variables). The two of these models are then used to construct a covariance matrix which is then compared with the observed data, and a number of indices of model misfit are calculated. Foremost among these is the $\chi^2$, which estimates the degree of model misfit. The desired result is a p-value of greater than 0.05, which shows that the two matrices are not significantly different. 
+
+However, the $\chi^2$  is extremely sensitive to sample size, and tends to be rejected in almost every case\cite{henson2006use}, given the sample sizes needed for accurate factor analysis and structural equation modelling tend to be quite large. As a result of this, many other fit indices have been developed. Foremost amongst these are the Non Normed Fit Index (NNFI), which is also known as the Tucker Lewis Index, the Root Mean Square Error of Approximation (RMSEA) and the Bayesian Information Criterion (BIC) and the Aikike Information Criterion (AIC). These all have different strengths and weaknesses and are typically used in a complementary way. 
+
+There are also some requirements for SEM models which are typically not met for much psychological and psychometric data. These are as follows:
+\begin{itemize}
+\item The distribution must be approximated well by the first and second order moments. 
+\item Sample size is required to be large (>300)
+\item The covariance matrix must be strictly positive definite across the entire parameter space.
+\end{itemize}
+
+Of these, the multivariate normality assumption  (assumption 1 above) is often difficult to meet in practice. However, there are a number of distribution free methods in SEM, of which the most common is a Weighted Least Squares approach. This proceeds similarly to a Weighted Least Squares approach in linear regression, where points are assigned weights depending on how closely they meet the assumptions of the model. Sample size, by contrast, is typically easy to increase (at least for non-clinical populations).
+
+Identification of the model is another issue in practice, though as Joreskog notes, this can often be achieved by fixing a number of parameters to 0 or 1 (the inter-factor variances are often scaled in this fashion) \cite{joreskog1978structural}. 
+
+Another, more theoretical issue is that no set of data is uniquely determined by an SEM model. This is known as the problem of rotation in factor analysis \cite{maccallum2000applications}. Given a covariance matrix $W$, and a set of data $D$, there are many solutions which provide the same fit indices of the model to the data. This can lead to a similiar problem as occurs to factor analysis, where the researcher must make a choice between models which are quantitatively identical. One approach for resolving this problem is discussed below, in Section \ref{sec:probl-sample-infer}. 
+
+\subsubsection{Item Response Theory}
+
+Item response theory (IRT) is often called model-based measurement\cite{fischer1995rasch}, and is also referred to as Rasch modelling, is a new (by the standards of psychometrics) approach to analysing test data, developed both by the Danish mathematician Rasch and Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's\cite{van1997handbook}. 
+The fundamental premise of IRT is that the properties and scores on a psychometric test can be modelled as functions of both the items on the test and the ability of the people taking the test. 
+
+The IRT approach suggests that conditional on both the ability of the person and the difficulty of the test, the responses of each participant can be predicted probabilistically. As the latent ability of the participant rises, they tend to choose more highly ranked alternatives, given a set difficulty of item. 
+
+For instance, if one was modelling extraversion using a set of ten items, the participants who scored highest in extraversion would be most likely to respond strongly agree to the items. IRT also assumes a property called local independence, which states that conditional on the ability measured by the test, the scores of each participant are independent of one another. 
+
+IRT is divided into a number of approaches, much like the debate between latent factor models and principal components analysis in Factor Analysis\cite{van1997handbook,fischer1995rasch}. The eponymously named Rasch models are the simplest, and have a number of extremely appealing mathematical properties. These models assume that only one trait is measured by the items, that all items are equally predictive of the trait, and that there is no guessing. 
+
+Because of these assumptions, it is possible to seperate out person abilities and item difficulties perfectly. However, another approach (normally referred to as a two parameter model, or IRT proper) claims that items are differentially predictive of the ability being measured, in a manner analogous to different strength of loadings of items on a construct in factor analysis. Another model the so called three parameter model, allows for correct responses through a process of guessing, but this model is not normally applied to polytomous (many valued, like a Likert scale) items \cite{van1997handbook,Mair2010}.  
+
+The Rasch model is the simplest of these three general forms of models, and will be discussed first, followed by a discussion of two parameter models, after which I discuss three parameter models. Finally, this section ends with a discussion about non parametric item response theory and multidimensional IRT. 
+
+In general, IRT models are represented by the logistic function, and are estimated iteratively through procedures of numerical optimisation (maximum likelihood). The function used to describe the data is a logistic one, where ability is estimated from the probability of answering the question correctly. 
+
+The difficulty is conventionally defined as the ability of participants who answer the question with 50\% accuracy. The parameter $\alpha$ is defined as the difficulty of the item. In two parameter models, another parameter $\beta$ is defined and is used for the discrimination of the item (the slope of the curve). In the more complex 3 parameter model, $\theta$ is used to measure guessing (the probability of a correct answer given low ability)\cite{van1997handbook}. 
+
+IRT was developed in the context of ability tests, and this leads to much of the vocabulary fitting uneasily within psychology. For instance, in the context of a credibility questionnaire about various treatments, the questions on homeopathy are categorised as most difficult. This does not mean that they are harder to answer, just that the probability of a respondent endorsing them is lower than the proability of a participant endorsing an item on the efficacy of painkilling pills (in a general population sample, at least). 
+
+Below, all of the models will be described in terms of their original use in ability testing, and then conclude with a discussion of polytomous IRT, which is the methodology exclusively relied upon in this research as this research focused on personality testing rather than ability testing.
+
+It is important to note that the names of the models are slightly deceiving, while they are called 1, 2 \& 3 parameter models, they actually involve the estimation of 1,2, or 3 parameters for each item. This normally means that a test of ${1,2,3\ldots, n}$ items will require the estimation of either ${n, 2n, 3n}$ parameters. The parameters are estimated by an iterative maximum likelihood approach, as so issues of optimisation and ensuring that a global maximum has been found are often important in practical applications\cite{gill2002bayesian}. 
+
+
+\subsubsection{Rasch Models}
+
+Rasch models are the simplest of the different kinds of IRT models. The model makes a number of assumptions, here restated in less mathematical language than is typical\cite{fischer1995rasch}.
+
+\begin{itemize}
+\item The latent variable is normally distributed
+\item Each of the items provides equal information with regard to the latent trait 
+\item Given a set of responses to a question, $k$ and a latent ability, for every k there is a $\theta$ which is identical in rank (monotonicity)
+\item Given the latent variable, all of the $n$ items are independent (local indpendence)
+\end{itemize}
+
+The first and third assumptions are common to most IRT models, while the second assumption is the defining characteristic of the Rasch model, and the feature that allows for some of its appealing mathematical properties. 
+
+In essence, all of the information about a participant garnered from a Rasch model can be represented by the ability score (it is a sufficient statistic for the distribution)\cite{fischer1995rasch}. This is a characteristic which does not generalise to the more complex models discussed below. 
+
+IRT models are defined by two parameters, the difficulty of the item and the discrimination of the item. The difficulty represents the probability of correctly answering the question, while the discrimination represents the change in difficulty for a given ability (the slope of the curve). In the Rasch model, these slopes are set to 1, so that all items provide equal information about the abilities of participants throughout the sample. This, while allowing for exact estimation of the difficulty of the test and strict sample invariance, is an assumption which is often not met for psychological testing instruments \cite{embretson2000item}. 
+
+\subsubsection{Two Parameter Models}
+
+Two parameter models were developed by Lord \& Novick while they worked at Educational Testing Services (ETS)\cite{van1997handbook}. They maintain all of the assumptions of the Rasch model, except for 2, which is generalised. The two parameter model recognises that different items provide different amounts of information regarding different participants. This alters the overall model by allowing the slopes of the item to differ, which disallows the property of conjoint additivity, which is the feature of Rasch models that ensures that participant ability and item difficulty can be seperated perfectly. However, in return this model allows for greater complexity and fidelity to the responses made by the participant. 
+
+\subsubsection{Three Parameter Models}
+
+The three parameter model was developed by Birnbaum and is identical to the two parameter model, except for one crucial difference\cite{van1997handbook}. Both the one and two parameter models assume that participants only get the correct answer if they know it, that is, there is no guessing. This is a difficult assumption to meet in practice, as in an educational testing setting (assuming that there is no negative marking) participants are likely to guess if they do not know the answer.
+
+ Even if there is a negative mark penalty, as long as it is not equal to the mark gained from a correct answer, any rational participant will guess if they have narrowed the options down to two of four possible responses. Therefore, Birnbaum's model incorporates this into the test, and assumes that there will be a non-zero level of guessing throughout the test. This means that it cannot be assumed that a participant with extremely low ability will answer a difficult question incorrectly, as so the lower bound on the probability of answering is estimated from the data, and will be greater than 0 (where it is in both the one and two parameter models). Apart from that, the model is exactly the same as the two parameter model.  
+
+\subsubsection{Non Parametric Item Response Theory}
+
+Non parametric IRT was developed by Mokken, and is often called Mokken scale analysis\cite{van2007mokken}. It maintains the assumptions of all of the previous models, and there are versions of the one, two and three parameter models which are equivalent to those noted above. However, mokken scaling does not require any assumptions about the  parametric form of the latent variable, which makes it a more flexible technique. In addition, mokken scaling is often performed as a prelude to parametric IRT, as it provides useful checks of all the assumptions noted above. In addition, Mokken scaling can be used in order to assess whether a scale should be broken into two or more subscales, which can then be modelled using parametric IRT. 
+
+\subsubsection{Multi Dimensional Item Response Theory}
+
+So far, all of the IRT models we have considered have been univariate IRT models, where there is assumed to be a single latent variable $\theta$ responsible for the different patterns of responses. However, it is easy to see that often, this assumption will not be met. 
+
+In terms of personality testing, there is a long history of stable inter-individual differences in the manner in which people respond to personality test items. Some participants will tend to utilise the extreme scores of the scale, while others will stick to the middle. These kinds of behaviours occur stably across divergent instruments, and need to be accounted for. 
+
+As yet, unfortunately, there is no useful mathemtatical model \cite{borsboom2009end} which can be used to model these kinds of individual differences, which is essential if the measurement of human ability is to progress. However, what can be done is fit a multidimensional model which accounts for some of these factors in a coherent  fashion\cite{doran2007estimating}. 
+
+Indeed, multi-level IRT models can allow us to examine the intercorrelations between latent variables, and can lead to much more stable estimates of ability and difficulty, though at the cost of a loss of parsimony and extensive computing requirements (though far less computation than is needed for even the simplest Markov Chain Monte Carlo model). Therefore, as many of the scales used in this research seem to measure multiple latent variables, ML IRT approaches will be employed after an acceptable  unidimensional model has been built for each of the sub scales. 
+
+\subsubsection{Polytomous Item Response Theory}
+
+In contrast the dichotomous IRT models presented above, almost all of the IRT models used in psychology are IRT models for polytomous (many responses) data. This follows as with a typical Likert scale, there are five possible responses, arranged (hopefully) in a montonically increasing fashion. 
+
+Indeed, failures of monotonicity are common when fitting simpler models, and this needs to be checked before estimation of parameters. However, such failures tend to be obvious after the estimation of parameters, and the model can then be improved in an iterative process. 
+
+Common polytomous models used in psychology are the Graded Response Model \cite{van1997handbook} (two parameter) and the Partial Credit Model (one parameter)\cite{fischer1995rasch}. Both of these models assume that the data is ordinal (as per a Likert scale). There is another model, the Rating Scale Model, which is used to fit nominal data, or when the assumptions of ordinal data have been breached. The model fitting procedure works as above, the general model building strategy is described below under the heading of data analysis for each of the different parts of the research.  
+
+\subsubsection{Scoring Self Report Measures}
+
+Scoring of self report measures is an area which has received surprisingly little research within psychology. Almost all scales seem to use either a sum or mean as their method for calculating a score \cite{borsboom2006attack}. This use of sums and means makes a number of assumptions, many of which may not be justified in this research.
+
+\begin{enumerate}
+\item All scores contribute equally to the construct
+\item All questions tap the same construct
+\item All questions are scored in the same direction
+\end{enumerate}
+
+Of these assumptions, most of them will be violated for many measures. The first, the notion that all questions contribute equally to the construct will be false in all cases where the factor loadings are significantly different from one another (as assessed by correlations between them at conventional levels of significance). The second assumption will be violated where a scale measures more than one factor. It would seem obvious that scales which measures multiple factors need to have a seperate score for each one, but this does not appear to occur in many cases. The third assumption is the only one which appears to be consistently followed with the use of reverse scoring, but this may be more a reflection of the awareness of the psychological research community of the problems of response styles rather than increased statistical sophistication.
+
+There are some reasons why means and sums are preferred throughout psychology. There are two main alternatives to their use (with many variations within each of these two broad types), but both of these methods require large samples, which (especially in clinical work) may not be available. 
+\begin{enumerate}
+\item The first alternative to means is the use of factor scores
+
+\item The second alternative is the use of participant abilities, as estimated from an IRT model.
+\end{enumerate}
+
+These two methods have much in common, and also some important differences. The first commonality is that they both require large amounts of participant data (perhaps 300 or more)\cite{van1997handbook,henson2006use}. The second commonality is that they are both model-based, in that a model is fitted to the observed responses, and then this model is used to turn these responses into scores for each of the participants. Given the paucity of experimental research using over 300 participants in most areas of psychology, it is not surprising that means and summations have remained the standard within the field. Another commonality between the two methods is that they both weight particular items differently, based either on their correlations with the factors (for factor analysis) or the probability of a particular response (for IRT). 
+
+There are also some differences between the two methods, which are described below. Firstly, factor analysis is a technique which falls squarely under the rubric of linear models\cite{venables2002modern}, so there is an assumed linearity between the responses and the factor scores. In contrast to this, IRT utilises a non linear approach to scoring the items (generally a logistic function), although these can also be classified under the rubric of linear models, albeit generalised \cite{venables2002modern} 
+
+One issue with the use of factor scores is that they come from an unidentified model, in the sense that there are an infinite number of factor scores consistent with the data \cite{grice2001computingit}, and the validity of these cannot be assessed through factor analysis alone. This is an issue which is ignored in many pieces of psychological research, but is nonetheless important. The resolution of this issue is discussed below in Section \ref{sec:probl-sample-infer}. There are two major types of factor scores, coarse and fine, and both of them will be assessed for their predictive ability on cross-validation test data \cite{grice2001computingit}.  
+
+Another difference concerns the assumptions about the parameters estimated from the sample. In factor analysis, they are assummed to be sample dependent, in that the same instrument given to a different population could produce entirely different factors. That being said, decades of research into validation of scales cross culturally and across time seems to suggest that this is not always the case. In item response theory, the item difficulties are assumed to be independent of the sample which is used to estimate them. This can be rigorously proven for the Rasch model, and is often extended to the more complex 2 and 3 parameter models also, though this is still controversial\cite{van1997handbook}. 
+
+The approach taken in this research  was the following. Firstly, all measures were administered to a random sample of the population from which experimental participants were to be drawn (students at University College Cork). These large datasets ($n$ between 800 and 1500) were then used to build and test models based on both factor analysis and item response theory. 
+Crossvalidation \cite{friedman2009elements} approaches were employed to decide amongst the different methods of scoring. These models were then  applied to the response patterns of the experimental participants, and estimates of their abilities and scores were created. This allows for the psychometric tools developed for analysis of large samples to be applied to experimental data where there would not have been enough respondents to fit a model on if this was the only data available.   
+
+\subsubsection{Time Series Analysis}
+
+Time Series Analysis is an extremely widely used statistical tecnhique, and has been modelled in some form for hundreds of years \cite{stigler1986history}. However, the models in use today in the social sciences tend to be ARIMA models and their descendents, and these were developed in the 1970's by Box and Jenkins\cite{box1970time}. ARIMA stands for Auto Regressive Integrated Moving Average models, and each of these will be described below \cite{mccleary1980applied}. 
+
+The general framework for the models is as follows. Firstly, the time series process is assumed to be stochastic and a random walk. Given the observations at time $t$, the observation at $t+1$ is assumed to be generated by a random shock from a normal distribution with mean 0 and standard deviation 1 (the standard normal). This procedure is repeated over time, and the time series thus progresses and changes due to the compounded influence of all of these random shocks. 
+
+The series at time t can be modelled as follows: $Y_t=\phi Y_t+\phi Y_{t+1}\ldots+a_t$. 
+
+The most important feature of a time series model is parsimony, as there are many ARIMA models which can fit a sequence equally well, and the best approach is to start from an extremely simple model and add extra parameters until an acceptable level of fit is reached.  In order for any kind of ARIMA model to be fit, $N>50$, which is often quite difficult in some applications. Given the nature of the time series data included in this research (physiological series measured once per second) this was not expected to cause any problems. 
+
+\paragraph{General Definitions}
+
+In the context of a time series $Y_t$, \textit{trend} refers to movement in a specific direction; i.e. any systematic change in the level of a time series. If a time series in trendless, and the subsequent values are generated as standard normal random shocks, then the best estimate of the time series at any point in the future will be the mean. However, very few time series are trendless, there is often something which moves the series in a particular direction. There are two options for dealing with trend: it must either be removed, or it must be modelled. Older texts on time series suggest regression as a means to remove trend, but this is not recommended as it will be heavily biased by outliers \cite{mccleary1980applied}. 
+
+Mathematically, a time series can be regarded as a random walk, that is, the independent realisation of a long sequence of independent and identically distributed events (the random shocks)\cite{venables2002modern}. A better way of dealing with trend in a time series is through differencing, where each observation is subtracted from the last observation. This allows us to consider the time series as particular individual changes from one observation to the next, having accounted for (by differencing) all of the changes up to that point. A differenced time series can be referred to as $z_t=Yt-Yt-1$. 
+
+The general form of ARIMA models is as follows: ARIMA(p,d,q) where $d$ is the number of differences required to make the time series stationary. In most social science cases, the order of $d$ will typically be less than 2 \cite{mccleary1980applied}. 
+
+Following the differencing procedure, the time series should be stationary in level. However, while this is necessary for an analysis of time series, it is not sufficient. In order for the time series to be analysed, it must be stationary both in level and in variance. One common way to acheive variance stationarity is by using a natural log transform. One major advantage in this approach is that coefficients garnered from this time series can merely be exponentiated in order to intepret them on the scale of the original data. 
+
+In the general form of the ARIMA(p,d,q) models, $d$ has already been discussed. In this context, $p$ refers to the number of lagged observations that must be retained in order to model the current observation $Y_t$. This is referred to as the Auto Regressive portion of the model, where $p$ is the autoregressive parameter. If the ARIMA model is (p,0,0) then it is already stationary, but other processes can be differenced to reach this point. Some authors note that first order AR processes are most common in social science applications \cite{mccleary1980applied}. The autoregressive parameter $\phi$ falls between -1 and 1 (if it does not, this represents a serious failure of the model) and thus, each lagged term coverges towards zero (as the parameter is raised to the power of n lags). 
+If $\phi$ is not constrained, then past shocks would become exponentially more important as time went on, which defies the common experience of processes moving over time. 
+
+The final term is the general form of ARIMA models, $q$ represents the moving average. Essentially, it is a measure of how long a random shock stays in the system before its effects can be ignored. An ARIMA (0,0,2) model would imply that the current term is made up from the previous two terms, and no more are necessary. Again, the parameters need to be constrained to the range between -1 and +1.
+
+\paragraph{Assumptions of Time Series Analysis}
+
+There are a number of conditions that must be met in order to carry out a time series analysis
+\begin{itemize}
+\item Each observation is considered to be on an interval scale
+\item The time between each observation must be constant
+\item  The time series must be stationary in both level and variance
+\item  The data generating process must be identified
+\item  The residuals must be white noise (i.e. drawn from the standard normal)
+\end{itemize} 
+
+\paragraph{Identification of ARIMA models}
+
+The models discussed above represent the general form of ARIMA models. These need to be estimated from the data, and this section deas with the methods of doing this. The general approach here is to use what is called the Auto Correlation Function (ACF). Essentially, the ACF is a generalised correlation coefficient for dependent (i.e. time-series) data. The ACF is normally calculated for different lags, and the results plotted. These plots are then primary tools to identify the ARIMA model which best fits the data. For example, an ARIMA(0,0,0) process will have ACF's for all lags which are essentially zero. An ARIMA(0,1,0) will have equal ACF for all lags. The ARIMA(0,0,1) will have a non-zero ACF(1) and all others will be zero. More generally, an ARIMA(0,0,q) will have $ACF(1)\ldots, ACF(q)$ which are not equal to zero.ARIMA(1,0,0) processes will have exponentially decaying ACF's. Examination of the ACF plots and their absolute value can also determine whether or not a time series needs to be differenced. 
+
+In addition, the Partial Auto-Correlation Function is also used in the identification of ARIMA models. The PACF is defined as the correlation between $t$ and $k$ after all lags inside that interval have been partialled out. Essentially, the PACF is equivalent conceptually to the differenced time series. 
+
+An issue which often causes problems for time series analyses is that of seasonality. Seasonality is defined as recurring patterns that occur at a higher order level of the time series. For example, time series of retail sales tend to spike in December and January, and this is an example of seasonality. Generally, seasonal effects are modelled using a higher order ARIMA(p,d,q) structure so a typical model of retail sales data might look like this ARIMA(2,0,0)(0,0,2). However, seasonal patterns are much rarer in physiological data, and so they will not be further discussed here. 
+
+\paragraph{Practical Model Building Strategy}
+
+The following are general steps towards building an ARIMA model. 
+
+\begin{itemize}
+\item Inspect the plots both of the series and the autocorrelations
+\item Examine autocorrelations, differencing if necessary
+\item Estimate parameters, ensuring that they are significantly different from zero, and within the bounds of invertibility
+\item Examine residuals, if they are not white noise, repeat steps 1-4 until they are. 
+\end{itemize}
+
+
+\paragraph{Event History Analysis}
+
+In this research, a particular form of time series analysis was used, which is known as event history analysis\cite{mccleary1980applied}. Essentially, this type of analysis partitions the time series into two or more parts, based on whether or not a particular event has occurred. In the case of this research, there were either two or three parts to the analysis. In the Deceptive and Open placebo groups, the first time series occcurred until the painful stimulus was applied, the second was the time from this point until the placebo was applied, and the third was this time point until the end. In the no treatment group, there were two time series, one for the period before the pain was applied, and one after.
+
+A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental condition. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them. 
+
+
+\subsubsection{Regression Models}
+
+At the heart of typical psychological modelling practice lies the general silinear model.This model underlies such familiar techniques as correlation, regression and analysis of variance (ANOVA)\cite{gelman2007data}. These techniques are based on the idea of fitting a straight line (or plane, in the case of multiple predictor variables) to the observed data and using this line to make inferences about the relationships between variables of interest. 
+
+The models are typically fitted by a least squares method. Least squares is a criterion which suggests that in order to fit the best line, the average vertical distance between the points should be minimised. Least squares is the heart of many social and physical science modelling techniques, and is formalised in the Gauss-Markov theorems which prove that if the assumptions of the model are met, then in the limit, the least squares approach is the most efficient unbiased estimator. 
+
+The assumptions of the general linear model are as follows:
+\begin{enumerate}
+\item The residuals of the model (the distances between the predicted line and the observed values) should be approximated by the standard normal distribution
+\item The variables should have constant variance across their entire range (homoscedasity)
+\item The residuals should be independent of the response variable
+
+\item The residuals should be uncorrelated with one another
+\end{enumerate}
+
+The general linear model has been elaborated greatly over the last century, and has been applied to the approximation of relationships that do not meet all of the assumptions noted above\cite{gelman2007data}. The introduction of link functions (non linear functions designed to transform the response variable into a form suitable for the model)  led to the development of generalised linear models, which allow the same computational techniques to be used to fit and test models for data which does not fit the requirements of the standard linear model. 
+
+For example, logistic regression is a technique for prediction of binary variables using a link function. Poisson regression is used to model , data which is bounded by zero and positive infinity. A number of quasi methods are available for both of these techniques which allow data which has an excess of zeros (so called zero inflated models)\cite{gelman2007data,venables2002modern}. In another direction, the requirement for the residuals to be uncorrelated has been relaxed to allow for the development of multilevel or mixed models, which allow particular groups residuals to be correlated with one another\cite{gelman2007data}. %The topic of mixed models will be returned to below in the context of time series analysis (where the observations, by definition, are not independent). 
+
+A number of major issues arise with the use of the general linear model with psychological data. Firstly, the requirement of normal errors can sometimes be difficult to satisfy. This follows from the manner in which the normal distribution appears to behave. When it was originally discovered (by Gauss) it was used to model many small, independent variables. It tends to work well as an approximation when there are many independent variables affecting the results of an analysis. 
+
+However, when psychological tests (such as self report instruments) are developed, the aim is to remove as many of these small influences as possible so that the measure taps one construct with clarity. This will often lead to a non-normal distribution of errors. Non parametric approaches are an alternative to the General Linear Model, but these often lack the power of their parametric alternatives. 
+
+That being said, the central limit theorem assures us that, in the limit, any distribution of means will converge to a normal, and in practice perhaps as little as 100 observations may suffice for a t-test \cite{venables2002modern}. This appears to justify the total ignorance surrounding distributional assumptions that exists in many parts of psychology. 
+
+A more serious problem (in terms of the impact on outcomes) is heteroscedasity, where the response variables (or the predictor) do not possess constant variance across their range\cite{gelman2007data}. This can seriously affect the models built as points with less variance will be much more influential than those with a lower precision (precision is the inverse of variance). The assumption of homosecdasity can be checked by formal statistical tests, but often graphical tests of this assumption are much more revealing, as they can show where the model fails as well as whether or not it fails. 
+
+A final (and perhaps most pressing) issue in the use of linear regression is the popularity of stepwise approaches to variable selection in regression models\cite{antonakis2010looking}. In these approaches, the computer is told which variables to start with, and an alogrithmic approach to the analysis is taken, whereby variables are added or removed from the model on the basis of their p value (or AIC). These models, which appear to remove all responsibility from the researcher, lead to biased estimates, far too narrow confidence intervals and incorrect F tests \cite{antonakis2010looking} \cite{gelman2007data}. Indeed, Antonakis \& Dietz found that using stepwise multiple regression they were able to fit a model explaining 80\% of the variance to 20 variables distrbuted normally, which is merely fitting a model to noise. However, this problem occurs even when variables are added or removed from a model manually, as the false positive rate increases linearly with the number of models fit. The $R^2$ tended to decrease as they increased their sample size in the MCMC study, but any appreciable model should not be constructable from pure noise \cite{antonakis2010looking}.
+
+That being said, there are solutions to this dilemma. Perhaps the most justifiable solution is to only add or remove variables from the model based on theory. This is an excellent solution which if followed consistently would lead to much more parsimonous and replicable models. 
+
+The major problem with this approach is that it removes the opportunity for serendiptious findings from research. Many of the most important findings in science were unexpected by the researchers (and often not understood for many years after their discovery). While the use of theory driven regressions may cut down on the discovery of spurious relationships, it does so at the cost of removing all opportunity for unexpected findings.
+
+Another solution lies in regression methods developed in the last thirty years which are designed to compensate for the deficiencies of stepwise approaches. These methods are known as lasso and ridge regression, and the premise behind them is simple. They allow variables to enter and exit algorithmically, but they penalise the coefficients towards zero each time this occurs\cite{friedman2009elements}. This allows for the effects of overfitting to be greatly reduced while at the same time enabling a variety of models to be fit to limited data. Combined with cross-validation of all models, these approaches hold real promise for reducing spurious findings in the  scientific literature. 
+
+\subsubsection{Analysis of Reaction Time Data}
+
+Reaction time data has been studied by (mostly cognitive) psychologists for many years. The Implicit Association Test has been used in almost 300 published papers and reports (and doubtless many more times where the results were not published). However, with a few exceptions, there has been almost no overflow from one area of study to the other. 
+
+The typical approach to analysis of IAT data goes as follows  \cite{Greenwald1998}: firstly, the data is checked for outliers. Outliers, in this case are defined as responses less than 300ms and greater than 3000ms. Any such outliers are recoded to 300 or 3000ms respectively. Following this procedure, a mean is taken of the items in each condition. These means along with standard deviations are reported. The response latencies are then log transformed (to reduce positive skew) and the IAT score is calculated as follows. Given the participants mean latency in each condition, their IAT score is the mean for the incompatible condition (i.e. White + Unpleasant) less the mean from the incompatible condition (i.e. White + pleasant) divided by the average of the two within group standard deviations. This measure is typically called $D$, and was developed after extensive analysis of an extremely large sample of IAT responses\cite{Greenwald2003a}. 
+In addition to the change of scoring procedure in the 2003 revisions, the threshold for outliers was also substantially widened to 10000 ms. 
+
+There are a number of problems with this approach. Firstly, the approach throws away much information, more than once. In the first case, information regarding extreme responses is censored, in an unsystematic and theoretically unjustified manner. The breakpoints of 300 and 3000 milliseconds appear to have been chosen to allow for the use of the mean as a group value rather than for any substantive reasons. 
+
+It is arguable as to whether or not this censoring represents a good strategy, but certainly it is something which should have been examined in a principled fashion, which does not appear to have happened. The second issue relates again to the calculation of a mean. 
+
+While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. Again, the choice of log transform (while slightly more justifiable) is decidedly inferior to a more data driven approach. Again, the issue here is more not that such choices in analysis were made, but rather that they have been made once and repeated many times in the later literature. Even those who have criticised the IAT \cite{Klauer2005,Mierke2003,Blanton2006} on methodological grounds appear to have ignored this issue. Possible resolutions of this issue are discussed below in Section \ref{experimental data analysis} 
+
+\subsection{Problems of Sample Inference}
+\label{sec:probl-sample-infer}
+\subsubsection{The Problem}
+
+In every statistical approach, the core is the development of inferential tools to reduce our uncertainty about the events under study\cite{gelman2010philosophy}. Given that we typically lack infinite resources, sampling from populations in a randomised manner is used to approximate the quantities of interest\cite{venables2002modern}. 
+
+However, we are rarely interested in the specific sample we have recruited; we tend to want to infer from the sample propoerties of the population from which they are drawn. In non technical terms, given a sample and some analyses, we develop a model which we hope will predict the behaviour of future samples (and indeed the population). 
+
+This approach toward inference is often operationalised in the creation of a model, whether based on the results of a linear regression or factor analysis. Typically, we aim to maximise the amount of the response variable(s) explained given some number of parameters. It is trivial to see that as the number of parameters increases, so does the fit - in the limit, this would involve the fitting of a model with a seperate parameter for each observation. Clearly, such a model will violate the principles of parsimony and clarity that we aim for in our science. However, even when $p$ is less than $n$, we still run the risk of overfitting a model to our data. Overfitting is said to have occurred when we model features of the data that are essentially random (i.e. noise)\cite{friedman2009elements}. This is typically regarded as a problem. 
+
+The results of this problem can be seen everywhere in the field of psychometrics. Because factor analysis is lenient towards mis-specified models and tends to model error as well as signal, many psychometric theories have faltered on the rock of replication\cite{fabrigar1999evaluating}. SEM is often used as a panacaea for such problems. However, a Structural Equation Model is only as good as the data and theory behind it, and if the factor analysis models noise, so too will an SEM on the same data set (to a lesser extent, of course). This may account for the poor replicability of psychological theories based on the results of factor analysis and SEM. 
+
+\subsubsection{A Solution}
+
+The typical scientific approach to this problem is simple - replication. Replication, preferably by independent researchers, is supposed to ensure that models eventually tend towards the minimum of parameters for the maximum of explanatory power. 
+
+Indeed, many fit indices penalise complex models over simple models. This suffices for some research, but there are cases where such an approach does not prove useful. Replication can also be fraught with difficulties, as it takes time, effort and an assumption that population quantities are stable over time (this assumption can easily be justified in physics or chemistry, but seems less well supported in psychology). Nonetheless, it is the ideal solution. However, given that replication is not done, researchers in the field of machine learning have come up with a novel approach which appears to improve predictive accuracy and can also aid in the development of theoretical understanding. 
+
+\subsubsection{Cross-Validation}
+
+The solution proposed by those machine learning researchers is at once simple and elegant, while also extremely practical. The technique is known as cross-validation, and its application routine in commercial and scientific data-mining settings. However, it does not appear to have found much favour within psychology as of yet (with some notable exceptions \cite{dawes1979robust}).  
+
+The basic premise of the technique is this:
+\begin{itemize}
+\item All models are wrong
+\item Models are best tested on independent samples
+\item Independent samples are sometimes hard to come by
+\item Therefore, datasets should be split into training and test sets, where the model is developed on the training set, and its accuracy assessed on the test set
+\end{itemize}
+
+This approach seems to improve predictive accuracy by an order of magnitude, especially when applied to large data sets. The use of these techniques (and indeed the entire algorithmic approach to analysis) has come under some scrutiny from many scientists \cite{breiman2001statistical}, as the approach could be taken to imply that theory is unecessary and that mathematical procedures can take their place. This argument is disingenuous as one of the largest problems for the social sciences today is the lack of any replicable results from which to build better models.These tools can greatly aid in this task, if used with caution and due care\cite{friedman2009elements}. 
+
+The principle of training and test sets has since been generalised to $k$-fold cross validation where the dataset is split into $k$ random pieces, and all but one of these are used to estimate a model, while the other is used as a test. This procedure is repeated $k$ times, and the results are averaged to form the best model (for that sample of data, at least). Some authorities argue that this procedure should be repeated at least $k$ more times, to control for the effects of random sampling\cite{friedman2009elements}. 
+
+Another variation on the central approach is leave-one-out cross validation, where given a sample of n observations, fit a model on n-1 and test on the other, a total of n times. This approach, while taking the technique to its logical extreme is not of particular usefulness to us at this point, as large inter-personal variability between individual participants typically observed in psychological data would tend to reduce its efficacy\cite{friedman2009elements}. 
+
+In essence, cross-validation is an extremely valuable technique which has been mostly ignored in psychology. It is the opinion of this researcher  that this technique is useful, and it will be applied consistently to this research. 
+
+\subsection{Treatment of Missing Data}
+
+
+Missing values can often cause a problem with large datasets. The
+traditional approach has been to delete either pairwise (dropping
+all variables that have missing values for a particular analysis)
+or listwise (dropping all variables that have any missing values).
+Both of these methods are flawed. The pairwise method can cause issues
+with interpretation in that different analyses will be based on different
+samples and degrees of freedom. The list wise method is slightly better,
+but it does make the assumption that the missing values are missing
+completely at random (MCAR) which is often not tenable \cite{graham2009missing}.
+
+The primary deficiency in the above methods is their granularity. Both methods discard information in a rather crude way. Another approach towards the treatment of missing data is mean imputation, where any missing value is recoded as the mean for the sample. Predictive mean matching is a similiar approach which substitutes the mean for the respective variable containing missing data instead. 
+
+The major issue with mean imputation methods is that they artificially reduce the variance of the data. As more of the sample tends towards missing, this can lead to artificially centred variables which when used in model building, provide inaccurate standard errors and lead to poor inferences. 
+
+A more principled approach to missing data was developed by Donald Rubin, a statistician concerned with the problem of missing data in large public datasets such as the census or longitudinal studies\cite{little1987statistical}. The basic idea is quite simple, and has been generalised far beyond its original goal of filling in data in large representative samples. 
+
+The method is multiple imputation, and the process is as follows. Firstly, the missing values in the dataset are predicted given the information available in the non-missing values. Some noise is added (typically Gaussian, though bootstrapping from the observed distribution is often a better approach) in order to prevent the computer from predicting the same values again, and these new values are then used as the starting predictors for the next imputation. This process is done a number of times (3-10, depending on the proportion of missing data) \cite{graham2009missing,little1987statistical} and then the the analysis is run on each of these datasets seperately, and the estimates are combined at the end of this process. The major advantage of this method is by looking at the variance of the estimated parameters, we can approximate the uncertainty which surrounds our method of imputation. In addition, the repeated draws ensure that chance features of the data do not lead to erronuous conclusions, as could easily be the case if a single imputation method were used. 
+
+Throughout this research, multiple imputation was used where the amount of missing data was substantial. Typically, between five and ten simulated data sets were created, and models run seperately across all imputed datasets, with inferences combined at the end. The multiple imputations were then analysed and tested to ensure that the simulated data was an accurate reflection of the non-missing data, in line with best practice \cite{abayomi2008diagnostics}.
+
+\section{Approaches to Statistical Inference}
+
+The dispute between Bayesian statistics and frequentist methods has run for over a century now, and the pendulum of use and acceptance has reversed a number of times in that period. In this section, the main differences and similarities shall be highlighted and an argument will be made for an approach which combines the best of both approaches. 
+
+The frequentist paradigm is the dominant approach currently in most experimental sciences \cite{gill2002bayesian,gelman2004bayesian} . The frequentist approach regards the probability of an event as the long run frequency of this event given repeated sampling from a particular population. The primary focus of frequentist statistics is the null hypothesis which represents the state of knowledge of the researcher at the beginning of a particular piece of research. The null hypothesis (hereafter $H_0$) is that any difference between the two samples in an experiment (typically treated and control) is due to chance variability in the measured quantities. The parameter values in the population are regarded as fixed but unknown, so from this perspective, it is meaningless to apply probability to them \cite{gill2002bayesian,gelman2004bayesian}.  
+
+The essential idea behind the approach of the null hypothesis is that the score on the test assessing the hypothesis of no difference must be sufficiently unlikely to have occurred by chance, given an assumed distributional form for the errors of the response variable (typically  the normal distribution). 
+
+This approach to statistical inference has much in common with the mathematical method of proof by contradiction. The measure used to assess this is called a p-value, and represents the probability that data as or more extreme than the test statistic would have occurred, given that the null hypothesis is true. A low p value (typically less than .05) suggests that the pattern of data between treatment and control is unlikely to have occurred by chance, and argues in favour of the rejection of the null hypothesis, in favour of an alternative hypothesis, which is usually specified by the researcher.This p-value of less than 0.05 was suggested by Fisher to be used when the researcher had little prior knowledge regarding the likely differences between groups, but it has become reified into much of the scientific community in the years since \cite{gigerenzer2004mindless}.  
+
+A number of issues arise from this definition and description. Firstly, given the definition of probability given above, it can be seen that the p value represents the fact that if the same experiment were to be run in exactly the same fashion using the same size sample from the same population then (assuming the results were significant at p<0.05) in 19 of 20 replications, the experimental data would again be significant. 
+
+One problem with the use of this binary threshold is that the p value estimates the likelihood of the null hypothesis given the data, which is rarely what the researcher is interested in. More typically, the researcher would like to know about both the existence and size of the relationship between the two (or more) quantities of interest\cite{cohen1988statistical}. The p value does not supply this information, and needs to be supplemented by what is called an effect size which measures the degree of association between two or more variables in standardized units. Perhaps the most easily understood of the effect size measures is the coefficient of determination, or $R^2$.  
+This measures the proportion of variance explained by a relationship between two variables, and is often computed by squaring the raw correlation coefficient. More formally, it is the ratio of the sum of squares included in the model divided by the total sum of squares in the data. As such, it is not relevant for most nonlinear and mixed models, though equivalent measures can sometimes be computed\cite{gelman2007data}.  
+
+A second problem which can often arise in applied research, is the possibility of Type I error when examining a large number of relationships in one data set. Given the threshold value of .05 for each comparison, and if $n$ independent comparisons are undertaken on the same data set, then the probability of a false positive increases linearly with the number of comparisons, and reaches 1 (implying certainty) when the number of comparisons reaches 20 or greater. 
+
+For this reason, a correction is often applied to p values, the most popular being the Bonoferroni correction, which divides the required p value by the number of comparisons which are to be made. However, this approach also has its problems. The existence of such comparisons, and their likelihood of rendering the major hypothesis non-significant leads to a situation where either researchers fail to report the analyses which they actually performed in order to retain their significant p value, or only analyse the data to the extent that their hypotheses are either confirmed or dis-confirmed. 
+Neither of these situations are scientifically optimal. The first situation encourages the propagation of false positives throughout the scientific literature \cite{ioannidis2005most}, while the second discourages researchers from making the best use of their data. 
+
+A further issue which can arise when using classical methods is the problem of replication. Confidence intervals and statistics (such as p values) are based on the notion that if an experiment were repeated 100 times, the true point estimate would lie within the interval 95 (for a 95\% confidence interval) times out of this 100. 
+
+There are two problems here, one quite obvious and the other quite subtle. The obvious problem is that given a particular confidence interval, we have no way of telling whether or not this interval contains the true value of the parameter which we are attempting to estimate\cite{gill2002bayesian}. The second problem is one of language, where most scientists think and talk about confidence intervals as though they represent a 95\% chance that the true value lies within the interval. This is simply not true, and can lead to issues of ambiguity when the true definition is unknown or forgotten, which appears to be quite often \cite{falk1995significance} (at least in a sample of psychology students and lecturers).  
+
+Another large problem with the notion of replication on equivalent samples as being the arbiter of our probability statements is that it violates Birnbaum's likelihood principle, which is a foundation of modern statistical thought\cite{gill2002bayesian, gelman2004bayesian}. The likelihood principle states that all inferences should be based only on the observed data. The classical methods fail this test through the supposition of arbitrary numbers of experiments which are not carried out in order to justify the uses made of probability. 
+
+A similar issue arises when looking at data-sets common in many disciplines which study people. This is that it may be (for many applications, anyway) impossible to precisely replicate the phenomena which we are using statistics on. In a study of time series data for economic interpretation, by a strict following of the assumptions, we should consider a number of replications where the events of the past turned out differently, and use these as our basis for comparison. It is difficult to see how such a history generating device could be constructed, and the use of classical statistics in these situations rests on no clear foundation \cite{gill2002bayesian}. 
+
+The final problem with the classical approaches is the approach taken to each new experiment. In classical statistics, the results of an experiment are strictly dependent on the data which are observed. While there is nothing wrong with this, it neglects the important fact that a researcher will often have prior information on the phenomenon under study - otherwise, why is the study being carried out?\cite{gill2002bayesian, gelman2004bayesian} The classical approach ignores such information, even when doing so could increase its explanatory power and compensate for many of its deficiencies, as shall be seen in the next paragraph below. 
+
+\subsection{A different approach: Bayesian Statistics}
+
+Bayesian statistics takes it name from that of an English preacher, Reverend Thomas Bayes. In an article published posthumously, he suggested that judging the fairness of a dice (modelled with a binomial distribution) and utilising uniform prior in the first instance, would prove a more useful alternative to classical procedures. However, Bayes himself did no further work in this area, and the foundations for what is known as Bayesian statistics today were laid by Laplace, apparently independently of Bayes \cite{stigler1986history}. 
+
+The first major difference between Bayesian and classical approaches is their definition of probability. While classical statistics defines probability as the long run frequency of an event, the Bayesian approach regards probability a subjective degree of belief in a particular outcome. The second major characteristic of the Bayesian approach is the belief that prior information should be incorporated into the results of the analysis. This can mean that the researcher's beliefs about the likelihood should be incorporated into the data, or it can mean that the results of a series of experiments should update the probabilities of the hypotheses over time. In one sense, this approach is similar to the approach of meta-analysis, where a number of different studies are combined and the overall effect size is estimated. However, the approach taken to the accumulation of evidence is quite different. 
+
+The method of updating probabilities is through the use of the Theorem of Inverse Probability, or Bayes Theorem. The theorem essentially states: the evidence for a hypothesis given the data, is proportional to the product of the probability of the data given the hypothesis (the likelihood) and the prior probability of the hypothesis. 
+\begin{equation}
+  \label{eq:bayes1}
+  \Pr(H|D)=\frac{\Pr(D| H)\times\Pr(H)}{\Pr(H)}
+\end{equation}
+
+Equation \ref{eqbayes1} is  a means for updating the beliefs held about a scientific hypothesis based on new evidence. The subjective part of the theorem (the prior) has been criticised by many (including the famous statistician R.A. Fisher) as subjective, and capable of rendering scientific testing meaningless \cite{salsburg2002lady}. However, the argument from the Bayesian side is that most scientists do have prior beliefs about the data, and that it is surely better to have these made part of the evidence base openly, rather than living in the background of a published scientific paper\cite{gill2002bayesian}. 
+
+Perhaps the most compelling reason that Bayesian statistics is not the standard method of analysis in the sciences is that the solution of complex statistical problems leads to the evaluation of high dimensional integrals \cite{gill2002bayesian}, which were extremely difficult to solve prior to the development of high speed, easily accessible computing power. As a result, scientists using the Bayesian approach were limited in the kinds of models which they could specify and more importantly, analyse. 
+ 
+Beginning in the late 1980's (although the method was developed in statistical physics in the 1950's), the accessibility of Markov Chain Monte Carlo (MCMC) methods on computers changed all of this. Essentially, these methods allow scientists to sample from the posterior distribution an arbitrary number of times (often 10,000 or more) until the chains converge to the same values through a random walk process \cite{gelman2004bayesian}. This has freed scientists from the impossibility of evaluating complex multidimensional integrals by hand, and opened up Bayesian approaches to many more professional scientists. 
+
+There are a number of advantages to the Bayesian approach, as well as a number of problems. The first major advantage is that it is philosophically and internally consistent, while the classical procedures are not, as they are an unwieldy synthesis of Fisher's, Newman's and Pearson's approaches towards data analysis \cite{gill2002bayesian, gigerenzer2004mindless}. The second major advantage is that the use of prior information can reduce the impact of unlikely results, given that the prior will correct for extreme values based on previous experience\cite{gelman2010philosophy}. 
+
+The third major advantage, already noted above, is the inclusion of prior beliefs openly in the analysis, rather than in an implicit manner through the formulation of hypotheses and methods to test these hypotheses. Fourthly, this use of priors allows the scientist with a diametrically opposed viewpoint to estimate the impact that some new data should have on his probabilities. A fifth major advantage is that more than two models can be compared. In comparison to the null and alternative hypotheses of the classical approach, any number of models can be considered and their probabilities updated in line with the results of the experiment. 
+
+In light of the above, it would seem that most scientists should be using Bayesian techniques more often than they do. However, there are also a number of problems with this approach, which are outlined below. The first (and for some, the largest) is the subjective nature of the prior distributions, which many decry as preventing the data from speaking from themselves \cite{gelman2010philosophy}. To some extent this is true, but this problem disappears as more data is collected and the prior ceases to have as much of an impact. A related problem concerns the justification of pror probabilities as subjective degrees of belief. It is impossible for a particular scientist to have all of his or her beliefs regarding possible outcomes of the study in the prior, yet this is a logical necessity if surprising results are ever to be found\cite{gelman2010philosophy}. This is easy to see as if the prior probability of an event is 0, then no amount of evidence can ever change this. 
+
+Some Bayesians  recommend thinking of the prior as a regularisation device, and setting them as widely as possible within the confines of the discipline under study \cite{gelman2010philosophy}. Others argue that the priors should be estimated from the data itself (so called Empirical Bayes) \cite{carlin2009bayesian} while many regard this as a violation of the principle that the data should only be used once \cite{gill2002bayesian}. Another major issue in the use of Bayesian statistics is that they are not taught in most disciplines, and require more mathematical and computational sophistication than do frequentist methods, as well as the use of perhaps unfamiliar command line driven software tools. 
+
+A final problem with the use of Bayesian methods (the one most favoured by Fisher) \cite{salsburg2002lady} is that scientists may have incompatible priors, and this may retard the development of understanding. However, this is a straw man argument, as scientists already do have widely divergent views about the interpretation of particular research (witness the controversy about what implicit measures actually measure and around the size and interpretation of the placebo effect) , and it would surely be better to allow for these divergent views and incorporate them into analysis, rather than let them fester impotently in the annals of journals.
+
+\subsection{Likelihood Approaches to Statistics}
+
+These approaches are perhaps the most core to the practice of statistics whether Bayesian or frequentist. Conventionally attributed to Fisher \cite{salsburg2002lady}, who developed the method of maximum likelihood, these approaches focus on which hypothesis is most likely given the data. These methods are already in widespread use in many factor analytic and psychometric studies, where models are compared based on the likelihood of the model given the data. Indeed, the AIC and BIC are prototypical examples of likelihood based measures, and can be calculated for almost any statistical model, which allows them to serve as convenient metrics in many situations. 
+
+These methods are not concerned with p-values, focusing more on the relative likelihood of different models on the same data set. Such an approach would seem to be ideal for many scientists, as the strong philosophical assumptions of Bayesian methods are absent, yet the problems with the use of p-values as a strict decision criterion are avoided. However, these approaches have difficulty with establishing the absolute superiority of a particular model, while excelling in assessing the relative superiority given a particular data set. In addition there is an attractive information-theoretic approach to statistics \cite{mackay2003information}, but that will not be covered here as this approach is utilised mostly in the field of signal processing and machine learning.  In this research, a mostly likelihood based approach will be taken, but given that much of the research involved two or more samples who were administered the same instruments, some Bayesian approaches will be evaluated alongside the likelihood and frequentist methods to assess their explanatory power and accuracy in psychological research.
+
+\section{Qualitative Research Methodology}
+
+Qualitative research typically relates to the analysis of interviews and other texts derived from people. It differs fundamentally from quantitative analysis in that it aims for a deep understanding of particular individuals, while quantitative analysis aims for a broad understanding of the sample as a whole. However, as the discussion above relating to inter-individual variability shows, sometimes it is better to focus on small groups of people in order to gain insight at this level before applying this knowledge to develop instruments which can be more easily applied to larger samples. The biggest problem with qualitative analysis is that it cannot scale to the level of large scale surveys, as it requires significant amounts of researcher time per participant, while quantitative surveys have a cost of development in time, but the marginal cost of administering the survey to a new participant is essentially zero (assuming distribution over the internet). 
+
+Qualitative analysis was an essential part of this project, as it gave insight and data into the development of the IAT's used in the final part of the research project. The methods used for qualitative analysis here were twofold, firstly, a thematic analysis of the interviews conducted was carried out to develop themes both for the repertory grid and for the IAT, and secondly, and Interpretive Phenomenological Analysis of this same data was also done, in order to develop an understanding of how the participants conceptualised health, in order to feed into the development of a theory of placebo and to provide insight into the responses garnered from more structured methods of analysis (i.e. surveys and experiments). 
+
+The issue of reflexivity is crucial to qualitative research (and also appears in quantitative research, though rarely as openly) \cite{rosenthal1967covert, rosenthal1969interpersonal}.
+Reflexivity refers to the impact of the researcher's prior conceptions and approaches have on the course of the interviews. This is extremely obvious in the choice of the major questions to be asked in the interviews, but it can occur in subtle ways during the interviews also (for example in the use of language by the interviewer) and in the quality of communication or rapport experienced by the researcher in the course of the interview. Reflexivity is also critical during the analysis, as the researcher must be aware of their own biases and ensure that this affects the analysis as little as possible, or at least report where the problems arose for them.  
+
+\subsection{Thematic Analysis}
+
+The thematic analysis's primary purpose was to look for common patterns in the conceptualisation of health, sickness and treatment. As such, it was felt that the best approach would be to develop the codes from the transcipts themselves. Following transcription, each interview was coded line by line by the primary researcher, and codes were developed throughout this process. 
+
+After all the interviews had been transcribed, the codes were pruned and amalgamated to reduce redundancy, and this process was repeated. This second coding lead to a number of new codes and insights which had been missed the first time, and the text was again coded for a third time following the development of these new codes. 
+
+Then, the document was coded a fourth time, but on this run through the aim was to look at higher level patterns that emerged from the text. Following this coding procedure, a process of chunking of codes was carried out. This involved looking at how codes fit together and grouping them under a number of thematic headings. The original texts and recordings were referred back to at this point to ensure that the themes were representative of the original data, and finally the themes were written up to record the results of this exercise. 
+
+\subsection{Interpretative Phenomenological Analysis}
+
+This method is quite a distinct approach within the field of qualitative analysis of text, and it focuses on the individual ways in which participants construct their experience and the world around them.  This differs from the aims of a method like grounded theory where the commonalities between participants are looked for and examined in the light of the developing theory. It also differs from the aims of the thematic analysis, where codes were chunked into higher level themes and patterns common to all participants were examined. 
+
+In this, the aim was for an understanding of the individual participants experience, and no attempt was made during the coding process to link the positions of one participant to those of another. A similiar coding process as before was followed, except that the codes were developed individually for each participant, and much more use was made of the pauses and semi-verbal expressions (such as sighs and laughter). Following the analysis and coding of the data for each individual participant, the analysis was then repeated across participants while looking for some common patterns. 
+
+In addition, some discursive approaches were taken to the texts. To some extent this was unavoidable, given that most of the interviews took place with healthcare professionals (conventional and alternative) and given the researcher's background in placebo, some of them may have felt that they needed to justify their positions, or indeed some may have felt threatened by this research. This however, was not a full blown discourse analysis, but rather a discursive perspective was taken on the interviews carried out. 
+
+\subsection{Repertory Grids}
+
+The use of repertory grids in this research was as a bridge between the qualitative analysis carried out and the quantitative side of the research. Repertory grids were developed by George Kelly as an aid to therapy \cite{kelly2003psychology} although it has been used in many diverse situations in the ensuing years. Repertory grids were developed out of Kelly's theory of cognitive consistency, an active area of research which fell out of favour following the discovery of cognitive dissonance by Festinger in 1947 \cite{greenwald2002}. 
+
+The premise of the technique is simple. Firstly, participants are supplied with a list of important people in their life, such as their mother, an older sibling and a teacher whom they liked or disliked. They write down the names they have chosen for each person, and then they compare the people in groups of 3. For each group (or sort), they are asked to describe how two of them are similiar and also how one of them is different in a word or short phrase. These words or phrases can then be analysed both quantitively or qualitatively. 
+
+The primary method of quantitive analysis was through factor analysis, which has been extensively covered above. The approach taken in this project was as follows. In one of the surveys carried out on the UCC population (TCQ version 1) participants were asked to rank the most important people in their life who were related to healthcare. This data was then sorted and ranked, and a list of the most common people used was compiled into a health related repertory grid. This was then administered to a small sample (N=17) to test the instrument. The results of this testing are described in Chapter XX .%come back to this once you've got a chapter name 
+
+\section{Preliminary Research}
+
+ Sampling from a population can be difficult, especially as the requirement of randomness needs to be satisfied. However, even if the surveys and measures are sent to a random selection of participants, who responds will almost certainly not be random, as people may only respond to surveys which are salient to them, and ignore the others. This is especially true in a University environment where many surveys are sent out to either random samples or the entire student population regularly. Some of the issues and concerns around sampling for each of the different pieces of research are discussed below.
+
+\subsection{Health, Optimism and Mindfulness Data}
+
+\subsubsection{Measures for Health, Optimism and Mindfulness Research}
+
+There were three measures used for this part of the research.
+\begin{enumerate}
+\item RAND-MOS: The RAND Medical Outcomes Survey produced the most widely used instrument of HRQoL (Health Related Quality of Life) worldwide. The instrument was later revised and the number of response categories standardised across scales and renamed the SF-36. The older version was used for this research, as they are extremely similiar and the newer version is under copyright and extremely expensive to use, even for non-commercial research. The RAND-MOS has 36 questions, and is divided into 8 sub-scales, General Health (GH),
+Physical Functioning (PF), Role Limitations (RL), Emotional Role Limitations
+(RLE), Pain (PN), Energy (EN), Emotional Well Being (EMWB) and Social
+Functioning (SF). All sub-scales showed acceptable reliability
+(>.7) in this and in other studies over the years\cite{Lam2007,Ferreira2000}.
+The instrument has 8 first order factors and two higher order factors
+\cite{Hann2008}. The scale involves dichotomous, trichotomous and
+five and six point scales for various items, so all questions are
+transformed to a 100 point scale before analysis, where higher scores
+represent better functioning.
+\item The mindful attention awareness scale (MAAS) 
+\cite{brown2003benefits} is a 15 item scale which is scored on
+a six point scale from almost always to almost never. The scale uses
+questions which measure mindlessness. The summary score is produced
+from the mean of all indvidual scores. The scale has shown adequate
+psychometric validity in many samples, with alpha ranging from 0.7
+to 0.9\cite{brown2003benefits,Ruth2006}.
+\item Life Orientation Test, Revised: The Life Orientation Test Revised (LOT-R) was developed and revised
+by Scheier and Carver \cite{Scheier1994}, and consists of 10 items.
+Three of the items load on pessimism, three on optimism and four are
+distractor items. The LOT-R has shown excellent psychometric validity,
+and is very commonly used as a measure of optimism/pessimism. The
+scale is scored on a 5 point scale, 
+and the sum of all items after items 3,7 and 9 are reverse coded are taken to produce the overall score.
+\end{enumerate}
+
+
+
+\subsubsection{Sampling for Health, Optimism and Mindfulness Data}
+
+The health, optimism and mindfulness data was the first data set to be collected, and the researcher aimed to collect it in such a way that would ensure that future data was collected efficiently. Therefore, the first 392 participants completed the forms by hand between August and October 2009. The participants were sampled pseudo-randomly from all of the public areas (coffeeshops, restuarants etc) of the campus. 
+
+Following this pen and paper approach to sampling, the survey was sent to a random selection of students via email on December 12th 2009, and data was collected and analysed from this point until the 24th of December 2009. Differences between the samples and the possible effects of these on the results obtained are discussed in the appropriate section. 
+
+\subsubsection{Analysis for Health, Optimism and Mindfulness Data}
+Firstly, the proportion of missing data was identified, and multiple imputation was employed to combat this problem in cases where there were substantial amounts of missing data. 
+Following this, the data was split into three parts - a training set (60\%), a test  set (20\%) and a final validation set (20\%).  
+
+Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. 
+
+Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. Next, the data was tested for normality using a Shapiro-Wilks test. Following this, a correlation matrix for the data was calculated and analysed.
+
+After these preliminary procedures, the data-set was analysed to assess if there were any differences in the samples which could be attributed to collection method (pen and paper versus on-line). As there were no major differences between the two samples, further analyses were carried out on the two samples as a whole. 
+
+Next, simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. After this, factor solutions were extracted using maximum likelihood, principal axis and minimum residuals methods, and these structures were examined to assess the invariance of the loadings using different methods of estimation. Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation. After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution. 
+
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx package for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions.
+
+Following the development and testing of SEM models, each of these was tested on the validation set and factor scores were created for each of the measures. 
+
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. Following this, a Rasch model was fitted to the data, and person and item parameters estimated from the data. Item and person fit statistics were also calculated, and as this model did not fit any of the three scales, a two parameter model was fit to the data. Again, item and person estimates were obtained and the relevant fit statistics calculated. The person estimates were then used as predictors in a logistic regression analysis, as a way of assessing the fit of the model.
+
+Again, the models developed were examined for their fit on the validation set, and the best model was chosen from this procedure. 
+
+After this, linear regressions were run to examine the differential effects of each of the correlated variables. A two step procedure was used. In the first, a simple model was run using one predictor and one response variable. At the next step, a new variable was added to the model, and its impact on the fit and explanatory power assessed. This step was repeated with all variables thought to be of importance to the response variable, until all useful predictor variables had been added and either retained or removed from the model. In the second stage, all variables were entered into the model and its fit assessed. Then, the least significant variables were removed from the model one by one, until a minimal parsimonious model was obtained. At each step of these regressions, qq-plots and plots of the residuals were examined to ensure that the assumptions of homoscedasity and normality of errors were met.
+
+These models were again checked for out of sample predictive accuracy on the validation set. Finally, all of the best models from this procedure were fit to the test set, and the results of this exercise reported. 
+
+\subsection{Treatment Credibility Questionnaire}
+
+\subsubsection{Measures}
+
+\paragraph{Development of Treatment Credibility Questionnaire}
+
+The Treatment Credibility Questionnaire was a measure developed for this research project, to compensate for the perceived lack of detail in placebo response expectancy measurement. The questionnaire was based on the Credibility/Expectancy Questionnaire developed by Devilly and Borkovec which consisted of six questions, three which tapped credibility and three which tapped expectancies \cite{Devilly2000}. The scale was developed to assess expectancies around treatment and each question was scored on a 10 point scale (0-9). A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X (where X is one of the treatments listed above). 
+
+The questions were as follows:
+
+
+\begin{enumerate}
+	\item How logical does the therapy offered to you seem?
+	\item How successful do you think this treatment will be in reducing your symptoms?
+ 	\item How confident would you be in recommending this treatment to a friend?
+	\item How much improvement in your symptoms do you think will occur?
+	\item How much do you really \textit{feel} that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really \textit{feel} will occur?
+\end{enumerate}
+
+\paragraph{Beliefs About Medicine Questionnaire}
+
+In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines\cite{Horne1999}. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors. The eight items were those retained from a pool of 16 items which derived from interviews with chronic pain patients. All 16 items were administered to all participants, of which 8 are the items selected for the final questionnaire by the original authors, and the other 8 are items which were dropped due to poor loadings.
+
+\subsubsection{Sampling for Treatment Credibility Questionnaire and Beliefs about Medicine Questionnaire}
+
+The sampling for the Treatment Credibility Questionnaire was conducted in two rounds, as the instrument needed to be validated in one sample, and then confirmed and revised in another. The first sample was sent to a random subset of students at the University in February 2010, to which 299 students responded. This data was analysed over the next two months, and following this, a revised version of the questionnaire was sent to both staff and students at the University. Along with this (full details in the Appendix) the Beliefs About Medicine Questionnaire was also sent, to assess the construct validity of the TCQ. 
+
+\subsubsection{Analysis for Treatment Credibility Questionnaire}
+
+All data analysis was preceded by fitting a multiple imputation model where necessary, and was split into 3 parts as described above under the section Analysis for Health, Optimism and Mindfulness. 
+
+Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. Next, the data was tested for normality using a Shapiro-Wilks test. Following this, a correlation matrix for the data was calculated and analysed.
+
+Next, simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. After this, factor solutions were extracted using maximum likelihood, principal axis and minimum residuals methods, and these structures were examined to assess the invariance of the loadings using different methods of estimation. Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation used. 
+
+After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution. 
+
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx package for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions. 
+
+
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. Following this, a Rasch model was fitted to the data, and person and item parameters estimated from the data. Item and person fit statistics were also calculated, and as this model did not fit any of the three scales, a two parameter model was fit to the data. Again, item and person estimates were obtained and the relevant fit statistics calculated. The person estimates were then used as predictors in a logistic regression analysis, as a way of assessing the fit of the model.
+
+After this, linear regressions were run to examine the differential effects of each of the correlated variables. A two step procedure was used. In the first, a simple model was run using one predictor and one response variable. At the next step, a new variable was added to the model, and its impact on the fit and explanatory power assessed. This step was repeated with all variables thought to be of importance to the response variable, until all useful predictor variables had been added and either retained or removed from the model. In the second stage, all variables were entered into the model and its fit assessed. Then, the least significant variables were removed from the model one by one, until a minimal parsimonious model was obtained. At each step of these regressions, qq-plots and plots of the residuals were examined to ensure that the assumptions of homoscedasity and normality of errors were met. As the residuals for the TCQ did not fit the assumptions of linear regression, a generalised linear model was fit to the data, using a poisson error structure, and allowing for over-dispersion. 
+
+The Beliefs About Medicine Questionnaire was a special case in this analysis. As only eight items are included in the canonical version of the scale, the other eight were given to test the hypothesis that different items might load better in a general population sample, rather than a clinical sample. Given the small sample sizes in the original research, and the inappropriate use of principal components analysis, this was also used as an opportunity to examine the structure using better methods. Therefore, the eight items of the published scale were analysed first, and then all analyses reported in this section were carried out on the larger sixteen item set. Results of these analyses are in the appropriate section, and the implications are discussed both in the discussion in that section and in the General Discussion. 
+
+
+\subsection{Placebo Analgesia Experiment}
+
+\subsection{Recruitment for the Experimental Procedure}
+
+Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure. After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive. 
+
+\subsection{Experimental Procedure}
+
+All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. 
+
+Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. 
+
+If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken one thousand times per second second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of moisturiser in a pharmacuetical container, and was unlabelled. 
+
+Participants in the treatment group were told that the cream was a potent painkiller, recently approved and clinically proven to reduce pain, which would take effect almost immediately. Participants in the placebo group were told that they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately. 
+
+\subsubsection{Analysis of Experimental Data}
+
+\paragraph{Analysis of IAT data}
+Moving on to the approaches taken in this research, a number of alternatives were attempted.
+Firstly, based on some relevant literature, an ex-Gaussian distribution was fit to the data. This distribution is a mixture distribution of a normal and an exponential, and can be used to account for the extremely long tails present in such data. If this distribution proved a reasonable fit to the data, then estimation of confidence intervals and predictions could be made more easily from the data. 
+Another approach was taken to the data in tandem with this. This approach involves ordinal test theory. All of the reaction time data occurs on a common scale. The differences between the responses to a word ,$w$ in condition 1 and condition 2 are on the same scale, and a distance matrix can be constructed from this data. This distance matrix can either be ranked (which makes less assumptions and is less affected by outliers) or the Euclidean distance can be used in analysis. The advantage of the distance approach is that it discards less information, though at the cost of making more assumptions. A clustering approach was then used, to assess whether or not the stimuli fell into the same categories. This clustering approach was repeated 10 times with different seeds and the results averaged in order to reduce random variability inherent to the k-means approach. $k$ was also varied from 1 to 10, and the results averaged also. 
+
+The ordinal/euclidean matrix was then factor analysed and examined using item response theory to assess its psychometric structure, and assess fit or lack thereof.
+
+\paragraph{Analysis of Pain Rating Data}
+\label{sec:analysis-pain-rating}
+
+Firstly, the pain ratings were plotted against time. 
+
+
+
+\section{Methodology for Literature Review}
+
+The literature review was the first task undertaken as part of this research project, and was carried out according to the following instructions. First, a list of databases was drawn up for each area that needed to be searched. Secondly, a list of terms which would be searched was generated by the primary researcher in conjunction with his supervisors. Thirdly, the search terms were applied to each database in turn. The first author performed an title check on all of the results, followed by an abstract check on each of the selected papers. The papers which were germane to the subject of the thesis were then sorted into thematic areas, and ranked in order of priority. Email alerts were also set up for the search terms used, in order to ensure that all relevant material was included. 
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "ThesisContents030511"
+%%% End: 
