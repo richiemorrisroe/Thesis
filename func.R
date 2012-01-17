@@ -106,13 +106,17 @@ combineLoadings <-  function (mfa) {
     loadlist[[i]] <- mfa[[i]]$loadings
     
   }
+  loadlist
+  loadings <- list()
   for (j in seq_along(along.with=loadlist)) {
-    loadings <- list()
+    
+
     loadings[[j]] <- as.matrix(unclass(loadlist[[j]]))
   }
   loadings
+
+  meanload <- lapply(loadings, function (x) Reduce('+', x))
 }
-meanload <- Reduce('+', loadings)
   ## for (k in seq(from=1, to=length(loadings), by=2)) {
   ##   meanload <- loadings[[k]]+loadings[[eval(k+1)]]
 
