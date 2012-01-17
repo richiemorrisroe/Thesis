@@ -84,18 +84,49 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   
    rotlist[[i]] <- get(paste("rot", i, sep=""))
 }
-  rotlist
+  reslist <- rotlist
 
   fmlist <- list()
   for (j in seq_along(along.with=meth)) {
     y <- fa(na.omit(data), nfactors=fno, rotate="oblimin", fm=meth[j])
     assign(paste("meth", j, sep=""), value=y)
-    fmlist[[i]] <- get(paste("meth", j, sep=""))
+    fmlist[[j]] <- get(paste("meth", j, sep=""))
 }
-  methrotlist <- c(factormethods=fmlist, rotations=rotlist)
+  
+  res <- c(factormethods=fmlist, rotations=reslist)
   
 }
 getLoadings <- function (mfa) {
   ind <- lapply(mfa, ExtractLoadings)
   ind
+}
+combineLoadings <-  function (mfa) {
+  loadlist <- list()
+  for (i in seq_along(along.with=mfa)) {
+    loadlist[[i]] <- mfa[[i]]$loadings
+    
+  }
+  for (j in seq_along(along.with=loadlist)) {
+    loadings <- list()
+    loadings[[j]] <- as.matrix(unclass(loadlist[[j]]))
+  }
+  loadings
+}
+meanload <- Reduce('+', loadings)
+  ## for (k in seq(from=1, to=length(loadings), by=2)) {
+  ##   meanload <- loadings[[k]]+loadings[[eval(k+1)]]
+
+    }
+##   meanload
+## }
+    
+    ## for (k in seq_along(along.with(length(loadlist[[j]]))) {
+    ##   rowload <- apply(loadlist[k,] function (k) rowMeans(k))
+     
+
+      #assign(paste("rowload", k, sep=""), value=rowlist)
+
+  
+  #assign(paste("reslist", j, sep=""), value=collist)
+    
 }
