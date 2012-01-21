@@ -260,7 +260,7 @@ VSS(na.omit(tcqall))
 
 <<tcqfact4, echo=FALSE, results=tex>>=
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.4))
+print(FactorXtab(tcq.fact.4, label="tcqfact4"))
 @ 
 
 <<factorloadings4, echo=FALSE, results=verbatim>>=
@@ -295,7 +295,7 @@ Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
 
 <<tcqfact5, echo=FALSE, results=tex>>=
 tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.5))
+print(FactorXtab(tcq.fact.5, label="tcqfact5"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.5))
@@ -309,7 +309,7 @@ Although in Table \ref{tab:tcq1fivefactor} the oblimin solution is shown, simpli
 Finally, the six factor solution was examined for interpretability, and the results are shown in Table \ref{tab:tcq1sixfactor}
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.6))
+print(FactorXtab(tcq.fact.6, label="tcqfact6"))
 @ 
 <<tcq6cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.6))
@@ -914,10 +914,10 @@ tcq2a.vss <- VSS(na.omit(tcqall2a))
 As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
 <<tcq2afact6, echo=FALSE, results=tex>>=
 tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.6))
+print(FactorXtab(tcq2a.fact.6, label="tcq2afact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2.sixfactor}
+\label{tab:tcq2afact6}
 
 As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
 
@@ -937,7 +937,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.7))
+print(FactorXtab(tcq2a.fact.7, label="tcq2afact7"))
 @ 
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
@@ -973,14 +973,14 @@ The parallel analysis suggests that there are four factors, while the MAP criter
 
 <<bam2afact1, echo=FALSE, results=tex>>=
 bam2a.fact1 <- fa(na.omit(Bamall2a), 1, fm="pa")
-print(FactorXtab(bam2a.fact1))
+print(FactorXtab(bam2a.fact1, label="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extremely poor. Only 11 of the 18 items have loadings above 0.3, which is typically used as a cutoff for the assigning of items to the factor. In addition, the communalities for all of the items are extremely low, all below 0.5 which indicates that the common variance of this solution is quite low. This one factor solution only explains 17\% of the variance and so is somewhat inadequate in all senses. 
 
 <<bam2afact2, echo=FALSE, results=tex>>=
 bam2a.fact2 <- fa(na.omit(Bamall2a), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact2))
+print(FactorXtab(bam2a.fact2, label="bam2afact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 23\%, which is again quite poor. In addition, six items have no loadings above 0.3 on either of the factors. 
 
@@ -999,7 +999,7 @@ As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderatel
 
 <<bam2afact3, echo=FALSE, results=tex>>=
 bam2a.fact3 <- fa(na.omit(Bamall2a), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact3))
+print(FactorXtab(bam2a.fact3, label="bam2afact3"))
 @ 
 Again, the communalities for this solution are extremely low, with almost all of them (16) below 0.5. This solution explained 29\% of the variance. The factors are described below. 
 
@@ -1019,7 +1019,7 @@ Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correla
 
 <<bam2afact4, echo=FALSE, results=tex>>=
 bam2a.fact4 <- fa(na.omit(Bamall2a), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact4))
+print(FactorXtab(bam2a.fact4, labels="bam2afact4"))
 @ 
 
 This solution explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
@@ -1066,7 +1066,7 @@ As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis a
 
 <<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5))
+print(FactorXtab(tcq2b.fact.5, labels="tcq2afact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
 \label{tab:tcq2bfivefactor}
@@ -1094,7 +1094,7 @@ print(FactorCor(tcq2b.fact.5))
 
 <<tcq2bfact6, echo=FALSE, results=tex>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6))
+print(FactorXtab(tcq2b.fact.6,labels="tcq2bfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
@@ -1117,7 +1117,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7))
+print(FactorXtab(tcq2b.fact.7, labels="tcq2afact7"))
 @ 
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
@@ -1168,14 +1168,14 @@ The parallel analysis suggests that there are five factors, while the MAP criter
 
 <<bam2afact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1))
+print(FactorXtab(bam2b.fact1, labels="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
 
 <<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2))
+print(FactorXtab(bam2b.fact2, labels="bam2bfact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
 
@@ -1192,7 +1192,7 @@ As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost en
 
 <<bam2bfact3, echo=FALSE, results=tex>>=
 bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact3))
+print(FactorXtab(bam2b.fact3,labels="bam2bfact3"))
 @ 
 This solution explained 34\% of the variance in the data. The factors broke down as follows:
 
@@ -1211,7 +1211,7 @@ Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat 
 
 <<bam2bfact4, echo=FALSE, results=tex>>=
 bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact4))
+print(FactorXtab(bam2b.fact4,labels="bam2bfact4"))
 @ 
 
 PA3: "BAM12" "BAM13" "BAM14" "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
@@ -1234,7 +1234,7 @@ As before, Table \ref{tab:bam2afact4cor} shows large correlations between factor
 
 <<bam2bfact5, echo=FALSE, results=tex>>=
 bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact5))
+print(FactorXtab(bam2b.fact5,labels="bam2bfact5"))
 @ 
 
 
@@ -1277,7 +1277,7 @@ tcq2c.vss <- VSS(na.omit(tcqall2c))
 
 <<tcq2cfact5, echo=FALSE, results=tex>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.5))
+print(FactorXtab(tcq2c.fact.5,labels="tcq2cfact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
 \label{tab:tcq2cfivefactor}
@@ -1316,7 +1316,7 @@ Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlate
 
 <<tcq2cfact6, echo=FALSE, results=tex>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6))
+print(FactorXtab(tcq2c.fact.6,labels="tcq2cfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
@@ -1339,7 +1339,7 @@ Again (Table \ref{tab:tcq2.sixfactorcorr} ) shows that Acupuncture again shows c
 
 <<tcq2cfact7, echo=FALSE, results=tex>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7))
+print(FactorXtab(tcq2c.fact.7,labels="tcq2cfact7"))
 @ 
 
 
@@ -1392,9 +1392,9 @@ bam2c.vss <- VSS(na.omit(bamall2c))
 
 The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
 
-<<bam2afact1, echo=FALSE, results=tex>>=
+<<bam2cfact1, echo=FALSE, results=tex>>=
 bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
-print(FactorXtab(bam2c.fact1))
+print(FactorXtab(bam2c.fact1,labels="bam2cfact1"))
 @ 
 
 The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
@@ -1402,7 +1402,7 @@ The loadings and communalities are uniformly low for this solution, and ther pro
 
 <<bam2cfact2, echo=FALSE, results=tex>>=
 bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact2))
+print(FactorXtab(bam2c.fact2,labels="bam2cfact2"))
 @ 
 As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
 PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
@@ -1417,7 +1417,7 @@ As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderatel
 
 <<bam2cfact3, echo=FALSE, results=tex>>=
 bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact3))
+print(FactorXtab(bam2c.fact3,labels="bam2cfact3"))
 @ 
 
 
@@ -1460,7 +1460,7 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 <<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6))
+print(FactorXtab(tcq2d.fact.6,labels="tcq2dfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2(Split D), Oblimin Rotation}
 \label{tab:tcq2d.sixfactor}
@@ -1480,7 +1480,7 @@ Similiarly to the results in other splits, the three conventional treatment fact
 
 <<tcq2dfact7, echo=FALSE, results=tex>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7))
+print(FactorXtab(tcq2d.fact.7,labels="tcq2dfact7"))
 @ 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
 \label{tab:tcq2dsevenfactor}
@@ -1534,7 +1534,7 @@ The parallel analysis criterion suggests three factors here, while the MAP crite
 
 <<bam2dfact1, echo=FALSE, results=tex>>=
 bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
-print(FactorXtab(bam2d.fact1))
+print(FactorXtab(bam2d.fact1,labels="bam2dfact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
@@ -1543,16 +1543,18 @@ As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number
 
 <<bam2dfact2, echo=FALSE, results=tex>>=
 bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact2))
+print(FactorXtab(bam2d.fact2,labels="bam2dfact2"))
 @ 
 
-PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18"
+PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18". These items all relate to the dangers surrounding medicines, and reasons to avoid using them, and so this factor can best be termed Safe use of Medicines. 
 
-PA1: "BAM2"  "BAM6"  "BAM13" "BAM14" "BAM17"
+PA1: "BAM2"  "BAM6"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors and their use of medicines, and so this factor can best be termed Doctors and Medicines. 
 
-<<bam2dfact2dor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2d.fact2))
+<<bam2dfact2dcor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact2, label="bam2dfact2dcor"))
 @ 
+
+It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
 
 
 \ref{tab:bam2dfact2dor} 
@@ -1560,16 +1562,21 @@ print(FactorCor(bam2d.fact2))
 
 <<bam2dfact3, echo=FALSE, results=tex>>=
 bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact3))
+print(FactorXtab(bam2d.fact3,labels="bam2dfact3"))
 @ 
 
+PA1: "BAM2"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors, and so this factor can best be termed Doctors and Medicines. 
 
+PA3: "BAM1"  "BAM3"  "BAM6"  "BAM8"  "BAM18". These items all relate to the dangers surrounding medicines, and so this factor can best be termed Dangers of Medicines. 
+
+PA2: "BAM7"  "BAM9"  "BAM10" "BAM11". These items all appear to relate to the dangers and avoidance of medicines, and so this factor can best be termed avoidance of medicines. 
 
 
 <<bam2dfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2d.fact3))
+print(FactorCor(bam2d.fact3, labels="bam2dfact3cor"))
 @ 
 
+It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
 
 \subsection{Structural Equation Modelling}
 
