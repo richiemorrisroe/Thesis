@@ -1,4 +1,5 @@
-FactorXtab <-  function (x) {
+FactorXtab <-  function (x, ...) {
+  dots <- (...)
 x.load<-x$loadings 
 x.comm<-x$communality
 x.names <- colnames(x.load)
@@ -8,16 +9,16 @@ x.comm.load<-cbind(x.load, x.comm)
 x.mat.df<-as.matrix.data.frame(x.comm.load)
 colnames(x.mat.df) <- x.names
 #colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
-fact.xtab <- xtable(x.mat.df)
+fact.xtab <- xtable(x.mat.df, ...)
 fact.xtab
 }
-FactorCor <- function (x) {
+FactorCor <- function (x, ...) {
   res <- x$score.cor
   #allnames <- attr(x$loadings, "dimnames")
   factnames <- colnames(x$loadings)
   res <- as.data.frame(res)
   #names(res) <- factnames
-  res.x <- xtable(res)
+  res.x <- xtable(res, ...)
 }
 ExtractLoadings <- function (x, loadings=0.3) {
   x.load <- x$loadings
@@ -120,12 +121,10 @@ combineLoadings <-  function (mfa) {
 
   meanload <- lapply(loadings, function (x) Reduce('+', x))
 }
-display <- function (mfa, method=NULL, rotreq=NULL) {
+displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   rotationreq <- rotreq
   meth <- method
-  browser()
-  rotget <-paste("rotations", rotationreq, sep=".")
-  res <- mfa$rotget
-     res
+  resind <- grep(rotationreq, x=names(mfa))
+  res <- mfa[[resind]]
 }
   
