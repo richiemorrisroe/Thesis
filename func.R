@@ -74,6 +74,7 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   obliquerotations <- c("promax", "oblimin",
           "simplimax", "bentlerQ", "geominQ", "biquartimin")
   allrot <- c(orthrotations, obliquerotations)
+
   meth <- c("minres", "wls", "gls", "pa", "ml")
   Scores <- c("regression", "Thurstone", "Anderson", "Bartlett", "tenBerge")
   fno <- factors
@@ -83,7 +84,9 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   assign(paste("rot", i,sep=""), value=x)
   
    rotlist[[i]] <- get(paste("rot", i, sep=""))
+   
 }
+  names(rotlist) <- allrot
   reslist <- rotlist
 
   fmlist <- list()
@@ -92,7 +95,7 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
     assign(paste("meth", j, sep=""), value=y)
     fmlist[[j]] <- get(paste("meth", j, sep=""))
 }
-  
+  names(fmlist) <- meth
   res <- c(factormethods=fmlist, rotations=reslist)
   
 }
@@ -117,20 +120,12 @@ combineLoadings <-  function (mfa) {
 
   meanload <- lapply(loadings, function (x) Reduce('+', x))
 }
-  ## for (k in seq(from=1, to=length(loadings), by=2)) {
-  ##   meanload <- loadings[[k]]+loadings[[eval(k+1)]]
-
-    }
-##   meanload
-## }
-    
-    ## for (k in seq_along(along.with(length(loadlist[[j]]))) {
-    ##   rowload <- apply(loadlist[k,] function (k) rowMeans(k))
-     
-
-      #assign(paste("rowload", k, sep=""), value=rowlist)
-
-  
-  #assign(paste("reslist", j, sep=""), value=collist)
-    
+display <- function (mfa, method=NULL, rotreq=NULL) {
+  rotationreq <- rotreq
+  meth <- method
+  browser()
+  rotget <-paste("rotations", rotationreq, sep=".")
+  res <- mfa$rotget
+     res
 }
+  
