@@ -271,7 +271,7 @@ print(ExtractLoadings(tcq.fact.4))
 \label{tab:tcq1fourfactor}
 
 <<factorcor4, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.4))
+print(FactorCor(tcq.fact.4, labels="factorcor4"))
 @ 
 
 The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
@@ -298,7 +298,7 @@ tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
 print(FactorXtab(tcq.fact.5, label="tcqfact5"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.5))
+print(FactorCor(tcq.fact.5, labels="tcq5cor"))
 @ 
 
 \caption{Five Factor Solution, TCQ 1 Promax rotation}
@@ -312,7 +312,7 @@ tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
 print(FactorXtab(tcq.fact.6, label="tcqfact6"))
 @ 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6))
+print(FactorCor(tcq.fact.6, labels="tcq6cor"))
 @ 
 
 \caption{Six Factor Solution, TCQ 1, Oblimin Rotation}
@@ -923,7 +923,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6))
+print(FactorCor(tcq2a.fact.6, labels="tcq2afactorcor"))
 @ 
 
 
@@ -947,7 +947,7 @@ Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that fact
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
 
 <<tcq2a7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.7))
+print(FactorCor(tcq2a.fact.7, labels="tcq2a7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -992,7 +992,7 @@ Although there appears to be an interpretable factor structure emerging from thi
 
 
 <<bam2afact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact2))
+print(FactorCor(bam2a.fact2,labels="bam2afact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
@@ -1012,7 +1012,7 @@ PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11". These items relate to the  respons
 
 
 <<bam2afact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact3))
+print(FactorCor(bam2a.fact3,labels="bam2afact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
@@ -1033,7 +1033,7 @@ PA4: "BAM5". This factor is almost certainly spurious, given that it only has on
 
 
 <<bam2afact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact4))
+print(FactorCor(bam2a.fact4,labels="bam2afact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
@@ -1088,7 +1088,7 @@ PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor consisted solely of 
 Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
 
 <<tcq2bfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.5))
+print(FactorCor(tcq2b.fact.5,labels="tcq2bfactorcor5"))
 @ 
 
 
@@ -1103,7 +1103,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6))
+print(FactorCor(tcq2a.fact.6,labels="tcq2afactorcor"))
 @ 
 
 
@@ -1142,7 +1142,7 @@ PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
 <<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7))
+print(FactorCor(tcq2b.fact.7,labels="tcq2b7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -1185,7 +1185,7 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". These items relate to the responsi
 
 
 <<bam2bfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact2))
+print(FactorCor(bam2b.fact2,labels="bam2bfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
@@ -1204,7 +1204,7 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". Again, this factor can best be ter
 
 
 <<bam2bfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact3))
+print(FactorCor(bam2b.fact3,labels="bam2bfact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not. . 
@@ -1226,7 +1226,7 @@ PA1: "BAM6"  "BAM8"  "BAM9"  "BAM18". These items all relate to safety or danger
 
 
 <<bam2bfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact4))
+print(FactorCor(bam2b.fact4,labels="bam2bfact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
@@ -1249,7 +1249,7 @@ PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines 
 PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
 <<bam2bfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact5))
+print(FactorCor(bam2b.fact5,labels="bam2bfact5cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
@@ -1308,7 +1308,7 @@ PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". PA3 maps to the acupuncture item
 Table\ref{tab:tcq2cfactorcor5}. 
 
 <<tcq2cfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.5))
+print(FactorCor(tcq2c.fact.5,labels="tcq2cfactorcor5"))
 @ 
 
 Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlated highly with the Cream factor (as would be expected), while the Alternative factors correlate quite well with one another also. Of particular note is Acupuncture, which appears to occupy a middle ground between the other alternative methods and the conventional ones, as least as evinced by this correlation structure. 
@@ -1325,7 +1325,7 @@ Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly 
 
 
 <<tcq2cfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.6))
+print(FactorCor(tcq2c.fact.6,labels="tcq2cfactorcor"))
 @ 
 \caption{Factor Correlations, Six Factor Solution TCQ 2}
 \label{tab:tcq2.sixfactorcorr}
@@ -1366,7 +1366,7 @@ PA7: "Pill3" "Inj1"  "Inj3" . This factor has supplementary loadings for some of
 The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
 
 <<tcq2c7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.7))
+print(FactorCor(tcq2c.fact.7,labels="tcq2c7factorcorr"))
 @ 
 
 The seven factor solution shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
@@ -1410,7 +1410,7 @@ PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". Al
 PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
 
 <<bam2cfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact2))
+print(FactorCor(bam2c.fact2,labels="bam2cfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
@@ -1428,7 +1428,7 @@ PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items ap
 PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
 
 <<bam2cfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact3))
+print(FactorCor(bam2c.fact3,labels="bam2cfact3cor"))
 @ 
 
 The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
@@ -1469,7 +1469,7 @@ As per all previous splits, the six factor solution mapped all six treatment mod
 
 
 <<tcq2dfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.6))
+print(FactorCor(tcq2d.fact.6,labels="tcq2dfactorcor"))
 @ 
 \caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
 \label{tab:tcq2d.sixfactorcorr}
@@ -1506,7 +1506,7 @@ PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, 
 \ref{tab:tcq2d7factorcorr}.
 
 <<tcq2d7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.7))
+print(FactorCor(tcq2d.fact.7,labels="tcq2d7factorcorr"))
 @ 
 
 
@@ -1557,7 +1557,7 @@ print(FactorCor(bam2d.fact2, label="bam2dfact2dcor"))
 It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
 
 
-\ref{tab:bam2dfact2dor} 
+
 
 
 <<bam2dfact3, echo=FALSE, results=tex>>=
@@ -1580,149 +1580,29 @@ It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate 
 
 \subsection{Structural Equation Modelling}
 
+Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
+
 <<bam2asem1, echo=FALSE, results=hide>>=
-## Bam <- "BAM"
-## bamitems.cols <- paste(Bam, 1:18, sep="")
-## manifests <- bamitems.cols
-## latents <- c("Beliefs About Medicine")
-## Bamq <- bamitems.cols
-## Bam2amodel1<- mxModel(name="Bam2a1", 
-##                       type="RAM",
-##                       manifestVars=manifests,
-##                       latentVars=latents,
-##                       mxPath(from="Beliefs About Medicine", to=Bamq), 
-##                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-##                       mxData(observed=cov(na.omit(Bamall2a)), type="cov", numObs=147))
-#Bam2afit1 <- mxRun(Bam2amodel1)
-#Bam2asumm1 <- summary(Bam2afit1)
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Beliefs About Medicine")
+Bamq <- bamitems.cols
+Bam2amodel1<- mxModel(name="Bam2a1", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq), 
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamall2b)), type="cov", numObs=147))
+Bam2afit1 <- mxRun(Bam2amodel1)
+Bam2asumm1 <- summary(Bam2afit1)
 @ 
 
 As can be seen from Table \ref{tab:tcq2semcomp} the seven factor solution appears to be the best model for the reproduction of the observed covariance matrix. 
 
 
-\subsubsection*{Beliefs About Medicine Questionnaire}
-
-
-
-\begin{figure}
-	\centering
-		\includegraphics{tcq079pabam.pdf}
-	\caption{Parallel Analysis and Scree Plot, Beliefs about Medicine Questionnaire}
-	\label{fig:tcq 0.795-58}
-\end{figure}
-
-
-The MAP criterion suggests one factor, so both one and two factor solutions will be examined for interpretability. 
-
-
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:42:38 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rr}
-  \hline
- & Loading \\ 
-  \hline
-1 & 0.41 \\ 
-  2 & 0.35 \\ 
-  3 & 0.64 \\ 
-  4 & 0.29 \\ 
-  5 & 0.49 \\ 
-  6 & 0.75 \\ 
-  7 & 0.67 \\ 
-  8 & 0.71 \\ 
-   \hline
-\end{tabular}
-\caption{Beliefs about Medicine One Factor Solution}
-\label{tab:bamonefactor}
-\end{center}
-\end{table}
-
-
-As can be seen from Table \ref{tab:bamonefactor}, all the items load on the factor, but many of them do not load particularly well. This impression is reinforced by the extremely low communalities (h2) on many of the items. The one factor solution does not appear to be a good fit to the data. This one factor explains 32\% of the variance, and the NNFI is 0.79, which is on the low side for a factor solution. 
-
-
-
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:31 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrrr}
-  \hline
- & 1 & 2 & Communality \\ 
-  \hline
-1 & -0.04 & 0.57 & 0.31 \\ 
-  2 & -0.11 & 0.59 & 0.28 \\ 
-  3 & 0.25 & 0.50 & 0.45 \\ 
-  4 & 0.17 & 0.16 & 0.08 \\ 
-  5 & 0.08 & 0.53 & 0.33 \\ 
-  6 & 0.74 & 0.08 & 0.61 \\ 
-  7 & 0.75 & -0.03 & 0.55 \\ 
-  8 & 0.80 & -0.02 & 0.62 \\ 
-   \hline
-\end{tabular}
-\caption{Beliefs About Medicine, Two Factor Solution}
-\label{tab:bamtwofactor}
-\end{center}
-\end{table}
-
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:32 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrr}
-  \hline
- & 1 & 2 \\ 
-  \hline
-1 & 1.00 & 0.68 \\ 
-  2 & 0.68 & 1.00 \\ 
-   \hline
-\end{tabular}
-\caption{Factor Correlations, BAM Two factor solution, Oblimin Rotation}
-\label{tab:bamtwofactor.corr}
-\end{center}
-\end{table}
-
-Factor 1: 4,6,7,8.
-Factor 2: 1,2,3,5
-
-As can be seen from Table \ref{tab:bamtwofactor}, this factor structure provides a better fit to the data. That being said, the communalities for items 1, 2, 4 and 5 are still extremely low, which is troubling. This may point to problems with the use of this scale in this population, but given that previous work has suggested this not to be the case, it may point too more fundamental problems with the instrument. The two factor solution explains 40\% of the variance, which is acceptable, though still very low. 
-
-
-Again, Table \ref{tab:bamtwofactor.corr} clearly highlights the absurdity of using Principal Components Analysis with Varimax rotation on this instrument, as the factor correlations are very high. The NNFI for this solution is 0.96, which is perfectly acceptable. 
-
-
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:32 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrrrrrr}
-  \hline
- & bam.bic1 & bam.bic2 & bam.bic3 & bam.tli.1 & bam.tli.2 & bam.tli.3 \\ 
-  \hline
-1 & 115.76 & -44.99 & -25.50 & 0.79 & 0.96 & 0.96 \\ 
-   \hline
-\end{tabular}
-\caption{Fit Indices, BAM factor Solutions}
-\label{tab:bam.fit}
-\end{center}
-\end{table}
-
-
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Tue Jan 11 16:38:08 2011
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rllrrrrrrr}
-  \hline
- & base & comparison & ep & minus2LL & df & AIC & diffLL & diffdf & p \\ 
-  \hline
-1 & BAM1 &  &  16 & 3599.32 & 20.00 & 104.35 &  &  &  \\ 
-  2 & BAM1 & BAM2 &  16 & 3638.21 & 20.00 & 143.24 & 38.88 & 0.00 & 0.00 \\ 
-   \hline
-\end{tabular}
-\end{center}
-\end{table}
 
 
 
