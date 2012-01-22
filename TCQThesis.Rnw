@@ -1871,7 +1871,7 @@ tcq6fit.notB <- mxRun(Tcq6modelnotB)
 tcq6summ.notB <- summary(tcq6fit.notB)
 @ 
 
-<<tcq7notAsem, echo=FALSE, results=hide>>=
+<<tcq7notBsem, echo=FALSE, results=hide>>=
 Pill <- "Pill"
 Cream <- "Cream"
 Inj <- "Inj"
@@ -2019,7 +2019,647 @@ bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fit
 print(xtable(bamsemcompare.notB, labels="tab:bamnotBsemcompare"))
 @ 
 
+It can be seen from Table \ref{tab:bamnotBsemcompare} that the two factor model provided the best fit to the out-of-sample data in  this case. 
+\subsection{Split C CFA}
+\label{sec:split-c-cfa}
 
+Next, the fit of the models developed on Split C will be tested on Splits A, B and D. Firstly, the TCQ factor structures will be compared. 
+
+<<tcq5notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+pillinj.cols <- c(pillitems.cols, Injitems.cols)
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+pillinj <- c(pills, inj)
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq5modelnotC <- mxModel(name="TCQ5notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills & Injections", to=pillinj), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=452))
+tcq5fit.notC <- mxRun(Tcq5modelnotC)
+tcq5summ.notC <- summary(tcq5fit.notC)
+@ 
+
+
+<<tcq6notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotC <- mxModel(name="TCQ6notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq6fit.notC <- mxRun(Tcq6modelnotC)
+tcq6summ.notC <- summary(tcq6fit.notC)
+@ 
+
+<<tcq7notCsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3" "Inj1", "Inj3")
+Tcq7modelnotC <- mxModel(name="TCQ7notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq7fit.notC <- mxRun(Tcq7modelnotC)
+tcq7summ.notC <- summary(tcq7fit.notC)
+@ 
+
+<<tcq2notCsemcompare, echo=FALSE, results=tex>>=
+tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
+print(xtable(tcq2.notC.semcompare, labels="tab:tcq2notCsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotC<- mxModel(name="Bam1notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam1fitnotC <- mxRun(Bam1modelnotC)
+Bam1asumm.notC <- summary(Bam1fitnotC)
+@ 
+
+<<bam2notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safe Use of Medicines")
+medavoid <- paste(Bam, c(2,6,8,9,10,13,14,17,18), sep="")
+safemed <- paste(Bam, c(2,3,7,10,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam2modelnotC <- mxModel(name="Bam2notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam2fitnotC <- mxRun(Bam2modelnotC)
+Bam2asummnotC <- summary(Bam2fitnotC)
+@ 
+
+
+<<bam3notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safer Medicines","Specific Use of Medicines")
+docmed <- paste(Bam, c(13,14,17), sep="")
+safemed <- paste(Bam, c(3,6,7,8,9,10,18), sep="")
+specmed <- paste(Bam, c(2,3,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam3modelnotC<- mxModel(name="Bam3notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Specific Use of Medicines", to=specmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=524))
+Bam3fitnotC <- mxRun(Bam3modelnotC)
+Bam3asummnotC <- summary(Bam3fitnotC)
+@ 
+
+
+<<bamnotCsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
+print(xtable(bamsemcompare.notC, labels="tab:bamnotCsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotCsemcompare} that the one factor solution fits the out of sample data best in this case. 
+
+\subsection{Split D CFA}
+\label{sec:split-d-cfa}
+
+
+Next, the fit of the models developed on Split C will be tested on Splits A, B and D. Firstly, the TCQ factor structures will be compared. 
+
+
+
+<<tcq6notdSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotD <- mxModel(name="TCQ6notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq6fit.notD <- mxRun(Tcq6modelnotD)
+tcq6summ.notD <- summary(tcq6fit.notD)
+@ 
+
+<<tcq7notDsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3" "Cream3", "Inj3")
+Tcq7modelnotD <- mxModel(name="TCQ7notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq7fit.notD <- mxRun(Tcq7modelnotD)
+tcq7summ.notD <- summary(tcq7fit.notD)
+@ 
+
+<<tcq2notDsemcompare, echo=FALSE, results=tex>>=
+tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
+print(xtable(tcq2.notD.semcompare, labels="tab:tcq2notDsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split D will be tested on the out of sample data (that is, Splits A, B and C). 
+
+<<bam1notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
+Bam1modelnotD<- mxModel(name="Bam1notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam1fitnotD <- mxRun(Bam1modelnotD)
+Bam1asumm.notD <- summary(Bam1fitnotD)
+@ 
+
+<<bam2notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safe Use of Medicines")
+safemed <- paste(Bam, c(3,4,6,8,9,10,11), sep="")
+docmed <- paste(Bam, c(2,6,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,5,7,12,15,16), sep="")
+Bam2modelnotD <- mxModel(name="Bam2notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=medavoid),
+                      mxPath(from="Safe Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam2fitnotD <- mxRun(Bam2modelnotD)
+Bam2asummnotD <- summary(Bam2fitnotD)
+@ 
+
+
+<<bam3notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Dangers of Medicines","Avoidance of Medicines")
+docmed <- paste(Bam, c(2,13,14,17), sep="")
+dangermed <- paste(Bam, c(1,3,6,8,18), sep="")
+medavoid <- paste(Bam, c(7,9,10,11), sep="")
+bamnoload <- paste(Bam, c(4,5,7,12,15,16), sep="")
+Bam3modelnotD<- mxModel(name="Bam3notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Dangers of Medicines", to=dangermed),
+                        mxPath(from="Avoidance of Medicines", to=medavoid),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=524))
+Bam3fitnotD <- mxRun(Bam3modelnotD)
+Bam3asummnotD <- summary(Bam3fitnotD)
+@ 
+
+
+<<bamnotDsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
+print(xtable(bamsemcompare.notD, labels="tab:bamnotDsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotDsemcompare} that the one factor solution fits the out of sample data best in the case of the Split D models tested on the out of sample data. 
+
+The next stage in  our analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample. 
+
+The best fitting models on the out of sample data were as follows:
+\begin{itemize}
+\item  Split A: Bam4, TCQ7
+
+\item Split B: Bam2, TCQ7
+
+\item Split C: Bam1, TCQ7
+
+\item Split D: Bam1, TCQ7
+\end{itemize}
+
+Each of these models will be run on the full dataset, and the results assessed. The model which fits best on this sample will be used to predict factor scores for the experimental data. 
+
+<<tcq7notAsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Seven")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+seven <- c("Inj1", "Inj3")
+Tcq7modelnotA <- mxModel(name="TCQ7notA", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Seven", to=seven),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
+tcq7fit.notA <- mxRun(Tcq7modelnotA)
+tcq7summ.notA <- summary(tcq7fit.notA)
+@ 
+
+<<bam4notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotA<- mxModel(name="Bam4notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam4fitnotA <- mxRun(Bam4modelnotA)
+Bam4asummnotA <- summary(Bam4fitnotA)
+@ 
+
+
+<<tcq7notBsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj1", "Inj3")
+Tcq7modelnotB <- mxModel(name="TCQ7notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
+tcq7fit.notB <- mxRun(Tcq7modelnotB)
+tcq7summ.notB <- summary(tcq7fit.notB)
+@ 
+
+<<bam2notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
+medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
+respmed <- paste(Bam, c(1,2,11,16,18), sep="")
+bamnoload <- paste(Bam, c(5,15), sep="")
+Bam2modelnotB <- mxModel(name="Bam2notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam2fitnotB <- mxRun(Bam2modelnotB)
+Bam2asummnotB <- summary(Bam2fitnotB)
+@ 
+
+<<tcq7notCsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3" "Inj1", "Inj3")
+Tcq7modelnotC <- mxModel(name="TCQ7notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq7fit.notC <- mxRun(Tcq7modelnotC)
+tcq7summ.notC <- summary(tcq7fit.notC)
+@ 
+
+<<bam1notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotC<- mxModel(name="Bam1notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam1fitnotC <- mxRun(Bam1modelnotC)
+Bam1asumm.notC <- summary(Bam1fitnotC)
+@ 
+
+<<tcq7notDsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3" "Cream3", "Inj3")
+Tcq7modelnotD <- mxModel(name="TCQ7notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq7fit.notD <- mxRun(Tcq7modelnotD)
+tcq7summ.notD <- summary(tcq7fit.notD)
+@ 
+
+<<bam1notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
+Bam1modelnotD<- mxModel(name="Bam1notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam1fitnotD <- mxRun(Bam1modelnotD)
+Bam1asumm.notD <- summary(Bam1fitnotD)
+@ 
 
 \subsection{Discussion}
 
