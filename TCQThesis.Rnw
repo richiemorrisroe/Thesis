@@ -1582,29 +1582,442 @@ It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate 
 
 Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
 
-<<bam2asem1, echo=FALSE, results=hide>>=
+<<semsplits, echo=FALSE, results=hide>>=
+tcq2nota <- tcq2[-tcq2.ind.a,]
+tcq2notb <- tcq2[-tcq2.ind.b,]
+tcq2notc <- tcq2[-tcq2.ind.c,]
+tcq2notd <- tcq2[-tcq2.ind.d,]
+tcqall2nota <- tcq2nota[,17:52]
+tcqall2notb <- tcq2notb[,17:52]
+tcqall2notc <- tcq2notc[,17:52]
+tcqall2notd <- tcq2notd[,17:52]
+bamnotA <- tcq2nota[,53:70]
+bamnotB <- tcq2notb[,53:70]
+bamnotC <- tcq2notc[,53:70]
+bamnotD <- tcq2notd[,53:70]
+@ 
+
+\subsection{Split A CFA}
+\label{sec:split-cfa}
+
+
+
+<<tcq6notaSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotA <- mxModel(name="TCQ6notA", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
+tcq6fit.notA <- mxRun(Tcq6modelnotA)
+tcq6summ.notA <- summary(tcq6fit.notA)
+@ 
+
+<<tcq7notAsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Seven")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+seven <- c("Inj1", "Inj3")
+Tcq7modelnotA <- mxModel(name="TCQ7notA", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Seven", to=seven),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
+tcq7fit.notA <- mxRun(Tcq7modelnotA)
+tcq7summ.notA <- summary(tcq7fit.notA)
+@ 
+
+<<tcq2notAsemcompare, echo=FALSE, results=tex>>=
+tcq2.notA.semcompare <- mxCompare(tcq6fit.notA, tcq7fit.notA)
+print(xtable(tcq2.notA.semcompare, labels="tab:tcq2notAsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notAsemcompare} that the seven factor model from Split A provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split A will be tested on the out of sample data. 
+
+<<bam1notAsem, echo=FALSE, results=hide>>=
 Bam <- "BAM"
 bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- bamitems.cols
-latents <- c("Beliefs About Medicine")
-Bamq <- bamitems.cols
-Bam2amodel1<- mxModel(name="Bam2a1", 
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,9,10,12,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,2,5,8,11,15,16, 18), sep="")
+Bam1modelnotA<- mxModel(name="Bam1notA", 
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
-                      mxPath(from="Beliefs About Medicine", to=Bamq), 
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamall2b)), type="cov", numObs=147))
-Bam2afit1 <- mxRun(Bam2amodel1)
-Bam2asumm1 <- summary(Bam2afit1)
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam1fitnotA <- mxRun(Bam1modelnotA)
+Bam2asumm1 <- summary(Bam1fitnotA)
 @ 
 
-As can be seen from Table \ref{tab:tcq2semcomp} the seven factor solution appears to be the best model for the reproduction of the observed covariance matrix. 
+<<bam2notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Natural Remedies" )
+medavoid <- paste(Bam, c(1,6,7,9,12,13,14,17,18), sep="")
+natrem <- paste(Bam, c(2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(3,4,5,8,15,16), sep="")
+Bam2modelnotA<- mxModel(name="Bam2notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Natural Remedies", to=natrem),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam2fitnotA <- mxRun(Bam2modelnotA)
+Bam2asummnotA <- summary(Bam2fitnotA)
+@ 
 
 
+<<bam3notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotA<- mxModel(name="Bam3notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam3fitnotA <- mxRun(Bam3modelnotA)
+Bam3asummnotA <- summary(Bam3fitnotA)
+@ 
 
 
+<<bam4notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotA<- mxModel(name="Bam4notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam4fitnotA <- mxRun(Bam4modelnotA)
+Bam4asummnotA <- summary(Bam4fitnotA)
+@ 
+
+<<bamnotAsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
+print(xtable(bamsemcompare.notA, labels="tab:bamnotAsemcompare"))
+@ 
+
+As can be seen from Table \ref{tab:bamnotAsemcompare}, the four factor solution appears to replicate best on the out of sample data. 
+
+\subsection{Split B CFA}
+\label{sec:split-b-cfa}
+
+<<tcq5notbSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+pillinj.cols <- c(pillitems.cols, Injitems.cols)
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+pillinj <- c(pills, inj)
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq5modelnotB <- mxModel(name="TCQ5notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills & Injections", to=pillinj), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=450))
+tcq5fit.notB <- mxRun(Tcq5modelnotB)
+tcq5summ.notB <- summary(tcq5fit.notB)
+@ 
+
+
+<<tcq6notbSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotB <- mxModel(name="TCQ6notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
+tcq6fit.notB <- mxRun(Tcq6modelnotB)
+tcq6summ.notB <- summary(tcq6fit.notB)
+@ 
+
+<<tcq7notAsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj1", "Inj3")
+Tcq7modelnotB <- mxModel(name="TCQ7notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
+tcq7fit.notB <- mxRun(Tcq7modelnotB)
+tcq7summ.notB <- summary(tcq7fit.notB)
+@ 
+
+<<tcq2notBsemcompare, echo=FALSE, results=tex>>=
+tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
+print(xtable(tcq2.notB.semcompare, labels="tab:tcq2notBsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotB<- mxModel(name="Bam1notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam1fitnotB <- mxRun(Bam1modelnotB)
+Bam1asumm.notB <- summary(Bam1fitnotB)
+@ 
+
+<<bam2notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
+medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
+respmed <- paste(Bam, c(1,2,11,16,18), sep="")
+bamnoload <- paste(Bam, c(5,15), sep="")
+Bam2modelnotB <- mxModel(name="Bam2notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam2fitnotB <- mxRun(Bam2modelnotB)
+Bam2asummnotB <- summary(Bam2fitnotB)
+@ 
+
+
+<<bam3notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotB<- mxModel(name="Bam3notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam3fitnotB <- mxRun(Bam3modelnotB)
+Bam3asummnotB <- summary(Bam3fitnotB)
+@ 
+
+
+<<bam4notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotB<- mxModel(name="Bam4notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam4fitnotB <- mxRun(Bam4modelnotB)
+Bam4asummnotB <- summary(Bam4fitnotB)
+@ 
+
+<<bamnotBsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
+print(xtable(bamsemcompare.notB, labels="tab:bamnotBsemcompare"))
+@ 
 
 
 
