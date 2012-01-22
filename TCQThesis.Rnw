@@ -271,7 +271,7 @@ print(ExtractLoadings(tcq.fact.4))
 \label{tab:tcq1fourfactor}
 
 <<factorcor4, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.4, labels="factorcor4"))
+print(FactorCor(tcq.fact.4, label="factorcor4"))
 @ 
 
 The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
@@ -298,7 +298,7 @@ tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
 print(FactorXtab(tcq.fact.5, label="tcqfact5"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.5, labels="tcq5cor"))
+print(FactorCor(tcq.fact.5, label="tcq5cor"))
 @ 
 
 \caption{Five Factor Solution, TCQ 1 Promax rotation}
@@ -312,7 +312,7 @@ tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
 print(FactorXtab(tcq.fact.6, label="tcqfact6"))
 @ 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6, labels="tcq6cor"))
+print(FactorCor(tcq.fact.6, label="tcq6cor"))
 @ 
 
 \caption{Six Factor Solution, TCQ 1, Oblimin Rotation}
@@ -923,7 +923,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6, labels="tcq2afactorcor"))
+print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor"))
 @ 
 
 
@@ -947,7 +947,7 @@ Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that fact
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
 
 <<tcq2a7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.7, labels="tcq2a7factorcorr"))
+print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -992,7 +992,7 @@ Although there appears to be an interpretable factor structure emerging from thi
 
 
 <<bam2afact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact2,labels="bam2afact2cor"))
+print(FactorCor(bam2a.fact2,label="bam2afact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
@@ -1012,14 +1012,14 @@ PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11". These items relate to the  respons
 
 
 <<bam2afact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact3,labels="bam2afact3cor"))
+print(FactorCor(bam2a.fact3,label="bam2afact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
 
 <<bam2afact4, echo=FALSE, results=tex>>=
 bam2a.fact4 <- fa(na.omit(Bamall2a), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact4, labels="bam2afact4"))
+print(FactorXtab(bam2a.fact4, label="bam2afact4"))
 @ 
 
 This solution explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
@@ -1033,7 +1033,7 @@ PA4: "BAM5". This factor is almost certainly spurious, given that it only has on
 
 
 <<bam2afact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact4,labels="bam2afact4cor"))
+print(FactorCor(bam2a.fact4,label="bam2afact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
@@ -1066,7 +1066,7 @@ As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis a
 
 <<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5, labels="tcq2afact5"))
+print(FactorXtab(tcq2b.fact.5, label="tcq2afact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
 \label{tab:tcq2bfivefactor}
@@ -1088,13 +1088,13 @@ PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor consisted solely of 
 Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
 
 <<tcq2bfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.5,labels="tcq2bfactorcor5"))
+print(FactorCor(tcq2b.fact.5,label="tcq2bfactorcor5"))
 @ 
 
 
 <<tcq2bfact6, echo=FALSE, results=tex>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6,labels="tcq2bfact6"))
+print(FactorXtab(tcq2b.fact.6,label="tcq2bfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
@@ -1103,7 +1103,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6,labels="tcq2afactorcor"))
+print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor"))
 @ 
 
 
@@ -1117,7 +1117,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7, labels="tcq2afact7"))
+print(FactorXtab(tcq2b.fact.7, label="tcq2afact7"))
 @ 
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
@@ -1142,7 +1142,7 @@ PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
 <<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7,labels="tcq2b7factorcorr"))
+print(FactorCor(tcq2b.fact.7,label="tcq2b7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -1168,14 +1168,14 @@ The parallel analysis suggests that there are five factors, while the MAP criter
 
 <<bam2afact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1, labels="bam2afact1"))
+print(FactorXtab(bam2b.fact1, label="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
 
 <<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2, labels="bam2bfact2"))
+print(FactorXtab(bam2b.fact2, label="bam2bfact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
 
@@ -1185,14 +1185,14 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". These items relate to the responsi
 
 
 <<bam2bfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact2,labels="bam2bfact2cor"))
+print(FactorCor(bam2b.fact2,label="bam2bfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
 
 <<bam2bfact3, echo=FALSE, results=tex>>=
 bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact3,labels="bam2bfact3"))
+print(FactorXtab(bam2b.fact3,label="bam2bfact3"))
 @ 
 This solution explained 34\% of the variance in the data. The factors broke down as follows:
 
@@ -1204,14 +1204,14 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". Again, this factor can best be ter
 
 
 <<bam2bfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact3,labels="bam2bfact3cor"))
+print(FactorCor(bam2b.fact3,label="bam2bfact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not. . 
 
 <<bam2bfact4, echo=FALSE, results=tex>>=
 bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact4,labels="bam2bfact4"))
+print(FactorXtab(bam2b.fact4,label="bam2bfact4"))
 @ 
 
 PA3: "BAM12" "BAM13" "BAM14" "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
@@ -1226,7 +1226,7 @@ PA1: "BAM6"  "BAM8"  "BAM9"  "BAM18". These items all relate to safety or danger
 
 
 <<bam2bfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact4,labels="bam2bfact4cor"))
+print(FactorCor(bam2b.fact4,label="bam2bfact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
@@ -1234,7 +1234,7 @@ As before, Table \ref{tab:bam2afact4cor} shows large correlations between factor
 
 <<bam2bfact5, echo=FALSE, results=tex>>=
 bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact5,labels="bam2bfact5"))
+print(FactorXtab(bam2b.fact5,label="bam2bfact5"))
 @ 
 
 
@@ -1249,7 +1249,7 @@ PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines 
 PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
 <<bam2bfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact5,labels="bam2bfact5cor"))
+print(FactorCor(bam2b.fact5,label="bam2bfact5cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
@@ -1277,7 +1277,7 @@ tcq2c.vss <- VSS(na.omit(tcqall2c))
 
 <<tcq2cfact5, echo=FALSE, results=tex>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.5,labels="tcq2cfact5"))
+print(FactorXtab(tcq2c.fact.5,label="tcq2cfact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
 \label{tab:tcq2cfivefactor}
@@ -1308,7 +1308,7 @@ PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". PA3 maps to the acupuncture item
 Table\ref{tab:tcq2cfactorcor5}. 
 
 <<tcq2cfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.5,labels="tcq2cfactorcor5"))
+print(FactorCor(tcq2c.fact.5,label="tcq2cfactorcor5"))
 @ 
 
 Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlated highly with the Cream factor (as would be expected), while the Alternative factors correlate quite well with one another also. Of particular note is Acupuncture, which appears to occupy a middle ground between the other alternative methods and the conventional ones, as least as evinced by this correlation structure. 
@@ -1316,7 +1316,7 @@ Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlate
 
 <<tcq2cfact6, echo=FALSE, results=tex>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6,labels="tcq2cfact6"))
+print(FactorXtab(tcq2c.fact.6,label="tcq2cfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
@@ -1325,7 +1325,7 @@ Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly 
 
 
 <<tcq2cfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.6,labels="tcq2cfactorcor"))
+print(FactorCor(tcq2c.fact.6,label="tcq2cfactorcor"))
 @ 
 \caption{Factor Correlations, Six Factor Solution TCQ 2}
 \label{tab:tcq2.sixfactorcorr}
@@ -1339,7 +1339,7 @@ Again (Table \ref{tab:tcq2.sixfactorcorr} ) shows that Acupuncture again shows c
 
 <<tcq2cfact7, echo=FALSE, results=tex>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7,labels="tcq2cfact7"))
+print(FactorXtab(tcq2c.fact.7,label="tcq2cfact7"))
 @ 
 
 
@@ -1366,7 +1366,7 @@ PA7: "Pill3" "Inj1"  "Inj3" . This factor has supplementary loadings for some of
 The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
 
 <<tcq2c7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.7,labels="tcq2c7factorcorr"))
+print(FactorCor(tcq2c.fact.7,label="tcq2c7factorcorr"))
 @ 
 
 The seven factor solution shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
@@ -1394,7 +1394,7 @@ The parallel analysis criterion suggests three factors here, while the MAP crite
 
 <<bam2cfact1, echo=FALSE, results=tex>>=
 bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
-print(FactorXtab(bam2c.fact1,labels="bam2cfact1"))
+print(FactorXtab(bam2c.fact1,label="bam2cfact1"))
 @ 
 
 The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
@@ -1402,7 +1402,7 @@ The loadings and communalities are uniformly low for this solution, and ther pro
 
 <<bam2cfact2, echo=FALSE, results=tex>>=
 bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact2,labels="bam2cfact2"))
+print(FactorXtab(bam2c.fact2,label="bam2cfact2"))
 @ 
 As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
 PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
@@ -1410,14 +1410,14 @@ PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". Al
 PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
 
 <<bam2cfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact2,labels="bam2cfact2cor"))
+print(FactorCor(bam2c.fact2,label="bam2cfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
 
 <<bam2cfact3, echo=FALSE, results=tex>>=
 bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact3,labels="bam2cfact3"))
+print(FactorXtab(bam2c.fact3,label="bam2cfact3"))
 @ 
 
 
@@ -1428,7 +1428,7 @@ PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items ap
 PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
 
 <<bam2cfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact3,labels="bam2cfact3cor"))
+print(FactorCor(bam2c.fact3,label="bam2cfact3cor"))
 @ 
 
 The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
@@ -1460,7 +1460,7 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 <<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6,labels="tcq2dfact6"))
+print(FactorXtab(tcq2d.fact.6,label="tcq2dfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2(Split D), Oblimin Rotation}
 \label{tab:tcq2d.sixfactor}
@@ -1469,7 +1469,7 @@ As per all previous splits, the six factor solution mapped all six treatment mod
 
 
 <<tcq2dfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.6,labels="tcq2dfactorcor"))
+print(FactorCor(tcq2d.fact.6,label="tcq2dfactorcor"))
 @ 
 \caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
 \label{tab:tcq2d.sixfactorcorr}
@@ -1480,7 +1480,7 @@ Similiarly to the results in other splits, the three conventional treatment fact
 
 <<tcq2dfact7, echo=FALSE, results=tex>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7,labels="tcq2dfact7"))
+print(FactorXtab(tcq2d.fact.7,label="tcq2dfact7"))
 @ 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
 \label{tab:tcq2dsevenfactor}
@@ -1506,7 +1506,7 @@ PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, 
 \ref{tab:tcq2d7factorcorr}.
 
 <<tcq2d7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.7,labels="tcq2d7factorcorr"))
+print(FactorCor(tcq2d.fact.7,label="tcq2d7factorcorr"))
 @ 
 
 
@@ -1534,7 +1534,7 @@ The parallel analysis criterion suggests three factors here, while the MAP crite
 
 <<bam2dfact1, echo=FALSE, results=tex>>=
 bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
-print(FactorXtab(bam2d.fact1,labels="bam2dfact1"))
+print(FactorXtab(bam2d.fact1,label="bam2dfact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
@@ -1543,7 +1543,7 @@ As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number
 
 <<bam2dfact2, echo=FALSE, results=tex>>=
 bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact2,labels="bam2dfact2"))
+print(FactorXtab(bam2d.fact2,label="bam2dfact2"))
 @ 
 
 PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18". These items all relate to the dangers surrounding medicines, and reasons to avoid using them, and so this factor can best be termed Safe use of Medicines. 
@@ -1562,7 +1562,7 @@ It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderate
 
 <<bam2dfact3, echo=FALSE, results=tex>>=
 bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact3,labels="bam2dfact3"))
+print(FactorXtab(bam2d.fact3,label="bam2dfact3"))
 @ 
 
 PA1: "BAM2"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors, and so this factor can best be termed Doctors and Medicines. 
@@ -1573,7 +1573,7 @@ PA2: "BAM7"  "BAM9"  "BAM10" "BAM11". These items all appear to relate to the da
 
 
 <<bam2dfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2d.fact3, labels="bam2dfact3cor"))
+print(FactorCor(bam2d.fact3, label="bam2dfact3cor"))
 @ 
 
 It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
@@ -1682,7 +1682,7 @@ tcq7summ.notA <- summary(tcq7fit.notA)
 
 <<tcq2notAsemcompare, echo=FALSE, results=tex>>=
 tcq2.notA.semcompare <- mxCompare(tcq6fit.notA, tcq7fit.notA)
-print(xtable(tcq2.notA.semcompare, labels="tab:tcq2notAsemcompare"))
+print(xtable(tcq2.notA.semcompare, label="tab:tcq2notAsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notAsemcompare} that the seven factor model from Split A provided a better fit to the out of sample data than did the 6 factor model. 
@@ -1785,7 +1785,7 @@ Bam4asummnotA <- summary(Bam4fitnotA)
 
 <<bamnotAsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
-print(xtable(bamsemcompare.notA, labels="tab:bamnotAsemcompare"))
+print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare"))
 @ 
 
 As can be seen from Table \ref{tab:bamnotAsemcompare}, the four factor solution appears to replicate best on the out of sample data. 
@@ -1913,7 +1913,7 @@ tcq7summ.notB <- summary(tcq7fit.notB)
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, labels="tab:tcq2notBsemcompare"))
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the 6 factor model. 
@@ -2016,7 +2016,7 @@ Bam4asummnotB <- summary(Bam4fitnotB)
 
 <<bamnotBsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
-print(xtable(bamsemcompare.notB, labels="tab:bamnotBsemcompare"))
+print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotBsemcompare} that the two factor model provided the best fit to the out-of-sample data in  this case. 
@@ -2124,7 +2124,7 @@ inj <- paste(Inj, 1:6, sep="")
 Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3" "Inj1", "Inj3")
+confconv <- c("Pill3", "Inj1", "Inj3")
 Tcq7modelnotC <- mxModel(name="TCQ7notC", 
                          type="RAM",
                          manifestVars=manifests,
@@ -2145,7 +2145,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, labels="tab:tcq2notCsemcompare"))
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
@@ -2185,7 +2185,7 @@ Bam2modelnotC <- mxModel(name="Bam2notC",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Medicine Avoidance", to=medavoid),
-                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="Safe Use of Medicines", to=safemed),
                       mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
@@ -2222,7 +2222,7 @@ Bam3asummnotC <- summary(Bam3fitnotC)
 
 <<bamnotCsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
-print(xtable(bamsemcompare.notC, labels="tab:bamnotCsemcompare"))
+print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotCsemcompare} that the one factor solution fits the out of sample data best in this case. 
@@ -2294,7 +2294,7 @@ inj <- paste(Inj, 1:6, sep="")
 Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3" "Cream3", "Inj3")
+confconv <- c("Pill3", "Cream3", "Inj3")
 Tcq7modelnotD <- mxModel(name="TCQ7notD", 
                          type="RAM",
                          manifestVars=manifests,
@@ -2315,7 +2315,7 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, labels="tab:tcq2notDsemcompare"))
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
@@ -2392,7 +2392,7 @@ Bam3asummnotD <- summary(Bam3fitnotD)
 
 <<bamnotDsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
-print(xtable(bamsemcompare.notD, labels="tab:bamnotDsemcompare"))
+print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotDsemcompare} that the one factor solution fits the out of sample data best in the case of the Split D models tested on the out of sample data. 
@@ -2412,7 +2412,12 @@ The best fitting models on the out of sample data were as follows:
 
 Each of these models will be run on the full dataset, and the results assessed. The model which fits best on this sample will be used to predict factor scores for the experimental data. 
 
-<<tcq7notAsem, echo=FALSE, results=hide>>=
+<<fullscales2, echo=FALSE, results=hide>>=
+tcqall2 <- tcq2[,17:52]
+bamall2 <- tcq2[,53:70]
+@ 
+
+<<tcq7notAsemAll, echo=FALSE, results=hide>>=
 Pill <- "Pill"
 Cream <- "Cream"
 Inj <- "Inj"
@@ -2434,7 +2439,7 @@ Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
 seven <- c("Inj1", "Inj3")
-Tcq7modelnotA <- mxModel(name="TCQ7notA", 
+Tcq7modelnotA.all <- mxModel(name="TCQ7notAAll", 
                          type="RAM",
                          manifestVars=manifests,
                          latentVars=latents,
@@ -2447,12 +2452,12 @@ Tcq7modelnotA <- mxModel(name="TCQ7notA",
                          mxPath(from="Seven", to=seven),
                          mxPath(from=manifests, arrows=2),
                          mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
-tcq7fit.notA <- mxRun(Tcq7modelnotA)
-tcq7summ.notA <- summary(tcq7fit.notA)
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notA.all <- mxRun(Tcq7modelnotA.all)
+tcq7summ.notA.all <- summary(tcq7fit.notA.all)
 @ 
 
-<<bam4notAsem, echo=FALSE, results=hide>>=
+<<bam4notAsemAll, echo=FALSE, results=hide>>=
 Bam <- "BAM"
 bamitems.cols <- paste(Bam, 1:18, sep="")
 manifests <- bamitems.cols
@@ -2462,7 +2467,7 @@ medeffect <- paste(Bam, c(1,3,4,10), sep="")
 diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
 regmed <- paste(Bam, 5, sep="")
 bamnoload <- paste(Bam, 15, sep="")
-Bam4modelnotA<- mxModel(name="Bam4notA", 
+Bam4modelnotA.all<- mxModel(name="Bam4notAAll", 
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
@@ -2473,13 +2478,13 @@ Bam4modelnotA<- mxModel(name="Bam4notA",
                       mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
-Bam4fitnotA <- mxRun(Bam4modelnotA)
-Bam4asummnotA <- summary(Bam4fitnotA)
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam4fitnotA.all <- mxRun(Bam4modelnotA.all)
+Bam4asummnotA.all <- summary(Bam4fitnotA.all)
 @ 
 
 
-<<tcq7notBsem, echo=FALSE, results=hide>>=
+<<tcq7notBsemAll, echo=FALSE, results=hide>>=
 Pill <- "Pill"
 Cream <- "Cream"
 Inj <- "Inj"
@@ -2501,7 +2506,7 @@ Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
 confconv <- c("Pill3", "Cream3", "Inj1", "Inj3")
-Tcq7modelnotB <- mxModel(name="TCQ7notB", 
+Tcq7modelnotB.all <- mxModel(name="TCQ7notBAll", 
                          type="RAM",
                          manifestVars=manifests,
                          latentVars=latents,
@@ -2514,12 +2519,12 @@ Tcq7modelnotB <- mxModel(name="TCQ7notB",
                          mxPath(from="Confidence in Conventional Treatments", to=confconv),
                          mxPath(from=manifests, arrows=2),
                          mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
-tcq7fit.notB <- mxRun(Tcq7modelnotB)
-tcq7summ.notB <- summary(tcq7fit.notB)
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notB.all <- mxRun(Tcq7modelnotB.all)
+tcq7summ.notB.all <- summary(tcq7fit.notB.all)
 @ 
 
-<<bam2notBsem, echo=FALSE, results=hide>>=
+<<bam2notBsemAll, echo=FALSE, results=hide>>=
 Bam <- "BAM"
 bamitems.cols <- paste(Bam, 1:18, sep="")
 manifests <- bamitems.cols
@@ -2527,7 +2532,7 @@ latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
 medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
 respmed <- paste(Bam, c(1,2,11,16,18), sep="")
 bamnoload <- paste(Bam, c(5,15), sep="")
-Bam2modelnotB <- mxModel(name="Bam2notB", 
+Bam2modelnotB.all <- mxModel(name="Bam2notBAll", 
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
@@ -2536,12 +2541,12 @@ Bam2modelnotB <- mxModel(name="Bam2notB",
                       mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
-Bam2fitnotB <- mxRun(Bam2modelnotB)
-Bam2asummnotB <- summary(Bam2fitnotB)
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam2fitnotB.all <- mxRun(Bam2modelnotB.all)
+Bam2asummnotB.all <- summary(Bam2fitnotB.all)
 @ 
 
-<<tcq7notCsem, echo=FALSE, results=hide>>=
+<<tcq7notCsemAll, echo=FALSE, results=hide>>=
 Pill <- "Pill"
 Cream <- "Cream"
 Inj <- "Inj"
@@ -2562,8 +2567,8 @@ inj <- paste(Inj, 1:6, sep="")
 Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3" "Inj1", "Inj3")
-Tcq7modelnotC <- mxModel(name="TCQ7notC", 
+confconv <- c("Pill3", "Inj1", "Inj3")
+Tcq7modelnotC.all <- mxModel(name="TCQ7notCAll", 
                          type="RAM",
                          manifestVars=manifests,
                          latentVars=latents,
@@ -2576,19 +2581,19 @@ Tcq7modelnotC <- mxModel(name="TCQ7notC",
                          mxPath(from="Confidence in Conventional Treatments", to=confconv),
                          mxPath(from=manifests, arrows=2),
                          mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
-tcq7fit.notC <- mxRun(Tcq7modelnotC)
-tcq7summ.notC <- summary(tcq7fit.notC)
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notC.all <- mxRun(Tcq7modelnotC.all)
+tcq7summ.notC.all <- summary(tcq7fit.notC.all)
 @ 
 
-<<bam1notCsem, echo=FALSE, results=hide>>=
+<<bam1notCsemAll, echo=FALSE, results=hide>>=
 Bam <- "BAM"
 bamitems.cols <- paste(Bam, 1:18, sep="")
 manifests <- c(bamitems.cols)
 latents <- c("Beliefs About Medicine", "NoLoad")
 Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
 bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
-Bam1modelnotC<- mxModel(name="Bam1notC", 
+Bam1modelnotC.all<- mxModel(name="Bam1notCAll", 
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
@@ -2596,12 +2601,12 @@ Bam1modelnotC<- mxModel(name="Bam1notC",
                       mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
-Bam1fitnotC <- mxRun(Bam1modelnotC)
-Bam1asumm.notC <- summary(Bam1fitnotC)
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam1fitnotC.all <- mxRun(Bam1modelnotC.all)
+Bam1asumm.notC.all <- summary(Bam1fitnotC.all)
 @ 
 
-<<tcq7notDsem, echo=FALSE, results=hide>>=
+<<tcq7notDAllsemAll, echo=FALSE, results=hide>>=
 Pill <- "Pill"
 Cream <- "Cream"
 Inj <- "Inj"
@@ -2622,8 +2627,8 @@ inj <- paste(Inj, 1:6, sep="")
 Acu <- paste(Acu, 1:6, sep="")
 hom <- paste(Hom, 1:6, sep="")
 rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3" "Cream3", "Inj3")
-Tcq7modelnotD <- mxModel(name="TCQ7notD", 
+confconv <- c("Pill3", "Cream3", "Inj3")
+Tcq7modelnotD.all <- mxModel(name="TCQ7notDAll", 
                          type="RAM",
                          manifestVars=manifests,
                          latentVars=latents,
@@ -2636,19 +2641,19 @@ Tcq7modelnotD <- mxModel(name="TCQ7notD",
                          mxPath(from="Confidence in Conventional Treatments", to=confconv),
                          mxPath(from=manifests, arrows=2),
                          mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
-tcq7fit.notD <- mxRun(Tcq7modelnotD)
-tcq7summ.notD <- summary(tcq7fit.notD)
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notD.all <- mxRun(Tcq7modelnotD.all)
+tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 @ 
 
-<<bam1notDsem, echo=FALSE, results=hide>>=
+<<bam1notDsemAll, echo=FALSE, results=hide>>=
 Bam <- "BAM"
 bamitems.cols <- paste(Bam, 1:18, sep="")
 manifests <- c(bamitems.cols)
 latents <- c("Beliefs About Medicine", "NoLoad")
 Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
 bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
-Bam1modelnotD<- mxModel(name="Bam1notD", 
+Bam1modelnotD.all<- mxModel(name="Bam1notDAll", 
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
@@ -2656,10 +2661,74 @@ Bam1modelnotD<- mxModel(name="Bam1notD",
                       mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
-Bam1fitnotD <- mxRun(Bam1modelnotD)
-Bam1asumm.notD <- summary(Bam1fitnotD)
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=671))
+Bam1fitnotD.all <- mxRun(Bam1modelnotD.all)
+Bam1asumm.notD.all <- summary(Bam1fitnotD.all)
+@
+
+<<bamallsemcompare, echo=FALSE, results=tex>>=
+bamall.semcompare <- mxCompare(Bam4fitnotA.all, c(Bam2fitnotB.all, Bam1fitnotC.all, Bam1fitnotD.all))
+print(xtable(bamall.semcompare, label="tab:bamallsemcompare"))
 @ 
+
+As can be seen from Table \ref{tab:bamallsemcompare}, the two factor model from Split B provided the best fit to all of the data, striking a balance between the complexity of the four factor model and the over simplicity of the one factor model. 
+
+<<tcqall2semcompare, echo=FALSE, results=tex>>=
+tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare"))
+@ 
+
+As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
+
+\subsection{IRT Analyses}
+\label{sec:irt-analyses}
+
+\subsubsection{Treatment Credibility Questionnaire}
+\label{sec:treatm-cred-quest}
+
+The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
+
+<<tcq2aitemselection, echo=FALSE, results=tex>>=
+tcq.aisp <- aisp(na.omit(tcqall2a))
+print(xtable(tcq.aisp, label="tab:tcq2aitemselection"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2aitemselection}, the TCQ divides neatly into two scales, one for the conventional items and another for the alternative items. 
+
+The next assumption to check was that of invariant item ordering, and the results are shown below.
+
+<<tcq2asplitscales, echo=FALSE, results=hide>>=
+tcq2a.conv <- tcqall2a[,1:18]
+tcq2a.alt <- tcqall2a[,19:36]
+@ 
+
+<<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
+tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
+print(xtable(tcq2a.conv$violations, label="tab:tcq2aconvcheckiio"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
+
+<<tcq2aaltitemord, echo=FALSE, results=tex>>=
+tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
+print(xtable(tcq2a.alt$violations, label="tab:tcq2aaltcheckiio"))
+@ 
+Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
+
+Next, the assumption of monotonicity was assesed for both scales. 
+
+<<tcq2aconvmonotonicity, echo=FALSE, results=tex>>=
+tcq2aconv.mono <- check.monotonicity(na.omit(tcq2a.conv))
+print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity"))
+@ 
+As can be seen from Table \ref{tab:tcq2aconvmonotonicity}, there were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
+
+<<tcq2aaltmonotonicity, echo=FALSE, results=tex>>=
+tcq2aalt.mono <- check.monotonicity(na.omit(tcq2a.alt))
+print(xtable(summary(tcq2aalt.mono), label="tab:tcq2aaltmonotonicity"))
+@ 
+
+As shown in Table \ref{tab:tcq2aaltmonotonicity}, there were no violations of the monotonicity assumption for the alternative items in this split either. 
 
 \subsection{Discussion}
 
