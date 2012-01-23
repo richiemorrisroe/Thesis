@@ -2704,14 +2704,14 @@ tcq2a.alt <- tcqall2a[,19:36]
 
 <<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
 tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
-print(xtable(tcq2a.conv$violations, label="tab:tcq2aconvcheckiio"))
+print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
 
 <<tcq2aaltitemord, echo=FALSE, results=tex>>=
 tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
-print(xtable(tcq2a.alt$violations, label="tab:tcq2aaltcheckiio"))
+print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio"))
 @ 
 Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
 
@@ -2729,6 +2729,46 @@ print(xtable(summary(tcq2aalt.mono), label="tab:tcq2aaltmonotonicity"))
 @ 
 
 As shown in Table \ref{tab:tcq2aaltmonotonicity}, there were no violations of the monotonicity assumption for the alternative items in this split either. 
+
+<<tcq2aguttmanerrors, echo=FALSE, results=hide>>=
+tcq2a.conv.errors <- check.errors(na.omit(tcq2a.conv))
+tcq2a.alt.errors <- check.errors(na.omit(tcq2a.alt))
+@ 
+
+Guttman errors are interesting, provide a quick measure of person fit. They have mostly been applied to dichotomous outcomes, but are examined in this work in order to check their adequacy as a measure of person fit. 
+
+
+\begin{figure}
+  <<tcqconvguttmanplot, echo=FALSE, fig=TRUE>>=
+conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors))+layer(geom="bar")
+print(conv.guttman)
+@   
+  \caption{Guttman Errors Histogram for TCQ 2A conventional items}
+  \label{fig:convguttman}
+\end{figure}
+\begin{figure}
+<<tcqaltguttmanplot, echo=FALSE, fig=TRUE>>=
+alt.guttman <- ggplot(as.data.frame(tcq2a.alt.errors), aes(x=tcq2a.alt.errors))+layer(geom="bar")
+print(alt.guttman)
+@ 
+  \caption{Guttman errors histogram for TCQ2A alternative items}
+  \label{fig:altguttman}
+\end{figure}
+
+As can be seen from Figures \ref{fig:convguttman} and \ref{fig:altguttman}, the majority of participants had 0 guttman errors, which indicates that they were responding to the scale in a coherent manner. 
+
+The major assumptions of parametric IRT are satisfied for this split, and so the next step is the estimation of rasch, one and two parameter models. 
+
+<<tcq2aconvgpcm, echo=FALSE, results=hide>>=
+tcq2a.conv.gpcm.rasch <- gpcm(na.omit(tcq2a.conv), constraint="rasch")
+tcq2a.conv.gpcm.1pl <- gpcm(na.omit(tcq2a.conv), constraint="1PL")
+tcq2a.conv.gpcm.gpcm <- gpcm(na.omit(tcq2a.conv), constraint="gpcm")
+@ 
+<<tcq2aconvpersonfit, echo=FALSE, results=hide>>=
+tcq2a.conv.rasch.sum <- summary(tcq2a.conv.gpcm.rasch)
+tcq2a.conv.1pl.sum <- summary(tcq2a.conv.gpcm.1pl)
+tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.2pl)
+@ 
 
 \subsection{Discussion}
 
@@ -2749,4 +2789,6 @@ In addition, the General sub-scale of the Beliefs about Medicines Questionnaire 
 This paper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure. Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the Beliefs About Medicine Questionnaire. 
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. This is the authors current focus, and we hope to have such evidence collected by the end of 2010. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
+
+  
 
