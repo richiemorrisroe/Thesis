@@ -1,3 +1,4 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 \section{Introduction}
 
 Expectancies are considered to be at the core of the placebo response \cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs \cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal \cite{Whalley2008}.  This paper reports on an adaptation of the Credibility/Expectancy Questionnaire \cite{devilly2000psychometric}  to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
@@ -2764,11 +2765,40 @@ tcq2a.conv.gpcm.rasch <- gpcm(na.omit(tcq2a.conv), constraint="rasch")
 tcq2a.conv.gpcm.1pl <- gpcm(na.omit(tcq2a.conv), constraint="1PL")
 tcq2a.conv.gpcm.gpcm <- gpcm(na.omit(tcq2a.conv), constraint="gpcm")
 @ 
-<<tcq2aconvpersonfit, echo=FALSE, results=hide>>=
+<<tcq2aconvsum, echo=FALSE, results=hide>>=
 tcq2a.conv.rasch.sum <- summary(tcq2a.conv.gpcm.rasch)
 tcq2a.conv.1pl.sum <- summary(tcq2a.conv.gpcm.1pl)
-tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.2pl)
+tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.gpcm)
 @ 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.gpcm.rasch), label="tab:tcq2acoefrasch"))
+@ 
+
+Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. Even a cursory inspection of this table shows that the model does not fit well. The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities, which is a clear violation of the model's assumptions. Next, a one parameter IRT model is examined. 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.gpcm.1pl), label="tab:tcq2aconvcoef1pl"))
+@ 
+
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar problem arises using the one parameter model, with an estimated discrimination parameter of 1.531. This suggests that the model will need to be further expanded to allow for an acceptable fit. 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.gpcm.gpcm), label="tab:tcq2aconvcoef1pl"))
+@ 
+
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that even with a discrimination parameter estimated individually for each item, the generalised partial credit models do not provide an acceptable fit to the data. Next, the one and two parameter graded response models were fit to the same items.
+
+<<tcq2convgrm, echo=FALSE, results=hide>>=
+tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
+tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
+@ 
+
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm"))
+@ 
+
+As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a much better fit to the data. There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment. Following this model, the next model fit was a two parameter graded response model, 
 
 \subsection{Discussion}
 
@@ -2792,3 +2822,6 @@ That being said, there are some important limitations to the study. Firstly, the
 
   
 
+%%% Local Variables:
+%%% TeX-master: "ThesisContents030511"
+%%% End:
