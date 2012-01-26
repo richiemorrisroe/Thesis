@@ -37,14 +37,14 @@ Extracth2u2 <- function (x) {
   x.h2u2 <- as.data.frame(cbind(x.comm, x.uniq, x.ratio))
   x.h2u2
  }
-IrtXtab <- function (x) {
+IrtXtab <- function (x, ...) {
   eta<-x$etapar #$
   se<-x$se.eta #$
   eta.mat<-as.matrix(eta)
   se.eta.mat<-as.matrix(se)
   eta.par.mat<-cbind(eta.mat, se.eta.mat)
   colnames(eta.par.mat) <- c("Ability Estimate", "Standard Error")
-  coef.xtab<-xtable(eta.par.mat)
+  coef.xtab<-xtable(eta.par.mat, ...)
   coef.xtab
 }
 coefreshape <-  function (x) {
@@ -128,3 +128,20 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   res <- mfa[[resind]]
 }
   
+ggplotGRM <- function (grm) {
+  x <- coef(grm)
+  y <- ncol(grm)
+  y <- y-1
+  x <- grm[,1:y]
+  x.t <- t(x)
+  r <- nrow(x.t)
+  v <- ncol(x.t)
+  response <- 1:(r-1)
+  x.t[1:r,v] <- 1:nrow(x.t)
+  x.tm <- melt(x.t, id="response")
+  x.tm <- as.data.frame(x.tm)
+             names(x.tm) <- c("threshold", "item", "ability")
+  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=threshold))+layer(geom="point")
+  plot2 <- plot1+layer(geom="line")
+  plot2
+  }
