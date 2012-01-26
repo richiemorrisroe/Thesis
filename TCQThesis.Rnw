@@ -2772,7 +2772,7 @@ tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.gpcm)
 @ 
 
 <<tcq2acoefrasch, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2a.gpcm.rasch), label="tab:tcq2acoefrasch"))
+print(xtable(coef(tcq2a.conv.gpcm.rasch), label="tab:tcq2acoefrasch"))
 @ 
 
 Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. Even a cursory inspection of this table shows that the model does not fit well. The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities, which is a clear violation of the model's assumptions. Next, a one parameter IRT model is examined. 
@@ -2798,7 +2798,17 @@ tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
 print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm"))
 @ 
 
-As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a much better fit to the data. There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment. Following this model, the next model fit was a two parameter graded response model, 
+As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a much better fit to the data.  There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment.  The next model fit was a two parameter graded response model.  
+
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.grm.2pl), label="tab:tcq2aconvgrm1plsumm"))
+@ 
+
+Again, it can be seen from Table \ref{tab:tcq2aconvgrm1plsumm} that the Cream items appear to be the most discriminating, and possess the highest difficulty levels (on average).  
+Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Creams are the least credible treatment for pain. 
+
+A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data, a process which will be carried out after all the splits are analysed. 
+
 
 \subsection{Discussion}
 
