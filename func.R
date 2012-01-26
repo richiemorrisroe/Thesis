@@ -130,9 +130,11 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   
 ggplotGRM <- function (grm) {
   x <- coef(grm)
-  y <- ncol(grm)
-  y <- y-1
-  x <- grm[,1:y]
+  dimensions <- dim(grm)[1]
+  y <- dimensions[[1]]
+  z <- y-1
+  browser()
+  x <- grm[,1:z]
   x.t <- t(x)
   r <- nrow(x.t)
   v <- ncol(x.t)
