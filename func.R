@@ -128,22 +128,18 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   res <- mfa[[resind]]
 }
   
-ggplotGRM <- function (grm) {
+ggplotGRM <- function (grm, ...) {
   x <- coef(grm)
-  dimensions <- dim(grm)[1]
-  y <- dimensions[[1]]
-  z <- y-1
-  browser()
-  x <- grm[,1:z]
+  x <- as.matrix(x)
+  x <- x[,-ncol(x)]
   x.t <- t(x)
-  r <- nrow(x.t)
-  v <- ncol(x.t)
-  response <- 1:(r-1)
-  x.t[1:r,v] <- 1:nrow(x.t)
+  response <- 1:nrow(x.t)
+  respind <- ncol(x.t)+1
+  x.t <- as.data.frame(x.t)
+  x.t$response <- response
   x.tm <- melt(x.t, id="response")
-  x.tm <- as.data.frame(x.tm)
-             names(x.tm) <- c("threshold", "item", "ability")
-  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=threshold))+layer(geom="point")
-  plot2 <- plot1+layer(geom="line")
+  names(x.tm) <- c("threshold", "item", "ability")
+  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=as.factor(threshold)), ...)
+  plot2 <- plot1+layer(geom="point")
   plot2
   }
