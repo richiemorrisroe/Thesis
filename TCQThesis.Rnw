@@ -2807,6 +2807,27 @@ print(xtable(coef(tcq2a.conv.grm.2pl), label="tab:tcq2aconvgrm1plsumm"))
 Again, it can be seen from Table \ref{tab:tcq2aconvgrm1plsumm} that the Cream items appear to be the most discriminating, and possess the highest difficulty levels (on average).  
 Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Creams are the least credible treatment for pain. 
 
+\begin{figure}
+<<tcq2aconvgrm1plPlot, echo=FALSE, fig=TRUE>>=
+print(ggplotGRM(tcq2a.conv.grm.1pl))
+@   
+  \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
+  \label{fig:tcqcov2agrm1pl}
+\end{figure}
+
+A plot showing the threshold parameters for each of the items in the conventional model can be seen in Figure \ref{fig:tcqcov2agrm1pl}.
+
+The same plot for the two parameter model can be seen in Figure \ref{}
+\begin{figure}
+<<tcq2aconvgrm2plPlot, echo=FALSE, fig=TRUE>>=
+print(ggplotGRM(tcq2a.conv.grm.2pl))
+@   
+  \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
+  \label{fig:tcq2aconvgrm2pl}
+\end{figure}
+
+
+
 A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data, a process which will be carried out after all the splits are analysed. 
 
 
