@@ -896,7 +896,7 @@ Injall2a <- tcq2a[,grep("Inj[1-6]", x=names(tcq2a))]
 Acuall2a <- tcq2a[,grep("Acu[1-6]", x=names(tcq2a))]
 Homall2a <- tcq2a[,grep("Hom[1-6]", x=names(tcq2a))]
 Reiall2a <- tcq2a[,grep("Rei[1-6]", x=names(tcq2a))]
-Bamall2a <- tcq2a[,53:70]
+bamall2a <- tcq2a[,53:70]
 tcqall2a <- as.data.frame(cbind(Pillall2a, Creamall2a, Injall2a, Acuall2a, Homall2a, Reiall2a))
 @ 
 
@@ -966,21 +966,21 @@ This questionnaire was developed for use with chronic pain patients. It appears 
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
 
 <<bamparallel, echo=FALSE, fig=TRUE>>=
-bam.para <- fa.parallel(na.omit(Bamall2a))
-bam.vss <- VSS(na.omit(Bamall2a))
+bam.para <- fa.parallel(na.omit(bamall2a))
+bam.vss <- VSS(na.omit(bamall2a))
 @ 
 
 The parallel analysis suggests that there are four factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all four factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
 
 <<bam2afact1, echo=FALSE, results=tex>>=
-bam2a.fact1 <- fa(na.omit(Bamall2a), 1, fm="pa")
+bam2a.fact1 <- fa(na.omit(bamall2a), 1, fm="pa")
 print(FactorXtab(bam2a.fact1, label="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extremely poor. Only 11 of the 18 items have loadings above 0.3, which is typically used as a cutoff for the assigning of items to the factor. In addition, the communalities for all of the items are extremely low, all below 0.5 which indicates that the common variance of this solution is quite low. This one factor solution only explains 17\% of the variance and so is somewhat inadequate in all senses. 
 
 <<bam2afact2, echo=FALSE, results=tex>>=
-bam2a.fact2 <- fa(na.omit(Bamall2a), 2, rotate="oblimin", fm="pa")
+bam2a.fact2 <- fa(na.omit(bamall2a), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact2, label="bam2afact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 23\%, which is again quite poor. In addition, six items have no loadings above 0.3 on either of the factors. 
@@ -999,7 +999,7 @@ print(FactorCor(bam2a.fact2,label="bam2afact2cor"))
 As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
 
 <<bam2afact3, echo=FALSE, results=tex>>=
-bam2a.fact3 <- fa(na.omit(Bamall2a), 3, rotate="oblimin", fm="pa")
+bam2a.fact3 <- fa(na.omit(bamall2a), 3, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact3, label="bam2afact3"))
 @ 
 Again, the communalities for this solution are extremely low, with almost all of them (16) below 0.5. This solution explained 29\% of the variance. The factors are described below. 
@@ -1019,7 +1019,7 @@ print(FactorCor(bam2a.fact3,label="bam2afact3cor"))
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
 
 <<bam2afact4, echo=FALSE, results=tex>>=
-bam2a.fact4 <- fa(na.omit(Bamall2a), 4, rotate="oblimin", fm="pa")
+bam2a.fact4 <- fa(na.omit(bamall2a), 4, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact4, label="bam2afact4"))
 @ 
 
@@ -2826,10 +2826,125 @@ print(ggplotGRM(tcq2a.conv.grm.2pl))
   \label{fig:tcq2aconvgrm2pl}
 \end{figure}
 
+Another item parameter plot for the two parameter model is shown in Figure ~\ref{fig:tcq2aconvgrm2pl}, which again shows no obvious problems with the model. 
 
 
 A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data, a process which will be carried out after all the splits are analysed. 
+Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
 
+<<bam2ascales, echo=FALSE, results=tex>>=
+bam2a.scales <- aisp(na.omit(bamall2a))
+print(xtable(bam2a.scales), label="tab:bam2ascales")
+@ 
+
+It can be seen from Table ~\ref{tab:bam2ascales} that many items on the beliefs about medicine questionnaire do not appear to be part of any scale (indicated by the zeros next to the item number). The algorithm suggests that there are two scales.
+
+The first is made up of BAM6, BAM7, BAM9, BAM13, BAM14 and BAM17.
+The second is made up of BAM4 and BAM10. This second scale appears to be less than useful, as some of the other tests of assumptions require at least three items per scale. The approach taken here will be to eliminate all but the first scale and conduct our analyses on that set of six items.
+
+<<bam2areduce, echo=FALSE, results=hide>>=
+bam2ascale <- bamall2a[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
+## bam2ascale.other <- bamall2a[,!c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
+@ 
+
+The next step is to check the assumption of invariant item ordering. This is less important here, but is checked for the sake of completeness. 
+
+<<bam2aiio, echo=FALSE, results=tex>>=
+bam2a.iio <- check.iio(na.omit(bam2ascale))
+print(xtable(bam2a.iio$violations, label="tab:bam2aiio"))
+@ 
+
+As can be seen from Table ~\ref{tab:bam2aiio}, no items violated the invariant item ordering assumption, and so are are retained until the next stage. The next step is to check the assumption of monotonicity.
+
+<<bam2acheckmono, echo=FALSE, results=tex>>=
+bam2a.mono <- check.monotonicity(na.omit(bam2ascale))
+print(xtable(summary(bam2a.mono), label="tab:bam2amono"))
+@ 
+
+Table \ref{tab:bam2amono} shows that there were no violations of monotonicity in this split for the reduced set of items. 
+
+The next step in our analysis plan is to fit a rasch model to the beliefs about medicine scale. 
+
+<<bam2arasch, echo=FALSE, results=tex>>=
+bam2a.gpcm.rasch <- gpcm(bam2ascale, constraint="rasch")
+print(xtable(coef2mat(coef(bam2a.gpcm.rasch)), label="tab:bam2arasch"))
+@ 
+
+As can be seen from Table ~\ref{tab:bam2arasch}, this model shows serious violations of the monotonicity assumption and as such, does not need to be investigated further.
+
+We next examine the fit of a one paramater generalised partial credit model with a discrimination parameter estimated from the data. 
+
+<<bam2a1PL, echo=FALSE, results=tex>>=
+bam2a.gpcm.1PL <- gpcm(bam2ascale, constraint="1PL")
+print(xtable(coef2mat(coef(bam2a.gpcm.1PL)), label="tab:bam2a1PL"))
+@ 
+
+Again, Table \ref{tab:bam2a1PL} makes it very clear that the one parameter GPCM provides an extremely poor fit to the data. 
+
+Next, the fit of a two parameter GPCM to this scale was examined. 
+
+<<bam2agpcm, echo=FALSE, results=tex>>=
+bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
+print(xtable(coef2mat(coef(bam2a.gpcm.gpcm)), label="tab:bam2agpcm"))
+@ 
+It can be clearly seen from Table ~\ref{tab:bam2agpcm} that even the two parameter GPCM provides a very poor fit to the data, with the monotonicity assumption violated for almost all the items in Category 3. In line with previous practice, the next models fit were the one and two parameter graded response models. 
+
+<<bam2agrm1pl, echo=FALSE, results=tex>>=
+bam2a.grm.1pl <- grm(na.omit(bam2ascale), constrained=TRUE)
+bam2acoef.mat <- coef2mat(coef(bam2a.grm.1pl))
+print(xtable(bam2acoef.mat, label="tab:bam2agrm1pl"))
+@ 
+
+It can be seen from Table \ref{tab:bam2agrm1pl} that the fit of this model is much better that the fit of any of the partial credit models. 
+
+The next step is to fit a two parameter GRM, and examine the differences in fit between the two models. 
+
+<<bam2agrm2pl, echo=FALSE, results=tex>>=
+bam2a.grm.2pl <- grm(na.omit(bam2ascale), constrained=FALSE, Hessian=TRUE)
+bam2acoef.mat <- coef2mat(coef(bam2a.grm.2pl))
+print(xtable(bam2acoef.mat, label="tab:bam2agrm2pl"))
+@ 
+
+It can be seen from Table \ref{tab:bam2agrm2pl} that this model reveals some interesting features of the items. BAM13 and BAM17 have the highest discrimination parameters, but the ability estimates of their extremities have moved down to compensate. 
+
+A likelihood ratio test carried out between the two models suggested that the two parameter model was significantly better than the one parameter model, ($p\le 0.001$). Again, this is a tentative result until the performance of the model on new data is examined. In any case, while both the AIC and the LR test favoured the two parameter model, the BIC was lower for the one parameter model indicating that according to this criterion, the one parameter model was superior. 
+
+\subsubsection{Split B}
+\label{sec:split-b}
+
+The next task was to repeat the analyses on Split B. The TCQ was the instrument first examined in this split, in line with previous work.
+
+Again, the first step is to examine whether or not the TCQ should be split into seperate scales, examine the monotonicity, the invariant item ordering assumption and examine a plot of Guttman errors. 
+
+<<tcq2baisp, echo=FALSE, results=tex>>=
+tcq2b.aisp <- aisp(na.omit(tcqall2b))
+print(xtable(tcq2b.aisp), label="tab:tcq2baisp")
+@ 
+
+As can be seen from Table ~\ref{tab:tcq2baisp}, the scales split along alternative and conventional lines, as in Split A. All further analyses will be carried out on the seperate scales. 
+
+<<tcq2bsplitscales, echo=FALSE, results=hide>>=
+tcq2b.conv <- tcqall2b[,1:18]
+tcq2b.alt <- tcqall2b[,19:36]
+@ 
+
+The first step in the examination of the tcq conventional in split B is to check the IIO assumption. 
+
+<<tcq2bcheckiio, echo=FALSE, results=tex>>=
+tcq2b.conv.iio <- check.iio(na.omit(tcq2b.conv))
+print(xtable(tcq2b.conv.iio$violations, label="tab:tcq2bcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2bcheckiio}, there were no violations of this assumption. 
+
+Next the assumption of montonicity was checked. 
+
+<<tcq2bconvcheckmono, echo=FALSE, results=tex>>=
+tcq2b.conv.mono <- check.monotonicity(na.omit(tcq2b.conv))
+print(xtable(summary(tcq2b.conv.mono), label="tab:tcq2bconvcheckmono"))
+@ 
+
+As shown in Table \ref{tab:tcq2bconvcheckmono}, there were no violations of the monotonicity assumption in this split. 
 
 \subsection{Discussion}
 
