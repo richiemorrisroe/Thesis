@@ -2944,7 +2944,119 @@ tcq2b.conv.mono <- check.monotonicity(na.omit(tcq2b.conv))
 print(xtable(summary(tcq2b.conv.mono), label="tab:tcq2bconvcheckmono"))
 @ 
 
-As shown in Table \ref{tab:tcq2bconvcheckmono}, there were no violations of the monotonicity assumption in this split. 
+As shown in Table \ref{tab:tcq2bconvcheckmono}, there were no violations of the monotonicity assumption in this split.
+
+This process of repeating assumptions is then repeated for the alternative question TCQ for Split B.
+
+<<tcq2baltcheckiio, echo=FALSE, results=tex>>=
+tcq2b.alt.iio <- check.iio(na.omit(tcq2b.alt))
+print(xtable(tcq2b.alt.iio$violations, label="tab:tcq2baltcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2baltcheckiio}, there were no violations of the invariant item ordering assumption in this split. Next, the monotonicity assumption was assessed. 
+
+<<tcq2baltcheckmono, echo=FALSE, results=tex>>=
+tcq2b.alt.mono <- check.monotonicity(na.omit(tcq2b.alt))
+print(xtable(summary(tcq2b.alt.mono), label="tab:tcq2baltcheckmono"))
+@ 
+
+As shown from Table \ref{tab:tcq2baltcheckmono}, there were no violations of the montonicity assumption in this sample. 
+
+Next, a series of partial credit models were fit and checked for violations of the assumptions. 
+
+<<tcq2bconvgpcm, echo=FALSE, results=hide>>=
+tcq2b.conv.gpcm.rasch <- gpcm(tcq2b.conv, constraint="rasch")
+tcq2b.conv.gpcm.1PL <- gpcm(tcq2b.conv, constraint="1PL")
+tcq2b.conv.gpcm.gpcm <- gpcm(tcq2b.conv, constraint="gpcm")
+@ 
+
+\begin{figure}
+<<tcq2bconvgpcmraschplot, echo=FALSE, fig=TRUE>>=
+gpcm.rasch.plot <- ggplotGRM(tcq2b.conv.gpcm.rasch)
+print(gpcm.rasch.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2B Conventional GPCM Rasch}
+  \label{fig:tcq2bconvgpcmrasch}
+\end{figure}
+
+It can easily be seen from Figure \ref{fig:tcq2bconvgpcmrasch} that the Rasch generalised partial credit model does not provide a good fit for these items. Note the fact that thresholds 2 and 3 are almost identical for Inj6, Inj3, Inj2, and there are obvious violations of monotonicity for Inj2, Pill1 and Pill2. This indicates that this model is not suitable for this data. 
+
+
+\begin{figure}
+<<tcq2bconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
+gpcm.1PL.plot <- ggplotGRM(tcq2b.conv.gpcm.1PL)
+print(gpcm.1PL.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2B Conventional GPCM}
+  \label{fig:tcq2bconvgpcm1PLplot}
+\end{figure}
+
+Next, the fit of the one parameter GPCM was examined using an Item Parameter Plot (Figure \ref{fig:tcq2bconvgpcm1PLplot}). 
+It can be seen that there are failures of the monotonicity assumption for Inj6, Inj2, Inj5, Inj1, Cream6, Cream5, Cream4, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. In fact, most of the 2 and 3 thresholds are reversed, demonstrating that this model is not a good fit for the data. 
+
+
+\begin{figure}
+<<tcq2bconvgpcmgpcmplot, echo=FALSE, fig=TRUE>>=
+gpcm.gpcm.plot <- ggplotGRM(tcq2b.conv.gpcm.gpcm)
+print(gpcm.gpcm.plot)
+@   
+  \caption{Item Position Plot for Two Parameter GPCM (Split B)}
+  \label{fig:tcq2bconvgpcm2plplot}
+\end{figure}
+
+As shown in Figure \ref{fig:tcq2bconvgpcm2plplot}, there are some failures of monotonicity here. Inj6, In5, Inj4, Inj3, Inj2, Inj1, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. This demonstrates the extremely poor fit of this model. 
+
+As none of the partial credit model fitted the items, the next step was to examine the fit of the one and two parameter graded response models. 
+
+<<tcq2bconvgrm, echo=FALSE, results=hide>>=
+tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE)
+tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE)
+@ 
+
+
+\begin{figure}
+<<tcq2bconvgrm1plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm1plot <- ggplotGRM(tcq2b.conv.grm.1pl)
+print(tcq2convgrm1plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 1 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2bconvgrm1plot}
+\end{figure}
+
+As shown in Figure \ref{fig:tcq2bconvgrm1plot}, there were no violations of monotonicity for the one parameter GRM. 
+
+<<tcq2bconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.conv.grm.1pl), label="tab:tcq2bconvgrm1plsumm"))
+@ 
+
+Table \ref{tcq2bconvgrm1plsumm} shows that the cream items were the least endorsed, especially the highest response category. The estimated discrimination parameter is also quite high, at 2.08. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
+
+\begin{figure}
+<<tcq2bconvgrm2plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm2plot <- ggplotGRM(tcq2b.conv.grm.2pl)
+print(tcq2convgrm2plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 2 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2bconvgrm2plot}
+\end{figure}
+@ 
+
+As can be seen from Figure \ref{fig:tcq2bconvgrm2plot}, there were no violations of monotonicity for the two parameter GRM. 
+
+<<tcq2bconv2plgrmsum, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.conv.grm.2pl), label="tab:tcq2bconv2plgrmsum"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2bconv2plgrmsum}, the discrimination parameters have lowered for most of the items, with the exception of Pill4, Pill5 and Pill6, where they have significantly increased. This is surprising, as the Cream items have much higher difficulty, but lower discrimination between different ability levels. 
+
+The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
+
+<<bam2baisp, echo=FALSE, results=tex>>=
+bam2b.aisp <- aisp(na.omit(bamall2b))
+print(xtable(bam2b.aisp, label="tab:bam2baisp"))
+@ 
+
+As shown in Table \ref{tab:bam2baisp}, some items do not load on any scales, and there is one two item scale (BAM1 and BAM2), along with one larger scale. As two items are not enough to form a useful scale, the larger scale will be the only one which is analysed. 
 
 \subsection{Discussion}
 
