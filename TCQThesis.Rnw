@@ -3058,6 +3058,89 @@ print(xtable(bam2b.aisp, label="tab:bam2baisp"))
 
 As shown in Table \ref{tab:bam2baisp}, some items do not load on any scales, and there is one two item scale (BAM1 and BAM2), along with one larger scale. As two items are not enough to form a useful scale, the larger scale will be the only one which is analysed. 
 
+The scale that will be analysed consists of BAM3, BAM4, BAM6, BAM9, BAM10, BAM11, BAM13, BAM14 and BAM17. This is a larger scale than was observed with Split A. 
+
+<<bamscale2b,echo=FALSE, results=hide>>=
+bamscale2b <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
+@ 
+
+The first step is to examine the invariant item ordering assumption.
+
+<<bam2checkiio, echo=FALSE, results=tex>>=
+bam2b.iio <- check.iio(na.omit(bamscale2b))
+print(xtable(bam2b.iio$violations, label="tab:bam2checkiio"))
+@ 
+
+In line with the results of Split A, no items were in violation of this assumption. 
+
+The next assumption which needs to be checked is the monotonicity assumption. 
+
+<<bam2bcheckmono, echo=FALSE, results=tex>>=
+bam2b.mono <- check.monotonicity(na.omit(bamscale2b))
+print(xtable(summary(bam2b.mono), label="tab:bam2bcheckmono"))
+@ 
+
+Table \ref{tab:bam2bcheckmono} shows clearly that there were no violations of the monotonicity assumption in this sample. 
+
+The final preliminary model check consists of a plot displaying the number of Guttman errors for each participant.
+\begin{figure}
+<<bam2bguttman, echo=FALSE, fig=TRUE>>=
+bam2b.guttman <- check.errors(na.omit(bamscale2b))
+bam2b.guttplot <- ggplot(as.data.frame(bam2b.guttman), aes(x=bam2b.guttman))+layer(geom="bar", binwidth=2)
+print(bam2b.guttplot)
+@   
+  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split B}
+  \label{fig:bam2bguttmanplot}
+\end{figure}
+
+As can be seen from Figure \ref{fig:bam2bguttmanplot}, the number of guttman errors was much higher for this scale than was observed in the previous split. This suggests that some of the respondents were not answering the questions in a consistent fashion, and will be investigated further when the person fit statistics are examined on a per model basis. 
+
+The first step in modelling the Beliefs about Medicines questionnaire is to attempt to fit a Rasch partial credit model.
+
+<<bam2bgpcm, echo=FALSE, results=hide>>=
+bam2b.gpcm.rasch <- gpcm(bamscale2b, constraint="rasch")
+bam2b.gpcm.1PL <- gpcm(bamscale2b, constraint="1PL")
+bam2b.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
+@ 
+
+
+
+## <<bam2bgpcmraschplot, echo=FALSE, fig=TRUE>>=
+## bam2bgpcm.raschplot <- ggplotGRM(coef(coef2mat(bam2b.gpcm.rasch)))
+% @                               %
+
+The estimated parameters for the Rasch model are shown below, in Table \ref{tab:bam2bgpcmrasch}. It can be seen that there are a number of violations of monotonicity in this sample. 
+
+<<bam2bgpcmrasch, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2b.gpcm.rasch)), label="tab:bam2bgpcmrasch"))
+@ 
+One and two parameter versions of the GPCM were also fit to this scale, but the models contained serious violations of monotonicity and are not further described here. 
+
+The next step in the process of modelling was to fit one and two parameter Graded Response Models. 
+
+<<bam2bgrm, echo=FALSE, results=hide>>=
+bam2b.grm.1pl <- grm(bamscale2b, constrained=TRUE)
+bam2b.grm.2pl <- grm(bamscale2b, constrained=FALSE)
+@ 
+
+<<bam2bgrm1sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(bam2b.grm.1pl), label="tab:bam2bgrm1sum"))
+@ 
+
+Table \ref{tab:bam2bgrm1sum} shows no signs of problems with monotonicity, and the fit appears acceptable. Next, the two parameter GRM was examined.
+
+<<bam2bgrm2sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(bam2b.grm.2pl), label="tab:bam2bgrm2sum"))
+@ 
+
+Table \ref{tab:bam2bgrm2sum} shows that the fit of the two parameter model is equally unproblematic. An
+
+<<bam2banovagrm, echo=FALSE, results=hide>>=
+bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
+@ 
+
+A likelihood ratio test suggests that the two parameter model provides a significantly better fit ($p \le 0.001$) than does the one parameter model. 
+
 \subsection{Discussion}
 
 \subsubsection{Study One}

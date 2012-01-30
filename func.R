@@ -129,12 +129,7 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
 }
   
 ggplotGRM <- function (grm, ...) {
-  ## if(class(grm)=="gpcm") {
-  ##  x <- coef2mat(grm)
-  ## }
-  ## else {
   x <- coef(grm)
-## }
   x <- as.matrix(x)
   x <- x[,-ncol(x)]
   x.t <- t(x)
@@ -156,19 +151,20 @@ coef2mat <- function (gpcm) {
     len <- lapply(gpcm, length)
     dimcols <- len[[2]]
     dimrows <- length(names(gpcm))
-    mat.res <- matrix(NA, nrow=dimrows, ncol=(dimcols+1))
-    for (i in seq_along(gpcm)) {
+    mat.res <- matrix(NA, nrow=dimrows, ncol=dimcols)
+    modlength <- lapply(gpcm, length)
+    maxlength <- max(as.matrix(unlist(maxlength)))
+    for (i in 1:maxlength) {
       column <- lapply(gpcm, "[", i)
       column <- as.matrix(unlist(column))
-      mat.res[,i] <- column
+      mat.res[1:length(column),i] <- column
       mat.res
     }
     rownames(mat.res) <- names(gpcm)
-    mat.res[1,5] <- mat.res[1,4]
-    mat.res[1,4] <- NA
+    mat.res[3,5] <- mat.res[3,4]
+    mat.res[3,4] <- NA
     categories <- lapply(gpcm, names)
     categories <- categories[[2]]
-    categories[6] <- "NA"
     colnames(mat.res) <- categories
     return(mat.res)
   }
