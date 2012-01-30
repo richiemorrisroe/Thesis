@@ -3141,6 +3141,207 @@ bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
 
 A likelihood ratio test suggests that the two parameter model provides a significantly better fit ($p \le 0.001$) than does the one parameter model. 
 
+
+\subsubsection{Split C}
+\label{sec:split-c}
+
+
+
+<<tcq2caisp, echo=FALSE, results=tex>>=
+tcq2c.aisp <- aisp(na.omit(tcqall2b))
+print(xtable(tcq2c.aisp), label="tab:tcq2caisp")
+@ 
+
+<<tcq2csplitscales, echo=FALSE, results=hide>>=
+tcq2c.conv <- tcqall2b[,1:18]
+tcq2c.alt <- tcqall2b[,19:36]
+@ 
+
+
+
+<<tcq2ccheckiio, echo=FALSE, results=tex>>=
+tcq2c.conv.iio <- check.iio(na.omit(tcq2c.conv))
+print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio"))
+@ 
+
+
+<<tcq2cconvcheckmono, echo=FALSE, results=tex>>=
+tcq2c.conv.mono <- check.monotonicity(na.omit(tcq2c.conv))
+print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono"))
+@ 
+
+
+
+<<tcq2caltcheckiio, echo=FALSE, results=tex>>=
+tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
+print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio"))
+@ 
+
+
+<<tcq2caltcheckmono, echo=FALSE, results=tex>>=
+tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
+print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono"))
+@ 
+
+
+
+<<tcq2cconvgpcm, echo=FALSE, results=hide>>=
+tcq2c.conv.gpcm.rasch <- gpcm(tcq2c.conv, constraint="rasch")
+tcq2c.conv.gpcm.1PL <- gpcm(tcq2c.conv, constraint="1PL")
+tcq2c.conv.gpcm.gpcm <- gpcm(tcq2c.conv, constraint="gpcm")
+@ 
+
+\begin{figure}
+<<tcq2cconvgpcmraschplot, echo=FALSE, fig=TRUE>>=
+gpcm.rasch.plot <- ggplotGRM(tcq2c.conv.gpcm.rasch)
+print(gpcm.rasch.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2C Conventional GPCM Rasch}
+  \label{fig:tcq2cconvgpcmrasch}
+\end{figure}
+
+\begin{figure}
+<<tcq2cconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
+gpcm.1PL.plot <- ggplotGRM(tcq2c.conv.gpcm.1PL)
+print(gpcm.1PL.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2C Conventional GPCM}
+  \label{fig:tcq2cconvgpcm1PLplot}
+\end{figure}
+
+
+\begin{figure}
+<<tcq2cconvgpcmgpcmplot, echo=FALSE, fig=TRUE>>=
+gpcm.gpcm.plot <- ggplotGRM(tcq2c.conv.gpcm.gpcm)
+print(gpcm.gpcm.plot)
+@   
+  \caption{Item Position Plot for Two Parameter GPCM (Split B)}
+  \label{fig:tcq2cconvgpcm2plplot}
+\end{figure}
+
+
+
+
+<<tcq2cconvgrm, echo=FALSE, results=hide>>=
+tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE)
+tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
+@ 
+
+
+\begin{figure}
+<<tcq2cconvgrm1plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm1plot <- ggplotGRM(tcq2c.conv.grm.1pl)
+print(tcq2convgrm1plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 1 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2cconvgrm1plot}
+\end{figure}
+
+
+
+<<tcq2cconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm"))
+@ 
+
+
+
+\begin{figure}
+<<tcq2cconvgrm2plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm2plot <- ggplotGRM(tcq2c.conv.grm.2pl)
+print(tcq2convgrm2plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 2 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2cconvgrm2plot}
+\end{figure}
+@ 
+
+
+
+<<tcq2cconv2plgrmsum, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum"))
+@ 
+
+
+<<bam2caisp, echo=FALSE, results=tex>>=
+bam2c.aisp <- aisp(na.omit(bamall2b))
+print(xtable(bam2c.aisp, label="tab:bam2caisp"))
+@ 
+
+
+<<bamscale2c,echo=FALSE, results=hide>>=
+bamscale2c <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
+@ 
+
+
+
+<<bam2ccheckiio, echo=FALSE, results=tex>>=
+bam2c.iio <- check.iio(na.omit(bamscale2b))
+print(xtable(bam2c.iio$violations, label="tab:bam2checkiio"))
+@ 
+
+
+
+<<bam2ccheckmono, echo=FALSE, results=tex>>=
+bam2c.mono <- check.monotonicity(na.omit(bamscale2b))
+print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono"))
+@ 
+
+
+\begin{figure}
+<<bam2cguttman, echo=FALSE, fig=TRUE>>=
+bam2c.guttman <- check.errors(na.omit(bamscale2b))
+bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+layer(geom="bar", binwidth=2)
+print(bam2c.guttplot)
+@   
+  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split B}
+  \label{fig:bam2cguttmanplot}
+\end{figure}
+
+
+
+
+<<bam2cgpcm, echo=FALSE, results=hide>>=
+bam2c.gpcm.rasch <- gpcm(bamscale2b, constraint="rasch")
+bam2c.gpcm.1PL <- gpcm(bamscale2b, constraint="1PL")
+bam2c.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
+@ 
+
+
+
+## <<bam2cgpcmraschplot, echo=FALSE, fig=TRUE>>=
+## bam2cgpcm.raschplot <- ggplotGRM(coef(coef2mat(bam2c.gpcm.rasch)))
+% @                               %
+
+
+
+<<bam2cgpcmrasch, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch"))
+@ 
+
+
+<<bam2cgrm, echo=FALSE, results=hide>>=
+bam2c.grm.1pl <- grm(bamscale2b, constrained=TRUE)
+bam2c.grm.2pl <- grm(bamscale2b, constrained=FALSE)
+@ 
+
+<<bam2cgrm1sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(bam2c.grm.1pl), label="tab:bam2cgrm1sum"))
+@ 
+
+
+
+<<bam2cgrm2sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(bam2c.grm.2pl), label="tab:bam2cgrm2sum"))
+@ 
+
+
+
+<<bam2canovagrm, echo=FALSE, results=hide>>=
+bam2cgrm.anova <- anova(bam2c.grm.1pl, bam2c.grm.2pl)
+@ 
+
+
+
 \subsection{Discussion}
 
 \subsubsection{Study One}
