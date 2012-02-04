@@ -149,11 +149,12 @@ coef2mat <- function (gpcm) {
   }
   else {
     len <- lapply(gpcm, length)
-    dimcols <- len[[2]]
+    probelem <- which.min(as.matrix(unlist(len)))
+    dimcols <- max(as.matrix(unlist(len)))
     dimrows <- length(names(gpcm))
     mat.res <- matrix(NA, nrow=dimrows, ncol=dimcols)
     modlength <- lapply(gpcm, length)
-    maxlength <- max(as.matrix(unlist(maxlength)))
+    maxlength <- max(as.matrix(unlist(modlength)))
     for (i in 1:maxlength) {
       column <- lapply(gpcm, "[", i)
       column <- as.matrix(unlist(column))
@@ -161,11 +162,16 @@ coef2mat <- function (gpcm) {
       mat.res
     }
     rownames(mat.res) <- names(gpcm)
-    mat.res[3,5] <- mat.res[3,4]
-    mat.res[3,4] <- NA
+    probelemlength <- length(gpcm[[probelem]])
+    ## browser()
+    missingvalue <- which(is.na(mat.res)) #this gives a scalar, as internally matrices are stored as vectors 
+    wrongvalue <- missingvalue-nrow(mat.res) #get the element where is the discrimination parameter has ended up
+    mat.res[missingvalue] <- mat.res[wrongvalue]
+    mat.res[wrongvalue] <- NA
+   
     categories <- lapply(gpcm, names)
-    categories <- categories[[2]]
-    colnames(mat.res) <- categories
+    categorynames <- categories[[length=ncol(mat.res)]]
+    colnames(mat.res) <- categorynames
     return(mat.res)
   }
   mat.res
