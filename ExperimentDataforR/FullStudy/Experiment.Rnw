@@ -1,12 +1,12 @@
-\documentclass{article}
-\author{Richard Morrisroe}
-\title{Analysis of Experimental Data}
-\usepackage{Sweave}
-\usepackage{graphics}
-\DeclareGraphicsExtensions{.pdf}
-\begin{document}
-\maketitle{}
-\date
+% \documentclass{article}
+% \author{Richard Morrisroe}
+% \title{Analysis of Experimental Data}
+% \usepackage{Sweave}
+% \usepackage{graphics}
+% \DeclareGraphicsExtensions{.pdf}
+% \begin{document}
+% \maketitle{}
+% \date
 
 \section{Introduction}
 
@@ -910,4 +910,7 @@ Secondly, given the number of models fitted, some were almost certain to come up
 
 It might be questioned why the Condition variable was not included in the mode l - it was, but it was dropped as its presence caused errors in the model fit. A little thought explains why this is so - placebo response was only possible in 2 of 3 conditions, and Condition acted as a proxy for these, thus causing issues with the model fit (in essence, Condition was collinear with placebo response). The final model shown above was superior to the other models considered, in terms of AIC and other model fit indices. 
 
-\end{document}
+
+%%% Local Variables:
+%%% TeX-master: "ThesisContents030511"
+%%% End:
