@@ -3765,13 +3765,108 @@ Following on from the graphical exploration of the relationships between the var
 <<stepwiselm, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-pilltotlm1 <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-pilltot.step <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction="both")
+pilltotlm1.nota <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+pilltot.step.nota <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(pilltot.step.nota)))
 pilltot.pred <- predict(pilltotlm1, newdata=tcq2a)
+@
+
+
+<<lmonheldoutdata, echo=FALSE, results=tex>>=
+pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2a)
+print(xtable(summary(pilltotlm.holdout)))
+@ 
+Rerunning the model on the held out data, the model was highly significant F(10,129)=28.95, $p\le 0.001$. The model had an adjusted $R^2$ of 0.4286, which equates to approximately 42\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Homeopathy and Reiki variables did not achieve significance on the held out data. 
+
+The next step was to repeat this process using Cream total as a dependent variable.
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+creamtotlm1 <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+creamtot.step.nota <- stepAIC(object=creamtotlm1, upper=creamtotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(creamtot.step.nota), label="tab:creamtotlm1nota"))
+creamtot.pred <- predict(creamtotlm1, newdata=tcq2a)
+@
+
+The results on the training sample are shown in Table \ref{tab:creamtotlm1nota}. The model was significant: F(3,314)=34.24, p-value of $p\le 0.001$. The adjusted $R^2$ for the model was 0.3861, which is extremely poor. Next the performance of the model on the held out data was assessed. 
+
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2a)
+print(xtable(summary(creamtotlm.holdout), label="tab:creamlmholdoutnota"))
 @ 
 
-When tested against the out of sample data, the predicted data had a correlation of 0.64 with the actual data, which is an acceptable level of prediction (especially with a linear model). 
+The results for the held out data are shown in Table \ref{tab:creamlmholdoutnota}. The model was again signficiant, with an F(6,144)=22.18, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model increased in the holdout sample, and was equal to 0.4586. However, the demographic variables were not significant on the held out sample. 
 
+\subsubsection{Split B}
+\label{sec:split-2}
+
+Next, the same procedure was repeated using the data from Splits A,B and D, while holding out Split B as a validation set. 
+
+<<pilltotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+pilltotlm1.notb <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+pilltot.step.notb <- stepAIC(object=pilltotlm1.notb, upper=pilltotlm1notb,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1, newdata=tcq2b)
+print(xtable(summary(pilltot.step.notb)), label="tab:pilltotnotbsteplm")
+@ 
+
+Table \ref{tab:pilltotnotbsteplm} shows the performance of the stepwise algorithm on the training sample. It can be seen that with a penalisation factor of three for the parameters in the model (as opposed to the classic AIC penalty of two), only four variables (Creamtot, Injtot, Acutot, and Experience with conventional treatments) are retained by the algorithm. Both Acutot and Expconv have a negative sign, which would be expected for acupuncture scores, but the negative coefficient for the experience with conventional treatments is surprising. It may be that having more experience with conventional forms of painkilling treatments is linked to a history of problems with pain, as as pills tend to be the most readily available pain treatment, they may be regarded as less effective. The $R^2$ adjusted for parameters was equal to 0.4491, which is lower than the previous training set. The model was independently significant, with an F(4,313)=65.61, $p\le 0.0001$. Next, the performance of this model on the held out data was assessed. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotb.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2b)
+print(xtable(summary(pilltotnotb.heldout.lm), label="tab:pilltotnotbheldout"))
+@ 
+
+It can be seen from Table \ref{tab:pilltotnotbheldout} that this model performs extremely well on the held out data, with a highly significant model - F(4,162)=65.79, $p\le 0.0001$, and an adjusted $R^2$ of .6096, indicating that 60\% of the variance in the Pilltotals can be explained by the predictor variables. Its worth noting that the sign of the Experience with conventional treatments variable has reversed, and is now in line with expectations. 
+
+\subsubsection{Split C}
+\label{sec:split-3}
+
+Next, the same series of analyses was performed using the data from Splits A, B and D, and retaining Split C as a hold out sample. 
+
+<<pilltotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+pilltotlm1.notc <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+pilltot.step.notc <- stepAIC(object=pilltotlm1.notc, upper=pilltotlm1notc,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1, newdata=tcq2c)
+print(xtable(summary(pilltot.step.notc)), label="tab:pilltotnotcsteplm")
+@ 
+The model shown in Table \ref{tab:pilltotnotcsteplm} contains almost the same four variables that were observed in Split 2 (with the inclusion of the Reiki total and the dropping of the Acupuncture total).  This suggests that these variables are likely to be truly related to Pill total credibility scores, as it is unlikely that random variation would account for the same set of four variables coming from the procedure twice in a row.  The $R^2$ for this model was equal to 0.4717, and the model was highly significant: F(4,299)=68.65, $p\le 0.0001$. These p values and test statistics are likely to be biased due to the automated inclusion and exclusion of variables for the model, and the true test is in the performance of the model on held-out data. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotc.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2c)
+print(xtable(summary(pilltotnotc.heldout.lm), label="tab:pilltotnotcheldout"))
+@ 
+
+This model did not fit quite as well as that in Split 2, but nonetheless, performance was acceptable. Table \ref{tab:pilltotnotcheldout} shows the estimated regression coefficients. While Cream and Injection credibility scores are still highly significant, Reiki and Experience with Conventional Treatments do not perform well on the held out data. The model itself is still highly significant; F(4,154)=34.53, $p\le 0.001$ and the adjusted $R^2$ is equal to 0.4591. 
+
+\subsubsection{Split D}
+\label{sec:split-4}
+
+Finally, the same procedure is repeated on Split 4, which uses Splits A, B and C as the training data, and Split D as the held out validation set. 
+
+<<pilltotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+pilltotlm1.notd <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+pilltot.step.notd <- stepAIC(object=pilltotlm1.notd, upper=pilltotlm1.notd,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1, newdata=tcq2d)
+print(xtable(summary(pilltot.step.notd)), label="tab:pilltotnotdsteplm")
+@ 
+
+Table \ref{tab:pilltotnotdsteplm} shows the estimated coefficients on the training data. The same core group of predictors are seen in the results, and Gender appears to be a useful predictor on this sub-sample of the data. This is the first appearance of a demographic variable in the final set, although the coefficients are quite small, as are the estimated t values. The model is significant: F(6,283)=48.4, with an adjusted $R^2$ of 0.496, which is line with results on previous splits.
+
+Next, this model is tested on the held out data set. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotd.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2d)
+print(xtable(summary(pilltotnotd.heldout.lm), label="tab:pilltotnotdheldout"))
+@ 
+Table \ref{tab:pilltotnotdheldout} shows the results of fitting the trained model to the heldout data. It can be seen that Creams, Injections and Acupuncture are significant, while Experience and Gender are not. The adjusted $R^2$ value is equal to 0.3822, the lowest of all the splits, while the model is significant; F(6,201)=22.34, with a p-value of $p\le 0.001$. 
 
 \subsection{Discussion}
 
