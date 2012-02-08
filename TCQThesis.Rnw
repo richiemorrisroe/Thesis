@@ -68,6 +68,7 @@ require(eRm)
 require(ltm)
 require(xtable)
 require(OpenMx)
+require(MASS)
 source("func.R")
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
@@ -612,6 +613,9 @@ pillLm1 <- lm((PillTot/5)~Gender+College+UGPG+Year, data=tcq1)
 tcq2 <- read.csv("tcq2.csv")
 @ 
 
+
+
+
 <<scalemake2, echo=FALSE, results=hide>>=
 Pillall <- tcq2[,grep("Pill[1-6]", x=names(tcq2))]
 Creamall <- tcq2[,grep("Cream[1-6]", x=names(tcq2))]
@@ -628,6 +632,13 @@ tcq2$Homtot <- apply(Homall, 1, mean, na.rm=TRUE)
 tcq2$Reitot <- apply(Reiall, 1, mean, na.rm=TRUE)
 tcq2$Bamtot <- apply(Bamall, 1, mean, na.rm=TRUE)
 tcqtotals <- with(tcq2, as.data.frame(cbind(Pilltot, Creamtot, Injtot, Acutot, Homtot, Reitot, Bamtot)))
+@ 
+
+<<expconvaltcalc, echo=FALSE, results=hide>>=
+tcq2$ConvMean <- with(tcq2, (Pilltot+Creamtot+Injtot)/3)
+tcq2$AltMean <- with(tcq2, (Acutot+Homtot+Reitot)/3)
+tcq2$Expconv <- with(tcq2, (ExpPill+ExpCream+ExpInj)/3)
+tcq2$Expalt <- with(tcq2, (ExpAcu+ExpHom+ExpRei)/3)
 @ 
 <<subsamplestcq2, echo=FALSE, results=hide>>=
 set.seed(52)
@@ -815,6 +826,8 @@ print(xtable(tcq2.sum))
 \label{tab:tcq2demo}
 \caption{Demographic Statistics, TCQ 2}
 
+
+
 As can be seen from the second column of Table \ref{tab:tcq2demo} , many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22, which shows that most of the sample was made up of students.
 The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
 The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
@@ -885,6 +898,8 @@ Following these investigations of the descriptive qualities of the data, the nex
 % Factor Analysis is a complicated technique, in which there are many wrong ways and no clear right way. Much of the confusion stems from the lack of an objective metric to determine the number of factors to extract from the data. However, there are a number of criteria which can be of help in this endeavour, and experts recommend that multiple approaches be utilised. Therefore, for this study, 3 methods were used. These three methods are Parallel Analysis, the Minimum Average Partial criterion and visual inspection of the scree plot. Oblimin rotations were used in the first instance, as orthogonal structure can be determined from obliquely rotated data but not vice versa. Principal Acis factoring methods were used, given the non-normality of the data. 
 
 \subsubsection{Treatment Credibility Questionnaire, Version 2}
+
+
 
 \subsubsection{TCQ Version2 Split A}
 \label{sec:tcq-version2-split}
@@ -3637,6 +3652,125 @@ Finally, an ANOVA was fit to the two graded response models, to determine which 
 bam2dgrm.anova <- anova(bam2d.grm.1pl, bam2d.grm.2pl)
 @ 
 
+
+\subsubsection{Regression Analyses}
+\label{sec:regression-analyses}
+
+The next part of the analysis to be carried out was regression analysis. There were a number of demographic variables collected in the second sample, to allow for examination of their effects on the outcome variables (the treatment credibility scores). Gender, education, college of study or work, health, income and experience with the six forms of treatment were collected. The approach taken to the analysis was the following. Using the four splits that were used for the psychometric analysis. In this case, models were fit on 3 of the four splits, and the results of these analyses were predicted using the held out data. This allows for the use of step methods of regression while ensuring unbiased p values and standard errors. 
+
+\subsubsection{Split A}
+\label{sec:split}
+
+The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
+\begin{figure}
+<<splitApairs, echo=FALSE, fig=TRUE>>=
+tcq2.nota.tot <- tcq2nota[,71:77]
+tcq2.nota.pairs <- pairs.panels(na.omit(tcq2.nota.tot))
+@   
+  \caption{Scatterplot Matrix for TCQ not A split. The upper diagonal has the correlations between the variables, the diagonal has a histogram of the values with density lines overlaid, and the lower diagonal has scatterplots for each pair of variables, with an overlaid locally weighted smoother regression line}
+  \label{fig:splitApairs}
+\end{figure}
+
+Figure \ref{fig:splitApairs} shows the scatterplot matrix for the totals in Split A. It can clearly be seen that the conventional variables correlate well with one another, as do the alternative variables. Some evidence of convergent validity is also seen, as the Beliefs About Medicine Questionnaire correlates negatively with the conventional forms of treatment, and positively with the alternative forms of treatment, as predicted. 
+
+Next, the relationships of the demographic variables with the totals were examined. 
+
+<<tcq2notAdemo, echo=FALSE, results=hide>>=
+tcq2.nota.demo <- tcq2nota[,2:16]
+@ 
+
+One examination of the data which was of interest was the relationship between the conventional and alternative scores and demographic variables. A mean was calculated for both the conventional and alternative items, and this was plotted against gender. The results are shown in Figure \ref{fig:convaltmeangender}. As can be seen, the patterns differ for mena and women, though the effect is small and the error bars are quite large. For men, higher scores on the conventional forms of treatment tend to be associated with higher scores on the alternative forms of treatment, while for women, the opposite is true. 
+
+\begin{figure}
+  
+  \caption{Regression line of Conventional treatment mean scores against Alternative treatment mean scores, stratified by Gender (regression line is a least squares fit)}
+  \label{fig:convaltmeangender}
+\end{figure}
+<<convaltmeans, echo=FALSE, results=hide>>=
+
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean, group=Gender))
+p2 <- p+layer(geom="smooth", method="lm")
+## p3 <- p2+facet_grid(.~Gender)
+print(p2)
+@ 
+
+
+\begin{figure}
+<<ggplotconvaltcollege, echo=FALSE, >>=
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~College)
+print(p3)
+@   
+  \caption{Conventional Means Regressed against Alternative treatment means, stratified based on College of study or work}
+  \label{fig:convaltmeancollege}
+\end{figure}
+
+
+Figure \ref{fig:convaltmeancollege} shows a regression of alternative  treatment mean scores against conventional treatment mean scores, stratified based on college. It can be seen that for Arts, Science and Business and Law, increased scores on the alternative treatments were associated with increased scores on the conventional treatments, while for medicine and health, the revers was true. 
+
+\begin{figure}
+<<ggplotpillincome, echo=FALSE, >>=
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Health)
+print(p3)
+@   
+  \caption{Regression of Alternative Treatment means against conventional treatment means, stratified by health status (where 1 is worst health and 5 is best health)}
+  \label{fig:convaltmeanhealth}
+\end{figure}
+
+Figure \ref{fig:convaltmeanhealth} shows the regression of conventional treatment mean scores against alternative  treatment mean scores, stratified by Health status. It can be seen that for moderate levels of self rated health (2-4), higher scores on the conventional treatments were associated with higher scores on the alternative treatment. However, for participants who rated their health as ``Excellent'', the opposite pattern emerged. 
+
+
+
+Next, summary scores for experience with conventional treatments and alternative treatments were calculated, and the relationships of these two variables to demographic variables were examined.
+
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Gender)
+print(p3)
+@   
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by Gender}
+  \label{fig:expconvaltgender}
+\end{figure}
+
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~College)
+print(p3)
+@ 
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
+  \label{fig:expconvaltgender}
+\end{figure}
+
+
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Health)
+print(p3)
+@ 
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
+  \label{fig:expconvaltgender}
+\end{figure}
+
+Following on from the graphical exploration of the relationships between the variables, the next step was to fit a linear model on this data, eliminate variables based on the decrease in AIC, and test the model on the held out data. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+pilltotlm1 <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+pilltot.step <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction="both")
+pilltot.pred <- predict(pilltotlm1, newdata=tcq2a)
+@ 
+
+When tested against the out of sample data, the predicted data had a correlation of 0.64 with the actual data, which is an acceptable level of prediction (especially with a linear model). 
 
 
 \subsection{Discussion}
