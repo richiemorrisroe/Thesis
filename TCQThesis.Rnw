@@ -3799,6 +3799,84 @@ print(xtable(summary(creamtotlm.holdout), label="tab:creamlmholdoutnota"))
 
 The results for the held out data are shown in Table \ref{tab:creamlmholdoutnota}. The model was again signficiant, with an F(6,144)=22.18, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model increased in the holdout sample, and was equal to 0.4586. However, the demographic variables were not significant on the held out sample. 
 
+Next, the same modelling procedure was applied to the Injection credibility scores. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+injtotlm1 <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+injtot.step.nota <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(injtot.step.nota), label="tab:injtotlm1nota"))
+injtot.pred <- predict(injtotlm1, newdata=tcq2a)
+@ 
+The model results shown in Table \ref{tab:injtotlm1nota} show that Cream and Pill credibility scores were excellent predictors, as were Experience with conventional treatments and Health. The model was independently significant: F(4,313)=68.35, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4594. It is important to note that this p values cannot be trusted due to the fact that the algorithm calculated them at each step, and so a multiple comparisions problem arises. 
+
+This model was then applied to the held out data. 
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+injtotlm.holdout <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2a)
+print(xtable(summary(injtotlm.holdout), label="tab:injlmholdoutnota"))
+@ 
+Table \ref{tab:injlmholdoutnota} shows the results of the model on the hjeld out data. It can be seen that Cream credibility, Pill credibility and Health were all significant, while Experience with conventional treatments was almost significant. The model itself was significant: F(4,142)=21.4, with a p value of $p\le 0.001$, while the adjusted $R^2$ was equal to 0.3585, which is quite poor in comparison to some of the other results. 
+
+Next, the same procedure was applied to the Acupuncture credibility scores. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+acutotlm1 <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+acutot.step.nota <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(acutot.step.nota), label="tab:acutotlm1nota"))
+acutot.pred <- predict(acutotlm1, newdata=tcq2a)
+@ 
+
+Table \ref{tab:acutotlm1nota} shows the estimated coefficients on the training sample. It can be seen that Cream credibility, Homeopathy credibility and Reiki credibility were the only variables retained by the procedure. The model was independently significant; F(3,314)=76.69, p=value $p\le 0.001$. The adjusted $R^2$ was equal to 0.4173. This model was then applied to the validation set.
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+Acutotlm.holdout <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2a)
+print(xtable(summary(Acutotlm.holdout), label="tab:aculmholdoutnota"))
+@ 
+
+It can be seen from Table \ref{tab:aculmholdoutnota} that all of the variables remained significant in the validation set. The model was independently significant; F(3,146)=23.89, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3154.
+
+Next, the same procedure was applied to the Homeopathy credibility totals. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+homtotlm1 <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+homtot.step.nota <- stepAIC(object=homtotlm1, upper=homtotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(homtot.step.nota), label="tab:homtotlm1nota"))
+acutot.pred <- predict(acutotlm1, newdata=tcq2a)
+@ 
+
+Table \ref{tab:homtotlm1nota} shows the estimated coefficients on the training set. It can be seen that Cream, Pill, Acupuncture and Reiki credibility scores were retained by the algorithm. The model was independently significant: F(4,313)=138.4, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.6342. Next, the model was examined on the validation set. 
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+Homtotlm.holdout <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2a)
+print(xtable(summary(Homtotlm.holdout), label="tab:homlmholdoutnota"))
+@ 
+Table \ref{tab:homlmholdoutnota} shows the performance of the model on the validation set. It can be seen that Pill and cream credibility scores are no longer significant, suggesting that their inclusion was an artifact of the selection algorithm. The model was significant: F(4,144)=29.09, $p\le 0.001$, and the adjusted $R^2$ was equal to 0.4316. 
+
+Next, the selection and testing procedure was applied to the Reiki totals. 
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+reitotlm1 <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+reitot.step.nota <- stepAIC(object=reitotlm1, upper=reitotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(reitot.step.nota), label="tab:reitotlm1nota"))
+reitot.pred <- predict(reitotlm1, newdata=tcq2a)
+@ 
+Table \ref{tab:reitotlm1nota} shows the estimated coefficients on the training set. The algorithm retained Injection total, Acupuncture and the Experience with alternative treatments variables. The model was significant; F(3,314)=67.98, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.388. Next, the performance of these  variables was examined on the validation set. 
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+Reitotlm.holdout <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2a)
+print(xtable(summary(Reitotlm.holdout), label="tab:reilmholdoutnota "))
+@ 
+
+Table \ref{tab:reilmholdoutnota} shows the estimated coefficients on the validation set. It can be seen that all variables remain significant. The model itself was significant:F(3,139)=17.71, $p\le 0.001$. The adjusted $R^2$ value for the model on the validation set was equal to 0.2609.
+
+
 \subsubsection{Split B}
 \label{sec:split-2}
 
