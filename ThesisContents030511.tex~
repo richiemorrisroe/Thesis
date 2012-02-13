@@ -1,0 +1,64 @@
+p\documentclass[apsych, phd]{uccthesis}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{pifont}
+\title{The Placebo Effect: Implicit and Explicit Expectancies}
+\author{Morrisroe, Richard Patrick BA (Hons)}
+\supervisors{ Dr Z. Di Blasi // Prof J.A. Groeger// Dr D. Evans}
+\professor{Prof J.A. Groeger}
+\sponsor{Irish Research Council for Humanities and Social Sciences}
+\usepackage[pdftex]{lscape}% for landscaped tables
+\usepackage{longtable}% for 
+\usepackage{Sweave}
+\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\makeindex
+\begin{document}
+
+\maketitle
+
+
+
+\tableofcontents
+
+\chapter{Introduction to the Research}
+
+%\include{Introduction}
+
+\chapter{Literature Review}
+
+%\include{LitReviewThesis050211}
+
+\chapter{Notes Towards a Theory of Placebo}
+
+%\include{TheoryPlacebo}
+
+\chapter{Methodology}
+
+%\include{Methodologyplan120211}
+
+\chapter{Preliminary Research}
+
+%\include{HealthforThesis}
+
+\include{TCQthesis}
+
+%\include{qualitativeresearch}
+
+%\include{repertory grid development}
+
+
+\chapter{Primary Research}
+
+%\include{Experiment Data for R/FullStudy/Experiment}
+\chapter{General Discussion}
+
+\chapter{Conclusions and Further Research}
+
+
+
+
+\bibliography{placebo,IAT,statistics,healthoptmind2}
+\end{document}
