@@ -1,0 +1,663 @@
+\documentclass{article}
+\author{Richard Morrisroe}
+\title{Analysis of Experimental Data}
+\usepackage{Sweave}
+\usepackage{graphics}
+
+\begin{document}
+\maketitle{}
+\date
+
+\section{Introduction}
+
+\section{Methodology}
+
+\subsection{Experimental Procedure}
+
+All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
+Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken 1000 times per second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of a  moisturising cream. 
+
+Participants in the treatment group were told that the cream was a potent painkiller, recently approved, which would take effect almost immediately. Participants in the placebo group were told that they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately. 
+
+
+\section{Results}
+
+
+\subsection{Analysis of IAT data}
+
+
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 20:59:29 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Bootstrap Estimates of Mean Optimism IAT scores}
+\begin{tabular}{rrrr}
+  \hline
+ & confidence level & lower quantile & upper quantile \\ 
+  \hline
+73 & 0.95 & 0.73 & 3.44 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\label{tab:optmeanconfprint}
+\end{table}
+As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
+
+
+
+% \begin{figure}
+%   \centering
+%\includegraphics{Experiment-optbootplot.pdf}  
+  % \caption{Plot of Bootstrap Resamples of Optimism Mean IAT score. Left plot shows a histogram of the resamples, right plot shows the resamples plotted against the normal distribution quantiles}
+  % \label{fig:optbootplot}
+%\end{figure}
+
+
+
+
+
+
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:00:40 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Bootstrap estimated confidence intervals for Treatment Credibility IAT score}
+\begin{tabular}{rrrr}
+  \hline
+ & confidence level & lower quantile & upper quantile \\ 
+  \hline
+49 & 0.95 & -0.39 & 2.38 \\ 
+   \hline
+\end{tabular}
+\label{tcqmeanconf}
+\end{center}
+\end{table}
+
+As can be seen in Table \ref{tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
+
+
+% \begin{figure}
+%   \centering
+% \includegraphics{Experiment-tcqbootplot}  
+  % \caption{Plot of Bootstrap Resamples of Optimism Mean IAT score. Left plot shows a histogram of the resamples, right plot shows the resamples plotted against the normal distribution quantiles}
+  % \label{fig:tcqbootplot}
+% \end{figure}
+\begin{figure}
+  \centering
+\includegraphics{Experiment-tcqstimblock3}  
+  \caption{Scatterplot Matrix for Treatment Credibility IAT Block 3. The upper triangle shows the correlations, scaled by size. The lower triangle shows the scatterplots with a locally weighted regression fit. The diagonal shows the histogram of each variable, with a density line overlaid.}
+  \label{fig:tcqstimblock3}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. 
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-tcqstimblock5}  
+  \caption{Scatterplot Matrix for Treatment Credibility IAT Block 5. The upper triangle shows the correlations, scaled by size. The lower triangle shows the scatterplots with a locally weighted regression fit. The diagonal shows the histogram of each variable, with a density line overlaid.}
+  \label{fig:tcqstimblock5}
+\end{figure}
+
+
+Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers, however, and the correlations lowered significantly once these were excluded. 
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-optstimblock3}  
+  \caption{Scatterplot Matrix for Optimism IAT Block 3. The upper triangle shows the correlations, scaled by size. The lower triangle shows the scatterplots with a locally weighted regression fit. The diagonal shows the histogram of each variable, with a density line overlaid.}
+  \label{fig:optstimblock3}
+\end{figure}
+
+
+Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-optstimblock5}  
+  \caption{Scatterplot Matrix for Optimism IAT Block 5. The upper triangle shows the correlations, scaled by size. The lower triangle shows the scatterplots with a locally weighted regression fit. The diagonal shows the histogram of each variable, with a density line overlaid.}
+  \label{fig:optstimblock5}
+\end{figure}
+
+
+The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-optiatplotself}  
+  \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation}
+  \label{fig:optiatplotself}
+\end{figure}
+
+
+ As can be seen in Figure \ref{fig:optplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:28:06 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Linear Regression on Block Time with demographics}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 4567.3602 & 1361.6329 & 3.35 & 0.0009 \\ 
+  BlockBlock 2: & -1458.6036 & 1043.7978 & -1.40 & 0.1629 \\ 
+  BlockBlock 3: & 22462.7658 & 1043.7978 & 21.52 & 0.0000 \\ 
+  BlockBlock 4: & -881.4054 & 1043.7978 & -0.84 & 0.3988 \\ 
+  BlockBlock 5: & 32744.7027 & 1043.7978 & 31.37 & 0.0000 \\ 
+  Age & 318.8968 & 48.4373 & 6.58 & 0.0000 \\ 
+  Gendermale & 1686.5680 & 663.5044 & 2.54 & 0.0113 \\ 
+   \hline
+\end{tabular}
+\label{tab:blocktimereg}
+\end{center}
+\end{table}
+ 
+As can be seen from Table \ref{tab:blocktimereg}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:30:38 2011
+\begin{table}[ht]
+\begin{center}
+\caption{ANOVA for assessment of group differences in TC IAT scores at baseline}
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+Condition   & 2 & 0.48 & 0.24 & 0.44 & 0.6422 \\ 
+  Residuals   & 107 & 58.33 & 0.55 &  &  \\ 
+   \hline
+\end{tabular}
+\label{tab:tcqbase}
+\end{center}
+\end{table}
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:30:38 2011
+\begin{table}[ht]
+\begin{center}
+\caption{ANOVA for assessment of group differences in Treatment Credibility Mean scores at baseline}
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+Condition   & 2 & 0.17 & 0.09 & 0.21 & 0.8141 \\ 
+  Residuals   & 107 & 44.38 & 0.41 &  &  \\ 
+   \hline
+\end{tabular}
+\label{tab:credbase}
+\end{center}
+\end{table}
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:30:38 2011
+\begin{table}[ht]
+\begin{center}
+\caption{ANOVA for assessment of group differences in Optimism IAT scores at baseline}
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+Condition   & 2 & 1.21 & 0.61 & 1.36 & 0.2619 \\ 
+  Residuals   & 107 & 47.82 & 0.45 &  &  \\ 
+   \hline
+\end{tabular}
+\label{tab:optbase}
+\end{center}
+\end{table}
+
+As can be seen from Tables the scores on the treatment credibility IAT, the optimism IAT and the mean conventional and alternative credibility scores did not differ across groups. 
+
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p>0.05).
+In addition, the priming manipulation was not significantly different across groups (p>0.05).
+
+
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-lotrmaas}  
+  \caption{Scatterplot of Correlation between Optimism and Mindfulness Scores}
+  \label{fig:lotrmaas}
+\end{figure}
+
+The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. This is in contrast to the results found in a much larger scale study carried out earlier in the research. 
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:01:03 2011
+\begin{table}[ht]
+\begin{center}
+\caption{$\Chi^2$ for effect of condition on placebo response}
+\begin{tabular}{rrrrrr}
+  \hline
+ & Chi Square & df & p Value & Open Placebo & Deceptive Placebo \\ 
+  \hline
+No & 0.26 & 1.00 & 0.61 & 26.00 & 21.00 \\ 
+  Yes & 0.26 & 1.00 & 0.61 & 12.00 & 14.00 \\ 
+   \hline
+\end{tabular}
+\label{tab:chisqcond}
+\end{center}
+\end{table}
+
+As can be seen from Table \ref{tab:chisqcond}, there is no significant effect of condition on placebo response. However, as can also be seen from the table, this is not due to a lower than expected placebo response in the Deceptive Placebo group, but rather due to a higher than expected placebo response in the Open Placebo group. The next step was to examine if this result could be accounted for by the priming mechanism.
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:01:03 2011
+\begin{table}[ht]
+\begin{center}
+\caption {$\Chi^2 $ for effect of priming and condition on placebo response}
+\begin{tabular}{rrrrr}
+  \hline
+ & Chi Square & df & p Value & V4 \\ 
+  \hline
+1 & 78.40 & 11.00 & 0.001 & 0.00 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\label{tab:chisqprime}
+\end{table}
+In Table \ref{chisqprime} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
+
+
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:01:12 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Rasch Model Estimates of Item Difficulty for the Optimism IAT}
+\begin{tabular}{rrrrr}
+  \hline
+ & etapar & se.eta & betapar & se.beta \\ 
+  \hline
+beta Me.diff & -0.27 & 0.49 & 0.27 & 0.49 \\ 
+  beta Mine.diff & 1.12 & 0.71 & 0.27 & 0.49 \\ 
+  beta Myself.diff & 0.29 & 0.55 & -1.12 & 0.71 \\ 
+  beta Theirs.diff & 0.65 & 0.60 & -0.29 & 0.55 \\ 
+  beta Them.diff & -1.18 & 0.46 & -0.65 & 0.60 \\ 
+  beta Themselves.diff & -0.51 & 0.47 & 1.18 & 0.46 \\ 
+  beta Better.diff & -0.27 & 0.49 & 0.51 & 0.47 \\ 
+  beta Happy.diff & -0.51 & 0.47 & 0.27 & 0.49 \\ 
+  beta Improving.diff & -0.01 & 0.51 & 0.51 & 0.47 \\ 
+  beta Succeeding.diff & 0.65 & 0.60 & 0.01 & 0.51 \\ 
+  beta Disimproving.diff & -0.01 & 0.51 & -0.65 & 0.60 \\ 
+  beta Failing.diff & 0.29 & 0.55 & 0.01 & 0.51 \\ 
+  beta Worse.diff & -0.27 & 0.49 & -0.29 & 0.55 \\ 
+   \hline
+\end{tabular}
+\label{tab:optrasch}
+\end{center}
+\end{table}
+
+Above, in Table \ref{tab:optrasch} can be seen the estimated parameters for a Rasch model of the optimism IAT stimuli. Below, in Figure \ref{optpimap} can be seen the Person Item Map for this model. This map shows that most of the stimuli were equivalent in difficulty, which indicates that this IAT is suitable for measuring implicit optimism in the general population, however, more discriminating stimuli would be necessary if the instrument was to be used in a clinical sample. 
+
+
+% \begin{figure}
+%   \centering
+% \includegraphics{Experiment-optpimap}
+%   \caption{Optimism IAT Person Item Map. The dots are the estimated item difficulties, and the histogram at the top shows the estimated person abilities.}
+% \label{fig:optpimap}  
+% \end{figure}
+
+
+A process of stepwise elimination was carried out to
+eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:46:28 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Treatment Credibility IAT Rasch Model estimates of item difficulty parameters}
+\begin{tabular}{rrrrr}
+  \hline
+ & etapar & se.eta & betapar & se.beta \\ 
+  \hline
+beta Accurate.diff & -0.13 & 0.23 & 0.06 & 0.23 \\ 
+  beta Actual.diff & -0.04 & 0.23 & 0.13 & 0.23 \\ 
+  beta Real.diff & -0.22 & 0.23 & 0.04 & 0.23 \\ 
+  beta Truth.diff & -0.17 & 0.23 & 0.22 & 0.23 \\ 
+  beta Fake.diff & 0.26 & 0.24 & 0.17 & 0.23 \\ 
+  beta Illusory.diff & -0.21 & 0.24 & -0.26 & 0.24 \\ 
+  beta Inaccurate.diff & 0.07 & 0.24 & 0.21 & 0.24 \\ 
+  beta Lies.diff & 0.18 & 0.24 & -0.07 & 0.24 \\ 
+  beta Cream.diff & 0.54 & 0.26 & -0.18 & 0.24 \\ 
+  beta Injections.diff & 0.06 & 0.24 & -0.54 & 0.26 \\ 
+  beta Surgery.diff & -0.60 & 0.22 & -0.06 & 0.24 \\ 
+  beta Acupuncture.diff & 0.23 & 0.25 & 0.60 & 0.22 \\ 
+  beta FlowerEssence.diff & 0.16 & 0.25 & -0.23 & 0.25 \\ 
+  beta Homeopathy.diff & -0.08 & 0.23 & -0.16 & 0.25 \\ 
+  beta Reiki.diff & -0.13 & 0.23 & 0.08 & 0.23 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+<<tcqiatpiplot, echo=FALSE, fig=TRUE>>=
+print(tcqiat.piplot)
+@ 
+
+Above in Table \ref{tab:tcqiatrasch} are shown the estimated abilities and their associated standard errors for the Treatment Credibility IAT. In Figure \ref{fig:tcqiatpimap} the estimates of person and item abilities can be seen in graphical form. 
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-tcqiatgender}  
+  \caption{Treatment Credibility IAT scores by Gender}
+  \label{fig:tcqiatgend}
+\end{figure}
+
+
+
+As can be seen from Figure \ref{fig:tcqiatgend} above, there were no significant differences between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument).
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-optiatgender}  
+  \caption{Optimism IAT scores by Gender}
+  \label{fig:optiatgender}
+\end{figure}
+
+
+
+ As can be seen from Figure \ref{fig:optiatgender}, there were no significant differences between men and women with regards to their score on the Optimism IAT. 
+
+\subsection{Analysis of Pain Ratings}
+ 
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-tsmeanpainplot}  
+  \caption{Mean Pain Ratings by Condition Across Time.}
+  \label{fig:tsmeanpainplot}
+\end{figure}
+
+
+
+As can be seen from Figure \ref{fig:tsmeanpainplot}, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to downgrade the effects that outliers could be having on the results. The curves shown above used a locally weighted smoother to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
+
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-medtspainplot}  
+  \caption{Median Pain Ratings by Condition Across Time}
+  \label{fig:medtspainplot}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:medtspainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess) was used to fit the curves. 
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-medianpaintscorrelationplots}  
+  \caption{Autocorrelation Plots for Median Pain Ratings}
+  \label{fig:medpainacf}
+\end{figure}
+
+
+As can be seen in Figure \ref{fig:medpainacf}, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall mixed model which will be fit to the data.
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-meanpaintscorrelationplots}  
+  \caption{Mean Pain Ratings Autocorrelation Plot}
+  \label{fig:meanacf}
+\end{figure}
+
+
+The mean pain ratings were also examined for autocorrelations, and as shown above, the results were exactly the same as for the median pain ratings, indicating an ARIMA(1,3,1) model was the best fit for the data.
+
+
+\subsection{Variables impacting the placebo response}
+
+In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-ggplotsurvivalgroupiat}  
+  \caption{Survival length on the x axis by Group (lines) against Treatment Credibility IAT scores on the y axis. The lines were fit using a locally weighted regression line}
+  \label{fig:ggplotsurvgroup}
+\end{figure}
+
+
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-placresponse.surv.tcqiatscore}  
+  \caption{Survival time (x axis) against Treatment Credibility IAT scores (y axis) with sample divided into placebo responders and non responders}
+  \label{fig:ggplottcqplac}
+\end{figure}
+
+
+As can be seen above in Figure \ref{fig:ggplottcqplac}, the group which responded to placebo tended to have a much higher tcqiatscore. This is in line with the hypotheses of the experiment, and leads on to formal test of the model expressed graphically above. Note that the difference between the groups in terms of placebo response does not appear to be significant (the dark area around the lines represent the standard errors of the loess fit). 
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-optiatcorrsurv}
+  \caption{Optimism IAT scores (y axis) against survival time (x axis) divided by response to placebo}
+  \label{fig:optiatplac}
+\end{figure}
+
+
+Again, it can be seen (Figure \ref{fig:optiatplac}) that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-creamcorrsurv}  
+  \caption{Mean Cream credibility scores (y axis) against length of survival (y axis) by Condition (lines)}
+  \label{fig:creamcorrsurv}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:creamcorrsurv} above, there appeared to be no relationship with the mean credibility score for creams and the length which participants remained in the experiment.
+
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-ggplotplacyesno}  
+  \caption{Pain Ratings over time divided by response to placebo}
+  \label{fig:placyesnopain}
+\end{figure}
+
+
+A number of findings are apparent from the plot above in Figure \ref{fig:placyesnopain}. Firstly, there were far more participants in the study who did not respond to placebo (as shown by the narrower confidence intervals on the blue line). 
+
+Secondly, the placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+
+\subsection{Logistic Regressions on Placebo Response}
+
+In order to examine whether or not the IAT scores were predictive of placebo response, a logistic regression model was used. Logistic regression was chosen for this as the response outcome was binary, and this method extends the linear regression model for binary outcomes. 
+
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:04:49 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Logistic Regression Model predicting Placebo Response from Treatment Credibility IAT}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$$|$z$|$) \\ 
+  \hline
+(Intercept) & -0.8169 & 0.3494 & -2.34 & 0.0194 \\ 
+  tcqiatscore & 0.3215 & 0.3440 & 0.93 & 0.3499 \\ 
+   \hline
+\end{tabular}
+\label{tab:placmod1}
+\end{center}
+\end{table}
+
+As can be seen above in Table \ref{tab:placmod1}, the treatment credibility IAT was not a significant independent predictor of placebo response.
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:04:49 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Logistic Regression Model predicting Placebo Response from Optimism IAT}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$$|$z$|$) \\ 
+  \hline
+(Intercept) & -0.2892 & 0.3602 & -0.80 & 0.4220 \\ 
+  optiatscore & -0.4115 & 0.3733 & -1.10 & 0.2703 \\ 
+   \hline
+\end{tabular}
+\label{placmod2}
+\end{center}
+\end{table}
+
+As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent significant predictor of placebo response either. 
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:04:49 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Logistic Regression Model predicting Placebo Response from Life Orientation Test Scores}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$$|$z$|$) \\ 
+  \hline
+(Intercept) & 0.1062 & 1.1724 & 0.09 & 0.9278 \\ 
+  LOTR & -0.0309 & 0.0509 & -0.61 & 0.5441 \\ 
+   \hline
+\end{tabular}
+\label{placebolotr}
+\end{center}
+\end{table}
+
+In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{placebolotr}.
+
+However, when these three variables are placed into the model together, the result is significant.
+
+% latex table generated in R 2.13.1 by xtable 1.5-6 package
+% Mon Jul 18 21:04:49 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Logistic Regression Model predicting Placebo Response from Treatment Credibility IAT, Optimism IAT and LOT-R}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$$|$z$|$) \\ 
+  \hline
+(Intercept) & -10.2557 & 4.9056 & -2.09 & 0.0366 \\ 
+  tcqiatscore & 13.4507 & 5.4927 & 2.45 & 0.0143 \\ 
+  optiatscore & 9.5461 & 4.4634 & 2.14 & 0.0325 \\ 
+  LOTR & 0.3953 & 0.1992 & 1.98 & 0.0472 \\ 
+  tcqiatscore:optiatscore & -11.7459 & 5.2298 & -2.25 & 0.0247 \\ 
+  tcqiatscore:LOTR & -0.5193 & 0.2165 & -2.40 & 0.0165 \\ 
+  optiatscore:LOTR & -0.4156 & 0.1895 & -2.19 & 0.0283 \\ 
+  tcqiatscore:optiatscore:LOTR & 0.4658 & 0.2120 & 2.20 & 0.0280 \\ 
+   \hline
+\end{tabular}
+\label{placmodinter}
+\end{center}
+\end{table}
+
+As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variable's interactions were also significant. 
+
+In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-ggplot3wayinter}  
+  \caption{Scatterplot of TC IAT (y axis) LOTR (x axis), Optimism IAT (size) and Placebo response (colour)}
+  \label{fig:3wayinter}
+\end{figure}
+
+
+
+ The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+
+ \begin{figure}
+   \centering
+\includegraphics{Experiment-lotrtcqsmoothplot}   
+   \caption{Life Orientation Test (x axis), TC IAT (y axis) against placebo response (line) }
+   \label{fig:lotrtcqplot}
+ \end{figure}
+
+
+This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-lotroptplot}  
+  \caption{Life Orientation Test (x axis) against TC IAT (y axis) by Placebo Response (line)}
+  \label{fig:lotroptplot}
+\end{figure}
+
+
+From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response. 
+
+
+\subsection{Analysis of Physiological Data}
+
+
+Before the analysis of GSR data was conducted, the mean and median GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
+
+
+
+\begin{figure}
+  \centering
+\includegraphics{Experiment-meanplotgsr}
+  \caption{Mean GSR recording over times by Group. Deceptive placebo - top plot, Open Placebo - middle plot, No Treatment - bottom plot}
+  \label{fig:meangsr}
+\end{figure}
+
+
+The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+
+
+<<gsrmedianplot, echo=FALSE, fig=TRUE>>=
+plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
+@ 
+
+Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations.
+
+<<ggplotgsr, echo=FALSE, fig=TRUE>>=
+meangsr.melt <- melt(meangsr, id="Time")
+meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
+meangsr2 <- meangsrplot+layer(geom="smooth")
+print(meangsr2)
+@ 
+
+
+\section{Discussion} 
+
+A number of findings have been made from this experiment. Firstly, there appears to be a large effect of priming participants with cooperation with regards to responding in the Open Placebo Condition. This was unexpected, but a possible explanation would be that in the Deceptive Placebo condition participants expected an immediate effect of the placebo intervention, and when this did not occur, they grew disheartened and suspected the veracity of the experimental manipulation. However, for the Open Placebo participants, they did not expect anything, so the sensation of the moisturiser might have increased their expectancies, and allowed the placebo response to occur.However, this is speculative at best. 
+
+Secondly, it appears that there is some association between placebo response and implicit measures. Though neither of them were independent predictors, when included in the model and allowed to interact, both of them were significant. However, this effect appears to have been moderated by self reported optimism scores. It may also be that this study lacked sufficient power to detect a significant independent effect, but this conclusion is suspect as typically power is less for interactions, so the evidence is somewhat against this suggestion.
+
+One possible explanation for these findings is that the kind of cognitive processes engaged in during IAT tasks may be related to placebo response. The most likely of these is probably task switching. Further analysis, looking at differences in response times where task switches occur will tease out this hypothesis. 
+
+% A number of caveats are in order here. Firstly, neither the optimism IAT or the treatment credibility IAT were independently predictive of placebo response. However, when the model included an interaction between them, all three of these variables were sitgnificant (as in the model shown above). This may indicate that there may be some irrelevant (from the conventional scoring perspective) feature of the IAT measures which was predictive of placebo response in this sample. This is a matter which can be teased out by future research. 
+
+One caveat that should be borne in mind is that, given the number of models fitted, some were almost certain to come up as significant, and the three way interaction between the two IAT measures and the Life Orientation Test was not a hypothesis of the research, though it is an extremely interesting finding.
+
+It might be questioned why the Condition variable was not included in the model - it was, but it was dropped as its presence caused errors in the model fit. A little thought explains why this is so - placebo response was only possible in 2 of 3 conditions, and Condition acted as a proxy for these, thus causing issues with the model fit (in essence, Condition was collinear with placebo response). The final model shown above was superior to the other models considered, in terms of AIC and other model fit indices. 
+
+
+
+In addition, the modelling here did not take account of the time series structure of the pain ratings, and used a crude binary measure of placebo response, to facilitate exploration of the major hypotheses of the study. Two further approaches can be taken here. Firstly, placebo response can be scored as the proportion of time spent below 7 following administration of placebo. Secondly, the pain ratings themselves can be predicted if a suitable autocorrelation structure for the residuals can be identified.
+
+Also, there are some limitations to the use of condition means for the analysis of both GSR and pain ratings. While these are convenient shortcuts, there is some evidence that individual variability in both response to placebo and pain is extremely variable, so in the future, each individual time series will be modelled and examined for cross correlations. 
+
+In addition, there appear to be some interesting patterns emerging from the GSR recordings. These showed a pattern which was not consistent with a minor hypothesis of the study (that they would track pain ratings) but further analysis needs to be carried out in order to ascertain this. The ECG readings are also left to analyse in the future due to time constraints. These physiological recordings are tangential to the major hypothesis of the research, however they do provide a large dataset with which to examine physilogical changes associated with both the response to pain and placebo. 
+
+\end{document}

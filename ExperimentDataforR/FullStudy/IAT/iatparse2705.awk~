@@ -1,0 +1,10 @@
+BEGIN{
+    FS="\\";
+    RS="#";
+    OFS=",";
+    ORS="\n";
+    NF=110;
+}{
+    for(i=1;i<=NF;i++) {printf "%-8s", $i; printf ",";} 
+   
+}

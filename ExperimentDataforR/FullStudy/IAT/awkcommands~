@@ -1,0 +1,96 @@
+richie@richie-Aspire-7110:~$ cd Data/Experiment\ Data\ for\ R/FullStudy/IAT/
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk -f iatparse1.awk IATData120211.txt
+awk: iatparse1.awk:10:    ~ /^Participant:[0-9]? Test:Optimism IAT/\,/^Block 5 Time/ {print <<optiat.txt}
+awk: iatparse1.awk:10:    ^ syntax error
+awk: iatparse1.awk:10:    ~ /^Participant:[0-9]? Test:Optimism IAT/\,/^Block 5 Time/ {print <<optiat.txt}
+awk: iatparse1.awk:10:                                             ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk -f iatparse1.awk IATData120211.txt
+awk: iatparse1.awk:10:    $1~ /^Participant:[0-9]? Test:Optimism IAT/,/^Block 5 Time/ {print <<optiat.txt}
+awk: iatparse1.awk:10:                                               ^ syntax error
+awk: iatparse1.awk:11:    $1 ~/^Participant:[0-9]? Test:Treatment Credibility IAT/,/^Block 5 Time/) {print <<tcqiat.txt}
+awk: iatparse1.awk:11:                                                            ^ syntax error
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'Participant' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'Participant' {print<<partfile.txt} IATData120211.txt
+>   C-c C-c
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'Participant' {print>>partfile.txt} IATData120211.txt
+awk: cmd. line:1: fatal: cannot open file `{print' for reading (No such file or directory)
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk ''Participant' {print>>partfile.txt}' IATData120211.txt
+awk: Participant {print>>partfile.txt}
+awk:                             ^ syntax error
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk ''Participant' {print>>partfile}' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk ''Participant' {print >>partfile}' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk ''Participant' {print >>partfile }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant/ {print >>partfile }' IATData120211.txt
+awk: (FILENAME=IATData120211.txt FNR=1) fatal: expression for `>>' redirection has null string value
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant/ {print >>"partfile" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant:[0-9]?/ {print $1 >>"partfile2" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+/ {print $1 >>"partfile2" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+/ {print $1 >>"partfile3" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+/ {print $1,$2,$3 >>"partfile4" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+/ {print $1,$2 >>"partfile4" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+/ {print $1,$2 >>"partfile5" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+ Test:Optimism IAT/, /Block 5 Time:/ {print $0  >>"optiat2" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+ Test: Optimism IAT/, /Block 5 Time:/ {print $0  >>"optiat2" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '/Participant: [0-9]+ Test: Treatment Credibility IAT/, /Block 5 Time:/ {print $0  >>"tcqiat2" }' IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ wc -l tcqiat
+wc: tcqiat: No such file or directory
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ wc -l tcqiat2
+567 tcqiat2
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ wc -l optiat2
+567 optiat2
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ wc -l IATData120211.txt
+1134 IATData120211.txt
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ sudo aptitude search revolution
+[sudo] password for richie: 
+p   librevolution-ruby              - Ruby binding for the Evolution mail client
+p   librevolution-ruby1.8           - Ruby 1.8 binding for the Evolution mail cl
+p   r-revolution-revobase           - REvolution Computing R Math Kernel Librari
+p   revolution-mkl                  - REvolution Computing high-performance nume
+p   revolution-r                    - REvolution Computing R for Ubuntu         
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'BEGIN {print "Don't Panic"} '
+>   C-c C-c
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'BEGIN { print \"Don't Panic"\ }'
+>   C-c C-c
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk "BEGIN { print \'Don't Panic'\ }"
+awk: BEGIN { print \'Don't Panic'\ }
+awk:               ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk "BEGIN { print 'Don't Panic' }"
+awk: BEGIN { print 'Don't Panic' }
+awk:               ^ invalid char ''' in expression
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk "BEGIN { print "Don't Panic" }"
+>   C-c C-c
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk "BEGIN { print \"Don't Panic\" }"
+Don't Panic
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk "BEGIN { print 'Don't Panic' }"
+awk: BEGIN { print 'Don't Panic' }
+awk:               ^ invalid char ''' in expression
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk 'BEGIN { print \"Don't Panic"\ }'
+>   C-c C-c
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '\Participant: [0-9]+\ {print $1 <<tcqiat5} '
+awk: \Participant: [0-9]+\ {print $1 <<tcqiat5} 
+awk: ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '\Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt '
+awk: \Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt 
+awk: ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ awk '\\Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt '
+awk: \\Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt 
+awk: ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ gawk '\Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt '
+gawk: \Participant: [0-9]+\ {print $1 <<tcqiat5} IATData120211.txt 
+gawk: ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ gawk '\Participant: [0-9]+\ {print $1 <<tcqiat5}' IATData120211.txt 
+gawk: \Participant: [0-9]+\ {print $1 <<tcqiat5}
+gawk: ^ backslash not last character on line
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ gawk '/Participant: [0-9]+/ {print $1 <<tcqiat5}' IATData120211.txt 
+gawk: /Participant: [0-9]+/ {print $1 <<tcqiat5}
+gawk:                                  ^ syntax error
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ gawk '/Participant: [0-9]+/ {print $1 << "tcqiat5"}' IATData120211.txt 
+gawk: /Participant: [0-9]+/ {print $1 << "tcqiat5"}
+gawk:                                  ^ syntax error
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ gawk '/Participant: [0-9]+/ {print $1 >> "tcqiat5"}' IATData120211.txt 
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ rm tcqiat5
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ ls
+AllData050411.txt         AllDatatill280311.txt  IATData120211.txt   iatparse1.awk~  partfile2  partfile5
+AllData290311.txt         awktest.awk            IATData120211.txt~  optiat2         partfile3  partfile.txt}
+AllDatafrom2903toend.txt  awktest.awk~           iatparse1.awk       partfile        partfile4  tcqiat2
+richie@richie-Aspire-7110:~/Data/Experiment Data for R/FullStudy/IAT$ 

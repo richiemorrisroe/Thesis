@@ -1,0 +1,1568 @@
+\section{Introduction}
+
+Expectancies are considered to be at the core of the placebo response \cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs \cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal \cite{Whalley2008}.  This paper reports on an adaptation of the Credibility/Expectancy Questionnaire \cite{devilly2000psychometric}  to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
+While expectancies are considered the prime factor in response to placebo, there is some evidence that they are not the best predictors in all situations, and that there may be components of expectancies which are not tapped by current measures \cite{Hyland2007,Geers2005,Geers2005a}. The CEQ is useful in that it taps both cognitive and affective components of the expectancy construct, and this should lead to better predictions. This article reports on the development of the CEQ for pain measurements. It is important to note that current or former use of the treatments measured was not a requirement for the completion of the measure, but this should not be regarded as a flaw given that many if not most participants in placebo research do not have any experience of the treatments used (and indeed, such knowledge is often an exclusion criteria for the research) \cite{Kirsch1985,Kirsch1997}. The CEQ has been used in a family therpay setting for children with conduct disorder \cite{Nock2007}, in the assessment of relational therapy for Vietnam war veterans and their spouses \cite{Devilly2002} and in the treatment of PTSD \cite{Devilly2008}. It has not been used in any non-clinical samples, and this is its first adaptation for the study of both pain and treatment response expectancies. 
+
+\section{Study One}
+
+\subsection{Materials and Methods}
+
+\subsubsection{Participants}
+
+All participants in Study 1 were students at the University of the researchers. 299 began the survey, and 281 completed the analysis in full. These 281 participants are the those on whom the analyses reported here were based. Ages, Gender and other demographic variables about the participants can be found in the Results section, under the heading of Descriptive Statistics. 
+
+\subsubsection{Measures}
+
+The Treatment Credibility Questionnaire was adapted from the Devilly and Borkovec Credibility/Expectancy Questionnaire. This questionnaire consists of six questions, asking about the cognitive and affective responses to the therapy. Given that this research project concerns the use of placebo analgesia, the questionnaires were modified to make them refer to procedures for the relief of pain.
+The general format is as follows: You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below. 
+In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pill, Cream, Injection and Acupuncture. 
+There were six questions under each method, giving the scale 24 questions in all. Following the analysis of the results of Study 1, the instrument was modified to include six questions each on Homeopathy and Reiki, another two methods within the field of complementary and alternative medicine.  
+
+
+ 
+
+The questions were as follows:
+
+
+\begin{enumerate}
+	\item How logical does the therapy offered to you seem?
+	\item How successful do you think this treatment will be in reducing your symptoms?
+ 	\item How confident would you be in recommending this treatment to a friend2
+	\item How much improvement in your symptoms do you think will occur?
+	\item How much do you really feel that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really feel will occur?
+\end{enumerate}
+
+The CEQ has had alpha of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
+
+\subsubsection{Data Collection}
+
+Data were collected online through the use of an online data collection tool. The email request for completion was sent through the moderator of the All Students list to a total of 4551 students. By the date alloted for collection of responses, 299 had been returned, giving a response rate of 6.3\%, which is extremely low. 
+
+The following demographic variables were also assessed: Age, College of Study, Gender, and whether the respondent was an undergraduate or a postgraduate. 
+
+\subsubsection{Data Analysis}
+
+As this was a first draft of the survey, representativeness was not rated as important as other factors. The priority here was to assess the reliability and factor structure of the of instrument, to allow further validation in clinical and non-clinical groups over time.  All data analysis was conducted using R 2.11.0, an open source data analysis environment based on the commercial S Plus language\cite{RDevelopmentCoreTeam2010}. The pysch package was used for all factor and reliability analyses \cite{Revelle2010} while the eRm package was used for the IRT analyses and plots \cite{Mair2010} and the xtable package \cite{Dahl2009} to export R objects for LaTeX  along with the Sweave package to allow R code to processed through LaTeX editors, enabling reproducible research \cite{Leisch2002}. Structural Equation Modelling was carried out using the OpenMx package \cite{Bokerinpress}. All code and data are available from the first author upon request. 
+
+Factor Analysis was carried out using a principal axis method, as normality could not be assumed.In this piece of research, Exploratory Factor Analysis was used, as the researcher had no prior hypotheses on the nature and structure of the underlying latent variables. 
+Many researchers recommend utilising a number of different methods of data reduction, as the evidence suggests that a factor structure which remains invariant after multiple different reductions is the most likely solution that can be fitted to the data\cite{costello2005best,henson2006use}. This was the approach taken in this research report. Other research has shown that parallel analysis and the Minimum Average Partial criterion, along with the scree plot are two the most effective means of assessing the number of factors to retain, and both of these criteria were used in this research. Kruskal-Wallis tests were used for assessment of differences between groups, as normality was not assumed (and indeed was not found). 
+
+
+\section{Results}
+
+\subsection{Demographic Statistics}
+
+Below in the table \ref{tab:tcq1.age} can be seen summary statistics for the age of the respondents. 
+<<packagesanddata, echo=FALSE, results=hide>>=
+require(ggplot2)
+require(psych)
+require(xtable)
+require(mokken)
+require(eRm)
+require(ltm)
+require(xtable)
+require(OpenMx)
+source("func.R")
+tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
+@ 
+
+<<agesummary, echo=FALSE, results=tex>>=
+sum.age<-summary(tcq1$Age) #$
+sum.age.mat<-as.matrix(sum.age)
+xtab.age<-xtable(sum.age.mat)
+print(xtab.age)
+@ 
+
+\caption{Age Distribution of Sample, TCQ 1}
+\label{tab:tcq1.age}
+
+
+
+The College of study of the respondents was also assessed, and the results are shown in Table \ref{tab:tcq1.college} below. 
+
+<<gendersummary, echo=FALSE, results=tex>>=
+sum.gen<-summary(tcq1$Gender.) 
+sum.gen.mat<-as.matrix(sum.age)
+sum.gen.xtab<-xtable(sum.gen.mat)
+print(sum.gen.xtab)
+@ 
+
+<<tcqcollege, echo=FALSE, results=tex>>=
+sum.coll<-summary(tcq1$College.) 
+sum.coll.mat<-as.matrix(sum.coll)
+xtab.coll<-xtable(sum.coll.mat)
+print(xtab.coll)
+@ 
+
+
+\caption{College of Respondents, TCQ 1}
+\label{tab:tcq1college}
+
+
+As we can see from Table \ref{tab:tcq1college}, again the breakdown roughly follows the distribution of students in the population. However, there are a few more Medicine and Health students than one would expect, presumably because this survey was somewhat more salient to them, given their field. 
+
+The next demographic variable we will examine is the breakdown between undergraduates and postgraduates in the sample. The results can be seen in Table 3 below. 
+<<upgsummary, echo=FALSE, results=tex>>=
+sum.ugpg<-summary(tcq1$UGPG.) #$
+ugpg.mat<-as.matrix(sum.ugpg)
+xtab.ugpg<-xtable(ugpg.mat)
+print(xtab.ugpg)
+@ 
+
+
+\caption{Distribution of Undergraduates and Postgraduate Respondents, TCQ 1}
+\label{tab:tcq1ugpg}
+
+As we can see from table \ref{tab:tcq1ugpg}, approximately 16\% of the sample are postgraduates, which fits reasonably well with the figures from the population. 
+
+The next demographic variable examined is that of year of Study, and the results can be seen in Table below.
+
+<<yearsummary, echo=FALSE, results=tex>>=
+sum.year<-summary(tcq1$Year.) #$
+mat.year<-as.matrix(sum.year)
+xtab.year<-xtable(mat.year)
+print(xtab.year)
+@ 
+
+
+\caption{Year of Study, TCQ 1}
+\label{tab:tcq1year}
+
+
+As one can see from Table \ref{tab:tcq1year} , the largest number of respondents came from first year, which argues against the representativeness of the sample. However, given that both first year undergraduates and first year postgraduates could have used this response, it may not be that much of a threat to representativeness. 
+
+Now that all of the demographic variables have been assessed, we can look at the scores on the response variables regarding the different forms of treatment. 
+
+Below, In Table \ref{tab:tcq1sumtotals} can be seen the summary statistics for the credibility scores for each of the four modalites.
+
+<<totalscreate, echo=FALSE, results=hide>>=
+totals <- tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")]
+@
+
+
+<<totalsummary, echo=FALSE, results=tex>>=
+sum.totals<-summary(totals)
+mat.totals<-as.matrix(sum.totals)
+xtab.totals<-xtable(mat.totals)
+print(xtab.totals)
+@ 
+
+
+\caption{Summary Statistics, Total Credibility Scores}
+\label{tab:tcq1.sumtotals}
+
+As can be seen,  none of these distributions are normally distributed, a point which is reinforced by Figure \ref{fig:tcqscatterplotmat} below, which shows both the correlations between the scale totals and their distribution. 
+\begin{figure}
+	\centering
+<<scatterplotmat, echo=FALSE, fig=TRUE>>=
+print(pairs.panels(totals))
+@ 
+\caption{Scatterplot Matrix, TCQ 1}
+\label{fig:tcqscatterplotmat}
+\end{figure}
+
+Next, the differences in credibility totals between Genders will be examined. 
+<<gendercred, echo=FALSE, fig=TRUE>>=
+gendpill <- ggplot(tcq1, aes(x=PillTot, colour=Gender))+layer(geom="bar")
+gendcream <- ggplot(tcq1, aes(x=CreamTot, colour=Gender))+layer(geom="bar")
+gendinj <- ggplot(tcq1, aes(x=InjTot, colour=Gender))+layer(geom="bar")
+gendacu <- ggplot(tcq1, aes(x=AcuTot, colour=Gender))+layer(geom="bar")
+@ 
+<<gendpill, echo=FALSE, fig=TRUE>>=
+print(gendpill)
+@ 
+
+As can be seen from this Box plot (Figure \ref{fig:tcq 0.795-11}), there appear to be no significant differences in median Pill scores that can be attributed to the Gender of the respondents. It can be seen, however, that the variability is larger within the male responses. Again, we see a similar pattern to the scores for Pills, in that there appears to be no mean differences in the credibility totals. We can see a larger variability with the responses from men.  From Figure 9, we can observe that again, no significant differences are visible between the credibility totals.  We can observe that men tend to report much higher variability in their assessment of injections.However, the acupuncture figure shows a different pattern. We can see from a simple inspection of the graph that the mean credibility totals are very different for females and males. We performed a Kruskall Wallis test to examine whether this visual difference can be backed up with a rigorous analysis. The results tended towards significance (p=0.09).
+As can be seen from this, the difference, although visible is not significant, although it probably would be if the sample were larger. Again, the pattern of larger variability in the responses of men is apparent.   
+<<collegeplots, echo=FALSE, fig=TRUE>>=
+collpill <- ggplot(tcq1, aes(x=PillTot, colour=College))+layer(geom="bar")
+collcream <- ggplot(tcq1, aes(x=CreamTot, colour=College))+layer(geom="bar")
+collinj <- ggplot(tcq1, aes(x=InjTot, colour=College))+layer(geom="bar")
+collacu <- ggplot(tcq1, aes(x=AcuTot, colour=College))+layer(geom="bar")
+@ 
+
+<<collpill, echo=FALSE, fig=TRUE>>=
+print(collpill)
+@ 
+
+
+<<collcream, echo=FALSE, fig=TRUE>>=
+print(collcream)
+@ 
+
+<<collinj, echo=FALSE, fig=TRUE>>=
+print(collinj)
+@ 
+
+<<collacu, echo=FALSE, fig=TRUE>>=
+print(collacu)
+@ 
+
+\subsubsection{Reliability Analysis}
+
+%Reliability is an extremely important part of any measurement instrument, given that if we cannot rely on the instrument giving us similar answers on different equations, it is of no use in our studies.
+The reliability of this scale was assessed. The method used was Cronbach's alpha, which is the mean of all possible split half reliabilities, and is the most commonly used measure of reliability in psychological research. Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
+
+This analysis was performed on the sample, and the mean alpha was equal to .9, which is well above the threshold used for survey research (.7) and would, on the basis of this sample, qualify as a clinical instrument, for which the threshold is 0.9. This reliability analysis (shown in Tables \ref{tab:reltcq1short} and \ref{tab:tcq1rel.long})  did not suggest that any of the items should be removed from the scale. 
+
+<<scalemake, echo=FALSE, results=hide>>=
+Pill.g <- grep("Pill[1-6]", x=names(tcq1))
+Cream.g <- grep("Cream[1-6]", x=names(tcq1))
+Inj.g <- grep("Inj[1-6]", x=names(tcq1))
+Acu.g <- grep("Acu[1-6]", x=names(tcq1))
+Pillall <- tcq1[,Pill.g]
+Creamall <- tcq1[,Cream.g]
+Injall <- tcq1[,Inj.g]
+Acuall <- tcq1[,Acu.g]
+tcqall <- as.data.frame(cbind(Pillall, Creamall, Injall, Acuall))
+rel.tcq <- psych:::alpha(na.omit(tcqall))
+@ 
+
+\caption{Reliability Statistics for TCQ 1}
+\label{tab:reltcq1short}
+<<reltcq, echo=FALSE, fig=TRUE>>=
+rel.xtab<-xtable(rel.tcq$total) 
+print(rel.xtab)
+@ 
+
+<<reltcq2, echo=FALSE, results=tex>>=
+print(xtable(rel.tcq$item.stats))
+@ 
+
+\label{tab:tcq1rel.long}
+
+
+
+\subsubsection{Factor Analysis}
+
+Factor Analysis is a method for examining inter-correlations between sets of variables in order to reduce the number of items required to model the instrument. It is commonly used in psychological research either to confirm a predicted structure (Confirmatory Factor Analysis) or to explore the factor structure of a new instrument (Exploratory Factor Analysis).
+
+
+
+
+The first analysis carried out on the data was an assessment of the number of factors suggested by both the parallel analysis and MAP criterion. The results of the parallel analysis and scree plot are shown in the Figure \ref{fig:tcq 0.795-17}  below. The MAP criterion suggested that six factors should be extracted. Both of these factor solutions will be created and examined based on fit indices and interpretability below. 
+
+\begin{figure}
+	\centering
+<<faparallel, echo=FALSE, fig=TRUE>>=
+plot(fa.parallel(na.omit(tcqall)))
+VSS(na.omit(tcqall))
+@ 
+
+	\caption{Scree Plot and Parallel Analysis, TCQ 1}
+	\label{fig:faparallel}
+\end{figure}
+
+<<tcqfact4, echo=FALSE, results=tex>>=
+tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
+print(FactorXtab(tcq.fact.4))
+@ 
+
+<<factorloadings4, echo=FALSE, results=verbatim>>=
+print(ExtractLoadings(tcq.fact.4))
+@ 
+
+\caption{Four Factor Solution, TCQ 1 Oblimin rotation}
+\label{tab:tcq1fourfactor}
+
+<<factorcor4, echo=FALSE, results=tex>>=
+print(FactorCor(tcq.fact.4))
+@ 
+
+The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
+As can be seen, the red lines (representing the random values) cut off the blue lines of the actual data somewhere at 4 factors, and the numerical output claims that a four factor solution is most optimal. 
+Therefore, 4 factors were retained. The theoretical rationale for accepting this analysis is outlined below. 
+
+As can be seen from Table \ref{tab:tcq1fourfactor}  this factor structure is extremely interpretable, with each group of six questions loading highly on its own factor. This fits with the expectations prior to the research. 
+
+Below, in Table \ref{tab:tcq1fourfactor.corr} are shown the inter-correlations between these factors. 
+
+
+\caption{Four Factor Solution Correlations between Factors}
+\label{tab:tcq1fourfactor.corr}
+
+
+This four factor solution explains 74\% of the variance, which is extremely high for a psychological self report scale. 
+
+As can be seen from Table \ref{tab:tcq1fourfactor.corr} , the Acupuncture factor does not correlate highly with the other three factors, but they do correlate reasonably well with one another. This table makes clear that the distinction between the western and alternative treatment modalities was clear to the participants. 
+
+Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
+
+<<tcqfact5, echo=FALSE, results=tex>>=
+tcq.fact.5<-fa(na.omit(tcqall), 5, rotate='promax', fm="pa")
+print(FactorXtab(tcq.fact.5))
+@ 
+<<tcq5cor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq.fact.5))
+@ 
+
+\caption{Five Factor Solution, TCQ 1 Promax rotation}
+
+
+Although in Table \ref{tab:tcq1fivefactor} the oblimin solution is shown, simplimax, varimax and promax rotations were attempted on the data specifying five factors. In no case did any of the items load highest on this factor, so this factor can be regarded as not adding anything to the model. 
+
+Finally, the six factor solution was examined for interpretability, and the results are shown in Table \ref{tab:tcq1sixfactor}
+<<tcqfact6, echo=FALSE, results=tex>>=
+tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
+print(FactorXtab(tcq.fact.6))
+@ 
+<<tcq6cor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq.fact.6))
+@ 
+
+\caption{Six Factor Solution, TCQ 1, Oblimin Rotation}
+\label{tab:tcq1sixfactor}
+
+
+As can be seen in Table \ref{tab:tcq1sixfactor} the four factors from the original solution still have the highest loadings, but there are a number of lower loadings on the fifth and sixth factors. This suggests that a CFA using a maximum likelihood approach is needed to determine which of these solutions can reproduce the covariance matrix most accurately. 
+
+<<fitindices,echo=FALSE, results=tex>>=
+fit4 <- FitIndices(tcq.fact.4)
+fit5 <- FitIndices(tcq.fact.5)
+fit6 <- FitIndices(tcq.fact.6)
+fit.tcq1 <- as.data.frame(cbind(fit4, fit5, fit6))
+print(xtable(fit.tcq1))
+@ 
+
+
+\caption{Fit Indices, TCQ 1}
+\label{tab:tcq1modelcomp}
+
+It can be seen that the six factor solution has the best fit indices (BIC and TLI) and given these fit indices and the results of the CFA in Table \ref{tab:tcq1modelcomp}, this factor solution appears to be the one which replicates the covariance matrix best. 
+
+@ 
+
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Wed Jan 12 13:19:15 2011
+\begin{table}[ht]
+\begin{center}
+\caption{Model Comparison Statistics, TCQ 1}
+\begin{tabular}{rllrrrrrrr}
+  \hline
+ & base & comparison & ep & minus2LL & df & AIC & diffLL & diffdf & p \\ 
+  \hline
+1 & TCQ14Factor &  &  48 & 1504.65 & 252.00 & 1158.27 &  &  &  \\ 
+  2 & TCQ14Factor & TCQ16Factor &  57 & 1129.68 & 243.00 & 801.30 & -374.97 & -9.00 &  \\ 
+   \hline
+\end{tabular}
+\label{tab:tcq1modelcomp}
+\end{center}
+\end{table}
+
+As can be seen in Table \ref{tab:tcq1modelcomp}, the six factor model appears to fit the data much better, which is unexpected. Possible explanations are discussed below. 
+
+
+\subsubsection{Confirmatory Factor Analyses}
+\label{sec:conf-fact-analys}
+
+<<tcq4sem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+Tcq4model <- mxModel(name="TCQ4", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcqall)), type="cov", numObs=264)
+                      )
+tcq4fit <- mxRun(Tcq4model)
+tcq4summ <- summary(tcq4fit)
+@ 
+
+
+<<tcq5sem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Fifth")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+fifth <- c("Pill4", "Pill5", "Pill6", "Cream5", "Cream6", "Inj6")
+Tcq5model <- mxModel(name="TCQ5", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                     mxPath(from="Fifth", to=fifth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcqall)), type="cov", numObs=264))
+tcq5fit <- mxRun(Tcq5model)
+tcq5summ <- summary(tcq5fit)
+@ 
+
+<<tcq6sem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Fifth", "Sixth")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+fifth <- c("Pill1", "Pill3","Cream1", "Cream3","Inj1", "Inj3")
+sixth <- c("Pill2", "Pill4","Inj2", "Inj4")
+Tcq5model <- mxModel(name="TCQ5", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                     mxPath(from="Fifth", to=fifth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcqall)), type="cov", numObs=264))
+tcq5fit <- mxRun(Tcq5model)
+tcq5summ <- summary(tcq5fit)
+@ 
+
+\subsection{Item Response Theory Analyses}
+
+
+<<tcqcheckassumptions, echo=FALSE, results=hide>>=
+tcq.scales <- aisp(na.omit(tcqall))
+@ 
+
+As can be seen from Table \ref{tab:tcqcheckassumptions}, the items appear to divide into two scales, one for the conventional items and another for the acupuncture items. Therefore, these two sets of items will be analysed seperately. 
+
+
+<<tcqscales, echo=FALSE, results=tex>>=
+print(xtable(tcq.scales))
+convtcq <- as.data.frame(cbind(Pillall, Creamall, Injall))
+tcqalt <- Acuall
+@ 
+
+<<tcqitemord, echo=FALSE, results=hide>>=
+tcqconv.item.ord <- check.iio(na.omit(convtcq))
+tcqalt.item.ord <- check.iio(na.omit(tcqalt))
+tcqconv.monotonicity <- check.monotonicity(na.omit(convtcq))
+tcqalt.monotonicity <- check.monotonicity(na.omit(tcqalt))
+@ 
+
+<<tcqconvitemord, echo=FALSE, results=tex>>=
+print(xtable(tcqconv.item.ord$violations))
+convtcq <- convtcq[,-2]
+@ 
+
+From Table \ref{tab:tcqconvitemord} it can be seen that Pill2 was the only item which did not meet the assumptions of the model in that it violated the item ordering assumption (assumption of monotonicity). Therefore, this item was removed from the scale before further analyses. 
+
+Next, the assumptions of monotonicity were examined for the conventional items, and the results are shown in Table \ref{tab:convmonotonicity}. 
+
+<<convmonotonicity, echo=FALSE, results=tex>>=
+print(xtable(summary(tcqconv.monotonicity)))
+@ 
+
+<<tcqaltitemord, echo=FALSE, results=tex>>=
+print(xtable(tcqalt.item.ord$violations))
+
+@ 
+
+Table \ref{tab:tcqaltitemord} demonstrates that there were no violations of the item ordering assumptions for the acupuncture items.
+
+Next, the assumption of monotonicity was examined for the acupcunture items, and the results are shown in Table \ref{tab:altmonotonicity}. The results indicate that there are no violations of monotonicity for these items. 
+
+<<altmonotonicity, echo=FALSE, results=tex>>=
+print(xtable(summary(tcqalt.monotonicity)))
+@ 
+
+<<tcqconvpcm, echo=FALSE, results=tex>>=
+tcqconv.pcm.rasch<-gpcm(convtcq, constraint="rasch")
+tcqcoef <- coef(tcqconv.pcm.rasch)
+print(xtable(tcqcoef))
+@ 
+
+Even a cursory glance at Table \ref{tab:tcqconvpcm} demonstrates that there are serious problems with this model, as the estimates are not monotonically increasing for each higher category. The model in Table \ref{tab:tcqconvpcm} is a rasch model, and the next model to be examined is a one parameter model, where the discrimination parameter is estimated from the data rather than being fixed at one. 
+
+<<tcqconvpcm1pl, echo=FALSE, results=tex>>=
+tcqconv.pcm.1pl <- gpcm(convtcq, constraint="1PL")
+tcqconv1pl.coef <- coef(tcqconv.pcm.1pl)
+print(xtable(tcqconv1pl.coef))
+@ 
+
+From Table \ref{tab:tcqconvpcm1pl} it can be seen that the model still has a number of problems with item ordering, especially in the Pill and Injection sections of the questionnaire. Indeed, it appears to be Category 3 which is causing the problems, which may suggest that participants were using this category as a base rather than actually considering the alternatives in a consistent manner. Next, a 2 parameter model will be fitted to assess if allowing individual discrimination parameters will prove to be a better approach. 
+
+<<tcqconvpcm2pl, echo=FALSE, results=tex>>=
+tcqconv.pcm.gpcm <- gpcm(convtcq, constraint="gpcm")
+tcqconv.gpcm.coef <- coef(tcqconv.pcm.gpcm)
+print(xtable(tcqconv.gpcm.coef))
+@ 
+
+Unfortunately, the approach of attempting to allow for a more flexible modelling approach in order to garner more coherent parameters for the model appears to have failed, in that Table \ref{tab:tcqconvpcm2pl} shows that the issues around item ordering have not been resolved by allowing for a two parameter model. 
+
+Thus far, the generalised partial credit model has been shown to be entirely inappropriate for the analysis of the conventional scale items in this sample. The next step is to attempt to fit a more flexible model, the graded response model, and examine if this model can be fit accurately to the dataset at hand. 
+
+<<tcqconvgrmconstrained, echo=FALSE, results=tex>>=
+tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
+tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
+print(xtable(tcqconv.grm1.coef))
+@ 
+
+It can be seen from Table \ref{tab:tcqconvgrmconstrained} that the fit is much better for this model, with no violations of monotonicity. The next step taken is to examine the fit of a more flexible model (with a discrimination parameter for each item), and assess whether or not this represents a significant enough improvement over the model above.
+
+<<tcqconvgrm2, echo=FALSE, results=tex>>=
+tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
+tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
+print(xtable(tcqconv.grm2.coef))
+@ 
+
+<<tcqgrmcomp, echo=FALSE, results=tex>>=
+grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
+@ 
+The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative tcq (i.e. the acupuncture items) was examined under both the partial credit model and the graded response model.  
+
+<<tcqaltpcm, echo=FALSE, results=tex>>=
+tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
+tcqaltcoef <- coef(tcqalt.pcm.rasch)
+print(xtable(tcqaltcoef))
+@ 
+
+Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcqaltpcm}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
+
+<<tcqaltpcm1pl, echo=FALSE, results=tex>>=
+tcqalt.pcm.1pl <- gpcm(tcqalt, constraint="1PL")
+tcqaltcoef.1pl <- coef(tcqalt.pcm.1pl)
+print(xtable(tcqaltcoef.1pl))
+@ 
+
+The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcqaltpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An anova confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
+
+Next, a two parameter model was fitted to this data. 
+
+<<tcqaltpcm2pl, echo=FALSE, results=tex>>=
+tcqalt.pcm.2pl <- gpcm(tcqalt, constraint="gpcm")
+tcqaltcoef.2pl <- coef(tcqalt.pcm.2pl)
+print(xtable(tcqaltcoef.2pl))
+@ 
+The two parameter model has some interesting features compared to the one parameter model. Firstly, the discrimanation parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has icnreased substantially. An anova between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
+
+Next, two graded response models were fit to the the alternative tcq question-set. 
+
+<<tcqaltgrm1, echo=FALSE, results=tex>>=
+tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
+tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
+print(xtable(tcqalt.grm1.coef))
+@ 
+
+The model described in Table \ref{tab:tcqaltgrm1} is quite different from the one parameter model estimated under the partial credit model. Firstly, the discrimination parameter is estimated at a much lower level (3.88 as opposed to 5.20). In addition, the parameter estimates are much more closely distributed around zero, and the category 4 parameter estimates are much less extreme. 
+
+<<tcqaltgrm2, echo=FALSE, results=tex>>=
+tcqalt.grm2 <- grm(tcqalt)
+tcqalt.grm2.coef <- coef(tcqalt.grm2)
+print(xtable(tcqalt.grm2.coef))
+@ 
+
+Again, the model shown in Table \ref{tab:tcqaltgrm2} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
+
+
+\subsection{Regression Analyses}
+\label{sec:regression-analyses}
+
+In this section, the totals for each of the treatment modalities are examined to determine if any of the demographic variables can account for them. Firstly, a linear regression was run on the Pilltotal variable using the demographics as predictors.
+
+<<pilltotreg1, echo=FALSE, results=tex>>=
+pillLm1 <- lm((PillTot/5)~Gender+College+UGPG+Year, data=tcq1)
+@ 
+
+\section{Confirmatory Analyses}
+\label{sec:conf-analys}
+<<tcq2importandsplit, echo=FALSE, results=hide>>=
+tcq2 <- read.csv("tcq2.csv")
+@ 
+
+<<scalemake2, echo=FALSE, results=hide>>=
+Pillall <- tcq2[,grep("Pill[1-6]", x=names(tcq2))]
+Creamall <- tcq2[,grep("Cream[1-6]", x=names(tcq2))]
+Injall <- tcq2[,grep("Inj[1-6]", x=names(tcq2))]
+Acuall <- tcq2[,grep("Acu[1-6]", x=names(tcq2))]
+Homall <- tcq2[,grep("Hom[1-6]", x=names(tcq2))]
+Reiall <- tcq2[,grep("Rei[1-6]", x=names(tcq2))]
+Bamall <- tcq2[,grep("BAM[1-18]", x=names(tcq2))]
+tcq2$Pilltot <- apply(Pillall, 1, mean, na.rm=TRUE)
+tcq2$Creamtot <- apply(Creamall, 1, mean, na.rm=TRUE)
+tcq2$Injtot <- apply(Injall, 1, mean, na.rm=TRUE)
+tcq2$Acutot <- apply(Acuall, 1, mean, na.rm=TRUE)
+tcq2$Homtot <- apply(Homall, 1, mean, na.rm=TRUE)
+tcq2$Reitot <- apply(Reiall, 1, mean, na.rm=TRUE)
+tcq2$Bamtot <- apply(Bamall, 1, mean, na.rm=TRUE)
+tcqtotals <- with(tcq2, as.data.frame(cbind(Pilltot, Creamtot, Injtot, Acutot, Homtot, Reitot, Bamtot)))
+@ 
+<<subsamplestcq2, echo=FALSE, results=hide>>=
+set.seed(52)
+tcq2.ind <- sample(1:1329, 1329, replace=FALSE)
+tcq2.ind.a <-tcq2.ind[1:310]
+tcq2.ind.b <-tcq2.ind[311:620]
+tcq2.ind.c <-tcq2.ind[621:930]
+tcq2.ind.d <- tcq2.ind[931:length(tcq2.ind)]
+tcq2a <- tcq2[tcq2.ind.a,]
+tcq2b <- tcq2[tcq2.ind.b,]
+tcq2c <- tcq2[tcq2.ind.c,]
+tcq2d <- tcq2[tcq2.ind.d,]
+Pill.g <- grep("Pill[1-6]", x=names(tcq2a))
+Cream.g <- grep("Cream[1-6]", x=names(tcq2a))
+Inj.g <- grep("Inj[1-6]", x=names(tcq2a))
+Acu.g <- grep("Acu[1-6]", x=names(tcq2a))
+Hom.g <- grep("Hom[1-6]", x=names(tcq2a))
+Rei.g <- grep("Rei[1-6]", x=names(tcq2a))
+Pillall.a <- tcq2a[,Pill.g]
+Creamall.a <- tcq2a[,Cream.g]
+Injall.a <- tcq2a[,Inj.g]
+Acuall.a <- tcq2a[,Acu.g]
+Homall.a <- tcq2a[,Hom.g]
+Reiall.a <- tcq2a[,Rei.g]
+Bamall.a <- tcq2a[,grep("BAM[1-18]", x=names(tcq2a))]
+tcq2.1 <- as.data.frame(cbind(Pillall.a, Creamall.a, Injall.a, Acuall.a))
+tcqfull.a <- as.data.frame(cbind(Pillall.a, Creamall.a, Injall.a,
+ Acuall.a, Homall.a, Reiall.a))
+@ 
+
+As in previous analyses, the second sample was much larger than the first, and therefore was split into a number of equal parts. In this case, the second sample (consisting of student and staff responses) was split into four equal sub-samples(A-D). The first of these (hereafter denoted as A), was then  used as a test sample for the models developed on the data from Sample 1. 
+
+\subsection{Confirmatory Factor Analysis}
+\label{sec:conf-fact-analys-1}
+
+<<tcq4sem2a, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+Tcq4model2 <- mxModel(name="TCQ42", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcq2.1)), type="cov", numObs=310)
+                      )
+tcq4fit2 <- mxRun(Tcq4model2)
+tcq4summ2 <- summary(tcq4fit2)
+@ 
+
+
+<<tcq5sem2, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Fifth")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+fifth <- c("Pill4", "Pill5", "Pill6", "Cream5", "Cream6", "Inj6")
+Tcq5model2 <- mxModel(name="TCQ52", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                     mxPath(from="Fifth", to=fifth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcqall)), type="cov", numObs=310))
+tcq5fit2 <- mxRun(Tcq5model2)
+tcq5summ2 <- summary(tcq5fit2)
+@ 
+
+<<tcq6sem2, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Fifth", "Sixth")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+fifth <- c("Pill1", "Pill3","Cream1", "Cream3","Inj1", "Inj3")
+sixth <- c("Pill2", "Pill4","Inj2", "Inj4")
+Tcq6model2 <- mxModel(name="TCQ62", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                     mxPath(from="Fifth", to=fifth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcq2.1)), type="cov", numObs=310))
+tcq6fit2 <- mxRun(Tcq6model2)
+tcq6summ2 <- summary(tcq6fit2)
+@ 
+
+<<tcq2testsemcomp, echo=FALSE, results=tex>>=
+tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq5fit2, tcq6fit2))
+print(summary(xtable(tcq2.1.comp)))
+@ 
+
+As can be seen from Table \ref{tab:tcq2testsemcomp} the six factor model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. 
+
+\section{Study Two}
+
+Given the results of Study 1, this study added two more CAM methodologies to the questionnaire, to determine if a higher order factor structure could be found which represented conventional and complementary methodologies.
+The hypotheses were as follows: 
+
+1)The TCQ V2.0 will have six factors, one for each treatment modality
+2)The BAM will have two factors 
+3)The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals. 
+4)The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model. 
+5)Income will correlate postively with experience of CAM methodologies
+6)Experience with a particular treatment will be correlated with higher ratings of its credibility
+
+% \subsection{Materials and Methods}
+
+% \subsubsection{Measures}
+
+% The instrument used for this research was the Treatment Credibility Questionnaire, Version 2. Version 2 differed from Version 1 in that it added two new sections to the instrument, following the same format as Study 1. These two sections concerned the credibility of Homeopathy and Reiki for pain. A number of demographic variables were also added to the survey. These asked for Income rated in units of 25K (i.e. 0-25K, 25-50K, 50-75K, 75-100K, 100K+). Self reported health was also measured on a five point scale, as were experience with each of the treatment modalities assessed in the questionnaire (i.e. Pills, Cream, Injections, Acupuncture, Homeopathy, Reiki). 
+
+% In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors. The eight items were those retained from a pool of 16 items which derived from interviews with chronic pain patients. All 16 items were administered to all participants, but only the final eight items are analysed here. 
+
+% \subsubsection{Sample}
+
+% The sample was collected from the University College Cork (UCC) staff and student population.. Data collection took place from the 3rd of April 2010 until the end of May 2010. 
+% All of the sample responses were collected electronically using Survey Monkey. 
+
+% \subsubsection{Statistical Analyses}
+
+% The plan for statistical analysis was as follows. Data will first be visualised using graphical tools such as scatter plot matrices and conditioning plots.  Following this, demographic variables were to be summarised. Secondly, correlations between any of the scale totals and the demographics were analysed. Thirdly, the BAM and the TCQ will be subjected to confirmatory factor analysis, which will include assessing the factor structure of the data using parallel analysis techniques and the Minimum Average Partial Criterion (MAP). 
+
+% Fourthly, an item response theory analysis will be carried out to determine how the items fit together. Finally, the ability estimates generated from the IRT methodology will be used as the dependent variable in a multiple regression to assess which, if any, of the demographic variables are useful in predictors. This procedure will also allow for the impact of Differential Item Functioning to be assessed.  
+
+% Missing data will be ignored for the purposes of this analysis, and data may be imputed and re-analysed following the complete case analysis, in order to check the Missing completely at Random (MCAR) assumption inherent in the use of a complete case analysis (CCA). All statistical analysis was carried out using the R software for statistical computing Version 2.11.0.  
+
+
+
+\subsection{Results}
+\subsubsection{Descriptive Statistics}
+
+The sample size collected was 1329, however, only 700 completed all questions. The analysis was carried out on those participants who had provided data for all questions. 
+
+<<tcq2demo, echo=FALSE, results=tex>>=
+tcq2.demo <- tcq2[,2:17]
+tcq2.sum <- summary(tcq2.demo)
+print(xtable(tcq2.sum))
+@ 
+\label{tab:tcq2demo}
+\caption{Demographic Statistics, TCQ 2}
+
+As can be seen from the second column of Table \ref{tab:tcq2demo} , many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22, which shows that most of the sample was made up of students.
+The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
+The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
+
+The sample was 67.88\% female, and 29.12\% male, with 45 respondents not specifying their gender. 
+
+The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Below, in Figure \ref{fig;tcq 0.795-42}, the correlations between the scale totals can be seen.
+@ 
+
+\begin{figure}
+	\centering
+<<tcq2pairs, echo=FALSE, fig=TRUE>>=
+print(pairs.panels(tcqtotals))
+@ 
+	\caption{Scatterplot Matrix, TCQ 2}
+	\label{fig:tcq2pairs}
+\end{figure}
+The variables are, in order: Pilltotal, Creamtotal, Injection total, Acupuncture Total, Homeopathy Total, Reiki Total and Beliefs about Medicine Total. 
+
+
+As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships which is useful given the intention to model some of these later in the analyses. 
+Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. It may be (for example) that those involved with medicine tend to rate them very low, while those involved in the liberal arts tend to rate them quite highly. These kinds of differences will be teased apart in analyses below. 
+
+The next step was to examine the interactions between total scores and various demographic variables. Given the underlying non-normality of the distributions of the variables involved (see Table \ref{tab:tcq2.normtests} , Kruskal Wallis tests were used for this purpose and the results can be seen in Tables 6 and 7 below. To assess whether the errors would be normally distributed, qqplots for the residuals were analysed. The data did not meet the assumptions, further justifying the use of non-parametric statistics.  
+
+<<credgender, echo=FALSE, results=tex>>=
+gendPill <- with(tcq2, tapply(Pilltot, Gender, mean, na.rm=TRUE))
+gendCream <- with(tcq2, tapply(Creamtot, Gender, mean, na.rm=TRUE))
+gendInj <- with(tcq2, tapply(Injtot, Gender, mean, na.rm=TRUE))
+gendAcu <- with(tcq2, tapply(Acutot, Gender, mean, na.rm=TRUE))
+gendHom <- with(tcq2, tapply(Homtot, Gender, mean, na.rm=TRUE))
+gendRei <- with(tcq2, tapply(Reitot, Gender, mean, na.rm=TRUE))
+gendBam <- with(tcq2, tapply(Bamtot, Gender, mean, na.rm=TRUE))
+gendcred <- as.data.frame(cbind(gendPill, gendCream, gendInj, gendAcu, gendHom, gendRei, gendBam))
+print(xtable(gendcred))
+@ 
+\caption{Credibility Differences by Gender}
+\label{tab:tcq2.collegecred}
+
+
+As can be seen from Table \ref{tab:tcq2.collegecred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
+
+
+<<credgender, echo=FALSE, results=tex>>=
+collPill <- with(tcq2, tapply(Pilltot, College, mean, na.rm=TRUE))
+collCream <- with(tcq2, tapply(Creamtot, College, mean, na.rm=TRUE))
+collInj <- with(tcq2, tapply(Injtot, College, mean, na.rm=TRUE))
+collAcu <- with(tcq2, tapply(Acutot, College, mean, na.rm=TRUE))
+collHom <- with(tcq2, tapply(Homtot, College, mean, na.rm=TRUE))
+collRei <- with(tcq2, tapply(Reitot, College, mean, na.rm=TRUE))
+collBam <- with(tcq2, tapply(Bamtot, College, mean, na.rm=TRUE))
+collcred <- as.data.frame(cbind(collPill, collCream, collInj, collAcu, collHom, collRei, collBam))
+print(xtable(collcred))
+@ 
+
+\caption{Credibility Differences by College}
+\label{tab:tcq2.collegecred}
+
+
+As can be seen from Table \ref{tab:tcq2.gendercred}, the sample scores showed some significant differences attributable to Gender. The cream, acupuncture, homeopathy and reiki totals were significantly different in the sample, as was the Beliefs About Medicine scale total. The usual caveats regarding multiple comparisons do of course apply to this finding. 
+
+Following these investigations of the descriptive qualities of the data, the next stage of the analysis is to examine the inter-correlations and latent structure behind the data through the use of factor analysis. 
+
+
+\subsubsection{Factor Analysis}
+
+
+% Factor Analysis is a complicated technique, in which there are many wrong ways and no clear right way. Much of the confusion stems from the lack of an objective metric to determine the number of factors to extract from the data. However, there are a number of criteria which can be of help in this endeavour, and experts recommend that multiple approaches be utilised. Therefore, for this study, 3 methods were used. These three methods are Parallel Analysis, the Minimum Average Partial criterion and visual inspection of the scree plot. Oblimin rotations were used in the first instance, as orthogonal structure can be determined from obliquely rotated data but not vice versa. Principal Acis factoring methods were used, given the non-normality of the data. 
+
+\subsubsection{Treatment Credibility Questionnaire, Version 2}
+
+\subsubsection{TCQ Version2 Split A}
+\label{sec:tcq-version2-split}
+
+<<scales2a, echo=FALSE, results=hide>>=
+Pillall2a <- tcq2a[,grep("Pill[1-6]", x=names(tcq2a))]
+Creamall2a <- tcq2a[,grep("Cream[1-6]", x=names(tcq2a))]
+Injall2a <- tcq2a[,grep("Inj[1-6]", x=names(tcq2a))]
+Acuall2a <- tcq2a[,grep("Acu[1-6]", x=names(tcq2a))]
+Homall2a <- tcq2a[,grep("Hom[1-6]", x=names(tcq2a))]
+Reiall2a <- tcq2a[,grep("Rei[1-6]", x=names(tcq2a))]
+Bamall2a <- tcq2a[,53:70]
+tcqall2a <- as.data.frame(cbind(Pillall2a, Creamall2a, Injall2a, Acuall2a, Homall2a, Reiall2a))
+@ 
+
+The results of factor analysis on the Treatment credibility Questionnaire can be seen in Figure \ref{fig:tcq2aparallel}, below. 
+
+\begin{figure}
+	\centering
+<<tcq2aparallel, echo=FALSE, fig=TRUE>>=
+tcq2a.para <- fa.parallel(na.omit(tcqall2a))
+tcq2a.vss <- VSS(na.omit(tcqall2a))
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2}
+	\label{fig:tcq2aparallel}
+\end{figure}
+
+As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
+<<tcq2afact6, echo=FALSE, results=tex>>=
+tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2a.fact.6))
+@ 
+\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2.sixfactor}
+
+As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
+
+Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
+<<tcq2afactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2a.fact.6))
+@ 
+
+
+\caption{Factor Correlations, Six Factor Solution TCQ 2}
+\label{tab:tcq2.sixfactorcorr}
+
+
+The proportion of variance explained by the six factor solution is equal to 82\% which is an extremely high amount, arguing for the usefulness of this solution. 
+
+As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
+
+<<tcq2afact7, echo=FALSE, results=tex>>=
+tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2a.fact.7))
+@ 
+
+\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2sevenfactor}
+
+Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that factor 7 has no questions loading highest on it. Therefore, we can probably use the six factor structure on the basis of this data. 
+The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
+
+<<tcq2a7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2a.fact.7))
+@ 
+
+<<tcq2afitindices, echo=FALSE, results=tex>>=
+tcq2aFit6 <- FitIndices(tcq2a.fact.6)
+tcq2aFit7 <- FitIndices(tcq2a.fact.7)
+tcq2afit <- as.data.frame(cbind(tcq2aFit6, tcq2aFit7))
+print(xtable(tcq2afit))
+@ 
+\caption{Fit Indices, TCQ 2}
+\label{tab:tcq2.fit}
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+This questionnaire was developed for use with chronic pain patients. It appears to be the standard in the field, however, it was only analysed using a principal components method and Varimax rotation, neither of which are appropriate for an instrument of this kind. 
+The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
+
+<<bamparallel, echo=FALSE, fig=TRUE>>=
+bam.para <- fa.parallel(na.omit(Bamall2a))
+bam.vss <- VSS(na.omit(Bamall2a))
+@ 
+
+The parallel analysis suggests that there are four factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all four factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
+
+<<bam2afact1, echo=FALSE, results=tex>>=
+bam2a.fact1 <- fa(na.omit(Bamall2a), 1, fm="pa")
+print(FactorXtab(bam2a.fact1))
+@ 
+
+As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extremely poor. Only 11 of the 18 items have loadings above 0.3, which is typically used as a cutoff for the assigning of items to the factor. In addition, the communalities for all of the items are extremely low, all below 0.5 which indicates that the common variance of this solution is quite low. This one factor solution only explains 17\% of the variance and so is somewhat inadequate in all senses. 
+
+<<bam2afact2, echo=FALSE, results=tex>>=
+bam2a.fact2 <- fa(na.omit(Bamall2a), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact2))
+@ 
+Again, the communalities in this factor solution are very low, and the amount of variance explained is 23\%, which is again quite poor. In addition, six items have no loadings above 0.3 on either of the factors. 
+
+PA1: "BAM1"  "BAM6"  "BAM7"  "BAM9"  "BAM12" "BAM13" "BAM14" "BAM17" "BAM18".  All of these items appear to relate to the avoidance of medicines (the items which are positive towards medicines have negative loadings), so this factor can be termed Medicine Avoidance. 
+
+PA2: "BAM2"  "BAM7"  "BAM10" "BAM11". These items all appear to relate to natural remedies in constrast to medicines and so this factor can be termed Natural Remedies.
+
+Although there appears to be an interpretable factor structure emerging from this solution, it should be noted that the large number of items not loading on any solution and the low proportion of variance explained caution against over-interpretation of this solution. 
+
+
+<<bam2afact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact2))
+@ 
+
+As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
+
+<<bam2afact3, echo=FALSE, results=tex>>=
+bam2a.fact3 <- fa(na.omit(Bamall2a), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact3))
+@ 
+Again, the communalities for this solution are extremely low, with almost all of them (16) below 0.5. This solution explained 29\% of the variance. The factors are described below. 
+
+PA1: "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM12" "BAM13" "BAM14" "BAM17" "BAM18". This factor again relates to less use of medicines, and as above can be termed medicine avoidance. 
+
+PA3: "BAM1"  "BAM3"  "BAM4"  "BAM10". All of these items appear to relate to cutting down or taking a break from medicine (with the exception of Question 1 which has a negative loading). Therefore, this factor will be termed safer use of medicines. 
+
+PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11". These items relate to the  responsible use of medicines, and this is what the factor will be termed. 
+
+
+
+<<bam2afact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact3))
+@ 
+
+Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
+
+<<bam2afact4, echo=FALSE, results=tex>>=
+bam2a.fact4 <- fa(na.omit(Bamall2a), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact4))
+@ 
+
+This solution explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
+
+PA1: "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM12" "BAM13" "BAM14" "BAM17" "BAM18". Again, this factor has emerged from the rotations, and again it can be termed medicine avoidance. 
+
+PA3: "BAM1"  "BAM3"  "BAM4"  "BAM10". All of these items appear to relate to the effectiveness of medicines, and this factor can then be termed Medicine effectiveness. 
+PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11" "BAM16" "BAM18". These items all appear to relate to differences between different forms of medicine, and so this factor will be termed Differences Between Medicines.
+
+PA4: "BAM5". This factor is almost certainly spurious, given that it only has one item on it. This item relates to regular taking of medicines, and so it can be termed Regular Taking of Medicines. 
+
+
+<<bam2afact4cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact4))
+@ 
+
+As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
+
+<<bam2asem1, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Beliefs About Medicine")
+Bamq <- bamitems.cols
+Bam2amodel1<- mxModel(name="Bam2a1", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq), 
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+                      mxData(observed=cov(na.omit(Bamall2a)), type="cov", numObs=147))
+Bam2afit1 <- mxRun(Bam2amodel1)
+#Bam2asumm1 <- summary(Bam2afit1)
+@ 
+
+%put in other 3 sem fits, although i suspect they won't converge. Look for debugging information online when you have internet. 
+
+\subsection{Split B}
+\label{sec:split-b}
+
+Next, the same process of analysis will be repeated on the second of four splits of the data. 
+
+<<tcq2bscalesplit, echo=FALSE, results=hide>>=
+tcqall2b <- tcq2b[,17:52]
+bamall2b <- tcq2b[,53:70]
+@ 
+
+\begin{figure}
+	\centering
+<<tcq2aparallel, echo=FALSE, fig=TRUE>>=
+tcq2b.para <- fa.parallel(na.omit(tcqall2b))
+tcq2b.vss <- VSS(na.omit(tcqall2b))
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
+	\label{fig:tcq2aparallel}
+\end{figure}
+
+As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot suggest that five factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, the five,  six and seven factor solutions will be examined for interpretability and then subjected to CFA on the other splits of the data.
+
+<<tcq2afact5, echo=FALSE, results=tex>>=
+tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.5))
+@ 
+\caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
+\label{tab:tcq2bfivefactor}
+
+The five factor solution broke down as follows:
+It explained 81\% of the variance, and all the communalities were greater than 0.5. 
+
+PA2: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6" "Inj1"  "Inj2"  "Inj3"  "Inj4"  "Inj5"  "Inj6". This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
+
+PA3:"Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor consists of the Cream questions and can thus be termed Creams. 
+
+PA5: "Rei1"  "Rei2"  "Rei3"  "Rei4"  "Rei5"  "Rei6". There was a small negative loading on Pill1 for this factor, but given its strong loadings on other factors, this was ignored. This left this factor consisting solely of the Reiki items, and so this factor was termed Reiki. 
+
+PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor consisted solely of the homeopathy items, and thus was termed Homeopathy.
+
+PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor consisted solely of the Acupuncture items and thus was termed acupuncture. 
+
+
+Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
+
+<<tcq2bfactorcor5, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.5))
+@ 
+
+
+<<tcq2bfact6, echo=FALSE, results=tex>>=
+tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.6))
+@ 
+\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2.sixfactor}
+
+As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded.  
+
+Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
+<<tcq2afactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2a.fact.6))
+@ 
+
+
+\caption{Factor Correlations, Six Factor Solution TCQ 2}
+\label{tab:tcq2.sixfactorcorr}
+
+
+The proportion of variance explained by the six factor solution is equal to 84\% which is an extremely high amount, arguing for the usefulness of this solution. 
+
+As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
+
+<<tcq2afact7, echo=FALSE, results=tex>>=
+tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.7))
+@ 
+
+\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2sevenfactor}
+
+This solution explained 86\% of the variance in the sample, and the items were assigned to factors as follows.
+PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
+
+PA5: "Pill1" "Rei1"  "Rei2"  "Rei3"  "Rei4"  "Rei5"  "Rei6". Again, apart from a small loading of Pill1 on this factor, it maps exactly to the Reiki questions, and thus will be termed Reiki. 
+
+PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor maps exactly to the Acupuncture questions, and will be termed thusly.
+
+PA3: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". Again, this factor is an exact map to the Cream questions and thus is termed Creams.
+
+PA2: "Inj1" "Inj2" "Inj3" "Inj4" "Inj5" "Inj6". These items are all Injection items, and so this factor gets that name. 
+
+PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor maps to all of the pill items. 
+
+PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
+
+
+The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
+
+<<tcq2b7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.7))
+@ 
+
+<<tcq2afitindices, echo=FALSE, results=tex>>=
+tcq2bFit5 <- FitIndices(tcq.fact.5)
+tcq2bFit6 <- FitIndices(tcq2b.fact.6)
+tcq2bFit7 <- FitIndices(tcq2b.fact.7)
+tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
+print(xtable(tcq2bfit))
+@ 
+\caption{Fit Indices, TCQ 2 (Split B)}
+\label{tab:tcq2bfit}
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
+
+<<bamparallel, echo=FALSE, fig=TRUE>>=
+bam.para <- fa.parallel(na.omit(bamall2b))
+bam.vss <- VSS(na.omit(bamall2b))
+@ 
+
+The parallel analysis suggests that there are five factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all five factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
+
+<<bam2afact1, echo=FALSE, results=tex>>=
+bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
+print(FactorXtab(bam2b.fact1))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
+
+<<bam2bfact2, echo=FALSE, results=tex>>=
+bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact2))
+@ 
+Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
+
+PA1: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM12" "BAM13" "BAM14" "BAM17" "BAM18". This factor, which consists of most of the scale, can be termed Medicine Avoidance.
+
+PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". These items relate to the responsible use of medicines, and thus this factor gets that name. 
+
+
+<<bam2bfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact2))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
+
+<<bam2bfact3, echo=FALSE, results=tex>>=
+bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact3))
+@ 
+This solution explained 34\% of the variance in the data. The factors broke down as follows:
+
+PA1: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM13" "BAM18". This factor was apparent in the two factor solution earlier, and again can be termed Medicine Avoidance. 
+
+PA3: "BAM13" "BAM14" "BAM17". This factor can perhaps best be termed Medicine Trust. 
+
+PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". Again, this factor can best be termed responsible use of medicines. 
+
+
+<<bam2bfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact3))
+@ 
+
+Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not. . 
+
+<<bam2bfact4, echo=FALSE, results=tex>>=
+bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact4))
+@ 
+
+PA3: "BAM12" "BAM13" "BAM14" "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
+
+PA4: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM10" "BAM11" "BAM15". These items have clustered together in almost all the solutions, and again are termed 
+Avoidance of Medicines.
+
+PA2: "BAM1"  "BAM2"  "BAM5"  "BAM16" "BAM18". Again, these items have tended to cluster together, and can best be termed as Responsible Use of Medicines. 
+
+PA1: "BAM6"  "BAM8"  "BAM9"  "BAM18". These items all relate to safety or danger of medicines, and thus this factor will be termed Medicine Safety.
+
+
+
+<<bam2bfact4cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact4))
+@ 
+
+As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
+
+
+<<bam2bfact5, echo=FALSE, results=tex>>=
+bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact5))
+@ 
+
+
+PA3: "BAM13" "BAM14" "BAM17". Again, these items can best be subsumed as a factor called Doctors and Medicines. 
+
+PA4: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM10" "BAM11" "BAM15". Again, this factor can best be termed Medicine Avoidance. 
+
+PA2:"BAM2" "BAM5". These items relate to the best way in which to take medicines, and can thus be termed Effective Medicine Usage.
+
+PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines and thus this factor can be termed Safety and Medicines. 
+
+PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
+
+<<bam2bfact5cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact5))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
+
+
+\subsection{Split C}
+\label{sec:split-c}
+
+<<tcq2cscalesplit, echo=FALSE, results=hide>>=
+tcqall2c <- tcq2c[,17:52]
+bamall2c <- tcq2c[,53:70]
+@ 
+
+\begin{figure}
+	\centering
+<<tcq2aparallel, echo=FALSE, fig=TRUE>>=
+tcq2b.para <- fa.parallel(na.omit(tcqall2b))
+tcq2b.vss <- VSS(na.omit(tcqall2b))
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
+	\label{fig:tcq2aparallel}
+\end{figure}
+
+
+<<tcq2afact5, echo=FALSE, results=tex>>=
+tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.5))
+@ 
+\caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
+\label{tab:tcq2bfivefactor}
+
+Table\ref{tab:tcq2cfactorcor5}. 
+
+<<tcq2bfactorcor5, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.5))
+@ 
+
+
+<<tcq2bfact6, echo=FALSE, results=tex>>=
+tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.6))
+@ 
+\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2.sixfactor}
+
+\ref{tab:tcq2.sixfactorcorr} 
+<<tcq2afactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2a.fact.6))
+@ 
+
+
+\caption{Factor Correlations, Six Factor Solution TCQ 2}
+\label{tab:tcq2.sixfactorcorr}
+
+
+
+
+<<tcq2afact7, echo=FALSE, results=tex>>=
+tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2b.fact.7))
+@ 
+
+\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
+\label{tab:tcq2sevenfactor}
+
+
+
+
+The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
+
+<<tcq2b7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.7))
+@ 
+
+<<tcq2afitindices, echo=FALSE, results=tex>>=
+tcq2bFit5 <- FitIndices(tcq.fact.5)
+tcq2bFit6 <- FitIndices(tcq2b.fact.6)
+tcq2bFit7 <- FitIndices(tcq2b.fact.7)
+tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
+print(xtable(tcq2bfit))
+@ 
+\caption{Fit Indices, TCQ 2 (Split B)}
+\label{tab:tcq2bfit}
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+
+<<bamparallel, echo=FALSE, fig=TRUE>>=
+bam.para <- fa.parallel(na.omit(bamall2b))
+bam.vss <- VSS(na.omit(bamall2b))
+@ 
+
+
+<<bam2afact1, echo=FALSE, results=tex>>=
+bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
+print(FactorXtab(bam2b.fact1))
+@ 
+
+
+
+<<bam2bfact2, echo=FALSE, results=tex>>=
+bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact2))
+@ 
+A. 
+
+<<bam2bfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact2))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
+
+<<bam2bfact3, echo=FALSE, results=tex>>=
+bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact3))
+@ 
+
+
+<<bam2bfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact3))
+@ 
+
+
+<<bam2bfact4, echo=FALSE, results=tex>>=
+bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact4))
+@ 
+
+<<bam2bfact4cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact4))
+@ 
+
+
+<<bam2bfact5, echo=FALSE, results=tex>>=
+bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact5))
+@ 
+
+
+<<bam2bfact5cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact5))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another.
+
+\subsection{Split D}
+\label{sec:split-d}
+
+
+
+\subsection{Structural Equation Modelling}
+
+
+
+As can be seen from Table \ref{tab:tcq2semcomp} the seven factor solution appears to be the best model for the reproduction of the observed covariance matrix. 
+
+
+\subsubsection*{Beliefs About Medicine Questionnaire}
+
+
+
+\begin{figure}
+	\centering
+		\includegraphics{tcq079pabam.pdf}
+	\caption{Parallel Analysis and Scree Plot, Beliefs about Medicine Questionnaire}
+	\label{fig:tcq 0.795-58}
+\end{figure}
+
+
+The MAP criterion suggests one factor, so both one and two factor solutions will be examined for interpretability. 
+
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Mon Oct 18 14:42:38 2010
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rr}
+  \hline
+ & Loading \\ 
+  \hline
+1 & 0.41 \\ 
+  2 & 0.35 \\ 
+  3 & 0.64 \\ 
+  4 & 0.29 \\ 
+  5 & 0.49 \\ 
+  6 & 0.75 \\ 
+  7 & 0.67 \\ 
+  8 & 0.71 \\ 
+   \hline
+\end{tabular}
+\caption{Beliefs about Medicine One Factor Solution}
+\label{tab:bamonefactor}
+\end{center}
+\end{table}
+
+
+As can be seen from Table \ref{tab:bamonefactor}, all the items load on the factor, but many of them do not load particularly well. This impression is reinforced by the extremely low communalities (h2) on many of the items. The one factor solution does not appear to be a good fit to the data. This one factor explains 32\% of the variance, and the NNFI is 0.79, which is on the low side for a factor solution. 
+
+
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Mon Oct 18 14:12:31 2010
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrr}
+  \hline
+ & 1 & 2 & Communality \\ 
+  \hline
+1 & -0.04 & 0.57 & 0.31 \\ 
+  2 & -0.11 & 0.59 & 0.28 \\ 
+  3 & 0.25 & 0.50 & 0.45 \\ 
+  4 & 0.17 & 0.16 & 0.08 \\ 
+  5 & 0.08 & 0.53 & 0.33 \\ 
+  6 & 0.74 & 0.08 & 0.61 \\ 
+  7 & 0.75 & -0.03 & 0.55 \\ 
+  8 & 0.80 & -0.02 & 0.62 \\ 
+   \hline
+\end{tabular}
+\caption{Beliefs About Medicine, Two Factor Solution}
+\label{tab:bamtwofactor}
+\end{center}
+\end{table}
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Mon Oct 18 14:12:32 2010
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrr}
+  \hline
+ & 1 & 2 \\ 
+  \hline
+1 & 1.00 & 0.68 \\ 
+  2 & 0.68 & 1.00 \\ 
+   \hline
+\end{tabular}
+\caption{Factor Correlations, BAM Two factor solution, Oblimin Rotation}
+\label{tab:bamtwofactor.corr}
+\end{center}
+\end{table}
+
+Factor 1: 4,6,7,8.
+Factor 2: 1,2,3,5
+
+As can be seen from Table \ref{tab:bamtwofactor}, this factor structure provides a better fit to the data. That being said, the communalities for items 1, 2, 4 and 5 are still extremely low, which is troubling. This may point to problems with the use of this scale in this population, but given that previous work has suggested this not to be the case, it may point too more fundamental problems with the instrument. The two factor solution explains 40\% of the variance, which is acceptable, though still very low. 
+
+
+Again, Table \ref{tab:bamtwofactor.corr} clearly highlights the absurdity of using Principal Components Analysis with Varimax rotation on this instrument, as the factor correlations are very high. The NNFI for this solution is 0.96, which is perfectly acceptable. 
+
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Mon Oct 18 14:12:32 2010
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrrrrr}
+  \hline
+ & bam.bic1 & bam.bic2 & bam.bic3 & bam.tli.1 & bam.tli.2 & bam.tli.3 \\ 
+  \hline
+1 & 115.76 & -44.99 & -25.50 & 0.79 & 0.96 & 0.96 \\ 
+   \hline
+\end{tabular}
+\caption{Fit Indices, BAM factor Solutions}
+\label{tab:bam.fit}
+\end{center}
+\end{table}
+
+
+% latex table generated in R 2.11.1 by xtable 1.5-6 package
+% Tue Jan 11 16:38:08 2011
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rllrrrrrrr}
+  \hline
+ & base & comparison & ep & minus2LL & df & AIC & diffLL & diffdf & p \\ 
+  \hline
+1 & BAM1 &  &  16 & 3599.32 & 20.00 & 104.35 &  &  &  \\ 
+  2 & BAM1 & BAM2 &  16 & 3638.21 & 20.00 & 143.24 & 38.88 & 0.00 & 0.00 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+
+\subsection{Discussion}
+
+\subsubsection{Study One}
+\label{sec:study-1}
+A number of issues have become clear from this first sample taken to validate the Treatment Credibility Questionnaire. Firstly, the measure appears to have the expected factor structure, with four factors, one for each set of six questions. Secondly, an item response theory analysis has suggested that while the Pills, Cream and Injection questions can be conceptualised with one latent trait, this does not appear to work for acupuncture. This would seem to suggest that ratings of complementary and western medicine are somewhat independent. The second version of this survey added two more sections on complementary therapies, Homeopathy and Reiki, in order to both balance the kinds of treatments, and to examine whether the assumption of bi-dimensionality would hold in another student and UCC staff sample. 
+
+ Very few demographic variables were collected in this survey. This limited what could be done with the ability estimates, and their relation to other factors. Therefore, for the second and third surveys, more demographics were added.  A question on experience with each of the treatments involved would seem like a useful check on what percentage of the respondents have experiential knowledge of these methods would prove useful. Given the cost of CAM and its unavailability to those of lower incomes, a question on income would also be useful.
+Both of these changes were made to the survey, which has since been emailed to all staff and students for further validation. 
+
+In addition, the General sub-scale of the Beliefs about Medicines Questionnaire was appended to V2 of the survey, in order to assess the extent to which the two instruments correlate (or fail to). This is a preliminary attempt to assess construct validity, which of course is but a prelude towards testing the instrument with clinical samples and in experimental settings.
+
+\subsubsection{Study 2}
+\label{sec:study-2}
+
+
+
+This paper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure. Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the Beliefs About Medicine Questionnaire. 
+
+That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. This is the authors current focus, and we hope to have such evidence collected by the end of 2010. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
+

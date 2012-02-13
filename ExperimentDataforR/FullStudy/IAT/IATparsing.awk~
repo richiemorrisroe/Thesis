@@ -1,0 +1,13 @@
+BEGIN{
+FS="\\"
+rec=/Block [1-5]+/
+RS=rec
+}
+{
+    for (i=1;i<NR;i++)
+array[i]=$0
+}
+END {
+    for (ind in array)
+	print $0;
+} 

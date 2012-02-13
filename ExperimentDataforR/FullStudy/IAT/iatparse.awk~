@@ -1,0 +1,8 @@
+#remove extraneous information about formatting
+
+BEGIN {
+    if $1~/Participant: [0-9]+/ {
+	    print $1, $2
+	}
+    else { print $0
+    }

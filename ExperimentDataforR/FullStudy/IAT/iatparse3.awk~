@@ -1,0 +1,23 @@
+#This program parses IAT txt files and extracts relevant information.
+
+#Step 0: get list of participant numbers
+#Step 1: Seperate out optimism and tcq iat for each participant - two invocations of awk, piping to seperate files -Done
+#Text files are comma seperated 
+# format - Pp Number:[:digits:] Test: Optimism OR Treatment Credibility Questionnaire
+#10 fields on each line of iat data
+#/Particpant:, Test: Optimism IAT|Treatment Credibility IAT-p1/
+#BEGIN {
+#awk '/Participant: [0-9]+ Test: Treatment Credibility IAT/, /Block 5 Time:/ {print $0  >>"tcqiat2" }' IATData120211.txt #these worked from the command line, woo hoo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#awk '/Participant: [0-9]+ Test: Optimism IAT/, /Block 5 Time:/ {print $0  >>"optiat2" }' IATData120211.txt
+#}
+BEGIN {
+    FS=",";
+    RS=/^Block [1-5]+Time: [0-9]+/
+}
+    block=RS;
+    iatarray=["$i"];
+    for (i=1; i<NR;i++ ) 
+	print blocks[i];
+
+
+ 

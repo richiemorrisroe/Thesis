@@ -1,0 +1,13 @@
+BEGIN{printf Participant, Block, Stimuli 1, Correct 1, Time 1,Stimuli 2, Correct 2, Time 2,Stimuli 3, Correct 3, Time 3,Stimuli 4, Correct 4, Time 4,  
+ FS="\\";
+RS="/Block [1-5]+ Time:[0-9]+/"
+}
+{
+    for(i=1;i<=NF;i++)
+	print $i>"opttest1fline"
+    }
+    
+END{
+    OFS=",";
+ORS="/n"
+}
