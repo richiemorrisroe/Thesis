@@ -3766,9 +3766,9 @@ Following on from the graphical exploration of the relationships between the var
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 pilltotlm1.nota <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-pilltot.step.nota <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction="both", k=3)
+pilltot.step.nota <- stepAIC(object=pilltotlm1.nota, upper=pilltotlm1.nota,lower=~1, direction="both", k=3)
 print(xtable(summary(pilltot.step.nota)))
-pilltot.pred <- predict(pilltotlm1, newdata=tcq2a)
+pilltot.pred <- predict(pilltotlm1.nota, newdata=tcq2a)
 @
 
 
@@ -3783,10 +3783,10 @@ The next step was to repeat this process using Cream total as a dependent variab
 <<stepwiselm, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-creamtotlm1 <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-creamtot.step.nota <- stepAIC(object=creamtotlm1, upper=creamtotlm1,lower=~1, direction="both", k=3)
+creamtotlm1.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+creamtot.step.nota <- stepAIC(object=creamtotlm1.nota, upper=creamtotlm1,lower=~1, direction="both", k=3)
 print(xtable(summary(creamtot.step.nota), label="tab:creamtotlm1nota"))
-creamtot.pred <- predict(creamtotlm1, newdata=tcq2a)
+creamtot.pred <- predict(creamtotlm1.nota, newdata=tcq2a)
 @
 
 The results on the training sample are shown in Table \ref{tab:creamtotlm1nota}. The model was significant: F(3,314)=34.24, p-value of $p\le 0.001$. The adjusted $R^2$ for the model was 0.3861, which is extremely poor. Next the performance of the model on the held out data was assessed. 
@@ -3804,16 +3804,16 @@ Next, the same modelling procedure was applied to the Injection credibility scor
 <<stepwiselm, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-injtotlm1 <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-injtot.step.nota <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="both", k=3)
-print(xtable(summary(injtot.step.nota), label="tab:injtotlm1nota"))
-injtot.pred <- predict(injtotlm1, newdata=tcq2a)
+injtotlm1.nota <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+injtot.step.nota <- stepAIC(object=injtotlm1.nota, upper=injtotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(injtot.step.nota), label="tab:injtotlm1.notanota"))
+injtot.pred <- predict(injtotlm1.nota, newdata=tcq2a)
 @ 
 The model results shown in Table \ref{tab:injtotlm1nota} show that Cream and Pill credibility scores were excellent predictors, as were Experience with conventional treatments and Health. The model was independently significant: F(4,313)=68.35, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4594. It is important to note that this p values cannot be trusted due to the fact that the algorithm calculated them at each step, and so a multiple comparisions problem arises. 
 
 This model was then applied to the held out data. 
 
-<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+<<lmonheldoutdatainj, echo=FALSE, results=tex>>=
 injtotlm.holdout <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2a)
 print(xtable(summary(injtotlm.holdout), label="tab:injlmholdoutnota"))
 @ 
@@ -3821,18 +3821,18 @@ Table \ref{tab:injlmholdoutnota} shows the results of the model on the hjeld out
 
 Next, the same procedure was applied to the Acupuncture credibility scores. 
 
-<<stepwiselm, echo=FALSE, results=tex>>=
+<<stepwiselmacunota, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-acutotlm1 <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-acutot.step.nota <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="both", k=3)
-print(xtable(summary(acutot.step.nota), label="tab:acutotlm1nota"))
-acutot.pred <- predict(acutotlm1, newdata=tcq2a)
+acutotlm1.nota <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+acutot.step.nota <- stepAIC(object=acutotlm1.nota, upper=acutotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(acutot.step.nota), label="tab:acutotlm1.notanota"))
+acutot.pred <- predict(acutotlm1.nota, newdata=tcq2a)
 @ 
 
 Table \ref{tab:acutotlm1nota} shows the estimated coefficients on the training sample. It can be seen that Cream credibility, Homeopathy credibility and Reiki credibility were the only variables retained by the procedure. The model was independently significant; F(3,314)=76.69, p=value $p\le 0.001$. The adjusted $R^2$ was equal to 0.4173. This model was then applied to the validation set.
 
-<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+<<lmonheldoutdataacu, echo=FALSE, results=tex>>=
 Acutotlm.holdout <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2a)
 print(xtable(summary(Acutotlm.holdout), label="tab:aculmholdoutnota"))
 @ 
@@ -3844,10 +3844,10 @@ Next, the same procedure was applied to the Homeopathy credibility totals.
 <<stepwiselm, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-homtotlm1 <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-homtot.step.nota <- stepAIC(object=homtotlm1, upper=homtotlm1,lower=~1, direction="both", k=3)
-print(xtable(summary(homtot.step.nota), label="tab:homtotlm1nota"))
-acutot.pred <- predict(acutotlm1, newdata=tcq2a)
+homtotlm1.nota <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+homtot.step.nota <- stepAIC(object=homtotlm1.nota, upper=homtotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(homtot.step.nota), label="tab:homtotlm1.nota"))
+acutot.pred <- predict(acutotlm1.nota, newdata=tcq2a)
 @ 
 
 Table \ref{tab:homtotlm1nota} shows the estimated coefficients on the training set. It can be seen that Cream, Pill, Acupuncture and Reiki credibility scores were retained by the algorithm. The model was independently significant: F(4,313)=138.4, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.6342. Next, the model was examined on the validation set. 
@@ -3862,10 +3862,10 @@ Next, the selection and testing procedure was applied to the Reiki totals.
 <<stepwiselm, echo=FALSE, results=tex>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
-reitotlm1 <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-reitot.step.nota <- stepAIC(object=reitotlm1, upper=reitotlm1,lower=~1, direction="both", k=3)
+reitotlm1.nota <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+reitot.step.nota <- stepAIC(object=reitotlm1.nota, upper=reitotlm1.nota,lower=~1, direction="both", k=3)
 print(xtable(summary(reitot.step.nota), label="tab:reitotlm1nota"))
-reitot.pred <- predict(reitotlm1, newdata=tcq2a)
+reitot.pred <- predict(reitotlm1.nota, newdata=tcq2a)
 @ 
 Table \ref{tab:reitotlm1nota} shows the estimated coefficients on the training set. The algorithm retained Injection total, Acupuncture and the Experience with alternative treatments variables. The model was significant; F(3,314)=67.98, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.388. Next, the performance of these  variables was examined on the validation set. 
 
@@ -3883,15 +3883,15 @@ tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 ## tcq2nota.complete$bamscale <- apply(bam2ascale, 1, mean, na.rm=TRUE)
 ## tcq2a$bamscale look at using reduced bam scale
-bamtotlm1 <- lm(Bamtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
-bamtot.step.nota <- stepAIC(object=bamtotlm1, upper=bamtotlm1,lower=~1, direction="both", k=3)
+bamtotlm1.nota <- lm(Bamtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+bamtot.step.nota <- stepAIC(object=bamtotlm1.nota, upper=bamtotlm1.nota,lower=~1, direction="both", k=3)
 print(xtable(summary(bamtot.step.nota), label="tab:bamtotlm1nota"))
-bamtot.pred <- predict(bamtotlm1, newdata=tcq2a)
+bamtot.pred <- predict(bamtotlm1.nota, newdata=tcq2a)
 @ 
 
 As can be seen from Table \ref{tab:bamtotlm1nota}, the algorithm kept six variables in the model. Of these conventional items have a negative loading, and the Acupuncture item has a positive loading. Interestingly enough, the experience with conventional treatments variable has a negative loading on the dependent variable also, as do income and Health. Next, the fit of the model on the held out data was examined. 
 
-<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+<<lmonheldoutdatabam, echo=FALSE, results=tex>>=
 Bamtotlm.holdout <- lm(Bamtot~Creamtot+Pilltot+Expconv+Acutot+Income+Health, data=tcq2a)
 print(xtable(summary(Bamtotlm.holdout), label="tab:Bamlmholdoutnota"))
 @ 
@@ -3907,8 +3907,8 @@ Next, the same procedure was repeated for all totals using the data from Splits 
 tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 pilltotlm1.notb <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
-pilltot.step.notb <- stepAIC(object=pilltotlm1.notb, upper=pilltotlm1notb,lower=~1, direction="both", k=3)
-pilltot.pred <- predict(pilltotlm1, newdata=tcq2b)
+pilltot.step.notb <- stepAIC(object=pilltotlm1.notb, upper=pilltotlm1.notb,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1.notb, newdata=tcq2b)
 print(xtable(summary(pilltot.step.notb)), label="tab:pilltotnotbsteplm")
 @ 
 
@@ -3926,7 +3926,7 @@ tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 creamtotlm1.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 creamtot.step.notb <- stepAIC(object=creamtotlm1.notb, upper=creamtotlm1notb,lower=~1, direction="both", k=3)
-creamtot.pred <- predict(creamtotlm1, newdata=tcq2b)
+creamtot.pred <- predict(creamtotlm1.notb, newdata=tcq2b)
 print(xtable(summary(creamtot.step.notb)), label="tab:creamtotnotbsteplm")
 @ 
 
@@ -3947,7 +3947,7 @@ tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 injtotlm1.notb <- lm(Injtot~Pilltot+Creamtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 injtot.step.notb <- stepAIC(object=injtotlm1.notb, upper=injtotlm1notb,lower=~1, direction="both", k=3)
-injtot.pred <- predict(injtotlm1, newdata=tcq2b)
+injtot.pred <- predict(injtotlm1.notb, newdata=tcq2b)
 print(xtable(summary(injtot.step.notb)), label="tab:injtotnotbsteplm")
 @ 
 
@@ -3967,7 +3967,7 @@ tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 acutotlm1.notb <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 acutot.step.notb <- stepAIC(object=acutotlm1.notb, upper=acutotlm1notb,lower=~1, direction="both", k=3)
-acutot.pred <- predict(acutotlm1, newdata=tcq2b)
+acutot.pred <- predict(acutotlm1.notb, newdata=tcq2b)
 print(xtable(summary(acutot.step.notb)), label="tab:acutotnotbsteplm")
 @ 
 
@@ -3987,7 +3987,7 @@ tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 homtotlm1.notb <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 homtot.step.notb <- stepAIC(object=homtotlm1.notb, upper=homtotlm1notb,lower=~1, direction="both", k=3)
-homtot.pred <- predict(homtotlm1, newdata=tcq2b)
+homtot.pred <- predict(homtotlm1.notb, newdata=tcq2b)
 print(xtable(summary(homtot.step.notb)), label="tab:homtotnotbsteplm")
 @ 
 
@@ -4002,15 +4002,15 @@ Table \ref{tab:homtotnotbheldout} shows the estimated coefficients on the valida
 
 Next, the same procedure was applied to the Reiki credibility score. 
 
-<<reitotlmnotc, echo=FALSE, results=hide>>=
-tcq2notc.full <- complete.cases(tcq2notc)
-tcq2notc.complete <- tcq2notc[tcq2notc.full,]
-reitotlm1.notc <- lm(Reitot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
-reitot.step.notc <- stepAIC(object=reitotlm1.notc, upper=reitotlm1notc,lower=~1, direction="both", k=3)
-reitot.pred <- predict(reitotlm1, newdata=tcq2c)
-print(xtable(summary(reitot.step.notc)), label="tab:reitotnotcsteplm")
+<<reitotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+reitotlm1.notb <- lm(Reitot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+reitot.step.notb <- stepAIC(object=reitotlm1.notb, upper=reitotlm1notb,lower=~1, direction="both", k=3)
+reitot.pred <- predict(reitotlm1.notb, newdata=tcq2b)
+print(xtable(summary(reitot.step.notb)), label="tab:reitotnotbsteplm")
 @ 
-Table \ref{tab:reitotnotcsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then applied to the training set. 
+Table \ref{tab:reitotnotbsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then applied to the training set. 
 
 <<reitotnotbheldout, echo=FALSE, results=tex>>=
 reitotnotb.heldout.lm <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2b)
@@ -4028,7 +4028,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 pilltotlm1.notc <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 pilltot.step.notc <- stepAIC(object=pilltotlm1.notc, upper=pilltotlm1notc,lower=~1, direction="both", k=3)
-pilltot.pred <- predict(pilltotlm1, newdata=tcq2c)
+#pilltot.pred <- predict(pilltotlm1.notc, newdata=tcq2c)
 print(xtable(summary(pilltot.step.notc)), label="tab:pilltotnotcsteplm")
 @ 
 The model shown in Table \ref{tab:pilltotnotcsteplm} contains almost the same four variables that were observed in Split 2 (with the inclusion of the Reiki total and the dropping of the Acupuncture total).  This suggests that these variables are likely to be truly related to Pill total credibility scores, as it is unlikely that random variation would account for the same set of four variables coming from the procedure twice in a row.  The $R^2$ for this model was equal to 0.4717, and the model was highly significant: F(4,299)=68.65, $p\le 0.0001$. These p values and test statistics are likely to be biased due to the automated inclusion and exclusion of variables for the model, and the true test is in the performance of the model on held-out data. 
@@ -4045,7 +4045,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 creamtotlm1.notc <- lm(Creamtot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 creamtot.step.notc <- stepAIC(object=creamtotlm1.notc, upper=creamtotlm1notc,lower=~1, direction="both", k=3)
-creamtot.pred <- predict(creamtotlm1, newdata=tcq2c)
+#creamtot.pred <- predict(creamtotlm1.notc, newdata=tcq2c)
 print(xtable(summary(creamtot.step.notc)), label="tab:creamtotnotcsteplm")
 @ 
 
@@ -4065,7 +4065,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 injtotlm1.notc <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 injtot.step.notc <- stepAIC(object=injtotlm1.notc, upper=injtotlm1notc,lower=~1, direction="both", k=3)
-injtot.pred <- predict(injtotlm1, newdata=tcq2c)
+#injtot.pred <- predict(injtotlm1.notc, newdata=tcq2c)
 print(xtable(summary(injtot.step.notc)), label="tab:injtotnotcsteplm")
 @ 
 Table \ref{tab:injtotnotcsteplm} shows that the algorithm retained three variables, Creamtotal, Pilltotal and Experience with conventional treatments, all with positive loadings as expected. Next, the fit of this model was examined on the validation data. 
@@ -4084,7 +4084,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 acutotlm1.notc <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 acutot.step.notc <- stepAIC(object=acutotlm1.notc, upper=acutotlm1notc,lower=~1, direction="both", k=3)
-acutot.pred <- predict(acutotlm1, newdata=tcq2c)
+#acutot.pred <- predict(acutotlm1.notc, newdata=tcq2c)
 print(xtable(summary(acutot.step.notc)), label="tab:acutotnotcsteplm")
 @ 
 
@@ -4102,7 +4102,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 homtotlm1.notc <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 homtot.step.notc <- stepAIC(object=homtotlm1.notc, upper=homtotlm1notc,lower=~1, direction="both", k=3)
-homtot.pred <- predict(homtotlm1, newdata=tcq2c)
+## homtot.pred <- predict(homtotlm1.notc, newdata=tcq2c)
 print(xtable(summary(homtot.step.notc)), label="tab:homtotnotcsteplm")
 @ 
 
@@ -4119,8 +4119,8 @@ Table \ref{tab:homtotnotcheldout} shows that all the variables remained signific
 tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 reitotlm1.notc <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
-reitot.step.notc <- stepAIC(object=reitotlm1.notc, upper=reitotlm1notc,lower=~1, direction="both", k=3)
-reitot.pred <- predict(reitot.step.notc, newdata=tcq2c)
+reitot.step.notc <- stepAIC(object=reitotlm1.notc, upper=reitotlm1.notc,lower=~1, direction="both", k=3)
+## reitot.pred <- predict(reitot.step.notc, newdata=tcq2c)
 print(xtable(summary(reitot.step.notc)), label="tab:reitotnotcsteplm")
 @ 
 Table \ref{tab:reitotnotcsteplm} shows the selected model and the predictor's estimated coefficients. It can be seen that Injections, Homeopathy and Reiki were the only retained coefficients. Next, this model was tested on the validation set. 
@@ -4136,7 +4136,7 @@ tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 bamtotlm1.notc <- lm(Bamtot~Creamtot+Pilltot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 bamtot.step.notc <- stepAIC(object=bamtotlm1.notc, upper=bamtotlm1notc,lower=~1, direction="both", k=3)
-bamtot.pred <- predict(bamtot.step.notc, newdata=tcq2c)
+## bamtot.pred <- predict(bamtot.step.notc, newdata=tcq2c)
 print(xtable(summary(bamtot.step.notc)), label="tab:bamtotnotcsteplm")
 @ 
 
@@ -4160,7 +4160,7 @@ tcq2notd.full <- complete.cases(tcq2notd)
 tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 pilltotlm1.notd <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 pilltot.step.notd <- stepAIC(object=pilltotlm1.notd, upper=pilltotlm1.notd,lower=~1, direction="both", k=3)
-pilltot.pred <- predict(pilltotlm1, newdata=tcq2d)
+pilltot.pred <- predict(pilltotlm1.notd, newdata=tcq2d)
 print(xtable(summary(pilltot.step.notd)), label="tab:pilltotnotdsteplm")
 @ 
 
@@ -4179,9 +4179,243 @@ tcq2notd.full <- complete.cases(tcq2notd)
 tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 creamtotlm1.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 creamtot.step.notd <- stepAIC(object=creamtotlm1.notd, upper=creamtotlm1.notd,lower=~1, direction="both", k=3)
-creamtot.pred <- predict(creamtotlm1, newdata=tcq2d)
+creamtot.pred <- predict(creamtotlm1.notd, newdata=tcq2d)
 print(xtable(summary(creamtot.step.notd)), label="tab:creamtotnotdsteplm")
 @ 
+
+Table \ref{tab:creamtotnotdsteplm} shows the estimated coefficients on the regression of Cream credibility scores on the training set. It can be seen that six predictors were retained, Pills, Injections, Acupcunture, Experience with alternative treatment, experience with conventional treatments and Gender. The next step was to examine the performance of the model on the held-out data.
+
+<<creamtotnotbheldout, echo=FALSE, results=tex>>=
+creamtotnotd.heldout.lm <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2d)
+print(xtable(summary(creamtotnotd.heldout.lm), label="tab:creamtotnotdheldout"))
+@ 
+
+Table \ref{tab:creamtotnotdheldout} shows the performance of the model on the held out data. It can be seen that Injections, Acupuncture, Experience with Treatments are no longer significant, while Pill credibility still is.The model is significant; F(7,193)=12.49, $p\le 0.0001$ and has an adjusted $R^2$ value of 0.2868, which is quite poor. 
+
+Next, the same procedure was applied to the Injection credibility totals for this split. 
+
+<<injtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+injtotlm1.notd <- lm(Injtot~Pilltot+Creamtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+injtot.step.notd <- stepAIC(object=injtotlm1.notd, upper=injtotlm1.notd,lower=~1, direction="both", k=3)
+injtot.pred <- predict(injtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(injtot.step.notd)), label="tab:injtotnotdsteplm")
+@ 
+It can be seen from Table \ref{tab:injtotnotdsteplm} that the algorithm retained five predictor variables, which is greater than has been seen in previous splits. Next, the performance of this model on the held out data was assessed. 
+
+<<injtotnotbheldout, echo=FALSE, results=tex>>=
+injtotnotd.heldout.lm <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2d)
+print(xtable(summary(injtotnotd.heldout.lm), label="tab:injtotnotdheldout"))
+@ 
+
+Table \ref{tab:injtotnotdheldout} shows the estimated coefficients for this model on the held-out data. It can be seen that Pill credibility scores and Experience with conventional treatments are the only variables that remain significant. The model was significant: F(5,201)=13.46, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.2321, which is extremely poor. 
+
+Next, a model was built and tested on the Acupuncture credibility scores. 
+
+<<acutotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+acutotlm1.notd <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+acutot.step.notd <- stepAIC(object=acutotlm1.notd, upper=acutotlm1.notd,lower=~1, direction="both", k=3)
+acutot.pred <- predict(acutotlm1.notd, newdata=tcq2d)
+print(xtable(summary(acutot.step.notd)), label="tab:acutotnotdsteplm")
+@ 
+Table \ref{tab:acutotnotdsteplm} shows that the algorithm retained five predictors in this case. Their fit was then examined on the held out data.
+
+<<acutotnotbheldout, echo=FALSE, results=tex>>=
+acutotnotd.heldout.lm <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2d)
+print(xtable(summary(acutotnotd.heldout.lm), label="tab:acutotnotdheldout"))
+@ 
+
+Table \ref{tab:acutotnotdheldout} shows the performance of the model on the held out data. It can be seen that only Homeopathy and Reiki credibility scores remain significant on this data set. The model was significant: F(5,203)=18.78, $p\le 0.0001$, and the adjusted $R^2$ of the model was equal to 0.2995, which is quite poor. 
+
+Next, the model development and validation procedure was applied to the Homeopathy credibility scores. 
+
+<<homtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+homtotlm1.notd <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+homtot.step.notd <- stepAIC(object=homtotlm1.notd, upper=homtotlm1.notd,lower=~1, direction="both", k=3)
+homtot.pred <- predict(homtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(homtot.step.notd)), label="tab:homtotnotdsteplm")
+@ 
+
+Table \ref{tab:homtotnotdsteplm} shows the retained predictors from the procedure for the Homeopathy credibility scores. It can be seen that only three were retained in this regression. Next, this model was fitted to the held out data.
+
+<<homtotnotbheldout, echo=FALSE, results=tex>>=
+homtotnotd.heldout.lm <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2d)
+print(xtable(summary(homtotnotd.heldout.lm), label="tab:homtotnotdheldout"))
+@ 
+
+Table \ref{tab:homtotnotdheldout} shows the performance of the model on the heldout data. It can be seen that both Acupuncture and Reiki remain extremely significant, but experience with alternative treatments does not. The model was significant: F(3,200)=75.17, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.5229, which is extremely good performance. 
+
+Next, the model selection and validation procedure was applied to the Reiki credibility scores. 
+
+<<reitotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+reitotlm1.notd <- lm(Reitot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+reitot.step.notd <- stepAIC(object=reitotlm1.notd, upper=reitotlm1.notd,lower=~1, direction="both", k=3)
+reitot.pred <- predict(reitotlm1.notd, newdata=tcq2d)
+print(xtable(summary(reitot.step.notd)), label="tab:reitotnotdsteplm")
+@ 
+
+Table \ref{tab:reitotnotdsteplm} shows the retained coefficients for the Reiki credibility scores regression. The algorithm has only retained three predictors, which is a little lower than in previous splits. Next, the fit of these predictors was examined on the held out data. 
+
+<<reitotnotbheldout, echo=FALSE, results=tex>>=
+reitotnotd.heldout.lm <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2d)
+print(xtable(summary(reitotnotd.heldout.lm), label="tab:reitotnotdheldout"))
+@ 
+
+Table \ref{tab:reitotnotdheldout} shows the performance of these predictors on the heldout data. It can be seen that both acupuncture and homeopathy remain significant, but Injections does not. The model was significant: F(3,206)=75.43, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.5165, which is extremely good. 
+
+Finally, this model selection and validation procedure was applied to the Beliefs About Medicine Total. 
+
+<<bamtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+bamtotlm1.notd <- lm(Bamtot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+bamtot.step.notd <- stepAIC(object=bamtotlm1.notd, upper=bamtotlm1.notd,lower=~1, direction="both", k=3)
+bamtot.pred <- predict(bamtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(bamtot.step.notd)), label="tab:bamtotnotdsteplm")
+@ 
+
+Table \ref{tab:bamtotnotdsteplm} shows the retained predictors from the algorithm. It can be seen that seven predictors were retained. Next, the fit of these predictors was examined on the held out data.
+
+<<bamtotnotbheldout, echo=FALSE, results=tex>>=
+bamtotnotd.heldout.lm <- lm(Bamtot~Pilltot+Creamtot+Homtot+Expalt+Expconv+Income+Health, data=tcq2d)
+print(xtable(summary(bamtotnotd.heldout.lm), label="tab:bamtotnotdheldout"))
+@ 
+
+Table \ref{tab:bamtotnotdheldout} shows the performance of the model on the validation set. It can be seen that Pilltotal, Homeopathy total and Experience with conventional treatments remain significant, but the other variables do not. The model was significant: F(7,182)=5.448, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.1414, which is extremely poor but in line with previous splits. 
+
+\subsubsection{Final Regression Models}
+\label{sec:final-regr-models}
+
+The next step in the data analysis procedure was to determine which of the models developed on each of the splits were the best fit to the data. As all of the data has been used in previous test and validation splits, the following approach was taken. Firstly, a random sample of 75 observations was drawn from each of the four splits, and then these samples were combined. The chosen models from each of the splits were then fitted to this new data set, and were compared using AIC and likelihood ratio tests. This approaches balances the advantages of cross-validation and avoids the problems of multiple comparison endemic to stepwise variable selection and repeated model fitting. 
+
+<<tcq2new, echo=FALSE, results=hide>>=
+set.seed(23)
+tcq2a.finalsamp <- tcq2nota.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2b.finalsamp <- tcq2notb.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2c.finalsamp <- tcq2notc.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2d.finalsamp <- tcq2notd.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2final <- as.data.frame(rbind(tcq2a.finalsamp,tcq2b.finalsamp,tcq2c.finalsamp,tcq2d.finalsamp))
+@ 
+
+<<pillfinalfits, echo=FALSE, results=hide>>=
+pilltotlm.nota <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
+pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
+pillcanddtest <- jtest(pilltotnotc, pilltot)
+pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
+pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
+@ 
+
+<<ABcompprint, echo=FALSE, results=tex>>=
+print(xtable(pillaandbtest), label="tab:pillAandBtest")
+@ 
+
+<<ABcompprint, echo=FALSE, results=tex>>=
+print(xtable(pillcanddtest, label="tab:pillCandDtest"))
+@ 
+
+As shown in Tables \ref{tab:pillAandBtest} and \ref{tab:pillCandDtest}, the model developed on Split A appears to preovide the best fit on this resampled data. The model tested on split A was also significantly better than C and D, therefore we can regard this model as the best for the Pill credibility scores. The model was significant: F(4,283)=68.81, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4859. 
+
+Next, the models for cream credibility scores were assessed. 
+
+<<creamfinal, echo=FALSE, results=hide>>=
+creamtotlm.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2final)
+creamtotlm.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2final)
+creamtotlm.notc <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2final)
+creamtotlm.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2final)
+creamaandbtest <- jtest(creamtotlm.nota, creamtotlm.notb)
+creamcanddtest <- jtest(creamtotlm.notc, creamtotlm.notd)
+creamdanbctest <- jtest(creamtotlm.notd, creamtotlm.notc)
+creamaanddtest <- jtest(creamtotlm.nota, creamtotlm.notd)
+@ 
+
+The results for this split were a little more ambiguous, as Models A and B were equivalent in terms of model testing. Model D was better than Model C, but Model A was better than Model D. Therefore we can regard Model D as the best fitting model for the Cream credibility scores. The model was significant: F(5,282)=43.51, $p\le 0.0001$, with an adjusted $R^2$ of 0.4255, which is acceptable. 
+
+Next, the same procedure was repeated for the Injection credibility scores. 
+
+<<injfinal, echo=FALSE, results=hide>>=
+injtotnota.final <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2final)
+injtotnotb.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2final)
+injtotnotc.final <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2final)
+injtotnotd.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2final)
+inj.aandb.test <- jtest(injtotnota.final, injtotnotb.final)
+inj.candd.test <- jtest(injtotnotc.final, injtotnotd.final)
+inj.bandd.test <- jtest(injtotnotb.final, injtotnotd.final)
+@ 
+
+<<modeldshow, echo=FALSE, results=tex>>=
+print(summary(xtable(injtotnotd.final, label="tab:injnotdfinal")))
+@ 
+
+Following repeated tests of the fit of the models, Model D appears to be the best fitting on this data. The model was significant: F(5,282)=48.56, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.3955. The coefficients for the model are shown in Table \ref{tab:injnotdfinal}. 
+
+Next, this procedure was repeated for the Acupuncture models. 
+
+<<acufinaltest, echo=FALSE, results=hide>>=
+acutotnota.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+acutotnotb.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2final)
+acutotnotc.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+acutotnotd.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+acu.aandb.test <- jtest(acutotnota.final, acutotnotb.final)
+acu.candd.test <- jtest(acutotnotc.final, acutotnotd.final)
+acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
+@ 
+Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
+
+<<acutotfinalprint, echo=FALSE, results=hide>>=
+print(summary(xtable(acutotnotc.final, label="tab:acutotfinal")))
+@ 
+
+The coefficients and p values for the individual terms in the model can be seen in Table \ref{tab:acutotfinal}. The model was significant: F(3,284)=79.31, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4501. 
+
+Next, this procedure was applied to the homeopathy models developed on each of the splits. 
+
+<<hommodfinal, echo=FALSE, results=tex>>=
+homtotnota.final <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2final)
+homtotnotb.final <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2final)
+homtotnotc.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+homtotnotd.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+hom.aandb.test <- jtest(homtotnota.final, homtotnotb.final)
+hom.candd.test <- jtest(homtotnotc.final, homtotnotb.final)
+hom.bandc.test <- jtest(homtotnotb.final, homtotnotc.final)
+@ 
+
+Following assessment of all four models, Model C was determined to be marginally the best.
+
+<<homfinalshow, echo=FALSE, results=tex>>=
+print(summary(xtable(homtotnotc.final, label="tab:homtotfinal")))
+@ 
+
+Table \ref{tab:homtotfinal} shows the estimated coefficients and p values for each of the predictors on the final dataset. The model was significant: F(3,284)=177.7, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.6487. 
+
+Next, the same procedure was applied to the Reiki credibility models. 
+
+<<reikimodfinal, echo=FALSE, results=hide>>=
+reitotnota.final <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2final)
+reitotnotb.final <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2final)
+reitotnotc.final <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2final)
+reitotnotd.final <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2final)
+rei.aandb.test <- jtest(reitotnota.final, reitotnotb.final)
+rei.candd.test <- jtest(reitotnotc.final, reitotnotd.final)
+rei.bandd.test <- jtest(reitotnotb.final, reitotnotd.final)
+@ 
+
+Following fitting and testing of the four models, Model D was determined to be the best fit to this new data. 
+
+<<reifinalshow, echo=FALSE, results=tex>>=
+print(summary(xtable(reitotnotd.final, label="tab:reitotfinal")))
+@ 
+
+Table \ref{tab:reitotfinal} shows the estimated coefficients for the Reiki credibility scores regression on the resampled data. The model was significant: F(3,284)=167.7, $p\le 0.0001$, with an adjusted $R^2$ of 0.6354, which is excellent. 
 
 \subsection{Discussion}
 
