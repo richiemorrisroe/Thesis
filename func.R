@@ -176,3 +176,50 @@ coef2mat <- function (gpcm) {
   }
   mat.res
 }
+myscrub <-
+  function (x, where, min, max, isvalue, newvalue)
+  
+{
+  if (missing(min)) 
+    min <- -Inf
+  if (missing(max)) 
+    max <- Inf
+  if (missing(isvalue)) 
+    isvalue <- Inf
+  if (missing(where)) 
+    where <- 1:dim(x)[2]
+  maxlength <- max(length(isvalue), length(min), length(max), 
+                   length(where))
+  if (missing(newvalue)) 
+    newvalue <- rep(NA, maxlength)
+  if (length(min) == 1) 
+    min <- rep(min, dim(x)[2])
+  if (length(max) == 1) 
+    max <- rep(max, dim(x)[2])
+  if (length(isvalue) == 1) 
+    isvalue <- rep(isvalue, maxlength)
+  if (length(newvalue) == 1) 
+    newvalue <- rep(newvalue, maxlength)
+  x <- as.matrix(x)
+  for (k in 1:maxlength) {
+    i <- where[k]
+    x[(!is.na(x[, i]) & (x[, i] < min[k])), i] <- newvalue[k]
+    x[(!is.na(x[, i]) & (x[, i] > max[k])), i] <- newvalue[k]
+    x[(!is.na(x[, i]) & (x[, i] == isvalue[k])), i] <- newvalue[k]
+  }
+  x <- as.data.frame(x)
+  return(x)
+}
+newscrub <- function(x, isvalue=NULL, newvalue=NULL) {
+  stopifnot(isvalue !=NULL, newvalue !=NULL)
+  maxlength <- dim(x)[2]
+  for (i in 1:maxlength) {
+    k <- i
+    if(k>length(newvalue||isvalue)) {
+      k <- length(isvalue)
+    }
+    ifelse(newvalue[k]!=NA, x[!is.na(isvalue[k]),i] <- newvalue[k], isvalue)
+    x
+  }
+  return(x)
+}
