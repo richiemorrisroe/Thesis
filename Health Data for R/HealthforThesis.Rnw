@@ -84,13 +84,13 @@ set1 <- c(1,2,20,22,34,36)
 set1paste <- paste(rand, set1, sep="")
 set1paste
 rand.set1 <- randitems[,set1paste]
-randscored1 <- myscrub(rand.set1, isvalue=c(1,2,3,4,5), newvalue=c(100,75,50,25,0))
+randscored1 <- scrub(rand.set1, where=c(1:5), isvalue=c(1,2,3,4,5), newvalue=c(100,75,50,25,0))
 paste2 <- paste(rand, 3:12, sep="")
 randset2 <- randitems[,paste2]
-randscored2 <- myscrub(randset2, isvalue=c(1,2,3), newvalue=c(0,50,100))
+randscored2 <- scrub(randset2, isvalue=c(1,2,3), newvalue=c(0,50,100))
 paste3 <- paste(rand, 13:19, sep="")
 randset3 <- randitems[,paste3]
-randscored3 <- myscrub(randset3, isvalue=c(1,2), newvalue=c(0,100))
+randscored3 <- scrub(randset3, isvalue=c(1,2), newvalue=c(0,100))
 paste4 <- paste(rand, 21,23,26,27,30, sep="")
 y <- c(21,23,26,27,30)
 paste4 <- paste(rand, y, sep="")
@@ -98,15 +98,15 @@ randset4 <- randitems[,paste4]
 y <- c(24,25,28,29,31)
 paste5 <- paste(rand, y, sep="")
 randset5 <- randitems[,paste5]
-randscored4 <- myscrub(randset4, isvalue=c(1,2,3,4,5), newvalue=c(100,80,60,40,20))
-randscored4 <- myscrub(randscored4, isvalue=6, newvalue=0)
-randscored5 <- myscrub(randset5, isvalue=c(1,2,3,4,5), newvalue=c(0,20,40,60,80))
-randscored5 <- myscrub(randscored5, isvalue=6, newvalue=100)
+randscored4 <- scrub(randset4, isvalue=c(1,2,3,4,5), newvalue=c(100,80,60,40,20))
+randscored4 <- scrub(randscored4, isvalue=6, newvalue=0)
+randscored5 <- scrub(randset5, isvalue=c(1,2,3,4,5), newvalue=c(0,20,40,60,80))
+randscored5 <- scrub(randscored5, isvalue=6, newvalue=100)
 y <- c(32,33,35)
 paste6 <- paste(rand, y, sep="")
 randset6 <- randitems[,paste6]
-randscored6 <- myscrub(randset6, isvalue=c(1,2,3), newvalue=c(0,25,50))
-randscored6 <- myscrub(randscored6, isvalue=c(4,5), newvalue=c(75,100))
+randscored6 <- scrub(randset6, isvalue=c(1,2,3), newvalue=c(0,25,50))
+randscored6 <- scrub(randscored6, isvalue=c(4,5), newvalue=c(75,100))
 randscored.all <- cbind(randscored1, randscored2, randscored3, randscored4, randscored5, randscored6)
 y <- c(1,33:36)
 paste.gh <- paste(rand, y, sep="")
@@ -1137,7 +1137,7 @@ irtGenhealth2 <- paste(rand, c(1, 33, 36), sep="")
 @
 
 <<physfuntrans, echo=FALSE, results=hide>>=
-irtphysfunct.scaled <- myscrub(irtphysfunct, isvalue=c(0,50,100), newvalue=c(0,1,2))
+irtphysfunct.scaled <- scrub(irtphysfunct, isvalue=c(0,50,100), newvalue=c(1,2,3))
 @
 
 <<physfunrasch, echo=FALSE, results=hide>>=
