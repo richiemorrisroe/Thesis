@@ -176,50 +176,41 @@ coef2mat <- function (gpcm) {
   }
   mat.res
 }
-myscrub <-
-  function (x, where, min, max, isvalue, newvalue)
-  
-{
-  if (missing(min)) 
-    min <- -Inf
-  if (missing(max)) 
-    max <- Inf
-  if (missing(isvalue)) 
-    isvalue <- Inf
-  if (missing(where)) 
-    where <- 1:dim(x)[2]
-  maxlength <- max(length(isvalue), length(min), length(max), 
-                   length(where))
-  if (missing(newvalue)) 
-    newvalue <- rep(NA, maxlength)
-  if (length(min) == 1) 
-    min <- rep(min, dim(x)[2])
-  if (length(max) == 1) 
-    max <- rep(max, dim(x)[2])
-  if (length(isvalue) == 1) 
-    isvalue <- rep(isvalue, maxlength)
-  if (length(newvalue) == 1) 
-    newvalue <- rep(newvalue, maxlength)
-  x <- as.matrix(x)
-  for (k in 1:maxlength) {
-    i <- where[k]
-    x[(!is.na(x[, i]) & (x[, i] < min[k])), i] <- newvalue[k]
-    x[(!is.na(x[, i]) & (x[, i] > max[k])), i] <- newvalue[k]
-    x[(!is.na(x[, i]) & (x[, i] == isvalue[k])), i] <- newvalue[k]
+
+## this function doesn't work, ignore.
+## newscrub <- function(x, isvalue=NULL, newvalue=NULL) {
+##   stopifnot(isvalue !=NULL, newvalue !=NULL)
+##   maxlength <- dim(x)[2]
+##   for (i in 1:maxlength) {
+##     k <- i
+##     if(k>length(newvalue||isvalue)) {
+##       k <- length(isvalue)
+##     }
+##     ifelse(newvalue[k]!=NA, x[!is.na(isvalue[k]),i] <- newvalue[k], isvalue)
+##     x
+##   }
+##   return(x)
+## }
+RecodeMany <- function (data, vars, Recodings){
+  varlist=list(vars)
+dataret <- data
+  for (i in 1:length(vars)) {
+    dataret[,i] <- car::recode(data[,i], recodes=Recodings)
   }
-  x <- as.data.frame(x)
-  return(x)
+return(dataret)
 }
-newscrub <- function(x, isvalue=NULL, newvalue=NULL) {
-  stopifnot(isvalue !=NULL, newvalue !=NULL)
-  maxlength <- dim(x)[2]
-  for (i in 1:maxlength) {
-    k <- i
-    if(k>length(newvalue||isvalue)) {
-      k <- length(isvalue)
-    }
-    ifelse(newvalue[k]!=NA, x[!is.na(isvalue[k]),i] <- newvalue[k], isvalue)
-    x
-  }
-  return(x)
+    ##   return(randitems)
+## }
+createSumScores <- function(data) { 
+data$physfun <- rowMeans(data[,grep("RANDQ[3456789]$|RANDQ[1][012]$",x=names(data))], na.rm=TRUE)
+data$rolelim <- rowMeans(data[,grep("RANDQ[1][3456]$",x=names(data))], na.rm=TRUE)
+data$rolelimem <- rowMeans(data[,grep("RANDQ[1][789]$",x=names(data))], na.rm=TRUE)
+data$energyfat <- rowMeans(data[,grep("RANDQ[2][379]$|RANDQ31$",x=names(data))], na.rm=TRUE)
+data$emwellbeing <- rowMeans(data[,grep("RANDQ[2][4568]$|RANDQ30$",x=names(data))], na.rm=TRUE)
+data$socialfunctioning <- rowMeans(data[,grep("RANDQ20|RANDQ32",x=names(data))], na.rm=TRUE)
+data$pain <- rowMeans(data[,grep("RANDQ[2][12]$",x=names(data))], na.rm=TRUE)
+data$generalhealth <- rowMeans(data[,grep("RANDQ1$|RANDQ[3][3456]$",x=names(data))], na.rm=TRUE)
+data$mindfulness <- rowMeans(data[, grep("MAAS", x=names(data))], na.rm=TRUE)
+data$optimism <- rowMeans(data[,grep("LOTR", x=names(data))], na.rm=TRUE)
+return(data)
 }
