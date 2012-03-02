@@ -17,7 +17,7 @@
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
 Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken 1000 times per second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of a  moisturising cream. 
 
-Participants in the treatment group were told that the cream was a potent painkiller, recently approved, which would take effect almost immediately. Participants in the placebo group were told that they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately. 
+Participants in the treatment group were told that \textit{the cream was a potent painkiller, recently approved, which would take effect almost immediately}. Participants in the placebo group were told that \textit{they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately.}
 
 
 \section{Results}
@@ -94,7 +94,7 @@ optbootplot <- plot(optboot)
 print(optmeanconf.xtab)
 @ 
 
-As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
+As can be seen from the Table ~\ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure ~\ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
 
 <<optbootplot, echo=FALSE, fig=TRUE>>=
 print(optbootplot)
@@ -246,7 +246,7 @@ print(opt.xtab)
 
 As can be seen from Tables the scores on the treatment credibility IAT, the optimism IAT and the mean conventional and alternative credibility scores did not differ across groups. 
 
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend$p.value}%$).
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend$p.value}$).
 In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime$p.value}%$).
 
 
@@ -879,7 +879,7 @@ The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fi
 deceptivemediangsr <- lapply(gsrdeceptive[,2:31150], median, na.rm=TRUE)
 openmediangsr <- lapply(gsropen[,2:31150], median, na.rm=TRUE)
 notreatmediangsr <- lapply(gsrnotreat[,2:31150], median, na.rm=TRUE)
-medgsr <- cbind(deceptivemediangsr, openmediangsr, notreatmediangsr)
+medgsr <- as.data.frame(cbind(deceptivemediangsr, openmediangsr, notreatmediangsr))
 medgsr <- lapply(medgsr, as.numeric)
 medgsr <- as.data.frame(medgsr)
 medgsr <- as.data.frame(lapply(medgsr, scale))
