@@ -214,3 +214,52 @@ data$mindfulness <- rowMeans(data[, grep("MAAS", x=names(data))], na.rm=TRUE)
 data$optimism <- rowMeans(data[,grep("LOTR", x=names(data))], na.rm=TRUE)
 return(data)
 }
+TrainTestSets <- function (x, data) {
+  testlist <- list()
+  trainlist <- list()
+  for (i in 1:length(x)) {
+    split <- x[[i]]
+    fold.train <- data[split,]
+    fold.test <- data[-eval(split),]
+    trainlist[[i]] <- fold.train
+    testlist[[i]] <- fold.test
+  }
+  traintestlist <- c(trainlist, testlist)
+
+  train.names <- paste(names(x), ".Train",sep="")
+  test.names <- paste(names(x), ".Test",sep="")
+  listnames <- c(train.names, test.names)
+  names(traintestlist) <- listnames
+  traintestlist
+}
+SeperateTestandTrain <- function(data, test=TRUE) {
+  if(test) {
+    indtest <- grep("Test$", names(data))
+    res <- data[indtest]
+  }
+  else {
+    indtrain <- grep("Train$", names(data)) 
+    res <- data[indtrain]
+  }
+  res
+}
+Trainfolds <- function(data, Form, control, sizes, metric, updown) {
+  cvresults <- list()
+  for (i in 1:length(data)) {
+    res <- train(form=Form, data=data, na.action="na.omit", size=sizes, metric=metric, maximise=updown, control=rfeControl)
+    cvresults[[i]] <- res
+  }
+  names(cvresults) <- names(data)
+  cvresults
+}
+
+Svdcv <- function(x, ...) {
+  msep <- x$msep
+  K <- nrow(msep)
+  rank <- seq(from = 0, to = x$maxrank, by = 1)
+    msep.mean <- apply(x$msep, 2, mean)
+    msep.se <- apply(x$msep, 2, sd)/sqrt(K)
+  res <- as.data.frame(cbind(rank, msep.mean, msep.se))
+  names(res) <- c("Rank", "Prediction Error", "Prediction Error SE")
+  resxtab <- xtable(res, ...)
+}
