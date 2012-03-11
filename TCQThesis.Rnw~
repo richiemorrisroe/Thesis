@@ -1,3 +1,4 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 \section{Introduction}
 
 Expectancies are considered to be at the core of the placebo response \cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs \cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal \cite{Whalley2008}.  This paper reports on an adaptation of the Credibility/Expectancy Questionnaire \cite{devilly2000psychometric}  to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
@@ -14,8 +15,12 @@ All participants in Study 1 were students at the University of the researchers. 
 \subsubsection{Measures}
 
 The Treatment Credibility Questionnaire was adapted from the Devilly and Borkovec Credibility/Expectancy Questionnaire. This questionnaire consists of six questions, asking about the cognitive and affective responses to the therapy. Given that this research project concerns the use of placebo analgesia, the questionnaires were modified to make them refer to procedures for the relief of pain.
-The general format is as follows: You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below. 
-In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pill, Cream, Injection and Acupuncture. 
+The general format is as follows: 
+\begin{quotation}
+You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below.   
+\end{quotation}
+
+In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pills, Creams, Injections and Acupuncture. 
 There were six questions under each method, giving the scale 24 questions in all. Following the analysis of the results of Study 1, the instrument was modified to include six questions each on Homeopathy and Reiki, another two methods within the field of complementary and alternative medicine.  
 
 
@@ -29,11 +34,11 @@ The questions were as follows:
 	\item How successful do you think this treatment will be in reducing your symptoms?
  	\item How confident would you be in recommending this treatment to a friend2
 	\item How much improvement in your symptoms do you think will occur?
-	\item How much do you really feel that therapy will help you to reduce your symptoms?
-	\item How much improvement in your symptoms do you really feel will occur?
+	\item How much do you really \textit{feel} that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really \textit{feel} will occur?
 \end{enumerate}
 
-The CEQ has had alpha of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
+The CEQ has had alphas of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
 
 \subsubsection{Data Collection}
 
@@ -63,6 +68,7 @@ require(eRm)
 require(ltm)
 require(xtable)
 require(OpenMx)
+require(MASS)
 source("func.R")
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
@@ -256,7 +262,7 @@ VSS(na.omit(tcqall))
 
 <<tcqfact4, echo=FALSE, results=tex>>=
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.4))
+print(FactorXtab(tcq.fact.4, label="tcqfact4"))
 @ 
 
 <<factorloadings4, echo=FALSE, results=verbatim>>=
@@ -267,7 +273,7 @@ print(ExtractLoadings(tcq.fact.4))
 \label{tab:tcq1fourfactor}
 
 <<factorcor4, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.4))
+print(FactorCor(tcq.fact.4, label="factorcor4"))
 @ 
 
 The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
@@ -290,11 +296,11 @@ As can be seen from Table \ref{tab:tcq1fourfactor.corr} , the Acupuncture factor
 Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
 
 <<tcqfact5, echo=FALSE, results=tex>>=
-tcq.fact.5<-fa(na.omit(tcqall), 5, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.5))
+tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
+print(FactorXtab(tcq.fact.5, label="tcqfact5"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.5))
+print(FactorCor(tcq.fact.5, label="tcq5cor"))
 @ 
 
 \caption{Five Factor Solution, TCQ 1 Promax rotation}
@@ -305,10 +311,10 @@ Although in Table \ref{tab:tcq1fivefactor} the oblimin solution is shown, simpli
 Finally, the six factor solution was examined for interpretability, and the results are shown in Table \ref{tab:tcq1sixfactor}
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.6))
+print(FactorXtab(tcq.fact.6, label="tcqfact6"))
 @ 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6))
+print(FactorCor(tcq.fact.6, label="tcq6cor"))
 @ 
 
 \caption{Six Factor Solution, TCQ 1, Oblimin Rotation}
@@ -607,6 +613,9 @@ pillLm1 <- lm((PillTot/5)~Gender+College+UGPG+Year, data=tcq1)
 tcq2 <- read.csv("tcq2.csv")
 @ 
 
+
+
+
 <<scalemake2, echo=FALSE, results=hide>>=
 Pillall <- tcq2[,grep("Pill[1-6]", x=names(tcq2))]
 Creamall <- tcq2[,grep("Cream[1-6]", x=names(tcq2))]
@@ -623,6 +632,13 @@ tcq2$Homtot <- apply(Homall, 1, mean, na.rm=TRUE)
 tcq2$Reitot <- apply(Reiall, 1, mean, na.rm=TRUE)
 tcq2$Bamtot <- apply(Bamall, 1, mean, na.rm=TRUE)
 tcqtotals <- with(tcq2, as.data.frame(cbind(Pilltot, Creamtot, Injtot, Acutot, Homtot, Reitot, Bamtot)))
+@ 
+
+<<expconvaltcalc, echo=FALSE, results=hide>>=
+tcq2$ConvMean <- with(tcq2, (Pilltot+Creamtot+Injtot)/3)
+tcq2$AltMean <- with(tcq2, (Acutot+Homtot+Reitot)/3)
+tcq2$Expconv <- with(tcq2, (ExpPill+ExpCream+ExpInj)/3)
+tcq2$Expalt <- with(tcq2, (ExpAcu+ExpHom+ExpRei)/3)
 @ 
 <<subsamplestcq2, echo=FALSE, results=hide>>=
 set.seed(52)
@@ -810,6 +826,8 @@ print(xtable(tcq2.sum))
 \label{tab:tcq2demo}
 \caption{Demographic Statistics, TCQ 2}
 
+
+
 As can be seen from the second column of Table \ref{tab:tcq2demo} , many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22, which shows that most of the sample was made up of students.
 The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
 The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
@@ -881,6 +899,8 @@ Following these investigations of the descriptive qualities of the data, the nex
 
 \subsubsection{Treatment Credibility Questionnaire, Version 2}
 
+
+
 \subsubsection{TCQ Version2 Split A}
 \label{sec:tcq-version2-split}
 
@@ -891,7 +911,7 @@ Injall2a <- tcq2a[,grep("Inj[1-6]", x=names(tcq2a))]
 Acuall2a <- tcq2a[,grep("Acu[1-6]", x=names(tcq2a))]
 Homall2a <- tcq2a[,grep("Hom[1-6]", x=names(tcq2a))]
 Reiall2a <- tcq2a[,grep("Rei[1-6]", x=names(tcq2a))]
-Bamall2a <- tcq2a[,53:70]
+bamall2a <- tcq2a[,53:70]
 tcqall2a <- as.data.frame(cbind(Pillall2a, Creamall2a, Injall2a, Acuall2a, Homall2a, Reiall2a))
 @ 
 
@@ -910,16 +930,16 @@ tcq2a.vss <- VSS(na.omit(tcqall2a))
 As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
 <<tcq2afact6, echo=FALSE, results=tex>>=
 tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.6))
+print(FactorXtab(tcq2a.fact.6, label="tcq2afact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2.sixfactor}
+\label{tab:tcq2afact6}
 
 As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6))
+print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor"))
 @ 
 
 
@@ -933,7 +953,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.7))
+print(FactorXtab(tcq2a.fact.7, label="tcq2afact7"))
 @ 
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
@@ -943,7 +963,7 @@ Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that fact
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
 
 <<tcq2a7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.7))
+print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -961,22 +981,22 @@ This questionnaire was developed for use with chronic pain patients. It appears 
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
 
 <<bamparallel, echo=FALSE, fig=TRUE>>=
-bam.para <- fa.parallel(na.omit(Bamall2a))
-bam.vss <- VSS(na.omit(Bamall2a))
+bam.para <- fa.parallel(na.omit(bamall2a))
+bam.vss <- VSS(na.omit(bamall2a))
 @ 
 
 The parallel analysis suggests that there are four factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all four factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
 
 <<bam2afact1, echo=FALSE, results=tex>>=
-bam2a.fact1 <- fa(na.omit(Bamall2a), 1, fm="pa")
-print(FactorXtab(bam2a.fact1))
+bam2a.fact1 <- fa(na.omit(bamall2a), 1, fm="pa")
+print(FactorXtab(bam2a.fact1, label="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extremely poor. Only 11 of the 18 items have loadings above 0.3, which is typically used as a cutoff for the assigning of items to the factor. In addition, the communalities for all of the items are extremely low, all below 0.5 which indicates that the common variance of this solution is quite low. This one factor solution only explains 17\% of the variance and so is somewhat inadequate in all senses. 
 
 <<bam2afact2, echo=FALSE, results=tex>>=
-bam2a.fact2 <- fa(na.omit(Bamall2a), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact2))
+bam2a.fact2 <- fa(na.omit(bamall2a), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact2, label="bam2afact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 23\%, which is again quite poor. In addition, six items have no loadings above 0.3 on either of the factors. 
 
@@ -988,14 +1008,14 @@ Although there appears to be an interpretable factor structure emerging from thi
 
 
 <<bam2afact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact2))
+print(FactorCor(bam2a.fact2,label="bam2afact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
 
 <<bam2afact3, echo=FALSE, results=tex>>=
-bam2a.fact3 <- fa(na.omit(Bamall2a), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact3))
+bam2a.fact3 <- fa(na.omit(bamall2a), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact3, label="bam2afact3"))
 @ 
 Again, the communalities for this solution are extremely low, with almost all of them (16) below 0.5. This solution explained 29\% of the variance. The factors are described below. 
 
@@ -1008,14 +1028,14 @@ PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11". These items relate to the  respons
 
 
 <<bam2afact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact3))
+print(FactorCor(bam2a.fact3,label="bam2afact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
 
 <<bam2afact4, echo=FALSE, results=tex>>=
-bam2a.fact4 <- fa(na.omit(Bamall2a), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact4))
+bam2a.fact4 <- fa(na.omit(bamall2a), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact4, label="bam2afact4"))
 @ 
 
 This solution explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
@@ -1029,26 +1049,11 @@ PA4: "BAM5". This factor is almost certainly spurious, given that it only has on
 
 
 <<bam2afact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact4))
+print(FactorCor(bam2a.fact4,label="bam2afact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
 
-<<bam2asem1, echo=FALSE, results=hide>>=
-Bam <- "BAM"
-bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- bamitems.cols
-latents <- c("Beliefs About Medicine")
-Bamq <- bamitems.cols
-Bam2amodel1<- mxModel(name="Bam2a1", 
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Beliefs About Medicine", to=Bamq), 
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-                      mxData(observed=cov(na.omit(Bamall2a)), type="cov", numObs=147))
-Bam2afit1 <- mxRun(Bam2amodel1)
-#Bam2asumm1 <- summary(Bam2afit1)
 @ 
 
 %put in other 3 sem fits, although i suspect they won't converge. Look for debugging information online when you have internet. 
@@ -1077,7 +1082,7 @@ As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis a
 
 <<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5))
+print(FactorXtab(tcq2b.fact.5, label="tcq2afact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
 \label{tab:tcq2bfivefactor}
@@ -1099,13 +1104,13 @@ PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor consisted solely of 
 Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
 
 <<tcq2bfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.5))
+print(FactorCor(tcq2b.fact.5,label="tcq2bfactorcor5"))
 @ 
 
 
 <<tcq2bfact6, echo=FALSE, results=tex>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6))
+print(FactorXtab(tcq2b.fact.6,label="tcq2bfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
@@ -1114,7 +1119,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6))
+print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor"))
 @ 
 
 
@@ -1128,7 +1133,7 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7))
+print(FactorXtab(tcq2b.fact.7, label="tcq2afact7"))
 @ 
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
@@ -1153,7 +1158,7 @@ PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
 <<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7))
+print(FactorCor(tcq2b.fact.7,label="tcq2b7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -1179,14 +1184,14 @@ The parallel analysis suggests that there are five factors, while the MAP criter
 
 <<bam2afact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1))
+print(FactorXtab(bam2b.fact1, label="bam2afact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
 
 <<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2))
+print(FactorXtab(bam2b.fact2, label="bam2bfact2"))
 @ 
 Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
 
@@ -1196,14 +1201,14 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". These items relate to the responsi
 
 
 <<bam2bfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact2))
+print(FactorCor(bam2b.fact2,label="bam2bfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
 
 <<bam2bfact3, echo=FALSE, results=tex>>=
 bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact3))
+print(FactorXtab(bam2b.fact3,label="bam2bfact3"))
 @ 
 This solution explained 34\% of the variance in the data. The factors broke down as follows:
 
@@ -1215,14 +1220,14 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". Again, this factor can best be ter
 
 
 <<bam2bfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact3))
+print(FactorCor(bam2b.fact3,label="bam2bfact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not. . 
 
 <<bam2bfact4, echo=FALSE, results=tex>>=
 bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact4))
+print(FactorXtab(bam2b.fact4,label="bam2bfact4"))
 @ 
 
 PA3: "BAM12" "BAM13" "BAM14" "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
@@ -1237,7 +1242,7 @@ PA1: "BAM6"  "BAM8"  "BAM9"  "BAM18". These items all relate to safety or danger
 
 
 <<bam2bfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact4))
+print(FactorCor(bam2b.fact4,label="bam2bfact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
@@ -1245,7 +1250,7 @@ As before, Table \ref{tab:bam2afact4cor} shows large correlations between factor
 
 <<bam2bfact5, echo=FALSE, results=tex>>=
 bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact5))
+print(FactorXtab(bam2b.fact5,label="bam2bfact5"))
 @ 
 
 
@@ -1260,7 +1265,7 @@ PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines 
 PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
 <<bam2bfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact5))
+print(FactorCor(bam2b.fact5,label="bam2bfact5cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
@@ -1276,275 +1281,3141 @@ bamall2c <- tcq2c[,53:70]
 
 \begin{figure}
 	\centering
-<<tcq2aparallel, echo=FALSE, fig=TRUE>>=
-tcq2b.para <- fa.parallel(na.omit(tcqall2b))
-tcq2b.vss <- VSS(na.omit(tcqall2b))
+<<tcq2cparallel, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1,2))
+tcq2c.para <- fa.parallel(na.omit(tcqall2c))
+tcq2c.vss <- VSS(na.omit(tcqall2c))
 @ 
 	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
-	\label{fig:tcq2aparallel}
+	\label{fig:tcq2cparallel}
 \end{figure}
 
 
-<<tcq2afact5, echo=FALSE, results=tex>>=
-tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5))
+<<tcq2cfact5, echo=FALSE, results=tex>>=
+tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.5,label="tcq2cfact5"))
 @ 
 \caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
-\label{tab:tcq2bfivefactor}
+\label{tab:tcq2cfivefactor}
+
+This solution explained 79\% of the variance, and all of the communalities were extremely high. 
+
+PA2: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6" "Inj1"  "Inj2"  "Inj3" "Inj4"  "Inj5"  "Inj6". This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
+
+PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor maps exactly to the Homeopathy items, and is therefore given that name.
+
+PA5: "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". Again, this factor maps exactly to the Reiki items and is named after them.
+
+PA4: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". PA4 maps to the Cream items and so retains that name. 
+
+PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". PA3 maps to the acupuncture items and so is termed Acupuncture. 
+
+% PA2:"Pill1"  "Pill2"  "Pill3"  "Pill4"  "Pill5"  "Pill6"  "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6" "Inj1"   "Inj2"   "Inj3"   "Inj4"   "Inj5"   "Inj6". This factor consists of extremely high loadings on the Pill and Injection items, and moderate ($0.3-0.4$) loadings on the Cream items. It can therefore best be referred to as the Conventional treatments factors.
+
+% PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6" "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". This factor appears to have small loadings on all of the alternative items, pointing towards this factor representing variance all these items had in common. This factor is therefore termed Alternative Treatments. 
+
+% PA5: "Hom1" "Hom3" "Hom4" "Hom5" "Hom6" "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". This factor consists of moderate loadings on Homeopathy and large loadings on Reiki. This factor can probably best be termed Reiki and Alterntative Treatments. 
+
+% PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor maps exactly to the Acupuncture items and so retains that name. 
+
+% PA4: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor again maps exactly to the Creams items, and is therefore termed Cream. This factor solution was from a varimax rotation, note the interesting differences between it and the others. 
+
 
 Table\ref{tab:tcq2cfactorcor5}. 
 
-<<tcq2bfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.5))
+<<tcq2cfactorcor5, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2c.fact.5,label="tcq2cfactorcor5"))
 @ 
 
+Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlated highly with the Cream factor (as would be expected), while the Alternative factors correlate quite well with one another also. Of particular note is Acupuncture, which appears to occupy a middle ground between the other alternative methods and the conventional ones, as least as evinced by this correlation structure. 
 
-<<tcq2bfact6, echo=FALSE, results=tex>>=
-tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6))
+
+<<tcq2cfact6, echo=FALSE, results=tex>>=
+tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.6,label="tcq2cfact6"))
 @ 
 \caption{Six factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2.sixfactor}
 
-\ref{tab:tcq2.sixfactorcorr} 
-<<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6))
+Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
+
+
+<<tcq2cfactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2c.fact.6,label="tcq2cfactorcor"))
 @ 
-
-
 \caption{Factor Correlations, Six Factor Solution TCQ 2}
 \label{tab:tcq2.sixfactorcorr}
+Again (Table \ref{tab:tcq2.sixfactorcorr} ) shows that Acupuncture again shows correlations with the conventional factors, but homeopathy does also in this particular solution. This solution explained 83\% of the variance, which is consistent with the other splits and factor solutions examined so far. 
 
 
 
 
-<<tcq2afact7, echo=FALSE, results=tex>>=
-tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7))
+
+
+
+<<tcq2cfact7, echo=FALSE, results=tex>>=
+tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.7,label="tcq2cfact7"))
 @ 
+
+
 
 \caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
 \label{tab:tcq2sevenfactor}
 
+Again, the factors mostly break down into the six forms of treatment.
 
+PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor represents the homeopathy items and retains that name. 
 
+PA5: "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". This is the Reiki items factor. 
 
-The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
+PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This is the Acupuncture items factor. 
 
-<<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7))
+PA4: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This is the Cream factor. 
+
+PA2:"Inj1" "Inj2" "Inj3" "Inj4" "Inj5" "Inj6". This is the Injections factor. 
+
+PA6:"Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This is the Pills factor. 
+
+PA7: "Pill3" "Inj1"  "Inj3" . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
+
+The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
+
+<<tcq2c7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2c.fact.7,label="tcq2c7factorcorr"))
 @ 
 
-<<tcq2afitindices, echo=FALSE, results=tex>>=
-tcq2bFit5 <- FitIndices(tcq.fact.5)
-tcq2bFit6 <- FitIndices(tcq2b.fact.6)
-tcq2bFit7 <- FitIndices(tcq2b.fact.7)
-tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
-print(xtable(tcq2bfit))
-@ 
-\caption{Fit Indices, TCQ 2 (Split B)}
-\label{tab:tcq2bfit}
+The seven factor solution shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
 
+<<tcq2cfitindices, echo=FALSE, results=tex>>=
+tcq2cFit5 <- FitIndices(tcq2c.fact.5)
+tcq2cFit6 <- FitIndices(tcq2c.fact.6)
+tcq2cFit7 <- FitIndices(tcq2c.fact.7)
+tcq2cfit <- as.data.frame(cbind(tcq2cFit5, tcq2cFit6, tcq2cFit7))
+print(xtable(tcq2cfit))
+@ 
+\caption{Fit Indices, TCQ 2 (Split C)}
+\label{tab:tcq2cfit}
+
+It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
-<<bamparallel, echo=FALSE, fig=TRUE>>=
-bam.para <- fa.parallel(na.omit(bamall2b))
-bam.vss <- VSS(na.omit(bamall2b))
+<<bam2cparallel, echo=FALSE, fig=TRUE>>=
+bam2c.para <- fa.parallel(na.omit(bamall2c))
+bam2c.vss <- VSS(na.omit(bamall2c))
+@ 
+
+The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+<<bam2cfact1, echo=FALSE, results=tex>>=
+bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
+print(FactorXtab(bam2c.fact1,label="bam2cfact1"))
+@ 
+
+The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
+
+
+<<bam2cfact2, echo=FALSE, results=tex>>=
+bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2c.fact2,label="bam2cfact2"))
+@ 
+As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
+
+PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
+
+<<bam2cfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact2,label="bam2cfact2cor"))
+@ 
+
+As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
+
+<<bam2cfact3, echo=FALSE, results=tex>>=
+bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2c.fact3,label="bam2cfact3"))
 @ 
 
 
-<<bam2afact1, echo=FALSE, results=tex>>=
-bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1))
+PA1: "BAM13" "BAM14" "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items appear to relate to the safety of medicines, and so this factor is named thusly. 
+
+PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
+
+<<bam2cfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact3,label="bam2cfact3cor"))
 @ 
 
+The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
 
 
-<<bam2bfact2, echo=FALSE, results=tex>>=
-bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2))
-@ 
-A. 
 
-<<bam2bfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact2))
-@ 
-
-As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
-
-<<bam2bfact3, echo=FALSE, results=tex>>=
-bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact3))
-@ 
-
-
-<<bam2bfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact3))
-@ 
-
-
-<<bam2bfact4, echo=FALSE, results=tex>>=
-bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact4))
-@ 
-
-<<bam2bfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact4))
-@ 
-
-
-<<bam2bfact5, echo=FALSE, results=tex>>=
-bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact5))
-@ 
-
-
-<<bam2bfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact5))
-@ 
-
-As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another.
 
 \subsection{Split D}
 \label{sec:split-d}
 
+<<tcq2dscalesplit, echo=FALSE, results=hide>>=
+tcqall2d <- tcq2d[,17:52]
+bamall2d <- tcq2d[,53:70]
+@ 
 
+\begin{figure}
+	\centering
+<<tcq2dparallel, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1,2))
+tcq2d.para <- fa.parallel(na.omit(tcqall2d))
+tcq2d.vss <- VSS(na.omit(tcqall2d))
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split D)}
+	\label{fig:tcq2dparallel}
+\end{figure}
+
+In this Split, the parallel analysis criterion suggested six factors while the MAP criterion suggested seven. Following previous practice, these two solutions were reported and examined for adequacy of fit and interpretability. 
+
+
+<<tcq2dfact6, echo=FALSE, results=tex>>=
+tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.6,label="tcq2dfact6"))
+@ 
+\caption{Six factor Solution, TCQ 2(Split D), Oblimin Rotation}
+\label{tab:tcq2d.sixfactor}
+
+As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors, as is clearly shown in Table \ref{tab:tcq2dfact6}. This solution explained 81\% of the variance. 
+
+
+<<tcq2dfactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2d.fact.6,label="tcq2dfactorcor"))
+@ 
+\caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
+\label{tab:tcq2d.sixfactorcorr}
+
+Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. Details of the correlations between factors are shown in Table \ref{tab:tcq2d.sixfactorcorr}. 
+
+
+
+<<tcq2dfact7, echo=FALSE, results=tex>>=
+tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.7,label="tcq2dfact7"))
+@ 
+\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
+\label{tab:tcq2dsevenfactor}
+
+
+This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
+
+PA1: "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
+
+PA5: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor will be termed Homeopathy. 
+
+PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor will be termed Acupuncture. 
+
+PA2: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor will be termed Creams.
+
+PA3: "Inj1" "Inj2" "Inj3" "Inj4" "Inj5" "Inj6". This factor will be termed Injections.
+
+PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor will be termed Pills. 
+
+PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
+
+
+\ref{tab:tcq2d7factorcorr}.
+
+<<tcq2d7factorcorr, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2d.fact.7,label="tcq2d7factorcorr"))
+@ 
+
+
+<<tcq2dfitindices, echo=FALSE, results=tex>>=
+tcq2dFit6 <- FitIndices(tcq2d.fact.6)
+tcq2dFit7 <- FitIndices(tcq2d.fact.7)
+tcq2dfit <- as.data.frame(cbind( tcq2dFit6, tcq2dFit7))
+print(xtable(tcq2dfit))
+@ 
+\caption{Fit Indices, TCQ 2 (Split D)}
+\label{tab:tcq2dfit}
+
+Again as has been seen in previous splits, the NNFI increases, the BIC decreases along with the RMSEA. 
+
+\ref{tab:tcq2dfit} 
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+
+<<bam2dparallel, echo=FALSE, fig=TRUE>>=
+bam2d.para <- fa.parallel(na.omit(bamall2d))
+bam2d.vss <- VSS(na.omit(bamall2d))
+@ 
+
+The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+<<bam2dfact1, echo=FALSE, results=tex>>=
+bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
+print(FactorXtab(bam2d.fact1,label="bam2dfact1"))
+@ 
+
+As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
+
+
+
+<<bam2dfact2, echo=FALSE, results=tex>>=
+bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact2,label="bam2dfact2"))
+@ 
+
+PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18". These items all relate to the dangers surrounding medicines, and reasons to avoid using them, and so this factor can best be termed Safe use of Medicines. 
+
+PA1: "BAM2"  "BAM6"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors and their use of medicines, and so this factor can best be termed Doctors and Medicines. 
+
+<<bam2dfact2dcor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact2, label="bam2dfact2dcor"))
+@ 
+
+It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
+
+
+
+
+
+<<bam2dfact3, echo=FALSE, results=tex>>=
+bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact3,label="bam2dfact3"))
+@ 
+
+PA1: "BAM2"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors, and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM1"  "BAM3"  "BAM6"  "BAM8"  "BAM18". These items all relate to the dangers surrounding medicines, and so this factor can best be termed Dangers of Medicines. 
+
+PA2: "BAM7"  "BAM9"  "BAM10" "BAM11". These items all appear to relate to the dangers and avoidance of medicines, and so this factor can best be termed avoidance of medicines. 
+
+
+<<bam2dfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact3, label="bam2dfact3cor"))
+@ 
+
+It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
 
 \subsection{Structural Equation Modelling}
 
+Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
+
+<<semsplits, echo=FALSE, results=hide>>=
+tcq2nota <- tcq2[-tcq2.ind.a,]
+tcq2notb <- tcq2[-tcq2.ind.b,]
+tcq2notc <- tcq2[-tcq2.ind.c,]
+tcq2notd <- tcq2[-tcq2.ind.d,]
+tcqall2nota <- tcq2nota[,17:52]
+tcqall2notb <- tcq2notb[,17:52]
+tcqall2notc <- tcq2notc[,17:52]
+tcqall2notd <- tcq2notd[,17:52]
+bamnotA <- tcq2nota[,53:70]
+bamnotB <- tcq2notb[,53:70]
+bamnotC <- tcq2notc[,53:70]
+bamnotD <- tcq2notd[,53:70]
+@ 
+
+\subsection{Split A CFA}
+\label{sec:split-cfa}
 
 
-As can be seen from Table \ref{tab:tcq2semcomp} the seven factor solution appears to be the best model for the reproduction of the observed covariance matrix. 
+
+<<tcq6notaSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotA <- mxModel(name="TCQ6notA", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
+tcq6fit.notA <- mxRun(Tcq6modelnotA)
+tcq6summ.notA <- summary(tcq6fit.notA)
+@ 
+
+<<tcq7notAsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Seven")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+seven <- c("Inj1", "Inj3")
+Tcq7modelnotA <- mxModel(name="TCQ7notA", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Seven", to=seven),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2nota)), type="cov", numObs=460))
+tcq7fit.notA <- mxRun(Tcq7modelnotA)
+tcq7summ.notA <- summary(tcq7fit.notA)
+@ 
+
+<<tcq2notAsemcompare, echo=FALSE, results=tex>>=
+tcq2.notA.semcompare <- mxCompare(tcq6fit.notA, tcq7fit.notA)
+print(xtable(tcq2.notA.semcompare, label="tab:tcq2notAsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notAsemcompare} that the seven factor model from Split A provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split A will be tested on the out of sample data. 
+
+<<bam1notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,9,10,12,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,2,5,8,11,15,16, 18), sep="")
+Bam1modelnotA<- mxModel(name="Bam1notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam1fitnotA <- mxRun(Bam1modelnotA)
+Bam2asumm1 <- summary(Bam1fitnotA)
+@ 
+
+<<bam2notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Natural Remedies" )
+medavoid <- paste(Bam, c(1,6,7,9,12,13,14,17,18), sep="")
+natrem <- paste(Bam, c(2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(3,4,5,8,15,16), sep="")
+Bam2modelnotA<- mxModel(name="Bam2notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Natural Remedies", to=natrem),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam2fitnotA <- mxRun(Bam2modelnotA)
+Bam2asummnotA <- summary(Bam2fitnotA)
+@ 
 
 
-\subsubsection*{Beliefs About Medicine Questionnaire}
+<<bam3notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotA<- mxModel(name="Bam3notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam3fitnotA <- mxRun(Bam3modelnotA)
+Bam3asummnotA <- summary(Bam3fitnotA)
+@ 
+
+
+<<bam4notAsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotA<- mxModel(name="Bam4notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam4fitnotA <- mxRun(Bam4modelnotA)
+Bam4asummnotA <- summary(Bam4fitnotA)
+@ 
+
+<<bamnotAsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
+print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare"))
+@ 
+
+As can be seen from Table \ref{tab:bamnotAsemcompare}, the four factor solution appears to replicate best on the out of sample data. 
+
+\subsection{Split B CFA}
+\label{sec:split-b-cfa}
+
+<<tcq5notbSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+pillinj.cols <- c(pillitems.cols, Injitems.cols)
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+pillinj <- c(pills, inj)
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq5modelnotB <- mxModel(name="TCQ5notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills & Injections", to=pillinj), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=450))
+tcq5fit.notB <- mxRun(Tcq5modelnotB)
+tcq5summ.notB <- summary(tcq5fit.notB)
+@ 
+
+
+<<tcq6notbSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotB <- mxModel(name="TCQ6notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
+tcq6fit.notB <- mxRun(Tcq6modelnotB)
+tcq6summ.notB <- summary(tcq6fit.notB)
+@ 
+
+<<tcq7notBsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj1", "Inj3")
+Tcq7modelnotB <- mxModel(name="TCQ7notB", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
+tcq7fit.notB <- mxRun(Tcq7modelnotB)
+tcq7summ.notB <- summary(tcq7fit.notB)
+@ 
+
+<<tcq2notBsemcompare, echo=FALSE, results=tex>>=
+tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotB<- mxModel(name="Bam1notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam1fitnotB <- mxRun(Bam1modelnotB)
+Bam1asumm.notB <- summary(Bam1fitnotB)
+@ 
+
+<<bam2notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
+medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
+respmed <- paste(Bam, c(1,2,11,16,18), sep="")
+bamnoload <- paste(Bam, c(5,15), sep="")
+Bam2modelnotB <- mxModel(name="Bam2notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam2fitnotB <- mxRun(Bam2modelnotB)
+Bam2asummnotB <- summary(Bam2fitnotB)
+@ 
+
+
+<<bam3notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotB<- mxModel(name="Bam3notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam3fitnotB <- mxRun(Bam3modelnotB)
+Bam3asummnotB <- summary(Bam3fitnotB)
+@ 
+
+
+<<bam4notBsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotB<- mxModel(name="Bam4notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam4fitnotB <- mxRun(Bam4modelnotB)
+Bam4asummnotB <- summary(Bam4fitnotB)
+@ 
+
+<<bamnotBsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
+print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotBsemcompare} that the two factor model provided the best fit to the out-of-sample data in  this case. 
+\subsection{Split C CFA}
+\label{sec:split-c-cfa}
+
+Next, the fit of the models developed on Split C will be tested on Splits A, B and D. Firstly, the TCQ factor structures will be compared. 
+
+<<tcq5notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+pillinj.cols <- c(pillitems.cols, Injitems.cols)
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+pillinj <- c(pills, inj)
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq5modelnotC <- mxModel(name="TCQ5notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills & Injections", to=pillinj), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=452))
+tcq5fit.notC <- mxRun(Tcq5modelnotC)
+tcq5summ.notC <- summary(tcq5fit.notC)
+@ 
+
+
+<<tcq6notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotC <- mxModel(name="TCQ6notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq6fit.notC <- mxRun(Tcq6modelnotC)
+tcq6summ.notC <- summary(tcq6fit.notC)
+@ 
+
+<<tcq7notCsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Inj1", "Inj3")
+Tcq7modelnotC <- mxModel(name="TCQ7notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq7fit.notC <- mxRun(Tcq7modelnotC)
+tcq7summ.notC <- summary(tcq7fit.notC)
+@ 
+
+<<tcq2notCsemcompare, echo=FALSE, results=tex>>=
+tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotC<- mxModel(name="Bam1notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam1fitnotC <- mxRun(Bam1modelnotC)
+Bam1asumm.notC <- summary(Bam1fitnotC)
+@ 
+
+<<bam2notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safe Use of Medicines")
+medavoid <- paste(Bam, c(2,6,8,9,10,13,14,17,18), sep="")
+safemed <- paste(Bam, c(2,3,7,10,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam2modelnotC <- mxModel(name="Bam2notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safe Use of Medicines", to=safemed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam2fitnotC <- mxRun(Bam2modelnotC)
+Bam2asummnotC <- summary(Bam2fitnotC)
+@ 
+
+
+<<bam3notCsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safer Medicines","Specific Use of Medicines")
+docmed <- paste(Bam, c(13,14,17), sep="")
+safemed <- paste(Bam, c(3,6,7,8,9,10,18), sep="")
+specmed <- paste(Bam, c(2,3,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam3modelnotC<- mxModel(name="Bam3notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Specific Use of Medicines", to=specmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=524))
+Bam3fitnotC <- mxRun(Bam3modelnotC)
+Bam3asummnotC <- summary(Bam3fitnotC)
+@ 
+
+
+<<bamnotCsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
+print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotCsemcompare} that the one factor solution fits the out of sample data best in this case. 
+
+\subsection{Split D CFA}
+\label{sec:split-d-cfa}
+
+
+Next, the fit of the models developed on Split C will be tested on Splits A, B and D. Firstly, the TCQ factor structures will be compared. 
+
+
+
+<<tcq6notdSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotD <- mxModel(name="TCQ6notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq6fit.notD <- mxRun(Tcq6modelnotD)
+tcq6summ.notD <- summary(tcq6fit.notD)
+@ 
+
+<<tcq7notDsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj3")
+Tcq7modelnotD <- mxModel(name="TCQ7notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq7fit.notD <- mxRun(Tcq7modelnotD)
+tcq7summ.notD <- summary(tcq7fit.notD)
+@ 
+
+<<tcq2notDsemcompare, echo=FALSE, results=tex>>=
+tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split D will be tested on the out of sample data (that is, Splits A, B and C). 
+
+<<bam1notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
+Bam1modelnotD<- mxModel(name="Bam1notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam1fitnotD <- mxRun(Bam1modelnotD)
+Bam1asumm.notD <- summary(Bam1fitnotD)
+@ 
+
+<<bam2notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safe Use of Medicines")
+safemed <- paste(Bam, c(3,4,6,8,9,10,11), sep="")
+docmed <- paste(Bam, c(2,6,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,5,7,12,15,16), sep="")
+Bam2modelnotD <- mxModel(name="Bam2notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=medavoid),
+                      mxPath(from="Safe Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam2fitnotD <- mxRun(Bam2modelnotD)
+Bam2asummnotD <- summary(Bam2fitnotD)
+@ 
+
+
+<<bam3notDsem, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Dangers of Medicines","Avoidance of Medicines")
+docmed <- paste(Bam, c(2,13,14,17), sep="")
+dangermed <- paste(Bam, c(1,3,6,8,18), sep="")
+medavoid <- paste(Bam, c(7,9,10,11), sep="")
+bamnoload <- paste(Bam, c(4,5,7,12,15,16), sep="")
+Bam3modelnotD<- mxModel(name="Bam3notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Dangers of Medicines", to=dangermed),
+                        mxPath(from="Avoidance of Medicines", to=medavoid),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=524))
+Bam3fitnotD <- mxRun(Bam3modelnotD)
+Bam3asummnotD <- summary(Bam3fitnotD)
+@ 
+
+
+<<bamnotDsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
+print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotDsemcompare} that the one factor solution fits the out of sample data best in the case of the Split D models tested on the out of sample data. 
+
+The next stage in  our analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample. 
+
+The best fitting models on the out of sample data were as follows:
+\begin{itemize}
+\item  Split A: Bam4, TCQ7
+
+\item Split B: Bam2, TCQ7
+
+\item Split C: Bam1, TCQ7
+
+\item Split D: Bam1, TCQ7
+\end{itemize}
+
+Each of these models will be run on the full dataset, and the results assessed. The model which fits best on this sample will be used to predict factor scores for the experimental data. 
+
+<<fullscales2, echo=FALSE, results=hide>>=
+tcqall2 <- tcq2[,17:52]
+bamall2 <- tcq2[,53:70]
+@ 
+
+<<tcq7notAsemAll, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Seven")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+seven <- c("Inj1", "Inj3")
+Tcq7modelnotA.all <- mxModel(name="TCQ7notAAll", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Seven", to=seven),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notA.all <- mxRun(Tcq7modelnotA.all)
+tcq7summ.notA.all <- summary(tcq7fit.notA.all)
+@ 
+
+<<bam4notAsemAll, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotA.all<- mxModel(name="Bam4notAAll", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam4fitnotA.all <- mxRun(Bam4modelnotA.all)
+Bam4asummnotA.all <- summary(Bam4fitnotA.all)
+@ 
+
+
+<<tcq7notBsemAll, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj1", "Inj3")
+Tcq7modelnotB.all <- mxModel(name="TCQ7notBAll", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notB.all <- mxRun(Tcq7modelnotB.all)
+tcq7summ.notB.all <- summary(tcq7fit.notB.all)
+@ 
+
+<<bam2notBsemAll, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
+medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
+respmed <- paste(Bam, c(1,2,11,16,18), sep="")
+bamnoload <- paste(Bam, c(5,15), sep="")
+Bam2modelnotB.all <- mxModel(name="Bam2notBAll", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam2fitnotB.all <- mxRun(Bam2modelnotB.all)
+Bam2asummnotB.all <- summary(Bam2fitnotB.all)
+@ 
+
+<<tcq7notCsemAll, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Inj1", "Inj3")
+Tcq7modelnotC.all <- mxModel(name="TCQ7notCAll", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notC.all <- mxRun(Tcq7modelnotC.all)
+tcq7summ.notC.all <- summary(tcq7fit.notC.all)
+@ 
+
+<<bam1notCsemAll, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotC.all<- mxModel(name="Bam1notCAll", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
+Bam1fitnotC.all <- mxRun(Bam1modelnotC.all)
+Bam1asumm.notC.all <- summary(Bam1fitnotC.all)
+@ 
+
+<<tcq7notDAllsemAll, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj3")
+Tcq7modelnotD.all <- mxModel(name="TCQ7notDAll", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2)), type="cov", numObs=594))
+tcq7fit.notD.all <- mxRun(Tcq7modelnotD.all)
+tcq7summ.notD.all <- summary(tcq7fit.notD.all)
+@ 
+
+<<bam1notDsemAll, echo=FALSE, results=hide>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
+Bam1modelnotD.all<- mxModel(name="Bam1notDAll", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=671))
+Bam1fitnotD.all <- mxRun(Bam1modelnotD.all)
+Bam1asumm.notD.all <- summary(Bam1fitnotD.all)
+@
+
+<<bamallsemcompare, echo=FALSE, results=tex>>=
+bamall.semcompare <- mxCompare(Bam4fitnotA.all, c(Bam2fitnotB.all, Bam1fitnotC.all, Bam1fitnotD.all))
+print(xtable(bamall.semcompare, label="tab:bamallsemcompare"))
+@ 
+
+As can be seen from Table \ref{tab:bamallsemcompare}, the two factor model from Split B provided the best fit to all of the data, striking a balance between the complexity of the four factor model and the over simplicity of the one factor model. 
+
+<<tcqall2semcompare, echo=FALSE, results=tex>>=
+tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare"))
+@ 
+
+As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
+
+\subsection{IRT Analyses}
+\label{sec:irt-analyses}
+
+\subsubsection{Treatment Credibility Questionnaire}
+\label{sec:treatm-cred-quest}
+
+The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
+
+<<tcq2aitemselection, echo=FALSE, results=tex>>=
+tcq.aisp <- aisp(na.omit(tcqall2a))
+print(xtable(tcq.aisp, label="tab:tcq2aitemselection"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2aitemselection}, the TCQ divides neatly into two scales, one for the conventional items and another for the alternative items. 
+
+The next assumption to check was that of invariant item ordering, and the results are shown below.
+
+<<tcq2asplitscales, echo=FALSE, results=hide>>=
+tcq2a.conv <- tcqall2a[,1:18]
+tcq2a.alt <- tcqall2a[,19:36]
+@ 
+
+<<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
+tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
+print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
+
+<<tcq2aaltitemord, echo=FALSE, results=tex>>=
+tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
+print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio"))
+@ 
+Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
+
+Next, the assumption of monotonicity was assesed for both scales. 
+
+<<tcq2aconvmonotonicity, echo=FALSE, results=tex>>=
+tcq2aconv.mono <- check.monotonicity(na.omit(tcq2a.conv))
+print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity"))
+@ 
+As can be seen from Table \ref{tab:tcq2aconvmonotonicity}, there were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
+
+<<tcq2aaltmonotonicity, echo=FALSE, results=tex>>=
+tcq2aalt.mono <- check.monotonicity(na.omit(tcq2a.alt))
+print(xtable(summary(tcq2aalt.mono), label="tab:tcq2aaltmonotonicity"))
+@ 
+
+As shown in Table \ref{tab:tcq2aaltmonotonicity}, there were no violations of the monotonicity assumption for the alternative items in this split either. 
+
+<<tcq2aguttmanerrors, echo=FALSE, results=hide>>=
+tcq2a.conv.errors <- check.errors(na.omit(tcq2a.conv))
+tcq2a.alt.errors <- check.errors(na.omit(tcq2a.alt))
+@ 
+
+Guttman errors are interesting, provide a quick measure of person fit. They have mostly been applied to dichotomous outcomes, but are examined in this work in order to check their adequacy as a measure of person fit. 
+
+
+\begin{figure}
+  <<tcqconvguttmanplot, echo=FALSE, fig=TRUE>>=
+conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors))+layer(geom="bar")
+print(conv.guttman)
+@   
+  \caption{Guttman Errors Histogram for TCQ 2A conventional items}
+  \label{fig:convguttman}
+\end{figure}
+\begin{figure}
+<<tcqaltguttmanplot, echo=FALSE, fig=TRUE>>=
+alt.guttman <- ggplot(as.data.frame(tcq2a.alt.errors), aes(x=tcq2a.alt.errors))+layer(geom="bar")
+print(alt.guttman)
+@ 
+  \caption{Guttman errors histogram for TCQ2A alternative items}
+  \label{fig:altguttman}
+\end{figure}
+
+As can be seen from Figures \ref{fig:convguttman} and \ref{fig:altguttman}, the majority of participants had 0 guttman errors, which indicates that they were responding to the scale in a coherent manner. 
+
+The major assumptions of parametric IRT are satisfied for this split, and so the next step is the estimation of rasch, one and two parameter models. 
+
+<<tcq2aconvgpcm, echo=FALSE, results=hide>>=
+tcq2a.conv.gpcm.rasch <- gpcm(na.omit(tcq2a.conv), constraint="rasch")
+tcq2a.conv.gpcm.1pl <- gpcm(na.omit(tcq2a.conv), constraint="1PL")
+tcq2a.conv.gpcm.gpcm <- gpcm(na.omit(tcq2a.conv), constraint="gpcm")
+@ 
+<<tcq2aconvsum, echo=FALSE, results=hide>>=
+tcq2a.conv.rasch.sum <- summary(tcq2a.conv.gpcm.rasch)
+tcq2a.conv.1pl.sum <- summary(tcq2a.conv.gpcm.1pl)
+tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.gpcm)
+@ 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.gpcm.rasch), label="tab:tcq2acoefrasch"))
+@ 
+
+Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. Even a cursory inspection of this table shows that the model does not fit well. The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities, which is a clear violation of the model's assumptions. Next, a one parameter IRT model is examined. 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.gpcm.1pl), label="tab:tcq2aconvcoef1pl"))
+@ 
+
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar problem arises using the one parameter model, with an estimated discrimination parameter of 1.531. This suggests that the model will need to be further expanded to allow for an acceptable fit. 
+
+<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.gpcm.gpcm), label="tab:tcq2aconvcoef1pl"))
+@ 
+
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that even with a discrimination parameter estimated individually for each item, the generalised partial credit models do not provide an acceptable fit to the data. Next, the one and two parameter graded response models were fit to the same items.
+
+<<tcq2convgrm, echo=FALSE, results=hide>>=
+tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
+tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
+@ 
+
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm"))
+@ 
+
+As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a much better fit to the data.  There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment.  The next model fit was a two parameter graded response model.  
+
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.conv.grm.2pl), label="tab:tcq2aconvgrm1plsumm"))
+@ 
+
+Again, it can be seen from Table \ref{tab:tcq2aconvgrm1plsumm} that the Cream items appear to be the most discriminating, and possess the highest difficulty levels (on average).  
+Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Creams are the least credible treatment for pain. 
+
+\begin{figure}
+<<tcq2aconvgrm1plPlot, echo=FALSE, fig=TRUE>>=
+print(ggplotGRM(tcq2a.conv.grm.1pl))
+@   
+  \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
+  \label{fig:tcqcov2agrm1pl}
+\end{figure}
+
+A plot showing the threshold parameters for each of the items in the conventional model can be seen in Figure \ref{fig:tcqcov2agrm1pl}.
+
+The same plot for the two parameter model can be seen in Figure \ref{}
+\begin{figure}
+<<tcq2aconvgrm2plPlot, echo=FALSE, fig=TRUE>>=
+print(ggplotGRM(tcq2a.conv.grm.2pl))
+@   
+  \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
+  \label{fig:tcq2aconvgrm2pl}
+\end{figure}
+
+Another item parameter plot for the two parameter model is shown in Figure ~\ref{fig:tcq2aconvgrm2pl}, which again shows no obvious problems with the model. 
+
+
+A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data, a process which will be carried out after all the splits are analysed. 
+Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
+
+<<bam2ascales, echo=FALSE, results=tex>>=
+bam2a.scales <- aisp(na.omit(bamall2a))
+print(xtable(bam2a.scales), label="tab:bam2ascales")
+@ 
+
+It can be seen from Table ~\ref{tab:bam2ascales} that many items on the beliefs about medicine questionnaire do not appear to be part of any scale (indicated by the zeros next to the item number). The algorithm suggests that there are two scales.
+
+The first is made up of BAM6, BAM7, BAM9, BAM13, BAM14 and BAM17.
+The second is made up of BAM4 and BAM10. This second scale appears to be less than useful, as some of the other tests of assumptions require at least three items per scale. The approach taken here will be to eliminate all but the first scale and conduct our analyses on that set of six items.
+
+<<bam2areduce, echo=FALSE, results=hide>>=
+bam2ascale <- bamall2a[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
+## bam2ascale.other <- bamall2a[,!c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
+@ 
+
+The next step is to check the assumption of invariant item ordering. This is less important here, but is checked for the sake of completeness. 
+
+<<bam2aiio, echo=FALSE, results=tex>>=
+bam2a.iio <- check.iio(na.omit(bam2ascale))
+print(xtable(bam2a.iio$violations, label="tab:bam2aiio"))
+@ 
+
+As can be seen from Table ~\ref{tab:bam2aiio}, no items violated the invariant item ordering assumption, and so are are retained until the next stage. The next step is to check the assumption of monotonicity.
+
+<<bam2acheckmono, echo=FALSE, results=tex>>=
+bam2a.mono <- check.monotonicity(na.omit(bam2ascale))
+print(xtable(summary(bam2a.mono), label="tab:bam2amono"))
+@ 
+
+Table \ref{tab:bam2amono} shows that there were no violations of monotonicity in this split for the reduced set of items. 
+
+The next step in our analysis plan is to fit a rasch model to the beliefs about medicine scale. 
+
+<<bam2arasch, echo=FALSE, results=tex>>=
+bam2a.gpcm.rasch <- gpcm(bam2ascale, constraint="rasch")
+print(xtable(coef2mat(coef(bam2a.gpcm.rasch)), label="tab:bam2arasch"))
+@ 
+
+As can be seen from Table ~\ref{tab:bam2arasch}, this model shows serious violations of the monotonicity assumption and as such, does not need to be investigated further.
+
+We next examine the fit of a one paramater generalised partial credit model with a discrimination parameter estimated from the data. 
+
+<<bam2a1PL, echo=FALSE, results=tex>>=
+bam2a.gpcm.1PL <- gpcm(bam2ascale, constraint="1PL")
+print(xtable(coef2mat(coef(bam2a.gpcm.1PL)), label="tab:bam2a1PL"))
+@ 
+
+Again, Table \ref{tab:bam2a1PL} makes it very clear that the one parameter GPCM provides an extremely poor fit to the data. 
+
+Next, the fit of a two parameter GPCM to this scale was examined. 
+
+<<bam2agpcm, echo=FALSE, results=tex>>=
+bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
+print(xtable(coef2mat(coef(bam2a.gpcm.gpcm)), label="tab:bam2agpcm"))
+@ 
+It can be clearly seen from Table ~\ref{tab:bam2agpcm} that even the two parameter GPCM provides a very poor fit to the data, with the monotonicity assumption violated for almost all the items in Category 3. In line with previous practice, the next models fit were the one and two parameter graded response models. 
+
+<<bam2agrm1pl, echo=FALSE, results=tex>>=
+bam2a.grm.1pl <- grm(na.omit(bam2ascale), constrained=TRUE)
+bam2acoef.mat <- coef2mat(coef(bam2a.grm.1pl))
+print(xtable(bam2acoef.mat, label="tab:bam2agrm1pl"))
+@ 
+
+It can be seen from Table \ref{tab:bam2agrm1pl} that the fit of this model is much better that the fit of any of the partial credit models. 
+
+The next step is to fit a two parameter GRM, and examine the differences in fit between the two models. 
+
+<<bam2agrm2pl, echo=FALSE, results=tex>>=
+bam2a.grm.2pl <- grm(na.omit(bam2ascale), constrained=FALSE, Hessian=TRUE)
+bam2acoef.mat <- coef2mat(coef(bam2a.grm.2pl))
+print(xtable(bam2acoef.mat, label="tab:bam2agrm2pl"))
+@ 
+
+It can be seen from Table \ref{tab:bam2agrm2pl} that this model reveals some interesting features of the items. BAM13 and BAM17 have the highest discrimination parameters, but the ability estimates of their extremities have moved down to compensate. 
+
+A likelihood ratio test carried out between the two models suggested that the two parameter model was significantly better than the one parameter model, ($p\le 0.001$). Again, this is a tentative result until the performance of the model on new data is examined. In any case, while both the AIC and the LR test favoured the two parameter model, the BIC was lower for the one parameter model indicating that according to this criterion, the one parameter model was superior. 
+
+\subsubsection{Split B}
+\label{sec:split-b}
+
+The next task was to repeat the analyses on Split B. The TCQ was the instrument first examined in this split, in line with previous work.
+
+Again, the first step is to examine whether or not the TCQ should be split into seperate scales, examine the monotonicity, the invariant item ordering assumption and examine a plot of Guttman errors. 
+
+<<tcq2baisp, echo=FALSE, results=tex>>=
+tcq2b.aisp <- aisp(na.omit(tcqall2b))
+print(xtable(tcq2b.aisp), label="tab:tcq2baisp")
+@ 
+
+As can be seen from Table ~\ref{tab:tcq2baisp}, the scales split along alternative and conventional lines, as in Split A. All further analyses will be carried out on the seperate scales. 
+
+<<tcq2bsplitscales, echo=FALSE, results=hide>>=
+tcq2b.conv <- tcqall2b[,1:18]
+tcq2b.alt <- tcqall2b[,19:36]
+@ 
+
+The first step in the examination of the tcq conventional in split B is to check the IIO assumption. 
+
+<<tcq2bcheckiio, echo=FALSE, results=tex>>=
+tcq2b.conv.iio <- check.iio(na.omit(tcq2b.conv))
+print(xtable(tcq2b.conv.iio$violations, label="tab:tcq2bcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2bcheckiio}, there were no violations of this assumption. 
+
+Next the assumption of montonicity was checked. 
+
+<<tcq2bconvcheckmono, echo=FALSE, results=tex>>=
+tcq2b.conv.mono <- check.monotonicity(na.omit(tcq2b.conv))
+print(xtable(summary(tcq2b.conv.mono), label="tab:tcq2bconvcheckmono"))
+@ 
+
+As shown in Table \ref{tab:tcq2bconvcheckmono}, there were no violations of the monotonicity assumption in this split.
+
+This process of repeating assumptions is then repeated for the alternative question TCQ for Split B.
+
+<<tcq2baltcheckiio, echo=FALSE, results=tex>>=
+tcq2b.alt.iio <- check.iio(na.omit(tcq2b.alt))
+print(xtable(tcq2b.alt.iio$violations, label="tab:tcq2baltcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2baltcheckiio}, there were no violations of the invariant item ordering assumption in this split. Next, the monotonicity assumption was assessed. 
+
+<<tcq2baltcheckmono, echo=FALSE, results=tex>>=
+tcq2b.alt.mono <- check.monotonicity(na.omit(tcq2b.alt))
+print(xtable(summary(tcq2b.alt.mono), label="tab:tcq2baltcheckmono"))
+@ 
+
+As shown from Table \ref{tab:tcq2baltcheckmono}, there were no violations of the montonicity assumption in this sample. 
+
+Next, a series of partial credit models were fit and checked for violations of the assumptions. 
+
+<<tcq2bconvgpcm, echo=FALSE, results=hide>>=
+tcq2b.conv.gpcm.rasch <- gpcm(tcq2b.conv, constraint="rasch")
+tcq2b.conv.gpcm.1PL <- gpcm(tcq2b.conv, constraint="1PL")
+tcq2b.conv.gpcm.gpcm <- gpcm(tcq2b.conv, constraint="gpcm")
+@ 
+
+\begin{figure}
+<<tcq2bconvgpcmraschplot, echo=FALSE, fig=TRUE>>=
+gpcm.rasch.plot <- ggplotGRM(tcq2b.conv.gpcm.rasch)
+print(gpcm.rasch.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2B Conventional GPCM Rasch}
+  \label{fig:tcq2bconvgpcmrasch}
+\end{figure}
+
+It can easily be seen from Figure \ref{fig:tcq2bconvgpcmrasch} that the Rasch generalised partial credit model does not provide a good fit for these items. Note the fact that thresholds 2 and 3 are almost identical for Inj6, Inj3, Inj2, and there are obvious violations of monotonicity for Inj2, Pill1 and Pill2. This indicates that this model is not suitable for this data. 
+
+
+\begin{figure}
+<<tcq2bconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
+gpcm.1PL.plot <- ggplotGRM(tcq2b.conv.gpcm.1PL)
+print(gpcm.1PL.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2B Conventional GPCM}
+  \label{fig:tcq2bconvgpcm1PLplot}
+\end{figure}
+
+Next, the fit of the one parameter GPCM was examined using an Item Parameter Plot (Figure \ref{fig:tcq2bconvgpcm1PLplot}). 
+It can be seen that there are failures of the monotonicity assumption for Inj6, Inj2, Inj5, Inj1, Cream6, Cream5, Cream4, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. In fact, most of the 2 and 3 thresholds are reversed, demonstrating that this model is not a good fit for the data. 
+
+
+\begin{figure}
+<<tcq2bconvgpcmgpcmplot, echo=FALSE, fig=TRUE>>=
+gpcm.gpcm.plot <- ggplotGRM(tcq2b.conv.gpcm.gpcm)
+print(gpcm.gpcm.plot)
+@   
+  \caption{Item Position Plot for Two Parameter GPCM (Split B)}
+  \label{fig:tcq2bconvgpcm2plplot}
+\end{figure}
+
+As shown in Figure \ref{fig:tcq2bconvgpcm2plplot}, there are some failures of monotonicity here. Inj6, In5, Inj4, Inj3, Inj2, Inj1, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. This demonstrates the extremely poor fit of this model. 
+
+As none of the partial credit model fitted the items, the next step was to examine the fit of the one and two parameter graded response models. 
+
+<<tcq2bconvgrm, echo=FALSE, results=hide>>=
+tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE)
+tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE)
+@ 
+
+
+\begin{figure}
+<<tcq2bconvgrm1plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm1plot <- ggplotGRM(tcq2b.conv.grm.1pl)
+print(tcq2convgrm1plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 1 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2bconvgrm1plot}
+\end{figure}
+
+As shown in Figure \ref{fig:tcq2bconvgrm1plot}, there were no violations of monotonicity for the one parameter GRM. 
+
+<<tcq2bconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.conv.grm.1pl), label="tab:tcq2bconvgrm1plsumm"))
+@ 
+
+Table \ref{tcq2bconvgrm1plsumm} shows that the cream items were the least endorsed, especially the highest response category. The estimated discrimination parameter is also quite high, at 2.08. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
+
+\begin{figure}
+<<tcq2bconvgrm2plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm2plot <- ggplotGRM(tcq2b.conv.grm.2pl)
+print(tcq2convgrm2plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 2 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2bconvgrm2plot}
+\end{figure}
+@ 
+
+As can be seen from Figure \ref{fig:tcq2bconvgrm2plot}, there were no violations of monotonicity for the two parameter GRM. 
+
+<<tcq2bconv2plgrmsum, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.conv.grm.2pl), label="tab:tcq2bconv2plgrmsum"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2bconv2plgrmsum}, the discrimination parameters have lowered for most of the items, with the exception of Pill4, Pill5 and Pill6, where they have significantly increased. This is surprising, as the Cream items have much higher difficulty, but lower discrimination between different ability levels. 
+
+The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
+
+<<bam2baisp, echo=FALSE, results=tex>>=
+bam2b.aisp <- aisp(na.omit(bamall2b))
+print(xtable(bam2b.aisp, label="tab:bam2baisp"))
+@ 
+
+As shown in Table \ref{tab:bam2baisp}, some items do not load on any scales, and there is one two item scale (BAM1 and BAM2), along with one larger scale. As two items are not enough to form a useful scale, the larger scale will be the only one which is analysed. 
+
+The scale that will be analysed consists of BAM3, BAM4, BAM6, BAM9, BAM10, BAM11, BAM13, BAM14 and BAM17. This is a larger scale than was observed with Split A. 
+
+<<bamscale2b,echo=FALSE, results=hide>>=
+bamscale2b <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
+@ 
+
+The first step is to examine the invariant item ordering assumption.
+
+<<bam2checkiio, echo=FALSE, results=tex>>=
+bam2b.iio <- check.iio(na.omit(bamscale2b))
+print(xtable(bam2b.iio$violations, label="tab:bam2checkiio"))
+@ 
+
+In line with the results of Split A, no items were in violation of this assumption. 
+
+The next assumption which needs to be checked is the monotonicity assumption. 
+
+<<bam2bcheckmono, echo=FALSE, results=tex>>=
+bam2b.mono <- check.monotonicity(na.omit(bamscale2b))
+print(xtable(summary(bam2b.mono), label="tab:bam2bcheckmono"))
+@ 
+
+Table \ref{tab:bam2bcheckmono} shows clearly that there were no violations of the monotonicity assumption in this sample. 
+
+The final preliminary model check consists of a plot displaying the number of Guttman errors for each participant.
+\begin{figure}
+<<bam2bguttman, echo=FALSE, fig=TRUE>>=
+bam2b.guttman <- check.errors(na.omit(bamscale2b))
+bam2b.guttplot <- ggplot(as.data.frame(bam2b.guttman), aes(x=bam2b.guttman))+layer(geom="bar", binwidth=2)
+print(bam2b.guttplot)
+@   
+  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split B}
+  \label{fig:bam2bguttmanplot}
+\end{figure}
+
+As can be seen from Figure \ref{fig:bam2bguttmanplot}, the number of guttman errors was much higher for this scale than was observed in the previous split. This suggests that some of the respondents were not answering the questions in a consistent fashion, and will be investigated further when the person fit statistics are examined on a per model basis. 
+
+The first step in modelling the Beliefs about Medicines questionnaire is to attempt to fit a Rasch partial credit model.
+
+<<bam2bgpcm, echo=FALSE, results=hide>>=
+bam2b.gpcm.rasch <- gpcm(bamscale2b, constraint="rasch")
+bam2b.gpcm.1PL <- gpcm(bamscale2b, constraint="1PL")
+bam2b.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
+@ 
+
+
+
+## <<bam2bgpcmraschplot, echo=FALSE, fig=TRUE>>=
+## bam2bgpcm.raschplot <- ggplotGRM(coef(coef2mat(bam2b.gpcm.rasch)))
+% @                               %
+
+The estimated parameters for the Rasch model are shown below, in Table \ref{tab:bam2bgpcmrasch}. It can be seen that there are a number of violations of monotonicity in this sample. 
+
+<<bam2bgpcmrasch, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2b.gpcm.rasch)), label="tab:bam2bgpcmrasch"))
+@ 
+One and two parameter versions of the GPCM were also fit to this scale, but the models contained serious violations of monotonicity and are not further described here. 
+
+The next step in the process of modelling was to fit one and two parameter Graded Response Models. 
+
+<<bam2bgrm, echo=FALSE, results=hide>>=
+bam2b.grm.1pl <- grm(bamscale2b, constrained=TRUE)
+bam2b.grm.2pl <- grm(bamscale2b, constrained=FALSE)
+@ 
+
+<<bam2bgrm1sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2b.grm.1pl)), label="tab:bam2bgrm1sum"))
+@ 
+
+Table \ref{tab:bam2bgrm1sum} shows no signs of problems with monotonicity, and the fit appears acceptable. Next, the two parameter GRM was examined.
+
+<<bam2bgrm2sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2b.grm.2pl)), label="tab:bam2bgrm2sum"))
+@ 
+
+Table \ref{tab:bam2bgrm2sum} shows that the fit of the two parameter model is equally unproblematic. An
+
+<<bam2banovagrm, echo=FALSE, results=hide>>=
+bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
+@ 
+
+A likelihood ratio test suggests that the two parameter model provides a significantly better fit ($p \le 0.001$) than does the one parameter model. 
+
+
+\subsubsection{Split C}
+\label{sec:split-c}
+
+
+
+<<tcq2caisp, echo=FALSE, results=tex>>=
+tcq2c.aisp <- aisp(na.omit(tcqall2c))
+print(xtable(tcq2c.aisp), label="tab:tcq2caisp")
+@ 
+
+As can be seen from Table \ref{tab:tcq2caisp}, the algorithm suggests that there are two scales, one for conventional items and another for alternative items, as was seen in the previous two splits. The assumption checking will therefore be carried out on each scale seperately. 
+
+<<tcq2csplitscales, echo=FALSE, results=hide>>=
+tcq2c.conv <- tcqall2c[,1:18]
+tcq2c.alt <- tcqall2c[,19:36]
+@ 
+
+
+
+<<tcq2ccheckiio, echo=FALSE, results=tex>>=
+tcq2c.conv.iio <- check.iio(na.omit(tcq2c.conv))
+print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2ccheckiio}, there were no violations of the item ordering assumption in this sample. 
+
+
+<<tcq2cconvcheckmono, echo=FALSE, results=tex>>=
+tcq2c.conv.mono <- check.monotonicity(na.omit(tcq2c.conv))
+print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono"))
+@ 
+
+Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmono} shows that there were no violations of monotonicity in this sample. 
+
+Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
+
+\begin{figure}
+<<tcq2cconvguttman, echo=FALSE, fig=TRUE>>=
+tcq2c.conv.gutt <- check.errors(na.omit(tcq2c.conv))
+tcq2c.conv.gutt.plot <- ggplot(as.data.frame(tcq2c.conv.gutt), aes(x=tcq2c.conv.gutt))+layer(geom="bar", binwidth=5)
+print(tcq2c.conv.gutt.plot)
+@   
+  \caption{Histogram of Guttman errors for TCQ conventional items, Split C}
+  \label{fig:tcq2cconvguttplot}
+\end{figure}
+
+The plot shown in Figure \ref{fig:tcq2cconvguttplot} is interesting. It can be seen that the majority of participants have very few guttman errors, but there are quite a few participants who have an extremely high level of scaling errors, suggesting that they were not engaging with the questions in a coherent manner. These participants may need to be removed in order to estimate accurate measures of person ability and item difficulty. 
+
+Next, the assumptions of IRT were checked for the TCQ alternative items in this split. 
+
+<<tcq2caltcheckiio, echo=FALSE, results=tex>>=
+tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
+print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio"))
+@ 
+
+Table \ref{tab:tcq2caltcheckiio} shows that there were no violations of the invariant item ordering assumption in this split for the alternative items. 
+
+
+<<tcq2caltcheckmono, echo=FALSE, results=tex>>=
+tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
+print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono"))
+@ 
+
+Next, the monotonicity assumption was examined. Table \ref{tab:tcq2caltcheckmono} shows that there were no violations of the monotonicity assumption for the alternative items in this split. 
+
+The next step in the analysis procedure was to fit a series of generalised partial credit models to the data (Rasch, one parameter and two parameter). The results are shown below. 
+
+<<tcq2cconvgpcm, echo=FALSE, results=hide>>=
+tcq2c.conv.gpcm.rasch <- gpcm(tcq2c.conv, constraint="rasch")
+tcq2c.conv.gpcm.1PL <- gpcm(tcq2c.conv, constraint="1PL")
+tcq2c.conv.gpcm.gpcm <- gpcm(tcq2c.conv, constraint="gpcm")
+@ 
+
+\begin{figure}
+<<tcq2cconvgpcmraschplot, echo=FALSE, fig=TRUE>>=
+tcq2c.conv.gpcm.rasch.plot <- ggplotGRM(tcq2c.conv.gpcm.rasch)
+print(tcq2c.conv.gpcm.rasch.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2C Conventional GPCM Rasch}
+  \label{fig:tcq2cconvgpcmrasch}
+\end{figure}
+
+Figure \ref{fig:tcq2cconvgpcmrasch} shows that this model does not fit the data well, as there are many violations of the monotonicity assumption, arguing against the use of this model. 
+
+\begin{figure}
+<<tcq2cconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
+tcq2c.conv.gpcm.1PL.plot <- ggplotGRM(tcq2c.conv.gpcm.1PL)
+print(tcq2c.conv.gpcm.1PL.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2C Conventional GPCM}
+  \label{fig:tcq2cconvgpcm1PLplot}
+\end{figure}
+
+Again, as can clearly be seen from Figure \ref{fig:tcq2cconvgpcm1PLplot}, the monotonicity assumption was not met for this model. 
+
+\begin{figure}
+<<tcq2cconvgpcmgpcmplot, echo=FALSE, fig=TRUE>>=
+tcq2c.conv.gpcm.gpcm.plot <- ggplotGRM(tcq2c.conv.gpcm.gpcm)
+print(tcq2c.conv.gpcm.gpcm.plot)
+@   
+  \caption{Item Position Plot for Two Parameter GPCM (Split B)}
+  \label{fig:tcq2cconvgpcm2plplot}
+\end{figure}
+
+
+Figure \ref{fig:tcq2cconvgpcm2plplot} shows that like the simpler models, the two parameter generalised partial credit model does not fit the data particularly well. 
+
+<<tcq2cconvgrm, echo=FALSE, results=hide>>=
+tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE)
+tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
+@ 
+
+Next, the fit of one and two parameter graded response models (GRM) was examined. 
+
+\begin{figure}
+<<tcq2cconvgrm1plot, echo=FALSE, fig=TRUE>>=
+tcq2c.convgrm1plot <- ggplotGRM(tcq2c.conv.grm.1pl)
+print(tcq2c.convgrm1plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 1 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2cconvgrm1plot}
+\end{figure}
+
+Figure \ref{fig:tcq2cconvgrm1plot} shows that, in contrast to the partial credit models, the one parameter model provides a good fit to this scale. 
+
+<<tcq2cconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm"))
+@ 
+
+In Table \ref{tab:tcq2cconvgrm1plsumm} the estimated thresholds for the one parameter graded response model are shown. It can be seen that the Cream items are perceived as the most difficult, and that the discrimination parameter (the slope) is estimated at 2.083. This is an average parameter estimated for the whole scale, and based on the results of the previous splits, we would expect to see the discrimination parameters increase for the Cream items and decrease for the Pill and Injection items. 
+
+
+\begin{figure}
+<<tcq2cconvgrm2plot, echo=FALSE, fig=TRUE>>=
+tcq2convgrm2plot <- ggplotGRM(tcq2c.conv.grm.2pl)
+print(tcq2convgrm2plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 2 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2cconvgrm2plot}
+\end{figure}
+@ 
+
+Firstly, the fit of the two parameter graded response model was examined graphically, as shown in Figure \ref{fig:tcq2cconvgrm2plot}. This figure demonstrates that there are no obvious violations of monotonicity, and the coefficients are the next focus of attention.
+
+
+<<tcq2cconv2plgrmsum, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum"))
+@ 
+
+Table \ref{tab:tcq2cconv2plgrmsum} shows the estimated coefficients and discrimation paramaters for the two parameter graded response model. Interestingly enough, Pill 5 and Pill6 appear to have been the questions with the most dicriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
+
+Next, an anova LR test was carried out between the two models to determine which one fitted the data better. 
+
+<<tcq2cconvanova, echo=FALSE, results=hide>>=
+tcq2c.conv.anova <- anova(tcq2c.conv.grm.1pl, tcq2c.conv.grm.2pl)
+@ 
+The results of the anova showed that the two parameter model fit the data significantly better than the one parameter model ($p\le 0.001$). In addition, the AIC and BIC measures (which penalise for extra parameters) agreed with the LR test, unlike in previous splits. Therefore, provisionally, it appears that the two parameter model provides the best fit to the data. 
+
+Next, the beliefs about medicine questionnaire was examined in this split. 
+
+<<bam2caisp, echo=FALSE, results=tex>>=
+bam2c.aisp <- aisp(na.omit(bamall2b))
+print(xtable(bam2c.aisp, label="tab:bam2caisp"))
+@ 
+
+As seen in previous splits, BAM1 and BAM2 were partitioned into their own scale, and many items did not fit any scale. As a two item scale is too small to examine effectively, all further analyses were carried out on the reduced scale (1). Table \ref{tab:bam2caisp} shows these results. In contrast to Split A, the scale had 9 items, and these were the same items as were selected by the scale splitting algorithm in Split B. 
+
+<<bamscale2c,echo=FALSE, results=hide>>=
+bamscale2c <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
+@ 
+
+The first assumption to be checked was the invariant item ordering assumption, and the results are shown in Table \ref{tab:bam2checkiio}. 
+
+<<bam2ccheckiio, echo=FALSE, results=tex>>=
+bam2c.iio <- check.iio(na.omit(bamscale2b))
+print(xtable(bam2c.iio$violations, label="tab:bam2checkiio"))
+@ 
+
+As can be seen from Table \ref{tab:bam2checkiio}, no items violated this assumption and therefore all of them were retained. 
+
+
+<<bam2ccheckmono, echo=FALSE, results=tex>>=
+bam2c.mono <- check.monotonicity(na.omit(bamscale2b))
+print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono"))
+@ 
+
+Following the check of the IIO assumption, the next step in assumption checking was a monotonicity check. The results of this check are shown in Table \ref{tab:bam2ccheckmono}. This shows that no items violated this assumption (though the ItemH coefficients are close to the cutoff of 0.3). 
+
+\begin{figure}
+<<bam2cguttman, echo=FALSE, fig=TRUE>>=
+bam2c.guttman <- check.errors(na.omit(bamscale2b))
+bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+layer(geom="bar", binwidth=2)
+print(bam2c.guttplot)
+@   
+  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split C}
+  \label{fig:bam2cguttmanplot}
+\end{figure}
+
+Next, the guttman errors in the split were examined and checked across this sample of items. Similiarly to the TCQ items in this split, the level of guttman errors was much higher, with a mode at approximately 10. This is worrying, and needs to be investigated further. 
+
+
+<<bam2cgpcm, echo=FALSE, results=hide>>=
+bam2c.gpcm.rasch <- gpcm(bamscale2b, constraint="rasch")
+bam2c.gpcm.1PL <- gpcm(bamscale2b, constraint="1PL")
+bam2c.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
+@ 
+
+Firstly, three generalised partial credit models were fit (Rasch, one parameter and two parameter). The results are shown below. 
+
+## <<bam2cgpcmraschplot, echo=FALSE, fig=TRUE>>=
+## bam2cgpcm.raschplot <- ggplotGRM(coef2mat(coef(bam2c.gpcm.rasch)))
+% @                               %
+
+
+
+<<bam2cgpcmrasch, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch"))
+@ 
+
+Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the RAsch model fitted to the BAM scale. Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported. Next, the fit of one and two parameter graded response models were examined. 
+
+<<bam2cgrm, echo=FALSE, results=hide>>=
+bam2c.grm.1pl <- grm(bamscale2b, constrained=TRUE)
+bam2c.grm.2pl <- grm(bamscale2b, constrained=FALSE)
+@ 
+
+<<bam2cgrm1sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2c.grm.1pl)), label="tab:bam2cgrm1sum"))
+@ 
+
+Table \ref{tab:bam2cgrm1sum} shows that there are no monotonicity problems with the one parameter GRM. The estimated dsicrimination parameter is 1.523, and BAM6 appears to be the most difficult item in the scale (as no participants gave the highest response category to it, across all of the splits).
+
+
+
+
+<<bam2cgrm2sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2c.grm.2pl)), label="tab:bam2cgrm2sum"))
+@ 
+
+Next, the fit of the two parameter  GRM was examined, and is displayed in Table \ref{tab:bam2cgrm2sum}. Note that BAM13 appears to be the most discriminating item, and that BAM3 is the most difficult item (with the exception of BAM6, as noted above). 
+
+<<bam2canovagrm, echo=FALSE, results=hide>>=
+bam2cgrm.anova <- anova(bam2c.grm.1pl, bam2c.grm.2pl)
+@ 
+
+An anova was carried out between the two graded response models, and the LR test showed that the two parameter model was significanly ($p \le 0.001$) better fit than the one parameter model. However, this was contradicted by both the BIC and AIC, which indicated that the one parameter model provided a better fit to the data. 
+
+\subsubsection{Split D}
+\label{sec:split-d}
+
+Next, the fourth and final split was examined. Again, the first step is to examine the Treatment Credibility Questionnaire and assess how many scales the items break down into.
+
+<<tcq2daisp, echo=FALSE, results=tex>>=
+tcq2d.aisp <- aisp(na.omit(tcqall2d))
+print(xtable(tcq2d.aisp), label="tab:tcq2daisp")
+@ 
+
+Table \ref{tab:tcq2daisp} shows that, similarly to the first three splits, the TCQ splits along the conventional/alternative distinction. Therefore, the items will be split into conventional and alternative scales and all analyses carried out seperately. 
+
+<<tcq2dsplitscales, echo=FALSE, results=hide>>=
+tcq2d.conv <- tcqall2d[,1:18]
+tcq2d.alt <- tcqall2d[,19:36]
+@ 
+
+The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. The first assumption to be checked is the invariant item ordering assumption. 
+
+<<tcq2dcheckiio, echo=FALSE, results=tex>>=
+tcq2d.conv.iio <- check.iio(na.omit(tcq2d.conv))
+print(xtable(tcq2d.conv.iio$violations, label="tab:tcq2dcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2dcheckiio}, all of the items in the TCQ conventional scale met the IIO assumption. Next, the monotonicity assumption was examined for the conventional scale. 
+
+
+<<tcq2dconvcheckmono, echo=FALSE, results=tex>>=
+tcq2d.conv.mono <- check.monotonicity(na.omit(tcq2d.conv))
+print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2dconvcheckmono}, all of the items in the conventional scale met this assumption. Next, the scale was checked for guttman scaling errors, and these were plotted. 
+
+\begin{figure}
+<<tcq2dconvguttman, echo=FALSE, fig=TRUE>>=
+tcq2d.conv.gutt <- check.errors(na.omit(tcq2d.conv))
+tcq2d.conv.gutt.plot <- ggplot(as.data.frame(tcq2d.conv.gutt), aes(x=tcq2d.conv.gutt))+layer(geom="bar", binwidth=5)
+print(tcq2d.conv.gutt.plot)
+@   
+  \caption{Histogram of Guttman errors for TCQ conventional items, Split D}
+  \label{fig:tcq2dconvguttplot}
+\end{figure}
+
+As shown in Figure \ref{fig:tcq2dconvguttplot}, the majority of participants had no guttman errors, but there were some participants who made an extremely large number of scaling errors. This worrying feature of this split will be examined further when person and item fit indices are assessed in the context of parametric IRT modelling.
+
+
+Next, the assumptions were checked for the alternative items. 
+
+<<tcq2daltcheckiio, echo=FALSE, results=tex>>=
+tcq2d.alt.iio <- check.iio(na.omit(tcq2d.alt))
+print(xtable(tcq2d.alt.iio$violations, label="tab:tcq2daltcheckiio"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2daltcheckiio}, there were no violations of the IIO assumption for the alternative items. 
+
+Next, the monotonicity assumption was examined for the alternative scale.
+
+
+<<tcq2daltcheckmono, echo=FALSE, results=tex>>=
+tcq2d.alt.mono <- check.monotonicity(na.omit(tcq2d.alt))
+print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono"))
+@ 
+
+As shown in Table \ref{tab:tcq2daltcheckmono}, there were no violations of the monotonicity assumption, and the itemH coefficients are quite high, which suggests that this is a well-devised scale. 
+
+
+<<tcq2dconvgpcm, echo=FALSE, results=hide>>=
+tcq2d.conv.gpcm.rasch <- gpcm(tcq2d.conv, constraint="rasch")
+tcq2d.conv.gpcm.1PL <- gpcm(tcq2d.conv, constraint="1PL")
+tcq2d.conv.gpcm.gpcm <- gpcm(tcq2d.conv, constraint="gpcm")
+@ 
+
+\begin{figure}
+<<tcq2dconvgpcmraschplot, echo=FALSE, fig=TRUE>>=
+tcq2d.conv.gpcm.rasch.plot <- ggplotGRM(tcq2d.conv.gpcm.rasch)
+print(tcq2d.conv.gpcm.rasch.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2D Conventional GPCM Rasch}
+  \label{fig:tcq2dconvgpcmrasch}
+\end{figure}
+
+The next step was to examine the fit of three partial credit models, and in Figure \ref{fig:tcq2dconvgpcmrasch}, it is easily seen that the Rasch PCM violates the monotonicity assumption. 
+
+\begin{figure}
+<<tcq2dconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
+tcq2d.conv.gpcm.1PL.plot <- ggplotGRM(tcq2d.conv.gpcm.1PL)
+print(tcq2d.conv.gpcm.1PL.plot)
+@   
+  \caption{Item Parameter Plot for TCQ2D Conventional GPCM}
+  \label{fig:tcq2dconvgpcm1PLplot}
+\end{figure}
+
+Next, the fit of a one parameter PCM (one discrimination parameter estimated from the data) is examined. It can be seen from Figure \ref{fig:tcq2dconvgpcm1PLplot}, that the monotonicity assumption is clearly violated for this model. 
+
+
+\begin{figure}
+<<tcq2dconvgpcmgpcmplot, echo=FALSE, fig=TRUE>>=
+tcq2d.conv.gpcm.gpcm.plot <- ggplotGRM(tcq2d.conv.gpcm.gpcm)
+print(tcq2d.conv.gpcm.gpcm.plot)
+@   
+  \caption{Item Position Plot for Two Parameter GPCM (Split B)}
+  \label{fig:tcq2dconvgpcm2plplot}
+\end{figure}
+
+Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpcm2plplot}. Again, there are clear violations of the monotonicity assumption, and so it was concluded that the PCM was a poor fit to the TCQ conventional items. 
+
+The next step was to examine the fit of one and two parameter Graded Response Models (GRM). 
+
+<<tcq2dconvgrm, echo=FALSE, results=hide>>=
+tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE)
+tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE)
+@ 
 
 
 
 \begin{figure}
-	\centering
-		\includegraphics{tcq079pabam.pdf}
-	\caption{Parallel Analysis and Scree Plot, Beliefs about Medicine Questionnaire}
-	\label{fig:tcq 0.795-58}
+<<tcq2dconvgrm1plot, echo=FALSE, fig=TRUE>>=
+tcq2d.convgrm1plot <- ggplotGRM(tcq2d.conv.grm.1pl)
+print(tcq2d.convgrm1plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 1 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2dconvgrm1plot}
+\end{figure}
+
+From Figure \ref{fig:tcq2dconvgrm1plot} it can be seen that there are no obvious violations of model assumptions for the one parameter GRM. 
+
+
+<<tcq2dconvgrm1plsumm, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2d.conv.grm.1pl), label="tab:tcq2dconvgrm1plsumm"))
+@ 
+
+Table \ref{tab:tcq2dconvgrm1plsumm} shows the coefficient estimates for the one parameter GRM. It can be seen that there are no violations of monotonicity, and that the discrimination parameter is estimated as being 2.064. The Cream items appear to be the least endorsed at higher levels (reflected in their higher thresholds at Category 4), while the Injection items appear to be the easiest to endorse, which fits with their higher credibility as an analgesic treatment. 
+
+
+\begin{figure}
+<<tcq2dconvgrm2plot, echo=FALSE, fig=TRUE>>=
+tcq2donvgrm2plot <- ggplotGRM(tcq2d.conv.grm.2pl)
+print(tcq2donvgrm2plot)
+@   
+  \caption{Item Parameter Plot for TCQ Conventional 2 parameter Graded Response Model (Split B)}
+  \label{fig:tcq2dconvgrm2plot}
+\end{figure}
+@ 
+
+Figure \ref{fig:tcq2dconvgrm2plot} shows the estimated thresholds for the conventional items under the Graded Response Model. This plot shows that there are no non-monotonic thresholds, and suggests that this model is appropriately applied to this data. 
+
+<<tcq2dconv2plgrmsum, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2d.conv.grm.2pl), label="tab:tcq2dconv2plgrmsum"))
+@ 
+
+Table \ref{tab:tcq2dconv2plgrmsum} shows the threshold estimates and the discrimination parameters for the two parameter graded response model. It can be seen that the Cream items have the highest discrimination parameters while the Injection items have the lowest. Item 3 has the highest ability threshold across all treatments, probably because this item asks about confidence that the treatment will completely eliminate the symptoms. 
+
+<<tcq2dconvanova, echo=FALSE, results=hide>>=
+tcq2d.conv.anova <- anova(tcq2d.conv.grm.1pl, tcq2d.conv.grm.2pl)
+@ 
+
+Finally, an ANOVA was carried out between the two graded response models, and this showed that there was no significant difference between the two models ($p=.593$), and the BIC and AIC were lower for the one parameter model, indicating better fit. 
+
+Next, the assumptions underlying the use of IRT modelling were applied to the Beliefs About Medicine Questionnaire. 
+
+<<bam2daisp, echo=FALSE, results=tex>>=
+bam2d.aisp <- aisp(na.omit(bamall2d))
+print(xtable(bam2d.aisp, label="tab:bam2daisp"))
+@ 
+
+It can be seen from Table \ref{tab:bam2daisp} that again BAM1 and BAM2 form their own scale, while some of the other items do not appear on any scale. In line with previous practice, the small scale was not analysed, and so all analyses from this point on were carried out on the reduced scale (consisting of the items on scale 1 in Table \ref{tab:bam2daisp}).
+
+
+<<bamscale2d,echo=FALSE, results=hide>>=
+bamscale2d <- bamall2d[,c("BAM3","BAM6","BAM7","BAM9","BAM10","BAM13","BAM14", "BAM17")]
+@ 
+
+
+
+<<bam2dcheckiio, echo=FALSE, results=tex>>=
+bam2d.iio <- check.iio(na.omit(bamscale2d))
+print(xtable(bam2d.iio$violations, label="tab:bam2dheckiio"))
+@ 
+
+Firstly, the invariant item ordering assumption was checked, and the results are shown in Table \ref{tab:bam2dheckiio}. As can be seen from this Table, there were no violations or issues with the IIO assumption.
+
+
+
+<<bam2dcheckmono, echo=FALSE, results=tex>>=
+bam2d.mono <- check.monotonicity(na.omit(bamscale2d))
+print(xtable(summary(bam2d.mono), label="tab:bam2dcheckmono"))
+@ 
+
+Next, the assumption of monotonicity was tested. The results of this test are shown in Table \ref{tab:bam2dcheckmono}, and it can be seen that there were no violations of this assumption, but the ItemH coefficients are quite low, suggesting that this scale is not entirely unproblematic. 
+
+
+\begin{figure}
+<<bam2dguttman, echo=FALSE, fig=TRUE>>=
+bam2d.guttman <- check.errors(na.omit(bamscale2d))
+bam2d.guttplot <- ggplot(as.data.frame(bam2d.guttman), aes(x=bam2d.guttman))+layer(geom="bar", binwidth=2)
+print(bam2d.guttplot)
+@   
+  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split D}
+  \label{fig:bam2dguttmanplot}
+\end{figure}
+
+Next, the scales were checked for guttman errors, and these were plotted in a histogram, shown in Figure \ref{fig:bam2dguttmanplot}. It can be seen from this plot that there were some participants who had quite a few guttman errors, as the distribution has a mode of approximately 10. However, the maximum number of Guttman errors was much lower than in Split C, where one participant had over 200 scaling errors. Again, this feature of the dataset needs to be investigated, and this will be carried out when person and item fit are assessed below.  
+
+<<bam2dgpcm, echo=FALSE, results=hide>>=
+bam2d.gpcm.rasch <- gpcm(bamscale2d, constraint="rasch")
+bam2d.gpcm.1PL <- gpcm(bamscale2d, constraint="1PL")
+bam2d.gpcm.gpcm <- gpcm(bamscale2d, constraint="gpcm")
+@ 
+
+Next, three generalised partial credit models were fitted to the scale, and the results of the Rasch fit are shown below. 
+
+## <<bam2dgpcmraschplot, echo=FALSE, fig=TRUE>>=
+## bam2dgpcm.raschplot <- ggplotGRM(na.omit(coef2mat(coef(bam2d.gpcm.rasch))))
+% @                               %
+
+
+
+<<bam2dgpcmrasch, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2d.gpcm.rasch)), label="tab:bam2dgpcmrasch"))
+@ 
+
+As can be seen from Table \ref{tab:bam2dgpcmrasch}, this model does not fit the BAM data very well, as shown by the numerous violations of monotonicity between Category 2 and 3. The same pattern appeared in the one and two parameter partial credit models, suggesting that these models were not useful for this scale. 
+
+<<bam2dgrm, echo=FALSE, results=hide>>=
+bam2d.grm.1pl <- grm(bamscale2d, constrained=TRUE)
+bam2d.grm.2pl <- grm(bamscale2d, constrained=FALSE)
+@ 
+
+Next, two graded response models (one and two parameter) were fit to the data. 
+<<bam2dgrm1sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2d.grm.1pl)), label="tab:bam2dgrm1sum"))
+@ 
+
+Table \ref{tab:bam2dgrm1sum} shows the estimated coefficients and (averaged) discrimination parameter for the one parameter graded response model. This model appears to not have any problems with non-monotonicity, and the estimated discrimination parameter and thresholds are quite similar to those in previous splits. Again, BAM3 has the highest estimated threshold (with the exception of BAM6, where no participant picked the highest response alternative). 
+
+Next, the two parameter GRM was fit to the Beliefs About Medicine Questionnaire. The results are shown in Table \ref{tab:bam2dgrm2sum}. The two parameter model is quite similiar to the one parameter model, the tradeoff between the discrimination parameter and the difficulty estimates can clearly be seen, as BAM3 has a lower discrimination parameter in this fit, but a much higher threshold. Most of the items appear to have made the opposite trade-off, with lower threshold values but a much higher discrimination parameter. 
+
+<<bam2dgrm2sum, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(bam2d.grm.2pl)), label="tab:bam2dgrm2sum"))
+@ 
+
+Finally, an ANOVA was fit to the two graded response models, to determine which of them fit the data better. The LR test indicated that the two parameter model fit the data significanly better ($p\le0.001$), but the AIC indicated that the one parameter model was a better fit. This will be examined by looking at each of the models' performance on unseen data. 
+
+<<bam2danovagrm, echo=FALSE, results=hide>>=
+bam2dgrm.anova <- anova(bam2d.grm.1pl, bam2d.grm.2pl)
+@ 
+
+
+\subsubsection{Regression Analyses}
+\label{sec:regression-analyses}
+
+The next part of the analysis to be carried out was regression analysis. There were a number of demographic variables collected in the second sample, to allow for examination of their effects on the outcome variables (the treatment credibility scores). Gender, education, college of study or work, health, income and experience with the six forms of treatment were collected. The approach taken to the analysis was the following. Using the four splits that were used for the psychometric analysis. In this case, models were fit on 3 of the four splits, and the results of these analyses were predicted using the held out data. This allows for the use of step methods of regression while ensuring unbiased p values and standard errors. 
+
+\subsubsection{Split A}
+\label{sec:split}
+
+The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
+\begin{figure}
+<<splitApairs, echo=FALSE, fig=TRUE>>=
+tcq2.nota.tot <- tcq2nota[,71:77]
+tcq2.nota.pairs <- pairs.panels(na.omit(tcq2.nota.tot))
+@   
+  \caption{Scatterplot Matrix for TCQ not A split. The upper diagonal has the correlations between the variables, the diagonal has a histogram of the values with density lines overlaid, and the lower diagonal has scatterplots for each pair of variables, with an overlaid locally weighted smoother regression line}
+  \label{fig:splitApairs}
+\end{figure}
+
+Figure \ref{fig:splitApairs} shows the scatterplot matrix for the totals in Split A. It can clearly be seen that the conventional variables correlate well with one another, as do the alternative variables. Some evidence of convergent validity is also seen, as the Beliefs About Medicine Questionnaire correlates negatively with the conventional forms of treatment, and positively with the alternative forms of treatment, as predicted. 
+
+Next, the relationships of the demographic variables with the totals were examined. 
+
+<<tcq2notAdemo, echo=FALSE, results=hide>>=
+tcq2.nota.demo <- tcq2nota[,2:16]
+@ 
+
+One examination of the data which was of interest was the relationship between the conventional and alternative scores and demographic variables. A mean was calculated for both the conventional and alternative items, and this was plotted against gender. The results are shown in Figure \ref{fig:convaltmeangender}. As can be seen, the patterns differ for mena and women, though the effect is small and the error bars are quite large. For men, higher scores on the conventional forms of treatment tend to be associated with higher scores on the alternative forms of treatment, while for women, the opposite is true. 
+
+\begin{figure}
+  
+  \caption{Regression line of Conventional treatment mean scores against Alternative treatment mean scores, stratified by Gender (regression line is a least squares fit)}
+  \label{fig:convaltmeangender}
+\end{figure}
+<<convaltmeans, echo=FALSE, results=hide>>=
+
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean, group=Gender))
+p2 <- p+layer(geom="smooth", method="lm")
+## p3 <- p2+facet_grid(.~Gender)
+print(p2)
+@ 
+
+
+\begin{figure}
+<<ggplotconvaltcollege, echo=FALSE, >>=
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~College)
+print(p3)
+@   
+  \caption{Conventional Means Regressed against Alternative treatment means, stratified based on College of study or work}
+  \label{fig:convaltmeancollege}
 \end{figure}
 
 
-The MAP criterion suggests one factor, so both one and two factor solutions will be examined for interpretability. 
+Figure \ref{fig:convaltmeancollege} shows a regression of alternative  treatment mean scores against conventional treatment mean scores, stratified based on college. It can be seen that for Arts, Science and Business and Law, increased scores on the alternative treatments were associated with increased scores on the conventional treatments, while for medicine and health, the revers was true. 
 
+\begin{figure}
+<<ggplotpillincome, echo=FALSE, >>=
+p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Health)
+print(p3)
+@   
+  \caption{Regression of Alternative Treatment means against conventional treatment means, stratified by health status (where 1 is worst health and 5 is best health)}
+  \label{fig:convaltmeanhealth}
+\end{figure}
 
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:42:38 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rr}
-  \hline
- & Loading \\ 
-  \hline
-1 & 0.41 \\ 
-  2 & 0.35 \\ 
-  3 & 0.64 \\ 
-  4 & 0.29 \\ 
-  5 & 0.49 \\ 
-  6 & 0.75 \\ 
-  7 & 0.67 \\ 
-  8 & 0.71 \\ 
-   \hline
-\end{tabular}
-\caption{Beliefs about Medicine One Factor Solution}
-\label{tab:bamonefactor}
-\end{center}
-\end{table}
-
-
-As can be seen from Table \ref{tab:bamonefactor}, all the items load on the factor, but many of them do not load particularly well. This impression is reinforced by the extremely low communalities (h2) on many of the items. The one factor solution does not appear to be a good fit to the data. This one factor explains 32\% of the variance, and the NNFI is 0.79, which is on the low side for a factor solution. 
+Figure \ref{fig:convaltmeanhealth} shows the regression of conventional treatment mean scores against alternative  treatment mean scores, stratified by Health status. It can be seen that for moderate levels of self rated health (2-4), higher scores on the conventional treatments were associated with higher scores on the alternative treatment. However, for participants who rated their health as ``Excellent'', the opposite pattern emerged. 
 
 
 
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:31 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrrr}
-  \hline
- & 1 & 2 & Communality \\ 
-  \hline
-1 & -0.04 & 0.57 & 0.31 \\ 
-  2 & -0.11 & 0.59 & 0.28 \\ 
-  3 & 0.25 & 0.50 & 0.45 \\ 
-  4 & 0.17 & 0.16 & 0.08 \\ 
-  5 & 0.08 & 0.53 & 0.33 \\ 
-  6 & 0.74 & 0.08 & 0.61 \\ 
-  7 & 0.75 & -0.03 & 0.55 \\ 
-  8 & 0.80 & -0.02 & 0.62 \\ 
-   \hline
-\end{tabular}
-\caption{Beliefs About Medicine, Two Factor Solution}
-\label{tab:bamtwofactor}
-\end{center}
-\end{table}
+Next, summary scores for experience with conventional treatments and alternative treatments were calculated, and the relationships of these two variables to demographic variables were examined.
 
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:32 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrr}
-  \hline
- & 1 & 2 \\ 
-  \hline
-1 & 1.00 & 0.68 \\ 
-  2 & 0.68 & 1.00 \\ 
-   \hline
-\end{tabular}
-\caption{Factor Correlations, BAM Two factor solution, Oblimin Rotation}
-\label{tab:bamtwofactor.corr}
-\end{center}
-\end{table}
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Gender)
+print(p3)
+@   
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by Gender}
+  \label{fig:expconvaltgender}
+\end{figure}
 
-Factor 1: 4,6,7,8.
-Factor 2: 1,2,3,5
-
-As can be seen from Table \ref{tab:bamtwofactor}, this factor structure provides a better fit to the data. That being said, the communalities for items 1, 2, 4 and 5 are still extremely low, which is troubling. This may point to problems with the use of this scale in this population, but given that previous work has suggested this not to be the case, it may point too more fundamental problems with the instrument. The two factor solution explains 40\% of the variance, which is acceptable, though still very low. 
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~College)
+print(p3)
+@ 
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
+  \label{fig:expconvaltgender}
+\end{figure}
 
 
-Again, Table \ref{tab:bamtwofactor.corr} clearly highlights the absurdity of using Principal Components Analysis with Varimax rotation on this instrument, as the factor correlations are very high. The NNFI for this solution is 0.96, which is perfectly acceptable. 
+\begin{figure}
+<<expconvaltgender, echo=FALSE, fig=TRUE>>=
+p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
+p2 <- p+layer(geom="smooth", method="lm")
+p3 <- p2+facet_grid(.~Health)
+print(p3)
+@ 
+  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
+  \label{fig:expconvaltgender}
+\end{figure}
+
+Following on from the graphical exploration of the relationships between the variables, the next step was to fit a linear model on this data, eliminate variables based on the decrease in AIC, and test the model on the held out data. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+pilltotlm1.nota <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+pilltot.step.nota <- stepAIC(object=pilltotlm1.nota, upper=pilltotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(pilltot.step.nota)))
+pilltot.pred <- predict(pilltotlm1.nota, newdata=tcq2a)
+@
 
 
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Mon Oct 18 14:12:32 2010
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrrrrrr}
-  \hline
- & bam.bic1 & bam.bic2 & bam.bic3 & bam.tli.1 & bam.tli.2 & bam.tli.3 \\ 
-  \hline
-1 & 115.76 & -44.99 & -25.50 & 0.79 & 0.96 & 0.96 \\ 
-   \hline
-\end{tabular}
-\caption{Fit Indices, BAM factor Solutions}
-\label{tab:bam.fit}
-\end{center}
-\end{table}
+<<lmonheldoutdata, echo=FALSE, results=tex>>=
+pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2a)
+print(xtable(summary(pilltotlm.holdout)))
+@ 
+Rerunning the model on the held out data, the model was highly significant F(10,129)=28.95, $p\le 0.001$. The model had an adjusted $R^2$ of 0.4286, which equates to approximately 42\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Homeopathy and Reiki variables did not achieve significance on the held out data. 
+
+The next step was to repeat this process using Cream total as a dependent variable.
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+creamtotlm1.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+creamtot.step.nota <- stepAIC(object=creamtotlm1.nota, upper=creamtotlm1,lower=~1, direction="both", k=3)
+print(xtable(summary(creamtot.step.nota), label="tab:creamtotlm1nota"))
+creamtot.pred <- predict(creamtotlm1.nota, newdata=tcq2a)
+@
+
+The results on the training sample are shown in Table \ref{tab:creamtotlm1nota}. The model was significant: F(3,314)=34.24, p-value of $p\le 0.001$. The adjusted $R^2$ for the model was 0.3861, which is extremely poor. Next the performance of the model on the held out data was assessed. 
 
 
-% latex table generated in R 2.11.1 by xtable 1.5-6 package
-% Tue Jan 11 16:38:08 2011
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rllrrrrrrr}
-  \hline
- & base & comparison & ep & minus2LL & df & AIC & diffLL & diffdf & p \\ 
-  \hline
-1 & BAM1 &  &  16 & 3599.32 & 20.00 & 104.35 &  &  &  \\ 
-  2 & BAM1 & BAM2 &  16 & 3638.21 & 20.00 & 143.24 & 38.88 & 0.00 & 0.00 \\ 
-   \hline
-\end{tabular}
-\end{center}
-\end{table}
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2a)
+print(xtable(summary(creamtotlm.holdout), label="tab:creamlmholdoutnota"))
+@ 
+
+The results for the held out data are shown in Table \ref{tab:creamlmholdoutnota}. The model was again signficiant, with an F(6,144)=22.18, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model increased in the holdout sample, and was equal to 0.4586. However, the demographic variables were not significant on the held out sample. 
+
+Next, the same modelling procedure was applied to the Injection credibility scores. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+injtotlm1.nota <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+injtot.step.nota <- stepAIC(object=injtotlm1.nota, upper=injtotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(injtot.step.nota), label="tab:injtotlm1.notanota"))
+injtot.pred <- predict(injtotlm1.nota, newdata=tcq2a)
+@ 
+The model results shown in Table \ref{tab:injtotlm1nota} show that Cream and Pill credibility scores were excellent predictors, as were Experience with conventional treatments and Health. The model was independently significant: F(4,313)=68.35, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4594. It is important to note that this p values cannot be trusted due to the fact that the algorithm calculated them at each step, and so a multiple comparisions problem arises. 
+
+This model was then applied to the held out data. 
+
+<<lmonheldoutdatainj, echo=FALSE, results=tex>>=
+injtotlm.holdout <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2a)
+print(xtable(summary(injtotlm.holdout), label="tab:injlmholdoutnota"))
+@ 
+Table \ref{tab:injlmholdoutnota} shows the results of the model on the hjeld out data. It can be seen that Cream credibility, Pill credibility and Health were all significant, while Experience with conventional treatments was almost significant. The model itself was significant: F(4,142)=21.4, with a p value of $p\le 0.001$, while the adjusted $R^2$ was equal to 0.3585, which is quite poor in comparison to some of the other results. 
+
+Next, the same procedure was applied to the Acupuncture credibility scores. 
+
+<<stepwiselmacunota, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+acutotlm1.nota <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+acutot.step.nota <- stepAIC(object=acutotlm1.nota, upper=acutotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(acutot.step.nota), label="tab:acutotlm1.notanota"))
+acutot.pred <- predict(acutotlm1.nota, newdata=tcq2a)
+@ 
+
+Table \ref{tab:acutotlm1nota} shows the estimated coefficients on the training sample. It can be seen that Cream credibility, Homeopathy credibility and Reiki credibility were the only variables retained by the procedure. The model was independently significant; F(3,314)=76.69, p=value $p\le 0.001$. The adjusted $R^2$ was equal to 0.4173. This model was then applied to the validation set.
+
+<<lmonheldoutdataacu, echo=FALSE, results=tex>>=
+Acutotlm.holdout <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2a)
+print(xtable(summary(Acutotlm.holdout), label="tab:aculmholdoutnota"))
+@ 
+
+It can be seen from Table \ref{tab:aculmholdoutnota} that all of the variables remained significant in the validation set. The model was independently significant; F(3,146)=23.89, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3154.
+
+Next, the same procedure was applied to the Homeopathy credibility totals. 
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+homtotlm1.nota <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+homtot.step.nota <- stepAIC(object=homtotlm1.nota, upper=homtotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(homtot.step.nota), label="tab:homtotlm1.nota"))
+acutot.pred <- predict(acutotlm1.nota, newdata=tcq2a)
+@ 
+
+Table \ref{tab:homtotlm1nota} shows the estimated coefficients on the training set. It can be seen that Cream, Pill, Acupuncture and Reiki credibility scores were retained by the algorithm. The model was independently significant: F(4,313)=138.4, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.6342. Next, the model was examined on the validation set. 
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+Homtotlm.holdout <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2a)
+print(xtable(summary(Homtotlm.holdout), label="tab:homlmholdoutnota"))
+@ 
+Table \ref{tab:homlmholdoutnota} shows the performance of the model on the validation set. It can be seen that Pill and cream credibility scores are no longer significant, suggesting that their inclusion was an artifact of the selection algorithm. The model was significant: F(4,144)=29.09, $p\le 0.001$, and the adjusted $R^2$ was equal to 0.4316. 
+
+Next, the selection and testing procedure was applied to the Reiki totals. 
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+reitotlm1.nota <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+reitot.step.nota <- stepAIC(object=reitotlm1.nota, upper=reitotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(reitot.step.nota), label="tab:reitotlm1nota"))
+reitot.pred <- predict(reitotlm1.nota, newdata=tcq2a)
+@ 
+Table \ref{tab:reitotlm1nota} shows the estimated coefficients on the training set. The algorithm retained Injection total, Acupuncture and the Experience with alternative treatments variables. The model was significant; F(3,314)=67.98, $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.388. Next, the performance of these  variables was examined on the validation set. 
+
+<<lmonheldoutdatacream, echo=FALSE, results=tex>>=
+Reitotlm.holdout <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2a)
+print(xtable(summary(Reitotlm.holdout), label="tab:reilmholdoutnota "))
+@ 
+
+Table \ref{tab:reilmholdoutnota} shows the estimated coefficients on the validation set. It can be seen that all variables remain significant. The model itself was significant:F(3,139)=17.71, $p\le 0.001$. The adjusted $R^2$ value for the model on the validation set was equal to 0.2609.
+
+Finally, the stepwise variable selection procedure was applied to the Beliefs about Medicine Total (long form).
+
+<<stepwiselm, echo=FALSE, results=tex>>=
+tcq2nota.full <- complete.cases(tcq2nota)
+tcq2nota.complete <- tcq2nota[tcq2nota.full,]
+## tcq2nota.complete$bamscale <- apply(bam2ascale, 1, mean, na.rm=TRUE)
+## tcq2a$bamscale look at using reduced bam scale
+bamtotlm1.nota <- lm(Bamtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
+bamtot.step.nota <- stepAIC(object=bamtotlm1.nota, upper=bamtotlm1.nota,lower=~1, direction="both", k=3)
+print(xtable(summary(bamtot.step.nota), label="tab:bamtotlm1nota"))
+bamtot.pred <- predict(bamtotlm1.nota, newdata=tcq2a)
+@ 
+
+As can be seen from Table \ref{tab:bamtotlm1nota}, the algorithm kept six variables in the model. Of these conventional items have a negative loading, and the Acupuncture item has a positive loading. Interestingly enough, the experience with conventional treatments variable has a negative loading on the dependent variable also, as do income and Health. Next, the fit of the model on the held out data was examined. 
+
+<<lmonheldoutdatabam, echo=FALSE, results=tex>>=
+Bamtotlm.holdout <- lm(Bamtot~Creamtot+Pilltot+Expconv+Acutot+Income+Health, data=tcq2a)
+print(xtable(summary(Bamtotlm.holdout), label="tab:Bamlmholdoutnota"))
+@ 
+
+Of the six variables selected by the algorithm, only Cream total and Income remain significant, as can be seen from Table \ref{tab:Bamlmholdoutnota}. The model was not significant, F(6,130)=1.887, $p=0.0877$, while the adjusted $R^2$ was equal to 0.037. 
+
+\subsubsection{Split B}
+\label{sec:split-2}
+
+Next, the same procedure was repeated for all totals using the data from Splits A,C and D, while holding out Split B as a validation set. 
+
+<<pilltotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+pilltotlm1.notb <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+pilltot.step.notb <- stepAIC(object=pilltotlm1.notb, upper=pilltotlm1.notb,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1.notb, newdata=tcq2b)
+print(xtable(summary(pilltot.step.notb)), label="tab:pilltotnotbsteplm")
+@ 
+
+Table \ref{tab:pilltotnotbsteplm} shows the performance of the stepwise algorithm on the training sample. It can be seen that with a penalisation factor of three for the parameters in the model (as opposed to the classic AIC penalty of two), only four variables (Creamtot, Injtot, Acutot, and Experience with conventional treatments) are retained by the algorithm. Both Acutot and Expconv have a negative sign, which would be expected for acupuncture scores, but the negative coefficient for the experience with conventional treatments is surprising. It may be that having more experience with conventional forms of painkilling treatments is linked to a history of problems with pain, as as pills tend to be the most readily available pain treatment, they may be regarded as less effective. The $R^2$ adjusted for parameters was equal to 0.4491, which is lower than the previous training set. The model was independently significant, with an F(4,313)=65.61, $p\le 0.0001$. Next, the performance of this model on the held out data was assessed. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotb.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2b)
+print(xtable(summary(pilltotnotb.heldout.lm), label="tab:pilltotnotbheldout"))
+@ 
+
+It can be seen from Table \ref{tab:pilltotnotbheldout} that this model performs extremely well on the held out data, with a highly significant model - F(4,162)=65.79, $p\le 0.0001$, and an adjusted $R^2$ of .6096, indicating that 60\% of the variance in the Pilltotals can be explained by the predictor variables. Its worth noting that the sign of the Experience with conventional treatments variable has reversed, and is now in line with expectations. 
+
+<<creamtotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+creamtotlm1.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+creamtot.step.notb <- stepAIC(object=creamtotlm1.notb, upper=creamtotlm1notb,lower=~1, direction="both", k=3)
+creamtot.pred <- predict(creamtotlm1.notb, newdata=tcq2b)
+print(xtable(summary(creamtot.step.notb)), label="tab:creamtotnotbsteplm")
+@ 
+
+Table \ref{tab:creamtotnotbsteplm} shows the estimated coefficients for the regression of Pilltot on the other variables. Only four variables were retained. All other variables appear to relate in the expected fashion, as above in Split A with the exception of the coefficient on gender which suggest that being either male or female lowers levels of Cream credibility. Next, this model was tested on the validation set. 
+
+<<creamtotnotbheldout, echo=FALSE, results=tex>>=
+creamtotnotb.heldout.lm <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2b)
+print(xtable(summary(creamtotnotb.heldout.lm), label="tab:creamtotnotbheldout"))
+@ 
 
 
+Table \ref{tab:creamtotnotbheldout} shows the performance of the model on the validation set. It can be seen that Pilltot and Acutot, along with Health, remain significant, but overall performance is worse than on the training set.  The model was significant; F(8,156)=13.02, $p\le 0.001$. The adjusted $R^2$ value was 0.3696.  
+
+Next, the stepwise selection procedure was carried out for the Injection credibility total.
+
+<<injtotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+injtotlm1.notb <- lm(Injtot~Pilltot+Creamtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+injtot.step.notb <- stepAIC(object=injtotlm1.notb, upper=injtotlm1notb,lower=~1, direction="both", k=3)
+injtot.pred <- predict(injtotlm1.notb, newdata=tcq2b)
+print(xtable(summary(injtot.step.notb)), label="tab:injtotnotbsteplm")
+@ 
+
+Table \ref{tab:injtotnotbsteplm} shows the performance of the model on the training data. It can be seen that Pill, Cream, Acupuncture and Reiki credibility totals are retained by the algorithm, along with experience with conventional treatments. This model's performance on the held out data was now assessed. 
+
+<<injtotnotbheldout, echo=FALSE, results=tex>>=
+injtotnotb.heldout.lm <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2b)
+print(xtable(summary(injtotnotb.heldout.lm), label="tab:injtotnotbheldout"))
+@ 
+
+Table \ref{tab:injtotnotbheldout} shows the estimated coefficients on the held out data. It can be seen that only Pill credibility remains significant. The model is significant; F(5,159)=30.37, $p\le 0.0001$, and has an adjusted $R^2$ of .4724, which is excellent performance on the validation set. This is not really that surprising, as the Factor Analyses carried out earlier did reduce Pills and Injections to one factor in all of the five factor solutions to the TCQ. 
+
+Next, the stepwise selection and validation procedure was carried out on the Acupuncture total.
+
+<<acutotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+acutotlm1.notb <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+acutot.step.notb <- stepAIC(object=acutotlm1.notb, upper=acutotlm1notb,lower=~1, direction="both", k=3)
+acutot.pred <- predict(acutotlm1.notb, newdata=tcq2b)
+print(xtable(summary(acutot.step.notb)), label="tab:acutotnotbsteplm")
+@ 
+
+Table \ref{tab:acutotnotbsteplm} shows the retained coefficients following stepwise selection. Pills, Creams, Injections, Homeopathy and Reiki are left in the model by the algorithm. This model was then tested on the held out data. 
+
+<<acutotnotbheldout, echo=FALSE, results=tex>>=
+acutotnotb.heldout.lm <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2b)
+print(xtable(summary(acutotnotb.heldout.lm), label="tab:acutotnotbheldout"))
+@ 
+
+Table \ref{tab:acutotnotbheldout} shows the estimated coefficients on the validation set. It can be seen that only the other alternative treatment variables have remained significant. The model was significant; F(5,164)=27.91, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4433. 
+
+Next, the Homeopathy total was regressed on the other predictors using stepwise selection and tested against the held out data.
+
+<<homtotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+homtotlm1.notb <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+homtot.step.notb <- stepAIC(object=homtotlm1.notb, upper=homtotlm1notb,lower=~1, direction="both", k=3)
+homtot.pred <- predict(homtotlm1.notb, newdata=tcq2b)
+print(xtable(summary(homtot.step.notb)), label="tab:homtotnotbsteplm")
+@ 
+
+Table \ref{tab:homtotnotbsteplm} shows the estimates for the regression coefficients on the training set. It can be seen that again, Acupuncture and Reiki appear to be the best predictors, though the Cream total is strongly negatively associated with the response variable.
+
+<<homtotnotbheldout, echo=FALSE, results=tex>>=
+homtotnotb.heldout.lm <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2b)
+print(xtable(summary(homtotnotb.heldout.lm), label="tab:homtotnotbheldout"))
+@ 
+
+Table \ref{tab:homtotnotbheldout} shows the estimated coefficients on the validation set. It can be seen that the alternative treatments are the only ones which have remained significant. Note that the intercept is not significant, which suggests that the mean level of the response variable was not significantly different from 0 (conditional on the other variables in the model). The model itself was significant; F(4,165)=60.48, $p\le 0.0001$, and the adjusted $R^2$ of the model was equal to 0.5847. 
+
+Next, the same procedure was applied to the Reiki credibility score. 
+
+<<reitotlmnotb, echo=FALSE, results=hide>>=
+tcq2notb.full <- complete.cases(tcq2notb)
+tcq2notb.complete <- tcq2notb[tcq2notb.full,]
+reitotlm1.notb <- lm(Reitot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
+reitot.step.notb <- stepAIC(object=reitotlm1.notb, upper=reitotlm1notb,lower=~1, direction="both", k=3)
+reitot.pred <- predict(reitotlm1.notb, newdata=tcq2b)
+print(xtable(summary(reitot.step.notb)), label="tab:reitotnotbsteplm")
+@ 
+Table \ref{tab:reitotnotbsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then applied to the training set. 
+
+<<reitotnotbheldout, echo=FALSE, results=tex>>=
+reitotnotb.heldout.lm <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2b)
+print(xtable(summary(reitotnotb.heldout.lm), label="tab:reitotnotbheldout"))
+@ 
+Table \ref{tab:reitotnotbheldout} shows the model's performance on the held out data. All predictors remain significant, and the model was significant as a whole; F(3,167)=78.23, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.5768. 
+
+\subsubsection{Split C}
+\label{sec:split-3}
+
+Next, the same series of analyses was performed using the data from Splits A, B and D, and retaining Split C as a hold out sample. 
+
+<<pilltotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+pilltotlm1.notc <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+pilltot.step.notc <- stepAIC(object=pilltotlm1.notc, upper=pilltotlm1notc,lower=~1, direction="both", k=3)
+#pilltot.pred <- predict(pilltotlm1.notc, newdata=tcq2c)
+print(xtable(summary(pilltot.step.notc)), label="tab:pilltotnotcsteplm")
+@ 
+The model shown in Table \ref{tab:pilltotnotcsteplm} contains almost the same four variables that were observed in Split 2 (with the inclusion of the Reiki total and the dropping of the Acupuncture total).  This suggests that these variables are likely to be truly related to Pill total credibility scores, as it is unlikely that random variation would account for the same set of four variables coming from the procedure twice in a row.  The $R^2$ for this model was equal to 0.4717, and the model was highly significant: F(4,299)=68.65, $p\le 0.0001$. These p values and test statistics are likely to be biased due to the automated inclusion and exclusion of variables for the model, and the true test is in the performance of the model on held-out data. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotc.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2c)
+print(xtable(summary(pilltotnotc.heldout.lm), label="tab:pilltotnotcheldout"))
+@ 
+
+This model did not fit quite as well as that in Split 2, but nonetheless, performance was acceptable. Table \ref{tab:pilltotnotcheldout} shows the estimated regression coefficients. While Cream and Injection credibility scores are still highly significant, Reiki and Experience with Conventional Treatments do not perform well on the held out data. The model itself is still highly significant; F(4,154)=34.53, $p\le 0.001$ and the adjusted $R^2$ is equal to 0.4591. 
+
+<<creamtotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+creamtotlm1.notc <- lm(Creamtot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+creamtot.step.notc <- stepAIC(object=creamtotlm1.notc, upper=creamtotlm1notc,lower=~1, direction="both", k=3)
+#creamtot.pred <- predict(creamtotlm1.notc, newdata=tcq2c)
+print(xtable(summary(creamtot.step.notc)), label="tab:creamtotnotcsteplm")
+@ 
+
+Table \ref{tab:creamtotnotcsteplm} shows the estimated coefficients for the regression of cream total against the other predictor variables, using a forwards and backwards stepwise algorithm.  It can be seen that Injection, Acupuncture, Experience with Alternative Treatments and Health all appear to be good predictors on the basis of this model. Next, the model is tested against the validation set. 
+
+<<creamtotnotbheldout, echo=FALSE, results=tex>>=
+creamtotnotc.heldout.lm <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2c)
+print(xtable(summary(creamtotnotc.heldout.lm), label="tab:creamtotnotcheldout"))
+@ 
+
+Table \ref{tab:creamtotnotcheldout} shows that only Injection total remains significant on the validation set. The model was significant; F(4,153)=18.22, $p\le 0.00001$. The adjusted $R^2$ for the model was equal to 0.3049. 
+
+Next, the stepwise selection and validation procedure was applied to the Injection credibility scores.
+
+<<injtotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+injtotlm1.notc <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+injtot.step.notc <- stepAIC(object=injtotlm1.notc, upper=injtotlm1notc,lower=~1, direction="both", k=3)
+#injtot.pred <- predict(injtotlm1.notc, newdata=tcq2c)
+print(xtable(summary(injtot.step.notc)), label="tab:injtotnotcsteplm")
+@ 
+Table \ref{tab:injtotnotcsteplm} shows that the algorithm retained three variables, Creamtotal, Pilltotal and Experience with conventional treatments, all with positive loadings as expected. Next, the fit of this model was examined on the validation data. 
+
+<<injtotnotbheldout, echo=FALSE, results=tex>>=
+injtotnotc.heldout.lm <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2c)
+print(xtable(summary(injtotnotc.heldout.lm), label="tab:injtotnotcheldout"))
+@ 
+
+Table \ref{tab:injtotnotcheldout} shows that all three variables remained significant when tested on the validation set. The model was significant; F(3,159)=46.77, $p\le 0.0001$ and had an adjusted $R^2$ of 0.4587. 
+
+Next, this procedure was applied to the Acupuncture mean score in Split C. 
+
+<<acutotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+acutotlm1.notc <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+acutot.step.notc <- stepAIC(object=acutotlm1.notc, upper=acutotlm1notc,lower=~1, direction="both", k=3)
+#acutot.pred <- predict(acutotlm1.notc, newdata=tcq2c)
+print(xtable(summary(acutot.step.notc)), label="tab:acutotnotcsteplm")
+@ 
+
+Table \ref{tab:acutotnotcsteplm} shows the best model as selected by the algorithm. It consists of three predictors, which will now be tested on the validation set. 
+
+<<acutotnotbheldout, echo=FALSE, results=tex>>=
+acutotnotc.heldout.lm <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2c)
+print(xtable(summary(acutotnotc.heldout.lm), label="tab:acutotnotcheldout"))
+@ 
+As shown in Table \ref{tab:acutotnotcheldout}, the fit on the validation set was extremely similiar to that observed on the training set. The model was significant, F(3,158)=35.94, $p\le 0.0001$, and the model had an adjusted $R^2$ of 0.3943. 
 
 
+<<homtotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+homtotlm1.notc <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+homtot.step.notc <- stepAIC(object=homtotlm1.notc, upper=homtotlm1notc,lower=~1, direction="both", k=3)
+## homtot.pred <- predict(homtotlm1.notc, newdata=tcq2c)
+print(xtable(summary(homtot.step.notc)), label="tab:homtotnotcsteplm")
+@ 
+
+Table \ref{tab:homtotnotcsteplm} shows the selected model output from the stepwise procedure. This model was then fit to the validation set, and its fit examined. 
+
+<<homtotnotbheldout, echo=FALSE, results=tex>>=
+homtotnotc.heldout.lm <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2c)
+print(xtable(summary(homtotnotc.heldout.lm), label="tab:homtotnotcheldout"))
+@ 
+
+Table \ref{tab:homtotnotcheldout} shows that all the variables remained significant on the validation set (with the exception of the intercept). The model was significant; F(3.152)=57, $p\le 0.0001$ and had an adjusted $R^2$ of 0.5201.
+
+<<reitotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+reitotlm1.notc <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+reitot.step.notc <- stepAIC(object=reitotlm1.notc, upper=reitotlm1.notc,lower=~1, direction="both", k=3)
+## reitot.pred <- predict(reitot.step.notc, newdata=tcq2c)
+print(xtable(summary(reitot.step.notc)), label="tab:reitotnotcsteplm")
+@ 
+Table \ref{tab:reitotnotcsteplm} shows the selected model and the predictor's estimated coefficients. It can be seen that Injections, Homeopathy and Reiki were the only retained coefficients. Next, this model was tested on the validation set. 
+
+<<reitotnotbheldout, echo=FALSE, results=tex>>=
+reitotnotc.heldout.lm <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2c)
+print(xtable(summary(reitotnotc.heldout.lm), label="tab:reitotnotcheldout"))
+@ 
+As Table \ref{tab:reitotnotcheldout} shows, all of the coefficients selected on the training set remained significant on the validation set. The model was significant; F(3,158)=68.36, $p\le 0.0001$. The adjusted $R^2$ was equal to 0.5566.
+
+<<bamtotlmnotc, echo=FALSE, results=hide>>=
+tcq2notc.full <- complete.cases(tcq2notc)
+tcq2notc.complete <- tcq2notc[tcq2notc.full,]
+bamtotlm1.notc <- lm(Bamtot~Creamtot+Pilltot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
+bamtot.step.notc <- stepAIC(object=bamtotlm1.notc, upper=bamtotlm1notc,lower=~1, direction="both", k=3)
+## bamtot.pred <- predict(bamtot.step.notc, newdata=tcq2c)
+print(xtable(summary(bamtot.step.notc)), label="tab:bamtotnotcsteplm")
+@ 
+
+Table \ref{tab:bamtotnotcsteplm} shows the estimated best model for the BAM total. This model's fit was then tested on the validation  set.
+
+<<bamtotnotbheldout, echo=FALSE, results=tex>>=
+bamtotnotc.heldout.lm <- lm(Bamtot~Creamtot+Pilltot+Homtot+Expconv+Income+Health, data=tcq2c)
+print(xtable(summary(bamtotnotc.heldout.lm), label="tab:bamtotnotcheldout"))
+@ 
+
+Table \ref{tab:bamtotnotcheldout} shows the model's performance on the held out data. It can be seen that Homeopathy, experience with conventional treatments and Income are no longer significant. The model itself was significant; F(6,145)=7.059, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.194. 
+
+
+\subsubsection{Split D}
+\label{sec:split-4}
+
+Finally, the same procedure was repeated on Split D, which uses Splits A, B and C as the training data, and Split D as the held out validation set. 
+
+<<pilltotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+pilltotlm1.notd <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+pilltot.step.notd <- stepAIC(object=pilltotlm1.notd, upper=pilltotlm1.notd,lower=~1, direction="both", k=3)
+pilltot.pred <- predict(pilltotlm1.notd, newdata=tcq2d)
+print(xtable(summary(pilltot.step.notd)), label="tab:pilltotnotdsteplm")
+@ 
+
+Table \ref{tab:pilltotnotdsteplm} shows the estimated coefficients on the training data. The same core group of predictors are seen in the results, and Gender appears to be a useful predictor on this sub-sample of the data. This is the first appearance of a demographic variable in the final set, although the coefficients are quite small, as are the estimated t values. The model is significant: F(6,283)=48.4, with an adjusted $R^2$ of 0.496, which is line with results on previous splits.
+
+Next, this model is tested on the held out data set. 
+
+<<pilltotnotbheldout, echo=FALSE, results=tex>>=
+pilltotnotd.heldout.lm <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2d)
+print(xtable(summary(pilltotnotd.heldout.lm), label="tab:pilltotnotdheldout"))
+@ 
+Table \ref{tab:pilltotnotdheldout} shows the results of fitting the trained model to the heldout data. It can be seen that Creams, Injections and Acupuncture are significant, while Experience and Gender are not. The adjusted $R^2$ value is equal to 0.3822, the lowest of all the splits, while the model is significant; F(6,201)=22.34, with a p-value of $p\le 0.001$. 
+
+<<creamtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+creamtotlm1.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+creamtot.step.notd <- stepAIC(object=creamtotlm1.notd, upper=creamtotlm1.notd,lower=~1, direction="both", k=3)
+creamtot.pred <- predict(creamtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(creamtot.step.notd)), label="tab:creamtotnotdsteplm")
+@ 
+
+Table \ref{tab:creamtotnotdsteplm} shows the estimated coefficients on the regression of Cream credibility scores on the training set. It can be seen that six predictors were retained, Pills, Injections, Acupcunture, Experience with alternative treatment, experience with conventional treatments and Gender. The next step was to examine the performance of the model on the held-out data.
+
+<<creamtotnotbheldout, echo=FALSE, results=tex>>=
+creamtotnotd.heldout.lm <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2d)
+print(xtable(summary(creamtotnotd.heldout.lm), label="tab:creamtotnotdheldout"))
+@ 
+
+Table \ref{tab:creamtotnotdheldout} shows the performance of the model on the held out data. It can be seen that Injections, Acupuncture, Experience with Treatments are no longer significant, while Pill credibility still is.The model is significant; F(7,193)=12.49, $p\le 0.0001$ and has an adjusted $R^2$ value of 0.2868, which is quite poor. 
+
+Next, the same procedure was applied to the Injection credibility totals for this split. 
+
+<<injtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+injtotlm1.notd <- lm(Injtot~Pilltot+Creamtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+injtot.step.notd <- stepAIC(object=injtotlm1.notd, upper=injtotlm1.notd,lower=~1, direction="both", k=3)
+injtot.pred <- predict(injtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(injtot.step.notd)), label="tab:injtotnotdsteplm")
+@ 
+It can be seen from Table \ref{tab:injtotnotdsteplm} that the algorithm retained five predictor variables, which is greater than has been seen in previous splits. Next, the performance of this model on the held out data was assessed. 
+
+<<injtotnotbheldout, echo=FALSE, results=tex>>=
+injtotnotd.heldout.lm <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2d)
+print(xtable(summary(injtotnotd.heldout.lm), label="tab:injtotnotdheldout"))
+@ 
+
+Table \ref{tab:injtotnotdheldout} shows the estimated coefficients for this model on the held-out data. It can be seen that Pill credibility scores and Experience with conventional treatments are the only variables that remain significant. The model was significant: F(5,201)=13.46, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.2321, which is extremely poor. 
+
+Next, a model was built and tested on the Acupuncture credibility scores. 
+
+<<acutotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+acutotlm1.notd <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+acutot.step.notd <- stepAIC(object=acutotlm1.notd, upper=acutotlm1.notd,lower=~1, direction="both", k=3)
+acutot.pred <- predict(acutotlm1.notd, newdata=tcq2d)
+print(xtable(summary(acutot.step.notd)), label="tab:acutotnotdsteplm")
+@ 
+Table \ref{tab:acutotnotdsteplm} shows that the algorithm retained five predictors in this case. Their fit was then examined on the held out data.
+
+<<acutotnotbheldout, echo=FALSE, results=tex>>=
+acutotnotd.heldout.lm <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2d)
+print(xtable(summary(acutotnotd.heldout.lm), label="tab:acutotnotdheldout"))
+@ 
+
+Table \ref{tab:acutotnotdheldout} shows the performance of the model on the held out data. It can be seen that only Homeopathy and Reiki credibility scores remain significant on this data set. The model was significant: F(5,203)=18.78, $p\le 0.0001$, and the adjusted $R^2$ of the model was equal to 0.2995, which is quite poor. 
+
+Next, the model development and validation procedure was applied to the Homeopathy credibility scores. 
+
+<<homtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+homtotlm1.notd <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+homtot.step.notd <- stepAIC(object=homtotlm1.notd, upper=homtotlm1.notd,lower=~1, direction="both", k=3)
+homtot.pred <- predict(homtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(homtot.step.notd)), label="tab:homtotnotdsteplm")
+@ 
+
+Table \ref{tab:homtotnotdsteplm} shows the retained predictors from the procedure for the Homeopathy credibility scores. It can be seen that only three were retained in this regression. Next, this model was fitted to the held out data.
+
+<<homtotnotbheldout, echo=FALSE, results=tex>>=
+homtotnotd.heldout.lm <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2d)
+print(xtable(summary(homtotnotd.heldout.lm), label="tab:homtotnotdheldout"))
+@ 
+
+Table \ref{tab:homtotnotdheldout} shows the performance of the model on the heldout data. It can be seen that both Acupuncture and Reiki remain extremely significant, but experience with alternative treatments does not. The model was significant: F(3,200)=75.17, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.5229, which is extremely good performance. 
+
+Next, the model selection and validation procedure was applied to the Reiki credibility scores. 
+
+<<reitotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+reitotlm1.notd <- lm(Reitot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+reitot.step.notd <- stepAIC(object=reitotlm1.notd, upper=reitotlm1.notd,lower=~1, direction="both", k=3)
+reitot.pred <- predict(reitotlm1.notd, newdata=tcq2d)
+print(xtable(summary(reitot.step.notd)), label="tab:reitotnotdsteplm")
+@ 
+
+Table \ref{tab:reitotnotdsteplm} shows the retained coefficients for the Reiki credibility scores regression. The algorithm has only retained three predictors, which is a little lower than in previous splits. Next, the fit of these predictors was examined on the held out data. 
+
+<<reitotnotbheldout, echo=FALSE, results=tex>>=
+reitotnotd.heldout.lm <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2d)
+print(xtable(summary(reitotnotd.heldout.lm), label="tab:reitotnotdheldout"))
+@ 
+
+Table \ref{tab:reitotnotdheldout} shows the performance of these predictors on the heldout data. It can be seen that both acupuncture and homeopathy remain significant, but Injections does not. The model was significant: F(3,206)=75.43, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.5165, which is extremely good. 
+
+Finally, this model selection and validation procedure was applied to the Beliefs About Medicine Total. 
+
+<<bamtotlmnotd, echo=FALSE, results=hide>>=
+tcq2notd.full <- complete.cases(tcq2notd)
+tcq2notd.complete <- tcq2notd[tcq2notd.full,]
+bamtotlm1.notd <- lm(Bamtot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
+bamtot.step.notd <- stepAIC(object=bamtotlm1.notd, upper=bamtotlm1.notd,lower=~1, direction="both", k=3)
+bamtot.pred <- predict(bamtotlm1.notd, newdata=tcq2d)
+print(xtable(summary(bamtot.step.notd)), label="tab:bamtotnotdsteplm")
+@ 
+
+Table \ref{tab:bamtotnotdsteplm} shows the retained predictors from the algorithm. It can be seen that seven predictors were retained. Next, the fit of these predictors was examined on the held out data.
+
+<<bamtotnotbheldout, echo=FALSE, results=tex>>=
+bamtotnotd.heldout.lm <- lm(Bamtot~Pilltot+Creamtot+Homtot+Expalt+Expconv+Income+Health, data=tcq2d)
+print(xtable(summary(bamtotnotd.heldout.lm), label="tab:bamtotnotdheldout"))
+@ 
+
+Table \ref{tab:bamtotnotdheldout} shows the performance of the model on the validation set. It can be seen that Pilltotal, Homeopathy total and Experience with conventional treatments remain significant, but the other variables do not. The model was significant: F(7,182)=5.448, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.1414, which is extremely poor but in line with previous splits. 
+
+\subsubsection{Final Regression Models}
+\label{sec:final-regr-models}
+
+The next step in the data analysis procedure was to determine which of the models developed on each of the splits were the best fit to the data. As all of the data has been used in previous test and validation splits, the following approach was taken. Firstly, a random sample of 75 observations was drawn from each of the four splits, and then these samples were combined. The chosen models from each of the splits were then fitted to this new data set, and were compared using AIC and likelihood ratio tests. This approaches balances the advantages of cross-validation and avoids the problems of multiple comparison endemic to stepwise variable selection and repeated model fitting. 
+
+<<tcq2new, echo=FALSE, results=hide>>=
+set.seed(23)
+tcq2a.finalsamp <- tcq2nota.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2b.finalsamp <- tcq2notb.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2c.finalsamp <- tcq2notc.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2d.finalsamp <- tcq2notd.complete[sample(1:nrow(tcq2nota.complete), 75),]
+tcq2final <- as.data.frame(rbind(tcq2a.finalsamp,tcq2b.finalsamp,tcq2c.finalsamp,tcq2d.finalsamp))
+@ 
+
+<<pillfinalfits, echo=FALSE, results=hide>>=
+pilltotlm.nota <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
+pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
+pillcanddtest <- jtest(pilltotnotc, pilltot)
+pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
+pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
+@ 
+
+<<ABcompprint, echo=FALSE, results=tex>>=
+print(xtable(pillaandbtest), label="tab:pillAandBtest")
+@ 
+
+<<ABcompprint, echo=FALSE, results=tex>>=
+print(xtable(pillcanddtest, label="tab:pillCandDtest"))
+@ 
+
+As shown in Tables \ref{tab:pillAandBtest} and \ref{tab:pillCandDtest}, the model developed on Split A appears to preovide the best fit on this resampled data. The model tested on split A was also significantly better than C and D, therefore we can regard this model as the best for the Pill credibility scores. The model was significant: F(4,283)=68.81, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4859. 
+
+Next, the models for cream credibility scores were assessed. 
+
+<<creamfinal, echo=FALSE, results=hide>>=
+creamtotlm.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2final)
+creamtotlm.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2final)
+creamtotlm.notc <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2final)
+creamtotlm.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2final)
+creamaandbtest <- jtest(creamtotlm.nota, creamtotlm.notb)
+creamcanddtest <- jtest(creamtotlm.notc, creamtotlm.notd)
+creamdanbctest <- jtest(creamtotlm.notd, creamtotlm.notc)
+creamaanddtest <- jtest(creamtotlm.nota, creamtotlm.notd)
+@ 
+
+The results for this split were a little more ambiguous, as Models A and B were equivalent in terms of model testing. Model D was better than Model C, but Model A was better than Model D. Therefore we can regard Model D as the best fitting model for the Cream credibility scores. The model was significant: F(5,282)=43.51, $p\le 0.0001$, with an adjusted $R^2$ of 0.4255, which is acceptable. 
+
+Next, the same procedure was repeated for the Injection credibility scores. 
+
+<<injfinal, echo=FALSE, results=hide>>=
+injtotnota.final <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2final)
+injtotnotb.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2final)
+injtotnotc.final <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2final)
+injtotnotd.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2final)
+inj.aandb.test <- jtest(injtotnota.final, injtotnotb.final)
+inj.candd.test <- jtest(injtotnotc.final, injtotnotd.final)
+inj.bandd.test <- jtest(injtotnotb.final, injtotnotd.final)
+@ 
+
+<<modeldshow, echo=FALSE, results=tex>>=
+print(summary(xtable(injtotnotd.final, label="tab:injnotdfinal")))
+@ 
+
+Following repeated tests of the fit of the models, Model D appears to be the best fitting on this data. The model was significant: F(5,282)=48.56, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.3955. The coefficients for the model are shown in Table \ref{tab:injnotdfinal}. 
+
+Next, this procedure was repeated for the Acupuncture models. 
+
+<<acufinaltest, echo=FALSE, results=hide>>=
+acutotnota.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+acutotnotb.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2final)
+acutotnotc.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+acutotnotd.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+acu.aandb.test <- jtest(acutotnota.final, acutotnotb.final)
+acu.candd.test <- jtest(acutotnotc.final, acutotnotd.final)
+acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
+@ 
+Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
+
+<<acutotfinalprint, echo=FALSE, results=hide>>=
+print(summary(xtable(acutotnotc.final, label="tab:acutotfinal")))
+@ 
+
+The coefficients and p values for the individual terms in the model can be seen in Table \ref{tab:acutotfinal}. The model was significant: F(3,284)=79.31, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4501. 
+
+Next, this procedure was applied to the homeopathy models developed on each of the splits. 
+
+<<hommodfinal, echo=FALSE, results=tex>>=
+homtotnota.final <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2final)
+homtotnotb.final <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2final)
+homtotnotc.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+homtotnotd.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+hom.aandb.test <- jtest(homtotnota.final, homtotnotb.final)
+hom.candd.test <- jtest(homtotnotc.final, homtotnotb.final)
+hom.bandc.test <- jtest(homtotnotb.final, homtotnotc.final)
+@ 
+
+Following assessment of all four models, Model C was determined to be marginally the best.
+
+<<homfinalshow, echo=FALSE, results=tex>>=
+print(summary(xtable(homtotnotc.final, label="tab:homtotfinal")))
+@ 
+
+Table \ref{tab:homtotfinal} shows the estimated coefficients and p values for each of the predictors on the final dataset. The model was significant: F(3,284)=177.7, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.6487. 
+
+Next, the same procedure was applied to the Reiki credibility models. 
+
+<<reikimodfinal, echo=FALSE, results=hide>>=
+reitotnota.final <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2final)
+reitotnotb.final <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2final)
+reitotnotc.final <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2final)
+reitotnotd.final <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2final)
+rei.aandb.test <- jtest(reitotnota.final, reitotnotb.final)
+rei.candd.test <- jtest(reitotnotc.final, reitotnotd.final)
+rei.bandd.test <- jtest(reitotnotb.final, reitotnotd.final)
+@ 
+
+Following fitting and testing of the four models, Model D was determined to be the best fit to this new data. 
+
+<<reifinalshow, echo=FALSE, results=tex>>=
+print(summary(xtable(reitotnotd.final, label="tab:reitotfinal")))
+@ 
+
+Table \ref{tab:reitotfinal} shows the estimated coefficients for the Reiki credibility scores regression on the resampled data. The model was significant: F(3,284)=167.7, $p\le 0.0001$, with an adjusted $R^2$ of 0.6354, which is excellent. 
 
 \subsection{Discussion}
 
@@ -1566,3 +4437,8 @@ This paper has demonstrated a number of matters with regards to this new instrum
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. This is the authors current focus, and we hope to have such evidence collected by the end of 2010. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
 
+  
+
+%%% Local Variables:
+%%% TeX-master: "ThesisContents030511"
+%%% End:
