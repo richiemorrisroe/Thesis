@@ -1170,37 +1170,39 @@ require(ltm)
 @
 
 <<randcheckassumptions, echo=FALSE, results=hide>>=
-rand.scales <- aisp(na.omit(randitems2))
+rand.scales <- aisp(na.omit(randitems))
 @
 
 <<randscales, echo=FALSE, results=tex>>=
 print(xtable(rand.scales),,label="tab:tcq1randscales")
 @
-As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, two items do not load on any scale.  The first of these is RANDQ2, which is not surprising given that it is not supposed to score on any scale, and the second is RANDQ36 which is part of the General Health scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
+As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are five scales in the RAND MOS.  
+
 
 The scales can be termed as follows:
 
 Scale 1: RANDQ3-RANDQ12: This maps exactly to the physical functioning scale.
 
-Scale 2: RAND1, RANDQ16-RANDQ20,23-32. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Mental/Emotional Health.
+Scale 2: RANDQ16-RANDQ20,24,25,28,29,31,32. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Mental/Emotional Health.
 
-Scale 3: RAND13-RAND15,RAND21-RAND22. This maps to the role limitations and pain scale, and can probably best be termed as physical limitations.
+Scale 3: RAND1, RAND20-23,26,27,30,34,36. This scale incorporates the pain scale, items from social functioning, emotional well being and general health. It can probably best be termed as Energy.
 
-Scale 4:  RANDQ33, RANDQ34, RANDQ35. This maps almost exactly to the General Health scale, and so retains that name.
+Scale 4: RAND13-RAND16. This maps to the role limitations scale, and can probably best be termed as physical limitations.
+
+Scale 5:  RANDQ33, RANDQ35. This maps to the negatively phrased items from the General Health scale, and can best be termed Sickness. However, this scale will not be analysed as there are not enough items to allow for the analytic procedure to work.
 
 <<randirtscales, echo=FALSE, results=hide>>=
-irtphysfun <- randitems2[,paste(rand, c(3:12), sep="")]
-irtemhealth <- randitems2[,paste(rand, c(16:20, 23:32), sep="")]
-irtphyslim <- randitems2[,paste(rand, c(13,15,21:22), sep="")]
-irtgenhealth <- randitems2[,paste(rand, c(1, 33, 34), sep="")]
+irtphysfun <- randitems[,paste(rand, c(3:12), sep="")]
+irtemhealth <- randitems[,paste(rand, c(16:20,24,25,28,29,31,32), sep="")]
+irtenergy <-  randitems[,paste(rand, c(1,20:23,26:27,30,34,36), sep="")]
+irtphyslim <- randitems[,paste(rand, c(13:16), sep="")]
+irtsickness <- randitems[,paste(rand, c(33,35), sep="")]
 @
 
 <<randphysfun, echo=FALSE, results=hide>>=
 irtphys.item.ord <- check.iio(na.omit(irtphysfun))
 irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
 @
-
-The check for invariant item ordering shows that all items  meet the Invariant Item Ordering  assumption. The check on the monotonicity assumption shows that all of the items meet this assumption. 
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
@@ -1218,10 +1220,10 @@ irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
 print(xtable(irtemhealth.item.ord$violations,label="tab:tcq1randemhealthitemord"))
 @
 
-Quite a number of items failed the item ordering assumption (RAND17, RAND18, RAND19, RAND24, RAND26) and so were removed from the scale before further analysis. 
+Quite a number of items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale. 
 
 <<newIrtEmHealth, echo=FALSE, results=tex>>=
-irtemhealth2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
+irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
 emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
 emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
 print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
@@ -1231,7 +1233,7 @@ As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emot
 
 
 
-<<randpain, echo=FALSE, results=hide>>=
+<<randphyslim, echo=FALSE, results=hide>>=
 irtphyslim.item.ord <- check.iio(na.omit(irtphyslim))
 irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
 @
@@ -1241,71 +1243,51 @@ The IIO and monotonicity assumptions were checked for the physical limitations s
 
 
 <<randgenhealth, echo=FALSE, results=hide>>=
-irtgenhealth.item.ord <- check.iio(na.omit(irtgenhealth))
-irtgenhealth.monotonicity <- check.monotonicity(na.omit(irtgenhealth))
+irtenergy.item.ord <- check.iio(na.omit(irtenergy))
+irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
+irtenergy2 <- randitems2[,paste(rand, c(1,20,22,26,30,34), sep="")]
 @
 
-There was one violation of the IIO assumption (RANDQ1), and no violations of the monotonicity assumption for the General Health scale. 
+There were two violations of the item ordering assumption, RAND21 and RAND23, and these items were removed before further analyses.
 
 <<randGenhealthItemord, echo=FALSE, results=tex>>=
 print(xtable(irtgenhealth.item.ord$violations,label="tab:tcq1genhealthitemord"))
 @
 
 
-As can be seen from the Table \ref{tab:randGenhealthItemord}, Q36 violated some of the assumptions and was removed from the model.  Following this, the reduced scale met all of the assumptions required for item response theory modelling.
-
-<<genhealth2, echo=FALSE, results=hide>>=
-irtGenhealth2 <- randitems.scored[,paste(rand, c(1, 33, 36), sep="")]
-
-@
 
 
 
 <<physfunrasch, echo=FALSE, results=hide>>=
-physfun.gpcm.rasch <- gpcm(na.omit(irtphysfun), constraint="rasch")
-physfun.gpcm.1pl <- gpcm(na.omit(irtphysfun), constraint="1PL")
-physfun.gpcm.gpcm <- gpcm(na.omit(irtphysfun), constraint="gpcm")
+physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
+physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
+physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
 print(xtable(coef(physfun.gpcm.rasch),label="tab:tcq1physfunrasch"))
 @
 
-As can be seen from Table \ref{tab:physfunraschprint}, the majority of items did not require large abilities to endorse.  This scale relates to physical functioning, and higher scores represent more difficulties in everyday functioning.
+As can be seen from Table \ref{tab:physfunraschprint}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
 
+<<physfunraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.gpcm.1pl),label="tab:tcq1physfun1pl"))
+@ 
 
+As shown in Table \ref{tab:tcq1physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
 
-% In Figure \ref{fig:PCMphysfunPImap}, it can be seen that RANDQ11 is problematic, as the 2nd response (2 on the scale) is easier than the first (labelled 1) which is a violation of monotonicity, one of the assumptions of the model.
+<<physfungpcmprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.gpcm.gpcm),label="tab:tcq1physfungpcm"))
+@ 
 
-
-% Looking at the plot shown in Figure \ref{fig:physfunpcmfitmap}, it can be seen that the Rasch model does not provide a good fit for this scale, as infit statistics should be between -2 and 2, while almost half the thresholds lie outside this boundary.
-
-% Given this plot and fit statistics, the model was refit using a rating scale model, which relaxes the ordinality assumptions of the partial credit model.  The results are shown below.
-
-% <<physfunRSM, echo=FALSE, results=tex>>=
-% physfun.rsm <- RSM(na.omit(irtphysfun.scaled))
-% rsm.xtab <- IrtXtab(physfun.rsm,label="tab:tcq1physfunrsm")
-% print(rsm.xtab)
-% @
-
-% <<physfunRSMPImap, echo=FALSE, fig=TRUE>>=
-% plotPImap(physfun.rsm)
-% @
-
-
-% <<physfunRSMPWmap, echo=FALSE, fig=TRUE>>=
-% plotPWmap(physfun.rsm)
-% @
-
-% It can be seen from Figure \ref{fig:RSMPWmap} that the fit is better, but still not adequate under the rating scale model.  The plot in Figure \ref{fig:RSMPImap} does show that the violations of monotonicity do not occur here, and the model has a better likelihood than the partial credit model. %
-
-## This would seem to suggest that the model should be expanded to allow for differential predictions at differing ability levels (the so called two parameter model).  That process will be described below, under the two parameter model section.
-
-## <<PCMphysfunPWmap, echo=FALSE, fig=TRUE>>=
-## print(plotPWmap(physfun.PCM))
-% @                               %
+Table \ref{tab:tcq1physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
 
 The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
+
+<<physfungrm1, echo=FALSE, results=hide>>=
+physfun.grm.1pl <- grm(na.exclude(irtphysfun), constrained=TRUE)
+physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+@ 
 
 <<emhealthPCM, echo=FALSE, results=hide>>=
 emhealth.pcm.rasch <- gpcm(irtEmhealth2, constraint="rasch")
@@ -2080,6 +2062,126 @@ lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp")
 print(lotrcomp.xtab2b)
 @
 
+\subsubsection{Item Response Theory Analyses}
+\label{sec:item-response-theory-1}
+
+<<randcheckassumptions, echo=FALSE, results=hide>>=
+rand.scales <- aisp(na.omit(randitems2))
+@
+
+<<randscales, echo=FALSE, results=tex>>=
+print(xtable(rand.scales),,label="tab:tcq1randscales")
+@
+As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, two items do not load on any scale.  The first of these is RANDQ2, which is not surprising given that it is not supposed to score on any scale, and the second is RANDQ36 which is part of the General Health scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
+
+The scales can be termed as follows:
+
+Scale 1: RANDQ3-RANDQ12: This maps exactly to the physical functioning scale.
+
+Scale 2: RAND1, RANDQ16-RANDQ20,23-32. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Mental/Emotional Health.
+
+Scale 3: RAND13-RAND15,RAND21-RAND22. This maps to the role limitations and pain scale, and can probably best be termed as physical limitations.
+
+Scale 4:  RANDQ33, RANDQ34, RANDQ35. This maps almost exactly to the General Health scale, and so retains that name.
+
+<<randirtscales, echo=FALSE, results=hide>>=
+irtphysfun <- randitems2[,paste(rand, c(3:12), sep="")]
+irtemhealth <- randitems2[,paste(rand, c(1,16:20, 23:32), sep="")]
+irtphyslim <- randitems2[,paste(rand, c(13,15,21:22), sep="")]
+irtgenhealth <- randitems2[,paste(rand, c( 33:35), sep="")]
+@
+
+<<randphysfun, echo=FALSE, results=hide>>=
+irtphys.item.ord <- check.iio(na.omit(irtphysfun))
+irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
+@
+
+The check for invariant item ordering shows that all items  meet the Invariant Item Ordering  assumption. The check on the monotonicity assumption shows that all of the items meet this assumption. 
+
+
+<<randphysfuncitemord, echo=FALSE, results=tex>>=
+print(xtable(irtphys.item.ord$violations,label="tab:tcq1physfuncitemord"))
+@
+
+As can be seen from Table \ref{tab:randphysfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
+
+<<randemhealth, echo=FALSE, results=hide>>=
+irtemhealth.item.ord <- check.iio(na.omit(irtemhealth))
+irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
+@
+
+<<randEmhealthItemord, echo=FALSE, results=tex>>=
+print(xtable(irtemhealth.item.ord$violations,label="tab:tcq1randemhealthitemord"))
+@
+
+Quite a number of items failed the item ordering assumption (RAND1, RAND17, RAND18, RAND19, RAND24, RAND26) and so were removed from the scale before further analysis. 
+
+<<newIrtEmHealth, echo=FALSE, results=tex>>=
+irtemhealth2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
+emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
+emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
+print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
+@
+
+As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+
+
+
+<<randpain, echo=FALSE, results=hide>>=
+irtphyslim.item.ord <- check.iio(na.omit(irtphyslim))
+irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
+@
+
+The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
+
+
+
+<<randgenhealth, echo=FALSE, results=hide>>=
+irtgenhealth.item.ord <- check.iio(na.omit(irtgenhealth))
+irtgenhealth.monotonicity <- check.monotonicity(na.omit(irtgenhealth))
+irtgenhealth <- randitems2[,paste(rand, c(33,34), sep="")]
+@
+
+There was one violation of the IIO assumption (RANDQ35), and no violations of the monotonicity assumption for the General Health scale. 
+
+<<randGenhealthItemord, echo=FALSE, results=tex>>=
+print(xtable(irtgenhealth.item.ord$violations,label="tab:tcq1genhealthitemord"))
+@
+
+
+
+
+
+<<physfunrasch, echo=FALSE, results=hide>>=
+physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
+physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
+physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
+@
+
+<<physfunraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.gpcm.rasch),label="tab:tcq1physfunrasch"))
+@
+
+As can be seen from Table \ref{tab:physfunraschprint}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
+
+<<physfunraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.gpcm.1pl),label="tab:tcq1physfun1pl"))
+@ 
+
+As shown in Table \ref{tab:tcq1physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
+
+<<physfungpcmprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.gpcm.gpcm),label="tab:tcq1physfungpcm"))
+@ 
+
+Table \ref{tab:tcq1physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
+
+The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
+
+<<physfungrm1, echo=FALSE, results=hide>>=
+physfun.grm.1pl <- grm(na.exclude(irtphysfun), constrained=TRUE)
+physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+@ 
 
 \subsection{Discussion}
 
