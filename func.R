@@ -263,3 +263,39 @@ Svdcv <- function(x, ...) {
   names(res) <- c("Rank", "Prediction Error", "Prediction Error SE")
   resxtab <- xtable(res, ...)
 }
+getIrtPreds <- function (x) {
+  res <- x$score.dat[,c("Obs", "Exp", "z1","se.z1")]
+  res
+}
+compareIRTscores <- function (x, y) {
+  scores.x <- x$z1
+  scores.y <- y$z1
+  cor.xy <- cor(scores.x, scores.y, method="pearson", use="pairwise.complete.obs")
+  diff.xy <- (scores.x-scores.y)^2
+  res <- list(cor=cor.xy, differences=diff.xy)
+  res
+}
+splitSample <- function(x, split) {
+  xlen <- nrow(x)
+  indices <- sample(1:xlen, xlen, replace=FALSE)
+  splitlen <- xlen/split
+  splits <- cut(indices, split, labels=FALSE)
+  samplist <- list()
+  for(i in 1:max(split)) {
+    samp<-x[splits==i,]
+    assign(paste("samp", i, sep=""), value=samp, 1)
+           samplist[[i]] <- get(paste("samp",i, sep=""))
+    ## names(samplist[i]) <- paste("split", i, sep="")
+  }
+samplist
+}
+IRTcv <- function (data, model=c("grm", "gpcm"), constraint=c(TRUE, FALSE, "rasch", "1PL", "gpcm"), splits=10, ....) {
+  if(is.dataframe(data) ||is.matrix(data))
+    stop("this function needs matrix or dataframe input")
+  splittedsamples <- splitSample(data, splits)
+  for (i in 1:length(splittedsamples)) {
+    testset <- splittedsamples[i]
+    trainset <- splittedsamples[!i]
+  }
+}
+  
