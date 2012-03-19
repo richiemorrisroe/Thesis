@@ -61,6 +61,8 @@ Many researchers recommend utilising a number of different methods of data reduc
 Below in the table \ref{tab:tcq1.age} can be seen summary statistics for the age of the respondents. 
 <<packagesanddata, echo=FALSE, results=hide>>=
 require(ggplot2)
+require(reshape2)
+require(lmtest)
 require(psych)
 require(xtable)
 require(mokken)
@@ -4311,7 +4313,7 @@ pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
 pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
 pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
 pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
-pillcanddtest <- jtest(pilltotnotc, pilltot)
+pillcanddtest <- jtest(pilltotnotc, pilltotnotd)
 pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
 pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
 @ 
