@@ -838,104 +838,7 @@ As can be seen from \ref{tab:randsemcompare}, the 5 factor solution appears to f
 
 \subsection{Mindfulness Attention Awareness Scale}
 
-For the MAAS, the parallel analysis criterion suggested four factors, while the MAP criterion suggested one.  Therefore, one through four factor solutions were extracted and the results interpreted, as shown below.
-
-% \subsubsection{MAAS Four Factor Solution}
-% \label{sec:maas-four-factor}
-
-
-
-% <<maas4fact, echo=FALSE, results=tex>>=
-% maas.fact.4<-factor.pa(na.omit(maasitems), 4, rotate='oblimin')
-% print(FactorXtab(maas.fact.4,label="tab:tcq1tcq1maas4fact"))
-% @
-
-% PA1: "MAASQ8"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14" "MAASQ15".  All of these questions appear to relate to distractable behaviours, and thus this factor can be labelled Behavioural Distractions.
-
-% PA3: "MAASQ4" "MAASQ6" "MAASQ7" "MAASQ8" "MAASQ9".  These questions all relate to a lack of awareness of the present, and so can be termed Lack of Present Awareness.
-
-% PA2: "MAASQ1"  "MAASQ2"  "MAASQ3"  "MAASQ14".  Q14 loads much higher on the first factor, so is left out of this analysis.  All of these questions relate to the lack of awareness of one's own thoughts, and so can be termed cognitive unawareness.
-
-% PA4:"MAASQ5".  This factor is almost certainly not useful, given that only one question loads upon it.  However, this question focuses on unawareness of the body, and so can be termed bodily unawareness.
-
-
-
-% The non-normed fit index was equal to \Sexpr{round(maas.fact.4$TLI, 3)}
-% and the RMSEA was equal to \Sexpr{round(maas.fact.4$RMSEA[1],3)},with confidence intervals from \Sexpr{round(maas.fact.4$RMSEA[2],3)} to \Sexpr{round(maas.fact.4$RMSEA[3],3)}.
-
-% <<maas4corr, echo=FALSE, results=tex>>=
-% print(xtable(maas.fact.4$r.scores,label="tab:tcq1maas4corr"))
-% @
-
-% <<maas4plot, echo=FALSE, fig=TRUE>>=
-% plot(maas.fact.4)
-% @
-
-% <<maas4factorextraction, echo=FALSE, results=hide>>=
-% print(ExtractLoadings(maas.fact.4))
-% @
-
-
-% \subsubsection{MAAS Three Factor Solution}
-% \label{sec:maas-three-factor}
-
-
-
-% <<maas3fact, echo=FALSE, results=tex>>=
-% maas.fact.3<-factor.pa(na.omit(maasitems), 3, rotate='oblimin')
-% print(FactorXtab(maas.fact.3,label="tab:tcq1mass3fact"))
-% @
-
-% PA1: "MAASQ8"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14" "MAASQ15".  As in the four factor solution, this items on this factor all appear to relate to behaviours, and so this factor can be termed behavioural unawareness.
-
-% PA3: "MAASQ4" "MAASQ5" "MAASQ6" "MAASQ7" "MAASQ8" "MAASQ9".  These items all appear to relate to a lack of awareness of the present in terms of action, and can therefore be termed as present unawareness.
-
-% PA2: "MAASQ1"  "MAASQ2"  "MAASQ3"  "MAASQ14".  These items all relate to a lack of attention to tasks, and can therefore be termed distractability.
-
-% The non-normed fit index was equal to \Sexpr{round(maas.fact.3$TLI, 3)}
-% and the RMSEA was equal to \Sexpr{round(maas.fact.3$RMSEA[1],3 )},with confidence intervals from \Sexpr{round(maas.fact.3$RMSEA[2],3 )} to \Sexpr{round(maas.fact.3$RMSEA[3],3)}.
-
-% <<maas3corr, echo=FALSE, results=tex>>=
-% print(xtable(maas.fact.3$r.scores,label="tab:tcq1maas3corr"))
-% @
-
-% <<maas3plot, echo=FALSE, fig=TRUE>>=
-% plot(maas.fact.3)
-% @
-
-% <<maas3factorextraction, echo=FALSE, results=hide>>=
-% print(ExtractLoadings(maas.fact.3))
-% @
-
-% \subsubsection{MAAS Two Factor Solution}
-% \label{sec:maas-two-factor}
-
-
-
-% <<maas2fact, echo=FALSE, results=tex>>=
-% maas.fact.2<-factor.pa(na.omit(maasitems), 2, rotate='oblimin')
-% print(FactorXtab(maas.fact.2,label="tab:tcq1maas2fact"))
-% @
-
-% PA1:"MAASQ4"  "MAASQ5"  "MAASQ6"  "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10"
-%   "MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14".  These items all relate to behaviours which the participant is unaware of, and can thus be termed as behavioural unawareness.
-
-% PA2:"MAASQ1"  "MAASQ2"  "MAASQ3"  "MAASQ14".  These items all relate to lack of attention  to tasks, and the factor is therefore named distractability.
-
-% The non-normed fit index was equal to \Sexpr{round(maas.fact.2$TLI, 3)}
-% and the RMSEA was equal to \Sexpr{round(maas.fact.2$RMSEA[1],3 )},with confidence intervals from \Sexpr{round(maas.fact.2$RMSEA[2],3)} to \Sexpr{round(maas.fact.2$RMSEA[3],3)}.
-
-% <<maas2corr, echo=FALSE, results=verbatim>>=
-% print(xtable(maas.fact.2$r.scores,label="tab:tcq1maas2corr"))
-% @
-
-% <<maas2plot, echo=FALSE, fig=TRUE>>=
-% plot(maas.fact.2)
-% @
-
-% <<maas2factorextraction, echo=FALSE, results=hide>>=
-% print(ExtractLoadings(maas.fact.2))
-% @
+For the MAAS, parallel analysis, MAP, VSS, Kaiser's rule and the Wold method of cross-validation suggested a one factor solution, while the Gabriel method of cross-validation suggested a seven factor solution.  Therefore, one and seven factor solutions were extracted and the results interpreted, as shown below.
 
 \subsubsection{MAAS One Factor Solution}
 \label{sec:maas-one-factor}
@@ -991,7 +894,7 @@ plot(maas.fact.7)
 \subsubsection{CFA for MAAS}
 \label{sec:cfa-maas}
 
-<<maas4sem, echo=FALSE, results=hide>>=
+<<maas7sem, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -1245,17 +1148,14 @@ The IIO and monotonicity assumptions were checked for the physical limitations s
 <<randgenhealth, echo=FALSE, results=hide>>=
 irtenergy.item.ord <- check.iio(na.omit(irtenergy))
 irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
-irtenergy2 <- randitems2[,paste(rand, c(1,20,22,26,30,34), sep="")]
+irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
 @
 
 There were two violations of the item ordering assumption, RAND21 and RAND23, and these items were removed before further analyses.
 
 <<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtgenhealth.item.ord$violations,label="tab:tcq1genhealthitemord"))
+print(xtable(irtenergy.item.ord$violations,label="tab:tcq1energyitemord"))
 @
-
-
-
 
 
 <<physfunrasch, echo=FALSE, results=hide>>=
@@ -1290,9 +1190,9 @@ physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
 @ 
 
 <<emhealthPCM, echo=FALSE, results=hide>>=
-emhealth.pcm.rasch <- gpcm(irtEmhealth2, constraint="rasch")
-emhealth.pcm.1PL <- gpcm(na.omit(irtEmhealth2), constraint="1PL")
-emhealth.pcm.gpcm <- gpcm(na.omit(irtEmhealth2), constraint="gpcm")
+emhealth.pcm.rasch <- gpcm(irtemhealth2, constraint="rasch")
+emhealth.pcm.1PL <- gpcm(na.omit(irtemhealth2), constraint="1PL")
+emhealth.pcm.gpcm <- gpcm(na.omit(irtemhealth2), constraint="gpcm")
 @
 
 <<emhealthRasch, echo=FALSE, results=tex>>=
@@ -1333,7 +1233,7 @@ par(mfrow=c(1,1))
 The next scale to be examined is the  General Health scale.  The first analysis undertaken was to fit a partial credit model to the scale.
 
 <<genhealthPCM, echo=FALSE, results=tex>>=
-genhealth.pcm.rasch <- gpcm(na.omit(irtgenhealth), constraint="rasch")
+irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
 @
 
 <<genhealthpcmraschplot, echo=FALSE, fig=TRUE>>=
@@ -1343,17 +1243,17 @@ par(mfrow=c(2,2))
 
 
 <<genhealthpcm1pl, echo=FALSE, results=hide>>=
-genhealth.pcm.1pl <- gpcm(na.omit(irtgenhealth), constraint="1PL")
+irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
 @
 
 <<genhealthpcm2pl, echo=FALSE, results=hide>>=
-genhealth.pcm.2pl <- gpcm(na.omit(irtgenhealth), constraint="gpcm")
+irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
 @
 
 <<genhealthpcmcompare, echo=FALSE, results=tex>>=
-anova.rasch.1pl <- anova.gpcm(genhealth.pcm.rasch, genhealth.pcm.1pl)
-anova.1pl.2pl <- anova.gpcm(genhealth.pcm.1pl, genhealth.pcm.2pl)
-anova.rasch.2pl <- anova.gpcm(genhealth.pcm.rasch, genhealth.pcm.2pl)
+anova.rasch.1pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.1pl)
+anova.1pl.2pl <- anova.gpcm(irtenergy.pcm.1pl, irtenergy.pcm.2pl)
+anova.rasch.2pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.2pl)
 @
 
 An anova conducted on the three models indicated that the 2 parameter model fit the data best, subject to the caveats above.
@@ -1388,14 +1288,58 @@ maas.mono <- check.monotonicity(na.omit(maas.irt))
 print(xtable(summary(maas.mono),label="tab:tcq1maasmono"))
 @
 
-As can be seen from TAble \ref{tab:maasmonotonicity}, there were no violations of the monotonicity assumption for the reduced scale.
+As can be seen from TAble \ref{tab:maasmonotonicity}, there were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
 
-<<maasitemspcm, echo=FALSE, results=tex>>=
+<<maasitemspcm, echo=FALSE, results=hide>>=
 maas.pcm.rasch <- gpcm(na.omit(maas.irt), constraint="rasch")
 maas.pcm.1pl <- gpcm(na.omit(maas.irt), constraint="1PL")
 maas.pcm.2pl <- gpcm(na.omit(maas.irt), constraint="gpcm")
 @
+
+<<maasirtraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas.pcm.rasch), label="tab:tcq1maaspcmrasch", caption="MAAS Partial Credit Model Coefficients, Rasch"))
+@ 
+
+As can be seen from Table \ref{tab:tcq1maaspcmrasch}, the Rasch partial credit model is not a good fit to the data. There are numerous violations of the increasing ability scores assumption. Next, a one parameter model (with discrimination estimated from the data) was fitted to the maas items. 
+
+<<maasirtraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas.pcm.1pl), label="tab:tcq1maaspcm1pl", caption="MAAS Partial Credit Model Coefficients, One Parameter Model"))
+@ 
+
+The estimated one parameter model is shown in Table \ref{tab:tcq1maaspcm1pl}, and it can clearly be seen that it suffers from the same problems as the rasch model fitted above. Finally, a two parameter partial credit model was fitted to these items. 
+
+<<maasirtraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas.pcm.2pl), label="tab:tcq1maaspcmgpcm", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
+@ 
+
+The Table (\ref{tab:tcq1maaspcmgpcm}) clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
+
+<<maasgrmfit, echo=FALSE, results=hide>>=
+maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
+maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
+@
+\begin{figure}
+<<maasgrm1plplot, echo=FALSE, fig=TRUE>>=
+maasp <- ggplotGRM(maas.grm.1pl)
+print(maasp)
+@   
+  \caption{MAAS Graded Response Model (One Parameter) Ability Thresholds}
+  \label{fig:maasgrm1plplot}
+\end{figure}
+
+As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
+
+
+\begin{figure}
+<<maasgrm2plot, echo=FALSE, fig=TRUE>>=
+maas2plp <- ggplotGRM(maas.grm.1pl)
+print(maas2plp)
+@   
+  \caption{MAAS Graded Response Model (Two parameter) Item Ability Thresholds}
+  \label{fig:maasgrm2plplot}
+\end{figure}
+
 
 <<maasanovacomp, echo=FALSE, results=hide>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1407,9 +1351,9 @@ anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 print(xtable(as.data.frame(maas.pcm.2pl[[1]]),label="tab:tcq1maas2pl"))
 @
 
-the estimated parameters of the model can be seen in Table \ref{tab:maas2plprint}.
+The estimated parameters of the model can be seen in Table \ref{tab:maas2plprint}.
 
-The three models were subjected to anova comparison and the 1 parameter model was significantly (p<0.001) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model (p<0.001).
+The three models were subjected to anova comparison and the 1 parameter model was significantly (p<0.001) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model (p<0.001). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
 The Life Orientation Test was the next instrument to be examined using the IRT approach.
 
@@ -1448,6 +1392,24 @@ lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
 lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
 @
 
+<<lotrpcmraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr.pcm.rasch), label="tab:tcq1lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+As shown in Table \ref{tab:tcq1lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
+
+<<lotrpcm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr.pcm.1pl), label="tab:tcq1lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+As can be seen in Table \ref{tab:tcq1lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
+
+<<lotrpcm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr.pcm.2pl), label="tab:tcq1lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+The coefficients in Table \ref{tab:tcq1lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
+
 <<lotranovacomp, echo=FALSE, results=hide>>=
 anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
 anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
@@ -1458,8 +1420,43 @@ The results of the model comparison showed that the rasch model was not signific
 
 However, the difference in likelihoods was extremely small between the Rasch and two parameter models (20.15), and the BIC suggested that the Rasch model was a better fit.  One issue for the BIC is that it presumes that a true model exists amongst the candidate models, which is almost certainly not the case in this (or indeed any other psychological research) case.
 
+The next stage in the analysis of the LOTR was the fitting of one and two parameter Graded Response Models. 
+
+<<lotrgrmfit, echo=FALSE, results=hide>>=
+lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
+lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
+@ 
+\begin{figure}
+<<lotrgrm1plplot, echo=FALSE, fig=TRUE>>=
+lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
+print(lotr1plgrm)
+@   
+  \caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
+  \label{fig:lotr1plgrm}
+\end{figure}
+
+Figure \ref{fig:lotr1plgrm} shows the estimated threshold points for each of the categories for each item. It can be seen that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
+
+\begin{figure}
+<<lotr2plgrmplot, echo=FALSE, fig=TRUE>>=
+lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
+print(lotr2plgrm)
+@   
+  \caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
+  \label{fig:lotr2plgrm}
+\end{figure}
+
+
+Again, Figure \ref{fig:lotr2plgrm} shows no violations of the modelling assumptions for the two parameter GRM. The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
+
+<<anovagrmlotr, echo=FALSE, results=hide>>=
+anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
+@ 
+
+The two parameter model was significantly better than the one parameter model (p=0.001), but the BIC suggested that the one parameter model provided a better overall fit to the data. 
+
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(lotr.pcm.2pl[[1]]),label="tab:tcq1lotr2plestimates"))
+print(xtable(coef(lotr.pcm.2pl),label="tab:tcq1lotr2plestimates"))
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
@@ -1467,9 +1464,12 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 \subsection{Predictions}
 \label{sec:predictions}
 
-As discussed in the methodology, one of the problems with psychometric methods is the problem of overfitting.  A solution that was proposed to this problem was cross-validation.  Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for psychometric analyses, around 300 observations are typically needed for accurate estimation of parameters.  Therefore, models were developed on the first sample, and then will be fitted to a subset of the second sample.  This procedure will then be repeated with the data not used for testing in the second sample and the first sample.  This will allow the issues of overfitting to be avoided, and will allow for the most promising models to be applied to the experimental data, which by itself would not be sufficient to engage in any useful psychometric analyses.
+As discussed in the methodology, one of the problems with psychometric methods is the problem of overfitting.  A solution that was proposed to this problem was cross-validation.  Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for factor analyses, around 300 observations are typically needed for accurate estimation of parameters.  Therefore, models were developed on the first sample, and then will be fitted to a subset of the second sample.  This procedure will then be repeated with the data not used for testing in the second sample and the first sample.  This will allow the issues of overfitting to be avoided, and will allow for the most promising models to be applied to the experimental data, which by itself would not be sufficient to engage in any useful psychometric analyses.
 
-The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  The same procedure will be followed for the IRT models, using the item scores and participant abilities as predictors for the held-out data. 
+
+The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
+
+A different procedure will be followed for the IRT models, using  ten fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 90\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model's predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
 
 <<hom2scales, echo=FALSE, results=hide>>=
 randitems.paste <- paste(rand, c(1:36), sep="")
@@ -1495,13 +1495,13 @@ rand.fact4.hom2 <- fa(na.omit(randitems2), 4, rotate="oblimin", method="pa")
 @
 
 
-<<rand6semhom2, echo=FALSE, results=hide>>=
+<<rand2semhom2, echo=FALSE, results=hide>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "General and Emotional Health")
 physfun <- paste(rand, c(3:12), sep="")
 genemhealth <- paste(rand,c(1,14,17:36), sep="")
-Rand2model <- mxModel(name="RAND2Samp1",
+Rand2model2 <- mxModel(name="RAND2Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
@@ -1509,68 +1509,115 @@ Rand2model <- mxModel(name="RAND2Samp1",
                       mxPath(from="General and Emotional Health", to=genemhealth),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=364)
+                       mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=281)
                       )
 rand2fit2 <- mxRun(Rand2model2)
 rand2summ2 <- summary(rand2fit2)
 @
 
-<<rand5semhom2, echo=FALSE, results=hide>>=
-randitems.cols <- paste(rand, 1:36, sep="")
-manifests <- randitems.cols
-latents <- c("Physical Functioning", "Emotional and Social Health", "General Health", "Role Limitations", "pain")
-physfun <- paste(rand, c(3:12), sep="")
-genhealth <- paste(rand, c(1,33:36), sep="")
-rolelim <- paste(rand, c(13:19), sep="")
-pain <- paste(rand, c(21:22), sep="")
-emsochealth <- paste(rand, c(17:20, 23:32), sep="")
-Rand5model.hom2 <- mxModel(name="RAND5",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Physical Functioning", to=physfun),
-                      mxPath(from="Emotional and Social Health", to=emsochealth),
-                      mxPath(from="General Health", to=genhealth),
-                      mxPath(from="Role Limitations", to=rolelim),
-                      mxPath(from="pain", to=pain),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-                      mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=281)
-                      )
-rand5fit.hom2 <- mxRun(Rand5model.hom2)
-rand5summ.hom2 <- summary(rand5fit.hom2)
-@
-
 <<rand4semhom2, echo=FALSE, results=hide>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
-latents <- c("Physical Functioning", "Emotional and Social Limitations", "General Health", "Physical Limitations")
+latents <- c("Physical Functioning", "Social and Emotional Functioning", "General Health", "Physical Limitations")
 physfun <- paste(rand, c(3:12), sep="")
 genhealth <- paste(rand, c(1,33:36), sep="")
-physlim <- paste(rand, c(13:16, 21:22), sep="")
-emsochealth <- paste(rand, c(17:20, 23:32), sep="")
-Rand4model.hom2 <- mxModel(name="RAND4",
+physlim <- paste(rand, c(13:16,21:22), sep="")
+emsocfunc <- paste(rand, c(17:20, 23:32), sep="")
+Rand4model2 <- mxModel(name="RAND4Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Physical Functioning", to=physfun),
-                      mxPath(from="Emotional and Social Limitations", to=emsochealth),
+                      mxPath(from="Social and Emotional Functioning", to=emsocfunc),
                       mxPath(from="General Health", to=genhealth),
                       mxPath(from="Physical Limitations", to=physlim),
                       mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-                      mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=281)
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
                       )
-rand4fit.hom2 <- mxRun(Rand4model.hom2)
-rand4summ.hom2 <- summary(rand4fit.hom2)
+rand4fit2 <- mxRun(Rand4model2)
+rand4summ2 <- summary(rand4fit2)
+@ 
+<<rand8semhom2, echo=FALSE, results=hide>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning", "Social and Emotional Wellbeing", "General Health", "Emotional Role Limitations", "Role Limitations", "Fatigue", "Pain", "Energy")
+physfun <- paste(rand, c(3:12), sep="")
+socemwellbeing <- paste(rand, c(20,23:28, 30, 32), sep="")
+genhealth <- paste(rand, c(1,33:36), sep="")
+emrolelim <- paste(rand, c(17:20), sep="")
+rolelim <- paste(rand, c(13:16), sep="")
+energy <- paste(rand, c(29, 31), sep="")
+pain <- paste(rand, c(21:22), sep="")
+fatigue <- paste(rand, c(2, 23, 27), sep="")
+Rand8model2 <- mxModel(name="RAND8Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                      mxPath(from="Social and Emotional Wellbeing", to=socemwellbeing),
+                      mxPath(from="General Health", to=genhealth),
+                      mxPath(from="Emotional Role Limitations", to=emrolelim),
+                      mxPath(from="Role Limitations", to=rolelim),
+                      mxPath(from="Energy", to=energy),
+                      mxPath(from="Pain", to=pain),
+                      mxPath(from="Fatigue", to=fatigue),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281))
+                      
+rand8fit2 <- mxRun(Rand8model2)
+rand8summ2 <- summary(rand8fit2)
 @
+
+<<rand13sem2, echo=FALSE, results=hide>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigourous Activity","RAND20", "RAND24" )
+physfun <- paste(rand, c(3:12), sep="")
+emrolelim <- paste(rand, c(17:20), sep="")
+rolelim <- paste(rand, c(13:16), sep="")
+posemotions <- paste(rand, c(23,26,27,30), sep="")
+physexertions <- paste(rand, c(3,4:5, 8), sep="")
+poshealth <- paste(rand, c(1,34, 36), sep="")
+fatigue <- paste(rand, c(29, 31), sep="")
+pain <- paste(rand, c(21:22), sep="")
+emproblems <- paste(rand, c(24, 25, 28, 30), sep="")
+sickness <- paste(rand, 33, sep="")
+vigactivity <- paste(rand, c(3,6), sep="")
+rand20 <- "RANDQ20"
+rand24 <- "RANDQ24"
+Rand13model2 <- mxModel(name="RAND13Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                       mxPath(from="Emotional Role Limitations", to=emrolelim),
+                       mxPath(from="Role Limitations", to=rolelim),
+                       mxPath(from="Positive Emotionality", to=posemotions),
+                      mxPath(from="Physical Exertion", to=physexertions),
+                       mxPath(from="Positive Health", to=poshealth),
+                       mxPath(from="Pain", to=pain),
+                       mxPath(from="Fatigue", to=fatigue),
+                       mxPath(from="Emotional Problems", to=emproblems),
+                       mxPath(from="Vigourous Activity", to=vigactivity),
+                      mxPath(from="Sickness", to=sickness),
+                      mxPath(from="RANDQ20", to=rand20),
+                       mxPath(from="RANDQ24", to=rand24),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
+                      )
+rand13fit2 <- mxRun(Rand13model2)
+rand13summ2 <- summary(rand13fit2)
+@ 
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
-randsemcomp.hom2 <- mxCompare(base=rand4fit.hom2, comparison=c(rand5fit.hom2, rand6fit.hom2))
-print(xtable(randsemcomp,label="tab:tcq1with2randsemcomp"))
+randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2, rand13fit2))
+print(xtable(randsemcomp,label="tab:hom1with2randsemcomp", caption="Model Comparison for MOS data using Models from Sample 1 on Sample 2" ))
 @
 
-As Table \ref{tab:randsemcomparehom2} shows, the five factor model provided the best fit to this unseen data, rather than the six factor model which was suggested by the analysis carried out on the first sample.  This provides some validation of the approach taken.
+As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
 
 Next, the full cross-validation procedure was carried out on the MAAS and LOTR instruments.  To do this, the second sample was randomly split into three sets, and the models from the first sample were fit to this data, to examine which of them provided the best fit.
 
@@ -1592,103 +1639,67 @@ lotritems2b <- lotritems2[lr2,]
 lotritems2c <- lotritems2[lr3,]
 @
 
-<<maas4sem2, echo=FALSE, results=hide>>=
+<<maas7sem2, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
-latents <- c("Behavioural Distractions", "Lack of Present Awareness", "Cognitive Unawareness", "Bodily Unawareness")
-behdist <- paste(maas, c(8, 10:15), sep="")
-lackpresaware <- paste(maas, c(4,6:9), sep="")
-cogunaware <- paste(maas, c(1:3), sep="")
-bodunaware <- paste(maas, c(5), sep="")
-Maas4model2 <- mxModel(name="MAAS42",
+latents <- c("Automatic Behaviour", "Preoccupations", "Hurry",  "Lack of Present Focus", "Food Mindlessness", "Inattention", "Lack of Awareness")
+automaticbehaviour <- paste(maas, c(9:12), sep="")
+preoccupations <- "MAASQ13"
+hurry <- paste(maas, c(7:8), sep="")
+lackpresfocus <- paste(maas, c(2:3), sep="")
+foodmindlessness <- "MAASQ15"
+inattention <- "MAASQ6"
+lackawareness <- paste(maas, c(1,4:5,9), sep="")
+Maas7model2 <- mxModel(name="MAAS7Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
-                      mxPath(from="Behavioural Distractions", to=behdist),
-                      mxPath(from="Lack of Present Awareness", to=lackpresaware),
-                      mxPath(from="Cognitive Unawareness", to=cogunaware),
-                      mxPath(from="Bodily Unawareness", to=bodunaware),
+                      mxPath(from="Automatic Behaviour", to=automaticbehaviour),
+                      mxPath(from="Preoccupations", to=preoccupations),
+                      mxPath(from="Hurry", to=hurry),
+                      mxPath(from="Lack of Present Focus", to=lackpresfocus),
+                      mxPath(from="Lack of Awareness", to=lackawareness),
+                           mxPath(from="Inattention", to=inattention),
+                           mxPath(from="Lack of Present Focus", to=lackpresfocus),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=370)
+                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313)
                       )
-maas4fit2 <- mxRun(Maas4model2)
-maas4summ2 <- summary(maas4fit2)
+maas7fit2 <- mxRun(Maas7model2)
+maas7summ2 <- summary(maas7fit2)
 @
 
 
 <<maas3sem2, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
-maasitems.cols <-paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Behavioural Unawareness", "Present Unawareness", "Distractability" )
-behdist <- paste(maas, c(8, 10:15), sep="")
-presunaware <- paste(maas, c(4:9), sep="")
-distractability <- paste(maas, c(1:3), sep="")
-Maas3model2 <- mxModel(name="MAAS3",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Behavioural Unawareness", to=behdist),
-                      mxPath(from="Present Unawareness", to=presunaware),
-                      mxPath(from="Distractability", to=distractability),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=370)
-                      )
-maas3fit2 <- mxRun(Maas3model2)
-maas3summ2 <- summary(maas3fit2)
-@
-
-<<maas2sem2, echo=FALSE, results=hide>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Behavioural Unawareness", "Distractability")
-behdist <- paste(maas, c(4:14), sep="")
-distractability <- paste(maas, c(1:3,14), sep="")
-Maas2model2 <- mxModel(name="MAAS2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Behavioural Unawareness", to=behdist),
-                      mxPath(from="Distractability", to=distractability),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=364)
-                      )
-maas2fit2 <- mxRun(Maas2model2)
-maas2summ2 <- summary(maas2fit2)
-
-@
-
-<<maas1fit, echo=FALSE, results=hide>>=
-maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
 latents <- c("Unawareness")
 unawareness <- paste(maas, c(1:15), sep="")
-Maas1model2 <- mxModel(name="MAAS1",
+Maas1model2 <- mxModel(name="MAAS1Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Unawareness", to=unawareness),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=370)
+                      mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=313)
                       )
 maas1fit2 <- mxRun(Maas1model2)
 maas1summ2 <- summary(maas1fit2)
 @
 
+
+
+
 <<maassemcompare2, echo=FALSE, results=tex>>=
-maascomp2 <- mxCompare(base=maas1fit2, comparison=c(maas2fit2, maas3fit2, maas4fit2))
-maascomp.xtab2 <- xtable(maascomp2,label="tab:tcq1with2maassem")
+maascomp2 <- mxCompare(base=maas1fit2, comparison=maas7fit2)
+maascomp.xtab2 <- xtable(maascomp2,label="tab:hom1with2maassem")
 print(maascomp.xtab2)
 @
 
-Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=370$) used to test the model.
+Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
 
 
 <<lotr1sem2, echo=FALSE, results=hide>>=
@@ -1704,36 +1715,38 @@ Lotr1model2 <- mxModel(name="LOTR1",
                       mxPath(from="Optimism", to=optimism),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=370)
+                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
                       )
 lotr1fit2 <- mxRun(Lotr1model2)
 lotr1summ2 <- summary(lotr1fit2)
 @
 
 
-<<lotr2sem, echo=FALSE, results=hide>>=
+<<lotr3sem, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
-latents <- c("Optimism", "Pessimism")
+latents <- c("Optimism", "Pessimism", "Pessimism2")
 optimism <- paste(lotr, c(1,4,10), sep="")
-pessimism <- paste(lotr, c(3,7,9), sep="")
-Lotr2model2 <- mxModel(name="LOTR2",
+pessimism <- paste(lotr, c(3,7), sep="")
+pessimism2 <- paste(lotr, c(7,9), sep="")
+Lotr3model2 <- mxModel(name="LOTR3Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Optimism", to=optimism),
                       mxPath(from="Pessimism", to=pessimism),
+                      mxPath(from="Pessimism2", to=pessimism2),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=370)
+                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=313)
                       )
-lotr2fit2 <- mxRun(Lotr2model2)
-lotr2summ2 <- summary(lotr2fit2)
+lotr3fit2 <- mxRun(Lotr3model2)
+lotr3summ2 <- summary(lotr3fit2)
 @
 
 <<lotrcompare2, echo=FALSE, results=hide>>=
-lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
+lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr3fit2)
 lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:tcq1with2lotrcomp")
 print(lotrcomp.xtab2)
 @
@@ -1741,28 +1754,41 @@ print(lotrcomp.xtab2)
 Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the model's performance on new data.
 
 The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
+
 <<fscoresemhealth, echo=FALSE, results=hide>>=
- emhealth2a <- randitems2[,c("RANDQ17", "RANDQ20", "RANDQ23", "RANDQ24", "RANDQ26", "RANDQ27", "RANDQ28"
- , "RANDQ29", "RANDQ30", "RANDQ31", "RANDQ32")]
-emhealth.pcm.rasch.scores <- factor.scores(emhealth.pcm.rasch, resp.patterns=emhealth2a)
-emhealth.pcm.1pl.scores <- factor.scores(emhealth.pcm.1PL, resp.patterns=na.omit(emhealth2a))
-emhealth.pcm.2pl.scores <- factor.scores(emhealth.pcm.gpcm, resp.patterns=na.omit(emhealth2a))
+## emhealth.pcm.rasch.scores <- factor.scores(emhealth.pcm.rasch, resp.patterns=emhealth2a)
+## emhealth.pcm.1pl.scores <- factor.scores(emhealth.pcm.1PL, resp.patterns=na.omit(emhealth2a))
+## emhealth.pcm.2pl.scores <- factor.scores(emhealth.pcm.gpcm, resp.patterns=na.omit(emhealth2a))
 @
 <<emhealthrand2, echo=FALSE, results=hide>>=
-emhealth2.pcm.rasch <- gpcm(emhealth2a, constraint="rasch")
-emhealth2.pcm.1pl <- gpcm(na.omit(emhealth2a), constraint="1PL")
-emhealth2.pcm.2pl <- gpcm(na.omit(emhealth2a), constraint="gpcm")
-emhealth2.rasch.scores <- factor.scores(emhealth2.pcm.rasch)
-emhealth2.1pl.scores <- factor.scores(emhealth2.pcm.1pl)
-emhealth2.2pl.scores <- factor.scores(emhealth2.pcm.2pl)
+## emhealth2.pcm.rasch <- gpcm(emhealth2a, constraint="rasch")
+## emhealth2.pcm.1pl <- gpcm(na.omit(emhealth2a), constraint="1PL")
+## emhealth2.pcm.2pl <- gpcm(na.omit(emhealth2a), constraint="gpcm")
+## emhealth2.rasch.scores <- factor.scores(emhealth2.pcm.rasch)
+## emhealth2.1pl.scores <- factor.scores(emhealth2.pcm.1pl)
+## emhealth2.2pl.scores <- factor.scores(emhealth2.pcm.2pl)
 @
 
-<<fscoreslotr, echo=FALSE, results=hide>>=
-lotr.pcm.rasch.scores <- factor.scores(lotr.pcm.rasch, resp.patterns=na.omit(lotritems2a[2:length(lotritems2a)]))
-lotr.pcm.1pl.scores <- factor.scores(lotr.pcm.1pl, resp.patterns=na.omit(lotritems2a[2:length(lotritems2a)]))
-lotr.pcm.2pl.scores <- factor.scores(lotr.pcm.2pl, resp.patterns=na.omit(lotritems2a[2:length(lotritems2a)]))
+<<fscoreslotr1to2, echo=FALSE, results=hide>>=
+lotr.pcm.rasch.scores.pred <- factor.scores(lotr.pcm.rasch, resp.patterns=lotritems2a[,2:length(lotritems2a)])
+lotr.rasch.scores <- getIrtPreds(lotr.pcm.rasch.scores.pred)
+lotr.pcm.1pl.scores.pred <- factor.scores(lotr.pcm.1pl, resp.patterns=na.omit(lotritems2a[2:length(lotritems2a)]))
+lotr.1pl.scores.pred <- getIrtPreds(lotr.pcm.1pl.scores.pred)
+lotr.pcm.2pl.scores.pred <- factor.scores(lotr.pcm.2pl, resp.patterns=na.omit(lotritems2a[2:length(lotritems2a)]))
+lotr.2pl.scores.pred <- getIrtPreds(lotr.pcm.2pl.scores.pred)
 @
 
+<<fscoreslotr1to2, echo=FALSE, results=hide>>=
+lotr2a.pcm.rasch <- gpcm(lotritems2a, constraint="rasch")
+lotr2a.pcm.1pl <- gpcm(lotritems2a, constraint="1PL")
+lotr2a.pcm.gpcm<- gpcm(lotritems2a, constraint="gpcm")
+lotr2a.pcm.rasch.scores <- factor.scores(lotr2a.pcm.rasch, resp.patterns=lotritems2a)
+lotr.rasch.scores2a <- getIrtPreds(lotr2a.pcm.rasch.scores)
+lotr2a.pcm.1pl.scores <- factor.scores(lotr2a.pcm.1pl) 
+lotr.1pl.scores2a <- getIrtPreds(lotr2a.pcm.1pl.scores)
+lotr2a.pcm.gpcm.scores <- factor.scores(lotr2a.pcm.gpcm)
+lotr.gpcm.scores2a <- getIrtPreds(lotr2a.pcm.gpcm.scores)
+@ 
 
 
 \subsection{Sample 2}
@@ -2085,51 +2111,51 @@ Scale 3: RAND13-RAND15,RAND21-RAND22. This maps to the role limitations and pain
 Scale 4:  RANDQ33, RANDQ34, RANDQ35. This maps almost exactly to the General Health scale, and so retains that name.
 
 <<randirtscales, echo=FALSE, results=hide>>=
-irtphysfun <- randitems2[,paste(rand, c(3:12), sep="")]
-irtemhealth <- randitems2[,paste(rand, c(1,16:20, 23:32), sep="")]
-irtphyslim <- randitems2[,paste(rand, c(13,15,21:22), sep="")]
-irtgenhealth <- randitems2[,paste(rand, c( 33:35), sep="")]
+irtphysfun2 <- randitems2[,paste(rand, c(3:12), sep="")]
+irtemhealth2 <- randitems2[,paste(rand, c(1,16:20, 23:32), sep="")]
+irtphyslim2 <- randitems2[,paste(rand, c(13,15,21:22), sep="")]
+irtgenhealth2 <- randitems2[,paste(rand, c( 33:35), sep="")]
 @
 
 <<randphysfun, echo=FALSE, results=hide>>=
-irtphys.item.ord <- check.iio(na.omit(irtphysfun))
-irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
+irtphys2.item.ord <- check.iio(na.omit(irtphysfun2))
+irtphys2.monotonicity <- check.monotonicity(na.omit(irtphysfun2))
 @
 
 The check for invariant item ordering shows that all items  meet the Invariant Item Ordering  assumption. The check on the monotonicity assumption shows that all of the items meet this assumption. 
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys.item.ord$violations,label="tab:tcq1physfuncitemord"))
+print(xtable(irtphys2.item.ord$violations,label="tab:tcq2physfuncitemord"))
 @
 
-As can be seen from Table \ref{tab:randphysfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
+As can be seen from Table \ref{tab:tcq2physfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
 
 <<randemhealth, echo=FALSE, results=hide>>=
-irtemhealth.item.ord <- check.iio(na.omit(irtemhealth))
-irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
+irtemhealth2.item.ord <- check.iio(na.omit(irtemhealth2))
+irtemhealth2.monotonicity <- check.monotonicity(na.omit(irtemhealth2))
 @
 
 <<randEmhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtemhealth.item.ord$violations,label="tab:tcq1randemhealthitemord"))
+print(xtable(irtemhealth2.item.ord$violations,label="tab:tcq2randemhealthitemord"))
 @
 
-Quite a number of items failed the item ordering assumption (RAND1, RAND17, RAND18, RAND19, RAND24, RAND26) and so were removed from the scale before further analysis. 
+As can be seen from Table \ref{tcq2randemhealthitemord},quite a number of items failed the item ordering assumption (RAND1, RAND17, RAND18, RAND19, RAND24, RAND26) and so were removed from the scale before further analysis. 
 
 <<newIrtEmHealth, echo=FALSE, results=tex>>=
-irtemhealth2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
+irtemhealth2.2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
 emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
 emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
-print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
+print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:tcq2randemhealth2iio"))
 @
 
-As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+As shown in Table \ref{tab:tcq2randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
 
 
 
 <<randpain, echo=FALSE, results=hide>>=
-irtphyslim.item.ord <- check.iio(na.omit(irtphyslim))
-irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
+irtphyslim2.item.ord <- check.iio(na.omit(irtphyslim2))
+irtphyslim2.monotonicity <- check.monotonicity(na.omit(irtphyslim2))
 @
 
 The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
@@ -2137,15 +2163,15 @@ The IIO and monotonicity assumptions were checked for the physical limitations s
 
 
 <<randgenhealth, echo=FALSE, results=hide>>=
-irtgenhealth.item.ord <- check.iio(na.omit(irtgenhealth))
-irtgenhealth.monotonicity <- check.monotonicity(na.omit(irtgenhealth))
-irtgenhealth <- randitems2[,paste(rand, c(33,34), sep="")]
+irtgenhealth2.item.ord <- check.iio(na.omit(irtgenhealth2))
+irtgenhealth2.monotonicity <- check.monotonicity(na.omit(irtgenhealth2))
+irtgenhealth2 <- randitems2[,paste(rand, c(33,34), sep="")]
 @
 
 There was one violation of the IIO assumption (RANDQ35), and no violations of the monotonicity assumption for the General Health scale. 
 
 <<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtgenhealth.item.ord$violations,label="tab:tcq1genhealthitemord"))
+print(xtable(irtgenhealth2.item.ord$violations,label="tab:tcq2genhealthitemord"))
 @
 
 
@@ -2153,8 +2179,8 @@ print(xtable(irtgenhealth.item.ord$violations,label="tab:tcq1genhealthitemord"))
 
 
 <<physfunrasch, echo=FALSE, results=hide>>=
-physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
-physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
+physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun2), constraint="rasch")
+physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun2), constraint="1PL")
 physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
@@ -2179,8 +2205,19 @@ Table \ref{tab:tcq1physfungpcm} shows that RANDQ12 is still a problematic item f
 The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
 
 <<physfungrm1, echo=FALSE, results=hide>>=
-physfun.grm.1pl <- grm(na.exclude(irtphysfun), constrained=TRUE)
+physfun.grm.1pl <- grm(irtphysfun, constrained=TRUE)
 physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+@ 
+
+<<maasgrmfit, echo=FALSE, results=hide>>=
+maas.grm.1pl <- grm(maasitems2, constrained=TRUE)
+maas.grm.2pl <- grm(maasitems2, constrained=FALSE)
+@ 
+
+
+<<lotrgrmfit, echo=FALSE, results=hide>>=
+lotr.grm.1pl <- grm(lotritems2, constrained=TRUE)
+lotr.grm.2pl <- grm(lotritems2, constrained=FALSE)
 @ 
 
 \subsection{Discussion}
