@@ -28,9 +28,14 @@ Participants in the treatment group were told that \textit{the cream was a poten
 <<importdata, echo=FALSE, results=hide>>=
 #setwd("Data/Experiment Data for R/FullStudy/")
 expmeasures <- read.csv("explicitmeasuresfixed.csv")
+expfull <- read.csv("explicitmeasuresfull.csv")
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
 tcqiat <- read.csv("tcqiatres.csv")
+healthmodels <- new.env()
+tcqmodels <- new.env()
+load("~/Thesis/Health Data for R/healthforthesis.rda", envir=healthmodels)
+load("~/Thesis/tcqdata180312.rda", envir=tcqmodels)
 @ 
 
 <<loadpackages, echo=FALSE, results=hide>>=
@@ -204,6 +209,7 @@ print(pairs.panels(optiatsorted[5:10]))
  \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
 
  As can be seen in Figure \ref{fig:optplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
+ 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores)[1] <-  "Participant"
 names(expmeasures)[1] <- "Participant"
@@ -218,10 +224,10 @@ Iatandexpmeasures$convaltcomp <- with(Iatandexpmeasures, meanconv -meanalt)
  
 <<optiatdemo, echo=FALSE, results=tex>>=
 optiatdemographics <- merge(expmeasures, optiatsorted, by="Participant")
-opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)))
+opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), label="tab:optiatdemo", caption="Test of Demographics and their effec on Response Time by Block on the Optimism IAT"))
 print(opt.demo)
 @  
-As can be seen from Table, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
+As can be seen from Table \ref{tab:optiatdemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
 tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
@@ -232,8 +238,8 @@ tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
 <<randcheck1, echo=FALSE, results=tex>>=
 tcq.xtab <- xtable(summary(aov(tcqiatscore~Condition, data=Iatandexpmeasures)))
 opt.xtab <- xtable(summary(aov(optiatscore~Condition, data=Iatandexpmeasures)))
-conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
-alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
+conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)), label="tab:convcond", caption="Mean Conventional Credibility Score by Condition")
+alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)), caption="Mean Alternative Scores by Condition", label="tab:altcond")
 chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Gender, Condition)))
 chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
 @ 
@@ -249,7 +255,28 @@ As can be seen from Tables the scores on the treatment credibility IAT, the opti
 The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend$p.value}$).
 In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime$p.value}%$).
 
+<<explicitfullsubset, echo=FALSE, results=hide>>=
+lotrexp <- expfull[,grep("LOTR", x=names(expfull))]
+maasexp <- expfull[,grep("MAAS", x=names(expfull))]
+@ 
 
+<<irtabilityestimateshom, echo=FALSE, results=hide>>=
+maas.grm.1pl <- with(healthmodels, maas.grm.1pl)
+maas.grm.2pl <- with(healthmodels, maas.grm.2pl)
+lotr.grm.2pl <- with(healthmodels, lotr.grm.2pl)
+lotr.grm.1pl <- with(healthmodels, lotr.grm.1pl)
+lotr.exp.fscores1pl <- factor.scores(lotr.grm.1pl, resp.patterns=lotrexp,na.action="na.exclude")
+lotr.exp.fscores.2pl <- factor.scores(lotr.grm.1pl, resp.patterns=lotrexp,na.action="na.exclude")
+maas.exp.fscores1pl <- factor.scores(maas.grm.1pl, resp.patterns=maasexp,na.action="na.exclude")
+maas.exp.fscores.2pl <- factor.scores(maas.grm.2pl, resp.patterns=maasexp, na.action="na.exclude")
+lotr1pl.abilities <-lotr.exp.fscores1pl$score.dat["z1"]
+lotr2pl.abilities <-lotr.exp.fscores.2pl$score.dat["z1"]
+maas2pl.abilities <-maas.exp.fscores.2pl$score.dat["z1"]
+maas1pl.abilities <-maas.exp.fscores1pl$score.dat["z1"]
+abilities <- as.data.frame(cbind(lotr1pl.abilities, lotr2pl.abilities, maas2pl.abilities, maas1pl.abilities))
+
+Iatandexpmeasures <- cbind(Iatandexpmeasures, abilities)
+@ 
 
 <<lotrmaas, echo=FALSE, fig=TRUE>>=
 lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))
