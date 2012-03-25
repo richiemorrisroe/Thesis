@@ -1,3 +1,4 @@
+
 % \documentclass{article}
 % \author{Richard Morrisroe}
 % \title{Analysis of Experimental Data}
@@ -274,8 +275,10 @@ lotr2pl.abilities <-lotr.exp.fscores.2pl$score.dat["z1"]
 maas2pl.abilities <-maas.exp.fscores.2pl$score.dat["z1"]
 maas1pl.abilities <-maas.exp.fscores1pl$score.dat["z1"]
 abilities <- as.data.frame(cbind(lotr1pl.abilities, lotr2pl.abilities, maas2pl.abilities, maas1pl.abilities))
-
-Iatandexpmeasures <- cbind(Iatandexpmeasures, abilities)
+names(abilities) <- c("lotr1.irt", "lotr2.irt","maas1.irt", "maas2.irt")
+expmeasuresfull <- cbind(expfull, abilities)
+expmeasureswithirt <- merge(expmeasuresfull, Iatandexpmeasures, by="Participant")
+expmeasuresirtpainratings <- merge(expmeasureswithirt, lenbelow7.df, by="Participant")
 @ 
 
 <<lotrmaas, echo=FALSE, fig=TRUE>>=
@@ -636,6 +639,25 @@ painratings <- vasscores[,c(1,2,8:53)]
 painratings.temp <- painratings[,2:length(painratings)]
 painratings.trans <- t(painratings.temp)
 colnames(painratings.trans) <- as.character(t(painratings[,1]))
+painratings.ts <- apply(painratings.trans,2, as.numeric)
+painratings.ts.df <- as.data.frame(painratings.ts)
+@ 
+
+<<getcountsbelow7, echo=FALSE, results=hide>>=
+painratings.7 <- apply(painratings.ts.df, 2, function (x) which(x==7, arr.ind=TRUE))
+getLenbelow7 <- function (x) {
+  if(length(x)==0 |length(x)== 1) {
+    return(0)
+    }
+  else {
+    maxind <- x[length(x)]
+    indless <- x[(length(x)-1)]
+    return(maxind-indless)
+    }
+  }
+lenbelow7 <- sapply(painratings.7, getLenbelow7)
+lenbelow7.df <- as.data.frame(lenbelow7)
+lenbelow7.df$Participant <- names(lenbelow7)
 @ 
 
 <<tcqiatgender, echo=FALSE, fig=TRUE>>=
@@ -766,12 +788,12 @@ In order to examine whether or not the IAT scores were predictive of placebo res
 
 
 <<placmod1, echo=FALSE, results=tex>>=
-placmod1 <- glm(PlacResp~tcqiatscore, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod1 <- glm(PlacResp~tcqiatscore, data=expmeasureswithirt, family=binomial(link="logit"))
 placmod1.xtab <- xtable(summary(placmod1))
 print(placmod1.xtab)
 @ 
 
-As can be seen above in Table \ref{tab:placmod1}, the treatment credibility IAT was not a significant independent predictor of placebo response.
+As can be seen above in Table \ref{tab:placmod1}, the treatment credibility IAT was a significant independent predictor of placebo response, confirming the major hypothesis of the thesis. 
 
 <<placmod2, echo=FALSE, results=tex>>=
 placmod2 <- glm(PlacResp~optiatscore, data=Iatandexpmeasures, family=binomial(link="logit"))
@@ -779,7 +801,7 @@ placmod2.xtab <- xtable(summary(placmod2))
 print(placmod2.xtab)
 @ 
 
-As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent significant predictor of placebo response either. 
+As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent significant predictor of placebo response. 
 
 <<placebolotr, echo=FALSE, results=tex>>=
 placmod.lotr<- glm(PlacResp~LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
@@ -789,17 +811,17 @@ print(placmod.lotr.xtab)
 
 In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{placebolotr}.
 
-However, when these three variables are placed into the model together, the result is significant.
+## However, when these three variables are placed into the model together, the result is significant.
 
-<<placeboglm, echo=FALSE, results=tex>>=
-placmod6<- glm(PlacResp~tcqiatscore*optiatscore*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod.xtab <- xtable(summary(placmod6))
-print(placmod.xtab)
-@ 
+## <<placeboglm, echo=FALSE, results=tex>>=
+## placmod6<- glm(PlacResp~tcqiatscore*optiatscore*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+## placmod.xtab <- xtable(summary(placmod6))
+## print(placmod.xtab)
+% @ 
 
-As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variable's interactions were also significant. 
+% As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variable's interactions were also significant. 
 
-In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
+% In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
 
 
 <<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
