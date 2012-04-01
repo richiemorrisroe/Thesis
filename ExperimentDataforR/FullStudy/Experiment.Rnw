@@ -28,14 +28,14 @@ Participants in the treatment group were told that \textit{the cream was a poten
 
 <<importdata, echo=FALSE, results=hide>>=
 #setwd("Data/Experiment Data for R/FullStudy/")
-expmeasures <- read.csv("explicitmeasuresfixed.csv")
-expfull <- read.csv("explicitmeasuresfull.csv")
+expmeasures <- read.csv("explicitmeasuresfixeddrop1991.csv")
+expfull <- read.csv("expmeasuresremove1991.csv"  )
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
 tcqiat <- read.csv("tcqiatres.csv")
 healthmodels <- new.env()
 tcqmodels <- new.env()
-load("~/Thesis/Health Data for R/healthforthesis.rda", envir=healthmodels)
+load("~/Thesis/HealthDataforR/healthforthesis.rda", envir=healthmodels)
 load("~/Thesis/tcqdata180312.rda", envir=tcqmodels)
 @ 
 
@@ -101,10 +101,14 @@ print(optmeanconf.xtab)
 @ 
 
 As can be seen from the Table ~\ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure ~\ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
-
+\begin{figure}
 <<optbootplot, echo=FALSE, fig=TRUE>>=
 print(optbootplot)
-@ 
+@   
+  \caption{Plot of Bootstrap Results for the Optimism IAT}
+  \label{fig:optbootplot}
+\end{figure}
+
 
 
 <<optstimboot, echo=FALSE, results=hide>>=
@@ -162,10 +166,14 @@ print(tcqmeanconf.xtab)
 @ 
 
 As can be seen in Table \ref{tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
-
+\begin{figure}
 <<tcqbootplot, echo=FALSE, fig=TRUE>>=
 print(tcqbootplot)
-@ 
+@   
+  \caption{Bootstrap Results for Treatment Credibility IAT score}
+  \label{fig:tcqbootplot}
+\end{figure}
+
 
 
 <<tcqstimboot, echo=FALSE, results=hide>>=
@@ -179,35 +187,55 @@ tcqstimbootplot <- plot(tcqstimboot)
 @ 
 
 
-
+\begin{figure}
 <<tcqstimblock3, echo=FALSE, fig=TRUE>>=
 print(pairs.panels(tcqstimblock3[,10:17]))
-@
+@  
+  \caption{Scatterplot Matrix for Treatment Credibility IAT, Block 3}
+  \label{fig:tcqstimblock3}
+\end{figure}
+
 
 As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. 
-
+\begin{figure}
 <<tcqstimblock5, echo=FALSE, fig=TRUE>>=
 print(pairs.panels(tcqstimblock5[,10:17]))
-@ 
+@   
+  \caption{Scatterplot Matrix for Treatment Credibility IAT Stimuli, Block 5}
+  \label{fig:optstimbklock5}
+\end{figure}
+
 
 Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers, however, and the correlations lowered significantly once these were excluded. 
-
+\begin{figure}
 <<optstimblock3, echo=FALSE, fig=TRUE>>=
 print(pairs.panels(optstimblock3[,8:15]))
-@ 
+@   
+  \caption{Scatterplot Matrix for Optimism IAT Stimuli, Block 5}
+  \label{fig:optstimblock5}
+\end{figure}
+
 
 Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
-
+\begin{figure}
 <<optstimblock5, echo=FALSE, fig=TRUE>>=
 print(pairs.panels(optstimblock5[,8:15]))
-@ 
+@   
+  \caption{Scatterplot Matrix for Optimism IAT Stimuli, Block 5}
+  \label{fig:optstimblock5}
+\end{figure}
+
 
 The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
-
+\begin{figure}
 <<optiatplotself, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optiatsorted[5:10]))
-@ 
- \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
+print((pairs.panels(optiatsorted[5:10])))
+@   
+  \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
+  \label{fig:optplotself}
+\end{figure}
+
+
 
  As can be seen in Figure \ref{fig:optplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
  
@@ -228,7 +256,41 @@ optiatdemographics <- merge(expmeasures, optiatsorted, by="Participant")
 opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), label="tab:optiatdemo", caption="Test of Demographics and their effec on Response Time by Block on the Optimism IAT"))
 print(opt.demo)
 @  
+
 As can be seen from Table \ref{tab:optiatdemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
+
+<<survivaldata, echo=FALSE, results=hide>>=
+painratings <- vasscores[,c(9:53)]
+napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
+lengthsurv <- 46-napainratings
+Iatandexpmeasures$lengthsurv <- lengthsurv
+@ 
+
+<<paints, echo=FALSE, results=hide>>=
+painratings <- vasscores[,c(1,2,8:53)]
+painratings.temp <- painratings[,2:length(painratings)]
+painratings.trans <- t(painratings.temp)
+colnames(painratings.trans) <- as.character(t(painratings[,1]))
+painratings.ts <- apply(painratings.trans,2, as.numeric)
+painratings.ts.df <- as.data.frame(painratings.ts)
+@ 
+
+<<getcountsbelow7, echo=FALSE, results=hide>>=
+painratings.7 <- apply(painratings.ts.df, 2, function (x) which(x==7, arr.ind=TRUE))
+getLenbelow7 <- function (x) {
+  if(length(x)==0 |length(x)== 1) {
+    return(0)
+    }
+  else {
+    maxind <- x[length(x)]
+    indless <- x[(length(x)-1)]
+    return(maxind-indless)
+    }
+  }
+lenbelow7 <- sapply(painratings.7, getLenbelow7)
+lenbelow7.df <- as.data.frame(lenbelow7)
+lenbelow7.df$Participant <- names(lenbelow7)
+@ 
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
 tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
@@ -277,15 +339,19 @@ maas1pl.abilities <-maas.exp.fscores1pl$score.dat["z1"]
 abilities <- as.data.frame(cbind(lotr1pl.abilities, lotr2pl.abilities, maas2pl.abilities, maas1pl.abilities))
 names(abilities) <- c("lotr1.irt", "lotr2.irt","maas1.irt", "maas2.irt")
 expmeasuresfull <- cbind(expfull, abilities)
-expmeasureswithirt <- merge(expmeasuresfull, Iatandexpmeasures, by="Participant")
-expmeasuresirtpainratings <- merge(expmeasureswithirt, lenbelow7.df, by="Participant")
+## expmeasureswithirt <- merge(expmeasuresfull, Iatandexpmeasures, by="Participant")
+## expmeasuresirtpainratings <- merge(expmeasureswithirt, lenbelow7.df, by="Participant")
 @ 
-
+\begin{figure}
 <<lotrmaas, echo=FALSE, fig=TRUE>>=
 lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))
 lotrmaas.comp <- lotrmaas+layer(geom="point")
 print(lotrmaas.comp)
-@ 
+@   
+  \caption{Scatterplot of Optimism Versus Mindfulness}
+  \label{fig:lotrmaas}
+\end{figure}
+
 
 The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. This is in contrast to the results found in a much larger scale study carried out earlier in the research. 
 
@@ -316,9 +382,14 @@ print(chisq1.xtab)
 
 In Table \ref{} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
 
+\begin{figure}
 <<pairsplot, echo=FALSE, Fig=TRUE>>=
 print(pairs.panels(iatexp))
-@ 
+@   
+  \caption{Scatterplot Matrix of Implicit and Explicit Measures}
+  \label{fig:iatexp}
+\end{figure}
+
 
 <<tsimport, echo=FALSE, results=hide>>=
 setwd("PhysMeasures/Richie1ps")
@@ -546,12 +617,7 @@ setwd("..")
 
 
 
-<<survivaldata, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(9:53)]
-napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
-lengthsurv <- 46-napainratings
-Iatandexpmeasures$lengthsurv <- lengthsurv
-@ 
+
 
 
 
@@ -610,10 +676,14 @@ print(xtable(optrasch.df))
 @ 
 
 Above, in Table \ref{tab:optrasch} can be seen the estimated parameters for a Rasch model of the optimism IAT stimuli. Below, in Figure \ref{optpimap} can be seen the Person Item Map for this model. This map shows that most of the stimuli were equivalent in difficulty, which indicates that this IAT is suitable for measuring implicit optimism in the general population, however, more discriminating stimuli would be necessary if the instrument was to be used in a clinical sample. 
-
+\begin{figure}
 <<optpimap, echo=FALSE, fig=TRUE>>=
 print(optiat.PImap)
-@ 
+@   
+  \caption{Optimism IAT Rasch Model Person-Item Map}
+  \label{fig:optpimap}
+\end{figure}
+
 
 A process of stepwise elimination was carried out to eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
 
@@ -628,52 +698,42 @@ tcqiat.ppar <- person.parameter(tcqiat.rasch)
 tcqrasch.df <- with(tcqiat.rasch, as.data.frame(cbind(etapar, se.eta, betapar, se.beta)))
 print(xtable(tcqrasch.df))
 @ 
-
+\begin{figure}
 <<tcqiatpiplot, echo=FALSE, fig=TRUE>>=
 print(tcqiat.piplot)
-@ 
-Above in Table \ref{tab:tcqiatrasch} are shown the estimated abilities and their associated standard errors for the Treatment Credibility IAT. In Figure \ref{fig:tcqiatpimap} the estimates of person and item abilities can be seen in graphical form. 
+@   
+  \caption{Treatment Credibility IAT Rasch Model Person-Item Plot}
+  \label{fig:tcqiatpiplot}
+\end{figure}
 
-<<paints, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(1,2,8:53)]
-painratings.temp <- painratings[,2:length(painratings)]
-painratings.trans <- t(painratings.temp)
-colnames(painratings.trans) <- as.character(t(painratings[,1]))
-painratings.ts <- apply(painratings.trans,2, as.numeric)
-painratings.ts.df <- as.data.frame(painratings.ts)
-@ 
+Above in Table \ref{tab:tcqiatrasch} are shown the estimated abilities and their associated standard errors for the Treatment Credibility IAT. In Figure \ref{fig:tcqiatpiplot} the estimates of person and item abilities can be seen in graphical form. 
 
-<<getcountsbelow7, echo=FALSE, results=hide>>=
-painratings.7 <- apply(painratings.ts.df, 2, function (x) which(x==7, arr.ind=TRUE))
-getLenbelow7 <- function (x) {
-  if(length(x)==0 |length(x)== 1) {
-    return(0)
-    }
-  else {
-    maxind <- x[length(x)]
-    indless <- x[(length(x)-1)]
-    return(maxind-indless)
-    }
-  }
-lenbelow7 <- sapply(painratings.7, getLenbelow7)
-lenbelow7.df <- as.data.frame(lenbelow7)
-lenbelow7.df$Participant <- names(lenbelow7)
-@ 
 
+
+
+\begin{figure}
 <<tcqiatgender, echo=FALSE, fig=TRUE>>=
 tcqiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=tcqiatscore))
 tcqiatgender+layer(geom="boxplot")
-@ 
+@   
+  \caption{Boxplot of Treatment Credibility IAT scores by Gender}
+  \label{fig:tcqiatgender}
+\end{figure}
 
 
-As can be seen from Figure B above, there were no significant differences between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument).
 
+As can be seen from Figure \ref{fig:tcqiatgender} above, there were no significant differences between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument).
+\begin{figure}
 <<optiatgender, echo=FALSE, fig=TRUE>>=
 optiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=optiatscore))
 optiatgender.comp <- optiatgender+layer(geom="boxplot")
 print(optiatgender.comp)
-@ 
- As can be seen from Figure C, there were no significant differences between men and women with regards to their score on the Optimism IAT. 
+@   
+  \caption{Boxplot of Optimism IAT Scores by Gender}
+  \label{fig:optiatgender}
+\end{figure}
+
+ As can be seen from Figure \ref{fig:optiatgender}, there were no significant differences between men and women with regards to their score on the Optimism IAT. 
 
 \subsection{Analysis of Pain Ratings}
  
@@ -694,38 +754,56 @@ medpainratings <- as.data.frame(cbind(meddeceptivepain, medplacebopain, mednotre
 medpainratings$Time <- 1:45
 @ 
 
+\begin{figure}
 <<tsmeanpainplot, echo=FALSE, fig=TRUE>>=
 meanpain.melt <- melt(meangrouppainratings, id="Time")
 tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))
 tspainplotcomp <- tspainplot+layer(geom="smooth")
 print(tspainplotcomp)
-@ 
+@   
+  \caption{Mean Pain Ratings by Condition Over Time}
+  \label{fig:meanpaintsplot}
+\end{figure}
 
 
-As can be seen from Figure X, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to downgrade the effects that outliers could be having on the results. The curves shown above used a locally weighted smoother to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
 
+As can be seen from Figure \ref{fig:meanpaintsplot}, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to downgrade the effects that outliers could be having on the results. The curves shown above used a locally weighted smoother to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
+
+\begin{figure}
 <<medtspainplot, echo=FALSE, fig=TRUE>>=
 medpain.melt <- melt(medpainratings, id="Time")
 medtspainplot <- ggplot(medpain.melt, aes(x=Time, y=value, group=variable, colour=variable))
 medtspain.comp <- medtspainplot+layer(geom="smooth")
 print(medtspain.comp)
-@ 
+@   
+  \caption{Median Pain Ratings by Condition Over Time}
+  \label{fig:medtspainplot}
+\end{figure}
 
-As can be seen from Figure Y, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess) was used to fit the curves. 
 
+As can be seen from Figure \ref{fig:medtspainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess) was used to fit the curves. 
+\begin{figure}
 <<medianpaintscorrelationplots, echo=FALSE, fig=TRUE>>=
 acf(na.omit(medpainratings$meddeceptivepain))
 acf(na.omit(medpainratings$medplacebopain))
 acf(na.omit(medpainratings$mednotreatpain))
-@ 
+@   
+  \caption{Median Pain Ratings by Group Autocorrelation Plots}
+  \label{fig:medianpaintscorrelationplots}
+\end{figure}
 
-As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall mixed model which will be fit to the data.
 
+As can be seen in Figure \ref{fig:medianpaintscorrelationplots}, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall mixed model which will be fit to the data.
+\begin{figure}
 <<meanpaintscorrelationplots, echo=FALSE, fig=TRUE>>=
 acf(na.omit(meangrouppainratings$meannotreatpain))
 acf(na.omit(meangrouppainratings$meandeceptivepain))
 acf(na.omit(meangrouppainratings$meanplacebopain))
-@ 
+@   
+  \caption{Mean Pain Ratings by Group Autocorrelation Plots}
+  \label{fig:meanpaintscorrelationplots}
+\end{figure}
+
 
 The mean pain ratings were also examined for autocorrelations, and as shown above, the results were exactly the same as for the median pain ratings, indicating an ARIMA(1,3,1) model was the best fit for the data.
 
@@ -733,39 +811,55 @@ The mean pain ratings were also examined for autocorrelations, and as shown abov
 \subsection{Variables impacting the placebo response}
 
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
-
+\begin{figure}
 <<ggplotsurvivalgroupiat, echo=FALSE, fig=TRUE>>=
 surviat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=tcqiatscore, colour=Condition))
 surviat.comp <- surviat.corr+layer(geom="smooth")
 print(surviat.comp)
-@ 
+@   
+  \caption{Length spent in the Experiment by Condition and Treatment Credibility IAT score (using a loess smoother)}
+  \label{fig:ggplotsurvivalgroupiat}
+\end{figure}
 
-<<placresponse.surv.tcqiatscore, echo=FALSE, fig=TRUE>>=
+\begin{figure}
+<<placresponsesurvtcqiatscore, echo=FALSE, fig=TRUE>>=
 surviat.corr2 <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=tcqiatscore, colour=PlacResp ))
 surviat2.comp <- surviat.corr2+layer(geom="smooth")
 print(surviat2.comp)
-@ 
+@   
+  \caption{Time spent in the Experiment by Response to Placebo and Treatment Credibility IAT score}
+  \label{fig:placresponsesurvtcqiatscore}
+\end{figure}
 
-As can be seen above in Figure \ref{fig:ggplottcqplac}, the group which responded to placebo tended to have a much higher tcqiatscore. This is in line with the hypotheses of the experiment, and leads on to formal test of the model expressed graphically above. Note that the difference between the groups in terms of placebo response does not appear to be significant (the dark area around the lines represent the standard errors of the loess fit). 
 
+As can be seen above in Figure \ref{fig:placresponsesurvtcqiatscore}, the group which responded to placebo tended to have a much higher tcqiatscore. This is in line with the hypotheses of the experiment, and leads on to formal test of the model expressed graphically above. Note that the difference between the groups in terms of placebo response does not appear to be significant (the dark area around the lines represent the standard errors of the loess fit). 
 
+\begin{figure}
 <<optiatcorrsurv, echo=FALSE, fig=TRUE>>=
 optiat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=optiatscore, colour=PlacResp))
 optiatcorr2 <- optiat.corr+layer(geom="smooth")
 print(optiatcorr2)
-@ 
+@   
+  \caption{Time spent in the Experiment by Placebo Response and Optimism IAT score}
+  \label{fig:optiatcorrsurv}
+\end{figure}
+
 
 Again, it can be seen that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
-
+\begin{figure}
 <<creamcorrsurv, echo=FALSE, fig=TRUE>>=
 creamcorr.surv <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=Cream, colour=Condition))
 creamcorr.point <- creamcorr.surv+layer(geom="point")
 creamcorr.smooth <- creamcorr.surv+layer(geom="smooth")
 print(creamcorr.smooth)
-@ 
+@   
+  \caption{Time spent in the Experiment by Condition and Cream Credibility Score}
+  \label{fig:creamcorrsurv}
+\end{figure}
 
-As can be seen from Figure D above, there appeared to be no relationship with the mean credibility score for creams and the length which participants remained in the experiment.
 
+As can be seen from Figure \ref{fig:creamcorrsurv} above, there appeared to be no relationship with the mean credibility score for creams and the length which participants remained in the experiment.
+\begin{figure}
 <<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
 placrespyes <- painratings[painratings$PlacResp=="Yes",]
 placrespno <- painratings[painratings$PlacResp=="No",]
@@ -778,7 +872,11 @@ placres.melt <- melt(placresyesnopain, id="Time")
 placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))
 placrespplot2 <- placresplot+layer(geom="smooth")
 print(placrespplot2)
-@ 
+@   
+  \caption{Pain Ratings over Time by Whether or not the Participant Responded to Placebo}
+  \label{fig:placyesnopain}
+\end{figure}
+
 
 A number of findings are apparent from the plot above in Figure \ref{fig:placyesnopain}. Firstly, there were far more participants in the study who did not respond to placebo (as shown by the narrower confidence intervals on the blue line). Secondly, the placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
@@ -788,7 +886,7 @@ In order to examine whether or not the IAT scores were predictive of placebo res
 
 
 <<placmod1, echo=FALSE, results=tex>>=
-placmod1 <- glm(PlacResp~tcqiatscore, data=expmeasureswithirt, family=binomial(link="logit"))
+placmod1 <- glm(PlacResp~tcqiatscore, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod1.xtab <- xtable(summary(placmod1))
 print(placmod1.xtab)
 @ 
@@ -811,67 +909,120 @@ print(placmod.lotr.xtab)
 
 In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{placebolotr}.
 
-## However, when these three variables are placed into the model together, the result is significant.
+% ## However, when these three variables are placed into the model together, the result is significant.
 
-## <<placeboglm, echo=FALSE, results=tex>>=
-## placmod6<- glm(PlacResp~tcqiatscore*optiatscore*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-## placmod.xtab <- xtable(summary(placmod6))
-## print(placmod.xtab)
-% @ 
+<<placeboglm, echo=FALSE, results=hide>>=
+placmod6<- glm(PlacResp~tcqiatscore*optiatscore*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod.xtab <- xtable(summary(placmod6))
+print(placmod.xtab)
+@ 
 
 % As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variable's interactions were also significant. 
 
 % In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
 
-
+\begin{figure}
 <<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
 iatexpno <- Iatandexpmeasures[Iatandexpmeasures$PlacResp=="No",]
 iatexpyes <- Iatandexpmeasures[Iatandexpmeasures$PlacResp=="Yes",]
 iatexpno <- na.omit(iatexpno)
 iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
-lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=tcqiatscore , colour=PlacResp, size=optiatscore))
-lotriatplot2 <- lotriatplot+layer(geom="point")
+lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=tcqiatscore , colour=PlacResp))
+lotriatplot2 <- lotriatplot+layer(geom="smooth")
 print(lotriatplot2)
-@ 
- The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+@   
+  \caption{Plot of Pain Ratings over Time by Placebo Response, TC IAT and Optimism Scores}
+  \label{fig:3wayinter}
+\end{figure}
 
+ The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+ \begin{figure}
 <<lotrtcqsmoothplot, echo=FALSE, fig=TRUE>>=
 lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=tcqiatscore , colour=PlacResp))
 lotrtcqplot2 <- lotrtcqplot+layer(geom="point")
 print(lotrtcqplot2)
-@  
+@     
+   \caption{Optimism against Treatment Credibility IAT score by Placebo Response}
+   \label{fig:lotrtcqsmoothplot}
+ \end{figure}
+
 
 This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
-
+\begin{figure}
 <<lotroptplot, echo=FALSE, fig=TRUE>>=
 lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=optiatscore , colour=PlacResp))
 lotroptplot2 <- lotroptplot+layer(geom="point")
 print(lotroptplot2)
-@ 
+@   
+  \caption{Optimism against Optimism IAT by Placebo Response}
+  \label{fig:lotroptplot}
+\end{figure}
+
 
 From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response. 
 
 
+\subsection{Modelling Time Spent Below Pain Rating of Seven}
+\label{sec:modelling-time-spent}
+
+The next stage in the analysis of the placebo response data was to examine the number of minutes spent underneath the breakpoint of seven. This was modelled using a zero-inflated Poisson linear model, as this is the appropriate response function for count data. 
+
+The first step was to examine the relationship between the TCQ iat score and the amount of minutes spent under a pain rating of seven (after the pain ratings had reached seven).
+
+<<placmodpoistcq, echo=FALSE, results=tex>>=
+## placmodpois1 <- glm(lenbelow7~tcqiatscore, data=, family=quasipoisson(link="log"))
+## print(xtable(summary(placmodpois1), label="tab:placmodpois1", caption="Poisson Model for Length of time spent underneath seven given TCQ iat score"))
+@ 
+
+As can be seen from Table \ref{tab:placmodpois1}, the TCQ IAT score was not a useful predictor of the amount of time spent below a pain rating of seven.
+
+The next step was to examine the effect of Optimism IAT score on the length of time a placebo response lasted. 
+
+<<placmodposiopt, echo=FALSE, results=tex>>=
+## placmodpois2 <- glm(lenbelow7~optiatscore, data=expmeasuresirtpainratings, family=quasipoisson(link="log"))
+## print(xtable(summary(placmodpois2), label="tab:placmodpois2", caption="Poisson Model for Length of time spent underneath seven given Optimsism IAT score"))
+@ 
+
+As shown in Table \ref{tab:placmodpois2}, Optimism IAT score was not a significant predictor of the length of time spent below a pain rating of seven.
+
+Next, the effects of explicit optimism were examined. 
+
+<<placmodposiopt, echo=FALSE, results=tex>>=
+## placmodpois3 <- glm(lenbelow7~LOTR, data=expmeasuresirtpainratings, family=quasipoisson(link="log"))
+## print(xtable(summary(placmodpois3), label="tab:placmodpois3", caption="Poisson Model for Length of time spent underneath seven given LOTR score"))
+@ 
+
+Table \ref{tab:placmodpois3} demonstrates the the Life Orientation Test scores also had no impact on how long a participants pain ratings stayed below seven. 
+
+<<placmodposiopt, echo=FALSE, results=tex>>=
+## placmodpois4 <- glm(lenbelow7~LOTR*tcqiatscore*optiatscore, data=expmeasuresirtpainratings, family=quasipoisson(link="log"))
+## print(xtable(summary(placmodpois4), label="tab:placmodpois4", caption="Poisson Model for Length of time spent underneath seven given LOTR, TC IAT and Optimism IAT score"))
+@ 
+
+Table \ref{tab:placmodpois4} shows the effect of TC IAT, Optimism IAT and LOT-R scores and their interactions. It can be seen that, contrary to the results of the logistic regression, there are no significant effects shown in this model. 
+
 \subsection{Analysis of Physiological Data}
 
+
 <<GSRcollate, echo=FALSE, results=hide>>=
-biodata <- ls(pattern="phys")
+biodata <- ls(pattern="^phys[0-9]+")
 biologicaldata <- matrix(NA, nrow=110000, ncol=107)
 for (i in seq(from=1, to=length(biodata))) {
   temp <- get(biodata[i])
-  print(i)
   biologicaldata[1:nrow(temp),i] <- temp[,1]
 }
+
 biologicaldata <- as.data.frame(biologicaldata)
 biodata2 <- gsub(pattern="phys", replacement="GSR", x=biodata)
 biologicaldata <- biologicaldata[1:31150,1:107]
-colnames(biologicaldata) <- biodata2
+names(biologicaldata) <- biodata2
 write.csv(biologicaldata, file="GSRdata.csv")
 pbionotna <- apply(biologicaldata, 2, function (x) sum(!is.na(x)))
-write.csv(biologicaldata, file="GSRdata.csv")
-rm(list=ls(pattern="phys"))
-gc()
+gsr.full <- biologicaldata[1:31550,]
+gsr.full.ts <- as.data.frame(lapply(gsr.full, ts, frequency=1000))
+gsr.agg <- lapply(gsr.full.ts,  function(x) aggregate(as.ts(x), FUN=mean))
+gsr.agg.df <- as.data.frame(gsr.agg)
 @ 
 <<GSRtrans, echo=FALSE, results=hide>>=
 GSRtrans <- matrix(NA, nrow=107, ncol=31150)
@@ -880,6 +1031,22 @@ for (i in seq_along(biologicaldata)) {
   rownames(GSRtrans) <- colnames(biologicaldata)
   }
 GSRtrans <- as.data.frame(GSRtrans)
+@ 
+
+<<getECG, echo=FALSE, results=hide>>=
+ecgmat <- matrix(NA, nrow=35550, ncol=107)
+getdata <- function(data) {
+  for(i in 1:length(biodata)) {
+  temp <- get(data[i])
+  print(i)
+  ecgmat[1:nrow(temp),i] <- temp[1:nrow(temp),2]
+}
+  ecgmat
+}
+ecgdata <- getdata(biodata)
+ecgnames <- gsub("phys", "ECG", x=biodata)
+ecgdata <- as.data.frame(ecgdata)
+names(ecgdata) <- ecgnames
 @ 
 
 <<gsrcollate, echo=FALSE, results=hide>>=
@@ -891,7 +1058,7 @@ GSRtrans$survlength <- apply(GSRtrans, 1, function (x) sum(!is.na(x)))
 GSRtrans$survlengthdiv <- with(GSRtrans, survlength/600)
 GSRtrans$Participant <- gsub(pattern="GSR", replacement="", x=GSRtrans$Participant)
 partsurvgsr <- GSRtrans[,c("Participant", "survlength", "survlengthdiv")]
-partsurvmin <- Iatandexpmeasures[,c("Participant","Condition", "PlacResp", "lengthsurv")]
+partsurvmin <- Iatandexpmeasures[,c("Participant","Condition","Gender", "PlacResp", "lengthsurv")]
 GSRtranswithcond <- merge(GSRtrans, partsurvmin, by="Participant")
 write.csv(GSRtrans, file="GSRtrans.csv")
 @ 
@@ -916,13 +1083,17 @@ meangsr <- lapply(meangsr, as.numeric )
 meangsr <- as.data.frame(lapply(meangsr, scale))
 meangsr$Time <- 1:31149
 @ 
-
+\begin{figure}
 <<meanplotgsr, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(2,2))
 plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
-@ 
+@   
+  \caption{Mean Galvanic Skin Response by Condition over Time}
+  \label{fig:meanplotgsr}
+\end{figure}
 
-The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+
+The results shown above in Figure \ref{fig:meanplotgsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 <<gsrmedians, echo=FALSE, results=hide>>=
 deceptivemediangsr <- lapply(gsrdeceptive[,2:31150], median, na.rm=TRUE)
@@ -932,20 +1103,40 @@ medgsr <- as.data.frame(cbind(deceptivemediangsr, openmediangsr, notreatmediangs
 medgsr <- lapply(medgsr, as.numeric)
 medgsr <- as.data.frame(medgsr)
 medgsr <- as.data.frame(lapply(medgsr, scale))
+medgsr$Time <- 1:31149
 @ 
-
+\begin{figure}
 <<gsrmedianplot, echo=FALSE, fig=TRUE>>=
 plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
-@ 
+@   
+  \caption{Median GSR over time by Condiition}
+  \label{fig:mediangsr}
+\end{figure}
+
 
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
 
-<<ggplotgsr, echo=FALSE, fig=TRUE>>=
+\begin{figure}
+<<ggplotmeangsr, echo=FALSE, fig=TRUE>>=
 meangsr.melt <- melt(meangsr, id="Time")
 meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
-meangsr2 <- meangsrplot+layer(geom="line")
+meangsr2 <- meangsrplot+layer(geom="smooth")
 print(meangsr2)
-@ 
+@   
+  \caption{Mean GSR levels by Condition (using a loess smoother)}
+  \label{fig:meangsrplot}
+\end{figure}
+
+\begin{figure}
+<<ggplotmedgsr, echo=FALSE, fig=TRUE>>=
+medgsr.melt <- melt(medgsr, id="Time")
+medgsrplot <- ggplot(medgsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
+medgsr2 <- medgsrplot+layer(geom="smooth")
+print(medgsr2)
+@   
+  \caption{Median GSR scores by Condition (using a loess smoother)}
+  \label{fig:medgsrplot}
+\end{figure}
 
 
  
