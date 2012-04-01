@@ -1,6 +1,5 @@
 FactorXtab <-  function (x, ...) {
-  dots <- (...)
-x.load<-x$loadings 
+  x.load<-x$loadings 
 x.comm<-x$communality
 x.names <- colnames(x.load)
 len <- length(colnames(x.load))
