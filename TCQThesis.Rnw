@@ -76,66 +76,59 @@ tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
 
 <<agesummary, echo=FALSE, results=tex>>=
-sum.age<-summary(tcq1$Age) #$
+sum.age<-summary(tcq1$Age) 
 sum.age.mat<-as.matrix(sum.age)
 xtab.age<-xtable(sum.age.mat)
 print(xtab.age)
 @ 
 
-\caption{Age Distribution of Sample, TCQ 1}
-\label{tab:tcq1.age}
 
 
 
 The College of study of the respondents was also assessed, and the results are shown in Table \ref{tab:tcq1.college} below. 
 
 <<gendersummary, echo=FALSE, results=tex>>=
-sum.gen<-summary(tcq1$Gender.) 
+sum.gen<-summary(tcq1$Gender) 
 sum.gen.mat<-as.matrix(sum.age)
 sum.gen.xtab<-xtable(sum.gen.mat)
 print(sum.gen.xtab)
 @ 
 
 <<tcqcollege, echo=FALSE, results=tex>>=
-sum.coll<-summary(tcq1$College.) 
+sum.coll<-summary(tcq1$College) 
 sum.coll.mat<-as.matrix(sum.coll)
-xtab.coll<-xtable(sum.coll.mat)
+xtab.coll<-xtable(sum.coll.mat, label="tab:tcq1.college", caption="College of Respondents, TCQ 1")
 print(xtab.coll)
 @ 
 
 
-\caption{College of Respondents, TCQ 1}
-\label{tab:tcq1college}
+
 
 
 As we can see from Table \ref{tab:tcq1college}, again the breakdown roughly follows the distribution of students in the population. However, there are a few more Medicine and Health students than one would expect, presumably because this survey was somewhat more salient to them, given their field. 
 
 The next demographic variable we will examine is the breakdown between undergraduates and postgraduates in the sample. The results can be seen in Table 3 below. 
 <<upgsummary, echo=FALSE, results=tex>>=
-sum.ugpg<-summary(tcq1$UGPG.) #$
+sum.ugpg<-summary(tcq1$UGPG) 
 ugpg.mat<-as.matrix(sum.ugpg)
-xtab.ugpg<-xtable(ugpg.mat)
+xtab.ugpg<-xtable(ugpg.mat, caption="Distribution of Undergraduates and Postgraduate Respondents, TCQ 1", label="tab:tcq1ugpg")
 print(xtab.ugpg)
 @ 
 
 
-\caption{Distribution of Undergraduates and Postgraduate Respondents, TCQ 1}
-\label{tab:tcq1ugpg}
 
 As we can see from table \ref{tab:tcq1ugpg}, approximately 16\% of the sample are postgraduates, which fits reasonably well with the figures from the population. 
 
 The next demographic variable examined is that of year of Study, and the results can be seen in Table below.
 
 <<yearsummary, echo=FALSE, results=tex>>=
-sum.year<-summary(tcq1$Year.) #$
+sum.year<-summary(tcq1$Year) 
 mat.year<-as.matrix(sum.year)
-xtab.year<-xtable(mat.year)
+xtab.year<-xtable(mat.year, caption="Year of Study, TCQ 1",label="tab:tcq1year" )
 print(xtab.year)
 @ 
 
 
-\caption{Year of Study, TCQ 1}
-\label{tab:tcq1year}
 
 
 As one can see from Table \ref{tab:tcq1year} , the largest number of respondents came from first year, which argues against the representativeness of the sample. However, given that both first year undergraduates and first year postgraduates could have used this response, it may not be that much of a threat to representativeness. 
@@ -152,13 +145,11 @@ totals <- tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")]
 <<totalsummary, echo=FALSE, results=tex>>=
 sum.totals<-summary(totals)
 mat.totals<-as.matrix(sum.totals)
-xtab.totals<-xtable(mat.totals)
+xtab.totals<-xtable(mat.totals, caption="Summary Statistics, Total Credibility Scores", label="tab:tcq1.sumtotals")
 print(xtab.totals)
 @ 
 
 
-\caption{Summary Statistics, Total Credibility Scores}
-\label{tab:tcq1.sumtotals}
 
 As can be seen,  none of these distributions are normally distributed, a point which is reinforced by Figure \ref{fig:tcqscatterplotmat} below, which shows both the correlations between the scale totals and their distribution. 
 \begin{figure}
@@ -171,19 +162,25 @@ print(pairs.panels(totals))
 \end{figure}
 
 Next, the differences in credibility totals between Genders will be examined. 
-<<gendercred, echo=FALSE, fig=TRUE>>=
+<<gendercred, echo=FALSE, results=hide>>=
 gendpill <- ggplot(tcq1, aes(x=PillTot, colour=Gender))+layer(geom="bar")
 gendcream <- ggplot(tcq1, aes(x=CreamTot, colour=Gender))+layer(geom="bar")
 gendinj <- ggplot(tcq1, aes(x=InjTot, colour=Gender))+layer(geom="bar")
 gendacu <- ggplot(tcq1, aes(x=AcuTot, colour=Gender))+layer(geom="bar")
 @ 
+
+\begin{figure}
 <<gendpill, echo=FALSE, fig=TRUE>>=
 print(gendpill)
-@ 
+@   
+  \caption{Gender Differences in Pill Scores, TCQ1}
+  \label{fig:gendcredpill}
+\end{figure}
 
-As can be seen from this Box plot (Figure \ref{fig:tcq 0.795-11}), there appear to be no significant differences in median Pill scores that can be attributed to the Gender of the respondents. It can be seen, however, that the variability is larger within the male responses. Again, we see a similar pattern to the scores for Pills, in that there appears to be no mean differences in the credibility totals. We can see a larger variability with the responses from men.  From Figure 9, we can observe that again, no significant differences are visible between the credibility totals.  We can observe that men tend to report much higher variability in their assessment of injections.However, the acupuncture figure shows a different pattern. We can see from a simple inspection of the graph that the mean credibility totals are very different for females and males. We performed a Kruskall Wallis test to examine whether this visual difference can be backed up with a rigorous analysis. The results tended towards significance (p=0.09).
+
+As can be seen from this Box plot (Figure \ref{fig:gendcredpill}), there appear to be no significant differences in median Pill scores that can be attributed to the Gender of the respondents. It can be seen, however, that the variability is larger within the male responses. Again, we see a similar pattern to the scores for Pills, in that there appears to be no mean differences in the credibility totals. We can see a larger variability with the responses from men.  From Figure 9, we can observe that again, no significant differences are visible between the credibility totals.  We can observe that men tend to report much higher variability in their assessment of injections.However, the acupuncture figure shows a different pattern. We can see from a simple inspection of the graph that the mean credibility totals are very different for females and males. We performed a Kruskall Wallis test to examine whether this visual difference can be backed up with a rigorous analysis. The results tended towards significance (p=0.09).
 As can be seen from this, the difference, although visible is not significant, although it probably would be if the sample were larger. Again, the pattern of larger variability in the responses of men is apparent.   
-<<collegeplots, echo=FALSE, fig=TRUE>>=
+<<collegeplots, echo=FALSE, results=hide>>=
 collpill <- ggplot(tcq1, aes(x=PillTot, colour=College))+layer(geom="bar")
 collcream <- ggplot(tcq1, aes(x=CreamTot, colour=College))+layer(geom="bar")
 collinj <- ggplot(tcq1, aes(x=InjTot, colour=College))+layer(geom="bar")
@@ -227,10 +224,9 @@ tcqall <- as.data.frame(cbind(Pillall, Creamall, Injall, Acuall))
 rel.tcq <- psych:::alpha(na.omit(tcqall))
 @ 
 
-\caption{Reliability Statistics for TCQ 1}
-\label{tab:reltcq1short}
-<<reltcq, echo=FALSE, fig=TRUE>>=
-rel.xtab<-xtable(rel.tcq$total) 
+
+<<reltcq, echo=FALSE, results=tex>>=
+rel.xtab<-xtable(rel.tcq$total,caption="Reliability Statistics for TCQ 1", label="tab:reltcq1short") 
 print(rel.xtab)
 @ 
 
@@ -264,18 +260,16 @@ VSS(na.omit(tcqall))
 
 <<tcqfact4, echo=FALSE, results=tex>>=
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.4, label="tcqfact4"))
+print(FactorXtab(tcq.fact.4, label="tcqfact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation"))
 @ 
 
 <<factorloadings4, echo=FALSE, results=verbatim>>=
 print(ExtractLoadings(tcq.fact.4))
 @ 
 
-\caption{Four Factor Solution, TCQ 1 Oblimin rotation}
-\label{tab:tcq1fourfactor}
 
 <<factorcor4, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.4, label="factorcor4"))
+print(FactorCor(tcq.fact.4, label="factorcor4", caption="Four Factor TCQ correlations"))
 @ 
 
 The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
@@ -287,10 +281,6 @@ As can be seen from Table \ref{tab:tcq1fourfactor}  this factor structure is ext
 Below, in Table \ref{tab:tcq1fourfactor.corr} are shown the inter-correlations between these factors. 
 
 
-\caption{Four Factor Solution Correlations between Factors}
-\label{tab:tcq1fourfactor.corr}
-
-
 This four factor solution explains 74\% of the variance, which is extremely high for a psychological self report scale. 
 
 As can be seen from Table \ref{tab:tcq1fourfactor.corr} , the Acupuncture factor does not correlate highly with the other three factors, but they do correlate reasonably well with one another. This table makes clear that the distinction between the western and alternative treatment modalities was clear to the participants. 
@@ -299,13 +289,12 @@ Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
 
 <<tcqfact5, echo=FALSE, results=tex>>=
 tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.5, label="tcqfact5"))
+print(FactorXtab(tcq.fact.5, label="tcqfact5",caption="Five Factor Solution, TCQ 1 Promax rotation"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.5, label="tcq5cor"))
+print(FactorCor(tcq.fact.5, label="tcq5cor", caption="Five Factor Solution TCQ1 Correlations"))
 @ 
 
-\caption{Five Factor Solution, TCQ 1 Promax rotation}
 
 
 Although in Table \ref{tab:tcq1fivefactor} the oblimin solution is shown, simplimax, varimax and promax rotations were attempted on the data specifying five factors. In no case did any of the items load highest on this factor, so this factor can be regarded as not adding anything to the model. 
@@ -313,14 +302,12 @@ Although in Table \ref{tab:tcq1fivefactor} the oblimin solution is shown, simpli
 Finally, the six factor solution was examined for interpretability, and the results are shown in Table \ref{tab:tcq1sixfactor}
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.6, label="tcqfact6"))
+print(FactorXtab(tcq.fact.6, label="tcqfact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation"))
 @ 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6, label="tcq6cor"))
+print(FactorCor(tcq.fact.6, label="tcq6cor",caption="TCQ Six Factor Solution Correlations"))
 @ 
 
-\caption{Six Factor Solution, TCQ 1, Oblimin Rotation}
-\label{tab:tcq1sixfactor}
 
 
 As can be seen in Table \ref{tab:tcq1sixfactor} the four factors from the original solution still have the highest loadings, but there are a number of lower loadings on the fifth and sixth factors. This suggests that a CFA using a maximum likelihood approach is needed to determine which of these solutions can reproduce the covariance matrix most accurately. 
@@ -330,12 +317,11 @@ fit4 <- FitIndices(tcq.fact.4)
 fit5 <- FitIndices(tcq.fact.5)
 fit6 <- FitIndices(tcq.fact.6)
 fit.tcq1 <- as.data.frame(cbind(fit4, fit5, fit6))
-print(xtable(fit.tcq1))
+print(xtable(fit.tcq1, caption="Fit Indices, TCQ 1", label="tab:tcq1modelcomp"))
 @ 
 
 
-\caption{Fit Indices, TCQ 1}
-\label{tab:tcq1modelcomp}
+
 
 It can be seen that the six factor solution has the best fit indices (BIC and TLI) and given these fit indices and the results of the CFA in Table \ref{tab:tcq1modelcomp}, this factor solution appears to be the one which replicates the covariance matrix best. 
 
@@ -824,10 +810,8 @@ The sample size collected was 1329, however, only 700 completed all questions. T
 <<tcq2demo, echo=FALSE, results=tex>>=
 tcq2.demo <- tcq2[,2:17]
 tcq2.sum <- summary(tcq2.demo)
-print(xtable(tcq2.sum))
+print(xtable(tcq2.sum, caption="Demographic Statistics, TCQ 2", label="tab:tcq2demo"))
 @ 
-\label{tab:tcq2demo}
-\caption{Demographic Statistics, TCQ 2}
 
 
 
@@ -865,10 +849,9 @@ gendHom <- with(tcq2, tapply(Homtot, Gender, mean, na.rm=TRUE))
 gendRei <- with(tcq2, tapply(Reitot, Gender, mean, na.rm=TRUE))
 gendBam <- with(tcq2, tapply(Bamtot, Gender, mean, na.rm=TRUE))
 gendcred <- as.data.frame(cbind(gendPill, gendCream, gendInj, gendAcu, gendHom, gendRei, gendBam))
-print(xtable(gendcred))
+print(xtable(gendcred, caption="Credibility Differences by Gender", label="tab:tcq2.collegecred"))
 @ 
-\caption{Credibility Differences by Gender}
-\label{tab:tcq2.collegecred}
+
 
 
 As can be seen from Table \ref{tab:tcq2.collegecred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
@@ -883,11 +866,9 @@ collHom <- with(tcq2, tapply(Homtot, College, mean, na.rm=TRUE))
 collRei <- with(tcq2, tapply(Reitot, College, mean, na.rm=TRUE))
 collBam <- with(tcq2, tapply(Bamtot, College, mean, na.rm=TRUE))
 collcred <- as.data.frame(cbind(collPill, collCream, collInj, collAcu, collHom, collRei, collBam))
-print(xtable(collcred))
+print(xtable(collcred, caption="Credibility Differences by College", label="tab:tcq2.collegecred"))
 @ 
 
-\caption{Credibility Differences by College}
-\label{tab:tcq2.collegecred}
 
 
 As can be seen from Table \ref{tab:tcq2.gendercred}, the sample scores showed some significant differences attributable to Gender. The cream, acupuncture, homeopathy and reiki totals were significantly different in the sample, as was the Beliefs About Medicine scale total. The usual caveats regarding multiple comparisons do of course apply to this finding. 
@@ -933,21 +914,18 @@ tcq2a.vss <- VSS(na.omit(tcqall2a))
 As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
 <<tcq2afact6, echo=FALSE, results=tex>>=
 tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.6, label="tcq2afact6"))
+print(FactorXtab(tcq2a.fact.6, label="tcq2afact6", caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
-\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2afact6}
+
 
 As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor"))
+print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor", caption="Factor Correlations, Six Factor Solution TCQ 2"))
 @ 
 
 
-\caption{Factor Correlations, Six Factor Solution TCQ 2}
-\label{tab:tcq2.sixfactorcorr}
 
 
 The proportion of variance explained by the six factor solution is equal to 82\% which is an extremely high amount, arguing for the usefulness of this solution. 
@@ -956,11 +934,10 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.7, label="tcq2afact7"))
+print(FactorXtab(tcq2a.fact.7, label="tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
-\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2sevenfactor}
+
 
 Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that factor 7 has no questions loading highest on it. Therefore, we can probably use the six factor structure on the basis of this data. 
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
@@ -973,10 +950,9 @@ print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr"))
 tcq2aFit6 <- FitIndices(tcq2a.fact.6)
 tcq2aFit7 <- FitIndices(tcq2a.fact.7)
 tcq2afit <- as.data.frame(cbind(tcq2aFit6, tcq2aFit7))
-print(xtable(tcq2afit))
+print(xtable(tcq2afit,caption="Fit Indices, TCQ 2", label="tab:tcq2.fit"))
 @ 
-\caption{Fit Indices, TCQ 2}
-\label{tab:tcq2.fit}
+
 
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
@@ -1085,10 +1061,8 @@ As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis a
 
 <<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5, label="tcq2afact5"))
+print(FactorXtab(tcq2b.fact.5, label="tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
 @ 
-\caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
-\label{tab:tcq2bfivefactor}
 
 The five factor solution broke down as follows:
 It explained 81\% of the variance, and all the communalities were greater than 0.5. 
@@ -1113,21 +1087,19 @@ print(FactorCor(tcq2b.fact.5,label="tcq2bfactorcor5"))
 
 <<tcq2bfact6, echo=FALSE, results=tex>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6,label="tcq2bfact6"))
+print(FactorXtab(tcq2b.fact.6,label="tcq2bfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
-\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2.sixfactor}
+
 
 As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded.  
 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor"))
+print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2A"))
 @ 
 
 
-\caption{Factor Correlations, Six Factor Solution TCQ 2}
-\label{tab:tcq2.sixfactorcorr}
+
 
 
 The proportion of variance explained by the six factor solution is equal to 84\% which is an extremely high amount, arguing for the usefulness of this solution. 
@@ -1136,11 +1108,9 @@ As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7, label="tcq2afact7"))
+print(FactorXtab(tcq2b.fact.7, label="tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
-\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2sevenfactor}
 
 This solution explained 86\% of the variance in the sample, and the items were assigned to factors as follows.
 PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6". This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
@@ -1169,10 +1139,9 @@ tcq2bFit5 <- FitIndices(tcq.fact.5)
 tcq2bFit6 <- FitIndices(tcq2b.fact.6)
 tcq2bFit7 <- FitIndices(tcq2b.fact.7)
 tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
-print(xtable(tcq2bfit))
+print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
 @ 
-\caption{Fit Indices, TCQ 2 (Split B)}
-\label{tab:tcq2bfit}
+
 
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
@@ -1296,10 +1265,9 @@ tcq2c.vss <- VSS(na.omit(tcqall2c))
 
 <<tcq2cfact5, echo=FALSE, results=tex>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.5,label="tcq2cfact5"))
+print(FactorXtab(tcq2c.fact.5,label="tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
 @ 
-\caption{Five factor Solution, TCQ 2 (Split B), Oblimin Rotation}
-\label{tab:tcq2cfivefactor}
+
 
 This solution explained 79\% of the variance, and all of the communalities were extremely high. 
 
@@ -1335,20 +1303,18 @@ Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlate
 
 <<tcq2cfact6, echo=FALSE, results=tex>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6,label="tcq2cfact6"))
+print(FactorXtab(tcq2c.fact.6,label="tcq2cfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
-\caption{Six factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2.sixfactor}
+
 
 Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
 
 
 <<tcq2cfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.6,label="tcq2cfactorcor"))
+print(FactorCor(tcq2c.fact.6,label="tcq2c6factorcor",caption="Factor Correlations, Six Factor Solution TCQ 2C"))
 @ 
-\caption{Factor Correlations, Six Factor Solution TCQ 2}
-\label{tab:tcq2.sixfactorcorr}
-Again (Table \ref{tab:tcq2.sixfactorcorr} ) shows that Acupuncture again shows correlations with the conventional factors, but homeopathy does also in this particular solution. This solution explained 83\% of the variance, which is consistent with the other splits and factor solutions examined so far. 
+
+Again (Table \ref{tab:tcq2c6factorcorr} ) shows that Acupuncture again shows correlations with the conventional factors, but homeopathy does also in this particular solution. This solution explained 83\% of the variance, which is consistent with the other splits and factor solutions examined so far. 
 
 
 
@@ -1358,13 +1324,11 @@ Again (Table \ref{tab:tcq2.sixfactorcorr} ) shows that Acupuncture again shows c
 
 <<tcq2cfact7, echo=FALSE, results=tex>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7,label="tcq2cfact7"))
+print(FactorXtab(tcq2c.fact.7,label="tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
 
 
-\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation}
-\label{tab:tcq2sevenfactor}
 
 Again, the factors mostly break down into the six forms of treatment.
 
@@ -1395,10 +1359,9 @@ tcq2cFit5 <- FitIndices(tcq2c.fact.5)
 tcq2cFit6 <- FitIndices(tcq2c.fact.6)
 tcq2cFit7 <- FitIndices(tcq2c.fact.7)
 tcq2cfit <- as.data.frame(cbind(tcq2cFit5, tcq2cFit6, tcq2cFit7))
-print(xtable(tcq2cfit))
+print(xtable(tcq2cfit,caption="Fit Indices, TCQ 2 (Split C)", label="tab:tcq2cfit"))
 @ 
-\caption{Fit Indices, TCQ 2 (Split C)}
-\label{tab:tcq2cfit}
+
 
 It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
 
@@ -1479,19 +1442,17 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 <<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6,label="tcq2dfact6"))
+print(FactorXtab(tcq2d.fact.6,label="tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
 @ 
-\caption{Six factor Solution, TCQ 2(Split D), Oblimin Rotation}
-\label{tab:tcq2d.sixfactor}
+
 
 As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors, as is clearly shown in Table \ref{tab:tcq2dfact6}. This solution explained 81\% of the variance. 
 
 
 <<tcq2dfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.6,label="tcq2dfactorcor"))
+print(FactorCor(tcq2d.fact.6,label="tcq2dfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2 (Split D)"))
 @ 
-\caption{Factor Correlations, Six Factor Solution TCQ 2 (Split D)}
-\label{tab:tcq2d.sixfactorcorr}
+
 
 Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. Details of the correlations between factors are shown in Table \ref{tab:tcq2d.sixfactorcorr}. 
 
@@ -1499,10 +1460,9 @@ Similiarly to the results in other splits, the three conventional treatment fact
 
 <<tcq2dfact7, echo=FALSE, results=tex>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7,label="tcq2dfact7"))
+print(FactorXtab(tcq2d.fact.7,label="tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
 @ 
-\caption{Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)}
-\label{tab:tcq2dsevenfactor}
+
 
 
 This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
@@ -1533,10 +1493,9 @@ print(FactorCor(tcq2d.fact.7,label="tcq2d7factorcorr"))
 tcq2dFit6 <- FitIndices(tcq2d.fact.6)
 tcq2dFit7 <- FitIndices(tcq2d.fact.7)
 tcq2dfit <- as.data.frame(cbind( tcq2dFit6, tcq2dFit7))
-print(xtable(tcq2dfit))
+print(xtable(tcq2dfit,caption="Fit Indices, TCQ 2 (Split D)",label="tab:tcq2dfit"))
 @ 
-\caption{Fit Indices, TCQ 2 (Split D)}
-\label{tab:tcq2dfit}
+
 
 Again as has been seen in previous splits, the NNFI increases, the BIC decreases along with the RMSEA. 
 
@@ -3123,9 +3082,7 @@ bam2b.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
 
 
 
-## <<bam2bgpcmraschplot, echo=FALSE, fig=TRUE>>=
-## bam2bgpcm.raschplot <- ggplotGRM(coef(coef2mat(bam2b.gpcm.rasch)))
-% @                               %
+
 
 The estimated parameters for the Rasch model are shown below, in Table \ref{tab:bam2bgpcmrasch}. It can be seen that there are a number of violations of monotonicity in this sample. 
 
@@ -3369,9 +3326,7 @@ bam2c.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
 
 Firstly, three generalised partial credit models were fit (Rasch, one parameter and two parameter). The results are shown below. 
 
-## <<bam2cgpcmraschplot, echo=FALSE, fig=TRUE>>=
-## bam2cgpcm.raschplot <- ggplotGRM(coef2mat(coef(bam2c.gpcm.rasch)))
-% @                               %
+
 
 
 
@@ -3619,9 +3574,6 @@ bam2d.gpcm.gpcm <- gpcm(bamscale2d, constraint="gpcm")
 
 Next, three generalised partial credit models were fitted to the scale, and the results of the Rasch fit are shown below. 
 
-## <<bam2dgpcmraschplot, echo=FALSE, fig=TRUE>>=
-## bam2dgpcm.raschplot <- ggplotGRM(na.omit(coef2mat(coef(bam2d.gpcm.rasch))))
-% @                               %
 
 
 
