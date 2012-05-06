@@ -297,16 +297,80 @@ IRTcv <- function (data, model=c("grm", "gpcm"), constraint=c(TRUE, FALSE, "rasc
     trainset <- splittedsamples[!i]
   }
 }
+IrtCV <- function(x) {
   
 #get observed frequencies from display command in package ltm
-## obs <- descript(x)$perc
-## totscores <- descript(x)$items
-## model <- grm(x)
-## model.scores <- factor.scores(model, resp.patterns=x)
-## abilities <- model.scores$score.dat["z1"]
-#Estimate conditional distribution of test scores for each trait level p(Ability|score) p(abilities|totscores) (probably need to merge them into one dataframe for this). 
+obs <- descript(x)$perc
+totscores <- descript(x)$items
+totscores[totscores==0] <- NA
+model <- grm(x)
+model.scores <- factor.scores(model, resp.patterns=x)
+abilities <- model.scores$score.dat["z1"]
+pointsweights <- model$GH 
+cutpoints <- pointsweights[[1]]
+weights <- pointsweights[[2]]
+q <- seq(from=0, to=1, by=0.05) #create 21 points
+quadnorm <- qnorm(q) # map 21 points to the normal quantiles
+totscores2 <- rowSums(x, na.rm=TRUE)
+totscores2[totscores2==0] <- NA
+ab.scores <- as.matrix(cbind(totscores2, abilities))
+res <- list(obsscores=obs, totscores=totscores2, abscores=ab.scores, model=model, scores=model.scores, abilities=abilities, weights=weights)
+}
+getscores <- function(x) {
+  reslist <- list()
+  x <- as.data.frame(x)
+  probmat <- matrix(NA, nrow=100, ncol=30)
+  uniquescores <- unique(x[,1])
+  unique.sorted <- sort(uniquescores)
+  for(i in seq_along(unique.sorted)) {
+    scoremat <- x[x$totscores2==unique.sorted[i],]
+    uniqueabs <- unique(scoremat[,2])
+    rep1 <- uniqueabs
+    reslist[[i]] <- rep1
+    names(reslist[[i]]) <- paste("score", unique.sorted[i], sep="")
+  }
+  reslist
+}
+probcalc <- function(x, totscores) {
+    res <- sapply(x, calcprob, totscores)
+  }
+ 
+calcprob <- function (x, totscores) {
+  probcal <- list()
+   for(i in seq_along(x)) {
+     if(is.na(x[[i]][1])) {
+       next
+     } else {
+       y <- x[[i]]
+       for(j in seq_along(y)) {
+         if(is.na(y[1][j])) {
+           next
+           probcal[[i]] <- NA
+         }
+         else{
+           p1 <- na.omit((y[j]))/ length(totscores) 
+           p2 <- length(na.omit(y))/length(totscores) 
+           p3 <- na.omit(length(y[j]))/length(totscores)
+           ## browser()
+                  p4 <- p1*p2
+                  p5 <- p4/p3
+           probcal[[i]] <- p5
+         }
+       }
+           
+       probcal
+     }
+     probcal
+   }
+  probcal
+}
+ 
+#Estimate conditional distribution of test scores for each trait level p(Ability|score)= p(score)*p(ability)/p(score)
+#p(abilities|totscores) (probably need to merge them into one dataframe for this).
+#p(abilities|totscores)=P(ability)*P(totscores)/p(abilities)
+#Bin participants on total scores
 #Get scores for each participant (take from 0, to match typical IRT practice and the interpretation of scores as the number of thresholds successfully completed.
-#This should be  distributed as a generalised multinomial for a polytomous model
+#This should be  distributed as a generalised multinomial for a polytomous model Use fitdistr from MASS to get best parameters of the distribution.
 # Method 1: multiply the conditional probability by the weight associated with the quadrature point. (these are stored in the grm model as GH).  This provides an estimation of the expected proportion of participants having an observed test score.
 #multiply the expected proportion by the sample size, the result is the expected frequency of of participants having a particular test score
 #Method 2: if individual ability estimates are available for all participants, the marginal expected frequency for a given score is the sum of the conditional probabilities for this score across the N participants.
