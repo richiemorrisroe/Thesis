@@ -316,44 +316,47 @@ totscores2[totscores2==0] <- NA
 ab.scores <- as.matrix(cbind(totscores2, abilities))
 res <- list(obsscores=obs, totscores=totscores2, abscores=ab.scores, model=model, scores=model.scores, abilities=abilities, weights=weights)
 }
-getscores <- function(x) {
-  reslist <- list()
-  x <- as.data.frame(x)
-  probmat <- matrix(NA, nrow=100, ncol=30)
-  uniquescores <- unique(x[,1])
-  unique.sorted <- sort(uniquescores)
-  for(i in seq_along(unique.sorted)) {
-    scoremat <- x[x$totscores2==unique.sorted[i],]
-    uniqueabs <- unique(scoremat[,2])
-    rep1 <- uniqueabs
-    reslist[[i]] <- rep1
-    names(reslist[[i]]) <- paste("score", unique.sorted[i], sep="")
-  }
-  reslist
-}
+## getscores <- function(x) { #this function appears to be completely pointless, in fact it may also have been causing my problems with the function below. 
+##   reslist <- list()
+##   x <- as.data.frame(x)
+##   probmat <- matrix(NA, nrow=100, ncol=30)
+##   uniquescores <- unique(x[,1])
+##   unique.sorted <- sort(uniquescores)
+##   for(i in seq_along(unique.sorted)) {
+##     scoremat <- x[x$totscores2==unique.sorted[i],]
+##     uniqueabs <- unique(scoremat[,2])
+##     rep1 <- uniqueabs
+##     reslist[[i]] <- rep1
+##     names(reslist[[i]]) <- paste("score", unique.sorted[i], sep="")
+##   }
+##   reslist
+## }
 probcalc <- function(x, totscores) {
     res <- sapply(x, calcprob, totscores)
   }
  
-calcprob <- function (x, totscores) {
+calcprob <- function (x) {
+  x2 <- x[,2]
+  totscores <- x[,1]
   probcal <- list()
-   for(i in seq_along(x)) {
+   for(i in seq_along(x2)) {
      if(is.na(x[[i]][1])) {
        next
      } else {
        y <- x[[i]]
+       y <- sort(y)
        for(j in seq_along(y)) {
          if(is.na(y[1][j])) {
            next
            probcal[[i]] <- NA
          }
          else{
-           p1 <- na.omit((y[j]))/ length(totscores) 
-           p2 <- length(na.omit(y))/length(totscores) 
-           p3 <- na.omit(length(y[j]))/length(totscores)
-           ## browser()
-                  p4 <- p1*p2
-                  p5 <- p4/p3
+           p1 <- na.omit(length((y==y[j])))/ length(totscores) 
+           p2 <- length(y==y[j])/length(na.omit(totscores))
+           p3 <- na.omit(length(y[j]))/length(na.omit(y))
+           browser()
+           p4 <- p1*p2
+           p5 <- p4/p3
            probcal[[i]] <- p5
          }
        }
@@ -375,3 +378,31 @@ calcprob <- function (x, totscores) {
 #multiply the expected proportion by the sample size, the result is the expected frequency of of participants having a particular test score
 #Method 2: if individual ability estimates are available for all participants, the marginal expected frequency for a given score is the sum of the conditional probabilities for this score across the N participants.
 #This can be displayed graphically. In addition, a chi square test can be performed between the observed and expected frequencies, to give a measure of model mis-fit (with all the problems that the Chi-square test is heir too). 
+CondProbIrt <- function(x) {
+  abilities <- x[,1]
+  totscores <- x[,2]
+  s.ord <- order(x$totscores2)
+  x.ord <- x[s.ord,]
+  x.ord2 <- na.omit(x.ord)
+  scores.len <- with(x.ord,tapply(z1, totscores2, length))
+  ## browser()
+  unique.ab <- with(x.ord,xtabs(z1~totscores2))
+  unique.scores <- as.numeric(names(scores.len))
+  probmat <- as.data.frame(matrix(NA, ncol=20, nrow=100))
+  for(i in seq_along(unique.scores)) {
+    cur.score <- x.ord2[x.ord2$totscores2==unique.scores[i],]
+    unique.len <- with(cur.score,table(z1, totscores2))
+    print(unique.scores[i])
+    for(j in seq_along(unique.len)) {
+      p1 <- unique.len[j]/length(unique(x.ord2$z1)) #ab prob
+      p2 <- nrow(cur.score)/nrow(x.ord2) #score prob
+      p3 <- p1*p2
+      p4 <- p3/p2
+      probmat[j,i] <- p4
+    }
+    probmat
+  }
+  scorenames <- paste("Score", unique.scores, sep="")
+  names(probmat) <- scorenames
+  probmat
+}
