@@ -391,10 +391,10 @@ CondProbIrt <- function(x) {
   probmat <- as.data.frame(matrix(NA, ncol=20, nrow=100))
   for(i in seq_along(unique.scores)) {
     cur.score <- x.ord2[x.ord2$totscores2==unique.scores[i],]
-    unique.len <- with(cur.score,table(z1, totscores2))
-    print(unique.scores[i])
-    for(j in seq_along(unique.len)) {
-      p1 <- unique.len[j]/length(unique(x.ord2$z1)) #ab prob
+    unique.ab <- with(cur.score,table(z1, totscores2))
+    unique.sc <- with(x.ord2, table(totscores2))
+    for(j in seq_along(unique.ab)) {
+      p1 <- unique.ab[j]/length(unique(x.ord2$z1)) #ab prob
       p2 <- nrow(cur.score)/nrow(x.ord2) #score prob
       p3 <- p1*p2
       p4 <- p3/p2
