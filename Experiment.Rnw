@@ -26,7 +26,7 @@ Participants in the treatment group were told that the cream was a potent painki
 
 
 <<importdata, echo=FALSE, results=hide>>=
-#setwd("Data/Experiment Data for R/FullStudy/")
+setwd("./ExperimentDataforR/FullStudy/")
 expmeasures <- read.csv("explicitmeasuresfixed.csv")
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
@@ -84,13 +84,14 @@ optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
 optci <- boot.ci(optboot)
 optmeanconf <- as.data.frame(optci$normal)
 names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
-optmeanconf.xtab <- xtable(optmeanconf)
+
 optbootplot <- plot(optboot)
 @ 
 
 
 
 <<optmeanconfprint, echo=FALSE, results=tex>>=
+optmeanconf.xtab <- xtable(optmeanconf, label="tab:optmeanconfprint", caption="Summary of Bootstrapped (n=1000) Calculations of IAT Optimism Score")
 print(optmeanconf.xtab)
 @ 
 
@@ -765,7 +766,7 @@ In addition, the Life Orientation scores are not a significant predictor of plac
 However, when these three variables are placed into the model together, the result is significant.
 
 <<placeboglm, echo=FALSE, results=tex>>=
-placmod6<- glm(PlacResp~tcqiatscore*optiatscore*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod6<- glm(PlacResp~poly(tcqiatscore,2)*poly(optiatscore,2)*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.xtab <- xtable(summary(placmod6))
 print(placmod.xtab)
 @ 
@@ -807,7 +808,7 @@ From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on th
 \subsection{Analysis of Physiological Data}
 
 <<GSRcollate, echo=FALSE, results=hide>>=
-biodata <- ls(pattern="phys")
+biodata <- ls(pattern="phys[0-9]+$")
 biologicaldata <- matrix(NA, nrow=110000, ncol=107)
 for (i in seq(from=1, to=length(biodata))) {
   temp <- get(biodata[i])
@@ -886,7 +887,7 @@ medgsr <- as.data.frame(lapply(medgsr, scale))
 @ 
 
 <<gsrmedianplot, echo=FALSE, fig=TRUE>>=
-plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
+## plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
 @ 
 
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
