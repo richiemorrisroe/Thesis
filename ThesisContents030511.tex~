@@ -12,9 +12,8 @@
 \usepackage{longtable}% for 
 \usepackage{Sweave}
 \usepackage[T1]{fontenc}
-%\usepackage[latin1]{inputenc}
-\usepackage{graphicx}
 \makeindex
+\includeonly{Methodologyplan120211}
 \begin{document}
 
 \maketitle
@@ -41,7 +40,7 @@
 
 \chapter{Health Optimism and Mindfulness Data}
 \label{cha:preliminary-research}
-\include{Health Data for R/HealthforThesis}
+\include{HealthforThesis}
 \chapter{Treatment Credibility Questionnaire}
 \include{TCQThesis}
 % \label{cha:preliminary-research-2}
@@ -54,7 +53,7 @@
 \chapter{Primary Research}
 \label{cha:primary-research}
 \label{cha:primary-research-1}
-\include{Experiment Data for R/FullStudy/Experiment}
+\include{Experiment}
 % %\include{Physiological Data Analysis}
 % \label{cha:primary-research-2}
 % \chapter{General Discussion}
