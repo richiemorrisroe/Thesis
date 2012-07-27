@@ -91,7 +91,7 @@ optci <- boot.ci(optboot)
 optmeanconf <- as.data.frame(optci$normal)
 names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
 optmeanconf.xtab <- xtable(optmeanconf)
-optbootplot <- plot(optboot)
+
 @ 
 
 
@@ -101,13 +101,13 @@ print(optmeanconf.xtab)
 @ 
 
 As can be seen from the Table ~\ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure ~\ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
-\begin{figure}
+\scalebox[0.7]{\begin{figure}
 <<optbootplot, echo=FALSE, fig=TRUE>>=
-print(optbootplot)
+print(plot(optboot))
 @   
   \caption{Plot of Bootstrap Results for the Optimism IAT}
   \label{fig:optbootplot}
-\end{figure}
+\end{figure}}
 
 
 
@@ -168,7 +168,7 @@ print(tcqmeanconf.xtab)
 As can be seen in Table \ref{tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
 \begin{figure}
 <<tcqbootplot, echo=FALSE, fig=TRUE>>=
-print(tcqbootplot)
+print(plot(tcqboot))
 @   
   \caption{Bootstrap Results for Treatment Credibility IAT score}
   \label{fig:tcqbootplot}
@@ -183,13 +183,13 @@ tcqmeanboot <- function (data, indices=rep(0.00885, 113)) {
 }
 tcqstimboot <- boot(tcqiatsorted, statistic=tcqmeanboot, R=1000)
 tcqstimbootci <- boot.ci(tcqstimboot)
-tcqstimbootplot <- plot(tcqstimboot)
+
 @ 
 
 
 \begin{figure}
 <<tcqstimblock3, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(tcqstimblock3[,10:17]))
+pairs.panels(tcqstimblock3[,10:17])
 @  
   \caption{Scatterplot Matrix for Treatment Credibility IAT, Block 3}
   \label{fig:tcqstimblock3}
@@ -199,7 +199,7 @@ print(pairs.panels(tcqstimblock3[,10:17]))
 As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. 
 \begin{figure}
 <<tcqstimblock5, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(tcqstimblock5[,10:17]))
+pairs.panels(tcqstimblock5[,10:17])
 @   
   \caption{Scatterplot Matrix for Treatment Credibility IAT Stimuli, Block 5}
   \label{fig:optstimbklock5}
@@ -209,7 +209,7 @@ print(pairs.panels(tcqstimblock5[,10:17]))
 Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers, however, and the correlations lowered significantly once these were excluded. 
 \begin{figure}
 <<optstimblock3, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optstimblock3[,8:15]))
+pairs.panels(optstimblock3[,8:15])
 @   
   \caption{Scatterplot Matrix for Optimism IAT Stimuli, Block 5}
   \label{fig:optstimblock5}
@@ -219,7 +219,7 @@ print(pairs.panels(optstimblock3[,8:15]))
 Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
 \begin{figure}
 <<optstimblock5, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optstimblock5[,8:15]))
+pairs.panels(optstimblock5[,8:15])
 @   
   \caption{Scatterplot Matrix for Optimism IAT Stimuli, Block 5}
   \label{fig:optstimblock5}
@@ -229,7 +229,7 @@ print(pairs.panels(optstimblock5[,8:15]))
 The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
 \begin{figure}
 <<optiatplotself, echo=FALSE, fig=TRUE>>=
-print((pairs.panels(optiatsorted[5:10])))
+pairs.panels(optiatsorted[5:10])
 @   
   \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
   \label{fig:optplotself}
@@ -260,10 +260,11 @@ print(opt.demo)
 As can be seen from Table \ref{tab:optiatdemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
 
 <<survivaldata, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(9:53)]
-napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
+painratings <- vasscores[,c(1,9:53)]
+napainratings <- apply(painratings[,2:length(painratings)],1, function (x)  sum(is.na(x)))
 lengthsurv <- 46-napainratings
-Iatandexpmeasures$lengthsurv <- lengthsurv
+survlength <- data.frame(Participant=painratings$Participant, lengthsurv=lengthsurv)
+Iatandexpmeasures <- merge(Iatandexpmeasures, survlength, by="Participant")
 @ 
 
 <<paints, echo=FALSE, results=hide>>=
