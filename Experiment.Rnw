@@ -98,7 +98,7 @@ print(optmeanconf.xtab)
 As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
 
 <<optbootplot, echo=FALSE, fig=TRUE>>=
-print(optbootplot)
+print(plot(optboot))
 @ 
 
 
