@@ -1024,7 +1024,255 @@ Firstly, the measure is sensitive to task-switching costs, and these need to be 
 
 One can argue that if it works then we should use it, but a cogent theoretical account of the IAT would allow for more detail and precision in theorising  than is the case at present, and for this reason such a development is essential if the IAT is to become a permanent part of research in experimental psychology.
 
+\part{Measurement in Psychology}
+\label{part:meas-psych}
 
+\section{Introduction}
+\label{sec:introduction}
+
+
+
+One of the features which both the placebo effect and implicit measures have is common is that they are both fields of study where measurement is controversial. In the case of the placebo, there are multiple definitions and situations where it is attempted to be measured, and in the case of implicit measures (more specifically, the implicit association test) there is a measure, but no clear model for how the measure achieves its predictive validity. 
+
+One of the major aims of this thesis is to examine the placebo effect using a variety of different kinds of predictors, and to use these multiple kinds of measures to examine their differential usefulness and areas of strength and weakness. In order to have another form of measurement, it was decided to use self report measures which have been associated both with the placebo effect (optimism, expectancies) and the IAT (mindfulness). 
+
+The reason for the use of these measures was threefold:
+\begin{enumerate}
+\item Firstly, it was believed to be important to have both an explicit and implicit measure both of treatment credibility and optimism as this would allow for a comparison of the relatively efficacy of both of these forms of measurement in the prediction of placebo
+\item Secondly, the use of self report measures (where there is much research on methods for establishing the validity of a measure) would provide a consistency check on the development of the implicit measures
+\item Finally, the use of self report measures allowed for large samples to be collected on some of the predictors of interest in order to develop better models for the measures which could then be applied to the experimental sample. 
+\end{enumerate}
+
+The remainder of this section shall be structured as follows:
+\begin{enumerate}
+\item Firstly, measurement methods in psychology shall be briefly reviewed, along with some general measurement method proposed for use in this thesis 
+\item Secondly, the measurement of the placebo shall be reviewed, with a focus on statistical problems with current methods and on expectancy measures.
+\item Next, the rationale for attempting to measure the placebo with implicit measures will be described. 
+\item Finally, an approach to modelling the placebo response and the relative contributions of different measures shall be described. 
+\end{enumerate}
+
+% \subsection{Psychometric Considerations}
+
+% This project involved a considerable amount of psychometric work, as the major part of it was the development and testing of two measures, one implicit association test and one expectancy questionnaire. This section will detail the approaches taken to the modelling of this data.
+
+\section{Review of Measurement Methods in Psychology}
+\label{sec:revi-meas-meth}
+
+\subsubsection{Explicit Measures}
+
+The use of self report measures of personality and attitude has been standard practice in psychology for over one hundred years \cite{spearman1904general}. In this time, well developed methodologies have been developed for the design and analysis of these measures.
+
+The primary concerns for these measures were their validity and reliability.
+Validity is typically taken to mean the extent to which a measure actually does measure what it purports to, while reliability is the extent to which the same measure applied to the same individuals will give consistent results \cite{raykov2010introduction}.  The validity of a measure can be assessed by correlational analyses with other measures which are theoretically related to the measure under study (convergent validity), but the ultimate test of the validity of the measures comes from its association with an indpendently measured outcome of interest. 
+
+The reliability of the self report measures was assessed by the use of reliability indices such as cronbach's alpha \cite{cronbach1951coefficient}. In addition, factor analysis, structural equation modelling and item response theory methods were applied to the data to investigate latent structure underlying the observed responses. Each of these will be dealt with in turn.  A number of different scoring methods were applied to the self report data arising from these pieces of research and these methods  are discussed below.
+
+
+\subsubsection{Latent Variables}
+
+Latent variables are a primary focus within psychometrics and psychology more generally \cite{bollen2002latent} \cite{borsboom2006attack}. 
+Latent variables have a number of both formal and informal definitions in the field \cite{bollen2002latent} and the one most useful for this research is the local independence definition. This defines latent variables as the cause of the correlations between observed variables, and asserts that, conditional on the latent variable, the correlations between observed variables not significantly different from zero (i.e. the observed variables are locally independent). This definition has the advantage of being equally applicable to both factor analytic and item response theory approaches, whereas other definitions (such as the expected value definition, where the latent variable is referred to as the true score of classical test theory \cite{bollen2002latent}) do not apply as easily to the methodologies employed in this thesis. 
+
+
+The essence of the latent variable concept is that psychological tools such as self report measures or implicit measures are impure measures \cite{edwards2000nature}. They are not pure measures of whatever construct is under investigation, they also tap into elements such as context, social desirability, response patterns and a myriad of other biases and heuristics \cite{borsboom2006attack}. The latent variable approach is extremely common because of this, and forms the core of factor analysis, item response theory and structural equation modelling techniques \cite{bollen2002latent}. 
+
+Some psychometricians would argue that factor analysis is a data reduction technique rather than a latent variable technique \cite{borsboom2006attack}. This critique has its merits, but is more applicable to principal components analysis (PCA) where all of the variance in a matrix is divided into components. Factor Analysis only examines the common variance between items, and as such is a latent variable approach.  In classical test theory (factor analysis, reliability analysis), a latent variable is often referred to as a ``true score'', that is, the score that would be obtained for a participant given an infinite number of replications of the study \cite{bollen2002latent,edwards2000nature}. Indeed, the error terms in a multiple regression model can also be regarded as latent variables \cite{bollen2002latent} in that they are variables which are conditional on a model which has been applied to a set of data. 
+
+ The latent variable modelling approach necessitates that a number of impure measures of a construct are collected (for example, items on a self report measure or stimuli from an IAT) \cite{edwards2000nature}. Impure in this sense means that there is no one to one mapping between observable outcomes of interest and the responses to a particular measure. This means that there is at least some residual variance left unexplained between the criterion (our measure, for example of extraversion) and the outcome (extraverted behaviour).  By examining what these items have in common (by either their correlations or a non-linear function of the response patterns) a better estimation of values on the  construct can be derived \cite{borsboom2006attack}. This derived measure is then used as a predictor for the outcome variable. 
+
+There are two main perspectives on latent variables. The first is the reflective model of latent variables, where the measures are believed to reflect the underlying construct. The second model is the formative model which suggests that latent variables are formed of the measures observed \cite{bollen2002latent,edwards2000nature}.
+
+The first model reflects a positivistic concept of latent variables (i.e. that they exist within people and psychological measures elicit them) while the second represents a more constructivist approach (latent variables are constructed from our measures, and do not necessarily correspond to anything that exists within individuals) \cite{borsboom2005measuring}.
+
+This research assumes the formative model of latent variables, as this is more useful for practical modelling of psychological constructs. 
+
+\subsubsection{Factor Analysis}
+
+Factor analysis has a long history in psychology, and is now over one hundred years old. It is the most commonly used latent variable modelling technique in psychology, and more pages of \textit{Psychometrika} have been devoted to it than to any other technique \cite{henson2006use}.  Despite this, there are still a number of issues and controversies which surround the technique \cite{sass2010comparative}.  Essentially, factor analysis is an attempt to approximate a correlation matrix with a smaller matrix of parameters.  These hypothesised latent variables tend to be called factors or components.
+
+ % One of the first controversies surrounding factor analysis is the dispute between Factor Analysis proper and Principal Components Analysis\cite{henson2006use}. The major difference between Factor Analysis and Principal Components Analysis is that in Factor Analysis, only the variance common across observed response to items (or communalities) is analysed, while in PCA, all of the variance (including variance only found in one item, or unique variance) is analysed. PCA tends to work better for data reduction, and indeed this is the reason why it was developed \cite{borsboom2006attack}.
+
+Throughout this research only factor analytic methods were used for psychometric purposes, as Factor Analysis provides a true latent variable modelling approach, while PCA does not. 
+
+The most critical issue surrounding factor analysis concerns determination of the number of factors to extract\cite{zwick1986comparison}.  This is an important issue, as theory and practice are likely to be held back if an incorrect choice is made.  The issue is not that there are no criteria on which to base a principled decision, but rather that the different criteria often do not agree, and it is thus ultimately left to the informed opinion of the researcher which factor solution is to be preferred.  All of the decision criteria will be reviewed in turn, and their advantages and disadvantages will be discussed \cite{henson2006use}. 
+
+\begin{quotation}
+  "Solving the number of factors problem is
+     easy, I do it everyday before breakfast.  But knowing the right
+     solution is harder" (Kaiser, 1954).
+\end{quotation}
+
+The choice of criterion for retention of factors is extremely important for this thesis. This is because if an incorrect number of factors are extracted, then the predictions for the experimental portion of the research will be biased, and thus will not prove as useful as the method could otherwise be. 
+
+The first, and most popular criterion is surprisingly the least useful \cite{zwick1986comparison}. This rule is called eigenvalues greater than one criterion and recommends keeping all factors whose eigenvalues are greater than one. The rationale behind this approach is that eigenvalues less than one explain less of the variance in the matrix than one item, and as such should not be retained.  More recent research appears to put the minimal criterion for retention of eigenvalues at approximately 0.7. 
+
+The second criterion often used is the scree plot technique, which was popularised by Raymond Cattell. This criterion recommends that the eigenvalues of all factors should be plotted against their number, and only factors before the drop off in eigenvalues should be used. As the process of factor analysis ensures that the first factor will have the largest eigenvalue, followed by the second and so forth, this criterion looks for the point where the eigenvalues are very close to one another.  This criterion has a number of advantages.  It is available in all statistical packages, it can be used without any special training and it tends to give results which are somewhat, if not totally accurate \cite{zwick1986comparison}.  Its major disadvantage is that it relies upon the interpretation of the researcher, but given the strong emphasis on interpretation throughout factor analytic literature this should not be regarded as too much of a handicap.
+
+The next criterion which can be used is that of parallel analysis. Parallel analysis is a Monte Carlo  technique which simulates a data matrix of equal size and shape to the matrix under study, and calculates the eigenvalues of these simulated matrix against those of the real matrix \cite{horn1965rationale}. All factors are retained up to the point where the simulated eigenvalues are greater than the true eigenvalues.  Parallel analysis is one of the better techniques for assessment of the number of factors to extract , and it can often give very accurate results \cite{zwick1986comparison}.
+
+Its major disadvantage is that it tends not to be available in many statistical packages, and that it can often over factor the data-set. However, there is some evidence \cite{beauducel2001problems} that parallel analysis can underextract factors when there is pronounced oblique structure, so both possibilities need to be kept in mind. It does produce some of the most accurate results in simulation studies so it is a useful tool nonetheless \cite{zwick1986comparison}.
+
+Another useful criterion is that of the Minimum Average Partial Criterion (MAP) which extracts factors from the data-set until only random variance is extracted \cite{revelle1979very}. Again, this is an accurate criterion  \cite{zwick1986comparison} which is little used as it is not available in popular statistical programs. The only problem that  has been found with this criterion is that it tends to under-extract factors. %However, with the use of this criterion as a lower bound, and parallel analysis as an upper bound, then the decision of how many factors to retain can be made much easier. [I found this, but the literature does not appear to have as many examples of it] This leads on to the major point and issue with much factor analytic research today, whereby one decision rule is used to the exclusion of all others. Many researchers have recommended the use of multiple decision criteria, but this does not appear to be am approach utilised by many in the literature \cite{henson2006use}\cite{sass2010comparative}. However, this is the approach which has been taken in this research. This work will use parallel analysis, the MAP criterion and examination of scree plots to ensure that all relevant factor solutions are examined.
+
+However, the ultimate test of a factor solution (without using other methodologies, such as Structural Equation Modelling) \cite{joreskog1978structural} is its theoretical clarity and interpretability, and this will be the first test used for all proposed factor solutions.
+
+Another area of dispute amongst researchers in the factor analytic field is which method of rotation to use\cite{sass2010comparative}. As the eigenvalues are only defined up to an arbitrary constant, these rotations do not have any substantive impact on the factor matrix, except that they can make it easier to interpret (which is a very useful function). 
+
+Rotations are commonly applied to factor solutions in order to reduce items loading on multiple factors, and to aid in the discovery of simple structure \cite{henson2006use}. Rotations can be divided into two classes, orthogonal and oblique \cite{sass2010comparative}. Orthogonal rotations return uncorrelated factors, while oblique rotations allow the factors to be correlated. Given that most psychological measures are correlated with one another, one would expect oblique rotations to be more common. However, the default appears to be orthogonal rotations, as they are apparently easier to interpret \cite{henson2006use}. Oblique rotations were applied throughout this research, as if the factors are truly uncorrelated, then the oblique rotation will show that, while the converse is not true for orthogonal rotations 
+
+
+
+\subsubsection{Structural Equation Modelling}
+
+Structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions\cite{fabrigar1999evaluating}. As has been explained above, the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiences.
+
+SEM was developed by Joreskog in the 1970's \cite{joreskog1978structural}. It provides a means of testing hypothesised relationships between latent and manifest variables. In practice, the result of a factor analysis is regarded as a measurement model of the data.
+
+This is combined with a structural model (which describes how the latent variables relate to one another and to the manifest variables). The two of these models are then used to construct a covariance matrix which is then compared with the observed data, and a number of indices of model misfit are calculated. Foremost among these is the $\chi^2$, which estimates the degree of model misfit. The desired result is a p-value of greater than 0.05, which shows that the two matrices are not significantly different.
+
+However, the $\chi^2$  is extremely sensitive to sample size, and tends to be rejected in almost every case \cite{henson2006use}, given the sample sizes needed for accurate factor analysis and structural equation modelling tend to be quite large. As a result of this, many other fit indices have been developed. Foremost amongst these are the Non Normed Fit Index (NNFI), which is also known as the Tucker Lewis Index \cite{bentler1990comparative}, the Root Mean Square Error of Approximation (RMSEA) \cite{rigdon1996cfi} and the Bayesian Information Criterion (BIC) \cite{schwarz1978estimating} and the Aikike Information Criterion (AIC) \cite{akaike1974new}. These all have different strengths and weaknesses and are typically used in a complementary way.
+
+% There are also some requirements for SEM models which are typically not met for much psychological and psychometric data. These are as follows:
+% \begin{itemize}
+% \item The distribution must be approximated well by the first and second order moments.
+% \item Sample size is required to be large (>300)
+% \item The covariance matrix must be strictly positive definite across the entire parameter space.
+% \end{itemize}
+
+% Of these, the multivariate normality assumption  (assumption 1 above) is often difficult to meet in practice. However, there are a number of distribution free methods in SEM, of which the most common is a Weighted Least Squares approach. This proceeds similarly to a Weighted Least Squares approach in linear regression, where points are assigned weights depending on how closely they meet the assumptions of the model. Sample size, by contrast, is typically easy to increase (at least for non-clinical populations).
+
+Identification of the model is one issue in practice, though as Joreskog notes, this can often be achieved by fixing a number of parameters to 0 or 1 (the inter-factor variances are often scaled in this fashion) \cite{joreskog1978structural}.
+
+Another, more theoretical issue is that no set of data is uniquely determined by an SEM model. This is known as the problem of rotation in factor analysis \cite{maccallum2000applications}. Given a covariance matrix $W$, and a set of data $D$, there are many solutions which provide the same fit indices of the model to the data. This can lead to a similiar problem as occurs to factor analysis, where the researcher must make a choice between models which are quantitatively identical. One approach for resolving this problem is discussed below, in Section \ref{sec:probl-sample-infer}.
+
+\subsubsection{Item Response Theory}
+
+Item response theory (IRT) is often called model-based measurement\cite{fischer1995rasch}, and is also referred to as Rasch modelling, is a newer approach to analysing test data, developed both by the Danish mathematician Rasch in work for the Danish army, and also seperately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's \cite{van1997handbook}.
+The fundamental premise of IRT is that the properties and scores on a psychometric test can be modelled as functions of both the items on the test and the ability of the people taking the test.
+
+The IRT approach suggests that conditional on both the ability of the person and the difficulty of the test, the responses of each participant can be predicted probabilistically. As the latent ability of the participant rises, they tend to choose alternative responses which are more reflective of this latent ability. One example of this might be an item for extraversion ``I am always the life and soul of the party``, those respondents who had a higher latent score on the extraversion construct would tend to choose the agree or strongly agree options (on a typical five point scale). 
+
+For instance, if one was modelling extraversion using a set of ten items, the participants who scored highest in extraversion would be most likely to respond strongly agree to the items.  IRT also assumes a property called local independence, which states that conditional on the ability measured by the test, the scores of each participant are independent of one another.
+
+There are a number of different approaches taken to IRT \cite{van1997handbook,fischer1995rasch}. The  Rasch models are the simplest, and have a number of extremely appealing mathematical properties. These models assume that only one trait is measured by the items, that all items are equally predictive of the trait, and that there is no guessing \cite{van1997handbook}.
+
+Because of these assumptions, it is possible to seperate out person abilities and item difficulties perfectly. However, another approach (normally referred to as a two parameter model, or IRT proper) claims that items are differentially predictive of the ability being measured, in a manner analogous to different strength of loadings of items on a construct in factor analysis. Another model the three parameter model \cite{lord1968statistical}, allows for correct responses through a process of guessing, but this model is not normally applied to polytomous (many valued, like a Likert scale) items \cite{van1997handbook,Mair2010}.
+
+The Rasch model is the simplest of these three general forms of models, and will be discussed first, followed by a discussion of two parameter models, after which I discuss three parameter models. Finally, this section ends with a discussion about non-parametric item response theory and multidimensional IRT.
+
+In general, IRT models are represented by the logistic function, and are estimated iteratively through procedures of numerical optimisation (maximum likelihood). The function used to describe the data is a logistic one, where ability is estimated from the probability of answering the question correctly.
+
+The difficulty of an item is conventionally defined as the ability of participants who answer the question with 50\% accuracy. The parameter $\alpha$ is defined as the difficulty of the item. In two parameter models, another parameter $\beta$ is defined and is used for the discrimination of the item (the slope of the curve). In the more complex 3 parameter model, $\theta$ is used to measure guessing (the probability of a correct answer given low ability)\cite{van1997handbook}.
+
+IRT was developed in the context of ability tests, and this leads to much of the vocabulary fitting uneasily within psychology. For instance, in the context of a credibility questionnaire about various treatments, the questions on homeopathy are categorised as most difficult (see Chapter 4). This does not mean that they are harder to answer, just that the probability of a respondent endorsing them is lower than the proability of a participant endorsing an item on the efficacy of painkilling pills.
+
+Below, all of the models will be described in terms of their original use in ability testing, and then conclude with a discussion of polytomous IRT, which is the methodology exclusively relied upon in this research as this research focused on personality testing rather than ability testing.
+
+% It is important to note that the names of the models are slightly deceiving, while they are called 1, 2 \& 3 parameter models, they actually involve the estimation of 1,2, or 3 parameters for each item. This normally means that a test of ${1,2,3\ldots, n}$ items will require the estimation of either ${n, 2n, 3n}$ parameters. The parameters are estimated by an iterative maximum likelihood approach, as so issues of optimisation and ensuring that a global maximum has been found are often important in practical applications\cite{gill2002bayesian}.
+
+
+\subsubsection{IRT Models}
+
+Rasch models are the simplest of the different kinds of IRT models. The model makes a number of assumptions, here restated in less mathematical language than is typical\cite{fischer1995rasch}.
+
+\begin{enumerate}
+\item The latent variable is normally distributed
+\item Each of the items provides equal information with regard to the latent trait
+\item Given a set of responses to a question, $k$ and a latent ability, for every k there is a $\theta$ which is identical in rank (monotonicity)
+\item Given the latent variable, all of the $n$ items are independent (local indpendence)
+\end{enumerate}
+
+The first and third assumptions are common to most IRT models, while the second assumption is the defining characteristic of the Rasch model, and the feature that allows for some of its appealing mathematical properties.
+
+In essence, all of the information about a participant garnered from a Rasch model can be represented by the ability score (it is a sufficient statistic for the distribution) \cite{fischer1995rasch}. This is a characteristic which does not generalise to the more complex models discussed below.
+
+Two parameter (IRT) models are defined by two parameters, the difficulty of the item and the discrimination of the item. The difficulty represents the probability of correctly answering the question, while the discrimination represents the change in difficulty for a given ability (the slope of the curve). In the Rasch model, these slopes are set to 1, so that all items provide equal information about the abilities of participants throughout the sample. This, while allowing for exact estimation of the difficulty of the test and strict sample invariance, is an assumption which is often not met for psychological testing instruments \cite{embretson2000item}.
+
+Two parameter models maintain all of the assumptions of the Rasch model, except for 2, which is generalised \cite{van1997handbook}. The two parameter model recognises that different items provide different amounts of information regarding different participants. This alters the overall model by allowing the slopes of the item to differ, which disallows the property of conjoint additivity, which is the feature of Rasch models that ensures that participant ability and item difficulty can be seperated perfectly.
+
+Non parametric IRT was developed by Mokken \cite{mokken1997nonparametric}, and is often called Mokken scale analysis\cite{van2007mokken}. It maintains the assumptions of all of the previous models, except for the parametric form of the latent variable. Mokken scaling is often performed as a prelude to parametric IRT, as it provides useful checks of all the assumptions noted above. In addition, Mokken scaling can be used in order to assess whether a scale should be broken into two or more subscales, which can then be modelled using parametric IRT. This is the manner in which mokken scale analysis was used in this research. 
+
+% \subsubsection{Two Parameter Models}
+
+% Two parameter models were developed by Lord \& Novick while they worked at Educational Testing Services (ETS)\cite{van1997handbook}. . However, in return this model allows for greater complexity and fidelity to the responses made by the participant.
+
+% \subsubsection{Three Parameter Models}
+
+% The three parameter model was developed by Birnbaum and is identical to the two parameter model, except for one crucial difference\cite{van1997handbook}. Both the one and two parameter models assume that participants only get the correct answer if they know it, that is, there is no guessing. This is a difficult assumption to meet in practice, as in an educational testing setting (assuming that there is no negative marking) participants are likely to guess if they do not know the answer.
+
+%  Even if there is a negative mark penalty, as long as it is not equal to the mark gained from a correct answer, any rational participant will guess if they have narrowed the options down to two of four possible responses. Therefore, Birnbaum's model incorporates this into the test, and assumes that there will be a non-zero level of guessing throughout the test. This means that it cannot be assumed that a participant with extremely low ability will answer a difficult question incorrectly, as so the lower bound on the probability of answering is estimated from the data, and will be greater than 0 (where it is in both the one and two parameter models). Apart from that, the model is exactly the same as the two parameter model.
+
+% \subsubsection{Non Parametric Item Response Theory}
+
+
+
+% \subsubsection{Multi Dimensional Item Response Theory}
+
+% So far, all of the IRT models we have considered have been univariate IRT models, where there is assumed to be a single latent variable $\theta$ responsible for the different patterns of responses. However, it is easy to see that often, this assumption will not be met.
+
+% In terms of personality testing, there is a long history of stable inter-individual differences in the manner in which people respond to personality test items. Some participants will tend to utilise the extreme scores of the scale, while others will stick to the middle. These kinds of behaviours occur stably across divergent instruments, and need to be accounted for.
+
+% As yet, unfortunately, there is no useful mathemtatical model \cite{borsboom2009end} which can be used to model these kinds of individual differences, which is essential if the measurement of human ability is to progress. However, what can be done is fit a multidimensional model which accounts for some of these factors in a coherent  fashion\cite{doran2007estimating}.
+
+% Indeed, multi-level IRT models can allow us to examine the intercorrelations between latent variables, and can lead to much more stable estimates of ability and difficulty, though at the cost of a loss of parsimony and extensive computing requirements (though far less computation than is needed for even the simplest Markov Chain Monte Carlo model). Therefore, as many of the scales used in this research seem to measure multiple latent variables, ML IRT approaches will be employed after an acceptable  unidimensional model has been built for each of the sub scales.
+
+\subsubsection{Polytomous Item Response Theory}
+\label{sec:polyt-item-resp}
+In contrast the dichotomous IRT models presented above, almost all of the IRT models used in psychology are IRT models for polytomous (many responses) data. This follows as with a typical Likert scale, there are five possible responses, arranged  in a montonically increasing fashion.
+
+% Indeed, failures of monotonicity are common when fitting simpler models, and this needs to be checked before estimation of parameters. However, such failures tend to be obvious after the estimation of parameters, and the model can then be improved in an iterative process.
+
+Common polytomous models used in psychology are the Graded Response Model \cite{van1997handbook} (two parameter) and the Partial Credit Model (one parameter)\cite{fischer1995rasch}. The generalised partial credit model is also used in research, and represents a generalisation of the PCM to more flexible two and three parameter IRT models. 
+
+All of these models assume that the data is ordinal (as per a Likert scale). There is another model, the Rating Scale Model \cite{bock1997nominal}, which is used to fit nominal data, or when the assumptions of ordinal data have been breached. The model fitting procedure typically followed a path from simplest to most complex, as described below.
+
+\subsubsection{Scoring Self Report Measures}
+
+Scoring of self report measures is an area which has received surprisingly little research within psychology. Almost all scales seem to use either a sum or mean as their method for calculating a score \cite{borsboom2006attack}. This use of sums and means makes a number of assumptions, some of which may not be justified in this research:
+
+\begin{enumerate}
+\item All scores contribute equally to the construct;
+\item All questions tap the same construct;
+\item All questions are scored in the same direction.
+\end{enumerate}
+
+Of these assumptions, many of them will be violated for many measures. The first, the notion that all questions contribute equally to the construct will be false in all cases where the factor loadings are significantly different from one another (as assessed by correlations between them at conventional levels of significance). The second assumption will be violated where a scale measures more than one factor. 
+
+It would seem obvious that scales which measures multiple factors need to have a seperate score for each one, but this does not appear to occur in many cases. As an example, the factor structure of the Life Orientation Test -Revised is a matter of controversy, with some studies have found a one factor structure while others have found a two factor structure. However, the official scoring guidelines produce only a single mean score for all items.  The third assumption is the only one which appears to be consistently followed with the use of reverse scoring.
+
+There are some reasons why means and sums are preferred over the more complex methods described below throughout psychology. There are two main alternatives to the use of means, medians or sum-scores (with many variations within each of these two broad types), but both of these methods require large samples, which (especially in clinical work) may not be readily available. 
+The two methods are:
+
+
+\begin{enumerate}
+\item Factor scores;
+\item Participant abilities and item difficulties, as estimated from an IRT model.
+\end{enumerate}
+
+These two methods have much in common, and also some important differences. The first commonality is that they both require large amounts of participant data (perhaps 300 or more) \cite{van1997handbook,henson2006use}. The second commonality is that they are both model-based, in that a model is fitted to the observed responses, and then this model is used to turn these responses into scores for each of the participants. Given the paucity of experimental research using over 300 participants in most areas of psychology, it is not surprising that means and summations have remained the standard within the field. Another commonality between the two methods is that they both weight particular items differently, based either on their correlations with the factors (for factor analysis) or the probability of a particular response (for IRT). For Rasch models, the assumption of equal discrimination for each item implies that sum scores are a perfect representation of the model, but Rasch models are difficult to fit to psychological instruments, especially those developed using classical test theory \cite{borsboom2006attack}.   
+
+There are also some differences between the two methods, which are described below. Firstly, factor analysis is a technique which falls squarely under the rubric of linear models\cite{venables2002modern}, so there is an assumed linearity between the responses and the factor scores. In contrast to this, IRT utilises a non linear approach to scoring the items (generally a logistic function), although these can also be classified under the rubric of linear models, albeit generalised \cite{venables2002modern}
+
+One issue with the use of factor scores is that they come from an unidentified model, in the sense that there are an infinite number of factor scores consistent with the data \cite{grice2001computingit}, and the validity of these cannot be assessed through factor analysis alone. The resolution of this issue is discussed below in Section \ref{sec:probl-sample-infer}. There are two major types of factor scores, coarse and fine, and both of them will be assessed for their predictive ability on cross-validation test data \cite{grice2001computingit}.
+
+Another difference concerns the assumptions about the parameters estimated from the sample. In factor analysis, they are assummed to be sample dependent, in that the same instrument given to a different population could produce entirely different factors.   For this research the models were developed and applied to the same sample, so theoretically, this should not be an issue.  In item response theory, the item difficulties are assumed to be independent of the sample which is used to estimate them. This can be rigorously proven for the Rasch model, and is often extended to the more complex 2 and 3 parameter models also, though this is still controversial \cite{van1997handbook}.
+
+The approach taken in this research  was the following. Firstly, all measures were administered to a random sample of the population from which experimental participants were to be drawn (students at University College Cork). These large datasets ($n$ between 800 and 1500) were then used to build and test models based on both factor analysis and item response theory.
+
+N fold Cross-validation \cite{friedman2009elements} (see also Section \ref{problems-sample-infer}) approaches were employed to decide amongst the different methods of scoring. N-fold cross-validation involves splitting the data into N sets, fitting the models on N-1 of these sets and testing the model on the remaining split. This process is repeated for all splits. These models were then  applied to the response patterns of the experimental participants, and estimates of their abilities and scores were created, along with a determination of the best model(s), which was then applied to the experimental data. 
+
+ This allows for the psychometric tools developed for analysis of large samples to be applied to experimental data where there would not have been enough respondents to fit a model on if this was the only data available. This is important, as many measures (including the ones described in Chapter \ref{cha:health-for-thesis} and \ref{cha:tcqthesis}) have structure which implies that the use of means, medians or sum-scores would be invalid, and the collection of large amounts of data allowed for models to be applied to the scales which can then be used to predict the response to placebo more accurately in Chapter \ref{cha:primary-research}. 
+
+\section{Measurement of Placebo}
+\label{sec:measurement-placebo}
+
+The measurement of placebo has improved greatly over the past fifty years since Beecher started examining the phenomenon. However, the measurement of placebo still suffers from a number of problems.
+
+The first problem is the consistent use of ANOVA and regression methods to examine differences between groups. While there is nothing intrinsically wrong with this method (as long as it is not within groups differences which are examined), it is a waste of statistical power. The issue here is that in placebo analgesia research (which this thesis made use of) typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$. This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information.
+
+More appropriate methods for these analyses are time series analyses and survival analysis, both of which are discussed in Chapter \ref{cha:methodology}. 
+
+The other major issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assummed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. In the next section, the rationale behind this approach is explained. 
 
 \section{Implicit Measures and Placebo}
 \label{sec:impl-meas-plac}
@@ -1054,7 +1302,25 @@ Another line of evidence which supports this thesis is the finding that the IAT 
 
 A final line of evidence is suggestive of this link, and it arises from the neurological patterns of activation associated with the placebo effects and the implicit association test. These patterns have been studied greatly over the last decade in placebo research, and the major findings are that a network involving the dorsolateral prefrontal cortex and the rostral anterior cingulate cortex appear to be activated during placebo related cognitions \cite{Mayberg2002,Zubieta2006}. While neurological research into the IAT has not been as prominent, two recent studies  \cite{Knutson2007,Knutson2006} has shown that both of these areas are activated during the association task that is the IAT. While this cannot be used to prove that the two phenomena are related, it does suggest that there may be some common neurological substrate underlying the kinds of cognitions involved in both of these effects. 
 
-In conclusion, I believe that the expectancies underlying the placebo effect can be measured by means of the Implicit Association Test for the following reasons. Firstly, some placebo effects seem to require a lack of conscious awareness in order to occur. Secondly, the placebo effect seems to be best modelled as a spontaneous phenomenon and the IAT has been shown to predict these kinds of behaviours better. Thirdly, the placebo and the IAT task seem to share some common patterns of neurological activation. For these reasons, I believe that it is imperative to develop an IAT which can measure these expectancies, so that this informed supposition can be put to the only test which really matters: that of empirical research.  
+In conclusion, I believe that the expectancies underlying the placebo effect can be measured by means of the Implicit Association Test for the following reasons. Firstly, some placebo effects seem to require a lack of conscious awareness in order to occur. Secondly, the placebo effect seems to be best modelled as a spontaneous phenomenon and the IAT has been shown to predict these kinds of behaviours better. Thirdly, the placebo and the IAT task seem to share some common patterns of neurological activation. For these reasons, I believe that  development of  an IAT which can measure these expectancies is a worthy contribution to huma knowledge. 
+
+\section{Modelling Placebo by Multiple Methods}
+\label{sec:modell-plac-mult}
+
+Finally, this section will present the overall approach and rationale for the work carried out in the course of this thesis.
+
+The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure of expectancies and treatment credibility was developed (Chapter \ref{cha:tcq-thesis}). 
+
+Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:development-of-iats} for details). 
+
+The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. 
+
+In order to make use of psychometric modelling, large samples of the self report instruments were collected in the same population from which the experimental participants were drawn. This allowed for factor score and IRT models to be built for each of the measures. 
+
+In the experiment itself, (see Chapter \ref{cha:primary-research}) physiological (ECG and GSR) was collected in order to examine the physiological characteristics of placebo and to allow for another form of measurement to be included in the final model.
+
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor type. In essence, this thesis seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measure's relative usefulness in the prediction of placebo. 
+
 %%% Local Variables:
-%%% TeX-master: "ThesisContents030511"
+%%% TeX-master: "PlaceboMeasurementByMultipleMethods"
 %%% End:
