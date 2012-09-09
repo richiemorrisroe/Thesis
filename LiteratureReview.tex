@@ -1205,20 +1205,20 @@ One can argue that if it works then we should use it, but a cogent theoretical a
 \section{Introduction}
 \label{sec:introduction}
 
-One of the features which both the placebo effect and implicit measures have is common is that they are both fields of study where measurement is controversial. In the case of the placebo, there are multiple definitions and situations where it is attempted to be measured, and in the case of implicit measures (more specifically, the implicit association test) there is a measure, but no clear model for how the measure achieves its predictive validity. 
+One of the features which both the placebo effect and implicit measures have is common is that they are both fields of study where measurement is controversial. In the case of the placebo, there are multiple definitions and situations where it is attempted to be measured and some controversy as to its existence, and in the case of implicit measures (more specifically, the implicit association test) there is a measure, but no clear model for how the measure achieves its predictive validity. 
 
 One of the major aims of this thesis is to examine the placebo effect using a variety of different kinds of predictors, and to use these multiple kinds of measures to examine their differential usefulness and areas of strength and weakness. In order to have another form of measurement, it was decided to use self report measures which have been associated both with the placebo effect (optimism, expectancies) and the IAT (mindfulness). 
 
 The reason for the use of these measures was threefold:
 \begin{enumerate}
 \item Firstly, it was believed to be important to have both an explicit and implicit measure both of treatment credibility and optimism as this would allow for a comparison of the relatively efficacy of both of these forms of measurement in the prediction of placebo
-\item Secondly, the use of self report measures (where there is much research on methods for establishing the validity of a measure) would provide a consistency check on the development of the implicit measures
+\item Secondly, the use of self report measures (where there exists a large amount of  research on methods for establishing the validity of a measure) would provide a consistency check on the development of the implicit measures
 \item Finally, the use of self report measures allowed for large samples to be collected on some of the predictors of interest in order to develop better models for the measures which could then be applied to the experimental sample. 
 \end{enumerate}
 
 The remainder of this section shall be structured as follows:
 \begin{enumerate}
-\item Firstly, measurement methods in psychology shall be briefly reviewed, along with some general measurement method proposed for use in this thesis 
+\item Firstly, measurement methods in psychology shall be briefly reviewed, along with the general measurement methods proposed for use in this thesis 
 \item Secondly, the measurement of the placebo shall be reviewed, with a focus on statistical problems with current methods and on expectancy measures.
 \item Next, the rationale for attempting to measure the placebo with implicit measures will be described. 
 \item Finally, an approach to modelling the placebo response and the relative contributions of different measures shall be described. 
@@ -1228,15 +1228,19 @@ The remainder of this section shall be structured as follows:
 \section{Review of Measurement Methods in Psychology}
 \label{sec:revi-meas-meth}
 
-\subsubsection{Explicit Measures}
+\subsection{Introduction}
+\label{sec:introduction}
 
-The use of self report measures of personality and attitude has been standard practice in psychology for over one hundred years \cite{spearman1904general}. In this time, well developed methodologies have been developed for the design and analysis of these measures.
+Stevens defined measurement as the assignment of numbers to people or objects according to a rule (Stevens, cited in \cite{michell2000normal}) Despite this simple definition, measurement in psychology can often be controversial.  In the study of people there are many extraneous factors which could effect the outcome of a particular experiment, and controlling all of these explicitly is a tremendous challenge. This has lead to the use of psychometric modelling and statistical techniques to attempt to counter some of these problems. Psychology is also lucky in that it is possible to carry out experimental research which can tease out and control for many factors which may not have been considered by the researchers (through the use of randomised assignment). 
 
-The primary concerns for these measures were their validity and reliability. Validity is typically taken to mean the extent to which a measure actually does measure what it purports to, while reliability is the extent to which the same measure applied to the same individuals will give consistent results \cite{raykov2010introduction}.  The validity of a measure can be assessed by correlational analyses with other measures which are theoretically related to the measure under study (convergent validity), but the ultimate test of the validity of the measures comes from its association with an indpendently measured outcome of interest. 
+Even so, inference of psychological constructs from measured variables is an error-prone process \cite{Blanton2006d}, in which it is difficult to ensure that what is being measured is actually related to the outcomes of interest. This has lead to a large focus on latent variable modelling (cf Section \ref{sec:latent-variables}). Latent variables are extensively defined below, but in essence, the measures collected by self report or implicit methods are considered to be a combination of the effect of the latent variable and error. This approach, when done well allows for a better understanding of the factors which effect psychological phenomena. 
 
-The reliability of the self report measures is assessed by the use of reliability indices such as Cronbach's $\alpha$ \cite{cronbach1951coefficient}. Typically,  factor analysis, structural equation modelling and item response theory methods are applied to the data to investigate latent structure underlying the observed responses. Each of these will be dealt with in turn.  
+However, this approach of assignment of numbers to traits of people according to rules is an approach not without its critics. For example, Michel \cite{michell2000normal} has argued that psychometrics is pathological in that it is has never explicitly tested the hypothesis that psychological characteristics can be modelled by numerical methods. In fact Michel claims that these qualities are explicitly non-numerical. However, even if these characteristics are not themselves numbers, there is little reason why a model involving numbers cannot be used with great fruition. For example, the heights of men can be modelled by a normal distribution \cite{gelman2007data}, but this does not mean that the normal distribution generated the heights of these individuals. 
 
-\subsubsection{Latent Variables}
+Borsboom \cite{borsboom2004psychometrics} replied to Michel, and noted that many of the problems Michel had pointed out were not problems with psychometrics in general, but rather with classical test theory, and pointed out that the proposal of Michel (using the additive conjoint measurement theory of Tukey and Luce) has actually been implemented in the methods of item response theory. 
+
+\subsection{Latent Variables}
+\label{sec:latent-variables}
 
 Latent variables are a primary focus within psychometrics and psychology more generally \cite{bollen2002latent} \cite{borsboom2006attack}. 
 Latent variables have a number of both formal and informal definitions in the field \cite{bollen2002latent} and the one most useful for this research is the local independence definition. This defines latent variables as \textit{the cause of the correlations between observed variables}, and asserts that, conditional on the latent variable, the correlations between observed variables not significantly different from zero (i.e. the observed variables are locally independent). This definition has the advantage of being equally applicable to both factor analytic and item response theory approaches, whereas other definitions (such as the expected value definition, where the latent variable is referred to as the true score of classical test theory \cite{bollen2002latent}) do not apply as easily to the methodologies employed in this thesis. 
@@ -1255,13 +1259,49 @@ The first model reflects a positivistic concept of latent variables (i.e. that t
 
 This research assumes the formative model of latent variables, as this is more useful for practical modelling of psychological constructs. 
 
-\subsubsection{Factor Analysis}
+\subsubsection{Constructs}
+\label{sec:constructs}
 
+The major focus of measurement in psychology is aimed at uncovering constructs, which are typically regarded as the underlying dimension which is reflected in observable outcomes of interest. These constructs are, by definition, unobservable, and are usually modelled with a latent variable framework. It is important to remember that the indicator of a construct is not itself a contruct \cite{borsboom2006attack}, but rather that the construct is the idealised ``cause'' of the construct. 
+
+All psychological theories consist of two parts which are the relationships between constructs (unobservable) and relations between constructs and measures (observed, and from which inferences regarding the relationships between constructs can be drawn) \cite{edwards2000nature}. The problem here is that multiple relationships between constructs can be consistent with the observed data, and this is why some argue that only when relationships between constructs, measures and observable outcomes can be developed are metrics useful. 
+
+In thinking about constructs, there are two main schools of thought. Then first, called the formative model specifies that constructs are the cause of measures, while the second, reflective model argues that constructs are a useful idealisation of measures \cite{edwards2000nature}. In this thesis, the second approach is taken towards constructs.  To quote Edwards \textit{et al}, constructs 
+\begin{quotation}
+  ... are elements of scientific discourse that serve as verbal surrogates for phenomena of interest
+\end{quotation}
+
+In essence, constructs provide us with a way to conceptualise the relationships between observed behaviour and measures of particular forms. To the extent that they achieve this aim, they are useful, and no further. 
+
+Even within the reflective and formative models, there are multiple ways in which constructs and measures can be related. In the direct models (reflective and formative) the contructs are related to the measures directly, while in the indirect models, there is a presumed mediating variable which intervenes between the construct and the measure. To use an example discussed earlier in this chapter, Kirsch's model of how response expectancies are related to the placebo response is a direct model, and in this model, the effects of all other variables would be regarded as indirect in that they are mediated by expectancies. 
+
+\subsubsection{Arbitrary Metrics}
+\label{sec:arbitrary-metrics}
+
+
+Blanton \textit{et al} argue that what is required within psychology are metrics which they define as \textit{a number that measures take on when describing individuals on the construct of interest. } \cite{Blanton2006d}. They further argue that the IAT (more specifically the Race IAT) is an arbitrary metric in that there is no well understood way of linking it to the population, nor of understanding how a one unit change in the metric affects the observable outcome of interest. This is an extremely good point, often forgotten in the development of psychological models and metrics \cite{borsboom2006attack}. Without re-examining the specific claims of Blanton and Jaccard (as was done in the previous part of the literature review), the general point is worthy of examination. 
+
+In essence, the argument is that if we cannot relate a construct to an observable outcome, then it is arbitrary and should not be used as a metric. This, while true, is a point not specific to implicit measures but rather a more general point regarding most of measurement within psychology. Even those stalwart Big-5 traits have been linked to outcomes but not conclusively, and we cannot predict what one extra unit of extraversion on the NEO-FFI is likely to translate into in terms of outcomes, and yet these measures are still given credence by the community of researchers (perhaps unjustly). 
+
+
+
+\subsection{Explicit Measures}
+\label{sec:explicit-measures}
+The use of self report measures of personality and attitude has been standard practice in psychology for over one hundred years \cite{spearman1904general}. In this time, well developed methodologies have been developed for the design and analysis of these measures.
+
+The primary concerns for these measures were their validity and reliability. Validity is typically taken to mean the extent to which a measure actually does measure what it purports to, while reliability is the extent to which the same measure applied to the same individuals will give consistent results \cite{raykov2010introduction}.  The validity of a measure can be assessed by correlational analyses with other measures which are theoretically related to the measure under study (convergent validity), but the ultimate test of the validity of the measures comes from its association with an indpendently measured outcome of interest. 
+
+The reliability of the self report measures is assessed by the use of reliability indices such as Cronbach's $\alpha$ \cite{cronbach1951coefficient}. Typically,  factor analysis, structural equation modelling and item response theory methods are applied to the data to investigate latent structure underlying the observed responses. Each of these will be dealt with in turn.  
+
+
+
+\subsubsection{Factor Analysis}
+\label{sec:factor-analysis}
 Factor analysis has a long history in psychology, and is now over one hundred years old. It is the most commonly used latent variable modelling technique in psychology, and more pages of \textit{Psychometrika} have been devoted to it than to any other technique \cite{henson2006use}.  Despite this, there are still a number of issues and controversies which surround the technique \cite{sass2010comparative}.  Essentially, factor analysis is an attempt to approximate a correlation matrix with a smaller matrix of parameters.  These hypothesised latent variables tend to be called factors or components.
 
  % One of the first controversies surrounding factor analysis is the dispute between Factor Analysis proper and Principal Components Analysis\cite{henson2006use}. The major difference between Factor Analysis and Principal Components Analysis is that in Factor Analysis, only the variance common across observed response to items (or communalities) is analysed, while in PCA, all of the variance (including variance only found in one item, or unique variance) is analysed. PCA tends to work better for data reduction, and indeed this is the reason why it was developed \cite{borsboom2006attack}.
 
-Throughout this research only factor analytic methods were used for psychometric purposes, as Factor Analysis provides a true latent variable modelling approach, while Principal Components Analysis  (PCA) does not. 
+% Throughout this research only factor analytic methods were used for psychometric purposes, as Factor Analysis provides a true latent variable modelling approach, while Principal Components Analysis  (PCA) does not. 
 
 The most critical issue surrounding factor analysis concerns determination of the number of factors to extract\cite{zwick1986comparison}.  This is an important issue, as theory and practice are likely to be held back if an incorrect choice is made.  The issue is not that there are no criteria on which to base a principled decision, but rather that the different criteria often do not agree, and it is thus ultimately left to the informed opinion of the researcher which factor solution is to be preferred.  All of the decision criteria will be reviewed in turn, and their advantages and disadvantages will be discussed \cite{henson2006use}. 
 
@@ -1294,7 +1334,7 @@ In conclusion, factor analysis is an extremely useful technique which has been w
 
 
 \subsubsection{Structural Equation Modelling}
-\label{sec:struct-equat-modell}
+\l\label{sec:struct-equat-modell}abel{sec:struct-equat-modell}
 
 Structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions\cite{fabrigar1999evaluating}. However, it is actually a far more general techniques to test the relationships between both manifest and latent variables, and even to establish causality in some cases \cite{pearl1998graphs}.   As has been explained above, the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiences.
 
@@ -1319,7 +1359,7 @@ Identification of the model is one issue in practice, though as Joreskog notes, 
 Another, more theoretical issue is that no set of data is uniquely determined by an SEM model. This is known as the problem of rotation in factor analysis \cite{maccallum2000applications}. Given a covariance matrix $W$, and a set of data $D$, there are many solutions which provide the same fit indices of the model to the data. This can lead to a similiar problem as occurs to factor analysis, where the researcher must make a choice between models which are quantitatively identical. One approach for resolving this problem is discussed in Chapter \ref{cha:methodology} , in Section \ref{sec:probl-sample-infer}.
 
 \subsubsection{Item Response Theory}
-
+\label{sec:item-response-theory}
 Item response theory (IRT) is often called model-based measurement\cite{fischer1995rasch}, and is also referred to as Rasch modelling, is a newer approach to analysing test data, developed both by the Danish mathematician Rasch in work for the Danish army, and also seperately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's \cite{van1997handbook}.
 The fundamental premise of IRT is that the properties and scores on a psychometric test can be modelled as functions of both the items on the test and the ability of the people taking the test.
 
@@ -1345,7 +1385,7 @@ It is important to note that the names of the models are slightly deceiving, whi
 
 
 \subsubsection{IRT Models}
-
+\label{sec:irt-models}
 Rasch models are the simplest of the different kinds of IRT models. The model makes a number of assumptions, here restated in less mathematical language than is typical\cite{fischer1995rasch}.
 
 \begin{enumerate}
@@ -1366,21 +1406,21 @@ Two parameter models maintain all of the assumptions of the Rasch model, except 
 Non parametric IRT was developed by Mokken \cite{mokken1997nonparametric}, and is often called Mokken scale analysis\cite{van2007mokken}. It maintains the assumptions of all of the previous models, except for the parametric form of the latent variable. Mokken scaling is often performed as a prelude to parametric IRT, as it provides useful checks of all the assumptions noted above. In addition, Mokken scaling can be used in order to assess whether a scale should be broken into two or more subscales, which can then be modelled using parametric IRT. This is the manner in which mokken scale analysis was used in this research. 
 
 % \subsubsection{Two Parameter Models}
-
+\label{sec:irt-models}
 % Two parameter models were developed by Lord \& Novick while they worked at Educational Testing Services (ETS)\cite{van1997handbook}. . However, in return this model allows for greater complexity and fidelity to the responses made by the participant.
 
 % \subsubsection{Three Parameter Models}
-
+\label{sec:irt-models}
 % The three parameter model was developed by Birnbaum and is identical to the two parameter model, except for one crucial difference\cite{van1997handbook}. Both the one and two parameter models assume that participants only get the correct answer if they know it, that is, there is no guessing. This is a difficult assumption to meet in practice, as in an educational testing setting (assuming that there is no negative marking) participants are likely to guess if they do not know the answer.
 
 %  Even if there is a negative mark penalty, as long as it is not equal to the mark gained from a correct answer, any rational participant will guess if they have narrowed the options down to two of four possible responses. Therefore, Birnbaum's model incorporates this into the test, and assumes that there will be a non-zero level of guessing throughout the test. This means that it cannot be assumed that a participant with extremely low ability will answer a difficult question incorrectly, as so the lower bound on the probability of answering is estimated from the data, and will be greater than 0 (where it is in both the one and two parameter models). Apart from that, the model is exactly the same as the two parameter model.
 
 % \subsubsection{Non Parametric Item Response Theory}
-
+\label{sec:irt-models}
 
 
 % \subsubsection{Multi Dimensional Item Response Theory}
-
+\label{sec:irt-models}
 % So far, all of the IRT models we have considered have been univariate IRT models, where there is assumed to be a single latent variable $\theta$ responsible for the different patterns of responses. However, it is easy to see that often, this assumption will not be met.
 
 % In terms of personality testing, there is a long history of stable inter-individual differences in the manner in which people respond to personality test items. Some participants will tend to utilise the extreme scores of the scale, while others will stick to the middle. These kinds of behaviours occur stably across divergent instruments, and need to be accounted for.
@@ -1400,7 +1440,7 @@ Common polytomous models used in psychology are the Graded Response Model \cite{
 All of these models assume that the data is ordinal (as per a Likert scale). There is another model, the Rating Scale Model \cite{bock1997nominal}, which is used to fit nominal data, or when the assumptions of ordinal data have been breached. The model fitting procedure typically followed a path from simplest to most complex, as described below.
 
 \subsubsection{Scoring Self Report Measures}
-
+\label{sec:scoring-self-report}
 Scoring of self report measures is an area which has received surprisingly little research within psychology. Almost all scales seem to use either a sum or mean as their method for calculating a score \cite{borsboom2006attack}. This use of sums and means makes a number of assumptions, some of which may not be justified in this research:
 
 \begin{enumerate}
