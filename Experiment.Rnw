@@ -1,12 +1,3 @@
-% \documentclass{article}
-% \author{Richard Morrisroe}
-% \title{Analysis of Experimental Data}
-% \usepackage{Sweave}
-% \usepackage{graphics}
-% \DeclareGraphicsExtensions{.pdf}
-% \begin{document}
-% \maketitle{}
-% \date
 
 \section{Introduction}
 
@@ -49,25 +40,31 @@ tcqiatsorted <- tcqiat[,c("Participant", "Date", "Time", "Block", "Accurate", "A
 optiatsorted <- optiat[, c("Participant", "Date", "Time", "Block", "Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse", "Correct", "BlockTime")]
 @ 
 
-<<opttestblocks, echo=FALSE, results=hide>>=
-optiatblock3 <- optiatsorted[optiatsorted$Block=="Block 3:",]
-optiatblock5 <- optiatsorted[optiatsorted$Block=="Block 5:",]
-optstimblock3 <- optiatblock3[,c(1,5:18)]
-optstimblock3$b3sd <- with(optstimblock3, apply(optstimblock3[,2:15], 1, function (x) sd(x, na.rm=TRUE)))
-optstimblock5 <- optiatblock5[,c(1,5:18)]
-optstimblock5$b5sd <- with(optstimblock5, apply(optstimblock5[,2:15], 1, function (x) sd(x, na.rm=TRUE)))
-optstimblock3$b3mean <- with(optstimblock3, apply(optstimblock3[,2:15], 1, function (x) mean(x, na.rm=TRUE)))
-optstimblock5$b5mean <- with(optstimblock5, apply(optstimblock5[,2:15], 1, function (x) mean(x, na.rm=TRUE)))
-optblock3scores <- optstimblock3[,c("Participant", "b3mean", "b3sd")]
-optblock5scores <- optstimblock5[,c("Participant", "b5mean", "b5sd")]
-optscores <- merge(optblock3scores, optblock5scores, all=FALSE)
-optscores$overallsd <- with(optscores, (b3sd+b5sd)/2)
-optscores$meandiff <- with(optscores, b5mean-b3mean)
-optscores$optiatscore <- with(optscores, meandiff/overallsd)
-optiatscore <- optscores[,c("Participant", "optiatscore")]
+<<optiatscore, echo=FALSE, results=hide>>=
+optiatsorted[,"Block"] <- with(optiatsorted, gsub(":", "", x=Block))
+optiatscore.mean <- calcIatScores(optiatsorted,Code="Participant", method="mean", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
+names(optiatscore.mean)[1] <- "Participant"
+names(optiatscore.mean)[6] <- "OptIAT.Mean"
+optiatscore.median <- calcIatScores(optiatsorted,Code="Participant", method="median", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
+names(optiatscore.median)[1] <- "Participant"
+names(optiatscore.median)[6] <- "OptIAT.Median"
+optiatscore <- merge(optiatscore.mean[c(1,6)], optiatscore.median[,c(1,6)], by="Participant")
 @ 
 
 \subsection{Analysis of IAT data}
+
+The first step in the analysis of IAT data is to examine the differential impact of using the mean versus the median as the measure of central tendency for the calculation of IAT scores (the $D$ measure). The results for the Optimism IAT are shown in Figure \ref{fig:meanmedoptiatplot}. As can be seen from this figure, there were no major changes attributable to this difference (the correlation between the two scores was $r=0.91$). 
+
+\begin{figure}
+<<meanmedoptiatplot, echo=FALSE, fig=TRUE>>=
+meanmedoptiatplot <- ggplot(optiatscore, aes(x=OptIAT.Mean, y=OptIAT.Median))+geom_point()+geom_smooth(method="lm")
+print(meanmedoptiatplot)
+@   
+  \caption{Scatterplot with Linear Regression Smooth of IAT score for Optimism IAT calculated with mean (x) and median (y)}
+  \label{fig:meanmedoptiatplot}
+\end{figure}
+
+
 
 <<optiatboot, echo=FALSE, results=hide>>=
 optcritblocks <- merge(optiatblock3, optiatblock5, by="Participant")
@@ -82,10 +79,8 @@ Iatcalcopt <- function (data, indices=rep(0.00885, 113)) {
 }
 optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
 optci <- boot.ci(optboot)
-optmeanconf <- as.data.frame(optci$normal)
+optmeanconf <- as.data.frame(optci[["normal"]])
 names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
-
-optbootplot <- plot(optboot)
 @ 
 
 
@@ -97,9 +92,9 @@ print(optmeanconf.xtab)
 
 As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
 
-<<optbootplot, echo=FALSE, fig=TRUE>>=
-print(plot(optboot))
-@ 
+% <<optbootplot, echo=FALSE, fig=TRUE>>=
+% print(plot(optboot))
+% @ 
 
 
 <<optstimboot, echo=FALSE, results=hide>>=
@@ -113,23 +108,27 @@ optstimbootplot <- plot(optstimboot)
 @ 
 
 <<tcqtestblocks, echo=FALSE, results=hide>>=
-tcqiatblock3 <- tcqiatsorted[tcqiatsorted$Block=="Block 3:",]
-tcqiatblock5 <- tcqiatsorted[tcqiatsorted$Block=="Block 5:",]
-tcqstimblock3 <- tcqiatblock3[,c(1,5:20)]
-tcqstimblock3$b3sd <- with(tcqstimblock3, apply(tcqstimblock3[,2:17], 1, function (x) sd(x, na.rm=TRUE)))
-tcqstimblock5=tcqiatblock5[,c(1,5:20)]
-tcqstimblock5$b5sd <- with(tcqstimblock5, apply(tcqstimblock5[,2:17], 1, function (x) sd(x, na.rm=TRUE)))
-tcqstimblock3$b3mean <- with(tcqstimblock3, apply(tcqstimblock3[,2:17], 1, function (x) mean(x, na.rm=TRUE)))
-tcqstimblock5$b5mean <- with(tcqstimblock5, apply(tcqstimblock5[,2:17], 1, function (x) mean(x, na.rm=TRUE)))
-tcqblock3scores <- tcqstimblock3[,c("Participant", "b3mean", "b3sd")]
-tcqblock5scores <- tcqstimblock5[,c("Participant", "b5mean", "b5sd")]
-tcqscores <- merge(tcqblock3scores, tcqblock5scores)
-tcqscores$overallsd <- with(tcqscores, (b3sd+b5sd)/2)
-tcqscores$meandiff <- with(tcqscores, b5mean-b3mean)
-tcqscores$tcqiatscore <- with(tcqscores, meandiff/overallsd)
-tcqiatscore <- tcqscores[, c("Participant", "tcqiatscore")]
-IATscores <- merge(optiatscore, tcqiatscore)
+tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
+tcqiatscore.mean <- calcIatScores(tcqiatsorted, Code="Participant", method="mean", words=c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki"))
+names(tcqiatscore.mean)[1] <- "Participant"
+names(tcqiatscore.mean)[6] <- "TCQIAT.Mean"
+tcqiatscore.median <- calcIatScores(tcqiatsorted, Code="Participant", method="median", words=c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki"))
+names(tcqiatscore.median)[1] <- "Participant"
+names(tcqiatscore.median)[6] <- "TCQIAT.Median"
+tcqiatscore <- merge(tcqiatscore.mean[,c(1,6)], tcqiatscore.median[,c(1,6)], by="Participant")
+IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 @
+
+Next, we examine the difference between the mean and median scores for the TCQ IAT. As can be seen from Figure \ref{fig:meanmedtcqiat}, the same pattern as emerged from the Optimism IAT scores is apparent, with little difference between the two measures of central tendency ($r=0.89$). 
+
+\begin{figure}
+<<meanmedtcqiat, echo=FALSE, figure=TRUE>>=
+meanmedtcqpl <- ggplot(tcqiatscore, aes(x=TCQIAT.Median, y=TCQIAT.Mean))+geom_point()+geom_smooth(method="lm")
+print(meanmedtcqpl)
+@   
+  \caption{Scatterplot of TCQIAT Median Scores against TCQ IAT mean scores with a linear regression smooth line}
+  \label{fig:meanmedtcqiat}
+\end{figure}
 
 
 
@@ -146,9 +145,9 @@ Iatcalctcq <- function (data=tcqcritblocks, indices=rep(0.00885, 113)) {
 }
 tcqboot <- boot(tcqcritblocks, Iatcalctcq, R=1000)
 tcqci <- boot.ci(tcqboot)
-tcqmeanconf <- as.data.frame(tcqci$normal)
+tcqmeanconf <- as.data.frame(tcqci[[normal]])
 names(tcqmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
-tcqmeanconf.xtab <- xtable(tcqmeanconf)
+tcqmeanconf.xtab <- xtable(tcqmeanconf, label="tab:tcqmeanconf", caption="TCQ IAT mean D scores bootstrap confidence estimates")
 tcqbootplot <- plot(tcqboot)
 @ 
 
@@ -156,7 +155,7 @@ tcqbootplot <- plot(tcqboot)
 print(tcqmeanconf.xtab)
 @ 
 
-As can be seen in Table \ref{tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
+As can be seen in Table \ref{tab:tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
 
 <<tcqbootplot, echo=FALSE, fig=TRUE>>=
 print(tcqbootplot)
@@ -174,18 +173,22 @@ tcqstimbootplot <- plot(tcqstimboot)
 @ 
 
 
-
+\begin{figure}
 <<tcqstimblock3, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(tcqstimblock3[,10:17]))
-@
+plotmatrix(tcqstimblock3[,10:17])
+@  
+  \caption{TCQ IAT Stimuli Response Times in Block 3. The Diagonal shows a histogram of response times, while the off-diagonal elements show the pairwise scatterplots}
+  \label{fig:tcqstimblock3}
+\end{figure}
 
-As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. 
+
+As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. The majority of responses are relatively fast, but there are a number of extreme outliers (the dots at the extreme right and top of each of the scatterplots). 
 
 <<tcqstimblock5, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(tcqstimblock5[,10:17]))
+print(plotmatrix(tcqstimblock5[,10:17]))
 @ 
 
-Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers, however, and the correlations lowered significantly once these were excluded. 
+Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers which are visible in the plot and the correlations lowered significantly once these were excluded. 
 
 <<optstimblock3, echo=FALSE, fig=TRUE>>=
 print(pairs.panels(optstimblock3[,8:15]))
