@@ -172,10 +172,12 @@ tcqstimbootci <- boot.ci(tcqstimboot)
 tcqstimbootplot <- plot(tcqstimboot)
 @ 
 
+The next question is whether or not the IAT's have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was $r=0.08$, thus showing that method variance does not appear to have contaminated the results. 
+
 
 \begin{figure}
 <<tcqstimblock3, echo=FALSE, fig=TRUE>>=
-plotmatrix(tcqstimblock3[,10:17])
+print(plotmatrix(tcqstimblock3[,10:17])+geom_smooth())
 @  
   \caption{TCQ IAT Stimuli Response Times in Block 3. The Diagonal shows a histogram of response times, while the off-diagonal elements show the pairwise scatterplots}
   \label{fig:tcqstimblock3}
@@ -185,39 +187,46 @@ plotmatrix(tcqstimblock3[,10:17])
 As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. The majority of responses are relatively fast, but there are a number of extreme outliers (the dots at the extreme right and top of each of the scatterplots). 
 
 <<tcqstimblock5, echo=FALSE, fig=TRUE>>=
-print(plotmatrix(tcqstimblock5[,10:17]))
+print(plotmatrix(tcqstimblock5[,10:17])+geom_smooth())
 @ 
 
 Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers which are visible in the plot and the correlations lowered significantly once these were excluded. 
 
 <<optstimblock3, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optstimblock3[,8:15]))
+print(plotmatrix(optstimblock3[,8:15])+geom_smooth(method="lm"))
 @ 
 
 Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
 
 <<optstimblock5, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optstimblock5[,8:15]))
+print(plotmatrix(optstimblock5[,8:15])+geom_smooth())
 @ 
 
 The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
-
+\begin{figure}
 <<optiatplotself, echo=FALSE, fig=TRUE>>=
-print(pairs.panels(optiatsorted[5:10]))
-@ 
+print(plotmatrix(optiatsorted[5:10])+geom_smooth())
+@   
  \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
+ \label{fig:optiatplotself}
+\end{figure}
 
- As can be seen in Figure \ref{fig:optplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
+
+
+ As can be seen in Figure \ref{fig:optiatplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
+ 
+ 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores)[1] <-  "Participant"
 names(expmeasures)[1] <- "Participant"
 vasscores.test <- vasscores[,1:8]
 expmeasurescomp <- merge(vasscores.test, expmeasures)
-Iatandexpmeasures <- merge(expmeasurescomp, IATscores)
+Iatandexpmeasures <- merge(expmeasurescomp, IATscores, by="Participant")
 iatexp <- Iatandexpmeasures[,14:23]
 Iatandexpmeasures$meanconv <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
 Iatandexpmeasures$meanalt <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
 Iatandexpmeasures$convaltcomp <- with(Iatandexpmeasures, meanconv -meanalt)
+## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
  
 <<optiatdemo, echo=FALSE, results=tex>>=
