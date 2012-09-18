@@ -215,7 +215,53 @@ print(plotmatrix(optiatsorted[5:10])+geom_smooth())
 
  As can be seen in Figure \ref{fig:optiatplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
  
+ Next, the correlation between the different block times is assessed. As discussed in Chapter \ref{cha:literature-review}, some correlation would be expected given the nature of the IAT task, but the aim here is to quantify what effect, if any it would have had on the results. 
  
+ \begin{figure}
+<<tcqmeanresp, echo=FALSE, figure=TRUE>>=
+tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
+## tcqmeanresp.pl <- ggplot(tcqiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
+## print(tcqmeanresp.pl)
+tcqiat.mean.m <- melt(tcqiat.mean.resp, id.vars=c("Participant", "Block"))
+tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
+tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])+geom_smooth(method="lm")
+print(tcq.block.corr.pl)
+@    
+   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
+   \label{fig:tcqblockcorr}
+ \end{figure}
+
+As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
+
+<<cormatrixtcqiat, echo=FALSE, results=tex>>=
+cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[[r]]
+print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
+@ 
+ 
+
+Next, the same process is repeated for the Optimism IAT. 
+
+<<tcqmeanresp, echo=FALSE, figure=TRUE>>=
+optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
+## optmeanresp.pl <- ggplot(optiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
+## print(optmeanresp.pl)
+optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
+opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
+opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
+print(opt.block.corr.pl)
+@    
+   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
+   \label{fig:optblockcorr}
+ \end{figure}
+
+As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. Table \ref{tab:optcormat}. The correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
+
+<<cormatrixtcqiat, echo=FALSE, results=tex>>=
+opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
+print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
+@ 
+
+
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores)[1] <-  "Participant"
 names(expmeasures)[1] <- "Participant"
@@ -223,54 +269,67 @@ vasscores.test <- vasscores[,1:8]
 expmeasurescomp <- merge(vasscores.test, expmeasures)
 Iatandexpmeasures <- merge(expmeasurescomp, IATscores, by="Participant")
 iatexp <- Iatandexpmeasures[,14:23]
-Iatandexpmeasures$meanconv <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
-Iatandexpmeasures$meanalt <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
-Iatandexpmeasures$convaltcomp <- with(Iatandexpmeasures, meanconv -meanalt)
+Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
+Iatandexpmeasures[,"meanalt" <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
+Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
 ## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
  
+Next, the relationship between overall response time in each block (total time to complete the block, including interstimulus intervals) was examined in terms of the demographic variables. 
+
 <<optiatdemo, echo=FALSE, results=tex>>=
 optiatdemographics <- merge(expmeasures, optiatsorted, by="Participant")
-opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)))
+opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), label="tab:optblocktimedemo", caption="Summary of Linear Regression of Block Time by Block, Age and Gender")
 print(opt.demo)
 @  
-As can be seen from Table, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with men tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
+As can be seen from Table, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with males tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
 tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
+tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), caption="Summary of Linear Rehression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo"))
+print(tcq.demo)
 @ 
 
+\subsection{Randomisation Checks}
+\label{sec:randomisation-checks}
 
+Next, the comparability of the groups were assessed to ensure that the randomisation process had proved effective. 
 
 <<randcheck1, echo=FALSE, results=tex>>=
-tcq.xtab <- xtable(summary(aov(tcqiatscore~Condition, data=Iatandexpmeasures)))
-opt.xtab <- xtable(summary(aov(optiatscore~Condition, data=Iatandexpmeasures)))
+tcq.xtab <- xtable(summary(aov(tcqiatscore~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of Anova of Treatment Credibility Scores by Condition")
+opt.xtab <- xtable(summary(aov(optiatscore~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
 conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
 alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
 chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Gender, Condition)))
 chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
 @ 
 
-<<tablesprint, echo=FALSE, results=tex>>=
+<<tcqcheckprint, echo=FALSE, results=tex>>=
 print(tcq.xtab)
-print(conv.xtab)
+
+@ 
+
+<<optcheckprint, echo=FALSE, results=tex>>=
 print(opt.xtab)
 @ 
 
-As can be seen from Tables the scores on the treatment credibility IAT, the optimism IAT and the mean conventional and alternative credibility scores did not differ across groups. 
+As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT, the optimism IAT did not differ by Condition. 
 
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend$p.value}%$).
-In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime$p.value}%$).
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend[["p.value"]]}).
+In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime[["p.value"]]}).
+
+
+\subsection{Explicit Measures}
+\label{sec:explicit-measures}
 
 
 
 <<lotrmaas, echo=FALSE, fig=TRUE>>=
-lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))
-lotrmaas.comp <- lotrmaas+layer(geom="point")
-print(lotrmaas.comp)
+lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Condition)
+print(lotrmaas)
 @ 
 
-The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. This is in contrast to the results found in a much larger scale study carried out earlier in the research. 
+The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapter \ref{cha:general-discussion}. 
 
 
 <<chisqcondition, echo=FALSE, results=tex>>=
@@ -289,7 +348,7 @@ As can be seen, there is no significant effect of condition on placebo response.
 
 <<chisqtestprimeplac, echo=FALSE, results=tex>>=
 chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
-chisqtest1 <- as.data.frame(cbind(chisq1$statistic, chisq1$parameter, chisq1$p.value, chisq1$observed))
+chisqtest1 <- as.data.frame(cbind(chisq1[["statistic"]], chisq1[["parameter"]], chisq1[["p.value"]], chisq1[["observed"]]))
 names(chisqtest1)[1] <- "Chi Square"
 names(chisqtest1)[2] <- "df"
 names(chisqtest1)[3] <- "p Value"
