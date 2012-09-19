@@ -4,6 +4,9 @@
 \section{Methodology}
 
 \subsection{Experimental Procedure}
+<<healthenv, echo=FALSE, results=hide>>=
+load("healthforthesis.rda")
+@ 
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
 Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken 1000 times per second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of a  moisturising cream. 
@@ -19,6 +22,7 @@ Participants in the treatment group were told that the cream was a potent painki
 <<importdata, echo=FALSE, results=hide>>=
 setwd("./ExperimentDataforR/FullStudy/")
 expmeasures <- read.csv("explicitmeasuresfixed.csv")
+expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
 tcqiat <- read.csv("tcqiatres.csv")
@@ -370,6 +374,28 @@ print(lotrmaas)
 @ 
 
 The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapter \ref{cha:general-discussion}. 
+
+Next, the differences between the experimental sample and the population sample were examined. 
+\begin{figure}
+<<surveyoptimism, echo=FALSE, figure=TRUE>>=
+survey.opt.pl <- ggplot(hom, aes(x=optimism))+geom_histogram()
+print(survey.opt.pl)
+@   
+  \caption{Histogram of Optimism Scores in the Survey samples}
+  \label{fig:surveyoptimism}
+\end{figure}
+
+
+In Figure \ref{fig:surveyoptimism} the distribution of optimism scores in the survey samples can be seen, while Figure \ref{fig:expoptimism} shows the equivalent plot for the experimental sample. It can be seen that the two plots are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
+
+\begin{figure}
+<<experimentoptimism, echo=FALSE, figure=TRUE>>=
+exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_histogram()
+print(exp.opt.pl)
+@   
+  \caption{Distribution of Optimism Scores in the Experimental Sample}
+  \label{fig:expoptimism}
+\end{figure}
 
 
 <<chisqcondition, echo=FALSE, results=tex>>=
