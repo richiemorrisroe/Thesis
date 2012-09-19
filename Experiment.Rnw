@@ -145,7 +145,7 @@ Iatcalctcq <- function (data=tcqcritblocks, indices=rep(0.00885, 113)) {
 }
 tcqboot <- boot(tcqcritblocks, Iatcalctcq, R=1000)
 tcqci <- boot.ci(tcqboot)
-tcqmeanconf <- as.data.frame(tcqci[[normal]])
+tcqmeanconf <- as.data.frame(tcqci[["normal"]])
 names(tcqmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
 tcqmeanconf.xtab <- xtable(tcqmeanconf, label="tab:tcqmeanconf", caption="TCQ IAT mean D scores bootstrap confidence estimates")
 tcqbootplot <- plot(tcqboot)
@@ -234,7 +234,7 @@ print(tcq.block.corr.pl)
 As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
-cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[[r]]
+cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
 print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
 @ 
  
@@ -260,6 +260,35 @@ As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are m
 opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
 print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
 @ 
+
+The final question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
+
+<<opttcqiatcorr, echo=FALSE, results=hide>>=
+curnames <- names(opt.iat.c)
+curnames.bl <- curnames[3:length(curnames)]
+curnames.bl2 <- paste("Opt", curnames.bl, sep="")
+curnames.d <- c(curnames[1:2], curnames.bl2)
+names(opt.iat.c) <- curnames.d
+curnames.tcq <- names(tcq.iat.c)
+curnames.bl.tcq <- curnames[3:length(curnames)]
+curnames.bl2.tcq <- paste("TCQ", curnames.bl.tcq, sep="")
+curnames.d.tcq <- c(curnames.tcq[1:2], curnames.bl2.tcq)
+names(tcq.iat.c) <- curnames.d.tcq
+iat.block.merge <- merge(tcq.iat.c, opt.iat.c, by="Participant")
+iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
+@ 
+
+\begin{figure}
+<<corriattcqopt, echo=FALSE, figure=TRUE>>=
+corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
+print(corr.iat.tcq.opt.pl)
+@   
+  \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
+  \label{fig:corriattcqopt}
+\end{figure}
+
+As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations between the two IAT's. These correlations, while significant, were quite low ($r\bar =0.20$) which equates to about 4\% of the variance. Therefore the two explicit measures can be safely be regarded as not being contaminated by method variance. 
+
 
 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
@@ -290,6 +319,18 @@ tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographic
 print(tcq.demo)
 @ 
 
+\subsection{Implicit-Explicit Relationships}
+\label{sec:impl-expl-relat}
+
+Next, the relationships between the explicit and implicit measures were examined. 
+
+<<corrtestimplexpl, echo=FALSE, results=tex>>=
+corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")
+print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures")
+@ 
+
+It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative). Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion.  
+
 \subsection{Randomisation Checks}
 \label{sec:randomisation-checks}
 
@@ -306,7 +347,6 @@ chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
 
 <<tcqcheckprint, echo=FALSE, results=tex>>=
 print(tcq.xtab)
-
 @ 
 
 <<optcheckprint, echo=FALSE, results=tex>>=
@@ -333,10 +373,10 @@ The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness 
 
 
 <<chisqcondition, echo=FALSE, results=tex>>=
-Subsetiatandexp <- Iatandexpmeasures[Iatandexpmeasures$Condition!="No Treatment",]
+Subsetiatandexp <- Iatandexpmeasures[with(Iatandexpmeasures,Condition!="No Treatment"),]
 Subsetiatandexp <- droplevels(Subsetiatandexp)
 chisq2 <- with(Subsetiatandexp, chisq.test(table(PlacResp, Condition)))
-chisqtest2 <- as.data.frame(cbind(chisq2$statistic, chisq2$parameter, chisq2$p.value, chisq2$observed))
+chisqtest2 <- as.data.frame(cbind(chisq2[["statistic"]], chisq2[["parameter"]], chisq2[["p.value"]], chisq2[["observed"]]))
 names(chisqtest2)[1] <- "Chi Square"
 names(chisqtest2)[2] <- "df"
 names(chisqtest2)[3] <- "p Value"
@@ -352,11 +392,23 @@ chisqtest1 <- as.data.frame(cbind(chisq1[["statistic"]], chisq1[["parameter"]], 
 names(chisqtest1)[1] <- "Chi Square"
 names(chisqtest1)[2] <- "df"
 names(chisqtest1)[3] <- "p Value"
-chisq1.xtab <- xtable(chisqtest1)
+chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square for Relationship between Priming, Condition and Placebo Response")
 print(chisq1.xtab)
 @ 
 
-In Table \ref{} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
+In Table \ref{tab:primeplacchi} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
+
+This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that Participants were much more likely to respond to placebo following a priming intervention. 
+
+\begin{figure}
+<<placprimeplot, echo=FALSE, figure=TRUE>>=
+plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
+print(plac.prime.pl)
+@   
+  \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
+  \label{fig:placprimeplot}
+\end{figure}
+
 
 <<pairsplot, echo=FALSE, Fig=TRUE>>=
 print(pairs.panels(iatexp))
