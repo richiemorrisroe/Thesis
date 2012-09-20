@@ -4392,7 +4392,20 @@ This paper has demonstrated a number of matters with regards to this new instrum
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. This is the authors current focus, and we hope to have such evidence collected by the end of 2010. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
 
-  
+<<saveimage, echo=FALSE, results=hide>>=
+pill.all <- c(with(tcq1, PillTot), with(tcq2, Pilltot))
+cream.all <- c(with(tcq1, CreamTot), with(tcq2, Creamtot))
+inj.all <- c(with(tcq1, InjTot), with(tcq2, Injtot))
+acu.all <- c(with(tcq1, AcuTot), with(tcq2, Acutot))
+hom.all <- with(tcq2, Homtot)
+rei.all <- with(tcq2, Reitot)
+all.cred <- list(pill.all, cream.all, inj.all, acu.all, hom.all, rei.all)
+all.cred <- lapply(all.cred, as.data.frame)
+names(all.cred) <- c("PillCredibility", "CreamCredibility", "InjectionCredibility", "AcupunctureCredibility", "HomeopathyCredibility", "ReikiCredibility")
+credtotals <- tcq2[,c("Pilltot", "Creamtot", "Injtot", "Acutot", "Homtot", "Reitot")]
+save.image("tcqthesis.rda")
+
+@   
 
 %%% Local Variables:
 %%% TeX-master: "PlaceboMeasurementByMultipleMethods"
