@@ -433,7 +433,7 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
     func <- method[2]
   }
   
-data2 <- data[,c(Code, words)]
+  data2 <- data[,c(Code, words)]
   block3 <- data2[data$Block=="Block 3",]
   block5 <- data2[data$Block=="Block 5",]
   block1 <- data2[data$Block=="Block 1",]
@@ -468,4 +468,25 @@ iatscore <-  diff/overallsd
 res <- data.frame(scores=scores, IAT=iatscore ## Block1Correct=b1.corr,Block2Correct=b2.corr,Block4Correct=b4.corr,Block3Correc
                   ## t=b3.corr, Block5Correct=b5.corr
                   )
+}
+fileImport <- function(directory, pattern) {
+  files <- list.files(directory, pattern=pattern, full.names=TRUE)
+  file.list <- lapply(files, read.table, header=FALSE)
+  files2 <- gsub(".*-.*-([0-9][0-9][0-9][0-9][0-9]?).txt", "\\1", x=files)
+  names(file.list) <- files2
+  file.list
+  ## file.df <- do.call(cbind, file.list)
+}
+listToDf <- function(data) {
+  dnames <- names(data)
+  rows <- sapply(data, nrow)
+  maxrows <- max(rows)
+  cols <- length(data)
+  res <- matrix(NA, nrow=maxrows, ncol=cols)
+for (i in seq(from=1, to=length(data))) {
+  temp <- data[[i]]
+  res[1:nrow(temp),i] <- temp[,1]
+}
+  colnames(res) <- paste(c("GSR", "ECG"), dnames, sep="")
+  res
 }
