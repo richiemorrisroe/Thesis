@@ -6,6 +6,8 @@
 \subsection{Experimental Procedure}
 <<healthenv, echo=FALSE, results=hide>>=
 load("healthforthesis.rda")
+hom.data <- hom
+load("tcqthesis.rda")
 @ 
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
@@ -37,6 +39,7 @@ require(reshape2)
 require(eRm)
 require(ltm)
 require(boot)
+require(plyr)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -303,7 +306,7 @@ expmeasurescomp <- merge(vasscores.test, expmeasures)
 Iatandexpmeasures <- merge(expmeasurescomp, IATscores, by="Participant")
 iatexp <- Iatandexpmeasures[,14:23]
 Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
-Iatandexpmeasures[,"meanalt" <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
+Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
 Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
 ## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
@@ -319,361 +322,9 @@ As can be seen from Table, the major influence on Block Time comes from Block, w
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
 tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
-tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), caption="Summary of Linear Rehression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo"))
+tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), caption="Summary of Linear Rehression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo")) 
 print(tcq.demo)
 @ 
-
-\subsection{Implicit-Explicit Relationships}
-\label{sec:impl-expl-relat}
-
-Next, the relationships between the explicit and implicit measures were examined. 
-
-<<corrtestimplexpl, echo=FALSE, results=tex>>=
-corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")
-print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures")
-@ 
-
-It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative). Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion.  
-
-\subsection{Randomisation Checks}
-\label{sec:randomisation-checks}
-
-Next, the comparability of the groups were assessed to ensure that the randomisation process had proved effective. 
-
-<<randcheck1, echo=FALSE, results=tex>>=
-tcq.xtab <- xtable(summary(aov(tcqiatscore~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of Anova of Treatment Credibility Scores by Condition")
-opt.xtab <- xtable(summary(aov(optiatscore~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
-conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
-alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
-chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Gender, Condition)))
-chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
-@ 
-
-<<tcqcheckprint, echo=FALSE, results=tex>>=
-print(tcq.xtab)
-@ 
-
-<<optcheckprint, echo=FALSE, results=tex>>=
-print(opt.xtab)
-@ 
-
-As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT, the optimism IAT did not differ by Condition. 
-
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend[["p.value"]]}).
-In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime[["p.value"]]}).
-
-
-\subsection{Explicit Measures}
-\label{sec:explicit-measures}
-
-
-
-<<lotrmaas, echo=FALSE, fig=TRUE>>=
-lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Condition)
-print(lotrmaas)
-@ 
-
-The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapter \ref{cha:general-discussion}. 
-
-Next, the differences between the experimental sample and the population sample were examined. 
-\begin{figure}
-<<surveyoptimism, echo=FALSE, figure=TRUE>>=
-survey.opt.pl <- ggplot(hom, aes(x=optimism))+geom_histogram()
-print(survey.opt.pl)
-@   
-  \caption{Histogram of Optimism Scores in the Survey samples}
-  \label{fig:surveyoptimism}
-\end{figure}
-
-
-In Figure \ref{fig:surveyoptimism} the distribution of optimism scores in the survey samples can be seen, while Figure \ref{fig:expoptimism} shows the equivalent plot for the experimental sample. It can be seen that the two plots are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
-
-\begin{figure}
-<<experimentoptimism, echo=FALSE, figure=TRUE>>=
-exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_histogram()
-print(exp.opt.pl)
-@   
-  \caption{Distribution of Optimism Scores in the Experimental Sample}
-  \label{fig:expoptimism}
-\end{figure}
-
-
-<<chisqcondition, echo=FALSE, results=tex>>=
-Subsetiatandexp <- Iatandexpmeasures[with(Iatandexpmeasures,Condition!="No Treatment"),]
-Subsetiatandexp <- droplevels(Subsetiatandexp)
-chisq2 <- with(Subsetiatandexp, chisq.test(table(PlacResp, Condition)))
-chisqtest2 <- as.data.frame(cbind(chisq2[["statistic"]], chisq2[["parameter"]], chisq2[["p.value"]], chisq2[["observed"]]))
-names(chisqtest2)[1] <- "Chi Square"
-names(chisqtest2)[2] <- "df"
-names(chisqtest2)[3] <- "p Value"
-chisq2.xtab <- xtable(chisqtest2)
-print(chisq2.xtab)
-@ 
-
-As can be seen, there is no significant effect of condition on placebo response. However, as can also be seen from the table, this is not due to a lower than expected placebo response in the Deceptive Placebo group, but rather due to a higher than expected placebo response in the Open Placebo group. The next step was to examine if this result could be accounted for by the priming mechanism.
-
-<<chisqtestprimeplac, echo=FALSE, results=tex>>=
-chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
-chisqtest1 <- as.data.frame(cbind(chisq1[["statistic"]], chisq1[["parameter"]], chisq1[["p.value"]], chisq1[["observed"]]))
-names(chisqtest1)[1] <- "Chi Square"
-names(chisqtest1)[2] <- "df"
-names(chisqtest1)[3] <- "p Value"
-chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square for Relationship between Priming, Condition and Placebo Response")
-print(chisq1.xtab)
-@ 
-
-In Table \ref{tab:primeplacchi} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
-
-This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that Participants were much more likely to respond to placebo following a priming intervention. 
-
-\begin{figure}
-<<placprimeplot, echo=FALSE, figure=TRUE>>=
-plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
-print(plac.prime.pl)
-@   
-  \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
-  \label{fig:placprimeplot}
-\end{figure}
-
-
-<<pairsplot, echo=FALSE, Fig=TRUE>>=
-print(pairs.panels(iatexp))
-@ 
-
-<<tsimport, echo=FALSE, results=hide>>=
-setwd("PhysMeasures/Richie1ps")
-phys2456 <- read.table("Richie-1-2456.txt")
-colnames(phys2456) <- c("GSR2456", "ECG2456")
-phys1903 <- read.table("Richie-2-1903.txt" )
-colnames(phys1903) <- c("GSR1903", "ECG1903")
-phys1879 <- read.table("Richie-3-1879.txt" )
-colnames(phys1879) <- c("GSR1879", "ECG1879")
-phys5701 <- read.table("Richie-4-5701.txt")
-colnames(phys5701) <- c("GSR5701", "ECG5701")
-phys0317 <- read.table("Richie-6-0317.txt")
-colnames(phys0317) <- c("GSR0317", "ECG0317")
-phys1243 <- read.table( "Richie-7-1243.txt")
-colnames(phys1243) <- c("GSR1243", "ECG1243")
-phys4325 <- read.table("Richie-8-4325.txt")
-colnames(phys4325) <- c("GSR4325", "ECG4325")
-phys2003 <- read.table("Richie-9-2003.txt" )
-colnames(phys2003) <- c("GSR2003", "ECG2003")
-phys6334 <- read.table("Richie-10-6334.txt"  )
-colnames(phys6334) <- c("GSR6334", "ECG6334")
-phys4181 <- read.table("Richie-11-4181.txt" )
-colnames(phys4181) <- c("GSR4181", "ECG4181")
-phys7327 <- read.table("Richie-12-7327.txt")
-colnames(phys7327) <- c("GSR7327", "ECG7327")
-phys4010 <- read.table("Richie-13-4010.txt")
-colnames(phys4010) <- c("GSR4010", "ECG4010")
-phys2634 <- read.table("Richie-14-2634.txt")
-colnames(phys2634) <- c("GSR2634", "ECG2634")
- phys7443 <- read.table("Richie-15-7443.txt")
-colnames(phys7443) <- c("GSR7443", "ECG7443")
- phys5682 <- read.table("Richie-16-5682.txt")
-colnames(phys5682) <- c("GSR5682", "ECG5682")
- phys2232 <- read.table("Richie-17-2232.txt")
-colnames(phys2232) <- c("GSR2232", "ECG2232")
- phys3101 <- read.table("Richie-18-3101.txt")
-colnames(phys3101) <- c("GSR3101", "ECG3101")
- phys1101 <- read.table("Richie-19-1101.txt")
-colnames(phys1101) <- c("GSR1101", "ECG1101")
- phys1089 <- read.table("Richie-20-1089.txt")
-colnames(phys1089) <- c("GSR1089", "ECG1089")
- phys6936 <- read.table("Richie-21-6936.txt")
-colnames(phys6936) <- c("GSR6936", "ECG6936")
- phys8273 <- read.table("Richie-22-8273.txt")
-colnames(phys8273) <- c("GSR8273", "ECG8273")
- phys9876 <- read.table("Richie-23-9876.txt")
-colnames(phys9876) <- c("GSR9786", "ECG9786")
- phys2212 <- read.table("Richie-24-2212.txt")
-colnames(phys2212) <- c("GSR2212", "ECG2212")
- phys2928 <- read.table("Richie-25-2928.txt")
-colnames(phys2928) <- c("GSR2928", "ECG2928")
- phys1911 <- read.table("Richie-26-1911.txt")
-colnames(phys1911) <- c("GSR1911", "ECG1911")
- phys9120 <- read.table("Richie-27-9120.txt")
-colnames(phys9120) <- c("GSR9120", "ECG9120")
- phys1956 <- read.table("Richie-28-1956.txt")
-colnames(phys1956) <- c("GSR1956", "ECG1956")
- phys4242 <- read.table("Richie-29-4242.txt")
-colnames(phys4242) <- c("GSR4242", "ECG4242")
- phys11012 <- read.table("Richie-30-11012.txt")
-colnames(phys11012) <- c("GSR11012", "ECG11012")
- phys6647 <- read.table( "Richie-31-6647.txt")
-colnames(phys6647) <- c("GSR6647", "ECG6647")
- phys2679 <- read.table( "Richie-32-2679.txt")
-colnames(phys2679) <- c("GSR2679", "ECG2679")
- phys1321 <- read.table( "Richie-33-1321.txt")
-colnames(phys1321) <- c("GSR1321", "ECG1321")
- phys1810 <- read.table( "Richie-34-1810.txt")
-colnames(phys1810) <- c("GSR1810", "ECG1810")
- phys2069 <- read.table( "Richie-35-2069.txt")
-colnames(phys2069) <- c("GSR2069", "ECG2069")
- phys1991 <- read.table( "Richie-36-1991.txt")
-colnames(phys1991) <- c("GSR1991", "ECG1991")
- phys6542 <- read.table("Richie-37-6542.txt")
-colnames(phys6542) <- c("GSR6542", "ECG6542")
- phys0856 <- read.table("Richie-38-0856.txt")
-colnames(phys0856) <- c("GSR0856", "ECG0856")
- phys7787 <- read.table( "Richie-39-7787.txt")
-colnames(phys7787) <- c("GSR7787", "ECG7787")
- phys5456 <- read.table( "Richie-40-5456.txt")
-colnames(phys7787) <- c("GSR7787", "ECG7787")
- phys0405 <- read.table("Richie-41-0405.txt")
-colnames(phys0405) <- c("GSR0405", "ECG0405")
-phys4228 <- read.table( "Richie-42-4228.txt")
-colnames(phys4228) <- c("GSR4228", "ECG4228")
-phys19912 <- read.table( "Richie-43-19912.txt")
-colnames(phys19912) <- c("GSR19912", "ECG19912")
-phys0606 <- read.table( "Richie-44-0606.txt")
-colnames(phys0606) <- c("GSR0606", "ECG0606")
- phys6691 <- read.table( "Richie-45-6691.txt")
-colnames(phys6691) <- c("GSR6691", "ECG6691")
- phys1923 <- read.table( "Richie-46-1923.txt")
-colnames(phys1923) <- c("GSR1923", "ECG1923")
- phys1748 <- read.table( "Richie-47-1748.txt")
-colnames(phys1748) <- c("GSR1748", "ECG1748")
- phys2610 <- read.table( "Richie-48-2610.txt")
-colnames(phys2610) <- c("GSR2610", "ECG2610")
- phys11012 <- read.table( "Richie-49-11012.txt")
-colnames(phys11012) <- c("GSR11012", "ECG11012")
- phys1224 <- read.table( "Richie-50-1224.txt")
-colnames(phys1224) <- c("GSR1224", "ECG1224")
- phys1212 <- read.table( "Richie-51-1212.txt")
-colnames(phys1212) <- c("GSR1212", "ECG1212")
-phys1617 <- read.table( "Richie-52-1617.txt")
-colnames(phys1617) <- c("GSR1617", "ECG1617")
-phys1209 <- read.table( "Richie-53-1209.txt")
-colnames(phys1209) <- c("GSR1209", "ECG1209")
-phys1103 <- read.table( "Richie-54-1103.txt")
-colnames(phys1103) <- c("GSR1103", "ECG1103")
-phys2510 <- read.table( "Richie-55-2510.txt")
-colnames(phys2510) <- c("GSR2510", "ECG2510")
-phys1986 <- read.table( "Richie-56-1986.txt")
-colnames(phys1986) <- c("GSR1986", "ECG1986")
-phys8888 <- read.table( "Richie-57-8888.txt")
-colnames(phys8888) <- c("GSR8888", "ECG8888")
-phys5923 <- read.table( "Richie-58-5923.txt")
-colnames(phys5923) <- c("GSR5923", "ECG5923")
-phys97862 <- read.table("Richie-59-98762.txt")
-colnames(phys97862) <- c("GSR98762", "ECG98762")
-phys9853 <- read.table( "Richie-60-9853.txt")
-colnames(phys9853) <- c("GSR9853", "ECG9853")
-phys1987 <- read.table( "Richie-61-1987.txt")
-colnames(phys1987) <- c("GSR1987", "ECG1987")
-phys1970 <- read.table( "Richie-62-1970.txt")
-colnames(phys1970) <- c("GSR1970", "ECG1970")
-phys0833 <- read.table("Richie-63-0833.txt")
-colnames(phys0833) <- c("GSR0833", "ECG0833")
-phys3497 <- read.table( "Richie-64-3497.txt")
-colnames(phys3497) <- c("GSR3497", "ECG3497")
-phys8421 <- read.table("Richie-65-8421.txt")
-colnames(phys8421) <- c("GSR8421", "ECG8421")
-phys8421 <- read.table("Richie-66-5440.txt")
-colnames(phys8421) <- c("GSR8421", "ECG8421")
-phys5262 <- read.table("Richie-67-5262.txt")
-colnames(phys5262) <- c("GSR5262", "ECG5262")
-phys1358 <-  read.table("Richie-68-1358.txt")
-colnames(phys1358) <- c("GSR1358", "ECG1358")
-phys7141 <- read.table( "Richie-69-7141.txt")
-colnames(phys7141) <- c("GSR7141", "ECG7141")
-phys5324 <- read.table( "Richie-70-5324.txt")
-colnames(phys5324) <- c("GSR5324", "ECG5324")
-phys8206 <- read.table( "Richie-71-8206.txt")
-colnames(phys8206) <- c("GSR8206", "ECG8206")
-phys19562 <- read.table( "Richie-72-19562.txt")
-colnames(phys19562) <- c("GSR19562", "ECG19562")
-phys0705 <- read.table( "Richie-73-0705.txt")
-colnames(phys0705) <- c("GSR0705", "ECG0705")
-phys2245 <- read.table("Richie-74-2245.txt")
-colnames(phys2245) <- c("GSR2245", "ECG2245")
-#phys5328 <- read.table( "Richie-75-5328.txt")
-#colnames(phys5328) <- c("GSR5328", "ECG5328")
-phys3049 <- read.table( "Richie-76-3049.txt")
-colnames(phys3049) <- c("GSR3049", "ECG3049")
-phys5209 <- read.table( "Richie-77-5209.txt")
-colnames(phys5209) <- c("GSR5209", "ECG5209")
-phys1580 <- read.table( "Richie-78-1580.txt")
-colnames(phys1580) <- c("GSR1580", "ECG1580")
-phys7198 <- read.table( "Richie-79-7198.txt")
-colnames(phys7198) <- c("GSR7198", "ECG7198")
-phys3580 <- read.table( "Richie-80-3580.txt")
-colnames(phys3580) <- c("GSR3580", "ECG3580")
-phys2345 <- read.table( "Richie-81-2345.txt")
-colnames(phys2345) <- c("GSR2345", "ECG2345")
-phys6955 <- read.table("Richie-82-6955.txt")
-colnames(phys6955) <- c("GSR6955", "ECG6955")
-phys4062 <- read.table( "Richie-83-4062.txt")
-colnames(phys4062) <- c("GSR4062", "ECG4062")
-phys4662 <- read.table( "Richie-84-4662.txt")
-colnames(phys4662) <- c("GSR4662", "ECG4662")
-phys4892 <- read.table("Richie-85-4892.txt")
-colnames(phys4892) <- c("GSR4892", "ECG4892")
-phys0473 <- read.table("Richie-86-0473.txt")
-colnames(phys0473) <- c("GSR0473", "ECG0473")
-phys6536 <- read.table( "Richie-87-6536.txt")
-colnames(phys6536) <- c("GSR6536", "ECG6536")
-phys1004 <- read.table( "Richie-88-1004.txt")
-colnames(phys1004) <- c("GSR1004", "ECG1004")
-phys1234 <- read.table( "Richie-89-1234.txt")
-colnames(phys1234) <- c("GSR1234", "ECG1234")
-phys3190 <- read.table( "Richie-90-3190.txt")
-colnames(phys3190) <- c("GSR3190", "ECG3190")
-phys2385 <- read.table( "Richie-91-2385.txt")
-colnames(phys2385) <- c("GSR2385", "ECG2385")
-phys4391 <- read.table( "Richie-92-4391.txt")
-colnames(phys4391) <- c("GSR4391", "ECG4391")
-phys7983 <- read.table( "Richie-93-7983.txt")
-colnames(phys7983) <- c("GSR7983", "ECG7983")
-phys1843 <- read.table( "Richie-94-1843.txt")
-colnames(phys1843) <- c("GSR1843", "ECG1843")
-phys4278 <- read.table( "Richie-95-4278.txt")
-colnames(phys4278) <- c("GSR4278", "ECG4278")
-phys1717 <- read.table( "Richie-96-1717.txt")
-colnames(phys1717) <- c("GSR1717", "ECG1717")
-phys1604 <- read.table( "Richie-97-1604.txt")
-colnames(phys1604) <- c("GSR1604", "ECG1604")
-phys0234 <- read.table( "Richie-98-0234.txt")
-colnames(phys0234) <- c("GSR0234", "ECG0234")
-phys5533 <- read.table( "Richie-99-5533.txt")
-colnames(phys5533) <- c("GSR5533", "ECG5533")
-phys19563 <- read.table("Richie-100-19563.txt")
-colnames(phys19563) <- c("GSR19563", "ECG19563")
-phys7837 <- read.table( "Richie-101-7837.txt")
-colnames(phys7837) <- c("GSR7837", "ECG7837")
-phys5669 <- read.table("Richie-103-5669.txt")
-colnames(phys5669) <- c("GSR5669", "ECG5669")
-phys9548 <- read.table( "Richie-104-9548.txt")
-colnames(phys9548) <- c("GSR9548", "ECG9548")
-phys3725 <- read.table( "Richie-105-3725.txt")
-colnames(phys3725) <- c("GSR3725", "ECG3725")
-phys7521 <- read.table( "Richie-106-7521.txt")
-colnames(phys7521) <- c("GSR7521", "ECG7521")
-phys2983 <- read.table( "Richie-107-2983.txt")
-colnames(phys2983) <- c("GSR2983", "ECG2983")
-phys27122 <- read.table( "Richie-108-27122.txt")
-colnames(phys27122) <- c("GSR27122", "ECG27122")
-phys3687 <- read.csv("richie109.csv", header=FALSE)
-colnames(phys3687) <- c("GSR3687", "ECG3687")
-phys7706 <- read.table( "Richie-110-7706.txt")
-colnames(phys7706) <- c("GSR7706", "ECG7706")
-phys9782 <- read.table("Richie-111-9782.txt")
-colnames(phys9782) <- c("GSR9782", "ECG9782")
-setwd("..")
-setwd("..")
-@
-
-
-
-<<survivaldata, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(9:53)]
-napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
-lengthsurv <- 46-napainratings
-Iatandexpmeasures$lengthsurv <- lengthsurv
-@ 
-
-
 
 <<ordtestiatprep, echo=FALSE, results=hide>>=
 optblock3 <- optstimblock3[,1:15]
@@ -681,7 +332,7 @@ optblock5 <- optstimblock5[,1:15]
 tcqblock3 <- tcqstimblock3[,1:17]
 tcqblock5 <- tcqstimblock5[,1:17]
 optblocks3and5 <-  merge(optblock3, optblock5, by="Participant")
-optblocks3and5$Me.diff <-with(optblocks3and5,Me.x-Me.y )
+optblocks3and5[,"Me.diff"] <-with(optblocks3and5,Me.x-Me.y )
 optblocks3and5$Mine.diff <-with(optblocks3and5,Mine.x-Mine.y)
 optblocks3and5$Myself.diff <-with(optblocks3and5,Myself.x-Myself.y)
 optblocks3and5$Theirs.diff <-with(optblocks3and5,Theirs.x-Theirs.y)
@@ -754,6 +405,268 @@ print(tcqiat.piplot)
 @ 
 Above in Table \ref{tab:tcqiatrasch} are shown the estimated abilities and their associated standard errors for the Treatment Credibility IAT. In Figure \ref{fig:tcqiatpimap} the estimates of person and item abilities can be seen in graphical form. 
 
+
+\subsection{Implicit-Explicit Relationships}
+\label{sec:impl-expl-relat}
+
+Next, the relationships between the explicit and implicit measures were examined. 
+
+<<corrtestimplexpl, echo=FALSE, results=tex>>=
+corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
+print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"))
+@ 
+
+It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative). Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion.  
+
+
+\subsection{Explicit Measures}
+\label{sec:explicit-measures}
+
+
+
+<<lotrmaas, echo=FALSE, fig=TRUE>>=
+lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Condition)
+print(lotrmaas)
+@ 
+
+The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapter \ref{cha:general-discussion}. 
+
+
+\subsection{Relationships between Experimental Samples and Survey Samples}
+\label{sec:relat-betw-exper}
+
+Given the focus of this thesis on the integration of survey and experimental research, the next step was to examine the differences and similarities between the samples collected from the general population via survey and the experimental sample.
+
+
+\begin{figure}
+<<surveyoptimism, echo=FALSE, figure=TRUE>>=
+survey.opt.pl <- ggplot(hom.data, aes(x=optimism))+geom_histogram()
+print(survey.opt.pl)
+@   
+  \caption{Histogram of Optimism Scores in the Survey samples}
+  \label{fig:surveyoptimism}
+\end{figure}
+
+
+In Figure \ref{fig:surveyoptimism} the distribution of optimism scores in the survey samples can be seen, while Figure \ref{fig:expoptimism} shows the equivalent plot for the experimental sample. It can be seen that the two plots are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
+
+\begin{figure}
+<<experimentoptimism, echo=FALSE, figure=TRUE>>=
+exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_histogram()
+print(exp.opt.pl)
+@   
+  \caption{Distribution of Optimism Scores in the Experimental Sample}
+  \label{fig:expoptimism}
+\end{figure}
+
+
+Next, the differences in mindfulness levels between the two samples were assessed. 
+
+\begin{figure} 
+<<surveymindfulness, echo=FALSE, figure=TRUE>>=
+surv.mind.pl <- ggplot(hom.data, aes(x=mindfulness))+geom_density()
+print(surv.mind.pl)
+@  
+  \caption{Density Plot for Mindfulness Scores, Survey Sample}
+  \label{fig:surveymind}
+\end{figure}
+
+As can be seen from Figures \ref{fig:surveymind} and \ref{fig:expmind}, the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were higheer in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study. 
+
+\begin{figure}
+<<experimentmindfulness, echo=FALSE, figure=TRUE>>=
+exp.mind.pl <- ggplot(Iatandexpmeasures, aes(x=MAAS))+geom_density()
+print(exp.mind.pl)
+@   
+  \caption{Density Plot for Mindfulness Scores, Experimental Sample}
+  \label{fig:expmind}
+\end{figure}
+
+
+Finally, the treatment credibility questionnaire scores were examined to assess the differences between the survey and experimental samples. 
+
+First, the differences between the two samples in terms of Pill credibility were examined. 
+
+\begin{figure}
+<<surveypill, echo=FALSE, figure=TRUE>>=
+surv.pill.pl <- ggplot(credtotals, aes(x=Pilltot))+geom_density()
+print(surv.pill.pl)
+@   
+  \caption{Pill Credibility Density Plot, Survey Sample (sample 2)}
+  \label{fig:surveypill}
+\end{figure}
+
+\begin{figure}
+<<experimentpill, echo=FALSE, figure=TRUE>>=
+exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
+print(exp.pill.pl)
+@   
+  \caption{Pill Credibility Density Plot, Experimental Sample}
+  \label{fig:exppill}
+\end{figure}
+
+As can be seen from Figures \ref{fig:surveypill} and \ref{fig:exppill}, the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
+
+Next, the difference between Cream Credibility scores were assessed. 
+
+\begin{figure}
+<<surveycream, echo=FALSE, figure=TRUE>>=
+surv.cream.pl <- ggplot(credtotals, aes(x=Creamtot))+geom_density()
+print(surv.cream.pl)
+@   
+  \caption{Density Plot for Distribution of Cream Credibility Scores, Survey Sample (sample 2)}
+  \label{fig:surveycream}
+\end{figure}
+
+
+\begin{figure}
+<<experimentcream, echo=FALSE, figure=TRUE>>=
+exp.cream.pl <- ggplot(Iatandexpmeasures, aes(x=Cream))+geom_density()
+print(exp.cream.pl)
+@   
+  \caption{Density Plot for Distribution of Cream Credibility Scores, Experimental Sample}
+  \label{fig:expcream}
+\end{figure}
+
+As shown in Figures \ref{fig:surveycream} and \ref{fig:expcream}, the survey group tended to have a more positive view of painkilling creams. While the survey group is strongly peaked at the right of the plot, the experimental group were more even distributed, with a peak at the centre of the plot. This is interesting, as one might expect the experimental group to be more positive towards painkilling treatments in general, given that they had agreed to take part in  a study which examined the effects of a new analgesic.
+
+Next, the credibility scores for injection painkilling treatments were examined between the survey and experimental groups. 
+
+\begin{figure}
+<<surveyinj, echo=FALSE, figure=TRUE>>=
+surv.inj.pl <- ggplot(tcq2, aes(x=Injtot))+geom_density()
+print(surv.inj.pl)
+@   
+  \caption{Injection Credibility Density Plot, Survey Sample (sample two)}
+  \label{fig:surveyinj}
+\end{figure}
+
+
+\begin{figure}
+<<expinj, echo=FALSE, figure=TRUE>>=
+exp.inj.pl <- ggplot(Iatandexpmeasures, aes(x=Inj))+geom_density()
+print(exp.inj.pl)
+@   
+  \caption{Density Plot for Injection Credibility Scores, Experimental Sample}
+  \label{fig:expinj}
+\end{figure}
+
+
+Figures \ref{fig:surveyinj} and \ref{fig:expinj} show that the Injection credibility scores were almost identical in their distributions between the two samples. 
+
+Next, the Alternative treatment scores were examined between the two samples.
+\begin{figure}
+  
+<<alttreatmentssurvey, echo=FALSE, figure=TRUE>>=
+print(plotmatrix(credtotals[,4:6])+geom_smooth()+geom_jitter())
+@   \caption{Density and Scatterplots for Alternative Treatments, Survey Sample}
+  \label{fig:altsurvey}
+\end{figure}
+
+\begin{figure}
+<<alttreatmentsexp, echo=FALSE, figure=TRUE>>=
+print(plotmatrix(Iatandexpmeasures[,19:21])+geom_smooth()+geom_jitter())
+@   
+  \caption{Scatter and Density Plots for Alternative Treatments, Experimental Sample}
+  \label{fig:alttreatmentsexp}
+\end{figure}
+
+Figures \ref{fig:altsurvey} and \ref{fig:alttreatmentsexp} show scatter and density plots for the survey and experimental samples, respectively. The only credibility score which looks significantly different is those for Homeopathy, which is significantly more bi-modal in the survey sample. 
+
+
+\subsection{Randomisation Checks}
+\label{sec:randomisation-checks}
+
+Next, the comparability of the groups were assessed to ensure that the randomisation process had proved effective. 
+
+<<randcheck1, echo=FALSE, results=tex>>=
+tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of Anova of Treatment Credibility Scores by Condition")
+opt.xtab <- xtable(summary(aov(OptIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
+conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
+alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
+chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Gender, Condition)))
+chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
+@ 
+
+<<tcqcheckprint, echo=FALSE, results=tex>>=
+print(tcq.xtab)
+@ 
+
+<<optcheckprint, echo=FALSE, results=tex>>=
+print(opt.xtab)
+@ 
+
+As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT, the optimism IAT did not differ by Condition. 
+
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend[["p.value"]]}).
+In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime[["p.value"]]}).
+
+
+
+<<chisqcondition, echo=FALSE, results=tex>>=
+Subsetiatandexp <- Iatandexpmeasures[with(Iatandexpmeasures,Condition!="No Treatment"),]
+Subsetiatandexp <- droplevels(Subsetiatandexp)
+chisq2 <- with(Subsetiatandexp, chisq.test(table(PlacResp, Condition)))
+chisqtest2 <- as.data.frame(cbind(chisq2[["statistic"]], chisq2[["parameter"]], chisq2[["p.value"]], chisq2[["observed"]]))
+names(chisqtest2)[1] <- "Chi Square"
+names(chisqtest2)[2] <- "df"
+names(chisqtest2)[3] <- "p Value"
+chisq2.xtab <- xtable(chisqtest2)
+print(chisq2.xtab)
+@ 
+
+As can be seen, there is no significant effect of condition on placebo response. However, as can also be seen from the table, this is not due to a lower than expected placebo response in the Deceptive Placebo group, but rather due to a higher than expected placebo response in the Open Placebo group. The next step was to examine if this result could be accounted for by the priming mechanism.
+
+<<chisqtestprimeplac, echo=FALSE, results=tex>>=
+chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
+chisqtest1 <- as.data.frame(cbind(chisq1[["statistic"]], chisq1[["parameter"]], chisq1[["p.value"]], chisq1[["observed"]]))
+names(chisqtest1)[1] <- "Chi Square"
+names(chisqtest1)[2] <- "df"
+names(chisqtest1)[3] <- "p Value"
+chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square for Relationship between Priming, Condition and Placebo Response")
+print(chisq1.xtab)
+@ 
+
+In Table \ref{tab:primeplacchi} above, it can be seen that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
+
+This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that Participants were much more likely to respond to placebo following a priming intervention. Given that priming interventions typically take place outside conscious awareness, this suggests that there is at least some part of the placebo response which is amenable to non-conscious (or implicit) influences. 
+
+\begin{figure}
+<<placprimeplot, echo=FALSE, figure=TRUE>>=
+plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
+print(plac.prime.pl)
+@   
+  \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
+  \label{fig:placprimeplot}
+\end{figure}
+
+\begin{figure}
+<<pairsplot, echo=FALSE, Fig=TRUE>>=
+print(plotmatrix(iatexp)+geom_smooth(method="lm")+geom_jitter())
+@   
+  \caption{Scatterplots and Density Plots for Self Report and Implicit Measures}
+  \label{fig:pairsplotimpexp}
+\end{figure}
+
+In Figure \ref{fig:pairsplotimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with themselves, as noted above).  
+
+
+\subsection{Pain Ratings}
+\label{sec:pain-ratings}
+
+
+
+
+<<survivaldata, echo=FALSE, results=hide>>=
+painratings <- vasscores[,c(9:53)]
+napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
+lengthsurv <- 46-napainratings
+Iatandexpmeasures$lengthsurv <- lengthsurv
+@ 
+
+
+
+
 <<paints, echo=FALSE, results=hide>>=
 painratings <- vasscores[,c(1,2,8:53)]
 painratings.temp <- painratings[,2:length(painratings)]
@@ -762,7 +675,7 @@ colnames(painratings.trans) <- as.character(t(painratings[,1]))
 @ 
 
 <<tcqiatgender, echo=FALSE, fig=TRUE>>=
-tcqiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=tcqiatscore))
+tcqiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=TCQIAT.Mean))
 tcqiatgender+layer(geom="boxplot")
 @ 
 
@@ -770,7 +683,7 @@ tcqiatgender+layer(geom="boxplot")
 As can be seen from Figure B above, there were no significant differences between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument).
 
 <<optiatgender, echo=FALSE, fig=TRUE>>=
-optiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=optiatscore))
+optiatgender <- ggplot(Iatandexpmeasures, aes(x=Gender, y=OptIAT.Mean))
 optiatgender.comp <- optiatgender+layer(geom="boxplot")
 print(optiatgender.comp)
 @ 
@@ -836,13 +749,13 @@ The mean pain ratings were also examined for autocorrelations, and as shown abov
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
 <<ggplotsurvivalgroupiat, echo=FALSE, fig=TRUE>>=
-surviat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=tcqiatscore, colour=Condition))
+surviat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=TCQIAT.Mean, colour=Condition))
 surviat.comp <- surviat.corr+layer(geom="smooth")
 print(surviat.comp)
 @ 
 
 <<placresponse.surv.tcqiatscore, echo=FALSE, fig=TRUE>>=
-surviat.corr2 <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=tcqiatscore, colour=PlacResp ))
+surviat.corr2 <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=TCQIAT.Mean, colour=PlacResp ))
 surviat2.comp <- surviat.corr2+layer(geom="smooth")
 print(surviat2.comp)
 @ 
@@ -851,7 +764,7 @@ As can be seen above in Figure \ref{fig:ggplottcqplac}, the group which responde
 
 
 <<optiatcorrsurv, echo=FALSE, fig=TRUE>>=
-optiat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=optiatscore, colour=PlacResp))
+optiat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=OptIAT.Mean, colour=PlacResp))
 optiatcorr2 <- optiat.corr+layer(geom="smooth")
 print(optiatcorr2)
 @ 
@@ -889,7 +802,7 @@ In order to examine whether or not the IAT scores were predictive of placebo res
 
 
 <<placmod1, echo=FALSE, results=tex>>=
-placmod1 <- glm(PlacResp~tcqiatscore, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod1 <- glm(PlacResp~TCQIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod1.xtab <- xtable(summary(placmod1))
 print(placmod1.xtab)
 @ 
@@ -897,7 +810,7 @@ print(placmod1.xtab)
 As can be seen above in Table \ref{tab:placmod1}, the treatment credibility IAT was not a significant independent predictor of placebo response.
 
 <<placmod2, echo=FALSE, results=tex>>=
-placmod2 <- glm(PlacResp~optiatscore, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod2.xtab <- xtable(summary(placmod2))
 print(placmod2.xtab)
 @ 
@@ -915,7 +828,7 @@ In addition, the Life Orientation scores are not a significant predictor of plac
 However, when these three variables are placed into the model together, the result is significant.
 
 <<placeboglm, echo=FALSE, results=tex>>=
-placmod6<- glm(PlacResp~poly(tcqiatscore,2)*poly(optiatscore,2)*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod6<- glm(PlacResp~poly(TCQIAT.Mean,2)*poly(OptIAT.Mean,2)*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.xtab <- xtable(summary(placmod6))
 print(placmod.xtab)
 @ 
@@ -931,14 +844,14 @@ iatexpyes <- Iatandexpmeasures[Iatandexpmeasures$PlacResp=="Yes",]
 iatexpno <- na.omit(iatexpno)
 iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
-lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=tcqiatscore , colour=PlacResp, size=optiatscore))
+lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))
 lotriatplot2 <- lotriatplot+layer(geom="point")
 print(lotriatplot2)
 @ 
  The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
 
 <<lotrtcqsmoothplot, echo=FALSE, fig=TRUE>>=
-lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=tcqiatscore , colour=PlacResp))
+lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))
 lotrtcqplot2 <- lotrtcqplot+layer(geom="point")
 print(lotrtcqplot2)
 @  
@@ -946,7 +859,7 @@ print(lotrtcqplot2)
 This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
 
 <<lotroptplot, echo=FALSE, fig=TRUE>>=
-lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=optiatscore , colour=PlacResp))
+lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=OptIAT.Mean , colour=PlacResp))
 lotroptplot2 <- lotroptplot+layer(geom="point")
 print(lotroptplot2)
 @ 
@@ -956,14 +869,17 @@ From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on th
 
 \subsection{Analysis of Physiological Data}
 
+<<tsimport, echo=FALSE, results=hide>>=
+physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
+phys.mat <- listToDf(physfiles)
+physnames <- colnames(phys.mat)
+names(phys.mat) <- NULL
+phys.df <- as.data.frame(phys.mat)
+@
+
+
 <<GSRcollate, echo=FALSE, results=hide>>=
-biodata <- ls(pattern="phys[0-9]+$")
-biologicaldata <- matrix(NA, nrow=110000, ncol=107)
-for (i in seq(from=1, to=length(biodata))) {
-  temp <- get(biodata[i])
-  print(i)
-  biologicaldata[1:nrow(temp),i] <- temp[,1]
-}
+
 biologicaldata <- as.data.frame(biologicaldata)
 biodata2 <- gsub(pattern="phys", replacement="GSR", x=biodata)
 biologicaldata <- biologicaldata[1:31150,1:107]
