@@ -28,6 +28,7 @@ expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
 tcqiat <- read.csv("tcqiatres.csv")
+setwd("../..")
 @ 
 
 <<loadpackages, echo=FALSE, results=hide>>=
@@ -40,6 +41,7 @@ require(eRm)
 require(ltm)
 require(boot)
 require(plyr)
+source("func.R")
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -179,7 +181,7 @@ tcqstimbootci <- boot.ci(tcqstimboot)
 tcqstimbootplot <- plot(tcqstimboot)
 @ 
 
-The next question is whether or not the IAT's have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was $r=0.08$, thus showing that method variance does not appear to have contaminated the results. 
+The next question is whether or not the IAT's have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
 
 
 \begin{figure}
@@ -268,7 +270,7 @@ opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]
 print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
 @ 
 
-The final question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
+The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
 
 <<opttcqiatcorr, echo=FALSE, results=hide>>=
 curnames <- names(opt.iat.c)
@@ -333,37 +335,37 @@ tcqblock3 <- tcqstimblock3[,1:17]
 tcqblock5 <- tcqstimblock5[,1:17]
 optblocks3and5 <-  merge(optblock3, optblock5, by="Participant")
 optblocks3and5[,"Me.diff"] <-with(optblocks3and5,Me.x-Me.y )
-optblocks3and5$Mine.diff <-with(optblocks3and5,Mine.x-Mine.y)
-optblocks3and5$Myself.diff <-with(optblocks3and5,Myself.x-Myself.y)
-optblocks3and5$Theirs.diff <-with(optblocks3and5,Theirs.x-Theirs.y)
-optblocks3and5$Them.diff <-with(optblocks3and5,Them.x-Them.y)
-optblocks3and5$Themselves.diff <-with(optblocks3and5,Themselves.x-Themselves.y)
-optblocks3and5$Better.diff <-with(optblocks3and5,Better.x-Better.y)
-optblocks3and5$Happy.diff <-with(optblocks3and5,Happy.x-Happy.y)
-optblocks3and5$Happy.diff <-with(optblocks3and5,Improving.x-Improving.y)
-optblocks3and5$Happy.diff <-with(optblocks3and5,Happy.x-Happy.y)
-optblocks3and5$Improving.diff <-with(optblocks3and5,Improving.x-Improving.y)
-optblocks3and5$Succeeding.diff<-with(optblocks3and5,Succeeding.x-Succeeding.y)
-optblocks3and5$Disimproving.diff <- with(optblocks3and5,Disimproving.x-Disimproving.y)
-optblocks3and5$Failing.diff <-with(optblocks3and5,Failing.x-Failing.y)
-optblocks3and5$Worse.diff <-with(optblocks3and5,Worse.x-Worse.y)
+optblocks3and5[,"Mine.diff"] <-with(optblocks3and5,Mine.x-Mine.y)
+optblocks3and5[,"Myself.diff"] <-with(optblocks3and5,Myself.x-Myself.y)
+optblocks3and5[,"Theirs.diff"] <-with(optblocks3and5,Theirs.x-Theirs.y)
+optblocks3and5[,"Them.diff"] <-with(optblocks3and5,Them.x-Them.y)
+optblocks3and5[,"Themselves.diff"] <-with(optblocks3and5,Themselves.x-Themselves.y)
+optblocks3and5[,"Better.diff"] <-with(optblocks3and5,Better.x-Better.y)
+optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
+optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
+optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
+optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
+optblocks3and5[,"Succeeding.diff"]<-with(optblocks3and5,Succeeding.x-Succeeding.y)
+optblocks3and5[,"Disimproving.diff"] <- with(optblocks3and5,Disimproving.x-Disimproving.y)
+optblocks3and5[,"Failing.diff"] <-with(optblocks3and5,Failing.x-Failing.y)
+optblocks3and5[,"Worse.diff"] <-with(optblocks3and5,Worse.x-Worse.y)
 optdiffs <- optblocks3and5[,c(1,30:42)]
 tcqblocks3and5 <- merge(tcqblock3, tcqblock5, by="Participant")
-tcqblocks3and5$Accurate.diff <- with(tcqblocks3and5, Accurate.x-Accurate.y)
-tcqblocks3and5$Actual.diff <- with(tcqblocks3and5, Actual.x-Actual.y)
-tcqblocks3and5$Real.diff <- with(tcqblocks3and5, Real.x-Real.y)
-tcqblocks3and5$Truth.diff <- with(tcqblocks3and5, Truth.x-Truth.y)
-tcqblocks3and5$Fake.diff <- with(tcqblocks3and5, Fake.x-Fake.y)
-tcqblocks3and5$Illusory.diff <- with(tcqblocks3and5, Illusory.x-Illusory.y)
-tcqblocks3and5$Inaccurate.diff <- with(tcqblocks3and5, Inaccurate.x-Inaccurate.y)
-tcqblocks3and5$Lies.diff <- with(tcqblocks3and5, Lies.x-Lies.y)
-tcqblocks3and5$Cream.diff <- with(tcqblocks3and5, Cream.x-Cream.y)
-tcqblocks3and5$Injections.diff <- with(tcqblocks3and5, Injections.x-Injections.y)
-tcqblocks3and5$Surgery.diff <- with(tcqblocks3and5, Surgery.x-Surgery.y)
-tcqblocks3and5$Acupuncture.diff <- with(tcqblocks3and5, Acupuncture.x-Acupuncture.y)
-tcqblocks3and5$FlowerEssence.diff <- with(tcqblocks3and5, FlowerEssence.x-FlowerEssence.y)
-tcqblocks3and5$Homeopathy.diff <- with(tcqblocks3and5, Homeopathy.x-Homeopathy.y)
-tcqblocks3and5$Reiki.diff <- with(tcqblocks3and5, Reiki.x-Reiki.y)
+tcqblocks3and5[,"Accurate.diff"] <- with(tcqblocks3and5, Accurate.x-Accurate.y)
+tcqblocks3and5[,"Actual.diff"] <- with(tcqblocks3and5, Actual.x-Actual.y)
+tcqblocks3and5[,"Real.diff"] <- with(tcqblocks3and5, Real.x-Real.y)
+tcqblocks3and5[,"Truth.diff"] <- with(tcqblocks3and5, Truth.x-Truth.y)
+tcqblocks3and5[,"Fake.diff"] <- with(tcqblocks3and5, Fake.x-Fake.y)
+tcqblocks3and5[,"Illusory.diff"] <- with(tcqblocks3and5, Illusory.x-Illusory.y)
+tcqblocks3and5[,"Inaccurate.diff"] <- with(tcqblocks3and5, Inaccurate.x-Inaccurate.y)
+tcqblocks3and5[,"Lies.diff"] <- with(tcqblocks3and5, Lies.x-Lies.y)
+tcqblocks3and5[,"Cream.diff"] <- with(tcqblocks3and5, Cream.x-Cream.y)
+tcqblocks3and5[,"Injections.diff"] <- with(tcqblocks3and5, Injections.x-Injections.y)
+tcqblocks3and5[,"Surgery.diff"] <- with(tcqblocks3and5, Surgery.x-Surgery.y)
+tcqblocks3and5[,"Acupuncture.diff"] <- with(tcqblocks3and5, Acupuncture.x-Acupuncture.y)
+tcqblocks3and5[,"FlowerEssence.diff"] <- with(tcqblocks3and5, FlowerEssence.x-FlowerEssence.y)
+tcqblocks3and5[,"Homeopathy.diff"] <- with(tcqblocks3and5, Homeopathy.x-Homeopathy.y)
+tcqblocks3and5[,"Reiki.diff"] <- with(tcqblocks3and5, Reiki.x-Reiki.y)
 tcqdiffs <- tcqblocks3and5[,34:48]
 optdiffs.dich <- apply(optdiffs, c(1,2), function (x) ifelse(x>0, 1, 0))
 tcqdiffs.dich <- apply(tcqdiffs, c(1,2), function (x) ifelse(x>0, 1, 0))
@@ -371,39 +373,50 @@ tcqdiffs.dich <- apply(tcqdiffs, c(1,2), function (x) ifelse(x>0, 1, 0))
 <<optiatirt, echo=FALSE, results=hide>>=
 optiat.rasch <- RM(na.omit(optdiffs.dich))
 optiat.ppar <- person.parameter(optiat.rasch)
-optiat.PImap <- plotPImap(optiat.rasch)
 optiat.elim <- stepwiseIt(optiat.rasch)
 @ 
 
+\begin{figure}
+<<optpimap, echo=FALSE, figure=TRUE>>=
+print(plotPImap(optiat.rasch))
+@   
+  \caption{Person Item Map of Difficulty parameters for Optimism IAT}
+  \label{fig:optpimap}
+\end{figure}
+
+
 <<optiatrachprint, echo=FALSE, results=tex>>=
 optrasch.df <- with(optiat.rasch, as.data.frame(cbind(etapar, se.eta, betapar, se.beta)))
-print(xtable(optrasch.df))
+print(xtable(optrasch.df, label="tab:optrasch", caption="Ability Estimates for Rasch Model Analysis of Optimism IAT"))
 @ 
 
-Above, in Table \ref{tab:optrasch} can be seen the estimated parameters for a Rasch model of the optimism IAT stimuli. Below, in Figure \ref{optpimap} can be seen the Person Item Map for this model. This map shows that most of the stimuli were equivalent in difficulty, which indicates that this IAT is suitable for measuring implicit optimism in the general population, however, more discriminating stimuli would be necessary if the instrument was to be used in a clinical sample. 
+Table \ref{tab:optrasch} shows the estimated parameters for a Rasch model of the optimism IAT stimuli. Figure \ref{fig:optpimap} shows the Person Item Map for this model. This map shows that most of the stimuli were equivalent in difficulty, which indicates that this IAT is suitable for measuring implicit optimism in the general population, however, more discriminating stimuli would be necessary if the instrument was to be used in a clinical sample. Additionally, the map shows that the majority of participants showed latent traits of less than zero, suggesting that implicit optimism is rarer than explicit optimism. 
 
-<<optpimap, echo=FALSE, fig=TRUE>>=
-print(optiat.PImap)
-@ 
 
 A process of stepwise elimination was carried out to eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
 
 <<tcqiatirt, echo=FALSE, results=hide>>=
 tcqiat.rasch <- RM(tcqdiffs.dich)
-tcqiat.piplot <- plotPImap(tcqiat.rasch)
+
 tcqiat.elim <- stepwiseIt(tcqiat.rasch)
 tcqiat.ppar <- person.parameter(tcqiat.rasch)
 @ 
 
 <<tcqiatability, echo=FALSE, results=tex>>=
 tcqrasch.df <- with(tcqiat.rasch, as.data.frame(cbind(etapar, se.eta, betapar, se.beta)))
-print(xtable(tcqrasch.df))
+print(xtable(tcqrasch.df, label="tab:tcqiatrasch", caption="Ability Estimates for Rasch Model of Treatment Credibility IAT"))
 @ 
 
+\begin{figure}
 <<tcqiatpiplot, echo=FALSE, fig=TRUE>>=
+tcqiat.piplot <- plotPImap(tcqiat.rasch)
 print(tcqiat.piplot)
-@ 
-Above in Table \ref{tab:tcqiatrasch} are shown the estimated abilities and their associated standard errors for the Treatment Credibility IAT. In Figure \ref{fig:tcqiatpimap} the estimates of person and item abilities can be seen in graphical form. 
+@   
+  \caption{Person Item Difficulty Map, Treatment Credibility IAT}
+  \label{fig:tcqpimap}
+\end{figure}
+
+Table \ref{tab:tcqiatrasch}  shows the estimated abilities and their associated standard errors for the Treatment Credibility IAT. Figure \ref{fig:tcqpimap} the estimates of person and item abilities can be seen in graphical form. Again, it can be seen from Figure \ref{fig:tcqpimap} that a majority of the sample had latent traits of less than zero, but that the item estimates of difficulty were approximately equal.
 
 
 \subsection{Implicit-Explicit Relationships}
@@ -654,17 +667,35 @@ In Figure \ref{fig:pairsplotimpexp} the relationships between the self report an
 \subsection{Pain Ratings}
 \label{sec:pain-ratings}
 
-
-
-
 <<survivaldata, echo=FALSE, results=hide>>=
 painratings <- vasscores[,c(9:53)]
 napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
 lengthsurv <- 46-napainratings
-Iatandexpmeasures$lengthsurv <- lengthsurv
+Iatandexpmeasures[,"lengthsurv"] <- lengthsurv
+censor <- Iatandexpmeasures[,"Censored"]
+censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
+Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
+<<randomforestCV, echo=FALSE, results=hide>>=
+train.ind <- sample(1:54, 40, replace=FALSE)
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv")]
+iatandexpfull <- na.omit(iatandexpfull)
+iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
+iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
+iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
+rf.train <- train(PlacResp~., data=iatandexpfull)
+rf.pred <- predict(rf.train, iatandexpfull.test)
+test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table)
 
+var.used.count <- varUsed(rf.train$finalModel)
+var.used.count <- as.data.frame(var.used.count)
+var.used.count.m[,"variable"] <- names(iatandexpfull)
+ggplot(var.used.count.m, aes(x=variable, y=value))+geom_histogram()+coord_flip()
+@ 
+
+<<rfTestResults, echo=FALSE, >>=
+@ 
 
 
 <<paints, echo=FALSE, results=hide>>=
