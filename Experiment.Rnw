@@ -41,6 +41,8 @@ require(eRm)
 require(ltm)
 require(boot)
 require(plyr)
+require(caret)
+require(survival)
 source("func.R")
 @ 
 
@@ -349,6 +351,8 @@ print(optiatgender)
   \caption{Optimism IAT by Gender}
   \label{fig:optiatgend}
 \end{figure}
+
+ As can be seen from Figure \ref{fig:optiatgend}, there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between men and women with regards to their score on the Optimism IAT. 
 
 <<ordtestiatprep, echo=FALSE, results=hide>>=
 optblock3 <- optstimblock3[,1:15]
@@ -709,13 +713,15 @@ painratings.trans <- t(painratings.temp)
 colnames(painratings.trans) <- as.character(t(painratings[,1]))
 painratings.trans <- as.data.frame(painratings.trans)
 painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
+pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
+pain.cond.m <- melt(pain.cond, id.vars="Condition")
 @ 
 
 
 
 
 
- As can be seen from Figure \ref{fig:optiatgend}, there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between men and women with regards to their score on the Optimism IAT. 
+
 
 \subsection{Analysis of Pain Ratings}
  
@@ -734,6 +740,12 @@ medplacebopain <- apply(placebopain[,4:48], 2, median, na.rm=TRUE)
 mednotreatpain <- apply(notreatpain[,4:48], 2, median, na.rm=TRUE)
 medpainratings <- as.data.frame(cbind(meddeceptivepain, medplacebopain, mednotreatpain))
 medpainratings[,"Time"] <- 1:45
+dec.pain.mean <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
+open.pain.mean <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
+notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
+
+painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
+
 @ 
 
 \begin{figure}
@@ -934,10 +946,13 @@ iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
 rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean, data=iatandexpfull)
 rf.pred <- predict(rf.train, iatandexpfull.test)
 test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table, label="tab:rfplac", caption="Random Forest Accuracy on Placebo Response (Test set)")
-var.used.count <- varUsed(rf.train$finalModel)
+var.used.count <- varUsed(rf.train[["finalModel"]])
 var.used.count <- as.data.frame(var.used.count)
-var.used.count.m[,"variable"] <- names(iatandexpfull)
-ggplot(var.used.count.m, aes(x=variable, y=value))+geom_histogram()+coord_flip()
+rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv")
+
+## var.used.count.m[,"variable"] <- names(iatandexpfull)
+## ggplot(var.used.count.m, aes(x=variable, y=value))+geom_histogram()+coord_flip()
+
 @ 
 
 <<rfTestResults, echo=FALSE, results=tex>>=
@@ -945,6 +960,16 @@ print(test.xtab)
 @ 
 
 As can be seen from Table \ref{tab:rfplac}, the random forest predicted the unseen data for the placebo response exceptionally well, with an accuracy of 1 ($95CI 0.7684-1$), and was significantly better than a random prediction ($p=0.002059$). This suggests that the major hypothesis of the thesis, that implicit measures would be a useful predictor of the placebo response was accurate. This subject is covered further in the discussion. 
+
+\begin{figure}
+<<varImpPlot, echo=FALSE, figure=TRUE>=
+print(varImpPlot(rf.train[["finalModel"]]))
+@   
+  \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
+  \label{fig:varimprf}
+\end{figure}
+
+
 
 \subsection{Analysis of Physiological Data}
 
