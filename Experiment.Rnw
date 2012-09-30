@@ -5,9 +5,11 @@
 
 \subsection{Experimental Procedure}
 <<healthenv, echo=FALSE, results=hide>>=
-load("healthforthesis.rda")
-hom.data <- hom
-load("tcqthesis.rda")
+## load("healthforthesis.rda")
+load("tcq2.rda")
+load("homdata.rda")
+load("credtotals.rda")
+## load("tcqthesis.rda")
 @ 
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
@@ -17,7 +19,7 @@ Participants in the treatment group were told that the cream was a potent painki
 
 
 \section{Results}
-
+\label{sec:results}
 
 
 
@@ -56,14 +58,20 @@ optiatsorted[,"Block"] <- with(optiatsorted, gsub(":", "", x=Block))
 optiatscore.mean <- calcIatScores(optiatsorted,Code="Participant", method="mean", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
 names(optiatscore.mean)[1] <- "Participant"
 names(optiatscore.mean)[6] <- "OptIAT.Mean"
+optstimblock3 <- optiatscore.mean[,grep("Block3.", x=names(optiatscore.mean))]
+optstimblock5 <- optiatscore.mean[,grep("Block5.", x=names(optiatscore.mean))]
 optiatscore.median <- calcIatScores(optiatsorted,Code="Participant", method="median", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
 names(optiatscore.median)[1] <- "Participant"
 names(optiatscore.median)[6] <- "OptIAT.Median"
 optiatscore <- merge(optiatscore.mean[c(1,6)], optiatscore.median[,c(1,6)], by="Participant")
+part.opt <- unique(optiat[,"Participant"])
+part.tcq <- unique(tcqiat[,"Participant"])
+optstimblock3 <- as.data.frame(cbind(part.opt, optstimblock3))
+optstimblock5 <- as.data.frame(cbind(part.opt, optstimblock5))
 @ 
 
 \subsection{Analysis of IAT data}
-
+\label{sec:analysis-iat-data}
 The first step in the analysis of IAT data is to examine the differential impact of using the mean versus the median as the measure of central tendency for the calculation of IAT scores (the $D$ measure). The results for the Optimism IAT are shown in Figure \ref{fig:meanmedoptiatplot}. As can be seen from this figure, there were no major changes attributable to this difference (the correlation between the two scores was $r=0.91$). 
 
 \begin{figure}
@@ -78,55 +86,61 @@ print(meanmedoptiatplot)
 
 
 <<optiatboot, echo=FALSE, results=hide>>=
-optcritblocks <- merge(optiatblock3, optiatblock5, by="Participant")
+optcritblocks <- merge(optstimblock3, optstimblock5, by="part.opt")
 Iatcalcopt <- function (data, indices=rep(0.00885, 113)) {
   d <- data[sample(indices, replace=TRUE),]
-  b3mean <- apply(d[5:18], 1, mean, na.rm=TRUE)
-  b3sd <- apply(d[5:18], 1, sd, na.rm=TRUE)
-  b5mean <- apply(d[24:37], 1, mean, na.rm=TRUE)
-  b5sd <- apply(d[,24:37], 1, sd, na.rm=TRUE)
+  b3mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b3sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
+  b5mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b5sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
   ovsd <- (b3sd+b5sd)/2
   Iatscore <- (b5mean-b3mean)/ovsd
 }
 optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
-optci <- boot.ci(optboot)
-optmeanconf <- as.data.frame(optci[["normal"]])
-names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
+## optci <- boot.ci(optboot)
+## optmeanconf <- as.data.frame(optci[["normal"]])
+## names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
 @ 
 
 
 
 <<optmeanconfprint, echo=FALSE, results=tex>>=
-optmeanconf.xtab <- xtable(optmeanconf, label="tab:optmeanconfprint", caption="Summary of Bootstrapped (n=1000) Calculations of IAT Optimism Score")
-print(optmeanconf.xtab)
+## optmeanconf.xtab <- xtable(optmeanconf, label="tab:optmeanconfprint",
+## caption="Summary of Bootstrapped (n=1000) Calculations of IAT Optimism Score")
+##  print(optmeanconf.xtab)
 @ 
 
-As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
+% As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
 
-% <<optbootplot, echo=FALSE, fig=TRUE>>=
-% print(plot(optboot))
-% @ 
+<<optbootplot, echo=FALSE, fig=TRUE>>=
+## print(plot(optboot))
+@ 
 
 
 <<optstimboot, echo=FALSE, results=hide>>=
-optmeanboot <- function (data, indices=rep(0.00885, 113)) {
-  d <- data[sample(indices, replace=TRUE),]
-  optmeans <- apply(d[,5:18], 2, mean, na.rm=TRUE)
-}
-optstimboot <- boot(optiatsorted, statistic=optmeanboot, R=1000)
-optstimbootci <- boot.ci(optstimboot)
-optstimbootplot <- plot(optstimboot)
+## optmeanboot <- function (data, indices=rep(0.00885, 113)) {
+##   d <- data[sample(indices, replace=TRUE),]
+##   optmeans <- apply(d[,5:18], 2, mean, na.rm=TRUE)
+## }
+## optstimboot <- boot(optiatsorted, statistic=optmeanboot, R=1000)
+## optstimbootci <- boot.ci(optstimboot)
+## optstimbootplot <- plot(optstimboot)
 @ 
 
 <<tcqtestblocks, echo=FALSE, results=hide>>=
 tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
 tcqiatscore.mean <- calcIatScores(tcqiatsorted, Code="Participant", method="mean", words=c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki"))
+tcqstimblock3 <- tcqiatscore.mean[,grep("Block3.", x=names(tcqiatscore.mean))]
+tcqstimblock5 <- tcqiatscore.mean[,grep("Block5.", x=names(tcqiatscore.mean))]
 names(tcqiatscore.mean)[1] <- "Participant"
 names(tcqiatscore.mean)[6] <- "TCQIAT.Mean"
 tcqiatscore.median <- calcIatScores(tcqiatsorted, Code="Participant", method="median", words=c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki"))
 names(tcqiatscore.median)[1] <- "Participant"
 names(tcqiatscore.median)[6] <- "TCQIAT.Median"
 tcqiatscore <- merge(tcqiatscore.mean[,c(1,6)], tcqiatscore.median[,c(1,6)], by="Participant")
+part.tcq <- unique(tcqiat[,"Participant"])
+tcqstimblock3 <- as.data.frame(cbind(part.tcq, tcqstimblock3))
+tcqstimblock5 <- as.data.frame(cbind(part.tcq, tcqstimblock5))
 IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 @
 
@@ -144,51 +158,51 @@ print(meanmedtcqpl)
 
 
 <<tcqiatboot, echo=FALSE, results=hide>>=
-tcqcritblocks <- merge(tcqiatblock3, tcqiatblock5, by="Participant")
-Iatcalctcq <- function (data=tcqcritblocks, indices=rep(0.00885, 113)) {
-  d <- data[sample(indices, replace=TRUE),]
-  b3mean <- apply(d[5:20], 1, mean, na.rm=TRUE)
-  b3sd <- apply(d[5:20], 1, sd, na.rm=TRUE)
-  b5mean <- apply(d[26:41], 1, mean, na.rm=TRUE)
-  b5sd <- apply(d[,26:41], 1, sd, na.rm=TRUE)
-  ovsd <- (b3sd+b5sd)/2
-  Iatscore <- (b5mean-b3mean)/ovsd
-}
-tcqboot <- boot(tcqcritblocks, Iatcalctcq, R=1000)
-tcqci <- boot.ci(tcqboot)
-tcqmeanconf <- as.data.frame(tcqci[["normal"]])
-names(tcqmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
-tcqmeanconf.xtab <- xtable(tcqmeanconf, label="tab:tcqmeanconf", caption="TCQ IAT mean D scores bootstrap confidence estimates")
-tcqbootplot <- plot(tcqboot)
+## tcqcritblocks <- merge(tcqiatblock3, tcqiatblock5, by="Participant")
+## Iatcalctcq <- function (data=tcqcritblocks, indices=rep(0.00885, 113)) {
+## d <- data[sample(indices, replace=TRUE),]
+## b3mean <- apply(d[5:20], 1, mean, na.rm=TRUE)
+## b3sd <- apply(d[5:20], 1, sd, na.rm=TRUE)
+## b5mean <- apply(d[26:41], 1, mean, na.rm=TRUE)
+## b5sd <- apply(d[,26:41], 1, sd, na.rm=TRUE)
+## ovsd <- (b3sd+b5sd)/2
+## Iatscore <- (b5mean-b3mean)/ovsd
+##  }
+## tcqboot <- boot(tcqcritblocks, Iatcalctcq, R=1000)
+## tcqci <- boot.ci(tcqboot)
+## tcqmeanconf <- as.data.frame(tcqci[["normal"]])
+## names(tcqmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
+## tcqmeanconf.xtab <- xtable(tcqmeanconf, label="tab:tcqmeanconf", caption="TCQ IAT mean D scores bootstrap confidence estimates")
+## tcqbootplot <- plot(tcqboot)
 @ 
 
 <<tcqmeanconf, echo=FALSE, results=tex>>=
-print(tcqmeanconf.xtab)
+## print(tcqmeanconf.xtab)
 @ 
 
-As can be seen in Table \ref{tab:tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
+% As can be seen in Table \ref{tab:tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
 
 <<tcqbootplot, echo=FALSE, fig=TRUE>>=
-print(tcqbootplot)
+## print(tcqbootplot)
 @ 
 
 
 <<tcqstimboot, echo=FALSE, results=hide>>=
-tcqmeanboot <- function (data, indices=rep(0.00885, 113)) {
-  d <- data[sample(indices, replace=TRUE),]
-  tcqmeans <- apply(d[,5:20], 2, mean, na.rm=TRUE)
-}
-tcqstimboot <- boot(tcqiatsorted, statistic=tcqmeanboot, R=1000)
-tcqstimbootci <- boot.ci(tcqstimboot)
-tcqstimbootplot <- plot(tcqstimboot)
+## tcqmeanboot <- function (data, indices=rep(0.00885, 113)) {
+##   d <- data[sample(indices, replace=TRUE),]
+##  tcqmeans <- apply(d[,5:20], 2, mean, na.rm=TRUE)
+## }
+## tcqstimboot <- boot(tcqiatsorted, statistic=tcqmeanboot, R=1000)
+## tcqstimbootci <- boot.ci(tcqstimboot)
+## tcqstimbootplot <- plot(tcqstimboot)
 @ 
-
-The next question is whether or not the IAT's have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
+ 
+The next question is whether or not the IAT\'s have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
 
 
 \begin{figure}
 <<tcqstimblock3, echo=FALSE, fig=TRUE>>=
-print(plotmatrix(tcqstimblock3[,10:17])+geom_smooth())
+print(plotmatrix(tcqstimblock3)+geom_smooth())
 @  
   \caption{TCQ IAT Stimuli Response Times in Block 3. The Diagonal shows a histogram of response times, while the off-diagonal elements show the pairwise scatterplots}
   \label{fig:tcqstimblock3}
@@ -198,19 +212,19 @@ print(plotmatrix(tcqstimblock3[,10:17])+geom_smooth())
 As can be seen from Figure \ref{fig:tcqstimblock3} above, the conventional stimuli appear to split into two blocks, the first consisting of Pills and Cream, and the second consisting of Injections and Surgery. The Alternative medicine stimuli seem to correlate reasonably well together, with the exception of Reiki and Homeopathy. The majority of responses are relatively fast, but there are a number of extreme outliers (the dots at the extreme right and top of each of the scatterplots). 
 
 <<tcqstimblock5, echo=FALSE, fig=TRUE>>=
-print(plotmatrix(tcqstimblock5[,10:17])+geom_smooth())
+print(plotmatrix(tcqstimblock5)+geom_smooth())
 @ 
 
 Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers which are visible in the plot and the correlations lowered significantly once these were excluded. 
 
 <<optstimblock3, echo=FALSE, fig=TRUE>>=
-print(plotmatrix(optstimblock3[,8:15])+geom_smooth(method="lm"))
+print(plotmatrix(optstimblock3)+geom_smooth(method="lm"))
 @ 
 
 Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
 
 <<optstimblock5, echo=FALSE, fig=TRUE>>=
-print(plotmatrix(optstimblock5[,8:15])+geom_smooth())
+print(plotmatrix(optstimblock5)+geom_smooth())
 @ 
 
 The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
@@ -355,46 +369,51 @@ print(optiatgender)
  As can be seen from Figure \ref{fig:optiatgend}, there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between men and women with regards to their score on the Optimism IAT. 
 
 <<ordtestiatprep, echo=FALSE, results=hide>>=
-optblock3 <- optstimblock3[,1:15]
-optblock5 <- optstimblock5[,1:15]
-tcqblock3 <- tcqstimblock3[,1:17]
-tcqblock5 <- tcqstimblock5[,1:17]
-optblocks3and5 <-  merge(optblock3, optblock5, by="Participant")
-optblocks3and5[,"Me.diff"] <-with(optblocks3and5,Me.x-Me.y )
-optblocks3and5[,"Mine.diff"] <-with(optblocks3and5,Mine.x-Mine.y)
-optblocks3and5[,"Myself.diff"] <-with(optblocks3and5,Myself.x-Myself.y)
-optblocks3and5[,"Theirs.diff"] <-with(optblocks3and5,Theirs.x-Theirs.y)
-optblocks3and5[,"Them.diff"] <-with(optblocks3and5,Them.x-Them.y)
-optblocks3and5[,"Themselves.diff"] <-with(optblocks3and5,Themselves.x-Themselves.y)
-optblocks3and5[,"Better.diff"] <-with(optblocks3and5,Better.x-Better.y)
-optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
-optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
-optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
-optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
-optblocks3and5[,"Succeeding.diff"]<-with(optblocks3and5,Succeeding.x-Succeeding.y)
-optblocks3and5[,"Disimproving.diff"] <- with(optblocks3and5,Disimproving.x-Disimproving.y)
-optblocks3and5[,"Failing.diff"] <-with(optblocks3and5,Failing.x-Failing.y)
-optblocks3and5[,"Worse.diff"] <-with(optblocks3and5,Worse.x-Worse.y)
-optdiffs <- optblocks3and5[,c(1,30:42)]
-tcqblocks3and5 <- merge(tcqblock3, tcqblock5, by="Participant")
-tcqblocks3and5[,"Accurate.diff"] <- with(tcqblocks3and5, Accurate.x-Accurate.y)
-tcqblocks3and5[,"Actual.diff"] <- with(tcqblocks3and5, Actual.x-Actual.y)
-tcqblocks3and5[,"Real.diff"] <- with(tcqblocks3and5, Real.x-Real.y)
-tcqblocks3and5[,"Truth.diff"] <- with(tcqblocks3and5, Truth.x-Truth.y)
-tcqblocks3and5[,"Fake.diff"] <- with(tcqblocks3and5, Fake.x-Fake.y)
-tcqblocks3and5[,"Illusory.diff"] <- with(tcqblocks3and5, Illusory.x-Illusory.y)
-tcqblocks3and5[,"Inaccurate.diff"] <- with(tcqblocks3and5, Inaccurate.x-Inaccurate.y)
-tcqblocks3and5[,"Lies.diff"] <- with(tcqblocks3and5, Lies.x-Lies.y)
-tcqblocks3and5[,"Cream.diff"] <- with(tcqblocks3and5, Cream.x-Cream.y)
-tcqblocks3and5[,"Injections.diff"] <- with(tcqblocks3and5, Injections.x-Injections.y)
-tcqblocks3and5[,"Surgery.diff"] <- with(tcqblocks3and5, Surgery.x-Surgery.y)
-tcqblocks3and5[,"Acupuncture.diff"] <- with(tcqblocks3and5, Acupuncture.x-Acupuncture.y)
-tcqblocks3and5[,"FlowerEssence.diff"] <- with(tcqblocks3and5, FlowerEssence.x-FlowerEssence.y)
-tcqblocks3and5[,"Homeopathy.diff"] <- with(tcqblocks3and5, Homeopathy.x-Homeopathy.y)
-tcqblocks3and5[,"Reiki.diff"] <- with(tcqblocks3and5, Reiki.x-Reiki.y)
-tcqdiffs <- tcqblocks3and5[,34:48]
-optdiffs.dich <- apply(optdiffs, c(1,2), function (x) ifelse(x>0, 1, 0))
-tcqdiffs.dich <- apply(tcqdiffs, c(1,2), function (x) ifelse(x>0, 1, 0))
+part.opt <- unique(optiat[,"Participant"])
+part.tcq <- unique(tcqiat[,"Participant"])
+optblock3 <-  optstimblock3 
+optblock5 <- optstimblock5
+tcqblock3 <- tcqstimblock3
+tcqblock5 <- tcqstimblock5
+optiat.diff <- iatDiff(optblock3, optblock5)
+tcqiat.diff <- iatDiff(tcqblock3, tcqblock5)
+## optblocks3and5 <-  merge(optblock3, optblock5, by="part.opt")
+#this whole chunk needs to be fixed, refactor into a function use mapply to reduce the need for laborious repitition
+## optblocks3and5[,"Me.diff"] <-with(optblocks3and5,Me.x-Me.y )
+## optblocks3and5[,"Mine.diff"] <-with(optblocks3and5,Mine.x-Mine.y)
+## optblocks3and5[,"Myself.diff"] <-with(optblocks3and5,Myself.x-Myself.y)
+## optblocks3and5[,"Theirs.diff"] <-with(optblocks3and5,Theirs.x-Theirs.y)
+## optblocks3and5[,"Them.diff"] <-with(optblocks3and5,Them.x-Them.y)
+## optblocks3and5[,"Themselves.diff"] <-with(optblocks3and5,Themselves.x-Themselves.y)
+## optblocks3and5[,"Better.diff"] <-with(optblocks3and5,Better.x-Better.y)
+## optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
+## optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
+## optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
+## optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
+## optblocks3and5[,"Succeeding.diff"]<-with(optblocks3and5,Succeeding.x-Succeeding.y)
+## optblocks3and5[,"Disimproving.diff"] <- with(optblocks3and5,Disimproving.x-Disimproving.y)
+## optblocks3and5[,"Failing.diff"] <-with(optblocks3and5,Failing.x-Failing.y)
+## optblocks3and5[,"Worse.diff"] <-with(optblocks3and5,Worse.x-Worse.y)
+## optdiffs <- optblocks3and5[,c(1,30:42)]
+## tcqblocks3and5 <- merge(tcqblock3, tcqblock5, by="Participant")
+## tcqblocks3and5[,"Accurate.diff"] <- with(tcqblocks3and5, Accurate.x-Accurate.y)
+## tcqblocks3and5[,"Actual.diff"] <- with(tcqblocks3and5, Actual.x-Actual.y)
+## tcqblocks3and5[,"Real.diff"] <- with(tcqblocks3and5, Real.x-Real.y)
+## tcqblocks3and5[,"Truth.diff"] <- with(tcqblocks3and5, Truth.x-Truth.y)
+## tcqblocks3and5[,"Fake.diff"] <- with(tcqblocks3and5, Fake.x-Fake.y)
+## tcqblocks3and5[,"Illusory.diff"] <- with(tcqblocks3and5, Illusory.x-Illusory.y)
+## tcqblocks3and5[,"Inaccurate.diff"] <- with(tcqblocks3and5, Inaccurate.x-Inaccurate.y)
+## tcqblocks3and5[,"Lies.diff"] <- with(tcqblocks3and5, Lies.x-Lies.y)
+## tcqblocks3and5[,"Cream.diff"] <- with(tcqblocks3and5, Cream.x-Cream.y)
+## tcqblocks3and5[,"Injections.diff"] <- with(tcqblocks3and5, Injections.x-Injections.y)
+## tcqblocks3and5[,"Surgery.diff"] <- with(tcqblocks3and5, Surgery.x-Surgery.y)
+## tcqblocks3and5[,"Acupuncture.diff"] <- with(tcqblocks3and5, Acupuncture.x-Acupuncture.y)
+## tcqblocks3and5[,"FlowerEssence.diff"] <- with(tcqblocks3and5, FlowerEssence.x-FlowerEssence.y)
+## tcqblocks3and5[,"Homeopathy.diff"] <- with(tcqblocks3and5, Homeopathy.x-Homeopathy.y)
+## tcqblocks3and5[,"Reiki.diff"] <- with(tcqblocks3and5, Reiki.x-Reiki.y)
+## tcqdiffs <- tcqblocks3and5[,34:48]
+optdiffs.dich <- apply(optiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
+tcqdiffs.dich <- apply(tcqiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
 @ 
 <<optiatirt, echo=FALSE, results=hide>>=
 optiat.rasch <- RM(na.omit(optdiffs.dich))
@@ -404,6 +423,7 @@ optiat.elim <- stepwiseIt(optiat.rasch)
 
 \begin{figure}
 <<optpimap, echo=FALSE, figure=TRUE>>=
+
 print(plotPImap(optiat.rasch))
 @   
   \caption{Person Item Map of Difficulty parameters for Optimism IAT}
@@ -745,7 +765,8 @@ open.pain.mean <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
 notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
 
 painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
-
+painbycond[,"Time"] <- 1:45
+painbycond.m <- melt(painbycond, id.vars="Time")
 @ 
 
 \begin{figure}
@@ -788,7 +809,7 @@ print(acf(na.omit(with(medpainratings,mednotreatpain))), main="Autocorrelation N
 \end{figure}
 
 
-As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall mixed model which will be fit to the data.
+As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
 
 \begin{figure}
 <<meanpaintscorrelationplots, echo=FALSE, fig=TRUE>>=
@@ -806,63 +827,72 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 
 
 \subsection{Variables impacting the placebo response}
-
+\label{sec:vari-impact-plac}
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
 
 \begin{figure}
-<<ggplotsurvivalgroupiat, echo=FALSE, fig=TRUE>>=
-surviat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=TCQIAT.Mean, colour=Condition))+geom_smooth(span=0.3)
-print(surviat.corr)
+<<ggplothistcond, echo=FALSE, fig=TRUE>>=
+plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+print(plac.resp.hist.pl)
 @   
   \caption{TCQIAT.Mean against Pain Responses Over Time}
-  \label{fig:tcqpaintime}
+  \label{fig:histresp}
 \end{figure}
 
 
-<<placresponse.surv.tcqiatscore, echo=FALSE, fig=TRUE>>=
-surviat.corr2 <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=TCQIAT.Mean, colour=PlacResp ))+geom_smooth(span=0.6)
-print(surviat2.comp)
-@ 
-
-As can be seen above in Figure \ref{fig:ggplottcqplac}, the group which responded to placebo tended to have a much higher tcqiatscore. This is in line with the hypotheses of the experiment, and leads on to formal test of the model expressed graphically above. Note that the difference between the groups in terms of placebo response does not appear to be significant (the dark area around the lines represent the standard errors of the loess fit). 
+From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
 
 
+
+
+
+
+\begin{figure}
 <<optiatcorrsurv, echo=FALSE, fig=TRUE>>=
-optiat.corr <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=OptIAT.Mean, colour=PlacResp))
-optiatcorr2 <- optiat.corr+layer(geom="smooth")
-print(optiatcorr2)
-@ 
+optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+print(optiat.histcond)
+@   
+  \caption{Density Plots of Optimism IAT Scores by Condition}
+  \label{fig:opthistcond}
+\end{figure}
 
-Again, it can be seen that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
 
-<<creamcorrsurv, echo=FALSE, fig=TRUE>>=
-creamcorr.surv <- ggplot(Iatandexpmeasures, aes(x=lengthsurv, y=Cream, colour=Condition))
-creamcorr.point <- creamcorr.surv+layer(geom="point")
-creamcorr.smooth <- creamcorr.surv+layer(geom="smooth")
-print(creamcorr.smooth)
-@ 
+Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
 
-As can be seen from Figure D above, there appeared to be no relationship with the mean credibility score for creams and the length which participants remained in the experiment.
+\begin{figure}
+<<creamhistcond, echo=FALSE, fig=TRUE>>=
+cream.hist.cond <- ggplot(Iatandexpmeasures, aes(x=Cream))+geom_density()+facet_grid(.~PlacResp)
+print(cream.hist.cond)
+@   
+  \caption{Desnity Plot for Mean Cream Credibility Scores by Condition}
+  \label{fig:creamhistcond}
+\end{figure}
 
+
+Figure  \ref{fig:creamhistcond} shows that there was a difference in the mean cream credibiliuty scores by whether or not a participant responded to placebo, but the difference was not significant ($t=-0.9545, df=53.766, p=0.3441$). 
+
+\begin{figure}
 <<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
-placrespyes <- painratings[painratings$PlacResp=="Yes",]
-placrespno <- painratings[painratings$PlacResp=="No",]
+placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
+placrespno <- painratings[with(painratings,PlacResp=="No"),]
 placresyesmean <- apply(placrespyes[4:48], 2, mean, na.rm=TRUE)
 placresnomean <- apply(placrespno[4:48], 2, mean, na.rm=TRUE)
-placresyesnopain <- cbind(placresyesmean, placresnomean)
-placresyesnopain <- as.data.frame(placresyesnopain)
+placresyesnopain <- as.data.frame(cbind(placresyesmean, placresnomean))
 placresyesnopain$Time <- 1:45
 placres.melt <- melt(placresyesnopain, id="Time")
-placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))
-placrespplot2 <- placresplot+layer(geom="smooth")
-print(placrespplot2)
-@ 
+placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")
+print(placresplot)
+@   
+  \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a loess smoother, the jagged line represents the actual pain levels}
+  \label{fig:placyesno}
+\end{figure}
 
-A number of findings are apparent from the plot above in Figure \ref{fig:placyesnopain}. Firstly, there were far more participants in the study who did not respond to placebo (as shown by the narrower confidence intervals on the blue line). Secondly, the placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+
+A number of findings are apparent from the plot above in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
 \subsection{Logistic Regressions on Placebo Response}
-
+\label{sec:logist-regr-plac}
 In order to examine whether or not the IAT scores were predictive of placebo response, a logistic regression model was used. Logistic regression was chosen for this as the response outcome was binary, and this method extends the linear regression model for binary outcomes. 
 
 
@@ -893,7 +923,7 @@ In addition, the Life Orientation scores are not a significant predictor of plac
 However, when these three variables are placed into the model together, the result is significant.
 
 <<placeboglm, echo=FALSE, results=tex>>=
-placmod6<- glm(PlacResp~poly(TCQIAT.Mean,2)*poly(OptIAT.Mean,2)*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.xtab <- xtable(summary(placmod6))
 print(placmod.xtab)
 @ 
@@ -904,29 +934,26 @@ In addition, this model explains approximately 27\% of the variance in placebo r
 
 
 <<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
-iatexpno <- Iatandexpmeasures[Iatandexpmeasures$PlacResp=="No",]
-iatexpyes <- Iatandexpmeasures[Iatandexpmeasures$PlacResp=="Yes",]
+iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
+iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
 iatexpno <- na.omit(iatexpno)
 iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
-lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))
-lotriatplot2 <- lotriatplot+layer(geom="point")
-print(lotriatplot2)
+lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
+print(lotriatplot)
 @ 
  The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
 
 <<lotrtcqsmoothplot, echo=FALSE, fig=TRUE>>=
-lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))
-lotrtcqplot2 <- lotrtcqplot+layer(geom="point")
-print(lotrtcqplot2)
+lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))+geom_point()
+print(lotrtcqplot)
 @  
 
 This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
 
 <<lotroptplot, echo=FALSE, fig=TRUE>>=
-lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=OptIAT.Mean , colour=PlacResp))
-lotroptplot2 <- lotroptplot+layer(geom="point")
-print(lotroptplot2)
+lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=OptIAT.Mean , colour=PlacResp))+geom_point()
+print(lotroptplot)
 @ 
 
 From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response. 
@@ -943,7 +970,7 @@ iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
 iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
-rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean, data=iatandexpfull)
+rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
 rf.pred <- predict(rf.train, iatandexpfull.test)
 test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table, label="tab:rfplac", caption="Random Forest Accuracy on Placebo Response (Test set)")
 var.used.count <- varUsed(rf.train[["finalModel"]])
@@ -961,6 +988,8 @@ print(test.xtab)
 
 As can be seen from Table \ref{tab:rfplac}, the random forest predicted the unseen data for the placebo response exceptionally well, with an accuracy of 1 ($95CI 0.7684-1$), and was significantly better than a random prediction ($p=0.002059$). This suggests that the major hypothesis of the thesis, that implicit measures would be a useful predictor of the placebo response was accurate. This subject is covered further in the discussion. 
 
+Other models which were fit to the data included a naive bayes classifier ($Acc=0.5714$), a linear support vector machine ($Acc=0.6439$), an an evolutionary tree model ($Acc=0.7857$). Of these, only the evolutionary tree performed above chance when predicting positive placebo response (all models predicted no placebo response correctly). This may be, as the plots above in section \ref{sec:vari-impact-plac} showed, the relationship appeared to be nonlinear, in that moderate levels of the three predictor variables appeared to be more highly associated with positive response to placebo. Tree models allow the data to be split on particular levels of a predictor variable, and this flexibility allows placebos to be predicted more accurately. 
+
 \begin{figure}
 <<varImpPlot, echo=FALSE, figure=TRUE>=
 print(varImpPlot(rf.train[["finalModel"]]))
@@ -969,90 +998,117 @@ print(varImpPlot(rf.train[["finalModel"]]))
   \label{fig:varimprf}
 \end{figure}
 
+As can be seen from Figure \ref{fig:varimprf}, all three variables were important to the fit, however the TCQ IAT appeared to be the most important, followed by the mean credibility score for conventional treatments, followed by the Optimism IAT, followed by scores on the LOT-R.
+
+
+<<evtree, echo=FALSE, results=hide>>=
+evtree.train <- train(PlacResp~OptIAT.Mean+TCQIAT.Mean+meanconvo, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
+evtree.pred <- predict(evtree.train, iatandexpfull.test)
+evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
+@ 
+
+To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, the Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
+
+\begin{figure}
+<<evtreeplot, echo=FALSE, figure=TRUE>>=
+print(plot(evtree.train$finalModel))
+@   
+  \caption{Evolutionary Tree plot for Prediction of Placebo Response}
+  \label{fig:evtreeplot}
+\end{figure}
+
+
 
 
 \subsection{Analysis of Physiological Data}
 
 <<tsimport, echo=FALSE, results=hide>>=
 physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
-phys.mat <- listToDf(physfiles)
-physnames <- colnames(phys.mat)
-names(phys.mat) <- NULL
-phys.df <- as.data.frame(phys.mat)
+gsr.mat <- listToDf(physfiles, 1)
+ecg.mat <- listToDf(physfiles, 2)
+gsrnames <- colnames(gsr.mat)
+ecgnames <- colnames(ecg.mat)
+names(gsr.mat) <- NULL
+names(ecg.mat) <- NULL
+gsr.df <- as.data.frame(gsr.mat)
+names(gsr.df) <- gsrnames
+ecg.df <- as.data.frame(ecg.mat)
+names(ecg.df) <- ecgnames
+
 @
 
 
 <<GSRcollate, echo=FALSE, results=hide>>=
-
-biologicaldata <- as.data.frame(biologicaldata)
-biodata2 <- gsub(pattern="phys", replacement="GSR", x=biodata)
-biologicaldata <- biologicaldata[1:31150,1:107]
-colnames(biologicaldata) <- biodata2
-write.csv(biologicaldata, file="GSRdata.csv")
-pbionotna <- apply(biologicaldata, 2, function (x) sum(!is.na(x)))
-write.csv(biologicaldata, file="GSRdata.csv")
-rm(list=ls(pattern="phys"))
-gc()
+gsrdata <- phys.df[,with(phys.df, grep("GSR", x=names(phys.df)))]
+## biologicaldata <- as.data.frame(biologicaldata)
+## biodata2 <- gsub(pattern="phys", replacement="GSR", x=biodata)
+## biologicaldata <- biologicaldata[1:31150,1:107]
+## colnames(biologicaldata) <- biodata2
+## write.csv(biologicaldata, file="GSRdata.csv")
+## pbionotna <- apply(biologicaldata, 2, function (x) sum(!is.na(x)))
+## write.csv(biologicaldata, file="GSRdata.csv")
+## rm(list=ls(pattern="phys"))
+## gc()
 @ 
 <<GSRtrans, echo=FALSE, results=hide>>=
-GSRtrans <- matrix(NA, nrow=107, ncol=31150)
-for (i in seq_along(biologicaldata)) {
-  GSRtrans[i,] <- t(biologicaldata[,i])
-  rownames(GSRtrans) <- colnames(biologicaldata)
-  }
-GSRtrans <- as.data.frame(GSRtrans)
+## GSRtrans <- matrix(NA, nrow=107, ncol=31150)
+## for (i in seq_along(biologicaldata)) {
+##   GSRtrans[i,] <- t(biologicaldata[,i])
+##   rownames(GSRtrans) <- colnames(biologicaldata)
+##   }
+## GSRtrans <- as.data.frame(GSRtrans)
 @ 
 
 <<gsrcollate, echo=FALSE, results=hide>>=
-x <- paste("Time", as.character(1:31150))
-x[31151] <- "Participant"
-GSRtrans$Participant <- rownames(GSRtrans)
-colnames(GSRtrans) <- x
-GSRtrans$survlength <- apply(GSRtrans, 1, function (x) sum(!is.na(x)))
-GSRtrans$survlengthdiv <- with(GSRtrans, survlength/600)
-GSRtrans$Participant <- gsub(pattern="GSR", replacement="", x=GSRtrans$Participant)
-partsurvgsr <- GSRtrans[,c("Participant", "survlength", "survlengthdiv")]
-partsurvmin <- Iatandexpmeasures[,c("Participant","Condition", "PlacResp", "lengthsurv")]
-GSRtranswithcond <- merge(GSRtrans, partsurvmin, by="Participant")
-write.csv(GSRtrans, file="GSRtrans.csv")
+## x <- paste("Time", as.character(1:31150))
+## x[31151] <- "Participant"
+## GSRtrans$Participant <- rownames(GSRtrans)
+## colnames(GSRtrans) <- x
+## GSRtrans$survlength <- apply(GSRtrans, 1, function (x) sum(!is.na(x)))
+## GSRtrans$survlengthdiv <- with(GSRtrans, survlength/600)
+## GSRtrans$Participant <- gsub(pattern="GSR", replacement="", x=GSRtrans$Participant)
+## partsurvgsr <- GSRtrans[,c("Participant", "survlength", "survlengthdiv")]
+## partsurvmin <- Iatandexpmeasures[,c("Participant","Condition", "PlacResp", "lengthsurv")]
+## GSRtranswithcond <- merge(GSRtrans, partsurvmin, by="Participant")
+## write.csv(GSRtrans, file="GSRtrans.csv")
 @ 
 
 <<gsrbycond, echo=FALSE, results=hide>>=
-gsrdeceptive <- GSRtranswithcond[GSRtranswithcond$Condition=="Treatment", ]
-gsropen <- GSRtranswithcond[GSRtranswithcond$Condition=="Placebo", ]
-gsrnotreat <- GSRtranswithcond[GSRtranswithcond$Condition=="No Treatment", ]
-gsrplacyes <- GSRtranswithcond[GSRtranswithcond$PlacResp=="Yes",]
-gsrplacno <- GSRtranswithcond[GSRtranswithcond$PlacResp=="No",]
+## gsrdeceptive <- GSRtranswithcond[GSRtranswithcond$Condition=="Treatment", ]
+## gsropen <- GSRtranswithcond[GSRtranswithcond$Condition=="Placebo", ]
+## gsrnotreat <- GSRtranswithcond[GSRtranswithcond$Condition=="No Treatment", ]
+## gsrplacyes <- GSRtranswithcond[GSRtranswithcond$PlacResp=="Yes",]
+## gsrplacno <- GSRtranswithcond[GSRtranswithcond$PlacResp=="No",]
 @ 
 
 Before the analysis of GSR data was conducted, the mean and median GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
 
 <<gsrmeans, echo=FALSE, results=hide>>=
-deceptivemeangsr <- lapply(gsrdeceptive[,2:31150], mean, na.rm=TRUE)
-openmeangsr <- lapply(gsropen[,2:31150], mean, na.rm=TRUE)
-notreatmeangsr <- lapply(gsrnotreat[,2:31150], mean, na.rm=TRUE)
-meangsr <- as.data.frame(cbind(deceptivemeangsr,openmeangsr, notreatmeangsr))
-meangsr <- lapply(meangsr, as.numeric )
-meangsr <- as.data.frame(lapply(meangsr, scale))
-meangsr$Time <- 1:31149
+## deceptivemeangsr <- lapply(gsrdeceptive[,2:31150], mean, na.rm=TRUE)
+## openmeangsr <- lapply(gsropen[,2:31150], mean, na.rm=TRUE)
+## notreatmeangsr <- lapply(gsrnotreat[,2:31150], mean, na.rm=TRUE)
+## meangsr <- as.data.frame(cbind(deceptivemeangsr,openmeangsr, notreatmeangsr))
+## meangsr <- lapply(meangsr, as.numeric )
+## meangsr <- as.data.frame(lapply(meangsr, scale))
+## meangsr$Time <- 1:31149
 @ 
 
 <<meanplotgsr, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(2,2))
-plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
+## par(mfrow=c(2,2))
+## plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
 @ 
 
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 <<gsrmedians, echo=FALSE, results=hide>>=
-deceptivemediangsr <- lapply(gsrdeceptive[,2:31150], median, na.rm=TRUE)
-openmediangsr <- lapply(gsropen[,2:31150], median, na.rm=TRUE)
-notreatmediangsr <- lapply(gsrnotreat[,2:31150], median, na.rm=TRUE)
-medgsr <- cbind(deceptivemediangsr, openmediangsr, notreatmediangsr)
-medgsr <- lapply(medgsr, as.numeric)
-medgsr <- as.data.frame(medgsr)
-medgsr <- as.data.frame(lapply(medgsr, scale))
+## deceptivemediangsr <- lapply(gsrdeceptive[,2:31150], median, na.rm=TRUE)
+## openmediangsr <- lapply(gsropen[,2:31150], median, na.rm=TRUE)
+## notreatmediangsr <- lapply(gsrnotreat[,2:31150], median, na.rm=TRUE)
+## medgsr <- cbind(deceptivemediangsr, openmediangsr, notreatmediangsr)
+## medgsr <- lapply(medgsr, as.numeric)
+## medgsr <- as.data.frame(medgsr)
+## medgsr <- as.data.frame(lapply(medgsr, scale))
 @ 
 
 <<gsrmedianplot, echo=FALSE, fig=TRUE>>=
@@ -1062,10 +1118,10 @@ medgsr <- as.data.frame(lapply(medgsr, scale))
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
 
 <<ggplotgsr, echo=FALSE, fig=TRUE>>=
-meangsr.melt <- melt(meangsr, id="Time")
-meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
-meangsr2 <- meangsrplot+layer(geom="line")
-print(meangsr2)
+## meangsr.melt <- melt(meangsr, id="Time")
+## meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
+## meangsr2 <- meangsrplot+layer(geom="line")
+## print(meangsr2)
 @ 
 
 
