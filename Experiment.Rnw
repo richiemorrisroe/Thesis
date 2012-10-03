@@ -975,7 +975,7 @@ rf.pred <- predict(rf.train, iatandexpfull.test)
 test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table, label="tab:rfplac", caption="Random Forest Accuracy on Placebo Response (Test set)")
 var.used.count <- varUsed(rf.train[["finalModel"]])
 var.used.count <- as.data.frame(var.used.count)
-rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv")
+rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv", "LOTR")
 
 ## var.used.count.m[,"variable"] <- names(iatandexpfull)
 ## ggplot(var.used.count.m, aes(x=variable, y=value))+geom_histogram()+coord_flip()
@@ -1002,7 +1002,7 @@ As can be seen from Figure \ref{fig:varimprf}, all three variables were importan
 
 
 <<evtree, echo=FALSE, results=hide>>=
-evtree.train <- train(PlacResp~OptIAT.Mean+TCQIAT.Mean+meanconvo, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
+evtree.train <- train(PlacResp~OptIAT.Mean+TCQIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
 evtree.pred <- predict(evtree.train, iatandexpfull.test)
 evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 @ 
@@ -1025,103 +1025,76 @@ print(plot(evtree.train$finalModel))
 <<tsimport, echo=FALSE, results=hide>>=
 physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
 gsr.mat <- listToDf(physfiles, 1)
+
 ecg.mat <- listToDf(physfiles, 2)
 gsrnames <- colnames(gsr.mat)
 ecgnames <- colnames(ecg.mat)
 names(gsr.mat) <- NULL
-names(ecg.mat) <- NULL
-gsr.df <- as.data.frame(gsr.mat)
-names(gsr.df) <- gsrnames
-ecg.df <- as.data.frame(ecg.mat)
-names(ecg.df) <- ecgnames
+gsr.mat.t <- t(gsr.mat)
 
+names(ecg.mat) <- NULL
+ecg.mat.t <- t(ecg.mat)
+gsr.df <- as.data.frame(gsr.mat.t)
+gsrnames2 <- gsub("GSR", "", gsrnames)
+gsr.df[,"Participant"] <- gsrnames2
 @
 
 
-<<GSRcollate, echo=FALSE, results=hide>>=
-gsrdata <- phys.df[,with(phys.df, grep("GSR", x=names(phys.df)))]
-## biologicaldata <- as.data.frame(biologicaldata)
-## biodata2 <- gsub(pattern="phys", replacement="GSR", x=biodata)
-## biologicaldata <- biologicaldata[1:31150,1:107]
-## colnames(biologicaldata) <- biodata2
-## write.csv(biologicaldata, file="GSRdata.csv")
-## pbionotna <- apply(biologicaldata, 2, function (x) sum(!is.na(x)))
-## write.csv(biologicaldata, file="GSRdata.csv")
-## rm(list=ls(pattern="phys"))
-## gc()
-@ 
-<<GSRtrans, echo=FALSE, results=hide>>=
-## GSRtrans <- matrix(NA, nrow=107, ncol=31150)
-## for (i in seq_along(biologicaldata)) {
-##   GSRtrans[i,] <- t(biologicaldata[,i])
-##   rownames(GSRtrans) <- colnames(biologicaldata)
-##   }
-## GSRtrans <- as.data.frame(GSRtrans)
-@ 
+
 
 <<gsrcollate, echo=FALSE, results=hide>>=
-## x <- paste("Time", as.character(1:31150))
-## x[31151] <- "Participant"
-## GSRtrans$Participant <- rownames(GSRtrans)
-## colnames(GSRtrans) <- x
-## GSRtrans$survlength <- apply(GSRtrans, 1, function (x) sum(!is.na(x)))
-## GSRtrans$survlengthdiv <- with(GSRtrans, survlength/600)
-## GSRtrans$Participant <- gsub(pattern="GSR", replacement="", x=GSRtrans$Participant)
-## partsurvgsr <- GSRtrans[,c("Participant", "survlength", "survlengthdiv")]
-## partsurvmin <- Iatandexpmeasures[,c("Participant","Condition", "PlacResp", "lengthsurv")]
-## GSRtranswithcond <- merge(GSRtrans, partsurvmin, by="Participant")
-## write.csv(GSRtrans, file="GSRtrans.csv")
+gsrwithpred <- merge(gsr.df, Iatandexpmeasures, by="Participant")
 @ 
 
 <<gsrbycond, echo=FALSE, results=hide>>=
-## gsrdeceptive <- GSRtranswithcond[GSRtranswithcond$Condition=="Treatment", ]
-## gsropen <- GSRtranswithcond[GSRtranswithcond$Condition=="Placebo", ]
-## gsrnotreat <- GSRtranswithcond[GSRtranswithcond$Condition=="No Treatment", ]
-## gsrplacyes <- GSRtranswithcond[GSRtranswithcond$PlacResp=="Yes",]
-## gsrplacno <- GSRtranswithcond[GSRtranswithcond$PlacResp=="No",]
+gsrdeceptive <- gsrwithpred[with(gsrwithpred,Condition=="Treatment"), ]
+gsropen <- gsrwithpred[with(gsrwithpred,Condition=="Placebo"), ]
+gsrnotreat <- gsrwithpred[with(gsrwithpred,Condition=="No Treatment"), ]
+gsrplacyes <- gsrwithpred[with(gsrwithpred,PlacResp=="Yes"),]
+gsrplacno <- gsrwithpred[with(gsrwithpred,PlacResp=="No"),]
 @ 
 
 Before the analysis of GSR data was conducted, the mean and median GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
 
 <<gsrmeans, echo=FALSE, results=hide>>=
-## deceptivemeangsr <- lapply(gsrdeceptive[,2:31150], mean, na.rm=TRUE)
-## openmeangsr <- lapply(gsropen[,2:31150], mean, na.rm=TRUE)
-## notreatmeangsr <- lapply(gsrnotreat[,2:31150], mean, na.rm=TRUE)
-## meangsr <- as.data.frame(cbind(deceptivemeangsr,openmeangsr, notreatmeangsr))
-## meangsr <- lapply(meangsr, as.numeric )
-## meangsr <- as.data.frame(lapply(meangsr, scale))
-## meangsr$Time <- 1:31149
+deceptivemeangsr <- lapply(gsrdeceptive[,2:31151], mean, na.rm=TRUE)
+openmeangsr <- lapply(gsropen[,2:31151], mean, na.rm=TRUE)
+notreatmeangsr <- lapply(gsrnotreat[,2:31151], mean, na.rm=TRUE)
+meangsr <- as.data.frame(cbind(deceptivemeangsr,openmeangsr, notreatmeangsr))
+meangsr <- lapply(meangsr, as.numeric )
+meangsr <- as.data.frame(lapply(meangsr, scale))
+meangsr[,"Time"] <- 1:31149
 @ 
 
 <<meanplotgsr, echo=FALSE, fig=TRUE>>=
-## par(mfrow=c(2,2))
-## plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
+par(mfrow=c(2,2))
+plot(as.ts(na.omit(meangsr)), main="Mean GSR over time")
 @ 
 
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 <<gsrmedians, echo=FALSE, results=hide>>=
-## deceptivemediangsr <- lapply(gsrdeceptive[,2:31150], median, na.rm=TRUE)
-## openmediangsr <- lapply(gsropen[,2:31150], median, na.rm=TRUE)
-## notreatmediangsr <- lapply(gsrnotreat[,2:31150], median, na.rm=TRUE)
-## medgsr <- cbind(deceptivemediangsr, openmediangsr, notreatmediangsr)
-## medgsr <- lapply(medgsr, as.numeric)
-## medgsr <- as.data.frame(medgsr)
-## medgsr <- as.data.frame(lapply(medgsr, scale))
+deceptivemediangsr <- lapply(gsrdeceptive[,2:35151], median, na.rm=TRUE)
+openmediangsr <- lapply(gsropen[,2:35151], median, na.rm=TRUE)
+notreatmediangsr <- lapply(gsrnotreat[,2:35151], median, na.rm=TRUE)
+medgsr <- as.data.frame(cbind(deceptivemediangsr, openmediangsr, notreatmediangsr))
+
+medgsr <- lapply(medgsr, as.numeric)
+medgsr <- as.data.frame(medgsr)
+medgsr <- as.data.frame(lapply(medgsr, scale))
 @ 
 
 <<gsrmedianplot, echo=FALSE, fig=TRUE>>=
-## plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
+plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
 @ 
 
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
 
 <<ggplotgsr, echo=FALSE, fig=TRUE>>=
-## meangsr.melt <- melt(meangsr, id="Time")
-## meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value, label=variable, colour=variable))
-## meangsr2 <- meangsrplot+layer(geom="line")
-## print(meangsr2)
+meangsr.melt <- melt(meangsr, id="Time")
+meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value))+geom_line()+facet_grid(variable~.)
+print(meangsrplot)
 @ 
 
 
