@@ -1030,6 +1030,7 @@ ecg.mat <- listToDf(physfiles, 2)
 gsrnames <- colnames(gsr.mat)
 ecgnames <- colnames(ecg.mat)
 names(gsr.mat) <- NULL
+gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
 gsr.mat.t <- t(gsr.mat)
 
 names(ecg.mat) <- NULL
@@ -1064,7 +1065,7 @@ notreatmeangsr <- lapply(gsrnotreat[,2:31151], mean, na.rm=TRUE)
 meangsr <- as.data.frame(cbind(deceptivemeangsr,openmeangsr, notreatmeangsr))
 meangsr <- lapply(meangsr, as.numeric )
 meangsr <- as.data.frame(lapply(meangsr, scale))
-meangsr[,"Time"] <- 1:31149
+meangsr[,"Time"] <- 1:nrow(meangsr)
 @ 
 
 <<meanplotgsr, echo=FALSE, fig=TRUE>>=
