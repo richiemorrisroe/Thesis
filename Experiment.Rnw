@@ -1038,6 +1038,7 @@ ecg.mat.t <- t(ecg.mat)
 gsr.df <- as.data.frame(gsr.mat.t)
 gsrnames2 <- gsub("GSR", "", gsrnames)
 gsr.df[,"Participant"] <- gsrnames2
+placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 @
 
 
