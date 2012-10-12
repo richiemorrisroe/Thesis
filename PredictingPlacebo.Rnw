@@ -359,7 +359,15 @@ nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=m
 
 <<knntrain, echo=FALSE, results=hide>>=
 knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
-                   preProcess=c("center", "scale", "PCA"))
+                   preProcess=c("center", "scale", "pca"))
+@ 
+
+<<svmtrain, echo=FALSE, results=hide>>=
+svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
+@ 
+
+<<svmradialtrain, echo=FALSE, results=hide>>=
+svmradial.train <- train(PlacResp~., data=iatandexpfull.train, method="lssvmRadial", trControl=mytrain, tuneGrid=data.frame(.sigma=0:10), preProcess=c("center", "scale", "pca"))
 @ 
 
 \section{Discussion}
