@@ -124,7 +124,7 @@ IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 \subsection{Participants}
 \label{sec:participants}
 
-All participants were students at the University of the lead researcher (RM). There were 111 participants (62 female, 47 male, 1 did not report gender). The ages of the participants ranged from 17-62 ($x\hat = 22.94$, sd=6.901$$).
+All participants were students at the University of the lead researcher (RM). There were 111 participants (62 female, 47 male, 1 did not report gender). The ages of the participants ranged from 17-62 ($x\hat = 22.94$, $sd=6.901$).
 All participants volunteered to take part in the study, as an incentive a draw was held where one randomly selected participant won a smartphone. The study was approved by the Social Research Ethics Committee of the lead researcher's university. 
 
 \subsection{Materials and Methods}
@@ -136,7 +136,7 @@ The major materials used in this study were as follows:
 
 \item A manual blood pressure gauge and hand exerciser used to induce pain via the submaximal torniuqet technique. 
 
-\item One IAT for treatment credibility - this IAT used real and fake words as the stimuli, along with names of various treatments. 
+\item One IAT for treatment credibility - this IAT used real and fake words as the stimuli, along with names of various treatments \footnote{see Appendix A for details of measures developed for this study} 
 
 \item Another IAT for optimism which used a self/other distinction along with words related to optimism and pessimism
 
@@ -146,14 +146,15 @@ The major materials used in this study were as follows:
 
 \item A Treatment Credibility Questionnaire (18 items) developed by the researcher (Morrisroe et al, forthcoming). This instrument showed extremely high reliability ($\alpha=0.9$) in two development studies. 
 
-\item The majority (n=67) of participants completed a scrambled sentence taks, to prime them to cooperate with the experimental procedure. 
+\item The majority ($n=79$) of participants completed a scrambled sentence taks, to prime them to cooperate with the experimental procedure. 
 \end{itemize}
 
 \subsection{Experimental Procedure}
 \label{sec:exper-proc}
 
-All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
-Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken at 1000Hz using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of a  moisturising cream. 
+All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants ($n=79$) also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment \footnote{see Appendix A for details}. Such manipulations have been shown to be effective at increasing the size of placebo effects \cite{Geers2005a}.  
+
+Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.  Next, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes (300 seconds).  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken at 1000Hz using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. 
 
 Participants in the treatment group were told that the cream was a potent painkiller, recently approved, which would take effect almost immediately. Participants in the placebo group were told that they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately. 
 
@@ -171,7 +172,195 @@ Next, a cross-validation approach was used to assess the usefulness of the varia
 
 At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
 
+\begin{figure}
+<<placprimeplot, echo=FALSE, figure=TRUE>>=
+plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
+print(plac.prime.pl)
+@   
+  \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
+  \label{fig:placprimeplot}
+\end{figure}
 
+
+The priming manipulation appeared to achieve its intended purpose, as Figure \ref{fig:placprimeplot} shows. A logistic regression demonstrated that the effects of priming were significant (p=0.0452). 
+
+Next, the potential contamination of the IAT results by general processing speed was assessed. 
+
+\begin{figure}
+<<tcqmeanresp, echo=FALSE, figure=TRUE>>=
+tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
+## tcqmeanresp.pl <- ggplot(tcqiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
+## print(tcqmeanresp.pl)
+tcqiat.mean.m <- melt(tcqiat.mean.resp, id.vars=c("Participant", "Block"))
+tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
+tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])+geom_smooth(method="lm")
+print(tcq.block.corr.pl)
+@    
+   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
+   \label{fig:tcqblockcorr}
+ \end{figure}
+
+As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
+
+<<cormatrixtcqiat, echo=FALSE, results=tex>>=
+cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
+print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
+@ 
+ 
+
+Next, the same process is repeated for the Optimism IAT. 
+
+<<tcqmeanresp, echo=FALSE, figure=TRUE>>=
+optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
+optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
+opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
+opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
+print(opt.block.corr.pl)
+@    
+   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
+   \label{fig:optblockcorr}
+ \end{figure}
+
+As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. Table \ref{tab:optcormat}. The correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
+
+<<cormatrixtcqiat, echo=FALSE, results=tex>>=
+opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
+print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
+@ 
+
+The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
+
+<<opttcqiatcorr, echo=FALSE, results=hide>>=
+curnames <- names(opt.iat.c)
+curnames.bl <- curnames[3:length(curnames)]
+curnames.bl2 <- paste("Opt", curnames.bl, sep="")
+curnames.d <- c(curnames[1:2], curnames.bl2)
+names(opt.iat.c) <- curnames.d
+curnames.tcq <- names(tcq.iat.c)
+curnames.bl.tcq <- curnames[3:length(curnames)]
+curnames.bl2.tcq <- paste("TCQ", curnames.bl.tcq, sep="")
+curnames.d.tcq <- c(curnames.tcq[1:2], curnames.bl2.tcq)
+names(tcq.iat.c) <- curnames.d.tcq
+iat.block.merge <- merge(tcq.iat.c, opt.iat.c, by="Participant")
+iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
+@ 
+
+\begin{figure}
+<<corriattcqopt, echo=FALSE, figure=TRUE>>=
+corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
+print(corr.iat.tcq.opt.pl)
+@   
+  \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
+  \label{fig:corriattcqopt}
+\end{figure}
+
+As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations between the two IAT's. These correlations, while significant, were quite low ($r\bar =0.20$) which equates to about 4\% of the variance. Therefore the two explicit measures can be safely be regarded as not being contaminated by method variance \cite{Mierke2003}. 
+
+Next, the relationship between the placebo response and proposed predictors were examined graphically. 
+
+<<tsimport, echo=FALSE, results=hide>>=
+physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
+gsr.mat <- listToDf(physfiles, 1)
+
+ecg.mat <- listToDf(physfiles, 2)
+gsrnames <- colnames(gsr.mat)
+ecgnames <- colnames(ecg.mat)
+names(gsr.mat) <- NULL
+gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
+gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
+gsr.mean2 <- as.data.frame(gsr.mean)
+gsrnames2 <- gsub("GSR", "", gsrnames)
+gsr.mean2[,"Participant"] <- gsrnames2
+gsr.mat.t <- t(gsr.mat)
+names(ecg.mat) <- NULL
+ecg.mat.t <- t(ecg.mat)
+gsr.df <- as.data.frame(gsr.mat.t)
+gsr.df[,"Participant"] <- gsrnames2
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+@
+
+\begin{figure}
+<<ggplothistcond, echo=FALSE, fig=TRUE>>=
+plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+print(plac.resp.hist.pl)
+@   
+  \caption{TCQIAT.Mean against Pain Responses Over Time}
+  \label{fig:histresp}
+\end{figure}
+
+From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
+
+\begin{figure}
+<<optiatcorrsurv, echo=FALSE, fig=TRUE>>=
+optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+print(optiat.histcond)
+@   
+  \caption{Density Plots of Optimism IAT Scores by Condition}
+  \label{fig:opthistcond}
+\end{figure}
+
+
+Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
+
+<<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
+placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
+placrespno <- painratings[with(painratings,PlacResp=="No"),]
+placresyesmean <- apply(placrespyes[4:48], 2, mean, na.rm=TRUE)
+placresnomean <- apply(placrespno[4:48], 2, mean, na.rm=TRUE)
+placresyesnopain <- as.data.frame(cbind(placresyesmean, placresnomean))
+placresyesnopain$Time <- 1:45
+placres.melt <- melt(placresyesnopain, id="Time")
+placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")
+print(placresplot)
+@   
+  \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a loess smoother, the jagged line represents the actual pain levels}
+  \label{fig:placyesno}
+\end{figure}
+
+A number of findings are apparent from the plot above in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). 
+
+<<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
+iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
+iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
+iatexpno <- na.omit(iatexpno)
+iatexpyes <- na.omit(iatexpyes)
+iatexpyesno <- rbind(iatexpyes, iatexpno)
+lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
+print(lotriatplot)
+@
+
+The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the Treatment Credibility IAT, the Optimism IAT and the LOT-R. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. This nonlinear relationship was the impetus to widen the kinds of models fit to the data than is common in this area. 
+ 
+\subsection{Machine Learning and the Placebo Response}
+\label{sec:mach-learn-plac}
+
+Firstly, the data was split into two random sections, with 80\% of the data utilised to train the models, and 20\% held aside for a final validation of any model's predictive power. Additionally, the training set was split into ten sections, of which nine were used to train the model and one was used to test the model. This allowed for the accuracy of each model to be ranked in a preliminary fashion, though the ultimate arbiter was performance on the training set. 
+
+
+<<testandtrain, echo=FALSE, results=hide>>=
+
+iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
+iatandexpfull <- na.omit(iatandexpfull)
+iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
+iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
+iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
+mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
+@ 
+
+
+<<rftrain, echo=FALSE, results=hide>>=
+randf.train <- train(PlacResp~., data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale", "PCA"))
+randf.pred <- predict(randf.train, iatandexpfull.test)
+@ 
+
+<<nbtrain, echo=FALSE, results=hide>>=
+nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale", "PCA"))
+@
+
+<<knntrain, echo=FALSE, results=hide>>=
+knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
+                   preProcess=c("center", "scale", "PCA"))
+@ 
 
 \section{Discussion}
 \label{sec:discussion}
