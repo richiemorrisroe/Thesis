@@ -12,10 +12,7 @@ load("credtotals.rda")
 ## load("tcqthesis.rda")
 @ 
 
-All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ).The majority of participants also completed a scrambled sentence task which aimed to prime them for cooperation in the experiment. Such manipulations have been shown to be effective at increasing the size of placebo effects.  
-Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants. Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10. If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken 1000 times per second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of a  moisturising cream. 
 
-Participants in the treatment group were told that the cream was a potent painkiller, recently approved, which would take effect almost immediately. Participants in the placebo group were told that they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately. 
 
 
 \section{Results}
@@ -377,41 +374,7 @@ tcqblock3 <- tcqstimblock3
 tcqblock5 <- tcqstimblock5
 optiat.diff <- iatDiff(optblock3, optblock5)
 tcqiat.diff <- iatDiff(tcqblock3, tcqblock5)
-## optblocks3and5 <-  merge(optblock3, optblock5, by="part.opt")
-#this whole chunk needs to be fixed, refactor into a function use mapply to reduce the need for laborious repitition
-## optblocks3and5[,"Me.diff"] <-with(optblocks3and5,Me.x-Me.y )
-## optblocks3and5[,"Mine.diff"] <-with(optblocks3and5,Mine.x-Mine.y)
-## optblocks3and5[,"Myself.diff"] <-with(optblocks3and5,Myself.x-Myself.y)
-## optblocks3and5[,"Theirs.diff"] <-with(optblocks3and5,Theirs.x-Theirs.y)
-## optblocks3and5[,"Them.diff"] <-with(optblocks3and5,Them.x-Them.y)
-## optblocks3and5[,"Themselves.diff"] <-with(optblocks3and5,Themselves.x-Themselves.y)
-## optblocks3and5[,"Better.diff"] <-with(optblocks3and5,Better.x-Better.y)
-## optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
-## optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
-## optblocks3and5[,"Happy.diff"] <-with(optblocks3and5,Happy.x-Happy.y)
-## optblocks3and5[,"Improving.diff"] <-with(optblocks3and5,Improving.x-Improving.y)
-## optblocks3and5[,"Succeeding.diff"]<-with(optblocks3and5,Succeeding.x-Succeeding.y)
-## optblocks3and5[,"Disimproving.diff"] <- with(optblocks3and5,Disimproving.x-Disimproving.y)
-## optblocks3and5[,"Failing.diff"] <-with(optblocks3and5,Failing.x-Failing.y)
-## optblocks3and5[,"Worse.diff"] <-with(optblocks3and5,Worse.x-Worse.y)
-## optdiffs <- optblocks3and5[,c(1,30:42)]
-## tcqblocks3and5 <- merge(tcqblock3, tcqblock5, by="Participant")
-## tcqblocks3and5[,"Accurate.diff"] <- with(tcqblocks3and5, Accurate.x-Accurate.y)
-## tcqblocks3and5[,"Actual.diff"] <- with(tcqblocks3and5, Actual.x-Actual.y)
-## tcqblocks3and5[,"Real.diff"] <- with(tcqblocks3and5, Real.x-Real.y)
-## tcqblocks3and5[,"Truth.diff"] <- with(tcqblocks3and5, Truth.x-Truth.y)
-## tcqblocks3and5[,"Fake.diff"] <- with(tcqblocks3and5, Fake.x-Fake.y)
-## tcqblocks3and5[,"Illusory.diff"] <- with(tcqblocks3and5, Illusory.x-Illusory.y)
-## tcqblocks3and5[,"Inaccurate.diff"] <- with(tcqblocks3and5, Inaccurate.x-Inaccurate.y)
-## tcqblocks3and5[,"Lies.diff"] <- with(tcqblocks3and5, Lies.x-Lies.y)
-## tcqblocks3and5[,"Cream.diff"] <- with(tcqblocks3and5, Cream.x-Cream.y)
-## tcqblocks3and5[,"Injections.diff"] <- with(tcqblocks3and5, Injections.x-Injections.y)
-## tcqblocks3and5[,"Surgery.diff"] <- with(tcqblocks3and5, Surgery.x-Surgery.y)
-## tcqblocks3and5[,"Acupuncture.diff"] <- with(tcqblocks3and5, Acupuncture.x-Acupuncture.y)
-## tcqblocks3and5[,"FlowerEssence.diff"] <- with(tcqblocks3and5, FlowerEssence.x-FlowerEssence.y)
-## tcqblocks3and5[,"Homeopathy.diff"] <- with(tcqblocks3and5, Homeopathy.x-Homeopathy.y)
-## tcqblocks3and5[,"Reiki.diff"] <- with(tcqblocks3and5, Reiki.x-Reiki.y)
-## tcqdiffs <- tcqblocks3and5[,34:48]
+
 optdiffs.dich <- apply(optiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
 tcqdiffs.dich <- apply(tcqiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
 @ 
@@ -830,6 +793,29 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 \label{sec:vari-impact-plac}
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
+<<tsimport, echo=FALSE, results=hide>>=
+physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
+gsr.mat <- listToDf(physfiles, 1)
+
+ecg.mat <- listToDf(physfiles, 2)
+gsrnames <- colnames(gsr.mat)
+ecgnames <- colnames(ecg.mat)
+names(gsr.mat) <- NULL
+gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
+gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
+gsr.mean2 <- as.data.frame(gsr.mean)
+gsrnames2 <- gsub("GSR", "", gsrnames)
+gsr.mean2[,"Participant"] <- gsrnames2
+gsr.mat.t <- t(gsr.mat)
+
+names(ecg.mat) <- NULL
+ecg.mat.t <- t(ecg.mat)
+gsr.df <- as.data.frame(gsr.mat.t)
+
+gsr.df[,"Participant"] <- gsrnames2
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+@
+
 
 \begin{figure}
 <<ggplothistcond, echo=FALSE, fig=TRUE>>=
@@ -933,6 +919,8 @@ As can be seen from Table \ref{tab:placmodinter} when interactions were allowed 
 In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
 
 
+
+
 <<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
@@ -965,7 +953,7 @@ Given the confusing results obtained from linear statistical modelling of the pl
 
 <<randomforestCV, echo=FALSE, results=hide>>=
 train.ind <- sample(1:54, 40, replace=FALSE)
-iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv")]
+iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
@@ -982,6 +970,14 @@ rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv", "LOTR")
 
 @ 
 
+<<rf2, echo=FALSE, results=hide>>=
+iatandexpfull.train.ind2 <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
+iatandexpfull.train2 <- iatandexpfull[iatandexpfull.train.ind2,]
+iatandexpfull.test2 <- iatandexpfull[-iatandexpfull.train.ind2,]
+rf.train2 <- train(PlacResp~., data=iatandexpfull.train2, method="rf", metric="Kappa", maximise=TRUE)
+rf.pred2 <- predict(rf.train2, iatandexpfull.test2)
+@ 
+
 <<rfTestResults, echo=FALSE, results=tex>>=
 print(test.xtab)
 @ 
@@ -991,7 +987,7 @@ As can be seen from Table \ref{tab:rfplac}, the random forest predicted the unse
 Other models which were fit to the data included a naive bayes classifier ($Acc=0.5714$), a linear support vector machine ($Acc=0.6439$), an an evolutionary tree model ($Acc=0.7857$). Of these, only the evolutionary tree performed above chance when predicting positive placebo response (all models predicted no placebo response correctly). This may be, as the plots above in section \ref{sec:vari-impact-plac} showed, the relationship appeared to be nonlinear, in that moderate levels of the three predictor variables appeared to be more highly associated with positive response to placebo. Tree models allow the data to be split on particular levels of a predictor variable, and this flexibility allows placebos to be predicted more accurately. 
 
 \begin{figure}
-<<varImpPlot, echo=FALSE, figure=TRUE>=
+<<varImpPlot, echo=FALSE, figure=TRUE>>=
 print(varImpPlot(rf.train[["finalModel"]]))
 @   
   \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
@@ -1022,24 +1018,7 @@ print(plot(evtree.train$finalModel))
 
 \subsection{Analysis of Physiological Data}
 
-<<tsimport, echo=FALSE, results=hide>>=
-physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
-gsr.mat <- listToDf(physfiles, 1)
 
-ecg.mat <- listToDf(physfiles, 2)
-gsrnames <- colnames(gsr.mat)
-ecgnames <- colnames(ecg.mat)
-names(gsr.mat) <- NULL
-gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
-gsr.mat.t <- t(gsr.mat)
-
-names(ecg.mat) <- NULL
-ecg.mat.t <- t(ecg.mat)
-gsr.df <- as.data.frame(gsr.mat.t)
-gsrnames2 <- gsub("GSR", "", gsrnames)
-gsr.df[,"Participant"] <- gsrnames2
-placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
-@
 
 
 
@@ -1071,10 +1050,17 @@ meangsr[,"Time"] <- 1:nrow(meangsr)
 
 <<meanplotgsr, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(2,2))
-plot(as.ts(na.omit(meangsr)), main="Mean GSR over time")
+plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
 @ 
 
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+
+<<placmodgsr, echo=FALSE, results=tex>>=
+placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
+print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
+@ 
+
+As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was significantly associated with the response to placebo. 
 
 <<gsrmedians, echo=FALSE, results=hide>>=
 deceptivemediangsr <- lapply(gsrdeceptive[,2:35151], median, na.rm=TRUE)
