@@ -171,6 +171,42 @@ Next, a cross-validation approach was used to assess the usefulness of the varia
 \label{sec:results}
 
 At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
+<<selfreportcleanup, echo=FALSE, results=hide>>=
+names(vasscores)[1] <-  "Participant"
+names(expmeasures)[1] <- "Participant"
+vasscores.test <- vasscores[,1:8]
+expmeasurescomp <- merge(vasscores.test, expmeasures)
+Iatandexpmeasures <- merge(expmeasurescomp, IATscores, by="Participant")
+iatexp <- Iatandexpmeasures[,14:23]
+Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
+Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
+Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
+## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
+@
+ 
+<<survivaldata, echo=FALSE, results=hide>>=
+painratings <- vasscores[,c(9:53)]
+napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
+lengthsurv <- 46-napainratings
+Iatandexpmeasures[,"lengthsurv"] <- lengthsurv
+censor <- Iatandexpmeasures[,"Censored"]
+censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
+Surv.data <- Surv(lengthsurv,censor2)
+@ 
+
+
+
+
+<<paints, echo=FALSE, results=hide>>=
+painratings <- vasscores[,c(1,2,8:53)]
+painratings.temp <- painratings[,2:length(painratings)]
+painratings.trans <- t(painratings.temp)
+colnames(painratings.trans) <- as.character(t(painratings[,1]))
+painratings.trans <- as.data.frame(painratings.trans)
+painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
+pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
+pain.cond.m <- melt(pain.cond, id.vars="Condition")
+@ 
 
 \begin{figure}
 <<placprimeplot, echo=FALSE, figure=TRUE>>=
@@ -302,6 +338,8 @@ print(optiat.histcond)
 
 Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
 
+
+
 <<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
 placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
 placrespno <- painratings[with(painratings,PlacResp=="No"),]
@@ -338,7 +376,8 @@ Firstly, the data was split into two random sections, with 80\% of the data util
 
 
 <<testandtrain, echo=FALSE, results=hide>>=
-
+require(doMC)
+registerDoMC(3)
 iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
@@ -349,26 +388,133 @@ mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
 
 
 <<rftrain, echo=FALSE, results=hide>>=
-randf.train <- train(PlacResp~., data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale", "PCA"))
+randf.train <- train(PlacResp~., data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
 randf.pred <- predict(randf.train, iatandexpfull.test)
 @ 
 
 <<nbtrain, echo=FALSE, results=hide>>=
-nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale", "PCA"))
+nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale"))
+nb.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale", "pca"))
 @
 
 <<knntrain, echo=FALSE, results=hide>>=
-knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
+knn.train.pc <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
                    preProcess=c("center", "scale", "pca"))
+knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
+                   preProcess=c("center", "scale"))
 @ 
 
 <<svmtrain, echo=FALSE, results=hide>>=
-svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
+svm.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
+svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale"))
 @ 
 
 <<svmradialtrain, echo=FALSE, results=hide>>=
-svmradial.train <- train(PlacResp~., data=iatandexpfull.train, method="lssvmRadial", trControl=mytrain, tuneGrid=data.frame(.sigma=0:10), preProcess=c("center", "scale", "pca"))
+#svmradial.train <- train(PlacResp~., data=iatandexpfull.train, method="lssvmRadial", trControl=mytrain, preProcess=c("center", "scale", "pca"))
 @ 
+
+<<gbmtrain, echo=FALSE, results=hide>>=
+## gbm.train <- train(PlacResp~., data=iatandexpfull.train, method="gbm", trControl=mytrain
+##                    , tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=1))
+@ 
+
+<<gamboost, echo=FALSE, results=hide>>=
+gamboost.train <- train(PlacResp~., data=iatandexpfull.train, method="gamboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+@ 
+
+<<glmboost, echo=FALSE, results=hide>>=
+glmboost.train <- train(PlacResp~., data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+@ 
+
+<<logitboost, echo=FALSE, results=hide>>=
+logitboost.train <-  train(PlacResp~., data=iatandexpfull.train, method="logitBoost", trControl=mytrain, tuneGrid=data.frame(.nIter=seq(10,500, by=10)))
+@ 
+
+<<glmnettrain, echo=FALSE, results=hide>>=
+glmnet.train <- train(PlacResp~., data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
+@ 
+
+<<blackboost, echo=FALSE, results=hide>>=
+blackboost.train <- train(PlacResp~., data=iatandexpfull.train, method="blackboost", trControl=mytrain, tuneGrid=data.frame(.mstop=c(50,100,150), .maxdepth=1:3))
+@ 
+
+<<glmstep, echo=FALSE, results=hide>>=
+glmstep.train <- train(PlacResp~., data=iatandexpfull.train, method="glmStepAIC", trControl=mytrain)
+@ 
+
+<<rpart, echo=FALSE, results=hide>>=
+rpart.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
+@ 
+
+<<rpart2, echo=FALSE, results=hide>>=
+rpart2.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<svmRadialCost, echo=FALSE, results=hide>>=
+svmradialcost.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale", "pca"))
+svmradialcost.train <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<ctree, echo=FALSE, results=hide>>=
+ctree2.train <- train(PlacResp~., data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
+@ 
+
+<<evtree, echo=FALSE, results=hide>>=
+evtree.train <- train(PlacResp~., data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<cforest, echo=FALSE, results=hide>>=
+cforest.train <- train(PlacResp~., data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)) )
+@ 
+
+<<rferns, echo=FALSE, results=hide>>=
+rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
+@ 
+
+<<pred, echo=FALSE, results=hide>>=
+nb.pc.pred <- predict(nb.train.pc, iatandexpfull.test)
+nb.pred <- predict(nb.train, iatandexpfull.test)
+knn.pc.pred <- predict(knn.train.pc, iatandexpfull.test)
+knn.pred <- predict(knn.train, iatandexpfull.test)
+svm.pc.pred <- predict(svm.train.pc, iatandexpfull.test)
+svm.pred <- predict(svm.train, iatandexpfull.test)
+gamboost.pred <- predict(gamboost.train, iatandexpfull.test)
+glmboost.pred <- predict(glmboost.train, iatandexpfull.test)
+logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
+glmnet.pred <- predict(glmnet.train, iatandexpfull.test)
+blackboost.pred <- predict(blackboost.train, iatandexpfull.test)
+glmstep.pred <- predict(glmstep.train, iatandexpfull.test)
+rpart.pred <- predict(rpart.train, iatandexpfull.test)
+rpart2.pred <- predict(rpart2.train, iatandexpfull.test)
+svmradialcost.pred <- predict(svmradialcost.train, iatandexpfull.test)
+ctree.pred <- predict(ctree2.train, iatandexpfull.test)
+evtree.pred <- predict(evtree.train, iatandexpfull.test)
+cforest.pred <- predict(cforest.train, iatandexpfull.test)
+rferns.pred <- predict(rferns.train, iatandexpfull.test)
+@ 
+
+<<confusionmats, echo=FALSE, results=hide>>=
+randf.acc <-confusionMatrix(randf.pred, iatandexpfull.test[,"PlacResp"])
+nb.acc <-confusionMatrix(nb.pred, iatandexpfull.test[,"PlacResp"])
+knn.pc.acc <- confusionMatrix(knn.pc.pred, iatandexpfull.test[,"PlacResp"])
+knn.acc <- confusionMatrix(knn.pred, iatandexpfull.test[,"PlacResp"])
+svm.pc.acc <-confusionMatrix(svm.pc.pred, iatandexpfull.test[,"PlacResp"])
+svm.acc <- confusionMatrix(svm.pred, iatandexpfull.test[,"PlacResp"])
+gamboost.acc <- confusionMatrix(gamboost.pred, iatandexpfull.test[,"PlacResp"])
+glmboost.acc <- confusionMatrix(glmboost.pred, iatandexpfull.test[,"PlacResp"])
+glmnet.acc <- confusionMatrix(glmnet.pred, iatandexpfull.test[,"PlacResp"])
+blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
+glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
+rpart.pred <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"])
+rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
+svmradial.acc <- confusionMatrix(svmradialcost.pred, iatandexpfull.test[,"PlacResp"])
+ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"])
+evtree.acc <- confusionMatrix(evtree.pred, iatandexpfull.test[,"PlacResp"])
+cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"])
+rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
+@ 
+
+After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.75 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. 
 
 \section{Discussion}
 \label{sec:discussion}
