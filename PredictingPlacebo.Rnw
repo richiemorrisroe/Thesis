@@ -25,7 +25,7 @@ The placebo effect has resisted prediction in experimental work for over 50 year
 \label{sec:rese-base-comb}
 
 
-The placebo is a badly defined but widely used concept in medicine \cite{Kaptchuk1998,Macedo2003} . Many theories have been put forth to account for its effects, including expectancy, conditioning, emotional change, motivation and meaning \cite{Stewart-Williams2004b,Moerman2006,Vodouris1989,Geers2005a}. However, none of these theories can account for all of the effects observed in research. The conditioning approach gained a following at first \cite{Voudouris1985}  but was quickly opposed by the response expectancy theory of Kirsch \cite{Kirsch1985,Kirsch1997}. Research on these two competing perspectives lead to a number of findings which may help us elucidate some of the features of this strange effect. In this section, the  expectancy versus conditioning debate shall be reviewed insofar as it relates to the main point, which is to examine whether or not the use of implicit measures of expectancies will allow us to predict the placebo response in individuals with greater accuracy. Then  some other lines of evidence which support this case will be reviewed, and finally sum up the evidence in favour of my hypothesis.
+The placebo is a badly defined but widely used concept in medicine \cite{Kaptchuk1998,Macedo2003} . Many theories have been put forth to account for its effects, including expectancy, conditioning, emotional change, motivation and meaning \cite{Stewart-Williams2004b,Moerman2006,Vodouris1989,Geers2005a}. However, none of these theories can account for all of the effects observed in research. The conditioning approach gained a following at first \cite{Voudouris1985}  but was quickly opposed by the response expectancy theory of Kirsch \cite{Kirsch1985,Kirsch1997}. Research on these two competing perspectives lead to a number of findings which may help us elucidate some of the features of this strange effect. In this section, the  expectancy versus conditioning debate shall be reviewed insofar as it relates to the main point, which is to examine whether or not the use of implicit measures of expectancies will allow us to predict the placebo response in individuals with greater accuracy. Then  some other lines of evidence which support this case will be reviewed, and finally sum up the evidence in favour of the hypothesis.
 
 The general format for inducing conditioned placebo responses developed by Voudouris and still in use today in the research of Benedetti \cite{Benedetti2006c} and others, consists of three stages. 
 
@@ -46,8 +46,12 @@ So, reviewing these research findings, we can note that in some cases, the place
 
 One line of evidence which supports this thesis is the finding that the IAT is better at predicting spontaneous behaviour than explicit measures \cite{Conner2005,Hofmann2005}. The IAT outperforms explicit measures in some domains \cite{Greenwald2009} and these domains tend to be where there is little conscious deliberation or reflection upon the matter concerned. The placebo effect is the example \textit{par excellence} of a undeliberated and spontaneous phenomenon, as no one chooses to have such a response and it seems dependent upon the lack of awareness of a participant that the treatment which they are receiving is not an active one. Thus, we can take this as supporting evidence that implicit measures should predict the placebo response more effectively. 
 
-A final line of evidence is suggestive of this link, and it arises from the neurological patterns of activation associated with the placebo effects and the implicit association test. These patterns have been studied greatly over the last decade in placebo research, and the major findings are that a network involving the dorsolateral prefrontal cortex and the rostral anterior cingulate cortex appear to be activated during placebo related cognitions \cite{Mayberg2002,Zubieta2006}. % (cf Section \ref{sec:neur-plac-effect}). 
-While neurological research into the IAT has not been as prominent, two  studies  \cite{Knutson2007,Knutson2006} has shown that both of these areas are activated during the association task that is the IAT. While this cannot be used to prove that the two phenomena are related, it does suggest that there may be some common neurological substrate underlying the kinds of cognitions involved in both of these effects. 
+One issue that needs to be raised is the issue of inducing placebo responses in participants of the study. The traditional method used is conditioning, but this requires a much more complicated design. A more feasible method for the induction of placebo responses is that of priming, which has been demonstrated to work in recent years \cite{Geers2005a,Jensen1991}. The priming method used in this study was a scrambled sentence task. 
+
+Additionally, it appears from recent research that optimism can act as a predictor of the placebo effect \citet{Geers2005}, at least in some circumstances \cite{Hyland2007}. For this reason, the Life Orientation Test (revised) \cite{Scheier1994} was administered to participants in this study. 
+
+% A final line of evidence is suggestive of this link, and it arises from the neurological patterns of activation associated with the placebo effects and the implicit association test. These patterns have been studied greatly over the last decade in placebo research, and the major findings are that a network involving the dorsolateral prefrontal cortex and the rostral anterior cingulate cortex appear to be activated during placebo related cognitions \cite{Mayberg2002,Zubieta2006}. % (cf Section \ref{sec:neur-plac-effect}). 
+% While neurological research into the IAT has not been as prominent, two  studies  \cite{Knutson2007,Knutson2006} has shown that both of these areas are activated during the association task that is the IAT. While this cannot be used to prove that the two phenomena are related, it does suggest that there may be some common neurological substrate underlying the kinds of cognitions involved in both of these effects. 
 
 In conclusion, I believe that the expectancies underlying the placebo effect can be measured by means of the Implicit Association Test for the following reasons. Firstly, some placebo effects seem to require a lack of conscious awareness in order to occur. Secondly, the placebo effect seems to be best modelled as a spontaneous phenomenon and the IAT has been shown to predict these kinds of behaviours better. Thirdly, the placebo and the IAT task seem to share some common patterns of neurological activation. 
 
@@ -171,6 +175,7 @@ Next, a cross-validation approach was used to assess the usefulness of the varia
 \label{sec:results}
 
 At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
+
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores)[1] <-  "Participant"
 names(expmeasures)[1] <- "Participant"
@@ -208,7 +213,32 @@ pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painr
 pain.cond.m <- melt(pain.cond, id.vars="Condition")
 @ 
 
+<<meanpaingroup, echo=FALSE, results=hide>>=
+deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
+placebopain <- painratings[with(painratings,Condition=="Placebo"),]
+notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
+meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
+meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
+meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
+meangrouppainratings <- cbind(meandeceptivepain, meanplacebopain, meannotreatpain)
+meangrouppainratings <- as.data.frame(meangrouppainratings)
+meangrouppainratings[,"Time"] <- 1:45
+meddeceptivepain <- apply(deceptivepain[,4:48], 2, median, na.rm=TRUE)
+medplacebopain <- apply(placebopain[,4:48], 2, median, na.rm=TRUE)
+mednotreatpain <- apply(notreatpain[,4:48], 2, median, na.rm=TRUE)
+medpainratings <- as.data.frame(cbind(meddeceptivepain, medplacebopain, mednotreatpain))
+medpainratings[,"Time"] <- 1:45
+dec.pain.mean <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
+open.pain.mean <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
+notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
+
+painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
+painbycond[,"Time"] <- 1:45
+painbycond.m <- melt(painbycond, id.vars="Time")
+@ 
+
 \begin{figure}
+  
 <<placprimeplot, echo=FALSE, figure=TRUE>>=
 plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
 print(plac.prime.pl)
@@ -232,9 +262,9 @@ tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
 tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])+geom_smooth(method="lm")
 print(tcq.block.corr.pl)
 @    
-   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
-   \label{fig:tcqblockcorr}
- \end{figure}
+\caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
+\label{fig:tcqblockcorr}
+\end{figure}
 
 As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
 
@@ -245,7 +275,7 @@ print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the bl
  
 
 Next, the same process is repeated for the Optimism IAT. 
-
+\begin{figure}
 <<tcqmeanresp, echo=FALSE, figure=TRUE>>=
 optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
@@ -282,6 +312,7 @@ iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
 @ 
 
 \begin{figure}
+  
 <<corriattcqopt, echo=FALSE, figure=TRUE>>=
 corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
 print(corr.iat.tcq.opt.pl)
@@ -339,7 +370,7 @@ print(optiat.histcond)
 Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
 
 
-
+\begin{figure}
 <<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
 placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
 placrespno <- painratings[with(painratings,PlacResp=="No"),]
@@ -356,7 +387,8 @@ print(placresplot)
 \end{figure}
 
 A number of findings are apparent from the plot above in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect, and adds confidence to the significant results for modelling reported below. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). 
-
+\begin{figure}
+  \centering
 <<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
@@ -365,19 +397,46 @@ iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
 lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
 print(lotriatplot)
-@
+@  
+  \caption{Three Way Interaction Plot between Treatment Credibility IAT, Optimism IAT and LOTR against Placebo Response}
+  \label{fig:3wayinter}
+\end{figure}
+
 
 The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the Treatment Credibility IAT, the Optimism IAT and the LOT-R. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. This nonlinear relationship was the impetus to widen the kinds of models fit to the data than is common in this area. 
- 
-\subsection{Machine Learning and the Placebo Response}
-\label{sec:mach-learn-plac}
 
-Firstly, the data was split into two random sections, with 80\% of the data utilised to train the models, and 20\% held aside for a final validation of any model's predictive power. Additionally, the training set was split into ten sections, of which nine were used to train the model and one was used to test the model. This allowed for the accuracy of each model to be ranked in a preliminary fashion, though the ultimate arbiter was performance on the training set. 
+Before moving on to the main thrust of the analyses, the differences between the three groups were examined in terms of pain using t-tests. 
+
+Surprisingly enough, there was no significant mean difference between the Deceptive and No Treatment conditions ($t=0.353, df=53.553, p=0.7255$). However, the differences between the Open Placebo group and the Deceptive Treatment group ($t=-3.422, df=53.27, p=0.0012, d=1.11$) were,  as was the difference between the  Open Placebo group and the No Treatment group ($t=-3.9154, df=87.996, p=0.0001, d=1.22$). These effects both qualify as large effects by Cohen's standards, and would match those effects found earlier in the field and assessed through meta-analysis \cite{Sauro2005}.
+
+
+This relationship was first confirmed using a logistic regression model. 
+
+<<placmodlog, echo=FALSE, results=tex>>=
+placmod.int <- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures.phys, family=binomial(link="logit"))
+print(xtable(summary(placmod.int), label="tab:placmodint", caption="Logistic Regression of IAT measures and optimism on the Placebo Response"))                   
+@ 
+
+From Table \ref{tab:placmodint}, it can be seen that the effect of the treatment credibility IAT was significant, validating the major hypothesis of the study. The effect of explicit Optimism was marginally significant, as were the two and three way interactions between these variables. 
+
+Next, the mean GSR for each participant was included in the model, and allowed to interact with all the other variables in the model. 
+
+<<placmodint2, echo=FALSE, results=tex>>=
+placmod.int2 <- glm(PlacResp~(TCQIAT.Mean*OptIAT.Mean*LOTR*gsr.mean)^2, data=Iatandexpmeasures.phys, family=binomial(link="logit"))
+print(xtable(summary(placmod.int2), label="tab:placmodint2", caption="Regression of IAT on Treatment Credibility IAT, Optimism IAT, Optimism and Mean GSR"))
+@ 
+
+As shown in Table \ref{tab:placmodint2}, the addition of the mean GSR for each participant causes the individual effects of Optimism, Optimism IAT and the Treatment Credibility IAT to become significant, al;ong with the two and three way interactions. The psuedo $R^2$ of this model is equal to 0.39, which is quite good. However, given the lack of individual significance for the predictors (with the exception of mean GSR), this would suggest that there are some problems with the model. Indeed, an examination of variance inflation factors for this model shows that multicollinearity is a major issue for this model, which suggests that the significance of these coefficients should be regarded as suspect. 
+ 
+% \subsection{Machine Learning and the Placebo Response}
+% \label{sec:mach-learn-plac}
+
+% Firstly, the data was split into two random sections, with 80\% of the data utilised to train the models, and 20\% held aside for a final validation of any model's predictive power. Additionally, the training set was split into ten sections, of which nine were used to train the model and one was used to test the model. This allowed for the accuracy of each model to be ranked in a preliminary fashion, though the ultimate arbiter was performance on the training set. 
 
 
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
-registerDoMC(3)
+registerDoMC(2)
 iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
@@ -388,136 +447,148 @@ mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
 
 
 <<rftrain, echo=FALSE, results=hide>>=
-randf.train <- train(PlacResp~., data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
+randf.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
 randf.pred <- predict(randf.train, iatandexpfull.test)
 @ 
 
-<<nbtrain, echo=FALSE, results=hide>>=
-nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale"))
+<<nbtrain, echo=FALSE, results=hide,eval=FALSE>>=
+## nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale"))
 nb.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale", "pca"))
 @
 
-<<knntrain, echo=FALSE, results=hide>>=
+<<knntrain, echo=FALSE, results=hide,eval=FALSE>>=
 knn.train.pc <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
                    preProcess=c("center", "scale", "pca"))
 knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
                    preProcess=c("center", "scale"))
 @ 
 
-<<svmtrain, echo=FALSE, results=hide>>=
-svm.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
-svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale"))
+<<svmtrain, echo=FALSE, results=hide,eval=FALSE>>=
+## svm.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
+## svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale"))
 @ 
 
-<<svmradialtrain, echo=FALSE, results=hide>>=
+<<svmradialtrain, echo=FALSE, results=hide,eval=FALSE>>=
 #svmradial.train <- train(PlacResp~., data=iatandexpfull.train, method="lssvmRadial", trControl=mytrain, preProcess=c("center", "scale", "pca"))
 @ 
 
-<<gbmtrain, echo=FALSE, results=hide>>=
-## gbm.train <- train(PlacResp~., data=iatandexpfull.train, method="gbm", trControl=mytrain
-##                    , tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=1))
+<<gbmtrain, echo=FALSE, results=hide,eval=FALSE>>=
+gbm.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+LOTR+meanconv+gsr.mean, data=iatandexpfull.train, method="gbm", trControl=mytrain, tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=3))
 @ 
 
-<<gamboost, echo=FALSE, results=hide>>=
+<<gamboost, echo=FALSE, results=hide,eval=FALSE>>=
 gamboost.train <- train(PlacResp~., data=iatandexpfull.train, method="gamboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
 @ 
 
 <<glmboost, echo=FALSE, results=hide>>=
-glmboost.train <- train(PlacResp~., data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+glmboost.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
 @ 
 
-<<logitboost, echo=FALSE, results=hide>>=
-logitboost.train <-  train(PlacResp~., data=iatandexpfull.train, method="logitBoost", trControl=mytrain, tuneGrid=data.frame(.nIter=seq(10,500, by=10)))
+% <<logitboost, echo=FALSE, results=hide,eval=FALSE>>=
+% logitboost.train <-  train(PlacResp~., data=iatandexpfull.train, method="logitBoost", trControl=mytrain, tuneGrid=data.frame(.nIter=seq(10,500, by=10)))
 @ 
 
 <<glmnettrain, echo=FALSE, results=hide>>=
-glmnet.train <- train(PlacResp~., data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
+glmnet.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
 @ 
 
-<<blackboost, echo=FALSE, results=hide>>=
+<<blackboost, echo=FALSE, results=hide,eval=FALSE>>=
 blackboost.train <- train(PlacResp~., data=iatandexpfull.train, method="blackboost", trControl=mytrain, tuneGrid=data.frame(.mstop=c(50,100,150), .maxdepth=1:3))
 @ 
 
-<<glmstep, echo=FALSE, results=hide>>=
+<<glmstep, echo=FALSE, results=hide,eval=FALSE>>=
 glmstep.train <- train(PlacResp~., data=iatandexpfull.train, method="glmStepAIC", trControl=mytrain)
 @ 
 
 <<rpart, echo=FALSE, results=hide>>=
-rpart.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
+rpart.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
 @ 
 
-<<rpart2, echo=FALSE, results=hide>>=
+<<rpart2, echo=FALSE, results=hide,eval=FALSE>>=
 rpart2.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=1:10), preProcess=c("center", "scale"))
 @ 
 
-<<svmRadialCost, echo=FALSE, results=hide>>=
-svmradialcost.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale", "pca"))
-svmradialcost.train <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale"))
+<<svmRadialCost, echo=FALSE, results=hide,eval=FALSE>>=
+## svmradialcost.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale", "pca"))
+## svmradialcost.train <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale"))
 @ 
 
 <<ctree, echo=FALSE, results=hide>>=
-ctree2.train <- train(PlacResp~., data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
+ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
 @ 
 
-<<evtree, echo=FALSE, results=hide>>=
-evtree.train <- train(PlacResp~., data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
+<<evtree, echo=FALSE, results=hide,eval=FALSE>>=
+evtree.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
 @ 
 
 <<cforest, echo=FALSE, results=hide>>=
-cforest.train <- train(PlacResp~., data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)) )
+cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
 @ 
 
-<<rferns, echo=FALSE, results=hide>>=
-rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
+<<rferns, echo=FALSE, results=hide,eval=FALSE>>=
+## rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
 @ 
 
 <<pred, echo=FALSE, results=hide>>=
-nb.pc.pred <- predict(nb.train.pc, iatandexpfull.test)
-nb.pred <- predict(nb.train, iatandexpfull.test)
-knn.pc.pred <- predict(knn.train.pc, iatandexpfull.test)
-knn.pred <- predict(knn.train, iatandexpfull.test)
-svm.pc.pred <- predict(svm.train.pc, iatandexpfull.test)
-svm.pred <- predict(svm.train, iatandexpfull.test)
-gamboost.pred <- predict(gamboost.train, iatandexpfull.test)
+## nb.pc.pred <- predict(nb.train.pc, iatandexpfull.test)
+## nb.pred <- predict(nb.train, iatandexpfull.test)
+## knn.pc.pred <- predict(knn.train.pc, iatandexpfull.test)
+## knn.pred <- predict(knn.train, iatandexpfull.test)
+## svm.pc.pred <- predict(svm.train.pc, iatandexpfull.test)
+## svm.pred <- predict(svm.train, iatandexpfull.test)
+## gamboost.pred <- predict(gamboost.train, iatandexpfull.test)
 glmboost.pred <- predict(glmboost.train, iatandexpfull.test)
-logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
+## logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
 glmnet.pred <- predict(glmnet.train, iatandexpfull.test)
-blackboost.pred <- predict(blackboost.train, iatandexpfull.test)
-glmstep.pred <- predict(glmstep.train, iatandexpfull.test)
+## blackboost.pred <- predict(blackboost.train, iatandexpfull.test)
+## glmstep.pred <- predict(glmstep.train, iatandexpfull.test)
 rpart.pred <- predict(rpart.train, iatandexpfull.test)
-rpart2.pred <- predict(rpart2.train, iatandexpfull.test)
-svmradialcost.pred <- predict(svmradialcost.train, iatandexpfull.test)
+## rpart2.pred <- predict(rpart2.train, iatandexpfull.test)
+## svmradialcost.pred <- predict(svmradialcost.train, iatandexpfull.test)
 ctree.pred <- predict(ctree2.train, iatandexpfull.test)
-evtree.pred <- predict(evtree.train, iatandexpfull.test)
+## evtree.pred <- predict(evtree.train, iatandexpfull.test)
 cforest.pred <- predict(cforest.train, iatandexpfull.test)
-rferns.pred <- predict(rferns.train, iatandexpfull.test)
+## rferns.pred <- predict(rferns.train, iatandexpfull.test)
 @ 
 
 <<confusionmats, echo=FALSE, results=hide>>=
-randf.acc <-confusionMatrix(randf.pred, iatandexpfull.test[,"PlacResp"])
-nb.acc <-confusionMatrix(nb.pred, iatandexpfull.test[,"PlacResp"])
-knn.pc.acc <- confusionMatrix(knn.pc.pred, iatandexpfull.test[,"PlacResp"])
-knn.acc <- confusionMatrix(knn.pred, iatandexpfull.test[,"PlacResp"])
-svm.pc.acc <-confusionMatrix(svm.pc.pred, iatandexpfull.test[,"PlacResp"])
-svm.acc <- confusionMatrix(svm.pred, iatandexpfull.test[,"PlacResp"])
-gamboost.acc <- confusionMatrix(gamboost.pred, iatandexpfull.test[,"PlacResp"])
-glmboost.acc <- confusionMatrix(glmboost.pred, iatandexpfull.test[,"PlacResp"])
-glmnet.acc <- confusionMatrix(glmnet.pred, iatandexpfull.test[,"PlacResp"])
-blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
-glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
-rpart.pred <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"])
-rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
-svmradial.acc <- confusionMatrix(svmradialcost.pred, iatandexpfull.test[,"PlacResp"])
-ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"])
-evtree.acc <- confusionMatrix(evtree.pred, iatandexpfull.test[,"PlacResp"])
-cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"])
-rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
+randf.acc <-confusionMatrix(randf.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## nb.acc <-confusionMatrix(nb.pc.pred, iatandexpfull.test[,"PlacResp"])
+## knn.pc.acc <- confusionMatrix(knn.pc.pred, iatandexpfull.test[,"PlacResp"])
+## knn.acc <- confusionMatrix(knn.pred, iatandexpfull.test[,"PlacResp"])
+## svm.pc.acc <-confusionMatrix(svm.pc.pred, iatandexpfull.test[,"PlacResp"])
+## svm.acc <- confusionMatrix(svm.pred, iatandexpfull.test[,"PlacResp"])
+## gamboost.acc <- confusionMatrix(gamboost.pred, iatandexpfull.test[,"PlacResp"])
+glmboost.acc <- confusionMatrix(glmboost.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+glmnet.acc <- confusionMatrix(glmnet.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
+## glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
+rpart.acc <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
+## svmradial.acc <- confusionMatrix(svmradialcost.pred, iatandexpfull.test[,"PlacResp"])
+ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## evtree.acc <- confusionMatrix(evtree.pred, iatandexpfull.test[,"PlacResp"])
+cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
 @ 
 
-After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.75 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. 
+
+% After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.75 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4281 -- 0.9421$), with a sensitivity of 0.875 and a specificity of 0.5. Again, note that the negative examples of placebo response are harder to predict than are the positive ones. The probability of correctly classifying a positive placebo response was 0.7778, while the probability of classifying a lack of placebo response was 0.6667. 
+
+
 
 \section{Discussion}
 \label{sec:discussion}
+
+A number of findings have arisen from this study. Firstly, there appears to be a relationship between implicit measures (assessed using the IAT) and the placebo response. However, this effect needs to be replicated due to issues with multicollinearity making it difficult to establish whether the effect is real or not.
+
+Secondly, this study replicates the findings of Kapthcuk  et al that people given an open placebo will experience a placebo response. This finding, in fact, is made even stronger by this study as even when the administration of a deceptive placebo is a possibility, the open placebo still proves more effective. 
+
+There are a number of potential explanations for this unusual finding. Firstly, the primary researcher's thesis was on placebo, and he possessed a strong belief that placebos actually work. This could easily have been communicated to the participants. Secondly, the experimenter was not comfortable with the deception involved in informing participants that they were about to receive a real drug, and this may have been communicated to the participants also. Additionally, the lack of any side-effects or sensory stimulus from the inert cream used in this study may have cued participants to believe that they were not getting a particularly good medication. It may also have been the case that the use of the term ``recently approved'' for the deceptive placebo administration may have had an impact on the response to this placebo.
+
+Some limitations of this study included that it was conducted entirely on students, and to that extent may not be widely generalisable. Secondly, the experimenter was not blinded, so demand characteristics cannot be ruled out as an explanation \footnote{that being said, the experimenter was as surprised as anyone when the results were analysed}. Another limitation of this study was the relatively small sample size. Although 111 participants took part in the study, only 66 of them were in either the Open or Deceptive Placebo group, which bounded the potential number of placebo responders. 
+
+
 
 \bibliography{placebo2,IAT2,statistics,healthoptmind2,probabilities2}
 
