@@ -395,7 +395,7 @@ iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
 iatexpno <- na.omit(iatexpno)
 iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
-lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
+lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()## +geom_smooth(method="glm", formula="PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR")
 print(lotriatplot)
 @  
   \caption{Three Way Interaction Plot between Treatment Credibility IAT, Optimism IAT and LOTR against Placebo Response}
@@ -406,6 +406,12 @@ print(lotriatplot)
 The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the Treatment Credibility IAT, the Optimism IAT and the LOT-R. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. This nonlinear relationship was the impetus to widen the kinds of models fit to the data than is common in this area. 
 
 Before moving on to the main thrust of the analyses, the differences between the three groups were examined in terms of pain using t-tests. 
+
+<<meanpain, echo=FALSE, results=hide>>=
+painmean <- rowMeans(vasscores[,9:53], na.rm=TRUE)
+painmeanpart <- data.frame(Participant=vasscores[,"Participant"], painmean)
+Iatandexpmeasures.pain <- merge(Iatandexpmeasures.phys, painmeanpart, by="Participant")
+@ 
 
 Surprisingly enough, there was no significant mean difference between the Deceptive and No Treatment conditions ($t=0.353, df=53.553, p=0.7255$). However, the differences between the Open Placebo group and the Deceptive Treatment group ($t=-3.422, df=53.27, p=0.0012, d=1.11$) were,  as was the difference between the  Open Placebo group and the No Treatment group ($t=-3.9154, df=87.996, p=0.0001, d=1.22$). These effects both qualify as large effects by Cohen's standards, and would match those effects found earlier in the field and assessed through meta-analysis \cite{Sauro2005}.
 
@@ -427,6 +433,13 @@ print(xtable(summary(placmod.int2), label="tab:placmodint2", caption="Regression
 @ 
 
 As shown in Table \ref{tab:placmodint2}, the addition of the mean GSR for each participant causes the individual effects of Optimism, Optimism IAT and the Treatment Credibility IAT to become significant, al;ong with the two and three way interactions. The psuedo $R^2$ of this model is equal to 0.39, which is quite good. However, given the lack of individual significance for the predictors (with the exception of mean GSR), this would suggest that there are some problems with the model. Indeed, an examination of variance inflation factors for this model shows that multicollinearity is a major issue for this model, which suggests that the significance of these coefficients should be regarded as suspect. 
+
+To control for possible unequal error variance and to tease out the effects by Condition, a generalised linear mixed model was fitted using the previous model as a baseline. Condition and Prime were included as random effects, to assess if their effects differed across conditions. 
+
+<<glmm1, echo=FALSE, results=tex>>=
+placmodlmer.pain <- lmer(PlacResp~+TCQIAT.Mean*OptIAT.Mean*LOTR+(1|Prime)+(1|Condition), data=Iatandexpmeasures.pain, family=binomial(link="logit"), control=list(maxIter=10000))
+print(xtable(placmodlmer.pain))
+@ 
  
 % \subsection{Machine Learning and the Placebo Response}
 % \label{sec:mach-learn-plac}
@@ -446,7 +459,7 @@ mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
 @ 
 
 
-<<rftrain, echo=FALSE, results=hide>>=
+<<rftrain, echo=FALSE, results=hide, eval=FALSE>>=
 randf.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
 randf.pred <- predict(randf.train, iatandexpfull.test)
 @ 
@@ -480,7 +493,7 @@ gbm.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+LOTR+meanconv+gsr.mean, data
 gamboost.train <- train(PlacResp~., data=iatandexpfull.train, method="gamboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
 @ 
 
-<<glmboost, echo=FALSE, results=hide>>=
+<<glmboost, echo=FALSE, results=hide, eval=FALSE>>=
 glmboost.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
 @ 
 
@@ -488,7 +501,7 @@ glmboost.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data
 % logitboost.train <-  train(PlacResp~., data=iatandexpfull.train, method="logitBoost", trControl=mytrain, tuneGrid=data.frame(.nIter=seq(10,500, by=10)))
 @ 
 
-<<glmnettrain, echo=FALSE, results=hide>>=
+<<glmnettrain, echo=FALSE, results=hide, eval=FALSE>>=
 glmnet.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
 @ 
 
@@ -500,7 +513,7 @@ blackboost.train <- train(PlacResp~., data=iatandexpfull.train, method="blackboo
 glmstep.train <- train(PlacResp~., data=iatandexpfull.train, method="glmStepAIC", trControl=mytrain)
 @ 
 
-<<rpart, echo=FALSE, results=hide>>=
+<<rpart, echo=FALSE, results=hide, eval=FALSE>>=
 rpart.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
 @ 
 
@@ -513,7 +526,7 @@ rpart2.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart2", trC
 ## svmradialcost.train <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale"))
 @ 
 
-<<ctree, echo=FALSE, results=hide>>=
+<<ctree, echo=FALSE, results=hide, eval=FALSE>>=
 ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
 @ 
 
@@ -521,7 +534,7 @@ ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=i
 evtree.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
 @ 
 
-<<cforest, echo=FALSE, results=hide>>=
+<<cforest, echo=FALSE, results=hide, eval=FALSE>>=
 cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
 @ 
 
@@ -529,7 +542,7 @@ cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv+gsr.mean, data=
 ## rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
 @ 
 
-<<pred, echo=FALSE, results=hide>>=
+<<pred, echo=FALSE, results=hide, eval=FALSE>>=
 ## nb.pc.pred <- predict(nb.train.pc, iatandexpfull.test)
 ## nb.pred <- predict(nb.train, iatandexpfull.test)
 ## knn.pc.pred <- predict(knn.train.pc, iatandexpfull.test)
@@ -551,7 +564,7 @@ cforest.pred <- predict(cforest.train, iatandexpfull.test)
 ## rferns.pred <- predict(rferns.train, iatandexpfull.test)
 @ 
 
-<<confusionmats, echo=FALSE, results=hide>>=
+<<confusionmats, echo=FALSE, results=hide, eval=FALSE>>=
 randf.acc <-confusionMatrix(randf.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 ## nb.acc <-confusionMatrix(nb.pc.pred, iatandexpfull.test[,"PlacResp"])
 ## knn.pc.acc <- confusionMatrix(knn.pc.pred, iatandexpfull.test[,"PlacResp"])
