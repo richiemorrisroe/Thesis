@@ -1,7 +1,7 @@
 \documentclass[apa]{article}
-
+\title{Placebo: is deception always necessary?}
 \begin{document}
-
+\maketitle
 \section{Introduction}
 \label{sec:introduction}
 
@@ -13,32 +13,69 @@ vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
 tcqiat <- read.csv("tcqiatres.csv")
 setwd("../..")
+
 @ 
 
 % So, having reviewed the placebo effect and the implicit association test above and examined the approaches taken to measurement within psychology, we are now in a position to examine the main experimental hypothesis of this thesis: that the placebo effect can be predicted by the use of reaction time based implicit measures. Below, the reasons for believing this shall be set out, and in the next section  research evidence shall be presented which supports this original hypothesis.
 
 
-The placebo effect has resisted prediction in experimental work for over 50 years. Many psychological variables have been tested to see if they can predict the response, but all have failed \cite{Shapiro1997} and it has been argued that placebo responders do not even exist \cite{Kaptchuk2008a}. The thesis of this research paper is that the lack of results in the prediction of the placebo effect is an artifact of the methods used rather than the unpredictability of the effect. This research argues that the Implicit Association Test \cite{Greenwald1998} is a useful method with which to predict the response. 
+The commonly accepted model of the placebo effect claims that deception is necessary for the effect to occur. Some theorists have argued against this \cite{Deventer2008,Evans2002}, and a recent randomised controlled trial has shown that compared to no treatment, an open placebo can perform significantly better \cite{kaptchuk2010placebos}. However, this study did not include a deceptive placebo condition, and so is not a true test of the theory that deception is unnecessary for the placebo response. This study aims to rectify this gap in the literature by putting this theory to the test. 
 
 
-\subsection{The Research Base for the combination of the two measures}
-\label{sec:rese-base-comb}
+Additionally, the placebo effect has resisted prediction in experimental work for over 50 years. Many psychological variables have been tested to see if they can predict the response, but all have failed \cite{Shapiro1997} and it has been argued that placebo responders do not even exist \cite{Kaptchuk2008a}. A secondary aim of this paper was to assess the usefulness of an implicit measure (the Implicit Association Test) in the prediction of placebo response in healthy volunteers \cite{Greenwald1998}. Finally, this paper additionally aimed to replicate the findings of Geers \textit{et al} who showed that placebo responses could be increased by priming of participants towards goals of co-operation \cite{Geers2005a}. This finding has not yet been demonstrated in the placebo response to pain, a deficit which this study aims to rectify. 
 
-
-The placebo is a badly defined but widely used concept in medicine \cite{Kaptchuk1998,Macedo2003} . Many theories have been put forth to account for its effects, including expectancy, conditioning, emotional change, motivation and meaning \cite{Stewart-Williams2004b,Moerman2006,Vodouris1989,Geers2005a}. However, none of these theories can account for all of the effects observed in research. The conditioning approach gained a following at first \cite{Voudouris1985}  but was quickly opposed by the response expectancy theory of Kirsch \cite{Kirsch1985,Kirsch1997}. Research on these two competing perspectives lead to a number of findings which may help us elucidate some of the features of this strange effect. In this section, the  expectancy versus conditioning debate shall be reviewed insofar as it relates to the main point, which is to examine whether or not the use of implicit measures of expectancies will allow us to predict the placebo response in individuals with greater accuracy. Then  some other lines of evidence which support this case will be reviewed, and finally sum up the evidence in favour of the hypothesis.
+The placebo is a badly defined but widely used concept in medicine \cite{Kaptchuk1998,Macedo2003}. Many theories have been put forth to account for its effects, including expectancy, conditioning, emotional change, motivation and meaning \cite{Stewart-Williams2004b, Moerman2006,Vodouris1989,Geers2005a}. However, none of these theories can account for all of the effects observed in research. The conditioning approach gained a following at first \cite{Voudouris1985}  but was quickly opposed by the response expectancy theory of Kirsch \cite{Kirsch1985,Kirsch1997}. 
 
 The general format for inducing conditioned placebo responses developed by Voudouris and still in use today in the research of Benedetti \cite{Benedetti2006c} and others, consists of three stages. 
+
 
 Firstly, the participant has their pain thresholds calibrated and is given a number of blocks of painful stimuli. Secondly, the participants are either given the same stimuli again following the application of placebo cream or the pain is reduced for the second stage after the application of the cream. The second group are then said to be conditioned by this stage. In the third block, pain is increased again for the conditioned participants, and they typically show a much larger placebo response than those who are merely given verbal suggestions of analgesia.  
 
 These results were believed by their developer to argue in favour of a conditioned approach to the placebo effect. However, an experiment by Montgomery and Kirsch \cite{Montgomery1997} demonstrated that these conditioned effects resulted solely from expectancies,and after a regression in which expectancies were partialled out, there were no significant effects arising from conditioning. This would seem to argue that expectancies are the prime method through which conditioning has an impact, and indeed this is the position of Kirsch. 
 
-Kirsch's \cite{Kirsch1985,Kirsch1997} theory of response expectancies specifies that these are the expectation of a non-volitional response, and he argues that they play a role in placebos and hypnosis. This theory relies upon the measurement of self report expectancies to determine this, and this seems to be somewhat incompatible to what happened in the Montgomery and Kirsch research described in the paragraph above. 
+A third theory, much less influential is the motivational theory \cite{Jensen1991,Geers2005a} which suggests that placebo responses are driven by the participants desire for relief. This would fit with both the observations of Beecher \cite{beecher1955powerful} on the beaches of Normandy, and with the documented fact that placebo responses tend to be larger in clinical populations, who could be assumed to possess a greater desire for relief \cite{Klinger2007a,Amanzio2001}. 
 
-In the experiment that confirmed the effects of expectancies, there were two groups who received lowered stimuli to condition them. One of these groups was informed of this pairing, and the other was not. Contrary to the predictions of the conditioned response model, those in the informed pairing group did not show an enhanced placebo effect, while those in the uninformed pairing group did. This seems to indicate that the effects of the conditioning procedure were inhibited by awareness. In other words, what occurred here was an example of implicit learning (learning without conscious awareness)\cite{Wittenbrink2007,DeHouwer2007}.
+ 
+%The thesis of this research paper is that the lack of results in the prediction of the placebo effect is an artifact of the methods used rather than the unpredictability of the effect. This research argues that the Implicit Association Test \cite{Greenwald1998} is a useful method with which to predict the response. 
+
+
+% \subsection{The Research Base for the combination of the two measures}
+% \label{sec:rese-base-comb}
+
+
+% Research on these two competing perspectives lead to a number of findings which may help us elucidate some of the features of this strange effect. In this section, the  expectancy versus conditioning debate shall be reviewed insofar as it relates to the main point, which is to examine whether or not the use of implicit measures of expectancies will allow us to predict the placebo response in individuals with greater accuracy. Then  some other lines of evidence which support this case will be reviewed, and finally sum up the evidence in favour of the hypothesis.
+
+
+<<purple>>=
+ <- 
+@ 
+
+<<is>>=
+afruit <- 
+@ 
+
+<<other>>=
+ <- 
+@ 
+
+Kirschs \cite{Kirsch1985,Kirsch1997} theory of response expectancies specifies that these are the expectation of a non-volitional response, and he argues that they play a role in placebos and hypnosis. This theory relies upon the measurement of self report expectancies to determine this, and this seems to be somewhat incompatible to what happened in the Montgomery and Kirsch research described in the paragraph above. 
+<<yetmore>>=
+echo <- 
+@ 
+In the experiment that confirmed the effects of expectancies, there were two groups who received lowered stimuli to condition them. One of these groups was informed of this pairing, and the other was not. Contrary to the predictions of the conditioned response model, those in the informed pairing group did not show an enhanced placebo effect, while those in the uninformed pairing group did. This seems to indicate that the effects of the conditioning procedure were inhibited by awareness. In other words, what occurred here was an example of implicit learning (learning without conscious awareness) \cite{Wittenbrink2007,DeHouwer2007}.
+
+
+<<testchunk10, echo=FALSE>>=
+testchink2
+
+
+@ 
+
 
 This conclusion is further reinforced by the work of Shiv and Carmon \cite{Shiv2005a} on the placebo effects of energy drinks given to participants at a lowered price. This research used an outcome measure of the number of problems solved in a specified period, and it demonstrated that those who believed that the price had been discounted solved less puzzles than those who received the drink at the normal price. The interesting feature of this research (for the purposes of this paper) is that when participants attention was drawn to the discounted price, the difference between the groups was reduced. This would seem to argue in favour of an implicit learning situation in this experiment also. 
-
+<<participants>>=
+chuk
+@ 
 So, reviewing these research findings, we can note that in some cases, the placebo effect seems to emerge without conscious awareness. The Shiv \textit{et al} (2005) study noted above showed that when participants awareness was drawn to the discounted price, the effects disappeared. A similar phenomenon occurred in the Montgomery and Kirsch (1997) \cite{Montgomery1997} study. These research findings suggest that the placebo response is at least partially determined by factors outside conscious awareness, and as such, it would make more sense to use implicit measures, of which the IAT is the most prominent. 
 
 % Implicit learning is a phenomenon which has come to the attention of psychologists in the past three decades. The research mostly focused on learning of patterns in random letter fragments and in the effects of sub-threshold sounds and pictures upon participants in a research setting. The investigation of these implicit attitudes was given a huge leap forward by the development of the Implicit Association Test \cite{Greenwald1998}. This computer administered instrument requests the participants to classify words into either trait (race, gender etc) or evaluative (self versus other, pleasant versus unpleasant) categories. This categorisation is performed separately at first, and then one of each type is paired together. This pairing is then reversed in the final step. The test works primarily based on reaction time (in milliseconds) and the assumption underlying the test is that items which are associated are easier to classify together, and that the difference in mean response latencies for classifications of each concept reflect the attitude towards that object. 
@@ -49,7 +86,9 @@ One line of evidence which supports this thesis is the finding that the IAT is b
 One issue that needs to be raised is the issue of inducing placebo responses in participants of the study. The traditional method used is conditioning, but this requires a much more complicated design. A more feasible method for the induction of placebo responses is that of priming, which has been demonstrated to work in recent years \cite{Geers2005a,Jensen1991}. The priming method used in this study was a scrambled sentence task. 
 
 Additionally, it appears from recent research that optimism can act as a predictor of the placebo effect \citet{Geers2005}, at least in some circumstances \cite{Hyland2007}. For this reason, the Life Orientation Test (revised) \cite{Scheier1994} was administered to participants in this study. 
-
+<<testchunk, echo=FALSE, results=hide>>=
+mytestchunk 
+@ 
 % A final line of evidence is suggestive of this link, and it arises from the neurological patterns of activation associated with the placebo effects and the implicit association test. These patterns have been studied greatly over the last decade in placebo research, and the major findings are that a network involving the dorsolateral prefrontal cortex and the rostral anterior cingulate cortex appear to be activated during placebo related cognitions \cite{Mayberg2002,Zubieta2006}. % (cf Section \ref{sec:neur-plac-effect}). 
 % While neurological research into the IAT has not been as prominent, two  studies  \cite{Knutson2007,Knutson2006} has shown that both of these areas are activated during the association task that is the IAT. While this cannot be used to prove that the two phenomena are related, it does suggest that there may be some common neurological substrate underlying the kinds of cognitions involved in both of these effects. 
 
@@ -80,6 +119,7 @@ require(plyr)
 require(caret)
 require(survival)
 source("func.R")
+
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -129,10 +169,11 @@ IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 \label{sec:participants}
 
 All participants were students at the University of the lead researcher (RM). There were 111 participants (62 female, 47 male, 1 did not report gender). The ages of the participants ranged from 17-62 ($x\hat = 22.94$, $sd=6.901$).
-All participants volunteered to take part in the study, as an incentive a draw was held where one randomly selected participant won a smartphone. The study was approved by the Social Research Ethics Committee of the lead researcher's university. 
+All participants volunteered to take part in the study, as an incentive a draw was held where one randomly selected participant won a smartphone. The study was approved by the Social Research Ethics Committee of the lead researchers university. 
 
 \subsection{Materials and Methods}
 \label{sec:materials-methods}
+
 
 The major materials used in this study were as follows:
 \begin{itemize}
@@ -169,7 +210,7 @@ All statistical analysis was carried out in R \cite{RDevelopmentCoreTeam2011} ve
 
 Some authors \cite{Blanton2006a,Blanton2006} have argued that the Implicit Association test is confounded by general processing speed. Therefore, correlations between the critical (Blocks 3 and 5) and non-critical blocks were examined to determine if this was the case for the sample at hand. 
 
-Next, a cross-validation approach was used to assess the usefulness of the variables as predictors of the placebo response. This approach \cite{friedman2009elements} involves building a statistical model on 9/10ths of the data and testing its accuracy on the remaining tenth. This process was carried out ten times, to provide a better measure of predictive accuracy. This method prevents models which do extremely well on the experimenter's dataset, but then fail to generalise to other datasets. In this study, support vector machines, naive bayes and random forest algorithms as well as logistic regression were used. 
+Next, a cross-validation approach was used to assess the usefulness of the variables as predictors of the placebo response. This approach \cite{friedman2009elements} involves building a statistical model on 9/10ths of the data and testing its accuracy on the remaining tenth. This process was carried out ten times, to provide a better measure of predictive accuracy. This method prevents models which do extremely well on the experimenter\'s dataset, but then fail to generalise to other datasets. In this study, support vector machines, naive bayes and random forest algorithms as well as logistic regression were used. 
 
 \section{Results}
 \label{sec:results}
@@ -271,6 +312,7 @@ As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relative
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
 print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
+
 @ 
  
 
@@ -282,6 +324,7 @@ optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
 opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
 opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
 print(opt.block.corr.pl)
+
 @    
    \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
    \label{fig:optblockcorr}
@@ -309,12 +352,14 @@ curnames.d.tcq <- c(curnames.tcq[1:2], curnames.bl2.tcq)
 names(tcq.iat.c) <- curnames.d.tcq
 iat.block.merge <- merge(tcq.iat.c, opt.iat.c, by="Participant")
 iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
+
 @ 
 
 \begin{figure}
   
 <<corriattcqopt, echo=FALSE, figure=TRUE>>=
-corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
+corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")
+
 print(corr.iat.tcq.opt.pl)
 @   
   \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
@@ -439,6 +484,7 @@ To control for possible unequal error variance and to tease out the effects by C
 <<glmm1, echo=FALSE, results=tex>>=
 placmodlmer.pain <- lmer(PlacResp~+TCQIAT.Mean*OptIAT.Mean*LOTR+(1|Prime)+(1|Condition), data=Iatandexpmeasures.pain, family=binomial(link="logit"), control=list(maxIter=10000))
 print(xtable(placmodlmer.pain))
+
 @ 
  
 % \subsection{Machine Learning and the Placebo Response}
