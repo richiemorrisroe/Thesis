@@ -465,7 +465,7 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
   diff <-  b5score-b3score
 iatscore <-  diff/overallsd
 ## browser()
-res <- data.frame(scores=scores, IAT=iatscore ## Block1Correct=b1.corr,Block2Correct=b2.corr,Block4Correct=b4.corr,Block3Correc
+res <- data.frame(scores=scores, IAT=iatscore, Block3=stimblock3, Block5=stimblock5 ## Block1Correct=b1.corr,Block2Correct=b2.corr,Block4Correct=b4.corr,Block3Correc
                   ## t=b3.corr, Block5Correct=b5.corr
                   )
 }
@@ -477,7 +477,7 @@ fileImport <- function(directory, pattern) {
   file.list
   ## file.df <- do.call(cbind, file.list)
 }
-listToDf <- function(data) {
+listToDf <- function(data, ind) {
   dnames <- names(data)
   rows <- sapply(data, nrow)
   maxrows <- max(rows)
@@ -485,8 +485,45 @@ listToDf <- function(data) {
   res <- matrix(NA, nrow=maxrows, ncol=cols)
 for (i in seq(from=1, to=length(data))) {
   temp <- data[[i]]
-  res[1:nrow(temp),i] <- temp[,1]
+  res[1:nrow(temp),i] <- temp[,ind]
 }
-  colnames(res) <- paste(c("GSR", "ECG"), dnames, sep="")
+  if(ind==1) {
+    colnames(res) <- paste("GSR", dnames, sep="")
+  }
+  if(ind==2) {
+    colnames(res) <- paste("ECG", dnames, sep="")
+  }
   res
 }
+iatDiff <- function(x, y) {
+  res <- matrix(NA, ncol=length(x), nrow=nrow(x))
+  for (i in 1:length(x)) {
+    print(i)
+    ## browser()
+    res[,i] <- mapply("-", x[,i], y[,i])
+    res}
+  stimnames <- names(x)
+  stimnames2 <- paste(stimnames, ".Diff", sep="")
+  names(res) <- stimnames2
+  res}
+repeatCV <- function(form, data, method=method, n, responsevariable, ...) {
+  res <- vector(length=n, mode="list")
+  Accuracy <- vector(length=n, mode="numeric")
+  data2 <- na.omit(iatandexpfull)
+  variable <- grep(responsevariable, x=names(data))
+  for (i in 1:n) {
+    print(i)
+    trainind <- with(data2, createDataPartition(data[,variable], p=0.8, list=FALSE))
+    trainset <- data2[trainind,]
+    testset <- data2[-trainind,]
+    train.res <- train(formula=form, data=trainset, ...)
+    
+    train.pred <- predict(train.res, testset)
+    res[[i]] <- confusionMatrix(train.pred, testset[,responsevariable])
+    Accuracy[i] <- res[[i]]$overall[1]
+  }
+  
+  res2 <- list(res, Accuracy)
+}
+                     
+                     
