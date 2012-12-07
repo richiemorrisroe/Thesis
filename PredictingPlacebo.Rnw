@@ -1,5 +1,6 @@
 \documentclass[apa]{article}
 \title{Placebo: is deception always necessary?}
+\usepackage{graphicx}
 \begin{document}
 \maketitle
 \section{Introduction}
@@ -412,7 +413,7 @@ Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
 @
 
 \begin{figure}
-<<ggplothistcond, echo=FALSE, fig=TRUE>>=
+<<ggplothistcond, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
 plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(plac.resp.hist.pl)
 @   
@@ -423,7 +424,7 @@ print(plac.resp.hist.pl)
 From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
 
 \begin{figure}
-<<optiatcorrsurv, echo=FALSE, fig=TRUE>>=
+<<optiatcorrsurv, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
 optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(optiat.histcond)
 @   
@@ -436,7 +437,7 @@ Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded
 
 
 \begin{figure}
-<<ggplotplacyesno, echo=FALSE, fig=TRUE>>=
+<<ggplotplacyesno, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
 placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
 placrespno <- painratings[with(painratings,PlacResp=="No"),]
 placresyesmean <- apply(placrespyes[4:48], 2, mean, na.rm=TRUE)
@@ -456,7 +457,7 @@ A number of findings are apparent from the plot above in Figure \ref{fig:placyes
 
 \begin{figure}
   \centering
-<<ggplot3wayinter, echo=FALSE, fig=TRUE>>=
+<<ggplot3wayinter, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
 iatexpno <- na.omit(iatexpno)
@@ -649,13 +650,18 @@ cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"], po
 \section{Discussion}
 \label{sec:discussion}
 
-A number of findings have arisen from this study. Firstly, there appears to be a relationship between implicit measures (assessed using the IAT) and the placebo response. However, this effect needs to be replicated due to issues with multicollinearity making it difficult to establish whether the effect is real or not.
 
-Secondly, this study replicates the findings of Kapthcuk  et al that people given an open placebo will experience a placebo response. This finding, in fact, is made even stronger by this study as even when the administration of a deceptive placebo is a possibility, the open placebo still proves more effective. 
+The major contribution of this  study is that replicates the findings of Kapthcuk  \textit{et al} \cite{kaptchuk2010placebos} that people given an open placebo will experience a placebo response. This finding, in fact, is made even stronger by this study as even when the administration of a deceptive placebo is a possibility, the open placebo still proves more effective. 
+
+Secondly, there appears to be a relationship between implicit measures (assessed using the IAT) and the placebo response. However, this effect needs to be replicated due to issues with multicollinearity making it difficult to establish whether the effect is real or not. A study with greater power would be necessary to definitively establish whether or not this effect is real. 
 
 There are a number of potential explanations for this unusual finding. Firstly, the primary researcher's thesis was on placebo, and he possessed a strong belief that placebos actually work. This could easily have been communicated to the participants. Secondly, the experimenter was not comfortable with the deception involved in informing participants that they were about to receive a real drug, and this may have been communicated to the participants also. Additionally, the lack of any side-effects or sensory stimulus from the inert cream used in this study may have cued participants to believe that they were not getting a particularly good medication. It may also have been the case that the use of the term ``recently approved'' for the deceptive placebo administration may have had an impact on the response to this placebo.
 
+Finally, it appears that priming manipulations are as effective in placebo analgesia as they have been in other areas of social cognition. This is important as priming is a less resource intensive way to increase the size of placebo effects, which is important if these effects are to be studied effectively. 
+
 Some limitations of this study included that it was conducted entirely on students, and to that extent may not be widely generalisable. Secondly, the experimenter was not blinded, so demand characteristics cannot be ruled out as an explanation \footnote{that being said, the experimenter was as surprised as anyone when the results were analysed}. Another limitation of this study was the relatively small sample size. Although 111 participants took part in the study, only 66 of them were in either the Open or Deceptive Placebo group, which bounded the potential number of placebo responders. 
+
+
 
 
 
