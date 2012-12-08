@@ -457,7 +457,7 @@ print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison o
 
 As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors, while the parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
-Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriel's method) or the typical ten fold validation common in  machine learning (Wold's method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave 2 of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
+Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriel\'s method) or the typical ten fold validation common in  machine learning (Wold\'s method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave 2 of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
 
 <<randfactorcv, echo=FALSE, results=hide>>=
 
@@ -564,7 +564,7 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 Two, four, eight and thirteen factor solutions were extracted and interpreted from the RAND MOS items. 
 
 <<rand2fact, echo=FALSE, results=tex>>=
-rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate='promax')
+rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, label="tab:rand2fact"))
 @
 
@@ -592,7 +592,7 @@ It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations w
 \paragraph{Rand MOS 4 Factor Solution}
 
 <<rand4fact, echo=FALSE, results=tex>>=
-rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate='oblimin')
+rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
 print(FactorXtab(rand.fact.4, label="tab:rand4fact"))
 @
 
@@ -624,7 +624,7 @@ It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations a
 \paragraph{RAND MOS 8 Factor Solution}
 
 <<rand8fact, echo=FALSE, results=tex>>=
-rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate='oblimin')
+rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
 print(FactorXtab(rand.fact.8, label="tab:tcq1rand8fact"))
 @
 
@@ -663,7 +663,7 @@ The factor correlations are moderate (shown in Table \ref{tab:tcq1rand8corr}) an
 \paragraph{Rand MOS 13 factor Solution}
 
 <<rand13fact, echo=FALSE, results=tex>>=
-rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate='oblimin')
+rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
 print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact"), scalebox=0.5)
 @
 
@@ -840,7 +840,7 @@ As can be seen from \ref{tab:randsemcompare}, the 5 factor solution appears to f
 
 \subsection{Mindfulness Attention Awareness Scale}
 
-For the MAAS, parallel analysis, MAP, VSS, Kaiser's rule and the Wold method of cross-validation suggested a one factor solution, while the Gabriel method of cross-validation suggested a seven factor solution.  Therefore, one and seven factor solutions were extracted and the results interpreted, as shown below.
+For the MAAS, parallel analysis, MAP, VSS, Kaiser\'s rule and the Wold method of cross-validation suggested a one factor solution, while the Gabriel method of cross-validation suggested a seven factor solution.  Therefore, one and seven factor solutions were extracted and the results interpreted, as shown below.
 
 \subsubsection{MAAS One Factor Solution}
 \label{sec:maas-one-factor}
@@ -848,7 +848,7 @@ For the MAAS, parallel analysis, MAP, VSS, Kaiser's rule and the Wold method of 
 
 
 <<maas1fact, echo=FALSE, results=tex>>=
-maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate='oblimin')
+maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
 print(FactorXtab(maas.fact.1,label="tab:tcq1maas1fact"))
 @
 
@@ -862,7 +862,7 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 
 The next factor solution to be examined was the seven factor solution suggested by the Gabriel method of cross-validation.
 <<maas7fact, echo=FALSE, results=tex>>=
-maas.fact.7<-factor.pa(na.omit(maasitems), 7, rotate='oblimin')
+maas.fact.7<-factor.pa(na.omit(maasitems), 7, rotate="oblimin")
 print(FactorXtab(maas.fact.7,label="tab:tcq1maas7fact"))
 @
 
@@ -967,7 +967,7 @@ Parallel Analysis indicated that two factors should be extracted, while the MAP 
 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
-lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate='oblimin')
+lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
 print(FactorXtab(lotr.fact.1,label="tab:tcq1lotr1fact"))
 @
 
@@ -983,7 +983,7 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 \label{sec:lotr-three-factor}
 
 <<lotr3fact, echo=FALSE, results=tex>>=
-lotr.fact.3<-factor.pa(na.omit(lotritems), 3, rotate='oblimin')
+lotr.fact.3<-factor.pa(na.omit(lotritems), 3, rotate="oblimin")
 print(FactorXtab(lotr.fact.3,label="tab:tcq1lotr3fact"))
 @
 
@@ -1067,7 +1067,7 @@ rand.scales <- aisp(na.omit(randitems))
 @
 
 <<randscales, echo=FALSE, results=tex>>=
-print(xtable(rand.scales),,label="tab:tcq1randscales")
+print(xtable(rand.scales),,label="tab:randscales")
 @
 As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are five scales in the RAND MOS.  
 
@@ -1099,7 +1099,7 @@ irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys.item.ord$violations,label="tab:tcq1physfuncitemord"))
+print(xtable(irtphys.item.ord$violations,label="tab:randphysfuncitemord", caption="IRT Physical Functioning Item Ordering Results"))
 @
 
 As can be seen from Table \ref{tab:randphysfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
@@ -1110,10 +1110,10 @@ irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
 @
 
 <<randEmhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtemhealth.item.ord$violations,label="tab:tcq1randemhealthitemord"))
+print(xtable(irtemhealth.item.ord$violations,label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
 @
 
-Quite a number of items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale. 
+As can be seen from Table \ref{tab:randemhealthitemord}, quite a number of items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale, which may suggest that this scale is not valid from an IRT point of view.  
 
 <<newIrtEmHealth, echo=FALSE, results=tex>>=
 irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
@@ -1141,10 +1141,10 @@ irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
 irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
 @
 
-There were two violations of the item ordering assumption, RAND21 and RAND23, and these items were removed before further analyses.
+There were two violations of the item ordering assumption for the Energy scale, RAND21 and RAND23, and these items were removed before further analyses.
 
 <<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtenergy.item.ord$violations,label="tab:tcq1energyitemord"))
+print(xtable(irtenergy.item.ord$violations,label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
 @
 
 
@@ -1155,28 +1155,48 @@ physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.rasch),label="tab:tcq1physfunrasch"))
+print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunrasch"))
 @
 
-As can be seen from Table \ref{tab:physfunraschprint}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
+As can be seen from Table \ref{tab:physfunrasch}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.1pl),label="tab:tcq1physfun1pl"))
+print(xtable(coef(physfun.gpcm.1pl),label="tab:randphysfun1pl"))
 @ 
 
-As shown in Table \ref{tab:tcq1physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
+As shown in Table \ref{tab:randphysfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
 
 <<physfungpcmprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.gpcm),label="tab:tcq1physfungpcm"))
+print(xtable(coef(physfun.gpcm.gpcm),label="tab:randphysfungpcm"))
 @ 
 
-Table \ref{tab:tcq1physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
+Table \ref{tab:randphysfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM.  
 
-The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
+
 
 <<physfungrm1, echo=FALSE, results=hide>>=
 physfun.grm.1pl <- grm(na.exclude(irtphysfun), constrained=TRUE)
 physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+@ 
+
+<<physfungrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.grm.1pl), label="tab:physfungrm1", caption="Coefficients for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+@ 
+
+As can be seen from Table \ref{tab:physfungrm1}, there appear to be no problems with the fit of this model as all of the coefficients are monotonically increasing. Next, a two parameter GRM was fit to this scale. 
+
+
+<<physfungrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(physfun.grm.2pl), label="tab:physfungrm2", caption="Coefficients for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+@ 
+
+
+From Table \ref{tab:phyfungrm2}, it can be seen that the allowing the discrimination parameter to vary freely makes a large difference to the coefficient estimates. Note that Q7 appears to be the most discrimination question, with a slope of 5.64. The next process was to assess if the two parameter model provided a significant improvement in fit over and above the one parameter model.
+
+The results of this ANOVA showed that the two parameter model was a much better fit to the data ($p \le 0.001$). 
+
+<<grmanova, echo=FALSE, results=hide>>=
+grmanova <- anova(physfun.grm.1pl, physfun.grm.2pl)
 @ 
 
 <<emhealthPCM, echo=FALSE, results=hide>>=
@@ -1185,47 +1205,46 @@ emhealth.pcm.1PL <- gpcm(na.omit(irtemhealth2), constraint="1PL")
 emhealth.pcm.gpcm <- gpcm(na.omit(irtemhealth2), constraint="gpcm")
 @
 
+
 <<emhealthRasch, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(unlist(coef(emhealth.pcm.rasch))),label="tab:tcq1emhealthrasch"))
+print(xtable(as.data.frame(unlist(coef(emhealth.pcm.rasch))),label="tab:emhealthrasch"))
 @
 
 
 
-As can be seen from Table \ref{tab:emhealthRasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
+As can be seen from Table \ref{tab:emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
 
 <<emhealth1pl, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(unlist(coef(emhealth.pcm.1PL))),label="tab:tcq1emhealth1pl"))
+print(xtable(coef2mat(coef(emhealth.pcm.1PL))),label="tab:emhealth1pl"))
 @
 
 
 
 In Table \ref{tab:emhealth2pl} can be seen the results of estimating a true two parameter model for this dataset, where the discrimination parameter was estimated seperately for each item.
 
-A likelihood test was carried out between these three models, and the results showed that the true 2 parameter model provided a much better fit to the data.  This is not particularly surprising given that it estimates twice as many parameters as the most parsimonious model, and the real test of these model's predictive abilities will come when we fit them to unseen data.
+A likelihood test was carried out between these three models, and the results showed that the true two parameter model provided a much better fit to the data ($p \le 0.001$).  This is not particularly surprising given that it estimates twice as many parameters as the most parsimonious model, and the real test of these model\'s predictive abilities will come when we fit them to unseen data.
 
-<<returnpar, echo=FALSE, results=hide>>=
-par(mfrow=c(1,1))
-@
 
-The next scale to be examined is the  General Health scale.  The first analysis undertaken was to fit a partial credit model to the scale.
+The next scale to be examined is the  General Health scale.  The first analysis undertaken was to fit a partial credit rasch model to the scale.
 
 <<genhealthPCM, echo=FALSE, results=tex>>=
 irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
-@
-
-<<genhealthpcmraschplot, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(2,2))
-#plot(genhealth.pcm.rasch)
+print(xtable(coef(irtenergy.pcm.rasch), label="tab:energypcmrasch", caption="Coefficients for IRT Energy Scale, Rasch Partial Credit Model"))
 @
 
 
-<<genhealthpcm1pl, echo=FALSE, results=hide>>=
+
+
+<<genhealthpcm1pl, echo=FALSE, results=tex>>=
 irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
+print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:energypcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
 @
 
 <<genhealthpcm2pl, echo=FALSE, results=hide>>=
 irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
+print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
 @
+
 
 <<genhealthpcmcompare, echo=FALSE, results=tex>>=
 anova.rasch.1pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.1pl)
@@ -1233,13 +1252,13 @@ anova.1pl.2pl <- anova.gpcm(irtenergy.pcm.1pl, irtenergy.pcm.2pl)
 anova.rasch.2pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.2pl)
 @
 
-An anova conducted on the three models indicated that the 2 parameter model fit the data best, subject to the caveats above.
+An anova conducted on the three models indicated that the 2 parameter model fit the data best ($p \le 0.001$), subject to the caveats above.
 
 The next instrument examined was the MAAS.  Firstly, the instrument was examined using mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
 <<maasassumptioncheck, echo=FALSE, results=tex>>=
 maas.scales <- aisp(na.omit(maasitems))
-print(xtable(as.matrix(maas.scales)),label="tab:tcq1maasassumptioncheck")
+print(xtable(as.matrix(maas.scales)),label="tab:maasassumptioncheck")
 @
 
 As can be seen from Table \ref{tab:maasassumptioncheck}, the mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis.
@@ -1253,7 +1272,7 @@ Next, item ordering was examined for this scale.
 
 <<maasitemord, echo=FALSE, results=tex>>=
 maas.iio <- check.iio(na.omit(maas.irt))
-print(xtable(maas.iio$violations,label="tab:tcq1maasIO"))
+print(xtable(maas.iio$violations,label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
 @
 
 As can be seen from Table \ref{tab:maasitemord}, there were no violations of item ordering with the reduced scale.
@@ -1262,10 +1281,10 @@ Next, monotonicity was examined for the reduced scale.
 
 <<maasmonotonicity, echo=FALSE, results=tex>>=
 maas.mono <- check.monotonicity(na.omit(maas.irt))
-print(xtable(summary(maas.mono),label="tab:tcq1maasmono"))
+print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
 @
 
-As can be seen from TAble \ref{tab:maasmonotonicity}, there were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
+As can be seen from Table \ref{tab:maasmono}, there were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
 
 <<maasitemspcm, echo=FALSE, results=hide>>=
@@ -1275,22 +1294,22 @@ maas.pcm.2pl <- gpcm(na.omit(maas.irt), constraint="gpcm")
 @
 
 <<maasirtraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas.pcm.rasch), label="tab:tcq1maaspcmrasch", caption="MAAS Partial Credit Model Coefficients, Rasch"))
+print(xtable(coef(maas.pcm.rasch), label="tab:maaspcmrasch", caption="MAAS Partial Credit Model Coefficients, Rasch"))
 @ 
 
-As can be seen from Table \ref{tab:tcq1maaspcmrasch}, the Rasch partial credit model is not a good fit to the data. There are numerous violations of the increasing ability scores assumption. Next, a one parameter model (with discrimination estimated from the data) was fitted to the maas items. 
+As can be seen from Table \ref{tab:maaspcmrasch}, the Rasch partial credit model is not a good fit to the data. There are numerous violations of the increasing ability scores assumption. Next, a one parameter model (with discrimination estimated from the data) was fitted to the maas items. 
 
 <<maasirtraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas.pcm.1pl), label="tab:tcq1maaspcm1pl", caption="MAAS Partial Credit Model Coefficients, One Parameter Model"))
+print(xtable(coef(maas.pcm.1pl), label="tab:maaspcm1pl", caption="MAAS Partial Credit Model Coefficients, One Parameter Model"))
 @ 
 
-The estimated one parameter model is shown in Table \ref{tab:tcq1maaspcm1pl}, and it can clearly be seen that it suffers from the same problems as the rasch model fitted above. Finally, a two parameter partial credit model was fitted to these items. 
+The estimated one parameter model is shown in Table \ref{tab:maaspcm1pl}, and it can clearly be seen that it suffers from the same problems as the rasch model fitted above. Finally, a two parameter partial credit model was fitted to these items. 
 
 <<maasirtraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas.pcm.2pl), label="tab:tcq1maaspcmgpcm", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
+print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
 @ 
 
-The Table (\ref{tab:tcq1maaspcmgpcm}) clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
+The Table (\ref{tab:maaspcm2pl}) clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
 <<maasgrmfit, echo=FALSE, results=hide>>=
 maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
@@ -1307,6 +1326,9 @@ print(maasp)
 
 As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
 
+<<maasgrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.grm.1pl), caption="Coefficients for MAAS One Parameter Graded Response Model", label="tab:maasgrm1pl"))
+@ 
 
 \begin{figure}
 <<maasgrm2plot, echo=FALSE, fig=TRUE>>=
@@ -1317,6 +1339,10 @@ print(maas2plp)
   \label{fig:maasgrm2plplot}
 \end{figure}
 
+<<maasgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.grm.2pl), caption="Coefficients for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+
+
 
 <<maasanovacomp, echo=FALSE, results=hide>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1324,11 +1350,9 @@ anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
 anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 @
 
-<<maas2plprint, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(maas.pcm.2pl[[1]]),label="tab:tcq1maas2pl"))
-@
 
-The estimated parameters of the model can be seen in Table \ref{tab:maas2plprint}.
+
+The estimated parameters of the model can be seen in Table \ref{tab:maasgrm2pl}.
 
 The three models were subjected to anova comparison and the 1 parameter model was significantly (p<0.001) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model (p<0.001). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
@@ -1338,14 +1362,14 @@ Firstly, the scale analysis was conducted to determine which items fit best toge
 
 <<lotrscales, echo=FALSE, results=tex>>=
 lotr.scales <- aisp(na.omit(lotritems))
-print(xtable(as.matrix(lotr.scales),label="tab:tcq1lotrscales"))
+print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
 @
 
 As can be seen from Table \ref{tab:lotrscales}, all of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
 
 <<lotritemord, echo=FALSE, results=tex>>=
 lotr.iio <- check.iio(na.omit(lotritems))
-print(xtable(lotr.iio$violations,label="tab:tcq1lotrIO"))
+print(xtable(lotr.iio$violations,label="tab:lotritemord"))
 @
 
 
@@ -1353,7 +1377,7 @@ As can be seen from Table \ref{tab:lotritemord}, Q1 needs to be removed from the
 
 <<lotrmono, echo=FALSE, results=tex>>=
 lotr.mono <- check.monotonicity(na.omit(lotritems))
-print(xtable(summary(lotr.mono),label="tab:tcq1lotrmono"))
+print(xtable(summary(lotr.mono),label="tab:lotrmono"))
 @
 
 As can be seen from Table \ref{tab:lotrmono}, there were no violations of monotonicity in the sample.
@@ -1370,22 +1394,22 @@ lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
 @
 
 <<lotrpcmraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.rasch), label="tab:tcq1lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
+print(xtable(coef(lotr.pcm.rasch), label="tab:lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
 @ 
 
-As shown in Table \ref{tab:tcq1lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
+As shown in Table \ref{tab:lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
 
 <<lotrpcm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.1pl), label="tab:tcq1lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
+print(xtable(coef(lotr.pcm.1pl), label="tab:lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
 @ 
 
-As can be seen in Table \ref{tab:tcq1lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
+As can be seen in Table \ref{tab:lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
 
 <<lotrpcm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.2pl), label="tab:tcq1lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
+print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
 @ 
 
-The coefficients in Table \ref{tab:tcq1lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
+The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
 
 <<lotranovacomp, echo=FALSE, results=hide>>=
 anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
@@ -1433,7 +1457,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model (p=0.001), but the BIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.2pl),label="tab:tcq1lotr2plestimates"))
+print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficients for LOTR Two Paramter Graded Response Model"))
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
@@ -1446,7 +1470,7 @@ As discussed in the methodology, one of the problems with psychometric methods i
 
 The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
 
-A different procedure will be followed for the IRT models, using  ten fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 90\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model's predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
+A different procedure will be followed for the IRT models, using  ten fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 90\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
 
 <<hom2scales, echo=FALSE, results=hide>>=
 randitems.paste <- paste(rand, c(1:36), sep="")
@@ -1583,7 +1607,7 @@ rand13summ2 <- summary(rand13fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2, rand13fit2))
-print(xtable(randsemcomp,label="tab:hom1with2randsemcomp", caption="Model Comparison for MOS data using Models from Sample 1 on Sample 2" ))
+print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for MOS data using Models from Sample 1 on Sample 2" ))
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
@@ -1664,7 +1688,7 @@ maas1summ2 <- summary(maas1fit2)
 
 <<maassemcompare2, echo=FALSE, results=tex>>=
 maascomp2 <- mxCompare(base=maas1fit2, comparison=maas7fit2)
-maascomp.xtab2 <- xtable(maascomp2,label="tab:hom1with2maassem")
+maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2")
 print(maascomp.xtab2)
 @
 
@@ -1716,11 +1740,11 @@ lotr3summ2 <- summary(lotr3fit2)
 
 <<lotrcompare2, echo=FALSE, results=hide>>=
 lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr3fit2)
-lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:tcq1with2lotrcomp")
+lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2")
 print(lotrcomp.xtab2)
 @
 
-Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the model's performance on new data.
+Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the model\'s performance on new data.
 
 The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
