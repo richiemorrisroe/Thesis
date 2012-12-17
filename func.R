@@ -1,3 +1,11 @@
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @param ... 
+##' @return 
+##' @author Richard Morrisroe
 FactorXtab <-  function (x, ...) {
   x.load<-x$loadings 
 x.comm<-x$communality
@@ -11,6 +19,14 @@ colnames(x.mat.df) <- x.names
 fact.xtab <- xtable(x.mat.df, ...)
 fact.xtab
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @param ... 
+##' @return 
+##' @author Richard Morrisroe
 FactorCor <- function (x, ...) {
   res <- x$score.cor
   #allnames <- attr(x$loadings, "dimnames")
@@ -19,6 +35,14 @@ FactorCor <- function (x, ...) {
   #names(res) <- factnames
   res.x <- xtable(res, ...)
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @param loadings 
+##' @return 
+##' @author Richard Morrisroe
 ExtractLoadings <- function (x, loadings=0.3) {
   x.load <- x$loadings
   x.uc.mat <- as.data.frame(unclass(x.load))
@@ -29,6 +53,13 @@ ExtractLoadings <- function (x, loadings=0.3) {
 ##   cor <- x$r.scores
 ##  xtable(cor)
 ## }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @return 
+##' @author Richard Morrisroe
 Extracth2u2 <- function (x) {
   x.comm <- x$communality
   x.uniq <- x$uniquenesses
@@ -36,6 +67,14 @@ Extracth2u2 <- function (x) {
   x.h2u2 <- as.data.frame(cbind(x.comm, x.uniq, x.ratio))
   x.h2u2
  }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @param ... 
+##' @return 
+##' @author Richard Morrisroe
 IrtXtab <- function (x, ...) {
   eta<-x$etapar #$
   se<-x$se.eta #$
@@ -46,6 +85,13 @@ IrtXtab <- function (x, ...) {
   coef.xtab<-xtable(eta.par.mat, ...)
   coef.xtab
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @return 
+##' @author Richard Morrisroe
 coefreshape <-  function (x) {
 #  mxlength <- lapply(x, max.length)
   res <- matrix(NA, ncol=length(x), nrow=10)
@@ -56,6 +102,13 @@ coefreshape <-  function (x) {
   }
   res
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param x 
+##' @return 
+##' @author Richard Morrisroe
 FitIndices <- function (x) {
   tli <- x$TLI
   bic <- x$BIC
@@ -69,6 +122,17 @@ FitIndices <- function (x) {
                      paste(substitute(x),"+90CInt", sep=""))
   res
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param data 
+##' @param factors 
+##' @param meth 
+##' @param rotation 
+##' @param scores 
+##' @return 
+##' @author Richard Morrisroe
 MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   orthrotations <- c("none", "varimax", "quartimax", "bentlerT", "geominT" )
   obliquerotations <- c("promax", "oblimin",
@@ -99,10 +163,24 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   res <- c(factormethods=fmlist, rotations=reslist)
   
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param mfa 
+##' @return 
+##' @author Richard Morrisroe
 getLoadings <- function (mfa) {
   ind <- lapply(mfa, ExtractLoadings)
   ind
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param mfa 
+##' @return 
+##' @author Richard Morrisroe
 combineLoadings <-  function (mfa) {
   loadlist <- list()
   for (i in seq_along(along.with=mfa)) {
@@ -120,6 +198,15 @@ combineLoadings <-  function (mfa) {
 
   meanload <- lapply(loadings, function (x) Reduce('+', x))
 }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param mfa 
+##' @param method 
+##' @param rotreq 
+##' @return 
+##' @author Richard Morrisroe
 displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   rotationreq <- rotreq
   meth <- method
@@ -127,6 +214,14 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   res <- mfa[[resind]]
 }
   
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param grm 
+##' @param ... 
+##' @return 
+##' @author Richard Morrisroe
 ggplotGRM <- function (grm, ...) {
   x <- coef(grm)
   x <- as.matrix(x)
@@ -142,11 +237,19 @@ ggplotGRM <- function (grm, ...) {
   plot2 <- plot1+layer(geom="point")
   plot2
   }
+##' .. content for \description{} (no empty lines) ..
+##'
+##' .. content for \details{} ..
+##' @title 
+##' @param gpcm 
+##' @return 
+##' @author Richard Morrisroe
 coef2mat <- function (gpcm) {
   if(is.matrix(gpcm)) {
     return(gpcm)
   }
   else {
+    
     len <- lapply(gpcm, length)
     probelem <- which.min(as.matrix(unlist(len)))
     dimcols <- max(as.matrix(unlist(len)))
@@ -157,6 +260,7 @@ coef2mat <- function (gpcm) {
     for (i in 1:maxlength) {
       column <- lapply(gpcm, "[", i)
       column <- as.matrix(unlist(column))
+      ## browser()
       mat.res[1:length(column),i] <- column
       mat.res
     }
