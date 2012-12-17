@@ -137,7 +137,7 @@ However, the situation is very different with the second sample, as can be seen 
 missing.many <- online.missing[online.missing>300]
 missing.many.df <- as.data.frame(missing.many)
 names(missing.many.df) <- "Number of Missing Observations"
-missing.many.xtab <- xtable(missing.many.df, label="tab:missingmanytable", caption="Number of Missing Observations for RAND MOS items with greater than 10\% missingness")
+missing.many.xtab <- xtable(missing.many.df, label="tab:missingmanytable", caption="Number of Missing Observations for RAND MOS items with greater than 10 percent missingness")
 print(missing.many.xtab)
 @
 
@@ -386,7 +386,7 @@ print(maas.first.xtab)
 
 
 
-The model was significant, F(\Sexpr{round(maas.first.sum[["fstatistic"]][[2]], 3)},\Sexpr{round(maas.first.sum[["fstatistic"]][3], 3)}) = \Sexpr{round(maas.first.sum[["fstatistic"]][1],3)} , and the adjusted $R^2$ for the model was equal to \Sexpr{round(maas.first.sum[[adj.r.squared]], 3)}.  
+The model was significant, F(\Sexpr{round(maas.first.sum[["fstatistic"]][[2]], 3)},\Sexpr{round(maas.first.sum[["fstatistic"]][3], 3)}) = \Sexpr{round(maas.first.sum[["fstatistic"]][1],3)} , and the adjusted $R^2$ for the model was equal to \Sexpr{round(maas.first.sum[["adj.r.squared"]], 3)}.  
 
 After eliminating all non significant variables, the final model was as shown in Table \ref{tab:maasmodfin}.
 
@@ -792,7 +792,7 @@ rand8summ <- summary(rand8fit)
 <<rand13sem, echo=FALSE, results=hide>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
-latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigourous Activity","RAND20", "RAND24" )
+latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigorous Activity","RAND20", "RAND24" )
 physfun <- paste(rand, c(3:12), sep="")
 emrolelim <- paste(rand, c(17:20), sep="")
 rolelim <- paste(rand, c(13:16), sep="")
@@ -1215,7 +1215,7 @@ print(xtable(as.data.frame(unlist(coef(emhealth.pcm.rasch))),label="tab:emhealth
 As can be seen from Table \ref{tab:emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
 
 <<emhealth1pl, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(emhealth.pcm.1PL))),label="tab:emhealth1pl"))
+print(xtable(coef2mat(coef(emhealth.pcm.1PL))),label="tab:emhealth1pl")
 @
 
 
@@ -1229,7 +1229,7 @@ The next scale to be examined is the  General Health scale.  The first analysis 
 
 <<genhealthPCM, echo=FALSE, results=tex>>=
 irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
-print(xtable(coef(irtenergy.pcm.rasch), label="tab:energypcmrasch", caption="Coefficients for IRT Energy Scale, Rasch Partial Credit Model"))
+print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:energypcmrasch", caption="Coefficients for IRT Energy Scale, Rasch Partial Credit Model"))
 @
 
 
@@ -1793,19 +1793,24 @@ print(qplot(online.missing))
   \caption{Histogram of Missing Values, Online sample}
   \label{fig:onlinemissingplot}
 \end{figure}
-
+\begin{figure}
 <<optplot2, echo=FALSE, fig=TRUE>>=
 optplot2 <- ggplot(hom2, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
 print(optplot2)
-@
+@  
+  \caption{Scatterplot with Linear Regression Smooth of Relationship between General Health and Optimism}
+  \label{fig:genhealthoptplot2}
+\end{figure}
 
-The relationship between optimism and health is even clearer in sample 2 (note the narrower confidence intervals and the steeper slope of the line).
+
+The relationship between optimism and health is even clearer in sample 2 (Figure \ref{fig:genhealthoptplot2}) (note the narrower confidence intervals and the steeper slope of the line).
 
 \subsubsection{Regression Analyses}
 \label{sec:regression-analyses}
 
 Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
 
+%This section needs to be done. 
 
 
 \subsubsection{Psychometric Analyses}
@@ -1816,7 +1821,7 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 
 The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the b sample, it was tested on both the a and the c sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from sample 1. The model chosen by this procedure was then used to predict factor scores for each of the participants, and was also used to predict these scores for the experimental portion of the research.
 
-<<maas2bparallel, echo=FALSE, fig=TRUE>>=
+<<maas2bparallel, echo=FALSE, fig=TRUE, results=hide>>=
 maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
 vss.maas.2b <- VSS(na.omit(maasitems2b))
 @
@@ -1825,14 +1830,14 @@ The parallel analysis procedure suggests that this sample of the responses to th
 
 <<maas2b1, echo=FALSE, results=tex>>=
 maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact1,label="tab:tcq2bmaas1fact"))
+print(FactorXtab(maas2b.fact1,label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"))
 @
 
 The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
 
 <<maas2bfact2, echo=FALSE, results=tex>>=
 maas2b.fact2 <- fa(maasitems2b, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact2,label="tab:tcq2bmaasfact2"))
+print(FactorXtab(maas2b.fact2,label="tab:maas2bfact2", caption="MAAS Two Factor Solution, Sample 2B"))
 @
 
 As can be seen from Table \ref{tab:maas2bfact2}, a clear two factor solution emerges from the data.
@@ -2029,7 +2034,7 @@ maas5summ2b <- summary(maas4fit2b)
 
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
 maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas2fit2b, maas3fit2b, maas4fit2b, maas5fit2b))
-print(xtable(maas2b.semcomp,label="tab:tcq2bmaas2"))
+print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare"))
 @
 
 As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next, we repeat this procedure for the LOT-R.
@@ -2089,7 +2094,7 @@ rand.scales <- aisp(na.omit(randitems2))
 @
 
 <<randscales, echo=FALSE, results=tex>>=
-print(xtable(rand.scales),,label="tab:tcq1randscales")
+print(xtable(rand.scales),,label="tab:randscales")
 @
 As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, two items do not load on any scale.  The first of these is RANDQ2, which is not surprising given that it is not supposed to score on any scale, and the second is RANDQ36 which is part of the General Health scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
 
@@ -2119,10 +2124,10 @@ The check for invariant item ordering shows that all items  meet the Invariant I
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys2.item.ord$violations,label="tab:tcq2physfuncitemord"))
+print(xtable(irtphys2.item.ord$violations,label="tab:physfuncitemord"))
 @
 
-As can be seen from Table \ref{tab:tcq2physfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
+As can be seen from Table \ref{tab:physfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
 
 <<randemhealth, echo=FALSE, results=hide>>=
 irtemhealth2.item.ord <- check.iio(na.omit(irtemhealth2))
@@ -2139,10 +2144,10 @@ As can be seen from Table \ref{tcq2randemhealthitemord},quite a number of items 
 irtemhealth2.2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
 emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
 emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
-print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:tcq2randemhealth2iio"))
+print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
 @
 
-As shown in Table \ref{tab:tcq2randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
 
 
 
@@ -2178,22 +2183,22 @@ physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.rasch),label="tab:tcq1physfunrasch"))
+print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunraschprint", caption="Coefficients for the Rasch Model fit to the IRT Physical Functioning Scale"))
 @
 
 As can be seen from Table \ref{tab:physfunraschprint}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.1pl),label="tab:tcq1physfun1pl"))
+print(xtable(coef(physfun.gpcm.1pl),label="tab:physfun1pl", caption="Coefficients for the One Parameter Graded Partial Credit Model fit to the IRT Physical Health Scale"))
 @ 
 
-As shown in Table \ref{tab:tcq1physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
+As shown in Table \ref{tab:physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
 
 <<physfungpcmprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.gpcm),label="tab:tcq1physfungpcm"))
+print(xtable(coef(physfun.gpcm.gpcm),label="tab:physfungpcm", caption="Coefficients for the Two Parameter Generalised Partial Credit Model fit to the IRT Physical Functioning scale"))
 @ 
 
-Table \ref{tab:tcq1physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
+Table \ref{tab:physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
 
 The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
 
