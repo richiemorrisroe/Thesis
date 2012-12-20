@@ -860,30 +860,6 @@ The hypotheses were as follows:
 
 \item Experience with a particular treatment will be correlated with higher ratings of its credibility
 \end{itemize}
-4)
-5)
-6)
-
-% \subsection{Materials and Methods}
-
-% \subsubsection{Measures}
-
-% The instrument used for this research was the Treatment Credibility Questionnaire, Version 2. Version 2 differed from Version 1 in that it added two new sections to the instrument, following the same format as Study 1. These two sections concerned the credibility of Homeopathy and Reiki for pain. A number of demographic variables were also added to the survey. These asked for Income rated in units of 25K (i.e. 0-25K, 25-50K, 50-75K, 75-100K, 100K+). Self reported health was also measured on a five point scale, as were experience with each of the treatment modalities assessed in the questionnaire (i.e. Pills, Cream, Injections, Acupuncture, Homeopathy, Reiki). 
-
-% In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors. The eight items were those retained from a pool of 16 items which derived from interviews with chronic pain patients. All 16 items were administered to all participants, but only the final eight items are analysed here. 
-
-% \subsubsection{Sample}
-
-% The sample was collected from the University College Cork (UCC) staff and student population.. Data collection took place from the 3rd of April 2010 until the end of May 2010. 
-% All of the sample responses were collected electronically using Survey Monkey. 
-
-% \subsubsection{Statistical Analyses}
-
-% The plan for statistical analysis was as follows. Data will first be visualised using graphical tools such as scatter plot matrices and conditioning plots.  Following this, demographic variables were to be summarised. Secondly, correlations between any of the scale totals and the demographics were analysed. Thirdly, the BAM and the TCQ will be subjected to confirmatory factor analysis, which will include assessing the factor structure of the data using parallel analysis techniques and the Minimum Average Partial Criterion (MAP). 
-
-% Fourthly, an item response theory analysis will be carried out to determine how the items fit together. Finally, the ability estimates generated from the IRT methodology will be used as the dependent variable in a multiple regression to assess which, if any, of the demographic variables are useful in predictors. This procedure will also allow for the impact of Differential Item Functioning to be assessed.  
-
-% Missing data will be ignored for the purposes of this analysis, and data may be imputed and re-analysed following the complete case analysis, in order to check the Missing completely at Random (MCAR) assumption inherent in the use of a complete case analysis (CCA). All statistical analysis was carried out using the R software for statistical computing Version 2.11.0.  
 
 
 
@@ -895,7 +871,7 @@ The sample size collected was 1329, however, only 700 completed all questions. T
 <<tcq2demo, echo=FALSE, results=tex>>=
 tcq2.demo <- tcq2[,2:17]
 tcq2.sum <- summary(tcq2.demo)
-print(xtable(tcq2.sum, caption="Demographic Statistics, TCQ 2", label="tab:tcq2demo"))
+print(xtable(tcq2.sum, caption="Demographic Statistics, TCQ 2", label="tab:tcq2demo"), scalebox=0.4)
 @ 
 
 
@@ -906,24 +882,29 @@ The mean level of experience with a particular treatment was highest for pills a
 
 The sample was 67.88\% female, and 29.12\% male, with 45 respondents not specifying their gender. 
 
-The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Below, in Figure \ref{fig;tcq 0.795-42}, the correlations between the scale totals can be seen.
+The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Below, in Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen.
 @ 
 
 \begin{figure}
 	\centering
 <<tcq2pairs, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 print(pairs.panels(tcqtotals))
+sink(NULL)
 @ 
 	\caption{Scatterplot Matrix, TCQ 2}
 	\label{fig:tcq2pairs}
 \end{figure}
+
 The variables are, in order: Pilltotal, Creamtotal, Injection total, Acupuncture Total, Homeopathy Total, Reiki Total and Beliefs about Medicine Total. 
 
 
 As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships which is useful given the intention to model some of these later in the analyses. 
-Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. It may be (for example) that those involved with medicine tend to rate them very low, while those involved in the liberal arts tend to rate them quite highly. These kinds of differences will be teased apart in analyses below. 
 
-The next step was to examine the interactions between total scores and various demographic variables. Given the underlying non-normality of the distributions of the variables involved (see Table \ref{tab:tcq2.normtests} , Kruskal Wallis tests were used for this purpose and the results can be seen in Tables 6 and 7 below. To assess whether the errors would be normally distributed, qqplots for the residuals were analysed. The data did not meet the assumptions, further justifying the use of non-parametric statistics.  
+
+Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. It may be (for example) that those involved with medicine tend to rate them very low, while those involved in the liberal arts tend to rate them quite highly. These kinds of differences will be teased apart in analyses below. 
+
+The next step was to examine the interactions between total scores and various demographic variables. Given the underlying non-normality of the distributions of the variables involved, Kruskal Wallis tests were used for this purpose and the results can be seen in Tables 6 and 7 below. To assess whether the errors would be normally distributed, qqplots for the residuals were analysed. The data did not meet the assumptions, further justifying the use of non-parametric statistics.  
 
 <<credgender, echo=FALSE, results=tex>>=
 gendPill <- with(tcq2, tapply(Pilltot, Gender, mean, na.rm=TRUE))
@@ -934,12 +915,13 @@ gendHom <- with(tcq2, tapply(Homtot, Gender, mean, na.rm=TRUE))
 gendRei <- with(tcq2, tapply(Reitot, Gender, mean, na.rm=TRUE))
 gendBam <- with(tcq2, tapply(Bamtot, Gender, mean, na.rm=TRUE))
 gendcred <- as.data.frame(cbind(gendPill, gendCream, gendInj, gendAcu, gendHom, gendRei, gendBam))
-print(xtable(gendcred, caption="Credibility Differences by Gender", label="tab:tcq2.collegecred"))
+rownames(gendcred)[1] <- "OverallMeans"
+print(xtable(gendcred, caption="Credibility Differences by Gender", label="tab:tcq2collegecred"))
 @ 
 
 
 
-As can be seen from Table \ref{tab:tcq2.collegecred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
+As can be seen from Table \ref{tab:tcq2collegecred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
 
 
 <<credgender, echo=FALSE, results=tex>>=
@@ -961,7 +943,7 @@ As can be seen from Table \ref{tab:tcq2.gendercred}, the sample scores showed so
 Following these investigations of the descriptive qualities of the data, the next stage of the analysis is to examine the inter-correlations and latent structure behind the data through the use of factor analysis. 
 
 
-\subsubsection{Factor Analysis}
+% \subsubsection{Factor Analysis}
 
 
 % Factor Analysis is a complicated technique, in which there are many wrong ways and no clear right way. Much of the confusion stems from the lack of an objective metric to determine the number of factors to extract from the data. However, there are a number of criteria which can be of help in this endeavour, and experts recommend that multiple approaches be utilised. Therefore, for this study, 3 methods were used. These three methods are Parallel Analysis, the Minimum Average Partial criterion and visual inspection of the scree plot. Oblimin rotations were used in the first instance, as orthogonal structure can be determined from obliquely rotated data but not vice versa. Principal Acis factoring methods were used, given the non-normality of the data. 
