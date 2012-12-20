@@ -1530,20 +1530,22 @@ bamall2d <- tcq2d[,53:70]
 \begin{figure}
 	\centering
 <<tcq2dparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 par(mfrow=c(1,2))
 tcq2d.para <- fa.parallel(na.omit(tcqall2d))
 tcq2d.vss <- VSS(na.omit(tcqall2d))
+sink(NULL)
 @ 
 	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split D)}
 	\label{fig:tcq2dparallel}
 \end{figure}
 
-In this Split, the parallel analysis criterion suggested six factors while the MAP criterion suggested seven. Following previous practice, these two solutions were reported and examined for adequacy of fit and interpretability. 
+In this Split, the parallel analysis criterion suggested six factors while the MAP criterion suggested seven (shown in Figure \ref{fig:tcq2dparallel}). Following previous practice, these two solutions were reported and examined for adequacy of fit and interpretability. 
 
 
 <<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6,label="tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
+print(FactorXtab(tcq2d.fact.6,label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
 @ 
 
 
@@ -1551,20 +1553,20 @@ As per all previous splits, the six factor solution mapped all six treatment mod
 
 
 <<tcq2dfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.6,label="tcq2dfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2 (Split D)"))
+print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2 (Split D)"))
 @ 
 
 
-Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. Details of the correlations between factors are shown in Table \ref{tab:tcq2d.sixfactorcorr}. 
+Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. Details of the correlations between factors are shown in Table \ref{tab:tcq2dfactorcor}. 
 
 
 
 <<tcq2dfact7, echo=FALSE, results=tex>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7,label="tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
+print(FactorXtab(tcq2d.fact.7,label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
 @ 
 
-
+The details of the seven factor solution for this split are shown in Table \ref{tab:tcq2dfact7}. 
 
 This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
 
@@ -1583,10 +1585,9 @@ PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor will be termed
 PA7: "Pill3"  "Cream3" "Inj3" This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
 
 
-\ref{tab:tcq2d7factorcorr}.
 
 <<tcq2d7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2d.fact.7,label="tcq2d7factorcorr"))
+print(FactorCor(tcq2d.fact.7,label="tab:tcq2d7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split D"))
 @ 
 
 
@@ -1594,26 +1595,35 @@ print(FactorCor(tcq2d.fact.7,label="tcq2d7factorcorr"))
 tcq2dFit6 <- FitIndices(tcq2d.fact.6)
 tcq2dFit7 <- FitIndices(tcq2d.fact.7)
 tcq2dfit <- as.data.frame(cbind( tcq2dFit6, tcq2dFit7))
-print(xtable(tcq2dfit,caption="Fit Indices, TCQ 2 (Split D)",label="tab:tcq2dfit"))
+tcq2dfit.m <- melt(tcq2dfit)
+names(tcq2dfit.m)[1] <- "Fit Index"
+print(xtable(tcq2dfit.m,caption="Fit Indices, TCQ 2 (Split D)",label="tab:tcq2dfit"))
 @ 
 
 
-Again as has been seen in previous splits, the NNFI increases, the BIC decreases along with the RMSEA. 
+From Table \ref{tab:tcq2dfit}, the same pattern  as has been seen in previous splits emerges in that the NNFI increases while  the BIC decreases along with the RMSEA. 
 
-\ref{tab:tcq2dfit} 
+
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
+\begin{figure}
 <<bam2dparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 bam2d.para <- fa.parallel(na.omit(bamall2d))
 bam2d.vss <- VSS(na.omit(bamall2d))
-@ 
+sink(NULL)
+@   
+  \caption{Parallel Analysis Scree Plot for Beliefs About Medicine Questionnaire, Split D}
+  \label{fig:bam2dparallel}
+\end{figure}
 
-The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+The parallel analysis criterion suggests three factors here (shown in Figure \ref{fig:bam2dparallel}, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
 
 <<bam2dfact1, echo=FALSE, results=tex>>=
 bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
-print(FactorXtab(bam2d.fact1,label="bam2dfact1"))
+print(FactorXtab(bam2d.fact1,label="tab:bam2dfact1",caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2 Split D"))
 @ 
 
 As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
@@ -1622,18 +1632,20 @@ As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number
 
 <<bam2dfact2, echo=FALSE, results=tex>>=
 bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact2,label="bam2dfact2"))
+print(FactorXtab(bam2d.fact2,label="tab:bam2dfact2", caption="Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
+
+Table \ref{tab:bam2dfact2} shows the coefficients for the two factor solution in Split D. 
 
 PA2: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM18". These items all relate to the dangers surrounding medicines, and reasons to avoid using them, and so this factor can best be termed Safe use of Medicines. 
 
 PA1: "BAM2"  "BAM6"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors and their use of medicines, and so this factor can best be termed Doctors and Medicines. 
 
 <<bam2dfact2dcor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2d.fact2, label="bam2dfact2dcor"))
+print(FactorCor(bam2d.fact2, label="tab:bam2dfact2dcor", caption="Factor Correlations Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
 
-It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
+It can be seen from Table \ref{tab:bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
 
 
 
@@ -1641,8 +1653,10 @@ It can be seen from Table \ref{bam2dfact2dcor} that the two factors are moderate
 
 <<bam2dfact3, echo=FALSE, results=tex>>=
 bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2d.fact3,label="bam2dfact3"))
+print(FactorXtab(bam2d.fact3,label="tab:bam2dfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
+
+Table \ref{tab:bam2dfact3} shows the structure of the three factor solution in Split D. 
 
 PA1: "BAM2"  "BAM13" "BAM14" "BAM17". Most of these items relate to doctors, and so this factor can best be termed Doctors and Medicines. 
 
@@ -1652,10 +1666,10 @@ PA2: "BAM7"  "BAM9"  "BAM10" "BAM11". These items all appear to relate to the da
 
 
 <<bam2dfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2d.fact3, label="bam2dfact3cor"))
+print(FactorCor(bam2d.fact3, label="tab:bam2dfact3cor", caption="Factor Correlations, Three factor solution, Beliefs About Medicine, Questionnaire, Split D"))
 @ 
 
-It can be seen from Table \ref{bam3dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
+It can be seen from Table \ref{tab:bam3dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
 
 \subsection{Structural Equation Modelling}
 
