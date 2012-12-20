@@ -76,6 +76,7 @@ require(ltm)
 require(xtable)
 require(OpenMx)
 require(MASS)
+require(reshape2)
 source("func.R")
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
@@ -971,25 +972,31 @@ The results of factor analysis on the Treatment credibility Questionnaire can be
 \begin{figure}
 	\centering
 <<tcq2aparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 tcq2a.para <- fa.parallel(na.omit(tcqall2a))
 tcq2a.vss <- VSS(na.omit(tcqall2a))
+sink(NULL)
 @ 
 	\caption{Parallel Analysis and Scree Plot TCQ 2}
 	\label{fig:tcq2aparallel}
 \end{figure}
 
 As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
+
+
 <<tcq2afact6, echo=FALSE, results=tex>>=
 tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.6, label="tcq2afact6", caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2a.fact.6, label="tab:tcq2afact6", caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
 
-As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
+As can be seen from Table \ref{tab:tcq2afact6} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. 
 
-Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
+Below can be seen the correlations between factors, in Table \ref{tab:tcq2a6factorcor}.
+
+
 <<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor", caption="Factor Correlations, Six Factor Solution TCQ 2"))
+print(FactorCor(tcq2a.fact.6, label="tab:tcq2a6factorcor", caption="Factor Correlations, Six Factor Solution TCQ 2"))
 @ 
 
 
@@ -997,28 +1004,34 @@ print(FactorCor(tcq2a.fact.6, label="tcq2afactorcor", caption="Factor Correlatio
 
 The proportion of variance explained by the six factor solution is equal to 82\% which is an extremely high amount, arguing for the usefulness of this solution. 
 
-As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
+As can be seen from Table \ref{tab:tcq2a6factorcor}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
+
+
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2a.fact.7, label="tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2a.fact.7, label="tab:tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
 
 
-Table \ref{tab:tcq2sevenfactor} is enlightening in that it can be seen that factor 7 has no questions loading highest on it. Therefore, we can probably use the six factor structure on the basis of this data. 
+Table \ref{tab:tcq2afact7} is enlightening in that it can be seen that factor 7 has no questions loading highest on it. Therefore, we can probably use the six factor structure on the basis of this data. 
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
 
 <<tcq2a7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr"))
+print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr", caption="Correlations Between factors, TCQ 2A, Seven factor solution"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
 tcq2aFit6 <- FitIndices(tcq2a.fact.6)
 tcq2aFit7 <- FitIndices(tcq2a.fact.7)
 tcq2afit <- as.data.frame(cbind(tcq2aFit6, tcq2aFit7))
-print(xtable(tcq2afit,caption="Fit Indices, TCQ 2", label="tab:tcq2.fit"))
+tcq2afit.m <- melt(tcq2afit)
+names(tcq2afit)[1] <- "Fit Index"
+print(xtable(tcq2afit.m,caption="Fit Indices, TCQ 2", label="tab:tcq2afit"))
 @ 
+
+In Table \ref{tab:tcq2afit}, the fit indices for each of the solutions are shown.
 
 
 
@@ -1027,8 +1040,10 @@ This questionnaire was developed for use with chronic pain patients. It appears 
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
 
 <<bamparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 bam.para <- fa.parallel(na.omit(bamall2a))
 bam.vss <- VSS(na.omit(bamall2a))
+sink(NULL)
 @ 
 
 The parallel analysis suggests that there are four factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all four factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
@@ -1054,7 +1069,7 @@ Although there appears to be an interpretable factor structure emerging from thi
 
 
 <<bam2afact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact2,label="bam2afact2cor"))
+print(FactorCor(bam2a.fact2,label="tab:bam2afact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
@@ -1074,17 +1089,17 @@ PA2: "BAM1"  "BAM2"  "BAM7"  "BAM10" "BAM11". These items relate to the  respons
 
 
 <<bam2afact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact3,label="bam2afact3cor"))
+print(FactorCor(bam2a.fact3,label="tab:bam2afact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 are much smaller. 
 
 <<bam2afact4, echo=FALSE, results=tex>>=
 bam2a.fact4 <- fa(na.omit(bamall2a), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2a.fact4, label="bam2afact4"))
+print(FactorXtab(bam2a.fact4, label="tab:bam2afact4"))
 @ 
 
-This solution explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
+The four factor solution (shown in Table \ref{tab:bam2afact4} explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
 
 PA1: "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM12" "BAM13" "BAM14" "BAM17" "BAM18". Again, this factor has emerged from the rotations, and again it can be termed medicine avoidance. 
 
@@ -1095,14 +1110,14 @@ PA4: "BAM5". This factor is almost certainly spurious, given that it only has on
 
 
 <<bam2afact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2a.fact4,label="bam2afact4cor"))
+print(FactorCor(bam2a.fact4,label="tab:bam2afact4cor"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
 
 @ 
 
-%put in other 3 sem fits, although i suspect they won't converge. Look for debugging information online when you have internet. 
+%put in other 3 sem fits, although i suspect they won\'t converge. Look for debugging information online when you have internet. 
 
 \subsection{Split B}
 \label{sec:split-b}
@@ -1117,21 +1132,23 @@ bamall2b <- tcq2b[,53:70]
 \begin{figure}
 	\centering
 <<tcq2aparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 tcq2b.para <- fa.parallel(na.omit(tcqall2b))
 tcq2b.vss <- VSS(na.omit(tcqall2b))
+sink(NULL)
 @ 
 	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
-	\label{fig:tcq2aparallel}
+	\label{fig:tcq2bparallel}
 \end{figure}
 
-As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot suggest that five factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, the five,  six and seven factor solutions will be examined for interpretability and then subjected to CFA on the other splits of the data.
+As can be seen from Figure \ref{fig:tcq2bparallel}, both the parallel analysis and the scree plot suggest that five factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, the five,  six and seven factor solutions will be examined for interpretability and then subjected to CFA on the other splits of the data.
 
 <<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5, label="tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
+print(FactorXtab(tcq2b.fact.5, label="tab:tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
 @ 
 
-The five factor solution broke down as follows:
+The five factor solution (shown in Table \ref{tab:tcq2afact5}) broke down as follows:
 It explained 81\% of the variance, and all the communalities were greater than 0.5. 
 
 PA2: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6" "Inj1"  "Inj2"  "Inj3"  "Inj4"  "Inj5"  "Inj6". This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
@@ -1148,7 +1165,7 @@ PA4: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor consisted solely of 
 Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
 
 <<tcq2bfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.5,label="tcq2bfactorcor5"))
+print(FactorCor(tcq2b.fact.5,label="tab:tcq2bfactorcor5"))
 @ 
 
 
@@ -1158,11 +1175,13 @@ print(FactorXtab(tcq2b.fact.6,label="tcq2bfact6",caption="Six factor Solution, T
 @ 
 
 
-As can be seen from Table \ref{tab:tcq2.sixfactor} , this factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded.  
+As can be seen from Table \ref{tab:tcq2.sixfactor} , the six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
 
-Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} 
-<<tcq2afactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2A"))
+Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} . 
+
+
+<<tcq2bfactorcor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.6,label="tab:tcq2bfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2B"))
 @ 
 
 
@@ -1171,11 +1190,11 @@ print(FactorCor(tcq2a.fact.6,label="tcq2afactorcor",caption="Factor Correlations
 
 The proportion of variance explained by the six factor solution is equal to 84\% which is an extremely high amount, arguing for the usefulness of this solution. 
 
-As can be seen from Table \ref{tab:tcq2.sixfactorcorr}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
+As can be seen from Table \ref{tab:tcq2bfactorcor}, the correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
 
 <<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7, label="tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2b.fact.7, label="tcq2afact7",caption="Seven Factor Solution, TCQ 2B, Oblimin Rotation"))
 @ 
 
 
@@ -1190,7 +1209,7 @@ PA3: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". Again, this factor i
 
 PA2: "Inj1" "Inj2" "Inj3" "Inj4" "Inj5" "Inj6". These items are all Injection items, and so this factor gets that name. 
 
-PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor maps to all of the pill items. 
+PA6: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6". This factor maps to all of the pill items, and is thus called Pills. 
 
 PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
 
@@ -1198,7 +1217,7 @@ PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
 <<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7,label="tcq2b7factorcorr"))
+print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -1206,6 +1225,8 @@ tcq2bFit5 <- FitIndices(tcq.fact.5)
 tcq2bFit6 <- FitIndices(tcq2b.fact.6)
 tcq2bFit7 <- FitIndices(tcq2b.fact.7)
 tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
+tcq2bfit.m <- melt(tcq2bfit)
+names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
 @ 
 
@@ -1215,24 +1236,26 @@ Next, the beliefs about medicine questionnaire will be examined in terms of fact
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
 
 <<bamparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 bam.para <- fa.parallel(na.omit(bamall2b))
 bam.vss <- VSS(na.omit(bamall2b))
+sink(NULL)
 @ 
 
 The parallel analysis suggests that there are five factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all five factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
 
-<<bam2afact1, echo=FALSE, results=tex>>=
+<<bam2bfact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1, label="bam2afact1"))
+print(FactorXtab(bam2b.fact1, label="tab:bam2bfact1"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
 
 <<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2, label="bam2bfact2"))
+print(FactorXtab(bam2b.fact2, label="tab:bam2bfact2"))
 @ 
-Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
+The results of the two factor solution are shown in Table \ref{tab:bam2bfact2}. Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
 
 PA1: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM12" "BAM13" "BAM14" "BAM17" "BAM18". This factor, which consists of most of the scale, can be termed Medicine Avoidance.
 
