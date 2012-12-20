@@ -1331,7 +1331,7 @@ PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines 
 PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
 <<bam2bfact5cor, echo=FALSE, results=tex>>=
-                            print(FactorCor(bam2b.fact5,label="bam2bfact5cor", caption="Factor Correlations, Beliefs About Medicine Five Factor Solution, TCQ 2, Split B"))
+print(FactorCor(bam2b.fact5,label="bam2bfact5cor", caption="Factor Correlations, Beliefs About Medicine Five Factor Solution, TCQ 2, Split B"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
@@ -1348,22 +1348,26 @@ bamall2c <- tcq2c[,53:70]
 \begin{figure}
 	\centering
 <<tcq2cparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 par(mfrow=c(1,2))
 tcq2c.para <- fa.parallel(na.omit(tcqall2c))
 tcq2c.vss <- VSS(na.omit(tcqall2c))
+sink(NULL)
 @ 
-	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split C)}
 	\label{fig:tcq2cparallel}
 \end{figure}
 
 
+Figure \ref{fig:tcq2cparallel} shows the results of parallel analysis on Split C for the Treatment Credibility Questionnaire. 
+
 <<tcq2cfact5, echo=FALSE, results=tex>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.5,label="tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.5,label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
 @ 
 
 
-This solution explained 79\% of the variance, and all of the communalities were extremely high. 
+The five factor  solution (shown in Table \ref{tab:tcq2cfact5}) explained 79\% of the variance, and all of the communalities were extremely high. 
 
 PA2: "Pill1" "Pill2" "Pill3" "Pill4" "Pill5" "Pill6" "Inj1"  "Inj2"  "Inj3" "Inj4"  "Inj5"  "Inj6". This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
 
@@ -1386,10 +1390,9 @@ PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". PA3 maps to the acupuncture item
 % PA4: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor again maps exactly to the Creams items, and is therefore termed Cream. This factor solution was from a varimax rotation, note the interesting differences between it and the others. 
 
 
-Table\ref{tab:tcq2cfactorcor5}. 
 
 <<tcq2cfactorcor5, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.5,label="tcq2cfactorcor5"))
+print(FactorCor(tcq2c.fact.5,label="tab:tcq2cfactorcor5", caption="Factor Correlations, TCQ 2 Five Factor Solution, Split C"))
 @ 
 
 Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlated highly with the Cream factor (as would be expected), while the Alternative factors correlate quite well with one another also. Of particular note is Acupuncture, which appears to occupy a middle ground between the other alternative methods and the conventional ones, as least as evinced by this correlation structure. 
@@ -1397,7 +1400,7 @@ Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlate
 
 <<tcq2cfact6, echo=FALSE, results=tex>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6,label="tcq2cfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.6,label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
 @ 
 
 
@@ -1405,23 +1408,19 @@ Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly 
 
 
 <<tcq2cfactorcor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.6,label="tcq2c6factorcor",caption="Factor Correlations, Six Factor Solution TCQ 2C"))
+print(FactorCor(tcq2c.fact.6,label="tab:tcq2c6factorcorr",caption="Factor Correlations, Six Factor Solution TCQ 2, Split C"))
 @ 
 
 Again (Table \ref{tab:tcq2c6factorcorr} ) shows that Acupuncture again shows correlations with the conventional factors, but homeopathy does also in this particular solution. This solution explained 83\% of the variance, which is consistent with the other splits and factor solutions examined so far. 
 
 
 
-
-
-
-
 <<tcq2cfact7, echo=FALSE, results=tex>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7,label="tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.7,label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
 @ 
 
-
+Table \ref{tab:tcq2cfact7} shows the seven factor solution structure for Split C. 
 
 
 Again, the factors mostly break down into the six forms of treatment.
@@ -1443,17 +1442,19 @@ PA7: "Pill3" "Inj1"  "Inj3" . This factor has supplementary loadings for some of
 The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
 
 <<tcq2c7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2c.fact.7,label="tcq2c7factorcorr"))
+print(FactorCor(tcq2c.fact.7,label="tab:tcq2c7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split C"))
 @ 
 
-The seven factor solution shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
+The seven factor solution (Table \ref{tab:tcq2c7factorcorr} shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
 
 <<tcq2cfitindices, echo=FALSE, results=tex>>=
 tcq2cFit5 <- FitIndices(tcq2c.fact.5)
 tcq2cFit6 <- FitIndices(tcq2c.fact.6)
 tcq2cFit7 <- FitIndices(tcq2c.fact.7)
 tcq2cfit <- as.data.frame(cbind(tcq2cFit5, tcq2cFit6, tcq2cFit7))
-print(xtable(tcq2cfit,caption="Fit Indices, TCQ 2 (Split C)", label="tab:tcq2cfit"))
+tcq2cfit.m <- melt(tcq2cfit)
+names(tcq2cfit.m)[1] <- "Fit Index"
+print(xtable(tcq2cfit.m,caption="Fit Indices, TCQ 2 (Split C)", label="tab:tcq2cfit"))
 @ 
 
 
@@ -1462,39 +1463,45 @@ It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
 <<bam2cparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 bam2c.para <- fa.parallel(na.omit(bamall2c))
 bam2c.vss <- VSS(na.omit(bamall2c))
+sink(NULL)
 @ 
 
 The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
 
 <<bam2cfact1, echo=FALSE, results=tex>>=
 bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
-print(FactorXtab(bam2c.fact1,label="bam2cfact1"))
+print(FactorXtab(bam2c.fact1,label="tab:bam2cfact1", caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
 
-The loadings and communalities are uniformly low for this solution, and ther proportion of variance explained was 20\%. 
+The loadings and communalities are uniformly low (shown in Table \ref{tab:bam2cfact1} for this solution, and ther proportion of variance explained was 20\%. 
 
 
 <<bam2cfact2, echo=FALSE, results=tex>>=
 bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact2,label="bam2cfact2"))
+                                                  print(FactorXtab(bam2c.fact2,label="tab:bam2cfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
-As can be seen from the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+As can be seen from Table \ref{tab:bam2cfact2} the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+
+
 PA1: "BAM2"  "BAM6"  "BAM8"  "BAM9"  "BAM10" "BAM13" "BAM14" "BAM17" "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
 
 PA2: "BAM2"  "BAM3"  "BAM7"  "BAM10" "BAM11" "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
 
 <<bam2cfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact2,label="bam2cfact2cor"))
+print(FactorCor(bam2c.fact2,label="tab:bam2cfact2cor", caption="Factor Correlations, Two Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
 
 <<bam2cfact3, echo=FALSE, results=tex>>=
 bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2c.fact3,label="bam2cfact3"))
+print(FactorXtab(bam2c.fact3,label="tab:bam2cfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
+
+Table \ref{tab:bam2cfact3} shows the structure of the three factor solution in this split. 
 
 
 PA1: "BAM13" "BAM14" "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
@@ -1504,7 +1511,7 @@ PA3: "BAM3"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM18". All these items ap
 PA2: "BAM2"  "BAM3"  "BAM11" "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
 
 <<bam2cfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2c.fact3,label="bam2cfact3cor"))
+print(FactorCor(bam2c.fact3,label="tab:bam2cfact3cor", caption="Factor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
