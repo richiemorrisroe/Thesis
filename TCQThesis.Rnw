@@ -1217,7 +1217,7 @@ PA7: "Pill3"  "Cream3" "Inj1"   "Inj3" . This factor is a little strange, as it 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
 <<tcq2b7factorcorr, echo=FALSE, results=tex>>=
-print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr"))
+print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr", caption="Factor Correlations, TCQ2B, Seven factor Solution"))
 @ 
 
 <<tcq2afitindices, echo=FALSE, results=tex>>=
@@ -1246,14 +1246,14 @@ The parallel analysis suggests that there are five factors, while the MAP criter
 
 <<bam2bfact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
-print(FactorXtab(bam2b.fact1, label="tab:bam2bfact1"))
+print(FactorXtab(bam2b.fact1, label="tab:bam2bfact1", caption="One factor Solution, Beliefs About Medicine Questionnaire, Split 2B"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
 
 <<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact2, label="tab:bam2bfact2"))
+print(FactorXtab(bam2b.fact2, label="tab:bam2bfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
 The results of the two factor solution are shown in Table \ref{tab:bam2bfact2}. Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
 
@@ -1263,16 +1263,16 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". These items relate to the responsi
 
 
 <<bam2bfact2cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact2,label="bam2bfact2cor"))
+print(FactorCor(bam2b.fact2,label="tab:bam2bfact2cor"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
 
 <<bam2bfact3, echo=FALSE, results=tex>>=
 bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact3,label="bam2bfact3"))
+print(FactorXtab(bam2b.fact3,label="tab:bam2bfact3", caption="Three factor solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
-This solution explained 34\% of the variance in the data. The factors broke down as follows:
+The three factor  solution (shown in Table \ref{tab:bam2bfact3} explained 34\% of the variance in the data. The factors broke down as follows:
 
 PA1: "BAM3"  "BAM4"  "BAM6"  "BAM7"  "BAM8"  "BAM9"  "BAM10" "BAM11" "BAM13" "BAM18". This factor was apparent in the two factor solution earlier, and again can be termed Medicine Avoidance. 
 
@@ -1282,15 +1282,18 @@ PA2: "BAM1"  "BAM2"  "BAM11" "BAM16" "BAM18". Again, this factor can best be ter
 
 
 <<bam2bfact3cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact3,label="bam2bfact3cor"))
+print(FactorCor(bam2b.fact3,label="tab:bam2bfact3cor", caption="FActor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
 
 Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not. . 
 
 <<bam2bfact4, echo=FALSE, results=tex>>=
 bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact4,label="bam2bfact4"))
+print(FactorXtab(bam2b.fact4,label="tab:bam2bfact4", caption="Four Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
 @ 
+
+The four factor structure is shown in Table \ref{tab:bam2bfact4}. 
+
 
 PA3: "BAM12" "BAM13" "BAM14" "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
 
@@ -1304,7 +1307,7 @@ PA1: "BAM6"  "BAM8"  "BAM9"  "BAM18". These items all relate to safety or danger
 
 
 <<bam2bfact4cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact4,label="bam2bfact4cor"))
+print(FactorCor(bam2b.fact4,label="tab:bam2bfact4cor", caption="Factor Correlations, Beliefs About Medicine Questionnaire Four Factor Solution, TCQ 2, Split B"))
 @ 
 
 As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
@@ -1312,9 +1315,10 @@ As before, Table \ref{tab:bam2afact4cor} shows large correlations between factor
 
 <<bam2bfact5, echo=FALSE, results=tex>>=
 bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
-print(FactorXtab(bam2b.fact5,label="bam2bfact5"))
+                            print(FactorXtab(bam2b.fact5,label="tab:bam2bfact5", caption="Five Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
 @ 
 
+Table \ref{tab:bam2bfact5} shows the five factor solution for the Beliefs About Medicine Questionnaire. 
 
 PA3: "BAM13" "BAM14" "BAM17". Again, these items can best be subsumed as a factor called Doctors and Medicines. 
 
@@ -1327,7 +1331,7 @@ PA1: "BAM6"  "BAM11" "BAM18". These items all relate to the safety of medicines 
 PA5: "BAM8"  "BAM9"  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
 <<bam2bfact5cor, echo=FALSE, results=tex>>=
-print(FactorCor(bam2b.fact5,label="bam2bfact5cor"))
+                            print(FactorCor(bam2b.fact5,label="bam2bfact5cor", caption="Factor Correlations, Beliefs About Medicine Five Factor Solution, TCQ 2, Split B"))
 @ 
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
