@@ -2785,7 +2785,7 @@ The next step in the analysis procedure was to examine the treatment credibility
 
 <<tcq2aitemselection, echo=FALSE, results=tex>>=
 tcq.aisp <- aisp(na.omit(tcqall2a))
-print(xtable(tcq.aisp, label="tab:tcq2aitemselection"))
+print(xtable(tcq.aisp, label="tab:tcq2aitemselection", caption="Item selection procedure, TCQ 2 Split A"))
 @ 
 
 As can be seen from Table \ref{tab:tcq2aitemselection}, the TCQ divides neatly into two scales, one for the conventional items and another for the alternative items. 
@@ -2799,14 +2799,14 @@ tcq2a.alt <- tcqall2a[,19:36]
 
 <<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
 tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
-print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio"))
+print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio", caption="Check of Item Ordering Assumptions, TCQ 2 Conventional Split A"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
 
 <<tcq2aaltitemord, echo=FALSE, results=tex>>=
 tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
-print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio"))
+print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio", caption="Item Ordering Assumption Check for TCQ Alternative, Split A"))
 @ 
 Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
 
@@ -2814,7 +2814,7 @@ Next, the assumption of monotonicity was assesed for both scales.
 
 <<tcq2aconvmonotonicity, echo=FALSE, results=tex>>=
 tcq2aconv.mono <- check.monotonicity(na.omit(tcq2a.conv))
-print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity"))
+print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity", caption="Monotonicity Check Results for TCQ 2 Conventional, Split A"))
 @ 
 As can be seen from Table \ref{tab:tcq2aconvmonotonicity}, there were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
 
