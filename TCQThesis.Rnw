@@ -1775,7 +1775,7 @@ tcq7summ.notA <- summary(tcq7fit.notA)
 
 <<tcq2notAsemcompare, echo=FALSE, results=tex>>=
 tcq2.notA.semcompare <- mxCompare(tcq6fit.notA, tcq7fit.notA)
-print(xtable(tcq2.notA.semcompare, label="tab:tcq2notAsemcompare"))
+print(xtable(tcq2.notA.semcompare, label="tab:tcq2notAsemcompare", caption="Comparison of Factor Models built on Split A on Splits B, C and D"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notAsemcompare} that the seven factor model from Split A provided a better fit to the out of sample data than did the 6 factor model. 
@@ -1878,7 +1878,7 @@ Bam4asummnotA <- summary(Bam4fitnotA)
 
 <<bamnotAsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
-print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare"))
+print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare", captio="Comparison of Beliefs About Medicine Factor Solutions from Split A Tested on Splits B, C and D"))
 @ 
 
 As can be seen from Table \ref{tab:bamnotAsemcompare}, the four factor solution appears to replicate best on the out of sample data. 
@@ -2006,7 +2006,7 @@ tcq7summ.notB <- summary(tcq7fit.notB)
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare"))
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the 6 factor model. 
@@ -2109,10 +2109,12 @@ Bam4asummnotB <- summary(Bam4fitnotB)
 
 <<bamnotBsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
-print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare"))
+print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare", caption="Beliefs About Medicine Questionnaire Split B Models Tested Against Splits A, C and D"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotBsemcompare} that the two factor model provided the best fit to the out-of-sample data in  this case. 
+
+
 \subsection{Split C CFA}
 \label{sec:split-c-cfa}
 
@@ -2238,7 +2240,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare"))
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
@@ -2315,7 +2317,7 @@ Bam3asummnotC <- summary(Bam3fitnotC)
 
 <<bamnotCsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
-print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare"))
+print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split C tested against Splits A, B and D"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotCsemcompare} that the one factor solution fits the out of sample data best in this case. 
@@ -2408,7 +2410,7 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare"))
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
@@ -2485,7 +2487,7 @@ Bam3asummnotD <- summary(Bam3fitnotD)
 
 <<bamnotDsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
-print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare"))
+print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split D, tested against Splits A, B and C"))
 @ 
 
 It can be seen from Table \ref{tab:bamnotDsemcompare} that the one factor solution fits the out of sample data best in the case of the Split D models tested on the out of sample data. 
@@ -2761,14 +2763,14 @@ Bam1asumm.notD.all <- summary(Bam1fitnotD.all)
 
 <<bamallsemcompare, echo=FALSE, results=tex>>=
 bamall.semcompare <- mxCompare(Bam4fitnotA.all, c(Bam2fitnotB.all, Bam1fitnotC.all, Bam1fitnotD.all))
-print(xtable(bamall.semcompare, label="tab:bamallsemcompare"))
+print(xtable(bamall.semcompare, label="tab:bamallsemcompare", caption="Best Model from Each Split tested against one another on the full dataset, Beliefs About Medicine Questionnaire"))
 @ 
 
 As can be seen from Table \ref{tab:bamallsemcompare}, the two factor model from Split B provided the best fit to all of the data, striking a balance between the complexity of the four factor model and the over simplicity of the one factor model. 
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
-print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare"))
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset Results"))
 @ 
 
 As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
