@@ -3244,7 +3244,7 @@ A likelihood ratio test suggests that the two parameter model provides a signifi
 
 <<tcq2caisp, echo=FALSE, results=tex>>=
 tcq2c.aisp <- aisp(na.omit(tcqall2c))
-print(xtable(tcq2c.aisp), label="tab:tcq2caisp")
+print(xtable(tcq2c.aisp), label="tab:tcq2caisp", caption="Item Selection Procedure Results, TCQ 2, Split C")
 @ 
 
 As can be seen from Table \ref{tab:tcq2caisp}, the algorithm suggests that there are two scales, one for conventional items and another for alternative items, as was seen in the previous two splits. The assumption checking will therefore be carried out on each scale seperately. 
@@ -3258,7 +3258,7 @@ tcq2c.alt <- tcqall2c[,19:36]
 
 <<tcq2ccheckiio, echo=FALSE, results=tex>>=
 tcq2c.conv.iio <- check.iio(na.omit(tcq2c.conv))
-print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio"))
+print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio", caption="Item Ordering Assumption Check, TCQ2 Conventional, Split C"))
 @ 
 
 As can be seen from Table \ref{tab:tcq2ccheckiio}, there were no violations of the item ordering assumption in this sample. 
@@ -3266,7 +3266,7 @@ As can be seen from Table \ref{tab:tcq2ccheckiio}, there were no violations of t
 
 <<tcq2cconvcheckmono, echo=FALSE, results=tex>>=
 tcq2c.conv.mono <- check.monotonicity(na.omit(tcq2c.conv))
-print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono"))
+print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono", caption="Monotonicity Check, TCQ 2 Conventional, Split C"))
 @ 
 
 Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmono} shows that there were no violations of monotonicity in this sample. 
@@ -3276,7 +3276,7 @@ Next, the number of guttman errors for the TCQ conventional items were calculate
 \begin{figure}
 <<tcq2cconvguttman, echo=FALSE, fig=TRUE>>=
 tcq2c.conv.gutt <- check.errors(na.omit(tcq2c.conv))
-tcq2c.conv.gutt.plot <- ggplot(as.data.frame(tcq2c.conv.gutt), aes(x=tcq2c.conv.gutt))+layer(geom="bar", binwidth=5)
+tcq2c.conv.gutt.plot <- ggplot(as.data.frame(tcq2c.conv.gutt), aes(x=tcq2c.conv.gutt))+geom_histogram(binwidth=5)
 print(tcq2c.conv.gutt.plot)
 @   
   \caption{Histogram of Guttman errors for TCQ conventional items, Split C}
@@ -3289,7 +3289,7 @@ Next, the assumptions of IRT were checked for the TCQ alternative items in this 
 
 <<tcq2caltcheckiio, echo=FALSE, results=tex>>=
 tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
-print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio"))
+print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="Item Ordering Assumption Check, TCQ2 Alternative, Split C"))
 @ 
 
 Table \ref{tab:tcq2caltcheckiio} shows that there were no violations of the invariant item ordering assumption in this split for the alternative items. 
@@ -3297,7 +3297,7 @@ Table \ref{tab:tcq2caltcheckiio} shows that there were no violations of the inva
 
 <<tcq2caltcheckmono, echo=FALSE, results=tex>>=
 tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
-print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono"))
+print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono", caption="Monotonicity Check, TCQ2 Alternative, Split C"))
 @ 
 
 Next, the monotonicity assumption was examined. Table \ref{tab:tcq2caltcheckmono} shows that there were no violations of the monotonicity assumption for the alternative items in this split. 
@@ -3363,7 +3363,7 @@ print(tcq2c.convgrm1plot)
 Figure \ref{fig:tcq2cconvgrm1plot} shows that, in contrast to the partial credit models, the one parameter model provides a good fit to this scale. 
 
 <<tcq2cconvgrm1plsumm, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm"))
+print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split C), One Parameter Graded Response Model"))
 @ 
 
 In Table \ref{tab:tcq2cconvgrm1plsumm} the estimated thresholds for the one parameter graded response model are shown. It can be seen that the Cream items are perceived as the most difficult, and that the discrimination parameter (the slope) is estimated at 2.083. This is an average parameter estimated for the whole scale, and based on the results of the previous splits, we would expect to see the discrimination parameters increase for the Cream items and decrease for the Pill and Injection items. 
@@ -3383,7 +3383,7 @@ Firstly, the fit of the two parameter graded response model was examined graphic
 
 
 <<tcq2cconv2plgrmsum, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum"))
+print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum", caption="Coefficients for TCQ 2 Split C Two Parameter Graded Response Model"))
 @ 
 
 Table \ref{tab:tcq2cconv2plgrmsum} shows the estimated coefficients and discrimation paramaters for the two parameter graded response model. Interestingly enough, Pill 5 and Pill6 appear to have been the questions with the most dicriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
@@ -3399,7 +3399,7 @@ Next, the beliefs about medicine questionnaire was examined in this split.
 
 <<bam2caisp, echo=FALSE, results=tex>>=
 bam2c.aisp <- aisp(na.omit(bamall2b))
-print(xtable(bam2c.aisp, label="tab:bam2caisp"))
+print(xtable(bam2c.aisp, label="tab:bam2caisp", caption="Item Selection Procedure, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 As seen in previous splits, BAM1 and BAM2 were partitioned into their own scale, and many items did not fit any scale. As a two item scale is too small to examine effectively, all further analyses were carried out on the reduced scale (1). Table \ref{tab:bam2caisp} shows these results. In contrast to Split A, the scale had 9 items, and these were the same items as were selected by the scale splitting algorithm in Split B. 
@@ -3412,7 +3412,7 @@ The first assumption to be checked was the invariant item ordering assumption, a
 
 <<bam2ccheckiio, echo=FALSE, results=tex>>=
 bam2c.iio <- check.iio(na.omit(bamscale2b))
-print(xtable(bam2c.iio$violations, label="tab:bam2checkiio"))
+print(xtable(bam2c.iio$violations, label="tab:bam2checkiio", caption="Item Ordering Assumption Check, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 As can be seen from Table \ref{tab:bam2checkiio}, no items violated this assumption and therefore all of them were retained. 
@@ -3420,7 +3420,7 @@ As can be seen from Table \ref{tab:bam2checkiio}, no items violated this assumpt
 
 <<bam2ccheckmono, echo=FALSE, results=tex>>=
 bam2c.mono <- check.monotonicity(na.omit(bamscale2b))
-print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono"))
+print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 Following the check of the IIO assumption, the next step in assumption checking was a monotonicity check. The results of this check are shown in Table \ref{tab:bam2ccheckmono}. This shows that no items violated this assumption (though the ItemH coefficients are close to the cutoff of 0.3). 
@@ -3428,7 +3428,7 @@ Following the check of the IIO assumption, the next step in assumption checking 
 \begin{figure}
 <<bam2cguttman, echo=FALSE, fig=TRUE>>=
 bam2c.guttman <- check.errors(na.omit(bamscale2b))
-bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+layer(geom="bar", binwidth=2)
+bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+geom_histogram(binwidth=2)
 print(bam2c.guttplot)
 @   
   \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split C}
@@ -3447,11 +3447,8 @@ bam2c.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
 Firstly, three generalised partial credit models were fit (Rasch, one parameter and two parameter). The results are shown below. 
 
 
-
-
-
 <<bam2cgpcmrasch, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch"))
+print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Beliefs About Medicine Questionnaire Split C, Rasch generalised partial credit model"))
 @ 
 
 Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the RAsch model fitted to the BAM scale. Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported. Next, the fit of one and two parameter graded response models were examined. 
@@ -3462,16 +3459,16 @@ bam2c.grm.2pl <- grm(bamscale2b, constrained=FALSE)
 @ 
 
 <<bam2cgrm1sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.grm.1pl)), label="tab:bam2cgrm1sum"))
+print(xtable(coef2mat(coef(bam2c.grm.1pl)), label="tab:bam2cgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire, One Parameter Graded Response Model (Split C)"))
 @ 
 
-Table \ref{tab:bam2cgrm1sum} shows that there are no monotonicity problems with the one parameter GRM. The estimated dsicrimination parameter is 1.523, and BAM6 appears to be the most difficult item in the scale (as no participants gave the highest response category to it, across all of the splits).
+Table \ref{tab:bam2cgrm1sum} shows that there are no monotonicity problems with the one parameter GRM. The estimated discrimination parameter is 1.523, and BAM6 appears to be the most difficult item in the scale (as no participants gave the highest response category to it, across all of the splits).
 
 
 
 
 <<bam2cgrm2sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.grm.2pl)), label="tab:bam2cgrm2sum"))
+print(xtable(coef2mat(coef(bam2c.grm.2pl)), label="tab:bam2cgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Split C, Two parameter Graded Response Model"))
 @ 
 
 Next, the fit of the two parameter  GRM was examined, and is displayed in Table \ref{tab:bam2cgrm2sum}. Note that BAM13 appears to be the most discriminating item, and that BAM3 is the most difficult item (with the exception of BAM6, as noted above). 
