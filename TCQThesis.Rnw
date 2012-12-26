@@ -669,6 +669,33 @@ print(xtable(summary(pillLm1), caption="Coefficient for Linear Regression on Pil
 
 As can be seen from \Table \ref{tab:tcq1pilllmsum}, there were no significant predictors of Pill Credibility scores from amongst the demographic variables collected in Study One. 
 
+Next, we examine the relationship of cream credibility variables to others in the sample.
+
+<<creamlm,echo=FALSE, results=tex>>=
+creamlm <- lm(CreamTot~PillTot+InjTot+AcuTot+Gender+College+UGPG, data=tcq1)
+print(xtable(summary(creamlm), caption="Cream Credibility Linear Regression Results",label="tab:creamlm"))
+@ 
+
+As can be seen from the model in Table \ref{tab:creamlm}, there appears to only be a relationship with cream credibility for the other credibility scores. Surprisingly, the relationship between Cream credibility and Acupuncture credibility is positive, a pattern which was also seen in the raw correlations and suggests that participants in study one were responding in the same fashion due to overall response characteristics rather than a considered examination of each treatment in isolation. 
+
+Next, we examine the relationship between Injection Credibility scores and the other variables in the sample.
+
+<<injlm, echo=FALSE, results=tex>>=
+injlm <- lm(InjTot~PillTot+CreamTot+AcuTot+Gender+College+UGPG, data=tcq1)
+print(xtable(summary(injlm), caption="Injection Credibility Totals Regression, Study One", label="tab:injlm1"))
+@ 
+
+As can be seen from Table \ref{tab:injlm1}, a similar pattern as was seen for the Cream credibility scores emerges, except that Acupuncture now has a negative coefficient (which is much smaller than those for Pill or Cream credibility). 
+
+Finally, we examine the relationship between Acupuncture credibility and other variables in the sample. 
+
+<<acutotlm, echo=FALSE, results=tex>>=
+acutotlm <- lm(AcuTot~PillTot+CreamTot+InjTot+Gender+College+UGPG, data=tcq1)
+print(xtable(summary(acutotlm), caption="Acupuncture Credibility Linear Regression, Study One", label="tab:acutotlm1"))
+@ 
+
+The pattern of results was a little different when acupuncture credibility total was used as the response variable. Cream Credibility was extremely significant, injection credibility was marginally significant, while Pill credibility was not significant. Note the negative coefficient on Injections, which suggests that these treatments were regarded as useful by different subsets of participants. 
+
 % finish this section
 
 \section{Confirmatory Analyses}
@@ -842,6 +869,8 @@ print(summary(xtable(tcq2.1.comp)))
 @ 
 
 As can be seen from Table \ref{tab:tcq2testsemcomp} the six factor model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion, below.
+
+
 
 
 %add confirmatory IRT and regression analyses
@@ -4512,7 +4541,7 @@ A number of issues have become clear from this first sample taken to validate th
 
 In addition, the General sub-scale of the Beliefs about Medicines Questionnaire was appended to V2 of the survey, in order to assess the extent to which the two instruments correlate (or fail to). This is a preliminary attempt to assess construct validity, which of course is but a prelude towards testing the instrument with clinical samples and in experimental settings.
 
-\subsubsection{Study 2}
+\subsubsection{Study Two}
 \label{sec:study-2}
 
 
