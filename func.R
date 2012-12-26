@@ -637,10 +637,28 @@ getIRTestimates <- function(fscores) {
   names(abest) <- c("AbilityEst", "StdError")
   return(abest)
 }
-testIRTModels <- function(oldmodel, newdata, constraint=c("rasch", "1PL", "gpcm",),...) {
+testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "gpcm",), grmconstraint= c(TRUE, FALSE), ...) {
+  if(class(oldmodel)=="gpcm") {
+    constraint <- gpcmconstraint
+  }
+     else {
+       constraint <- grmconstraint
+     }
+  richiecool <- FALSE
+  if(richiecool) {
+    funlist <- as.list(parse(oldmodel$call))
+    funlist2 <- substitute(newdata)
+    #more awesome metaprogramming stuff that I haven't figured out how to do yet....
+  }
+  
   comp.para <- length(unique(as.vector(coef(oldmodel))))
   predscores <- getIRTestimates(factor.scores(oldmodel, resp.patterns=newdata))
+  if(class(oldmodel)=="gpcm") {
   newmodel <- gpcm(newdata, constraint=constraint)
+}
+  else {
+    newmodel <- grm(newdata, constrained=constraint)
+  }
   newscores <- getIRTestimates(factor.scores(newmodel, resp.patterns=newdata))
   diffscores <- mapply("-", predscores[,1], newscores[,1])
   rea <- sqrt(sum(diffscores^2))*log(comp.para)
