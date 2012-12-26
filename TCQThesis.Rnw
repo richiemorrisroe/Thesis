@@ -969,6 +969,16 @@ As can be seen from Table \ref{tab:pcmmodcomp}, the one parameter Partial Credit
 
 Next, the same process is repeated for the graded response models. 
 
+<<grmtest, echo=FALSE, results=hide>>=
+grm1pl.done <- testIRTModels(tcqconv.grm.1pl, tcq2a.conv, grmconstraint=TRUE)
+grm2pl.done <- testIRTModels(tcqconv.grm.2pl, tcq2a.conv, grmconstraint=FALSE)
+grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
+rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
+grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
+print(grm.modcomp.xtab)
+@ 
+
+As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model in each case)
 
 
 \section{Study Two}
