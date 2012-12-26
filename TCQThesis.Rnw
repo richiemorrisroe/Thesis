@@ -572,6 +572,8 @@ print(xtable(summary(tcqalt.monotonicity), caption="Test of Monotonicity Assumpt
 tcqconv.pcm.rasch<-gpcm(convtcq, constraint="rasch")
 tcqcoef <- coef(tcqconv.pcm.rasch)
 print(xtable(tcqcoef, label="tab:tcq1convpcmrasch", caption="Coefficients for TCQ1 Partial Credit Model (Rasch)"))
+tcqconv.pcm.fscores.rasch <- factor.scores(tcqconv.pcm.rasch)
+tcqconv.pcm.absest.rasch <- getIRTestimates(tcqconv.pcm.fscores.rasch)
 @ 
 
 Even a cursory glance at Table \ref{tab:tcq1convpcmrasch} demonstrates that there are serious problems with this model, as the estimates are not monotonically increasing for each higher category. The  next model to be examined is a one parameter model, where the discrimination parameter is estimated from the data rather than being fixed at one. 
@@ -580,6 +582,8 @@ Even a cursory glance at Table \ref{tab:tcq1convpcmrasch} demonstrates that ther
 tcqconv.pcm.1pl <- gpcm(convtcq, constraint="1PL")
 tcqconv1pl.coef <- coef(tcqconv.pcm.1pl)
 print(xtable(tcqconv1pl.coef, label="tab:tcqconvpcm1pl", caption="Coefficients for TCQ 1 Partial Credit Model, One Parameter"))
+tcqconv.pcm.fscores.1pl <- factor.scores(tcqconv.pcm.1pl)
+tcqconv.pcm.absest.1pl <- getIRTestimates(tcqconv.pcm.fscores.1pl)
 @ 
 
 From Table \ref{tab:tcqconvpcm1pl} it can be seen that the model still has a number of problems with item ordering, especially in the Pill and Injection sections of the questionnaire. Indeed, it appears to be Category 3 which is causing the problems, which may suggest that participants were using this category as a base rather than actually considering the alternatives in a consistent manner. Next, a 2 parameter model will be fitted to assess if allowing individual discrimination parameters will prove to be a better approach. 
@@ -588,6 +592,8 @@ From Table \ref{tab:tcqconvpcm1pl} it can be seen that the model still has a num
 tcqconv.pcm.gpcm <- gpcm(convtcq, constraint="gpcm")
 tcqconv.gpcm.coef <- coef(tcqconv.pcm.gpcm)
 print(xtable(tcqconv.gpcm.coef, caption="Coefficients for TCQ1 Conventional Two Parameter Partial Credit Model", label="tab:tcq1convpcm2pl"))
+tcqconv.pcm.fscores.gpcm <- factor.scores(tcqconv.pcm.gpcm)
+tcqconv.pcm.absest.gpcm <- getIRTestimates(tcqconv.pcm.fscores.gpcm)
 @ 
 
 Unfortunately, the approach of attempting to allow for a more flexible modelling approach in order to garner more coherent parameters for the model appears to have failed, in that Table \ref{tab:tcq1convpcm2pl} shows that the issues around item ordering have not been resolved by allowing for a two parameter model. 
@@ -598,6 +604,8 @@ Thus far, the generalised partial credit model has been shown to be entirely ina
 tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
 tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 print(xtable(tcqconv.grm1.coef, label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
+tcqconv.grm.fscores.1pl <- factor.scores(tcqconv.grm.1pl)
+tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.1pl)
 @ 
 
 It can be seen from Table \ref{tab:tcq1convgrm1pl} that the fit is much better for this model, with no violations of monotonicity. The next step taken is to examine the fit of a more flexible model (with a discrimination parameter for each item), and assess whether or not this represents a significant enough improvement over the model above.
@@ -606,6 +614,8 @@ It can be seen from Table \ref{tab:tcq1convgrm1pl} that the fit is much better f
 tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
 tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
 print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
+tcqconv.grm.fscores.2pl <- factor.scores(tcqconv.grm.2pl)
+tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.2pl)
 @ 
 
 <<tcqgrmcomp, echo=FALSE, results=hide>>=
@@ -617,6 +627,8 @@ The result of this model comparison exercise showed that the 1 parameter model w
 tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
 tcqaltcoef <- coef(tcqalt.pcm.rasch)
 print(xtable(tcqaltcoef, label="tab:tcq1altgpcmrasch", caption="Coefficients for TCQ 1 Alternative Scale, Rasch Generalised Partial Credit Model"))
+tcqalt.pcm.fscores.rasch <- factor.scores(tcqalt.pcm.rasch)
+tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores.rasch)
 @ 
 
 Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcq1altgpcmrasch}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
@@ -625,6 +637,8 @@ Unlike the partial credit model formed from the conventional items, the scale co
 tcqalt.pcm.1pl <- gpcm(tcqalt, constraint="1PL")
 tcqaltcoef.1pl <- coef(tcqalt.pcm.1pl)
 print(xtable(tcqaltcoef.1pl, label="tab:tcq1altgpcm1pl", caption="Coefficients for TCQ1 Alternative, One Parameter Generalised Partial Credit Model"))
+tcqalt.pcm.fscores <- factor.scores(tcqalt.pcm.1pl)
+tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores)
 @ 
 
 The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcqaltpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An anova confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
@@ -644,6 +658,8 @@ Next, two graded response models were fit to the the alternative tcq question-se
 tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
+tcqalt.grm1.fscores <- factor.scores(tcqalt.grm.constrained)
+tcqalt.grm1.absest <- getIRTestimates(tcqalt.grm1.fscores)
 @ 
 
 The model described in Table \ref{tab:tcq1altgrm1pl} is quite different from the one parameter model estimated under the partial credit model. Firstly, the discrimination parameter is estimated at a much lower level (3.88 as opposed to 5.20). In addition, the parameter estimates are much more closely distributed around zero, and the category 4 parameter estimates are much less extreme. 
@@ -652,6 +668,8 @@ The model described in Table \ref{tab:tcq1altgrm1pl} is quite different from the
 tcqalt.grm2 <- grm(tcqalt)
 tcqalt.grm2.coef <- coef(tcqalt.grm2)
 print(xtable(tcqalt.grm2.coef, label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
+tcqalt.grm2.fscores <- factor.scores(tcqalt.grm2)
+tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
 
 Again, the model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
@@ -918,21 +936,57 @@ print(acutot2a.xtab)
 
 Table \ref{tab:acutotlm2a} shows that the model for Acupuncture credibility is quite different on the Study Two data. Firstly, the coefficient for Injection is positive, unlike in the previous data, and the coefficients for College and Gender are significant. This would seem to suggest that the representation of the acupuncture credibility questions were quite different between the two samples, with a stronger effect of demographic questions in sample two. 
 
+\subsection{Confirmatory IRT Analyses}
+\label{sec:conf-irt-analys}
+
+
+The first step in examining the predictive power of the IRT models is to score the current subsample of the Study Two data (Split A) using the prior models. Then, the same model can be fit on this data alone, and the error of estimation between the two processes can be calculated. Essentially, the root mean square error of approximation (RMSEA) was used to assess the usefulness of each of the models. 
+
+Firstly, the Conventional Treatment Scale was assessed. 
+
+<<tcqconvpcmraschtest, echo=FALSE, results=hide>>=
+tcq2a.conv <- tcq2.1[,c(1,3:18)]
+pcm.rasch.done <- testIRTModels(tcqconv.pcm.rasch, tcq2a.conv, constraint="rasch")
+@ 
+
+
+<<tcqconvpcm1pltest, echo=FALSE, results=hide>>=
+pcm.1pl.done <- testIRTModels(tcqconv.pcm.1pl, tcq2a.conv, constraint="1PL")
+@ 
+
+<<tcqconvpcmgpcmtest, echo=FALSE, results=hide>>=
+pcm.gpcm.done <- testIRTModels(tcqconv.pcm.gpcm, tcq2a.conv, constraint="gpcm")
+@ 
+
+<<pcmmodcomp, echo=FALSE, results=tex>>=
+pcm.mod.comp <- rbind(pcm.rasch.done, pcm.1pl.done, pcm.gpcm.done)
+rownames(pcm.mod.comp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+pcm.mod.comp.xtab <- xtable(pcm.mod.comp, caption="Comparison of Performance of IRT PCM Models on Study Two Data", label="tab:pcmmodcomp")
+print(pcm.mod.comp.xtab)
+@ 
+
+As can be seen from Table \ref{tab:pcmmodcomp}, the one parameter Partial Credit Model appears to fit better in that it has a lower square root of the sum of the squared errors, and the predicted scores and actual scores correlate higher than those for the rasch model. However, despite these fit indices an argument can be made for the Rasch model in terms of simplicity (even though a complexity parameter was added to the error term to account for this possibility). 
+
+Next, the same process is repeated for the graded response models. 
+
+
+
 \section{Study Two}
 
 Given the results of Study 1, this study added two more Complementary and Alternative Medicine (CAM) methodologies to the questionnaire, to determine if a higher order factor structure could be found which represented conventional and complementary methodologies.
 The hypotheses were as follows: 
+
 \begin{itemize}
-\item The TCQ V2.0 will have six factors, one for each treatment modality
+\item The TCQ V2.0 will have six factors, one for each treatment modality, along with two higher level factors, one for Conventional and Alternative treatments each;
 
-\item The BAM will have two factors 
+\item The BAM will have two factors;
 
-\item The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals
-\item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s). 
+\item The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
+\item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s).;
 
-\item Income will correlate postively with experience of CAM methodologies
+\item Income will correlate postively with experience of CAM methodologies;
 
-\item Experience with a particular treatment will be correlated with higher ratings of its credibility
+\item Experience with a particular treatment will be correlated with higher ratings of its credibility. 
 \end{itemize}
 
 
