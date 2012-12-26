@@ -631,3 +631,21 @@ repeatCV <- function(form, data, method=method, n, responsevariable, ...) {
 }
                      
                      
+getIRTestimates <- function(fscores) {
+  data <- fscores[["score.dat"]]
+  abest <- data[,c("z1", "se.z1")]
+  names(abest) <- c("AbilityEst", "StdError")
+  return(abest)
+}
+testIRTModels <- function(oldmodel, newdata, constraint=c("rasch", "1PL", "gpcm",),...) {
+  comp.para <- length(unique(as.vector(coef(oldmodel))))
+  predscores <- getIRTestimates(factor.scores(oldmodel, resp.patterns=newdata))
+  newmodel <- gpcm(newdata, constraint=constraint)
+  newscores <- getIRTestimates(factor.scores(newmodel, resp.patterns=newdata))
+  diffscores <- mapply("-", predscores[,1], newscores[,1])
+  rea <- sqrt(sum(diffscores^2))*log(comp.para)
+  scorescor <- cor(predscores[,1], newscores[,1], ...)
+  res <- data.frame(ErrorApproximation=rea, Correlation=scorescor)
+  return(res)
+}
+  
