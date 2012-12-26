@@ -663,11 +663,11 @@ Again, the model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimat
 In this section, the totals for each of the treatment modalities are examined to determine if any of the demographic variables can account for them. Firstly, a linear regression was run on the Pilltotal variable using the demographics as predictors.
 
 <<pilltotreg1, echo=FALSE, results=tex>>=
-pillLm1 <- lm((PillTot/5)~Gender+College+UGPG+Year, data=tcq1)
+pillLm1 <- lm((PillTot/5)~CreamTot+InjTot+AcuTot+Gender+College+UGPG+Year, data=tcq1)
 print(xtable(summary(pillLm1), caption="Coefficient for Linear Regression on Pill Credibility Scores, TCQ1", label="tab:tcq1pilllmsum"))
 @ 
 
-As can be seen from \Table \ref{tab:tcq1pilllmsum}, there were no significant predictors of Pill Credibility scores from amongst the demographic variables collected in Study One. 
+As can be seen from Table \ref{tab:tcq1pilllmsum}, there were no only Cream and Injection credibility scores were predictors of Pill Credibility scores from amongst the variables collected in Study One. 
 
 Next, we examine the relationship of cream credibility variables to others in the sample.
 
@@ -696,7 +696,7 @@ print(xtable(summary(acutotlm), caption="Acupuncture Credibility Linear Regressi
 
 The pattern of results was a little different when acupuncture credibility total was used as the response variable. Cream Credibility was extremely significant, injection credibility was marginally significant, while Pill credibility was not significant. Note the negative coefficient on Injections, which suggests that these treatments were regarded as useful by different subsets of participants. 
 
-% finish this section
+
 
 \section{Confirmatory Analyses}
 \label{sec:conf-analys}
@@ -874,6 +874,50 @@ As can be seen from Table \ref{tab:tcq2testsemcomp} the six factor model appears
 
 
 %add confirmatory IRT and regression analyses
+
+\subsection{Confirmatory Regression Analyses}
+\label{sec:conf-regr-analys}
+
+
+Given that the models developed on the first data set are useful, then they should generalise to the new data. Examining this supposition is the purpose of this section.
+
+Firstly, the Pill credibility model was replicated on a subset of the new data. 
+
+<<pilllm2a, echo=FALSE, results=tex>>=
+pilllm2a <- lm(Pilltot~Creamtot+Injtot+Acutot+Gender+College+UGPG, data=tcq2a)
+print(xtable(summary(pilllm2a), caption="Replication of Pill Credibility Model from Study One on a subsample from Study 2", label="tab:pilllm2a"))
+@ 
+
+As can be seen from Table \ref{tab:pilllm2a}, the significant variables from the old model were still significant, and additionally there was a small effect of Acupuncture credibility and gender on the overall Pill Credibility scores. 
+
+Next, the original model on cream credibility scores was examined. 
+
+<<creamlm2a, echo=FALSE, results=tex>>=
+creamlm2a <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+College+UGPG, data=tcq2a)
+print(xtable(summary(creamlm2a), caption="Regression of Cream Credibility Scores Model from Study One on a subsample of Study Two Data", label="tab:creamlm2a"))
+@ 
+
+As can be seen from Table \ref{tab:creamlm2a}, a similar pattern  as was seen from the Study One data emerges from this regression model. Note that the positive coefficient for Acupuncture remains in this data, and is again significant. This suggests that cream and acupuncture painkilling treatments are somehow linked together in the minds of participants in both studies. This could be due to the fact that they are not as widely used as pills and injections, and so possess less face validity to the participants studied. 
+
+Next, we examine the Injection Credibility model developed on the first sample. 
+
+<<injlm2a, echo=FALSE, results=tex>>=
+injlm2a <- lm(Injtot~Pilltot+Creamtot+Acutot+Gender+College+UGPG, data=tcq2a)
+print(xtable(summary(injlm2a), caption="Regression of Injection Credibility Score Model from Study One on subsample from Study Two", label="tab:injlm2a"))
+@ 
+
+As can bee seen from Table \ref{tab:injlm2a}, the results of this same model on Study Two data were in line with those from Study One. That being said, both Gender Coefficients are significant in Stuyd Two, while they were not in Study One. This is interesting as it represents a larger effect being seen on an equivalent instrument. 
+
+Finally, the Acupuncture credibility model from Study One was examined. 
+
+<<acutotlm2a, echo=FALSE, results=tex>>=
+acutotlm2a <- lm(Acutot~Pilltot+Creamtot+Injtot+Gender+College+UGPG, data=tcq2a)
+acutot2a.xtab <- xtable(summary(acutotlm2a), caption="Acupuncture Credibility Model from Study One replicated on a subsample from Study Two", label="tab:acutotlm2a")
+print(acutot2a.xtab)
+@ 
+
+Table \ref{tab:acutotlm2a} shows that the model for Acupuncture credibility is quite different on the Study Two data. Firstly, the coefficient for Injection is positive, unlike in the previous data, and the coefficients for College and Gender are significant. This would seem to suggest that the representation of the acupuncture credibility questions were quite different between the two samples, with a stronger effect of demographic questions in sample two. 
+
 \section{Study Two}
 
 Given the results of Study 1, this study added two more Complementary and Alternative Medicine (CAM) methodologies to the questionnaire, to determine if a higher order factor structure could be found which represented conventional and complementary methodologies.
