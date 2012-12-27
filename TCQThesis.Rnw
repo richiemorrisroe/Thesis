@@ -3069,8 +3069,34 @@ A likelihood ratio test was carried out for the two models, and the two paramete
 
 For models built on Split A, Splits B, C and D were used as a test set. 
 
+The first check was to examine the fit of each of the partial credit models. Although none of these models met the assumptions of the model, they may still be useful in a predictive sense. 
 
+<<tcq2aconvpcmtest, echo=FALSE, results=hide>>=
+tcq2nota.conv <- tcq2nota[,c(17:34)]
+tcq2a.pcm.rasch.done <- testIRTModels(tcq2a.conv.gpcm.rasch, tcq2nota.conv, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2a.pcm.1PL.done <- testIRTModels(tcq2a.conv.gpcm.1pl, tcq2nota.conv, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2a.pcm.gpcm.done <- testIRTModels(tcq2a.conv.gpcm.gpcm, tcq2nota.conv, gpcmconstraint="gpcm", grmconstraint=NULL)
+@ 
 
+<<pcmtestprint, echo=FALSE, results=tex>>=
+tcq2a.pcm.modcomp <- rbind(tcq2a.pcm.rasch.done, tcq2a.pcm.1PL.done, tcq2a.pcm.gpcm.done)
+pcm.modcomp2a <- xtable(tcq2a.pcm.modcomp, caption="Partial Credit Models from Split A tested on Splits B, C and D", label="tab:pcmmodcomp2a")
+print(pcm.modcomp2a)
+@ 
+
+As can be seen from Table \ref{tab:pcmmodcomp2a}, the one parameter PCM appears to provide the best predictive accuracy on the heldout data. 
+
+Next, the two graded response models were assessed. 
+
+<<grmtest2a, echo=FALSE, results=hide>>=
+tcq2a.grm.1pl.done <- testIRTModels(tcq2a.conv.grm.1pl, tcq2nota.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2a.grm.2pl.done <- testIRTModels(tcq2a.conv.grm.2pl, tcq2nota.conv,gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2a.grm.done <- rbind(tcq2a.grm.1pl.done, tcq2a.grm.2pl.done)
+tcq2a.grm.done.xtab <- xtable(tcq2a.grm.done, caption="Comparison of Split A Graded Response Models on Splits B, C and D", label="tab:grmdone2a")
+print(tcq2a.grm.done.xtab)
+@ 
+
+Table \ref{tab:grmdone2a} shows that the one parameter model performed best on the unseen data, suggesting that the additional complexity of a two parameter model was not necessary in this sample. 
 
 
 Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
@@ -3151,6 +3177,26 @@ print(xtable(bam2acoef.mat, label="tab:bam2agrm2pl", caption="Coefficients for B
 It can be seen from Table \ref{tab:bam2agrm2pl} that this model reveals some interesting features of the items. BAM13 and BAM17 have the highest discrimination parameters, but the ability estimates of their extremities have moved down to compensate. 
 
 A likelihood ratio test carried out between the two models suggested that the two parameter model was significantly better than the one parameter model, ($p\le 0.001$). Again, this is a tentative result until the performance of the model on new data is examined. In any case, while both the AIC and the LR test favoured the two parameter model, the BIC was lower for the one parameter model indicating that according to this criterion, the one parameter model was superior. 
+
+Next, the performance of all the Beliefs About Medicine Models was assessed on unseen data (Splits B, C and D). 
+
+<<bampcmtest, echo=FALSE, results=hide>>=
+bamnota.irt <-  tcq2nota[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
+bam2a.pcm.rasch.done <- testIRTModels(bam2a.gpcm.rasch, bamnota.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+bam2a.pcm.1pl.done <- testIRTModels(bam2a.gpcm.1PL, bamnota.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+bam2a.pcm.gpcm.done <- testIRTModels(bam2a.gpcm.gpcm, bamnota.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+bam2a.pcm.modcomp <- rbind(bam2a.pcm.rasch.done, bam2a.pcm.1pl.done, bam2a.pcm.gpcm.done)
+bam2a.pcm.modcomp.xtab <- xtable(bam2a.pcm.modcomp, caption="Partial Credit Models for BAM Scale from Split A Performance on Heldout Data", label="tab:bam2apcmmodcomp")
+print(bam2a.pcm.modcomp.xtab)
+@ 
+
+From Table \ref{tab:bam2apcmmodcomp} it can be seen that the rasch model provided the best performance on unseen data. 
+
+Next, the performance of the graded response models on unseen  data was assessed. 
+
+<<bam2agrmtest, echo=FALSE, results=tex>>=
+bam2a.grm.1pl.done <- testIRTModels(bam2a.grm.1pl, bamnota.irt)
+@ 
 
 \subsubsection{Split B}
 \label{sec:split-b}
