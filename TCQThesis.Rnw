@@ -946,16 +946,16 @@ Firstly, the Conventional Treatment Scale was assessed.
 
 <<tcqconvpcmraschtest, echo=FALSE, results=hide>>=
 tcq2a.conv <- tcq2.1[,c(1,3:18)]
-pcm.rasch.done <- testIRTModels(tcqconv.pcm.rasch, tcq2a.conv, constraint="rasch")
+pcm.rasch.done <- testIRTModels(tcqconv.pcm.rasch, tcq2a.conv, gpcmconstraint="rasch", grmconstraint=NULL)
 @ 
 
 
 <<tcqconvpcm1pltest, echo=FALSE, results=hide>>=
-pcm.1pl.done <- testIRTModels(tcqconv.pcm.1pl, tcq2a.conv, constraint="1PL")
+pcm.1pl.done <- testIRTModels(tcqconv.pcm.1pl, tcq2a.conv, gpcmconstraint="1PL", grmconstraint=NULL)
 @ 
 
 <<tcqconvpcmgpcmtest, echo=FALSE, results=hide>>=
-pcm.gpcm.done <- testIRTModels(tcqconv.pcm.gpcm, tcq2a.conv, constraint="gpcm")
+pcm.gpcm.done <- testIRTModels(tcqconv.pcm.gpcm, tcq2a.conv, gpcmconstraint="gpcm", grmconstraint=NULL)
 @ 
 
 <<pcmmodcomp, echo=FALSE, results=tex>>=
@@ -1080,6 +1080,20 @@ As can be seen from Table \ref{tab:tcq2.gendercred}, the sample scores showed so
 
 Following these investigations of the descriptive qualities of the data, the next stage of the analysis is to examine the inter-correlations and latent structure behind the data through the use of factor analysis. 
 
+<<semsplits, echo=FALSE, results=hide>>=
+tcq2nota <- tcq2[-tcq2.ind.a,]
+tcq2notb <- tcq2[-tcq2.ind.b,]
+tcq2notc <- tcq2[-tcq2.ind.c,]
+tcq2notd <- tcq2[-tcq2.ind.d,]
+tcqall2nota <- tcq2nota[,17:52]
+tcqall2notb <- tcq2notb[,17:52]
+tcqall2notc <- tcq2notc[,17:52]
+tcqall2notd <- tcq2notd[,17:52]
+bamnotA <- tcq2nota[,53:70]
+bamnotB <- tcq2notb[,53:70]
+bamnotC <- tcq2notc[,53:70]
+bamnotD <- tcq2notd[,53:70]
+@ 
 
 % \subsubsection{Factor Analysis}
 
@@ -1812,20 +1826,7 @@ It can be seen from Table \ref{tab:bam3dfact3cor} that all of the factors correl
 
 Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
 
-<<semsplits, echo=FALSE, results=hide>>=
-tcq2nota <- tcq2[-tcq2.ind.a,]
-tcq2notb <- tcq2[-tcq2.ind.b,]
-tcq2notc <- tcq2[-tcq2.ind.c,]
-tcq2notd <- tcq2[-tcq2.ind.d,]
-tcqall2nota <- tcq2nota[,17:52]
-tcqall2notb <- tcq2notb[,17:52]
-tcqall2notc <- tcq2notc[,17:52]
-tcqall2notd <- tcq2notd[,17:52]
-bamnotA <- tcq2nota[,53:70]
-bamnotB <- tcq2notb[,53:70]
-bamnotC <- tcq2notc[,53:70]
-bamnotD <- tcq2notd[,53:70]
-@ 
+
 
 \subsection{Split A CFA}
 \label{sec:split-cfa}
@@ -2972,7 +2973,7 @@ Guttman errors are interesting, provide a quick measure of person fit. They have
 
 \begin{figure}
 <<tcqconvguttmanplot, echo=FALSE, fig=TRUE>>=
-conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors))+layer(geom="bar")
+conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors))+geom_histogram()
 print(conv.guttman)
 @   
   \caption{Guttman Errors Histogram for TCQ 2A conventional items}
@@ -3009,14 +3010,14 @@ print(xtable(coef(tcq2a.conv.gpcm.rasch), label="tab:tcq2acoefrasch", caption="C
 
 Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. Even a cursory inspection of this table shows that the model does not fit well. The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities, which is a clear violation of the model\'s assumptions. Next, a one parameter IRT model is examined. 
 
-<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+<<tcq2acoefpcm1pl, echo=FALSE, results=tex>>=
 
 print(xtable(coef(tcq2a.conv.gpcm.1pl), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 Conventional One Parameter Generalised Partial Credit Model"))
 @ 
 
 Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar problem arises using the one parameter model, with an estimated discrimination parameter of 1.531. This suggests that the model will need to be further expanded to allow for an acceptable fit. 
 
-<<tcq2acoefrasch, echo=FALSE, results=tex>>=
+<<tcq2acoefgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.gpcm.gpcm), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 (Split A), Conventional Scale, Two Parameter Generalised Partial Credit Model"))
 @ 
 
@@ -3064,7 +3065,14 @@ print(ggplotGRM(tcq2a.conv.grm.2pl))
 Another item parameter plot for the two parameter model is shown in Figure ~\ref{fig:tcq2aconvgrm2pl}, which again shows no obvious problems with the model. 
 
 
-A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data, a process which will be carried out after all the splits are analysed. 
+A likelihood ratio test was carried out for the two models, and the two parameter model appeared a better fit in terms of likelihood($p<0.001$), AIC and BIC. That being said, given the tradeoff in degrees of freedom (17), a better test will be the models accuracy on unseen data.
+
+For models built on Split A, Splits B, C and D were used as a test set. 
+
+
+
+
+
 Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
 
 <<bam2ascales, echo=FALSE, results=tex>>=
