@@ -3930,6 +3930,50 @@ tcq2d.conv.anova <- anova(tcq2d.conv.grm.1pl, tcq2d.conv.grm.2pl)
 
 Finally, an ANOVA was carried out between the two graded response models, and this showed that there was no significant difference between the two models ($p=.593$), and the BIC and AIC were lower for the one parameter model, indicating better fit. 
 
+Next, the performance of the models on unseen data is assessed. First, the performance of the partial credit models was examined for the conventional treatment credibility scale. 
+
+<<tcq2dconvpcmmodtest, echo=FALSE, results=tex>>=
+tcq2notd.irt <- tcq2notd[,17:34]
+tcq2d.conv.gpcm.rasch.done <- testIRTModels(tcq2d.conv.gpcm.rasch, tcq2notd.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2d.conv.gpcm.1PL.done <- testIRTModels(tcq2d.conv.gpcm.1PL, tcq2notd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2d.conv.gpcm.gpcm.done <- testIRTModels(tcq2d.conv.gpcm.gpcm, tcq2notd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+tcq2d.conv.pcm.modcomp <- rbind(tcq2d.conv.gpcm.rasch.done, tcq2d.conv.gpcm.1PL.done, tcq2d.conv.gpcm.gpcm.done)
+tcq2d.conv.gpcm.done.xtab <- xtable(tcq2d.conv.pcm.modcomp, caption="Performance of Split D Conventional TCQ Scale on Splits A, B and C", label="tab:tcq2dpcmmodcomp")
+print(tcq2d.conv.gpcm.done.xtab)
+@ 
+
+As can be seen from Table \ref{tab:tcq2dpcmmodcomp}, the best performing model on unseen data was the one parameter PCM.
+
+The same process was then repeated for the graded response models. 
+
+<<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
+tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
+print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvgrmmodcomp"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Graded Response Model appears to provide the best fit to the unseen data. 
+
+
+<<tcq2dconvpcmmodtest, echo=FALSE, results=tex>>=
+tcq2notd.alt.irt <- tcq2notd[,35:52]
+tcq2d.alt.gpcm.rasch.done <- testIRTModels(tcq2d.alt.gpcm.rasch, tcq2notd.alt.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2d.alt.gpcm.1PL.done <- testIRTModels(tcq2d.alt.gpcm.1PL, tcq2notd.alt.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2d.alt.gpcm.gpcm.done <- testIRTModels(tcq2d.alt.gpcm.gpcm, tcq2notd.alt.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+tcq2d.alt.pcm.modcomp <- rbind(tcq2d.alt.gpcm.rasch.done, tcq2d.alt.gpcm.1PL.done, tcq2d.alt.gpcm.gpcm.done)
+tcq2d.alt.gpcm.done.xtab <- xtable(tcq2d.alt.pcm.modcomp, caption="Performance of Split D Altentional TCQ Scale on Splits A, B and C", label="tab:tcq2daltpcmmodcomp")
+print(tcq2d.alt.gpcm.done.xtab)
+@ 
+
+
+<<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
+tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
+print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvpcmmodcomp"))
+@ 
+
 Next, the assumptions underlying the use of IRT modelling were applied to the Beliefs About Medicine Questionnaire. 
 
 <<bam2daisp, echo=FALSE, results=tex>>=
@@ -4010,12 +4054,36 @@ Next, the two parameter GRM was fit to the Beliefs About Medicine Questionnaire.
 print(xtable(coef2mat(coef(bam2d.grm.2pl)), label="tab:bam2dgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, (Split D), Two Parameter Graded Response Model"))
 @ 
 
-Finally, an ANOVA was fit to the two graded response models, to determine which of them fit the data better. The LR test indicated that the two parameter model fit the data significanly better ($p\le0.001$), but the AIC indicated that the one parameter model was a better fit. This will be examined by looking at each of the models\' performance on unseen data. 
+After this process, an ANOVA was fit to the two graded response models, to determine which of them fit the data better. The LR test indicated that the two parameter model fit the data significanly better ($p\le0.001$), but the AIC indicated that the one parameter model was a better fit. This will be examined by looking at each of the models\' performance on unseen data. 
 
 <<bam2danovagrm, echo=FALSE, results=hide>>=
 bam2dgrm.anova <- anova(bam2d.grm.1pl, bam2d.grm.2pl)
+@
+
+Next, the performance of each of these models on unseen data was assessed. 
+
+<<bam2dpcmmodtest, echo=FALSE, results=tex>>=
+bamnotd.irt <- tcq2notd[,c("BAM3","BAM6","BAM7","BAM9","BAM10","BAM13","BAM14", "BAM17")]
+bam2d.gpcm.rasch.done <- testIRTModels(bam2d.gpcm.rasch, bamnotd.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+bam2d.gpcm.1PL.done <- testIRTModels(bam2d.gpcm.1PL, bamnotd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+bam2d.gpcm.gpcm.done <- testIRTModels(bam2d.gpcm.gpcm, bamnotd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+bam2d.pcm.modcomp <- rbind(bam2d.gpcm.rasch.done, bam2d.gpcm.1PL.done, bam2d.gpcm.gpcm.done)
+print(xtable(bam2d.pcm.modcomp, caption="Performance of Split D Beliefs About Medicine Scale on Splits A, B and C", label="tab:bam2dpcmmodcomp"))
 @ 
 
+As can be seen from Table \ref{tab:bam2dpcmmodcomp}, the one parameter Partial Credit Model performed best on the unseen data. 
+
+Next, the perfomance of the graded response models on unseen data was assessed. 
+
+<<bam2dgrmmodtest, echo=FALSE, results=tex>>=
+bam2d.grm.1pl.done <- testIRTModels(bam2d.grm.1pl, bamnotd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+bam2d.grm.2pl.done <- testIRTModels(bam2d.grm.2pl, bamnotd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+bam2d.grm.modcomp <- rbind(bam2d.grm.1pl.done, bam2d.grm.2pl.done)
+print(xtable(bam2d.grm.modcomp, captio="Performance of Split D Beliefs About Medicine Scale (Graded Response Model) on Splits A, B and C", label="tab:bam2dgrmmodcomp"))
+@ 
+
+
+As can be seen from Table \ref{tab:bam2dgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
 
 \subsubsection{Regression Analyses}
 \label{sec:regression-analyses}
