@@ -3153,6 +3153,7 @@ Again, Table \ref{tab:bam2a1PL} makes it very clear that the one parameter GPCM 
 Next, the fit of a two parameter GPCM to this scale was examined. 
 
 <<bam2agpcm, echo=FALSE, results=tex>>=
+
 bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
 print(xtable(coef2mat(coef(bam2a.gpcm.gpcm)), label="tab:bam2agpcm", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, Two Parameter Generalised Partial Credit Model"))
 @ 
@@ -3195,9 +3196,10 @@ From Table \ref{tab:bam2apcmmodcomp} it can be seen that the rasch model provide
 Next, the performance of the graded response models on unseen  data was assessed. 
 
 <<bam2agrmtest, echo=FALSE, results=tex>>=
-bam2a.grm.1pl.done <- testIRTModels(bam2a.grm.1pl, bamnota.irt)
+## bam2a.test <- bamnota.irt[,2:length(bamnota.irt)]
+## bam2a.grm.1pl.done <- testIRTModels(bam2a.grm.1pl, bam2a.test)
 @ 
-
+%fix split A levels problem
 \subsubsection{Split B}
 \label{sec:split-b}
 
@@ -3338,6 +3340,33 @@ print(xtable(coef(tcq2b.conv.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="
 
 As can be seen from Table \ref{tab:tcq2bconv2plgrmsum}, the discrimination parameters have lowered for most of the items, with the exception of Pill4, Pill5 and Pill6, where they have significantly increased. This is surprising, as the Cream items have much higher difficulty, but lower discrimination between different ability levels. 
 
+Finally, the predictive power of each of these models was assessed, beginning with the partial credit models. 
+
+<<tcq2bmodtest, echo=FALSE, results=tex>>=
+tcqconv.notb <- tcq2notb[,17:34]
+tcq2b.pcm.rasch.done <- testIRTModels(tcq2b.conv.gpcm.rasch, tcqconv.notb, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2b.pcm.1pl.done <- testIRTModels(tcq2b.conv.gpcm.1PL, tcqconv.notb, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2b.pcm.gpcm.done <- testIRTModels(tcq2b.conv.gpcm.gpcm, tcqconv.notb, gpcmconstraint="gpcm", grmconstraint=NULL)
+tcq2b.pcm.modcomp <- rbind(tcq2b.pcm.rasch.done, tcq2b.pcm.1pl.done, tcq2b.pcm.gpcm.done)
+tcq2b.pcm.modcomp.xtab <- xtable(tcq2b.pcm.modcomp, caption="Comparison of Splt B TCQ Conventional Scale Partial Credit Models on Splits A, C and D", label="tab:tcq2bpcmmodcomp")
+print(tcq2b.pcm.modcomp.xtab)
+@ 
+
+As can be seen from Table \ref{tab:tcq2bpcmmodcomp}, the one parameter PCM model performed best on the unseen data. 
+
+Next, this process is repeated for the graded response models. 
+
+<<tcq2bgrmtest, echo=FALSE, results=tex>>=
+tcq2b.grm.1pl.done <- testIRTModels(tcq2b.conv.grm.1pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2b.grm.2pl.done <- testIRTModels(tcq2b.conv.grm.2pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2b.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
+tcq2b.grm.modcomp.xtab <- xtable(tcq2b.pcm.modcomp, caption="Performance of TCQ Conventional Graded Response Models from Split B, tested on Splits A, C and D", label="tab:tcq2bgrmmodcomp")
+print(tcq2b.grm.modcomp.xtab)
+@ 
+
+
+As shown in Table \ref{tab:tcq2bgrmmodcomp}, the one parameter Graded Response Model provided the best performance on unseen data. 
+
 The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
 
 <<bam2baisp, echo=FALSE, results=tex>>=
@@ -3420,7 +3449,7 @@ Table \ref{tab:bam2bgrm1sum} shows no signs of problems with monotonicity, and t
 print(xtable(coef2mat(coef(bam2b.grm.2pl)), label="tab:bam2bgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Two parameter Graded Response Model"))
 @ 
 
-Table \ref{tab:bam2bgrm2sum} shows that the fit of the two parameter model is equally unproblematic. An
+Table \ref{tab:bam2bgrm2sum} shows that the fit of the two parameter model is equally unproblematic. 
 
 <<bam2banovagrm, echo=FALSE, results=hide>>=
 bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
@@ -3429,6 +3458,26 @@ bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
 A likelihood ratio test suggests that the two parameter model provides a significantly better fit ($p \le 0.001$) than does the one parameter model. 
 
 
+Finally, the performance of each of the different types of IRT models on unseen data was assessed. 
+
+<<bam2bpcmmodtest, echo=FALSE, results=tex>>=
+bamnotb.irt <- tcq2notb[,c("BAM3", "BAM4", "BAM6", "BAM9", "BAM10", "BAM11", "BAM13", "BAM14", "BAM17")]
+bam2b.gpcm.rasch.done <- testIRTModels(bam2b.gpcm.rasch,  bamnotb.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+bam2b.gpcm.1PL.done <- testIRTModels(bam2b.gpcm.1PL, bamnotb.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+bam2b.gpcm.gpcm.done <- testIRTModels(bam2b.gpcm.gpcm, bamnotb.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+bam2b.gpcm.modcomp <- rbind(bam2b.gpcm.rasch.done, bam2b.gpcm.1PL.done, bam2b.gpcm.gpcm.done)
+bam2b.gpcm.modcomp.xtab <- xtable(bam2b.gpcm.modcomp, caption="Performance of Beliefs About Medicine IRT Scale from Split B on Splits A, C and D", label="tab:bam2bpcmmodcomp")
+print(bam2b.gpcm.modcomp.xtab)
+@ 
+
+As can be seen from Table \ref{tab:bam2bpcmmodcomp}, the rasch PCM provided the best performance on unseen data.
+
+Next, the same procedure was applied to the Graded Response Models. 
+
+<<bam2bgrmtest, echo=FALSE, results=tex>>=
+#bam2b.grm.1pl.done <- testIRTModels(bam2b.grm.1pl, bamnotb.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+@ 
+% figure out what to do with the different response patterns in grade response models 
 \subsubsection{Split C}
 \label{sec:split-c}
 
