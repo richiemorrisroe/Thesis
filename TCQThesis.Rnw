@@ -3249,6 +3249,7 @@ Next, the performance of the graded response models on unseen  data was assessed
 ## bam2a.grm.1pl.done <- testIRTModels(bam2a.grm.1pl, bam2a.test)
 @ 
 %fix split A levels problem
+
 \subsubsection{Split B}
 \label{sec:split-b}
 
@@ -3369,7 +3370,7 @@ As shown in Figure \ref{fig:tcq2bconvgrm1plot}, there were no violations of mono
 print(xtable(coef(tcq2b.conv.grm.1pl), label="tab:tcq2bconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split B), One parameter Graded Response Model"))
 @ 
 
-Table \ref{tcq2bconvgrm1plsumm} shows that the cream items were the least endorsed, especially the highest response category. The estimated discrimination parameter is also quite high, at 2.08. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
+Table \ref{tab:tcq2bconvgrm1plsumm} shows that the cream items were the least endorsed, especially the highest response category. The estimated discrimination parameter is also quite high, at 2.08. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
 
 \begin{figure}
 <<tcq2bconvgrm2plot, echo=FALSE, fig=TRUE>>=
@@ -3415,6 +3416,48 @@ print(tcq2b.grm.modcomp.xtab)
 
 
 As shown in Table \ref{tab:tcq2bgrmmodcomp}, the one parameter Graded Response Model provided the best performance on unseen data. 
+
+Next, the same model fitting and testing procedure was applied to the Alternative Scale for Split B. 
+
+<<tcq2baltpcm, echo=FALSE, results=hide>>=
+tcq2b.alt.gpcm.rasch <- gpcm(tcq2b.alt, constraint="rasch")
+tcq2b.alt.gpcm.1PL <- gpcm(tcq2b.alt, constraint="1PL")
+tcq2b.alt.gpcm.gpcm <- gpcm(tcq2b.alt, constraint="gpcm")
+@ 
+
+
+Three partial credit models were fit to the scale, but as they all had serious problems with monotonicity, they are not discussed further here.
+
+Next, two graded response models were fit to the data. 
+
+<<tcq2baltgrm, echo=FALSE, results=hide>>=
+tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
+tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE)
+@ 
+<<tcq2baltgrm1pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.alt.grm.1pl), label="tab:tcq2bconv1plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) One Parameter Graded Response Model"))
+@
+
+
+In Table \ref{tab:tcq2bconv1plgrmsum} are shown the coefficient estimates for the one parameter alternative scale graded response model for split B.
+
+It can be seen that the ability estimates are extremely low, while the discrimination parameter is far higher than was seen in Split A. 
+
+<<tcq2baltgrm2pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2b.alt.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) Two Parameter Graded Response Model"))
+@
+
+Table \ref{tab:tcq2bconv2plgrmsum} shows the corresponding coefficient estimates for the two parameter GRM. It can be seen that the discrimination parameter has lowered significantly, while the ability estimates have risen to counter balance this.
+
+Next, each of these model\'s performance was assessed on unseen data. 
+
+<<tcq2baltgrmtest, echo=FALSE, results=tex>>=
+tcq2notb.alt.irt <- tcq2notb[,35:52]
+tcq2b.alt.grm.1pl.done <- testIRTModels(tcq2b.alt.grm.1pl, tcq2notb.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2b.alt.grm.2pl.done <- testIRTModels(tcq2b.alt.grm.2pl, tcq2notb.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2b.alt.grm.modcomp <- rbind(tcq2b.alt.grm.1pl.done, tcq2b.alt.grm.2pl.done)
+print(xtable(tcq2b.alt.grm.modcomp, caption="Performance of Split B TCQ Alternative Graded Response Model on Splits B, C and D", label="tab:tcq2baltgrmmodcomp"))
+@ 
 
 The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
 
