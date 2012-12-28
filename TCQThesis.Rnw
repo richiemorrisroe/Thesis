@@ -3459,6 +3459,8 @@ tcq2b.alt.grm.modcomp <- rbind(tcq2b.alt.grm.1pl.done, tcq2b.alt.grm.2pl.done)
 print(xtable(tcq2b.alt.grm.modcomp, caption="Performance of Split B TCQ Alternative Graded Response Model on Splits B, C and D", label="tab:tcq2baltgrmmodcomp"))
 @ 
 
+As shown in Table \ref{tab:tcq2baltgrmmodcomp}, the two parameter model provided a better approximation to the unseen data. 
+
 The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
 
 <<bam2baisp, echo=FALSE, results=tex>>=
