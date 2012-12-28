@@ -2919,7 +2919,13 @@ As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were id
 \subsubsection{Treatment Credibility Questionnaire}
 \label{sec:treatm-cred-quest}
 
+
 The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
+
+\subsubsection{Split A}
+\label{sec:split-a}
+
+
 
 <<tcq2aitemselection, echo=FALSE, results=tex>>=
 tcq.aisp <- aisp(na.omit(tcqall2a))
@@ -3098,6 +3104,49 @@ print(tcq2a.grm.done.xtab)
 
 Table \ref{tab:grmdone2a} shows that the one parameter model performed best on the unseen data, suggesting that the additional complexity of a two parameter model was not necessary in this sample. 
 
+
+Next, the same process is repeated for the TCQ Alternative for Split A. 
+
+<<tcq2aaltpcm, echo=FALSE, results=hide>>=
+tcq2a.alt.gpcm.rasch <- gpcm(tcq2a.alt, constraint="rasch")
+tcq2a.alt.gpcm.1PL <- gpcm(tcq2a.alt, constraint="1PL")
+tcq2a.alt.gpcm.gpcm <- gpcm(tcq2a.alt, constraint="gpcm")
+@ 
+
+
+The Partial Credit Models were all measured, but all three had serious violations of the monotonicity assumption, so the results are not shown further here. 
+
+Next, one and two parameter Graded Response Models were applied to the TCQ Alternative for this split. 
+
+<<tcq2aaltgrm, echo=FALSE, results=hide>>=
+tcq2a.alt.grm.1pl <- grm(tcq2a.alt, constrained=TRUE)
+tcq2a.alt.grm.2pl <- grm(tcq2a.alt, constrained=FALSE)
+@
+
+<<tcq2agrm1pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.alt.grm.1pl), caption="Coefficients for TCQ Alternative (Split A) One Parameter Graded Response Model", label="tab:tcq2aaltgrm1pl"))
+@ 
+
+The coefficients for the one parameter graded response model for the alternative scale are shown in Table \ref{tab:tcq2aaltgrm1pl}. It can be seen that the estimated discrimination parameter is quite high, suggesting that all of these items are harder to endorse than those relating to conventional treatments. The Homeopathy and Reiki items tend to be harder to endorse than are the Acupuncture items. 
+
+
+<<tcq2agrm2pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2a.alt.grm.2pl), caption="Coefficients for TCQ Alternative (Split A) Two Parameter Graded Response Model", label="tab:tcq2aaltgrm2pl"))
+@ 
+
+Table \ref{tab:tcq2aaltgrm2pl} shows the corresponding coefficients for the two parameter GRM. It can be seen that the difficulties for the homeopathy and reiki items have lowered, but their discrimination parameters have increased. 
+
+The next step was to assess the performance of each of these models on unseen data. 
+
+<<tcq2aaltgrmtest, echo=FALSE, results=tex>>=
+tcq2nota.alt <- tcq2nota[,35:52]
+tcq2a.alt.grm.1pl.done <- testIRTModels(tcq2a.alt.grm.1pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2a.alt.grm.2pl.done <- testIRTModels(tcq2a.alt.grm.2pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2a.grm.modcomp <- rbind(tcq2a.alt.grm.1pl.done, tcq2a.alt.grm.2pl.done)
+print(xtable(tcq2a.grm.modcomp, caption="Performance of Split A Graded Response Models TCQ Alternative on Splits B, C and D", label="tab:tcq2aaltgrmmodcomp"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2aaltgrmmodcomp}, the one parameter model performed significantly better on the unseen data. 
 
 Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
 
