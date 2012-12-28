@@ -3760,6 +3760,47 @@ print(tcq2c.conv.grm.modcomp.xtab)
 
 As can be seen from Table \ref{tab:tcq2convgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
 
+<<tca2caltpcm, echo=FALSE, results=tex>>=
+tcq2c.alt.pcm.rasch <- gpcm(tcq2c.alt, constraint="rasch")
+tcq2c.alt.pcm.1PL <- gpcm(tcq2c.alt, constraint="1PL")
+tcq2c.alt.pcm.gpcm <- gpcm(tcq2c.alt, constraint="gpcm")
+@ 
+
+Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here. 
+
+Next, two graded response models were fit to the data. 
+
+<<tcq2caltgrm, echo=FALSE, results=hide>>=
+tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
+tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
+@ 
+
+<<tcq2caltgrm1pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.alt.grm.1pl), caption="Coefficients of TCQ Alternative (Split C) One Parameter Graded Response Model", label="tab:tcq2caltgrm1pl"))
+@ 
+
+As can be seen in Table \ref{tab:tcq2caltgrm1pl}, there are no obvious problems with this solution, as before the homeopathy and reiki questions tend to have higher ability estimates.
+
+
+
+<<tcq2caltgrm2pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2c.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2caltgrm2pl"))
+@ 
+
+Table \ref{tab:tcq2caltgrm2pl} shows that the pattern of other splits is confirmed in that the discrimination parameters of the acupuncture items lowers, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
+
+Finally for this model, we examine its performance on unseen data. 
+
+<<tcq2cgrmmodtest, echo=FALSE, results=tex>>=
+tcq2notc.alt.irt <- tcq2notc[,35:52]
+tcq2c.alt.grm.1pl.done <- testIRTModels(tcq2c.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2c.alt.grm.2pl.done <- testIRTModels(tcq2c.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2c.alt.grm.modcomp <- rbind(tcq2c.alt.grm.1pl.done, tcq2c.alt.grm.2pl.done)
+print(xtable(tcq2c.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2caltgrmmodcomp"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the two parameter model provides a better fit to the unseen data. 
+
 
 Next, the beliefs about medicine questionnaire was examined in this split. 
 
@@ -4050,15 +4091,7 @@ print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Convent
 As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Graded Response Model appears to provide the best fit to the unseen data. 
 
 
-<<tcq2dconvpcmmodtest, echo=FALSE, results=tex>>=
-tcq2notd.alt.irt <- tcq2notd[,35:52]
-tcq2d.alt.gpcm.rasch.done <- testIRTModels(tcq2d.alt.gpcm.rasch, tcq2notd.alt.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-tcq2d.alt.gpcm.1PL.done <- testIRTModels(tcq2d.alt.gpcm.1PL, tcq2notd.alt.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-tcq2d.alt.gpcm.gpcm.done <- testIRTModels(tcq2d.alt.gpcm.gpcm, tcq2notd.alt.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-tcq2d.alt.pcm.modcomp <- rbind(tcq2d.alt.gpcm.rasch.done, tcq2d.alt.gpcm.1PL.done, tcq2d.alt.gpcm.gpcm.done)
-tcq2d.alt.gpcm.done.xtab <- xtable(tcq2d.alt.pcm.modcomp, caption="Performance of Split D Altentional TCQ Scale on Splits A, B and C", label="tab:tcq2daltpcmmodcomp")
-print(tcq2d.alt.gpcm.done.xtab)
-@ 
+
 
 
 <<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
@@ -4067,6 +4100,49 @@ tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmc
 tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
 print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvpcmmodcomp"))
 @ 
+
+Next, the same procedure is repeated for the TCQ Alternative scale in this split. 
+
+<<tca2caltpcm, echo=FALSE, results=tex>>=
+tcq2d.alt.pcm.rasch <- gpcm(tcq2d.alt, constraint="rasch")
+tcq2d.alt.pcm.1PL <- gpcm(tcq2d.alt, constraint="1PL")
+tcq2d.alt.pcm.gpcm <- gpcm(tcq2d.alt, constraint="gpcm")
+@ 
+
+Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here. 
+
+Next, two graded response models were fit to the data. 
+
+<<tcq2daltgrm, echo=FALSE, results=hide>>=
+tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
+tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
+@ 
+
+<<tcq2daltgrm1pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2d.alt.grm.1pl), caption="Coefficients of TCQ Alternative (Split D) One Parameter Graded Response Model", label="tab:tcq2daltgrm1pl"))
+@ 
+
+As can be seen in Table \ref{tab:tcq2daltgrm1pl}, there are no obvious problems with this solution, as before the homeopathy and reiki questions tend to have higher ability estimates.
+
+
+
+<<tcq2daltgrm2pl, echo=FALSE, results=tex>>=
+print(xtable(coef(tcq2d.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2daltgrm2pl"))
+@ 
+
+Table \ref{tab:tcq2daltgrm2pl} shows that the pattern of other splits is confirmed in that the discrimination parameters of the acupuncture items lowers, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
+
+Finally for this model, we examine its performance on unseen data. 
+
+<<tcq2cgrmmodtest, echo=FALSE, results=tex>>=
+tcq2notc.alt.irt <- tcq2notc[,35:52]
+tcq2d.alt.grm.1pl.done <- testIRTModels(tcq2d.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.alt.grm.2pl.done <- testIRTModels(tcq2d.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.alt.grm.modcomp <- rbind(tcq2d.alt.grm.1pl.done, tcq2d.alt.grm.2pl.done)
+print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2daltgrmmodcomp"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
 
 Next, the assumptions underlying the use of IRT modelling were applied to the Beliefs About Medicine Questionnaire. 
 
