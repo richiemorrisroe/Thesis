@@ -2119,64 +2119,63 @@ The scales can be termed as follows:
 
 Scale 1: RANDQ3-RANDQ12: This maps exactly to the physical functioning scale.
 
-Scale 2: RANDQ17-RANDQ19,24-25,28-32,25. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Negative Health.
+Scale 2: RANDQ17-RANDQ19,24-25,28-32,35. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Negative Health.
 
 Scale 3: RANDQ1, RANDQ20, RANDQ23, RANDQ26, RANDQ27, RANDQ30, RANDQ34, RANDQ36: This scale maps to the general health and positively worded questions from the energy/fatigue and emotional health scales, and so can best be termed Positive Health.  
 
 Scale 4: RAND21-RAND22. This maps to the  pain scale, and can probably best be termed as pain. This scale will not be analysed further as two items is not enough to model the response structure properly. 
 
-Scale 4:  RANDQ33, RANDQ34, RANDQ35. This maps almost exactly to the General Health scale, and so retains that name.
 
 <<randirtscales, echo=FALSE, results=hide>>=
-irtphysfun2 <- randitems2[,paste(rand, c(3:12), sep="")]
-irtemhealth2 <- randitems2[,paste(rand, c(1,16:20, 23:32), sep="")]
-irtphyslim2 <- randitems2[,paste(rand, c(13,15,21:22), sep="")]
-irtgenhealth2 <- randitems2[,paste(rand, c( 33:35), sep="")]
+irtphysfun2b <- randitems2[,paste(rand, c(3:12), sep="")]
+irtneghealth2b <- randitems2[,paste(rand, c(17:19, 24:25,28,29,31,32,35 ), sep="")]
+irtposhealth2b <- randitems2[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
 @
 
 <<randphysfun, echo=FALSE, results=hide>>=
-irtphys2.item.ord <- check.iio(na.omit(irtphysfun2))
-irtphys2.monotonicity <- check.monotonicity(na.omit(irtphysfun2))
+irtphys2b.item.ord <- check.iio(na.omit(irtphysfun2b))
+irtphys2b.monotonicity <- check.monotonicity(na.omit(irtphysfun2b))
 @
 
 The check for invariant item ordering shows that all items  meet the Invariant Item Ordering  assumption. The check on the monotonicity assumption shows that all of the items meet this assumption. 
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys2.item.ord$violations,label="tab:physfuncitemord"))
+print(xtable(irtphys2b.item.ord[["violations"]],label="tab:physfunc2bitemord", caption="Item Ordering Check for RAND Physical Functioning Scale, Split B"))
 @
 
-As can be seen from Table \ref{tab:physfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
+As can be seen from Table \ref{tab:physfunc2bitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
 
-<<randemhealth, echo=FALSE, results=hide>>=
-irtemhealth2.item.ord <- check.iio(na.omit(irtemhealth2))
-irtemhealth2.monotonicity <- check.monotonicity(na.omit(irtemhealth2))
+<<randneghealth, echo=FALSE, results=hide>>=
+irtneghealth2b.item.ord <- check.iio(na.omit(irtneghealth2b))
+irtemhealth2b.monotonicity <- check.monotonicity(na.omit(irtneghealth2b))
 @
 
-<<randEmhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtemhealth2.item.ord$violations,label="tab:tcq2randemhealthitemord"))
+<<randneghealthItemord, echo=FALSE, results=tex>>=
+print(xtable(irtneghealth2b.item.ord[["violations"]],label="tab:tcq2randneghealthitemord", caption="Item Ordering Assumption Check for RAND Negative Health Scale, Split B"))
 @
 
-As can be seen from Table \ref{tcq2randemhealthitemord},quite a number of items failed the item ordering assumption (RAND1, RAND17, RAND18, RAND19, RAND24, RAND26) and so were removed from the scale before further analysis. 
+As can be seen from Table \ref{tab:randneghealthitemord},quite a number of items failed the item ordering assumption (RAND1, RAND18, RAND19, RAND35, RAND26) and so were removed from the scale before further analysis. 
 
 <<newIrtEmHealth, echo=FALSE, results=tex>>=
-irtemhealth2.2 <- randitems2[,paste(rand, c(16, 20,25, 27:32), sep="")]
-emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
-emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
-print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
+irtneghealth2b.s <- irtneghealth2b[,paste(rand, c(25,29,31,32), sep="")]
+neghealth.item.ord2 <- check.iio(na.omit(irtneghealth2b.s))
+neghealth.mono.2 <- check.monotonicity(na.omit(irtneghealth2b.s))
+print(xtable(neghealth.item.ord2[["violations"]], caption="IIO for reduced negative health scale", label="tab:randneghealth2biio"))
 @
 
-As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+As shown in Table \ref{tab:randneghealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
 
 
 
-<<randpain, echo=FALSE, results=hide>>=
-irtphyslim2.item.ord <- check.iio(na.omit(irtphyslim2))
-irtphyslim2.monotonicity <- check.monotonicity(na.omit(irtphyslim2))
+<<randposhealth, echo=FALSE, results=hide>>=
+irtposhealth2b.item.ord <- check.iio(na.omit(irtposhealth2b))
+irtposhealth2b.monotonicity <- check.monotonicity(na.omit(irtposhealth2b))
 @
 
-The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
+<<poshealthitemord2b, echo=FALSE, results=tex>>=
 
+@ 
 
 
 <<randgenhealth, echo=FALSE, results=hide>>=
