@@ -7,8 +7,8 @@
 hom<-read.csv("HOM data for RFINAL.csv")
 hom <- hom[,1:65]
 write.csv(hom, "homfinal.csv")
-hom1 <- hom[hom$CollectMeth=="Paper",]
-hom2 <- hom[hom$CollectMeth=="Online",]
+hom1 <- hom[with(hom, CollectMeth=="Paper"),]
+hom2 <- hom[with(hom, CollectMeth=="Online"),]
 @ 
 \section{Aims of the Research}
 
@@ -1630,6 +1630,13 @@ lr3 <- lotrsamp[741:length(lotrsamp)]
 lotritems2a <- lotritems2[lr1,]
 lotritems2b <- lotritems2[lr2,]
 lotritems2c <- lotritems2[lr3,]
+randsamp <- sample(1:1109, 1109)
+r1 <- randsamp[1:370]
+r2 <- randsamp[371:740]
+r3 <- randsamp[741:length(randsamp)]
+randitems2a <- randitems2[r1,]
+randitems2b <- randitems[r2,]
+randitems2c <- randitems[r3,]
 @
 
 <<maas7sem2, echo=FALSE, results=hide>>=
@@ -1821,6 +1828,11 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 
 The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the b sample, it was tested on both the a and the c sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from sample 1. The model chosen by this procedure was then used to predict factor scores for each of the participants, and was also used to predict these scores for the experimental portion of the research.
 
+\subsubsection{Split B}
+\label{sec:split-b}
+
+
+
 <<maas2bparallel, echo=FALSE, fig=TRUE, results=hide>>=
 maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
 vss.maas.2b <- VSS(na.omit(maasitems2b))
@@ -1901,8 +1913,10 @@ print(xtable(maas2bfit),label="tab:tcq2bmaassemcomp")
 @
 
 <<lotr2bparallel, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
 lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
 lotr2b.vss <- VSS(na.omit(lotritems2b))
+sink(NULL)
 @
 Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted.
 
@@ -2037,7 +2051,7 @@ maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas2fit2b, maas3fit2b
 print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare"))
 @
 
-As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next, we repeat this procedure for the LOT-R.
+As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  this procedure is repeated for the LOT-R.
 
 <<lotr1sem2b, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
@@ -2089,22 +2103,27 @@ print(lotrcomp.xtab2b)
 \subsubsection{Item Response Theory Analyses}
 \label{sec:item-response-theory-1}
 
+
+
+
 <<randcheckassumptions, echo=FALSE, results=hide>>=
-rand.scales <- aisp(na.omit(randitems2))
+rand.scales <- aisp(na.omit(randitems2b))
 @
 
 <<randscales, echo=FALSE, results=tex>>=
-print(xtable(rand.scales),,label="tab:randscales")
+print(xtable(rand.scales,caption="Automatic Item Selection Procedure, RAND MOS, Split B",label="tab:randscales2b"))
 @
-As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, two items do not load on any scale.  The first of these is RANDQ2, which is not surprising given that it is not supposed to score on any scale, and the second is RANDQ36 which is part of the General Health scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
+As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, one item does not load on any scale.  This is RANDQ2, which is not surprising given that it is not supposed to score on any scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
 
 The scales can be termed as follows:
 
 Scale 1: RANDQ3-RANDQ12: This maps exactly to the physical functioning scale.
 
-Scale 2: RAND1, RANDQ16-RANDQ20,23-32. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Mental/Emotional Health.
+Scale 2: RANDQ17-RANDQ19,24-25,28-32,25. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Negative Health.
 
-Scale 3: RAND13-RAND15,RAND21-RAND22. This maps to the role limitations and pain scale, and can probably best be termed as physical limitations.
+Scale 3: RANDQ1, RANDQ20, RANDQ23, RANDQ26, RANDQ27, RANDQ30, RANDQ34, RANDQ36: This scale maps to the general health and positively worded questions from the energy/fatigue and emotional health scales, and so can best be termed Positive Health.  
+
+Scale 4: RAND21-RAND22. This maps to the  pain scale, and can probably best be termed as pain. This scale will not be analysed further as two items is not enough to model the response structure properly. 
 
 Scale 4:  RANDQ33, RANDQ34, RANDQ35. This maps almost exactly to the General Health scale, and so retains that name.
 
@@ -2201,6 +2220,12 @@ print(xtable(coef(physfun.gpcm.gpcm),label="tab:physfungpcm", caption="Coefficie
 Table \ref{tab:physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
 
 The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
+
+<<emhealthpcm, echo=FALSE, results=hide>>=
+emhealth.pcm.rasch <- gpcm(irtemhealth2.2, constraint="rasch")
+emhealth.pcm.1PL <- gpcm(irtemhealth2.2, constraint="1PL")
+emhealth.pcm.gpcm <- gpcm(irtemhealth2.2, constraint="gpcm")
+@ 
 
 <<physfungrm1, echo=FALSE, results=hide>>=
 physfun.grm.1pl <- grm(irtphysfun, constrained=TRUE)
