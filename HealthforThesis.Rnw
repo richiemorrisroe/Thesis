@@ -2375,6 +2375,61 @@ As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provi
 
 Next, we examine the LOT-R in this split. 
 
+<<lotr2bcheck, echo=FALSE, results=hide>>=
+lotr2b.iio <- check.iio(na.omit(lotritems2b))
+lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
+@ 
+
+The LOT-R had no problems with either item ordering or monotonicity. 
+
+Firstly, three partial credit models were fit to the data. 
+
+<<lotr2bpcm, echo=FALSE, results=hide>>=
+lotr2b.pcm.rasch <- gpcm(lotritems2b, constraint="rasch")
+lotr2b.pcm.1PL <- gpcm(lotritems2b, constraint="1PL")
+lotr2b.pcm.gpcm <- gpcm(lotritems2b, constraint="gpcm")
+@ 
+
+All of the partial credit models had non-monotonically increasing parameter estimates and so are not reported further here. 
+
+Next, one and two parameter Graded Response Models were fit to the data. 
+
+<<lotr2bgrm, echo=FALSE, results=hide>>=
+lotr2b.grm.1pl <- grm(lotritems2b, constrained=TRUE)
+lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
+@ 
+
+
+<<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Esitmates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
+@ 
+
+Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
+
+<<lotr2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
+@ 
+
+
+It can be seen from Table \ref{tab:lotr2bgrm2pl} that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
+
+
+Finally, we assess the performance of each of these models on unseen data. 
+
+<<lotr2bgrmtest, echo=FALSE, results=tex>>=
+lotr2b.grm.1pl.test <- testIRTModels(lotr2b.grm.1pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+lotr2b.grm.2pl.test <- testIRTModels(lotr2b.grm.2pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+lotr2b.grm.test.all <- rbind(lotr2b.grm.1pl.test, lotr2b.grm.2pl.test)
+print(xtable(lotr2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:lotr2bgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data. 
+
+\subsubsection{Split C}
+\label{sec:split-c}
+
+
+
 \subsection{Discussion}
 
 There are a number of interesting findings which have emerged from
