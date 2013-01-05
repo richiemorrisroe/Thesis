@@ -1634,9 +1634,12 @@ randsamp <- sample(1:1109, 1109)
 r1 <- randsamp[1:370]
 r2 <- randsamp[371:740]
 r3 <- randsamp[741:length(randsamp)]
-randitems2a <- randitems2[r1,]
+randitems2a <- randitems[r1,]
 randitems2b <- randitems[r2,]
 randitems2c <- randitems[r3,]
+randitems.nota <- randitems[c(r2, r3),]
+randitems.notb <- randitems[c(r1, r3),]
+randitems.notc <- randitems[c(r1, r2),]
 @
 
 <<maas7sem2, echo=FALSE, results=hide>>=
@@ -2127,9 +2130,9 @@ Scale 4: RAND21-RAND22. This maps to the  pain scale, and can probably best be t
 
 
 <<randirtscales, echo=FALSE, results=hide>>=
-irtphysfun2b <- randitems2[,paste(rand, c(3:12), sep="")]
-irtneghealth2b <- randitems2[,paste(rand, c(17:19, 24:25,28,29,31,32,35 ), sep="")]
-irtposhealth2b <- randitems2[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
+irtphysfun2b <- randitems2b[,paste(rand, c(3:12), sep="")]
+irtneghealth2b <- randitems2b[,paste(rand, c(17:19, 24:25,28,29,31,35 ), sep="")]
+irtposhealth2b <- randitems2b[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
 @
 
 <<randphysfun, echo=FALSE, results=hide>>=
@@ -2155,10 +2158,10 @@ irtemhealth2b.monotonicity <- check.monotonicity(na.omit(irtneghealth2b))
 print(xtable(irtneghealth2b.item.ord[["violations"]],label="tab:tcq2randneghealthitemord", caption="Item Ordering Assumption Check for RAND Negative Health Scale, Split B"))
 @
 
-As can be seen from Table \ref{tab:randneghealthitemord},quite a number of items failed the item ordering assumption (RAND1, RAND18, RAND19, RAND35, RAND26) and so were removed from the scale before further analysis. 
+As can be seen from Table \ref{tab:randneghealthitemord},quite a number of items failed the item ordering assumption (RAND29, RAND35) and so were removed from the scale before further analysis. 
 
-<<newIrtEmHealth, echo=FALSE, results=tex>>=
-irtneghealth2b.s <- irtneghealth2b[,paste(rand, c(25,29,31,32), sep="")]
+<<irtneghealth, echo=FALSE, results=tex>>=
+irtneghealth2b.s <- irtneghealth2b[,paste(rand, c(25,28,24,29,31,17,19,18), sep="")]
 neghealth.item.ord2 <- check.iio(na.omit(irtneghealth2b.s))
 neghealth.mono.2 <- check.monotonicity(na.omit(irtneghealth2b.s))
 print(xtable(neghealth.item.ord2[["violations"]], caption="IIO for reduced negative health scale", label="tab:randneghealth2biio"))
@@ -2174,73 +2177,135 @@ irtposhealth2b.monotonicity <- check.monotonicity(na.omit(irtposhealth2b))
 @
 
 <<poshealthitemord2b, echo=FALSE, results=tex>>=
-
+print(xtable(irtposhealth2b.item.ord[["violations"]], caption="Item Ordering Checks for RAND MOS Positive Health Scale, Split B", label="tab:rand2bposhealthitemord"))
 @ 
-
-
-<<randgenhealth, echo=FALSE, results=hide>>=
-irtgenhealth2.item.ord <- check.iio(na.omit(irtgenhealth2))
-irtgenhealth2.monotonicity <- check.monotonicity(na.omit(irtgenhealth2))
-irtgenhealth2 <- randitems2[,paste(rand, c(33,34), sep="")]
-@
-
-There was one violation of the IIO assumption (RANDQ35), and no violations of the monotonicity assumption for the General Health scale. 
-
-<<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtgenhealth2.item.ord$violations,label="tab:tcq2genhealthitemord"))
-@
+As can be seen from Table \ref{tab:rand2bposhealthitemord}, all items met the item ordering assumption. 
+Additionally, the smaller scale showed no violations of the monotonicity assumption. 
 
 
 
+Having checked the assumptions for all three scales, the next step was to fit partial credit and graded response models to each of the scales, and to examine their fit on unseen data. 
 
 
 <<physfunrasch, echo=FALSE, results=hide>>=
-physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun2), constraint="rasch")
-physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun2), constraint="1PL")
-physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
+physfun2b.gpcm.rasch <- gpcm(na.exclude(irtphysfun2b), constraint="rasch")
+physfun2b.gpcm.1pl <- gpcm(na.exclude(irtphysfun2b), constraint="1PL")
+physfun2b.gpcm.gpcm <- gpcm(na.exclude(irtphysfun2b), constraint="gpcm")
 @
 
-<<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunraschprint", caption="Coefficients for the Rasch Model fit to the IRT Physical Functioning Scale"))
-@
+Three partial credit models were fit (rasch, one parameter and two parameter). However, all of them had non-monotonically increasing ability estimates, and so are not reported further here. 
 
-As can be seen from Table \ref{tab:physfunraschprint}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
+The next step in the modelling process was to fit a one and two parameter GRM. 
 
-<<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.1pl),label="tab:physfun1pl", caption="Coefficients for the One Parameter Graded Partial Credit Model fit to the IRT Physical Health Scale"))
+<<physfun2bgrm, echo=FALSE, results=hide>>=
+physfun2b.grm.1pl <- grm(na.omit(irtphysfun2b), constrained=TRUE)
+physfun2b.grm.2pl <- grm(na.omit(irtphysfun2b), constrained=FALSE)
 @ 
 
-As shown in Table \ref{tab:physfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
-
-<<physfungpcmprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.gpcm),label="tab:physfungpcm", caption="Coefficients for the Two Parameter Generalised Partial Credit Model fit to the IRT Physical Functioning scale"))
+<<physfun2bgrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(physfun2b.grm.1pl), caption="One Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm1pl"))
 @ 
 
-Table \ref{tab:physfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM. 
+As can be seen from Table \ref{tab:physfun2bgrm1pl}, there were no violations of monotonicity for the one parameter GRM. Note that the discrimination parameter is extremely high, which is not [particularly surprising given the use of a non-clinical sample. 
 
-The next sub-scale to be examined is Emotional Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
-
-<<emhealthpcm, echo=FALSE, results=hide>>=
-emhealth.pcm.rasch <- gpcm(irtemhealth2.2, constraint="rasch")
-emhealth.pcm.1PL <- gpcm(irtemhealth2.2, constraint="1PL")
-emhealth.pcm.gpcm <- gpcm(irtemhealth2.2, constraint="gpcm")
+<<physfun2bgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(physfun2b.grm.2pl), caption="Two Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm2pl"))
 @ 
 
-<<physfungrm1, echo=FALSE, results=hide>>=
-physfun.grm.1pl <- grm(irtphysfun, constrained=TRUE)
-physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+It can be seen from Table \ref{tab:physfun2bgrm2pl} that the average ability estimates have risen while discrimination parameters have dropped for most of the items. The next step is to examine the performance of each of these models on unseen data (i.e. that from Splits A and C). 
+
+<<physfun2bgrmtest, echo=FALSE, results=tex>>=
+physfun.notb <- randitems.notb[,paste(rand, c(3:12), sep="")]
+physfun2b.grm.1pl.test <- testIRTModels(physfun2b.grm.1pl, physfun.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+physfun2b.grm.2pl.test <- testIRTModels(physfun2b.grm.2pl, physfun.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+physfun2b.grm.test.all <- rbind(physfun2b.grm.1pl.test, physfun2b.grm.2pl.test)
+print(xtable(physfun2b.grm.test.all, caption="Performance of One and Two Parameter GRM's on Unseen Data (Splits A and C)", label="tab:physfun2btest"))
 @ 
 
-<<maasgrmfit, echo=FALSE, results=hide>>=
-maas.grm.1pl <- grm(maasitems2, constrained=TRUE)
-maas.grm.2pl <- grm(maasitems2, constrained=FALSE)
+As can be seen from Table \ref{tab:physfun2btest}, the one parameter model provided a better fit to the unseen data. 
+
+The next sub-scale to be examined is Negative Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
+
+<<neghealthpcm, echo=FALSE, results=hide>>=
+neghealth2b.pcm.rasch <- gpcm(irtneghealth2b, constraint="rasch")
+neghealth2b.pcm.1PL <- gpcm(irtneghealth2b, constraint="1PL")
+neghealth2b.pcm.gpcm <- gpcm(irtneghealth2b, constraint="gpcm")
+@ 
+
+Three partial credit models were fitted, but all had non-monotonically increasing parameter estimates, and so are not reported further here. 
+
+Next, one and two parameter Graded Response Models were fitted. 
+
+<<neghealthgrm, echo=FALSE, results=hide>>=
+neghealth2b.grm.1pl <- grm(irtneghealth2b, constrained=TRUE)
+neghealth2b.grm.2pl <- grm(irtneghealth2b, constrained=FALSE)
+@ 
+
+<<negghealth2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2b.grm.1pl)), caption="Coefficients for One Parameter Graded Response Model Negative Health Scale, Split B", label="tab:neghealth2bgrm1pl"))
 @ 
 
 
-<<lotrgrmfit, echo=FALSE, results=hide>>=
-lotr.grm.1pl <- grm(lotritems2, constrained=TRUE)
-lotr.grm.2pl <- grm(lotritems2, constrained=FALSE)
+As shown in Table \ref{tab:neghealth2bgrm1pl}, there were no problemw ith non-monotonically increasing parameter estimates for this model. Of interests is the relatively low discrimination parameter, which suggests that these items were more applicable to the sample. Also of interest is that the emotional role limitations questions (17,18,19) did not have any responses that were not no, suggesting that this scale was not particularly useful for this sample. 
+
+<<neghealth2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2b.grm.2pl)), caption="Coefficients for Negative Health Scale, Two Parameter Graded Response Model, Split B", label="tab:neghealth2bgrm2pl"))
 @ 
+
+
+As can be seen from Table \ref{tab:neghealth2bgrm2pl}, the discrimination parameter has lowered (in line with previous models) while the estimated abilities have widened. Note that question 25 and 28 appear to have been the source of the high discrimination parameter in the one parameter model. 
+
+Next, the fit of each of these models on unseen data was examined. 
+
+<<neghealth2bgrmtest, echo=FALSE, results=tex>>=
+neghealth.notb <- randitems.notb[,paste(rand, c(17:19, 24:25,28,29,31,35 ), sep="")] 
+neghealth2b.grm.1pl.test <- testIRTModels(neghealth2b.grm.1pl, neghealth.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+neghealth2b.grm.2pl.test <- testIRTModels(neghealth2b.grm.2pl, neghealth.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+neghealth2b.grm.test.all <- rbind(neghealth2b.grm.1pl.test, neghealth2b.grm.2pl.test)
+print(xtable(neghealth2b.grm.test.all, caption="Performance of Negative health Split B Graded Response Models on Unseen Data", label="tab:neghealth2bgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:neghealth2bgrmtest}, the one parameter model performed slightly better on the unseen data, though there is not much in the difference. 
+
+Finally, for this split, the positive health scale was examined using partial credirt and graded response models. 
+
+<<irtposhealthpcm, echo=FALSE, results=hide>>=
+irtposhealth2b.pcm.rasch <- gpcm(irtposhealth2b, constraint="rasch")
+irtposhealth2b.pcm.1PL <- gpcm(irtposhealth2b, constraint="1PL")
+irtposhealth2b.pcm.gpcm <- gpcm(irtposhealth2b, constraint="gpcm")
+@ 
+
+Three partial credit models were fit to the data, but all had problems with the parameter estimates and are not reported further here. 
+
+<<poshealth2bgrm, echo=FALSE, results=hide>>=
+poshealth2b.grm.1pl <- grm(irtposhealth2b, constrained=TRUE)
+poshealth2b.grm.2pl <- grm(irtposhealth2b, constrained=FALSE)
+@ 
+
+<<poshealth2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(poshealth2b.grm.1pl)), caption="Coefficients for One Parameter Graded Response Model on Positive Health Scale, Split B", label="tab:poshealth2bgrm1pl"))
+@ 
+
+
+As can be seen from Table \ref{tab:poshealth2bgrm1pl}, there were no problems with the parameter estimates for this model. The questions marked as most difficult (1, 30 and 23) relate to emotional well being and the general health scale. The discrimination parameter is relatively low in comparison to other scales, again probably due to the non-clinical sample used in this study. 
+
+<<poshealth2bgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(poshealth2b.grm.2pl)), caption="Coefficients for Two Parameter Graded Response Model on Positive Health Scale, Split B", label="tab:poshealth2bgrm2pl"))
+@ 
+
+Again, there were no problems with parameter estimates for this scale (Table \ref{tab:poshealth2bgrm2pl}). For the majority of items the ability estimates have increased while the discrimination parameter(s) have lowered. 
+
+Finally, we assess the fit of each of these models on unseen data. 
+
+<<poshealth2bgrmtest, echo=FALSE, results=tex>>=
+poshealth.notb <- randitems.notb[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
+poshealth2b.grm.1pl.test <- testIRTModels(poshealth2b.grm.1pl, poshealth.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+poshealth2b.grm.2pl.test <- testIRTModels(poshealth2b.grm.2pl, poshealth.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+poshealth2b.grm.test.all <- rbind(poshealth2b.grm.1pl.test, poshealth2b.grm.2pl.test)
+print(xtable(poshealth2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:poshealth2btest"))
+@ 
+
+As can be seen from Table \ref{tab:poshealth2btest}, the one parameter model provided a better fit to the unseen data. 
 
 \subsection{Discussion}
 
