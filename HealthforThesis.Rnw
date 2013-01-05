@@ -1623,6 +1623,9 @@ ms3 <- maassamp[741:length(maassamp)]
 maasitems2a <- maasitems2[ms1,]
 maasitems2b <- maasitems2[ms2,]
 maasitems2c <- maasitems2[ms3,]
+maasitems.nota <- maasitems2[c(ms2, ms3),]
+maasitems.notb <- maasitems2[c(ms1, ms3),]
+maasitems.notc <- maasitems2[c(ms1, ms2),]
 lotrsamp <- sample(1:1109, 1109)
 lr1 <- lotrsamp[1:370]
 lr2 <- lotrsamp[371:740]
@@ -1630,6 +1633,9 @@ lr3 <- lotrsamp[741:length(lotrsamp)]
 lotritems2a <- lotritems2[lr1,]
 lotritems2b <- lotritems2[lr2,]
 lotritems2c <- lotritems2[lr3,]
+lotritems.nota <- lotritems2[c(lr2, lr3),]
+lotritems.notb <- lotritems2[c(lr1, lr3),]
+lotritems.notc <- lotritems2[c(lr1, lr2),]
 randsamp <- sample(1:1109, 1109)
 r1 <- randsamp[1:370]
 r2 <- randsamp[371:740]
@@ -2306,6 +2312,68 @@ print(xtable(poshealth2b.grm.test.all, caption="Performance of One and Two Param
 @ 
 
 As can be seen from Table \ref{tab:poshealth2btest}, the one parameter model provided a better fit to the unseen data. 
+
+Next, we examine the Mindful Attention Awareness Scale, using the same methodologies. 
+
+First, the assumptions underlying item response theory modelling are checked. 
+
+<<maas2bcheck, echo=FALSE, results=hide>>=
+maas2b.iio <- check.iio(na.omit(maasitems2b))
+maas2b.mono <- check.monotonicity(na.omit(maasitems2b))
+@ 
+
+<<maas2bitemord, echo=FALSE, results=tex>>=
+print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check, MAAS Split B", label="tab:maas2bitemord"))
+maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
+@ 
+
+As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
+
+Firstly, three partial credit models are fit to the data. 
+
+<<maas2bpcm, echo=FALSE, results=hide>>=
+maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
+maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
+maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
+@ 
+
+All of these partial credit models had problems with non-monotonically increasing parameter estimates, and so are not reported further.
+
+Next, one and two parameter graded response models were fit to the data. 
+
+<<maas2bgrm, echo=FALSE, results=hide>>=
+maas2b.grm.1pl <- grm(maas2b.s, constrained=TRUE)
+maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
+@ 
+
+
+<<maas2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
+@ 
+
+
+It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
+
+<<maas2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
+@ 
+
+It can be seen from Table \ref{tab:maas2bgrm2pl} that there were no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
+
+Finally, we examine the performance of these models on unseen data.
+
+<<maas2bgrmtest, echo=FALSE, results=hide>>=
+maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
+maas2b.grm.1pl.test <- testIRTModels(maas2b.grm.1pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+maas2b.grm.2pl.test <- testIRTModels(maas2b.grm.2pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+maas2b.grm.test.all <- rbind(maas2b.grm.1pl.test, maas2b.grm.2pl.test)
+print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models for MAAS on Unseen Data", label="tab:maas2bgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provided the best fit to the unseen data. 
+
+Next, we examine the LOT-R in this split. 
 
 \subsection{Discussion}
 
