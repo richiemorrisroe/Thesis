@@ -2428,7 +2428,179 @@ As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model perfo
 \subsubsection{Split C}
 \label{sec:split-c}
 
+Firstly, the RAND MOS is examined to determine how many scales it consists of. 
 
+<<rand2caisp, echo=FALSE, results=hide>>=
+rand2c.aisp <- aisp(na.omit(randitems2c))
+print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split C", label="tab:rand2caisp"))
+@ 
+
+As can be seen in Table \ref{tab:rand2caisp} again the RAND MOS divides into three scales. 
+
+The first scale consists of items 3 through 13, and can be best termed as physical functioning (although it contains one item from the physical role limitations subscale). 
+
+The second scale consists of most of the physical and role limitations scales and the negatively worded items from the emotional well being and social functioning scales and can again, as in the previous split, be termed as negative health. 
+
+The third scale consists of the rest of the items, that is the general health, social functioning and emotional well being and energy/fatigue items which are positively worded, and can best be termed as positive health. 
+
+<<rand2cscales, echo=FALSE, results=hide>>=
+physfun2c <- randitems2c[,paste(rand, c(3:13), sep="")]
+poshealth2c <- randitems2c[,paste(rand, c(1,20,22:23, 26:27, 30, 34, 36), sep="")]
+neghealth2c <- randitems2c[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
+@ 
+
+Firstly, the assumptions underlying IRT modelling must be assessed before modelling can commence. 
+
+<<physfun2ccheck, echo=FALSE, results=hide>>=
+physfun2c.iio <- check.iio(na.omit(physfun2c))
+physfun2c.mono <- check.monotonicity(na.omit(physfun2c))
+@ 
+
+There were no violations of either the item ordering assumption or the monotonicity assumptions for the physical functioning scale in this split. 
+
+The preliminaries having been dealt with, the next step was to fit three partial credit models. 
+
+<<physfun2cgpcm, echo=FALSE, results=hide>>=
+physfun2c.gpcm.rasch <- gpcm(physfun2c, constraint="rasch")
+physfun2c.gpcm.1pl <- gpcm(physfun2c, constraint="1PL")
+physfun2c.gpcm.gpcm <- gpcm(physfun2c, constraint="gpcm")
+@ 
+
+All three partial credit models had problems with the ability estimates in that they were not montonotically increasing, and so are not discussed further here. 
+
+Next, one and two parameter Graded Response Models were fit to the data.
+
+
+<<physfun2cgrm, echo=FALSE, results=hide>>=
+physfun2c.grm.1pl <- grm(physfun2c, constrained=TRUE)
+physfun2c.grm.2pl <- grm(physfun2c, constrained=FALSE)
+@ 
+
+<<physfun2cgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(physfun2c.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model, Physical Functioning Scale, Split C", label="tab:physfun2cgrm1pl"))
+@ 
+
+As can be seen from Table \ref{tab:physfun2cgrm1pl}, there are no obvious problems with this model. The rather low ability estimates are interesting in that they are all negative, but the discrimination parameter is quite high suggesting that there is much information in the choosing of one response over another. 
+
+<<physfun2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(physfun2c.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model, Physical Functioning Scale, Split C", label="tab:physfun2cgrm2pl"))
+@ 
+
+As can be seen from Table \ref{tab:physfungrm2pl}, the discrimination parameters have lowered for the majority of items, except for 7 and 11 which refer to either walking up one flight of stairs or along one block (which presumably the non American sample here understood). 
+
+The final step in the model building process is to assess each models\' performance on unseen data. 
+
+<<physfun2cgrmtest, echo=FALSE, results=tex>>=
+physfun.notc <- randitems.notc[,paste(rand, c(3:13), sep="")]
+physfun2c.grm.1pl.test <- testIRTModels(physfun2c.grm.1pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+physfun2c.grm.2pl.test <- testIRTModels(physfun2c.grm.2pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
+physfun2c.grm.test.all <- rbind(physfun2c.grm.1pl.test, physfun2c.grm.2pl.test)
+print(xtable(physfun2c.grm.test.all, caption="Performance of One and Two Parameter Physical Functioning Graded Response Models on Unseen Data (Splits A and B", label="tab:physfun2ctest"))
+@ 
+
+As can be seen from Table \ref{tab:physfun2cgrmtest}, the one parameter model performed best on the unseen data. 
+
+Next, the negative health scale was checked to ensure suitability for IRT modelling. 
+
+<<neghealth2ccheck, echo=FALSE, results=hide>>=
+neghealth2c.iio <- check.iio(na.omit(neghealth2c))
+neghealth2c.mono <- check.monotonicity(na.omit(neghealth2c))
+@ 
+
+The negative health scale for this split showed no failures of the item ordering assumption or of the monotonicity assumption. 
+
+Next, three partial credit models were fit to the data. 
+
+<<neghealth2cgpcm, echo=FALSE, results=hide>>=
+neghealth2c.gpcm.rasch <- gpcm(neghealth2c, constraint="rasch")
+neghealth2c.gpcm.1PL <- gpcm(neghealth2c, constraint="1PL")
+neghealth2c.gpcm.gpcm <- gpcm(neghealth2c, constraint="gpcm")
+@ 
+
+All three partial credit models suffered from non-monotonically increasing parameter estimate problems, and are not discussed here further. 
+
+Next, one and two parameter Graded Response Models were fit to the data. 
+
+<<neghealth2cgrm, echo=FALSE, results=hide>>=
+neghealth2c.grm.1pl <- grm(neghealth2c, constrained=TRUE)
+neghealth2c.grm.2pl <- grm(neghealth2c, constrained=FALSE)
+@ 
+
+
+<<neghealth2cgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2c.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model, Negative Health Scale, Split C", label="tab:neghealth2cgrm1pl"))
+@ 
+
+As can be seen from Table \ref{tab:neghealth2cgrm1pl}, there are no obvious problems with this model. The estimated discrimination parameter is quite low, suggesting that the items convey only the information in their location thresholds. 
+
+<<neghealth2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2c.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model, Negative Health Scale, Split C", label="tab:neghealth2cgrm2pl"))
+@ 
+
+It can be see from Table \ref{tab:neghealth2bgrm2pl}, that the ability estimates have lowered significantly, as have most of the discrimination parameters. 
+
+Finally, the performance of each of these models was examined on unseen data. 
+
+<<neghealth2cgrmtest, echo=FALSE, results=tex>>=
+neghealth.notc <- randitems.notc[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
+neghealth2c.grm.1pl.test <- testIRTModels(neghealth2c.grm.1pl, neghealth.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+neghealth2c.grm.2pl.test <- testIRTModels(neghealth2c.grm.2pl, neghealth.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
+neghealth2c.grm.test.all <- rbind(neghealth2c.grm.1pl.test, neghealth2c.grm.1pl.test)
+print(xtable(neghealth2c.grm.test.all, caption="Performance of One and Two Parameter Negative Health Graded Response Models on Unseen Data (Splits A and B)", label="tab:neghealth2cgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:neghealth2cgrmtest}, both models performed equivalently on the unseen data, therefore the simpler one parameter model is chosen. 
+
+Next, the assumptions are checked for the positive health scale in this split. 
+
+<<poshealth2ccheck, echo=FALSE, results=hide>>=
+poshealth2c.iio <- check.iio(na.omit(poshealth2c))
+poshealth2c.mono <- check.monotonicity(na.omit(poshealth2c))
+@ 
+
+There were no violations of the item ordering or monotonicity assumptions for this scale in this split.
+
+Next, three partial credit models were fitted. 
+
+<<poshealth2cgpcm, echo=FALSE, results=hide>>=
+poshealth2c.gpcm.rasch <- gpcm(poshealth2c, constraint="rasch")
+poshealth2c.gpcm.1PL <- gpcm(poshealth2c, constraint="1PL")
+poshealth2c.gpcm.gpcm <- gpcm(poshealth2c, constraint="gpcm")
+@ 
+
+All three partial credit models has non-monotonic parameter estimates, and are not analysed further here. 
+
+
+Next, one and two parameter Graded Response Models were fitted to this scale.
+
+<<poshealth2cgrm, echo=FALSE, results=hide>>=
+poshealth2c.grm.1pl <- grm(poshealth2c, constrained=TRUE)
+poshealth2c.grm.2pl <- grm(poshealth2c, constrained=FALSE)
+@ 
+
+<<poshealth2cgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(poshealth2c.grm.1pl)), caption="Coefficient Estimates for Positive Health One Parameter Graded Response Model, Split C", label="tab:poshealth2cgrm1pl"))
+@ 
+
+The coefficient estimates for this model are shown in Table \ref{tab:poshealth2cgrm1pl}. It can be seen that the discrimination parameter is quite low, and the ability estimates (especially for question 1) are quite high. One would expect this to alter under a two parameter model. 
+
+<<poshealth2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(poshealth2c.grm.2pl)), caption="Coefficient Estimates for Positive Health Two Parameter Graded Response Model, Split C", label="tab:poshealth2cgrm2pl"))
+@ 
+
+Table \ref{tab:poshealth2cgrm2pl} shows that the speculation regarding the shape of ability estimates and discrimination parameters was quite wrong, ad Q1 retains its extremely high ability estimates and Question 22 lowers its discrimination parameter significantly while gaining an extremely high estimate for ability. Q22 refers to pain, and this appears to be an extremely strong predictor of overall health, as the other two questions with as high abilities represent overall health questions.
+
+Finally for this scale, its performance on unseen data is assessed. 
+
+<<poshealth2cgrmtest, echo=FALSE, results=tex>>=
+poshealth.notc <- randitems.notc[,paste(rand, c(1,20,22:23, 26:27, 30, 34, 36), sep="")]
+poshealth2c.grm.1pl.test <- testIRTModels(poshealth2c.grm.1pl, poshealth.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+poshealth2c.grm.2pl.test <- testIRTModels(poshealth2c.grm.2pl, poshealth.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
+poshealth2c.grm.test.all <- rbind(poshealth2c.grm.1pl.test, poshealth2c.grm.2pl.test)
+print(xtable(poshealth2c.grm.test.all, caption="Performance of Positive Health One and Two Parameter Models (Split C) on unseen data (Splits A and B)", label="tab:poshealth2cgrmtest"))
+@ 
+
+As is shown in Table \ref{tab:poshealth2cgrmtest}, the one parameter model provided a batter fit to the unseen data. 
 
 \subsection{Discussion}
 
