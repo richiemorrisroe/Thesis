@@ -2602,6 +2602,121 @@ print(xtable(poshealth2c.grm.test.all, caption="Performance of Positive Health O
 
 As is shown in Table \ref{tab:poshealth2cgrmtest}, the one parameter model provided a batter fit to the unseen data. 
 
+The next stage of the analysis is to examine the usefulness of IRT models for the Mindful Attention Awareness Scale in this split.
+
+The first step is to check the item ordering and monotonicity assumptions. 
+
+The automated item selection procedure suggests that items 6 and 15 do not fit the scale well enough to be considered, so these items are removed first. 
+
+<<maas2ccheck, echo=FALSE, results=hide>>=
+maas2c.iio <- check.iio(na.omit(maasitems2c))
+maas2c.mono <- check.monotonicity(na.omit(maasitems2c))
+maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
+@ 
+
+Additionally, item 5 fails the item ordering check, and so is alsop removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
+
+Firstly, three partial credit models are fit to the data. 
+
+<<maas2cgpcm, echo=FALSE, results=hide>>=
+maas2c.gpcm.rasch <- gpcm(maas2c.s, constraint="rasch")
+maas2c.gpcm.1PL <- gpcm(maas2c.s, constraint="1PL")
+maas2c.gpcm.gpcm <- gpcm(maas2c.s, constraint="gpcm")
+@ 
+
+None of the partial credit models are analysed further, as they all had non-monotonically increasing parameter estimates. 
+
+Next, one and two parameter Graded Response Models are fit to the scale. 
+
+<<maas2cgrm, echo=FALSE, results=hide>>=
+maas2c.grm.1pl <- grm(maas2c.s, constrained=TRUE)
+maas2c.grm.2pl <- grm(maas2c.s, constrained=FALSE)
+@ 
+
+<<maas2cgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"))
+@ 
+
+
+As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.048, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindfulness. 
+
+Next, a two parameter model is fit to this data. 
+
+<<maas2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"))
+@ 
+
+The two parameter model (shown in Table \ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+
+
+The final step in the analysis of the MAAS scale is to test the performance of the models on unseen  data. 
+
+<<maas2cgrmtest, echo=FALSE, results=hide>>=
+maas.irt.notc <- maasitems.notc[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
+maas2c.grm.1pl.test <- testIRTModels(maas2c.grm.1pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+maas2c.grm.2pl.test <- testIRTModels(maas2c.grm.2pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
+maas2c.grm.test.all <- rbind(maas2c.grm.1pl.test, maas2c.grm.2pl.test)
+print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Parameter Graded Response Models on Unseen Data (Splits A and B)", label="tab:maas2cgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). 
+
+
+Next, the structure of the LOT-R in this split was examined. 
+
+<<lotr2caisp, echo=FALSE, results=hide>>=
+lotr2c.aisp <- aisp(na.omit(lotritems2c))
+@ 
+
+<<lotr2ccheck, echo=FALSE, results=hide>>=
+lotr2c.iio <- check.iio(na.omit(lotritems2c))
+lotr2c.mono <- check.monotonicity(na.omit(lotritems2c))
+lotr2c.s <- lotritems2c[,paste(lotr, c(3,4,7,9,10), sep="")]
+@ 
+
+An examination of the item ordering assumption showed that Q1 did not fit this model, and so was removed from the scale. There were no failures of the monotonicity assumption, and thus the modelling could commence. 
+
+<<lotr2cpcm, echo=FALSE, results=hide>>=
+lotr2c.pcm.rasch <- gpcm(lotr2c.s, constraint="rasch")
+lotr2c.pcm.1PL <- gpcm(lotr2c.s, constraint="1PL")
+lotr2c.pcm.gpcm <- gpcm(lotr2c.s, constraint="gpcm")
+@ 
+
+All Partial Credit Models suffered from non-monotonically increasing parameter estimates, and so are not analysed further here. 
+
+Next, one and two parameter Graded Response Models were fit to the scale.
+
+<<lotr2cgrm, echo=FALSE, results=hide>>=
+lotr2c.grm.1pl <- grm(lotr2c.s, constrained=TRUE)
+lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
+@ 
+
+<<lotr2cgrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Esitmates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
+@ 
+
+Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the one parameter Graded Response Model. It can be seen that the discrimination parameter is quite high, and that the most difficult question is Q10 which is ``Overall, I expect more good things to happen to me than bad''. The ``easiest'' question is Q7, which is one of the negative.ly fphrased question, suggesting that the two of these questions would be enough to garner a rough estimate of ability from participants. 
+
+
+<<lotr2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
+@ 
+
+Table \ref{tab:lotr2cgrm2pl} shows the estimates for the two parameter GRM. It can be seen that Q7 is not the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
+
+Finally, the performance of these two models is tested against unseen data. 
+
+<<lotr2cgrmtest, echo=FALSE, results=tex>>=
+lotr.irt.notc <- lotritems.notc[,paste(lotr, c(3,4,7,9,10), sep="")]
+lotr2c.grm.1pl.test <- testIRTModels(lotr2c.grm.1pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+lotr2c.grm.2pl.test <- testIRTModels(lotr2c.grm.2pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
+lotr2c.grm.test.all <- rbind(lotr2c.grm.1pl.test, lotr2c.grm.2pl.test)
+print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and Two Parameter Graded Response Models on Unseen Data", label="tab:lotr2cgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
+
 \subsection{Discussion}
 
 There are a number of interesting findings which have emerged from
