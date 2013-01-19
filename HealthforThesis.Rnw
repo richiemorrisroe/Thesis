@@ -1216,13 +1216,15 @@ print(xtable(coef(physfun.grm.2pl), label="tab:randphysfungrm2pl", caption="Coef
 @ 
 
 
-From Table \ref{tab:randphysfungrm2pl}, it can be seen that the allowing the discrimination parameter to vary freely makes a large difference to the coefficient estimates. Note that Q7 appears to be the most discrimination question, with a slope of 5.64. The next process was to assess if the two parameter model provided a significant improvement in fit over and above the one parameter model.
+From Table \ref{tab:randphysfungrm2pl}, it can be seen that the allowing the discrimination parameter to vary freely makes a large difference to the coefficient estimates. Note that Q7 appears to be the most discriminating question, with a slope of 5.64. The next process was to assess if the two parameter model provided a significant improvement in fit over and above the one parameter model.
 
 The results of this ANOVA showed that the two parameter model was a much better fit to the data ($p \le 0.001$). 
 
 <<grmanova, echo=FALSE, results=hide>>=
 grmanova <- anova(physfun.grm.1pl, physfun.grm.2pl)
 @ 
+
+However, a better predictor of the usefulness of a model is to examine its fit on unseen data, and this was done in Section \ref{sec:predictions}. 
 
 <<emhealthPCM, echo=FALSE, results=hide>>=
 emhealth.pcm.rasch <- gpcm(irtemhealth2, constraint="rasch")
@@ -1232,44 +1234,74 @@ emhealth.pcm.gpcm <- gpcm(na.omit(irtemhealth2), constraint="gpcm")
 
 
 <<emhealthRasch, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(unlist(coef(emhealth.pcm.rasch))),label="tab:emhealthrasch"))
+print(xtable(coef2mat(coef(emhealth.pcm.rasch)),label="tab:hom1emhealthrasch", caption="Coefficient Estimates for Emotional Health IRT Scale, Rasch Partial Credit Model, Sample One"))
 @
 
 
 
-As can be seen from Table \ref{tab:emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
+As can be seen from Table \ref{tab:hom1emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
 
 <<emhealth1pl, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(emhealth.pcm.1PL))),label="tab:emhealth1pl")
+print(xtable(coef2mat(coef(emhealth.pcm.1PL)),label="tab:hom1emhealth1pl", caption="Coefficient Estimates for One Parameter Partial Credit Model, Emotional Health Scale, RAND MOS, Sample One"))
 @
 
 
 
-In Table \ref{tab:emhealth2pl} can be seen the results of estimating a true two parameter model for this dataset, where the discrimination parameter was estimated seperately for each item.
+In Table \ref{tab:hom1emhealth2pl} can be seen the results of estimating a true two parameter model for this dataset, where the discrimination parameter was estimated seperately for each item.
 
 A likelihood test was carried out between these three models, and the results showed that the true two parameter model provided a much better fit to the data ($p \le 0.001$).  This is not particularly surprising given that it estimates twice as many parameters as the most parsimonious model, and the real test of these model\'s predictive abilities will come when we fit them to unseen data.
 
+Next, one and two parameter Graded Response Models were fit to the data. 
 
-The next scale to be examined is the  General Health scale.  The first analysis undertaken was to fit a partial credit rasch model to the scale.
+<<hom1emhealthgrm, echo=FALSE, results=hide>>=
+hom1.emhealth.grm.1pl <- grm(irtemhealth2, constrained=TRUE)
+hom1.emhealth.grm.2pl <- grm(irtemhealth2, constrained=FALSE)
+@ 
+
+
+<<hom1emhealthgrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.emhealth.grm.1pl)), label="tab:hom1memhealthgrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Emotional Health Scale, Sample One"))
+@ 
+
+Table \ref{tab:hom1emhealthgrm1pl} shows the coefficient estimates for the one parameter Graded Response Model fitted to the Energy Scale of the RAND MOS. It can be seen that the emotional role limitations questions (16-19) are estimated at quite low ability thresholds, as the sample was non-clinical, and that the questions have a relatively high discrimination parameter, but relatively low ability estimates (as most of the rest of the questions come from the emotional health and energy/fatigue scales). 
+
+Next, a two parameter model was fitted to this scale. 
+
+<<hom1emhealthgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.emhealth.grm.2pl)), label="tab:hom1emhealthgrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, Emotional Health RAND MOS Scale, Sample One"))
+@ 
+Table \ref{tab:hom1emhealthgrm2pl} shows the coefficient estimates for the two parameter Graded Response Model, in which all of the signs and ordering of the thresholds have reversed. 
+
+
+
+The next scale to be examined is the  Energy scale.  The first analysis undertaken was to fit a partial credit rasch model to the scale.
 
 <<genhealthPCM, echo=FALSE, results=tex>>=
 irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
-print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:energypcmrasch", caption="Coefficients for IRT Energy Scale, Rasch Partial Credit Model"))
+print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:hom1energpcmrasch", caption="Coefficient Estimates for IRT Energy Scale, Rasch Partial Credit Model"))
 @
+
+
+It can be seen from Table \ref{tab:hom1energpcmrasch} that with the exception of Q36, all the items seem appropriately fitting. With Q36, there is no ability level where a response category of four is more probable than any of the other items, which is a failure either of the model or the scale. 
 
 
 
 
 <<genhealthpcm1pl, echo=FALSE, results=tex>>=
 irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
-print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:energypcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
+print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:hom1energpcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
 @
+
+Table \ref{tab:hom1energpcm1pl} shows the coefficient estimates for the one parameter Partial Credit Model fitted to the energy RAND MOS scale. Suprisingly, the overall discrimination parameter has decreased. The most difficult question is 21, which asks about bodily pain in the past six months. The difficulty of this question would seem to be a function of the sampling procedure (i.e. students) here, rather than a function of the item's properties. Again, Q36 has the problem with the third response category, as does Q22, suggesting that the population is split bimodally on this question, with either high or low responses being more probable than a response in the middle. 
+
 
 <<genhealthpcm2pl, echo=FALSE, results=hide>>=
 irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
-print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
+print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:hom1energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
 @
 
+
+Table \ref{tab:hom1energpcm2pl} shows the coefficient estimates for the two parameter PCM on this scale. Again, items 36 and 22 have issues with category 3 estimates, and the discrimination parameters are all quite low with over half the scale having discrimination parameters of less than one, meaning that they discriminate less well between high and low ability respondents than would questions meeting the assumptions of a Rasch model. 
 
 <<genhealthpcmcompare, echo=FALSE, results=tex>>=
 anova.rasch.1pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.1pl)
@@ -1278,6 +1310,29 @@ anova.rasch.2pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.2pl)
 @
 
 An anova conducted on the three models indicated that the 2 parameter model fit the data best ($p \le 0.001$), subject to the caveats above.
+
+Next, one and two parameter Graded Response Models were fit to the energy scale. 
+
+<<hom1irtenergygrm, echo=FALSE, results=hide>>=
+hom1.energy.grm.1pl <- grm(irtenergy, constrained=TRUE)
+hom1.energy.grm.2pl <- grm(irtenergy, constrained=FALSE)
+@ 
+
+
+<<hom1energygrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.energy.grm.1pl)), label="tab:hom1energygrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model on IRT Energy Scale, RAND MOS, Sample One"))
+@ 
+
+Table \ref{tab:hom1energygrm1pl} shows the coefficient estimates for the one parameter model on the Energy scale. It can be seen that the Graded Response Model does not have the same issues with category 3 for items 22 and 36, which implies that this issue above was a property of the model rather than the scale. The discrimination parameter is estimated as much higher under this model also, as are the ability thresholds, though the rank ordering remains the same. 
+
+<<hom1energygrm2plprint, echho=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.energy.grm.2pl)), label="tab:hom1energygrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, IRT Energy Scale, RAND MOS, Sample One"))
+@ 
+
+Table \ref{tab:hom1energygrm2pl} shows the coefficient estimates for the two parameter Graded Response Model. It can be seen that the discrimination parameters are very different from those of a similar Partial Credit Model (see Table \ref{tab:hom1energygpcm2pl}). Additionally, the ability estimates are much higher on average, with Q22 having the highest ability threshold. 
+
+
+
 
 The next instrument examined was the MAAS.  Firstly, the instrument was examined using mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
