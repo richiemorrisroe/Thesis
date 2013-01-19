@@ -1092,7 +1092,7 @@ rand.scales <- aisp(na.omit(randitems))
 @
 
 <<randscales, echo=FALSE, results=tex>>=
-print(xtable(rand.scales),,label="tab:randscales")
+print(xtable(rand.scales,label="tab:randscales", caption="Item Selection Procedure Results, RAND MOS Sample One"))
 @
 As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are five scales in the RAND MOS.  
 
@@ -1124,7 +1124,7 @@ irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
 
 
 <<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys.item.ord$violations,label="tab:randphysfuncitemord", caption="IRT Physical Functioning Item Ordering Results"))
+print(xtable(irtphys.item.ord[["violations"]],label="tab:randphysfuncitemord", caption="IRT Physical Functioning Item Ordering Results"))
 @
 
 As can be seen from Table \ref{tab:randphysfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
@@ -1135,7 +1135,7 @@ irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
 @
 
 <<randEmhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtemhealth.item.ord$violations,label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
+print(xtable(irtemhealth.item.ord[["violations"]],label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
 @
 
 As can be seen from Table \ref{tab:randemhealthitemord}, quite a number of items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale, which may suggest that this scale is not valid from an IRT point of view.  
@@ -1144,7 +1144,7 @@ As can be seen from Table \ref{tab:randemhealthitemord}, quite a number of items
 irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
 emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
 emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
-print(xtable(emhealth.item.ord2$violations, caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
+print(xtable(emhealth.item.ord2[["violations"]], caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
 @
 
 As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
@@ -1169,7 +1169,7 @@ irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
 There were two violations of the item ordering assumption for the Energy scale, RAND21 and RAND23, and these items were removed before further analyses.
 
 <<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtenergy.item.ord$violations,label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
+print(xtable(irtenergy.item.ord[["violations"]],label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
 @
 
 
@@ -1180,19 +1180,19 @@ physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunrasch"))
+print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunrasch", caption="Coefficient Estimates, Rasch Partial Credit Model, Sample One"))
 @
 
 As can be seen from Table \ref{tab:physfunrasch}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.1pl),label="tab:randphysfun1pl"))
+print(xtable(coef(physfun.gpcm.1pl),label="tab:randphysfun1pl", caption="Coefficient Estimates, Rand MOS One Parameter Partial Credit Model, Sample One"))
 @ 
 
 As shown in Table \ref{tab:randphysfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
 
 <<physfungpcmprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.gpcm),label="tab:randphysfungpcm"))
+  print(xtable(coef(physfun.gpcm.gpcm),label="tab:randphysfungpcm", caption="Coefficient Estimates for RAND Physical Functioning IRT Scale, Two Parameter Partial Credit Model, Sample One"))
 @ 
 
 Table \ref{tab:randphysfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM.  
@@ -1200,23 +1200,23 @@ Table \ref{tab:randphysfungpcm} shows that RANDQ12 is still a problematic item f
 
 
 <<physfungrm1, echo=FALSE, results=hide>>=
-physfun.grm.1pl <- grm(na.exclude(irtphysfun), constrained=TRUE)
-physfun.grm.2pl <- grm(na.exclude(irtphysfun), constrained=FALSE)
+physfun.grm.1pl <- grm(irtphysfun, constrained=TRUE)
+physfun.grm.2pl <- grm(irtphysfun, constrained=FALSE)
 @ 
 
 <<physfungrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.grm.1pl), label="tab:physfungrm1", caption="Coefficients for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+print(xtable(coef(physfun.grm.1pl), label="tab:physfungrm1", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
 @ 
 
 As can be seen from Table \ref{tab:physfungrm1}, there appear to be no problems with the fit of this model as all of the coefficients are monotonically increasing. Next, a two parameter GRM was fit to this scale. 
 
 
 <<physfungrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.grm.2pl), label="tab:physfungrm2", caption="Coefficients for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+print(xtable(coef(physfun.grm.2pl), label="tab:randphysfungrm2pl", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
 @ 
 
 
-From Table \ref{tab:phyfungrm2}, it can be seen that the allowing the discrimination parameter to vary freely makes a large difference to the coefficient estimates. Note that Q7 appears to be the most discrimination question, with a slope of 5.64. The next process was to assess if the two parameter model provided a significant improvement in fit over and above the one parameter model.
+From Table \ref{tab:randphysfungrm2pl}, it can be seen that the allowing the discrimination parameter to vary freely makes a large difference to the coefficient estimates. Note that Q7 appears to be the most discrimination question, with a slope of 5.64. The next process was to assess if the two parameter model provided a significant improvement in fit over and above the one parameter model.
 
 The results of this ANOVA showed that the two parameter model was a much better fit to the data ($p \le 0.001$). 
 
