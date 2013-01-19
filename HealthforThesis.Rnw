@@ -1352,7 +1352,7 @@ Next, item ordering was examined for this scale.
 
 <<maasitemord, echo=FALSE, results=tex>>=
 maas.iio <- check.iio(na.omit(maas.irt))
-print(xtable(maas.iio$violations,label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
+print(xtable(maas.iio[["violations"]],label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
 @
 
 As can be seen from Table \ref{tab:maasitemord}, there were no violations of item ordering with the reduced scale.
@@ -1407,8 +1407,12 @@ print(maasp)
 As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
 
 <<maasgrm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.grm.1pl), caption="Coefficients for MAAS One Parameter Graded Response Model", label="tab:maasgrm1pl"))
+print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
 @ 
+
+Table \ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
+
+Next, a two parameter Graded Response Model was examined for the same scale. 
 
 \begin{figure}
 <<maasgrm2plot, echo=FALSE, fig=TRUE>>=
@@ -1420,9 +1424,11 @@ print(maas2plp)
 \end{figure}
 
 <<maasgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.grm.2pl), caption="Coefficients for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+@ 
 
 
+Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. IT can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates sugegst that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
 <<maasanovacomp, echo=FALSE, results=hide>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1430,11 +1436,7 @@ anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
 anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 @
 
-
-
-The estimated parameters of the model can be seen in Table \ref{tab:maasgrm2pl}.
-
-The three models were subjected to anova comparison and the 1 parameter model was significantly (p<0.001) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model (p<0.001). However, the ultimate test is the ability of the model to predict out-of-sample data. 
+The three models were subjected to anova comparison and the 1 parameter model was significantly ($p \le 0.001$) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model ($p \le 0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
 The Life Orientation Test was the next instrument to be examined using the IRT approach.
 
