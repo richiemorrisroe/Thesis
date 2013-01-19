@@ -685,7 +685,7 @@ The factor correlations are moderate (shown in Table \ref{tab:hom1rand8corr}) an
 
 <<rand13fact, echo=FALSE, results=tex>>=
 rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
-print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), scalebox=0.5)
+print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), floating.environment="sidewaystable")
 @
 
 PA2: "RANDQ6"  "RANDQ7"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
@@ -720,16 +720,16 @@ The last three factors have only one item loading on them, and three is normally
 Therefore we can stop the interpretation here, as this factor does not seem to add much to our understanding of the scale. 
 
 <<rand13corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.13[["r.scores"]],label="tab:tcq1rand13corr", caption="Inter Factor Correlations, 13 Factor RAND MOS Solution"), scalebox=0.6)
+print(xtable(rand.fact.13[["r.scores"]],label="tab:hom1rand13corr", caption="Factor Correlations, Thirteen Factor RAND MOS Solution, Sample One"), scalebox=0.6)
 @
-As Table \ref{tab:tcq1rand13corr} shows, the factors are inter-correlated, but not in any coherent fashion. 
+As Table \ref{tab:hom1rand13corr} shows, the factors are inter-correlated, but not in any coherent fashion. 
 
 
 
 
 
 The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}. Although the factor structure from this solution looks unlikely to be useful (given that there are three factors consisting only of one item each), the fit indices indicate that this is a better solution than any of the other proposed structures. That being said, this structure is unlikely to replicate. 
+and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}. Although the factor structure from this solution looks unlikely to be useful (given that there are three factors consisting only of one item each), the fit indices indicate that this is a better solution than any of the other proposed structures. That being said, this structure is unlikely to replicate, due to presumed overfitting. 
 
 
 \paragraph{CFA for RAND MOS}
@@ -855,10 +855,10 @@ rand13summ <- summary(rand13fit)
 
 <<randsemcompare, echo=FALSE, results=tex>>=
 randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand4fit, rand8fit, rand13fit), all=TRUE)
-print(xtable(randsemcomp,label="tab:randsemcompare"), scalebox=0.8)
+print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8)
 @
 
-As can be seen from \ref{tab:randsemcompare}, the 5 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
+As can be seen from \ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
 
 \subsection{Mindfulness Attention Awareness Scale}
 
@@ -871,8 +871,10 @@ For the MAAS, parallel analysis, MAP, VSS, Kaiser\'s rule and the Wold method of
 
 <<maas1fact, echo=FALSE, results=tex>>=
 maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
-print(FactorXtab(maas.fact.1,label="tab:tcq1maas1fact"))
+print(FactorXtab(maas.fact.1,label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One"))
 @
+
+The results of the one factor solution for the MAAS are shown in Table \ref{tab:hom1maas1fact}. 
 
 The non-normed fit index was equal to \Sexpr{round(maas.fact.1[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(maas.fact.1[["RMSEA"]][2],3 )} to \Sexpr{round(maas.fact.1[["RMSEA"]][3],3)}.
@@ -885,7 +887,7 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 The next factor solution to be examined was the seven factor solution suggested by the Gabriel method of cross-validation.
 <<maas7fact, echo=FALSE, results=tex>>=
 maas.fact.7<-factor.pa(na.omit(maasitems), 7, rotate="oblimin")
-print(FactorXtab(maas.fact.7,label="tab:tcq1maas7fact"))
+print(FactorXtab(maas.fact.7,label="tab:tcq1maas7fact", caption="Factor Loadings, Seven Factor Solution, MAAS, Sample One"))
 @
 
 
@@ -990,13 +992,14 @@ Parallel Analysis indicated that two factors should be extracted, while the MAP 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
 lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
-print(FactorXtab(lotr.fact.1,label="tab:tcq1lotr1fact"))
+print(FactorXtab(lotr.fact.1,label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One"))
 @
 
+Table \ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively high, except for question one which is a sign that perhaps this solution is not optimal. 
 
 
 The non-normed fit index was equal to \Sexpr{round(lotr.fact.1[["TLI"]], 3)}
-and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(lotr.fact.1[["RMSEA"]][2],3)} to \Sexpr{round(lotr.fact.1[["RMSEA"]][3],3 )}.  This solution does not seem optimal, as the RMSEA is well outside the recommended bounds, and the NNFI is quite low.  In addition, the communalities are not very high, with over half the variance being left out of the solution.
+and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(lotr.fact.1[["RMSEA"]][2],3)} to \Sexpr{round(lotr.fact.1[["RMSEA"]][3],3 )}.  This solution does not seem optimal, as the RMSEA is well outside the recommended bounds, and the NNFI is quite low.  %% In addition, the communalities are not very high, with over half the variance being left out of the solution.
 
 
 
@@ -1006,7 +1009,7 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 
 <<lotr3fact, echo=FALSE, results=tex>>=
 lotr.fact.3<-factor.pa(na.omit(lotritems), 3, rotate="oblimin")
-print(FactorXtab(lotr.fact.3,label="tab:tcq1lotr3fact"))
+print(FactorXtab(lotr.fact.3,label="tab:tcq1lotr3fact", caption="Factor Loadings, Three Factor Solution, LOT-R, Sample One"))
 @
 
 PA2:"LOTRQ1"  "LOTRQ4"  "LOTRQ10". These items are all the positively framed items, and so this factor can best be termed as Optimism. 
