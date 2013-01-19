@@ -9,6 +9,8 @@ hom <- hom[,1:65]
 write.csv(hom, "homfinal.csv")
 hom1 <- hom[with(hom, CollectMeth=="Paper"),]
 hom2 <- hom[with(hom, CollectMeth=="Online"),]
+setOption("xtable.include.rownames"=FALSE)
+setOption("xtable.format.args", list=(big.mark=","))
 @ 
 \section{Aims of the Research}
 
@@ -46,8 +48,8 @@ The major types of analysis carried out are described in the Methodology chapter
 
 % The total sample after this data was removed was N=\Sexpr{nrow(na.omit(hom))}.
 
-The response rate for Sample 1 was approximately
-90\% of those asked, while the response rate for the online sample
+The response rate for Sample One (paper) was approximately
+90\% of those asked, while the response rate for Sample Two (Online)
 was 10\%.
 
 
@@ -148,9 +150,28 @@ Next, we will impute the missing data using a multiple imputation procedure (as 
 <<impute, eval=FALSE, echo=FALSE, results=hide>>=
 require(mice)
 hom.imp <- mice(hom[,2:length(hom)], m=10) #remove first column as it causes problems with the imputation
+hom.comp1 <- complete(hom.imp, 1)
+hom.comp2 <- complete(hom.imp, 2)
+hom.comp3 <- complete(hom.imp, 3)
+hom.comp4 <- complete(hom.imp, 4)
+hom.comp5 <- complete(hom.imp, 5)
+hom.comp6 <- complete(hom.imp, 6)
+hom.comp7 <- complete(hom.imp, 7)
+hom.comp8 <- complete(hom.imp, 8)
+hom.comp9 <- complete(hom.imp, 9)
+hom.comp10 <- complete(hom.imp, 10)
+homlist <- list(hom.comp1, hom.comp2, hom.comp3, hom.comp4, hom.comp5, hom.comp6, hom.comp7, hom.comp8, hom.comp9, hom.comp10)
+for (i in 1:length(homlist)) {
+  homi <- homlist[[i]]
+  write.csv(homlist[[i]], file=paste("homcomp", i, ".csv", sep=""))
+}
+  
 @ 
 
-
+<<readcomphom, echo=FALSE, results=hide>>=
+homfiles <- list.files(pattern="homcomp")
+homlist <- lapply(homfiles, read.csv)
+@ 
 
 \subsection{Descriptive Statistics}
 % \section{Methods}
@@ -165,7 +186,7 @@ be seen in Table \ref{tab:sumstatscales} , below.
 hom.tot <- hom1[,66:75]
 tot.sum <- summary(hom.tot)
 tot.xtab <- xtable(tot.sum, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism Measures")
-print(tot.xtab, scalebox=0.5)
+print(tot.xtab, scalebox=0.75, include.rownames=FALSE, floating.environment="sidewaystable")
 @
 
 
@@ -176,7 +197,7 @@ of the sample by Collection Method is shown.
 <<demostats, echo=FALSE, results=tex>>=
 hom.demo <- hom1[,2:8]
 hom.demo.xtab <- xtable(summary(hom.demo), label="tab:democollect", caption="Demographic Statistics for Sample One (paper sample)")
-print(hom.demo.xtab, scalebox=)
+print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
 @
 
 
@@ -205,7 +226,7 @@ hom.tot.cor <- cor(hom.tot, use="pairwise.complete.obs", method="spearman")
 hom.tot.cor <- as.data.frame(hom.tot.cor)
 names(hom.tot.cor) <- c("Physical Functioning", "Role Limitations", "Emotional Role Limitations", "Energy Fatigue", "Social Functioning", "Pain", "General Health", "Mindfulness", "Optimism")
 hom.tot.cor.xtab <- xtable(hom.tot.cor, label="tab:scalecorr", caption="Correlations Between Scales GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being.  *=p<0.05, **=p<0.01, ***=p<0.001")
-print(hom.tot.cor.xtab, scalebox=0.6)
+print(hom.tot.cor.xtab, scalebox=0.6, floating.environment="sidewaystable")
 @
 
 
@@ -220,7 +241,7 @@ Possible explanations are examined in the Discussion section.  In fact, optimism
 optplot1 <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
 print(optplot1)
 @  
-  \caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the errors of estimation}
+  \caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
   \label{fig:optplot1}
 \end{figure}
 
@@ -232,7 +253,7 @@ The figure above \ref{fig:optplot1}, shows a linear regression of optimism again
 
 \begin{figure}
 <<optplotgend, echo=FALSE, fig=TRUE>>=
-optplotgend <- ggplot(hom1, aes(x=generalhealth, y=optimism, colour=Gender))+layer(geom="smooth", method="lm")
+optplotgend <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
 print(optplotgend)
 @  
   \caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
@@ -244,7 +265,7 @@ It can be seen from Figure \ref{fig:optplotgend} that participants of both gende
 
 \begin{figure}
 <<optplotcollege, echo=FALSE, fig=TRUE>>=
-optplotcoll <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism, colour=College))+layer(geom="smooth", method="lm")
+optplotcoll <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(~.College, ncol=2)
 print(optplotcoll)
 @  
   \caption{Plot of General Health against Optimism stratified by Faculty of respondents. Dark areas of plot represent errors of estimates. }
@@ -273,7 +294,7 @@ It can be seen from Figure \ref{fig:optplotmaas} that higher levels of mindfulne
 lotrage <- ggplot(na.omit(hom1), aes(x=Age, y=optimism, ))+layer(geom="smooth",method="lm")
 print(lotrage)
 @  
-  \caption{Regression Line of Optimism against Age (linear regression smooth). Dark areas on plot surrounding line represent errors of estimation}
+  \caption{Regression Line of Optimism against Age (linear regression smooth). Dark areas on plot surrounding line represent confidence intervals}
   \label{fig:lotrageplot}
 \end{figure}
 
@@ -286,7 +307,7 @@ Below, we examine if the relationship between mindfulness and health can account
 healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
 print(healthmaas.samp)
 @  
-  \caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth}
+  \caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
   \label{fig:healthmaasmethplot}
 \end{figure}
 
@@ -341,7 +362,7 @@ Given the correlation matrix reported above in Table \ref{tab:scalecorr}, regres
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1)
 opt.reg.sum <- summary(opt.reg.first)
 opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
-print(opt.reg.xtab)
+print(opt.reg.xtab, table.placement="ht")
 @
 
 
@@ -358,6 +379,7 @@ opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom
 opt.reg.fin.stand <- standardize(opt.reg.final)
 opt.fin.sum <- summary(opt.reg.final)
 opt.fin.xtab <- xtable(opt.fin.sum, label="tab:optregfinal", caption="Final Regression Model for Optimism")
+print(opt.fin.xtab , table.placement="ht")
 @
 
 
@@ -381,7 +403,7 @@ The results of the maximal model are shown in Table \ref{tab:maasfirst} below.
 maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+College+Age+Gender+UGPG, data=hom1)
 maas.first.sum <- summary(maas.reg.first)
 maas.first.xtab <- xtable(maas.first.sum, caption="Maximal Regression Model for Mindfulness", label="tab:maasfirst")
-print(maas.first.xtab)
+print(maas.first.xtab, table.placement="ht")
 @
 
 
@@ -394,7 +416,7 @@ After eliminating all non significant variables, the final model was as shown in
 maas.reg.fin <- lm(mindfulness~optimism+energyfat+emwellbeing+Age+rolelim+rolelimem, data=hom1)
 maas.fin.sum <- summary(maas.reg.fin)
 maas.fin.xtab <- xtable(maas.fin.sum, label="tab:maasmodfin", caption="Final Regression Model for Mindfulness")
-print(maas.fin.xtab)
+print(maas.fin.xtab, table.placement="ht")
 @
 
 
@@ -410,7 +432,7 @@ The model was significant, F(7, 557) = \Sexpr{round(maas.fin.sum[["fstatistic"]]
 health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+College+Gender+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1)
 health.sum1<-summary(health.mod1)
 health1.xtab<-xtable(health.sum1,label="tab:healthregfirst", caption="Maximal Regression Model for Health")
-print(health1.xtab)
+print(health1.xtab, table.placement="ht")
 @
 
 
@@ -422,7 +444,7 @@ The model (shown in Table \ref{tab:healthregfirst}) was significant,F(\Sexpr{rou
 health.modfin<-lm(generalhealth~physfun+optimism+energyfat+pain, na.action="na.omit", data=hom1)
 health.sumfin<-summary(health.modfin)
 healthfin.xtab<-xtable(health.sumfin, label="tab:healthfinal", caption="Final Regression Model for General Health")
-print(healthfin.xtab)
+print(healthfin.xtab, table.placement="ht")
 @
 
 The following predictors were
@@ -457,10 +479,9 @@ print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison o
 
 As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors, while the parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
-Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriel\'s method) or the typical ten fold validation common in  machine learning (Wold\'s method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave 2 of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
+Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriel\'s method) or the typical ten fold validation common in  machine learning (Wold\'s method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
 
 <<randfactorcv, echo=FALSE, results=hide>>=
-
 rand.fact.gabriel <- cv.svd.gabriel(na.omit(randitems.scored), krow=2, kcol=2, maxrank=18)
 rand.fact.wold <- cv.svd.wold(na.omit(randitems.scored), k=10, maxrank=12)
 @ 
@@ -565,7 +586,7 @@ Two, four, eight and thirteen factor solutions were extracted and interpreted fr
 
 <<rand2fact, echo=FALSE, results=tex>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
-print(FactorXtab(rand.fact.2, label="tab:rand2fact"))
+print(FactorXtab(rand.fact.2, label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 
 PA1: "RANDQ1"  "RANDQ14" "RANDQ16" "RANDQ17" "RANDQ18" "RANDQ19" "RANDQ20" "RANDQ21" "RANDQ22" "RANDQ23" "RANDQ24" "RANDQ25" "RANDQ26" "RANDQ27"
@@ -582,7 +603,7 @@ and the RMSEA was equal to \Sexpr{round(rand.fact.2$RMSEA[1],3 )},with confidenc
 This factor solution does not appear to be useful, as it has extremely low fit indices (NNFI=0.69), and the breakdown of the factors is rather strange. If the factors had broken down in terms of Physical and Mental Health, then this would have made more sense. The factor loadings were invariant under a number of rotations (varimax, oblimin and promax), so it appears to be a real (if less than interpretable) factor structure. 
 
 <<rand2corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.2$r.scores, label="tab:tcq1rand4corr"))
+print(xtable(rand.fact.2$r.scores, label="tab:tcq1rand4corr", caption="Factor Correlations, RAND MOS Two Factor Solution, Sample One"))
 @
 
 It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations were quite low for this solution, at 0.17. This suggests that an orthogonal rotation might be more appropriate, but attempting this did not change any of the loadings. 
@@ -593,7 +614,7 @@ It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations w
 
 <<rand4fact, echo=FALSE, results=tex>>=
 rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
-print(FactorXtab(rand.fact.4, label="tab:rand4fact"))
+print(FactorXtab(rand.fact.4, label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
 @
 
 The loadings on the four factor solution broke down as follows. 
@@ -613,7 +634,7 @@ and the RMSEA was equal to \Sexpr{round(rand.fact.4$RMSEA[1],3 )},with confidenc
 The fit indices are somewhat better for this solution than for the two factor solution, though the NNFI is still quite low. The RMSEA is somewhat too high for comfort, also. 
 
 <<rand4corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.4$r.scores, label="tab:tcq1rand4corr"))
+print(xtable(rand.fact.4$r.scores, label="tab:tcq1rand4corr", caption="Factor Correlations, RAND MOS Four Factor Solution, Sample One"))
 @
 
 It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations are quite low in this solution also, though they are all high enough to retain the oblique rotations.
@@ -625,7 +646,7 @@ It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations a
 
 <<rand8fact, echo=FALSE, results=tex>>=
 rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
-print(FactorXtab(rand.fact.8, label="tab:tcq1rand8fact"))
+print(FactorXtab(rand.fact.8, label="tab:tcq1rand8fact", caption="factor Loadings Eight Factor Solution, RAND MOS, Sample One"))
 @
 
 PA2: "RANDQ3"  "RANDQ4"  "RANDQ5"  "RANDQ6"  "RANDQ7"  "RANDQ8"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". Again, the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
@@ -646,17 +667,17 @@ PA8: "RANDQ2"  "RANDQ23" "RANDQ27". The loadings on this factor are all below .4
 
 
 
-The non-normed fit index was equal to \Sexpr{round(rand.fact.8$TLI, 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.8$RMSEA[1],3 )},with confidence intervals from \Sexpr{round(rand.fact.8$RMSEA[2],3 )} to \Sexpr{round(rand.fact.8$RMSEA[3],3 )}.
+The non-normed fit index was equal to \Sexpr{round(rand.fact.8[["TLI"]], 3)}
+and the RMSEA was equal to \Sexpr{round(rand.fact.8[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.8[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.8[["RMSEA"]][3],3 )}.
 
-This factor structure definitely makes sense, and the fit indices are relatively acceptable, although the RMSEA is a little higher than would be wanted. In addition, the items map quite well to the subscales, which further reinforces our confidenc in this solution.
+This factor structure definitely makes sense, and the fit indices are relatively acceptable, although the RMSEA is a little higher than would be wanted. In addition, the items map quite well to the subscales, which further reinforces our confidence in this solution.
 
 
 <<rand8corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.8$r.scores, label="tab:tcq1rand8corr"))
+print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate (shown in Table \ref{tab:tcq1rand8corr}) and in line with expectations. The correlations are definitely too high to use an othrogonal rotation. 
+The factor correlations are moderate (shown in Table \ref{tab:hom1rand8corr}) and in line with expectations. The correlations are definitely too high to use an othrogonal rotation. 
 
 
 
@@ -664,7 +685,7 @@ The factor correlations are moderate (shown in Table \ref{tab:tcq1rand8corr}) an
 
 <<rand13fact, echo=FALSE, results=tex>>=
 rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
-print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact"), scalebox=0.5)
+print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), scalebox=0.5)
 @
 
 PA2: "RANDQ6"  "RANDQ7"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
@@ -686,15 +707,16 @@ PA6: "RANDQ21" "RANDQ22". These items map exactly to the Pain Scale, and thus re
 
 PA1: "RANDQ24" "RANDQ25" "RANDQ28" "RANDQ30". These items mostly relate to the emotional well being scale, and are almost all negatively framed. It can probably best be termed Emotional Problems.
 
-PA9: "RANDQ33". This one item relates to sickness, and can probably be termed as sickness.
 
 PA10: "RANDQ3" "RANDQ6". These items relate to vigourous activities and climbing stairs. It can probably best be termed as Vigourous Activity.
+
+PA9: "RANDQ33". 
 
 PA12: "RANDQ20"
 
 PA13: "RANDQ24"
 
-The last two factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate  %cite Tabachnick & Fidell here.
+The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate  %cite Tabachnick & Fidell here.
 Therefore we can stop the interpretation here, as this factor does not seem to add much to our understanding of the scale. 
 
 <<rand13corr, echo=FALSE, results=tex>>=
@@ -2112,6 +2134,151 @@ print(lotrcomp.xtab2b)
 \subsubsection{Item Response Theory Analyses}
 \label{sec:item-response-theory-1}
 
+\subsubsection{Split A}
+\label{sec:split-a}
+
+The next stage in the analyses was to examine the response structure of the items in all three splits of the second sample data. 
+
+This process was begun with the RAND MOS.
+
+The first step was to examine the breakdown of items within scales. 
+
+<<rand2aaiasp, echo=FALSE, results=tex>>=
+rand2a.aisp <- aisp(na.omit(randitems2a))
+rand2a.aisp <- as.data.frame(rand2a.aisp)
+print(xtable(rand2a.aisp, caption="Item Selection Procedure Results for RAND MOS, Split A", label="tab:rand2aaisp"))
+@ 
+
+Table \ref{tab:rand2aaisp} shows the breakdown of items and their assignment to particular scales. 
+The first scale consists of items 3 to 12 and is the physical functioning scale and so retains that name. 
+
+The second scale consists of the role limitations scales and the negatively worded questions from the emotional well being and energy/faatigue scales, and can probably be best termed as negative health. 
+
+The third scale consists of the general health, pain and positively worded questions for emotional well being and energy/fatigue scales, and can probably best be termed as overall health. 
+
+Two items (2 and 24) do not load on any scale, while 33 and 35 load on a seperate scale. This scale (4 in the table) was not analysed, as two items is not enough to make a useful scale. 
+
+<<rand2ascales, echo=FALSE, results=hide>>=
+rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
+rand2a.neghealth <- randitems2a[,paste(rand, c(13:19, 25,28, 29,31,32), sep="")]
+rand2a.ovhealth <- randitems2a[,paste(rand, c(1, 22,23, 26,27,34,36), sep="")]
+@ 
+
+Firstly, the item ordering and monotonicity assumptions were checked for the physical functioning scale. 
+
+
+
+<<rand2aphysfuncheck, echo=FALSE, results=hide>>=
+physfun2a.iio <- check.iio(na.omit(rand2a.physfun))
+physfun2a.mono <- check.monotonicity(na.omit(rand2a.physfun))
+@ 
+
+There were no violations of either the item ordering or monotonicity assumptions for the physical functioning scale in this split, so IRT modelling can proceed.
+
+The first step was to fit three partial credit models to this scale.
+
+<<physfun2apcm, echo=FALSE,results=hide >>=
+physfun2a.pcm.rasch <- gpcm(rand2a.physfun, constraint="rasch")
+physfun2a.pcm.1PL <- gpcm(rand2a.physfun, constraint="1PL")
+physfun2a.pcm.gpcm <- gpcm(rand2a.physfun, constraint="gpcm")
+@ 
+
+All three partial credit models had non increasing parameter estimates, and thus are not considered further here. 
+
+Next, one and two parameter Graded Response Models were fit to this scale. 
+
+<<physfun2agrm, echo=FALSE, results=hide>>=
+physfun2a.grm.1pl <- grm(rand2a.physfun, constrained=TRUE)
+physfun2a.grm.2pl <- grm(rand2a.physfun, constrained=FALSE)
+@ 
+
+<<physfun2agrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(physfun2a.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model Physical Functioning Scale, Split A", label="tab:rand2aphysfungrm1pl"))
+@ 
+
+Table \ref{tab:rand2aphysfungrm1pl} shows the coefficient estimates for this scale. It can be seen that the discrimination parameter is quite high, while the ability estimates are quite low. This is presumably because many of these items are intended more for a clinical sample than the non-clincial sample used in this research. 
+
+<<physfun2agrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(physfun2a.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model for Physical Functioning Scale, Split A", label="tab:physfun2agrm2pl"))
+@ 
+
+Table \ref{tab:physfun2agrm2pl} shows the coefficient estimates for the two parameter model. It can  be seen that while the ability estimates have remained quite low, the discrimination parameters have altered significantly. Q7 and 11 have the two highest discrimination parameters, which makes sense as they ask respectively regarding difficulties in climbing one flight of stairs or walking one block. Again, the ability estimates for each threshold are quite low. 
+
+The next step is to examine the performance of each of these models on unseen data. 
+
+<<rand2agrmtest, echo=FALSE, results=tex>>=
+physfun.nota <- randitems.nota[,paste(rand, 3:12, sep="")]
+physfun2a.grm.1pl.test <- testIRTModels(physfun2a.grm.1pl, physfun.nota, gpcmconstraint=NULL, grmconstraint=TRUE)
+physfun2a.grm.2pl.test <- testIRTModels(physfun2a.grm.2pl, physfun.nota, gpcmconstraint=NULL, grmconstraint=FALSE)
+physfun2a.grm.all <- rbind(physfun2a.grm.1pl.test, physfun2a.grm.2pl.test)
+print(xtable(physfun2a.grm.all, caption="Performance of Physical Functioning One and Two Parameter Graded Response Models (Split A) on unseen data", label="tab:physfun2agrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:physfun2agrmtest}, the one paramter model provided the best fit to the unseen data. 
+
+
+Next, the negative health scale is checked for violations of the item ordering and monotonicity assumptions. 
+
+<<neghealth2acheck, echo=FALSE, results=hide>>=
+neghealth2a.iio <- check.iio(na.omit(rand2a.neghealth))
+neghealth2a.mono <- check.monotonicity(na.omit(rand2a.neghealth))
+@
+
+There were no violations of either the item ordering assumption or the monotonicity assumption for this scale. 
+
+The next step was to fit three partial credit models to this scale. 
+
+<<neghealth2apcm, echo=FALSE, results=hide>>=
+neghealth2a.pcm.rasch <- gpcm(rand2a.neghealth, constraint="rasch")
+neghealth2a.pcm.1PL <- gpcm(rand2a.neghealth, constraint="1PL")
+neghealth2a.pcm.gpcm <- gpcm(rand2a.neghealth, constraint="gpcm")
+@ 
+
+<<neghealth2apcmraschprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2a.pcm.rasch)), caption="Coefficient Estimates for Rasch Partial Credit Model, Negative Health Scale, Split A", label="tab:neghealth2apcmrasch"))
+@ 
+
+Table \ref{tab:neghealth2apcmrasch} shows the coefficient estimates for the RAsch partial credit model. It can be seen that there is an extremely wide spread of abillity estimates, the physical limitations items tend to have quite low thresholds, while the items drawn from the emotional well being and energy/fatigue scales have a much broader spread. For instance, item 32 has a top ability threshold of 6.11, which is extremely high. The item asks about health problems interfering with the social life of the respondent, and given that the sample was predominantly young and students, may be the reason for the low probability of endorsement of the items (thus leading to the high estimated ability threshold). 
+
+<<neghealth2apcm1pl, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative health Scale, One Parameter Partial Credit Model, Split A", label="tab:neghealth2apcm1pl"))
+@ 
+
+Table \ref{tab:neghealth2apcm1pl} shows the coefficient estimates for the one parameter partial credit model. The overall estimated discrimination parameter is quite low, while the same pattern of ability esitmates as the rasch model remains. 
+
+<<neghealth2apcmgpcm, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative Health Scale, Two Parameter Partial Credit Model, Split A", label="tab:neghealth2apgm2pl"))
+@ 
+
+Table \ref{tab:neghealth2apcm2pl} shows the estimated thresholds and discrimination parameters for the two parameter partial credit model. Interestingly enough, the estimated discrimination parameters have actually decreased for the majority of the scale, which is unexpected. The ordering of the ability estimates remains the same as in previous models. 
+
+Next, the performance of these three partial credit models was assessed on unseen data. 
+
+<<neghealth2apcmtest, echo=FALSE, results=tex>>=
+neghealth.nota <- randitems.nota[,paste(rand, c(13:19, 25,28, 29,31,32), sep="")]
+neghealth2a.pcm.rasch.test <- testIRTModels(neghealth2a.pcm.rasch, neghealth.nota, gpcmconstraint="rasch", grmconstraint=NULL)
+neghealth2a.pcm.1PL.test <- testIRTModels(neghealth2a.pcm.1PL, neghealth.nota, gpcmconstraint="1PL", grmconstraint=NULL)
+neghealth2a.pcm.gpcm.test <- testIRTModels(neghealth2a.pcm.gpcm, neghealth.nota, gpcmconstraint="gpcm", grmconstraint=NULL)
+neghealth2a.pcm.test.all <- rbind(neghealth2a.pcm.rasch.test, neghealth2a.pcm.1PL.test, neghealth2a.pcm.gpcm.test)
+print(xtable(neghealth2a.pcm.test.all, caption="Performance of Negative Health Partial Credit Models (Split A) on unseen data (Splits B and C)", label="tab:neghealth2apcmtest"))
+@ 
+
+Table \ref{tab:neghealth2apcmtest} shows that the one parameter model provided a better fit to the unseen data. 
+
+Next, one and two parameter Graded Response Models were fit to the negative health scale. 
+
+<<neghealth2agrm, echo=FALSE, results=hide>>=
+neghealth2a.grm.1pl <- grm(rand2a.neghealth, constrained=TRUE)
+neghealth2a.grm.2pl <- grm(rand2a.neghealth, constrained=FALSE)
+@ 
+
+<<neghealth2agrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(neghealth2a.grm.1pl)), caption="Coefficient Estimates for Negative Health One Parameter Graded Response Model, Split A"))
+@ 
+
+\subsubsection{Split B}
+\label{sec:split-b-1}
 
 
 
