@@ -1918,13 +1918,15 @@ Finally, the performance of the one and two parameter IRT models for the LOT-R w
 
 <<hom1lotrgrmtest, echo=FALSE, results=tex>>=
 lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
-hom1.lotr.grm.1pl.test <- testIRTModels(hom1.lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.lotr.grm.2pl.test <- testIRTModels(hom1.lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
 hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
 rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)"))
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
 @ 
 
+
+As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data. 
 
 \part{Sample Two}
 
