@@ -1327,6 +1327,14 @@ print(xtable(coef2mat(coef(hom1.physlim.grm.1pl)), label="tab:hom1physlimgrm1pl"
 
 Table \ref{tab:hom1physlimgrm1pl} shows the coefficient estimates for the one parameter Graded Response Model. The discrimination parameter is quite high, suggesting that a positive response on these questions is informative as to a person's ability level. The ability thresholds are quite low, which makes sense given the non-clinical and young nature of the sample. 
 
+Next, the two parameter graded response model was examined for this scale. 
+
+<<hom1physlimgrm2pl, echo=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.physlim.grm.2pl)), label="tab:hom1physlimgrm2pl", caption="Coefficient Estimates for Two Parameter Physical Limitations Graded Response Model, Sample One"))
+@ 
+
+
+Table \ref{tab:hom1physlimgrm2pl} shows the coefficient estimates for the two paramter GRM for the physical limitations scale. It can be seen that the discrimination parameters have lowered signigicantly for Q14 and Q16, while have raised for Q13 and Q15. 
 
 The next instrument examined was the MAAS.  Firstly, the instrument was examined using mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
@@ -1845,8 +1853,8 @@ The next part of the analyses was examining the predictive ability of the IRT mo
 
 The first scale to be examined was the RAND MOS Physical Functioning Scale. 
 
-<<hom1physfuntest, echo=FALSE, results=hide>>=
-
+<<hom1physfuntest, echo=FALSE, results=tex>>=
+rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
 hom1.grm.1pl.test <- testIRTModels(physfun.grm.1pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=TRUE)
 hom1.grm.2pl.test <- testIRTModels(physfun.grm.2pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=FALSE)
 hom1.grm.test.all <- rbind(hom1.grm.1pl.test, hom1.grm.2pl.test)
@@ -1857,7 +1865,7 @@ As can be seen from Table \ref{tab:hom1physfungrmtest}, the one parameter model 
 
 
 Next, the performance of the two emotional health GRM\'s on unseen data was assessed. 
-<<hom1emhealthtest, echo=FALSE, results=hide>>=
+<<hom1emhealthtest, echo=FALSE, results=tex>>=
 emhealth2a <- randitems2a[,paste(rand, c(16:19,25,28,29,31), sep="")]
 hom1.emhealth.grm.1pl.test <- testIRTModels(hom1.emhealth.grm.1pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=TRUE)
 hom1.emhealth.grm.2pl.test <- testIRTModels(hom1.emhealth.grm.2pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=FALSE)
@@ -1882,8 +1890,39 @@ As can be seen from Table \ref{tab:hom1energygrmtest}, the one parameter GRM pro
 
 Next, we examine the performance of one and two parameter GRM's on the physical limitations scale from Sample One. 
 
-<<hom1physlimtest, echo=FALSE, results=hide>>=
+<<hom1physlimtest, echo=FALSE, results=tex>>=
 physlim2a <- randitems2a[,paste(rand, c(13:16), sep="")]
+hom1.physlim.grm.1pl.test <- testIRTModels(hom1.physlim.grm.1pl, physlim2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.physlim.grm.2pl.test <- testIRTModels(hom1.physlim.grm.2pl, physlim2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.physlim.grm.all <- rbind(hom1.physlim.grm.1pl.test, hom1.physlim.grm.2pl.test)
+rownames(hom1.physlim.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.physlim.grm.all, caption="Performance of One and Two Parameter GRM's from Sample One on a subset of Sample Two Data (Split A)", label="tab:hom1physlimgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1physlimgrmtest}, the one parameter GRM provided the best fit to the unseen data. 
+
+Next, the performance of the MAAS models are assessed on unseen data. 
+
+<<hom1maasgrmtest, echo=FALSE, results=tex>>=
+maas.irt2a <- maasitems2a[,paste(maas, c(1,3:5,7:15), sep="")]
+hom1.maas.grm.1pl.test <- testIRTModels(maas.grm.1pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE) 
+hom1.maas.grm.2pl.test <- testIRTModels(maas.grm.2pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE) 
+hom1.maas.grm.all <- rbind(hom1.maas.grm.1pl.test, hom1.maas.grm.2pl.test)
+rownames(hom1.maas.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1maasgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data. 
+
+Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
+
+<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
+lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
+hom1.lotr.grm.1pl.test <- testIRTModels(hom1.lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(hom1.lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
+rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)"))
 @ 
 
 
