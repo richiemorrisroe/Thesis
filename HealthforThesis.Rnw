@@ -351,10 +351,11 @@ mytrain <- trainControl(method="cv")
   opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
 testpred <- hom1.test.opt[,c("pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat")]
 opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
+opt.train.evtree <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="evtree", tuneLength=5)
 testopt <- with(hom1.test.opt, optimism)
 optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
 opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
-opt.pred.test.rf <- extractPrediction(opt.train.rf, testX=testpred, testY=testopt)
+opt.pred.test <- extractPrediction(list( opt.train.evtree, opt.trainenet), testX=testpred, testY=testopt)
 @ 
 
 <<optreglm, echo=FALSE, results=tex>>=
