@@ -339,6 +339,23 @@ Given the correlation matrix reported above in Table \ref{tab:scalecorr}, regres
 %  A maximal model approach was
 % taken for this regression.  The fit was carried out using lasso regression (as described in the methodology) and the $\lambda$ parameter was selected by using ten-fold cross-validation.
 
+<<cvsetup, echo=FALSE, results=hide>>=
+hom1.full <- na.omit(hom1)
+hom1.partition <- with(hom1.full, createDataPartition(optimism, list=FALSE, p=0.8))
+hom1.train.opt <- hom1.full[hom1.partition,]
+hom1.test.opt <- hom1.full[-hom1.partition,]
+mytrain <- trainControl(method="cv")
+@ 
+
+<<opttrain, echo=FALSE, results=hide>>=
+  opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
+testpred <- hom1.test.opt[,c("pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat")]
+opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
+testopt <- with(hom1.test.opt, optimism)
+optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
+opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
+opt.pred.test.rf <- extractPrediction(opt.train.rf, testX=testpred, testY=testopt)
+@ 
 
 <<optreglm, echo=FALSE, results=tex>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1)
