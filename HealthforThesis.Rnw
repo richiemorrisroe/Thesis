@@ -53,6 +53,7 @@ require(arm)
 require(caret)
 require(nFactors)
 require(bcv)
+require(glmnet)
 @
 
 <<sourcefunc, echo=FALSE, results=hide>>=
@@ -347,24 +348,48 @@ hom1.test.opt <- hom1.full[-hom1.partition,]
 mytrain <- trainControl(method="cv")
 @ 
 
-<<opttrain, echo=FALSE, results=hide, eval=FALSE>>=
+<<opttrain, echo=FALSE, results=hide>>=
   ## opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
-testpred <- hom1.test.opt[,c("pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat")]
+testpred <- hom1.test.opt[,c("Age", "pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat", "generalhealth")]
 ## opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
 ## opt.train.evtree <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="evtree", tuneLength=5)
 trainopt <- with(hom1.train.opt, optimism)
-trainpred <- hom1.train.opt[,66:74]
+trainpred <- hom1.train.opt[,c(4, 66:74)]
 testopt <- with(hom1.test.opt, optimism)
 ## optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
 ## opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
 ## opt.pred.test <- extractPrediction(list( opt.train.rf, opt.trainenet), testX=hom1.test.opt[,-75], testY=testopt)
 @ 
 
+<<optridge, echo=FALSE, results==hide>>=
+opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
+opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="response", scale=FALSE)
+ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
+digits(ridge.xtab) <- 4
+print(ridge.xtab)
+@
+
+Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the typical linear regression fit. Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+
+Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
+
+<<optlasso, echo=FALSE, results=hide>>=
+opt.lasso <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10)
+opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=1, nfolds=10, type="response", scale=FALSE)
+opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
+digits(opt.lasso.xtab) <- 4
+print(opt.lasso.xtab)
+lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10, type="link")
+@ 
+
+Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted (see Table \ref{tab:optregfinal}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+
 <<optreglm, echo=FALSE, results=tex>>=
-opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1)
+opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
 opt.reg.sum <- summary(opt.reg.first)
 opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
 print(opt.reg.xtab, table.placement="ht")
+lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
 @
 
 
