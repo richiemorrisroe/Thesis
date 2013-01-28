@@ -347,15 +347,17 @@ hom1.test.opt <- hom1.full[-hom1.partition,]
 mytrain <- trainControl(method="cv")
 @ 
 
-<<opttrain, echo=FALSE, results=hide>>=
-  opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
+<<opttrain, echo=FALSE, results=hide, eval=FALSE>>=
+  ## opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
 testpred <- hom1.test.opt[,c("pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat")]
-opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
-opt.train.evtree <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="evtree", tuneLength=5)
+## opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
+## opt.train.evtree <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="evtree", tuneLength=5)
+trainopt <- with(hom1.train.opt, optimism)
+trainpred <- hom1.train.opt[,66:74]
 testopt <- with(hom1.test.opt, optimism)
-optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
-opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
-opt.pred.test <- extractPrediction(list( opt.train.evtree, opt.trainenet), testX=testpred, testY=testopt)
+## optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
+## opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
+## opt.pred.test <- extractPrediction(list( opt.train.rf, opt.trainenet), testX=hom1.test.opt[,-75], testY=testopt)
 @ 
 
 <<optreglm, echo=FALSE, results=tex>>=
@@ -373,6 +375,7 @@ Below, in Table \ref{tab:optregfinal} can be seen the final model,
 including all significant predictor variables.
 
 <<optregfinal, echo=FALSE, results=tex>>=
+
 opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
 optfolds <- TrainTestSets(opt.part, hom1)
 opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)

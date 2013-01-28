@@ -273,7 +273,7 @@ coef2mat <- function (gpcm) {
     mat.res[wrongvalue] <- NA
    
     categories <- lapply(gpcm, names)
-    categorynames <- categories[[length=ncol(mat.res)]]
+    categorynames <- categories[[which.max(sapply(categories, length))]]
     colnames(mat.res) <- categorynames
     return(mat.res)
   }
@@ -666,4 +666,12 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
   res <- data.frame(ErrorApproximation=rea, Correlation=scorescor)
   return(res)
 }
+
   
+penalisedRegression <- function(x, y, traindata, testdata, alpha, nfolds=10, ...) {
+  x.mat <- as.matrix(x)
+  cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds)
+  mod <- glmnet(x=x.mat, y=y, alpha=alpha)
+  pred.coef <- predict(mod, testdata, s=cvres$lambda.min, type="coefficients")
+  return(pred.coef)
+  }
