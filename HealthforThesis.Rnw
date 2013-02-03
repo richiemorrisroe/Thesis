@@ -361,7 +361,7 @@ testopt <- with(hom1.test.opt, optimism)
 ## opt.pred.test <- extractPrediction(list( opt.train.rf, opt.trainenet), testX=hom1.test.opt[,-75], testY=testopt)
 @ 
 
-<<optridge, echo=FALSE, results==hide>>=
+<<optridge, echo=FALSE, results=hide>>=
 opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
 opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="response", scale=FALSE)
 ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
@@ -374,15 +374,42 @@ Ridge regression penalises the coefficients by pushing them towards zero in the 
 Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
 
 <<optlasso, echo=FALSE, results=hide>>=
-opt.lasso <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10)
-opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=1, nfolds=10, type="response", scale=FALSE)
+opt.lasso <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response", scale=FALSE)
 opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
 digits(opt.lasso.xtab) <- 4
 print(opt.lasso.xtab)
-lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10, type="link")
+lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
 @ 
 
-Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted (see Table \ref{tab:optregfinal}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+
+<<optstep, echo=FALSE, results=tex>>=
+opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
+opt.reg.simple <- lm(optimism~1, data=hom1.train.opt)
+opt.step <- stepAIC(opt.reg.first, direction="both", k=2)
+opt.step.pred.resp <- predict(opt.step, newdata=hom1.test.opt, type="response")
+opt.step.pred.coef <- predict(opt.step, newdata=hom1.test.opt, type="terms")
+step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimism"])
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
+@ 
+
+As Table \ref{tab:hom1optstep} shows, the stepwise selected models kept three predictors. General health and Age are retained, despite their lack of signifiance, suggesting that while they have an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
+
+<<optsteppred, echo=FALSE, results=hide>>=
+opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=hom1.test.opt)
+print(xtable(summary(opt.step), captio="Coefficients for Stepwise Selected Model on Test Data", caption="tab:hom1stepopttest"))
+@ 
+
+As shown in Table \ref{tab:hom1stepopttest} the model performs much more poorly on unseen data. However, the correlation between predicted values and optimism is 0.5, which is better than either the lasso or ridge performance on unseen data. 
+
+<<optloess, echo=FALSE, results=hide, eval=FALSE>>=
+opt.loess <- loess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt)
+## opt.loess.fit <- tuneLoess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, tuneLength=10, newdata=hom1.test.opt)
+opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
+## opt.loess.pred.obs <- data.frame(pred=opt.loess.pred, obs=hom1.test.opt)
+## train.gam.loess <- train(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, method="gamLoess", tuneLength=10)
+@ 
 
 <<optreglm, echo=FALSE, results=tex>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
@@ -393,14 +420,13 @@ lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
 @
 
 
-In table \ref{tab:optregfirst} the summary of the regression results can be seen, the model is significant, with an $F$ value of \Sexpr{round(opt.reg.sum[["fstatistic"]],3)}  and an $R^2$ of \Sexpr{round(opt.reg.sum[["adj.r.squared"]],3)}.  
+%% In table \ref{tab:optregfirst} the summary of the regression results can be seen, the model is significant, with an $F$ value of \Sexpr{round(opt.reg.sum[["fstatistic"]],3)}  and an $R^2$ of \Sexpr{round(opt.reg.sum[["adj.r.squared"]],3)}.  
 
 
-Below, in Table \ref{tab:optregfinal} can be seen the final model,
-including all significant predictor variables.
+%% Below, in Table \ref{tab:optregfinal} can be seen the final model,
+%% including all significant predictor variables.
 
 <<optregfinal, echo=FALSE, results=tex>>=
-
 opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
 optfolds <- TrainTestSets(opt.part, hom1)
 opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
@@ -411,11 +437,12 @@ print(opt.fin.xtab , table.placement="ht")
 @
 
 
-The model was significant, F(15, 528) = \Sexpr{round(opt.fin.sum[["fstatistic"]], 3)}, and the adjusted $R^2$ was equal to \Sexpr{round(opt.fin.sum[["adj.r.squared"]],3)}
-The model seems to show that the only important predictors of Optimism in the dataset are General Health, Mindfulness, Emotional Well Being and Age.  This corroborates the plots that were shown above for these variables. The strongest predictor was emotional well being, with age and general health being of similiar magnitude. 
+%% The model was significant, F(15, 528) = \Sexpr{round(opt.fin.sum[["fstatistic"]], 3)}, and the adjusted $R^2$ was equal to \Sexpr{round(opt.fin.sum[["adj.r.squared"]],3)}
+%% The model seems to show that the only important predictors of Optimism in the dataset are General Health, Mindfulness, Emotional Well Being and Age.  This corroborates the plots that were shown above for these variables. The strongest predictor was emotional well being, with age and general health being of similiar magnitude. 
 
-The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
+%% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
 
+As has been shown above, all three kinds of regression models agreed that emotional well being and Age were important, and general health tended not to be removed from any of the models, though it did not have a particularly large coefficient. Surprisingly enough, stepwise selection performed better on unseen data than either lasso or ridge regression, suggesting that overfitting did not occur for this variable. 
 
 
 
@@ -427,28 +454,45 @@ in the midfulness regressions.  The results are shown below.
 
 The results of the maximal model are shown in Table \ref{tab:maasfirst} below.
 
+<<mindsetup, echo=FALSE, results=hide>>=
+mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
+hom1.mind.train <- hom1.full[mind.ind, ]
+hom1.mind.test <- hom1.full[-mind.ind,]
+mind.train <- with(hom1.mind.train, mindfulness)
+mind.pred.train <- hom1.mind.train[,c(4,67:73,75)]
+mind.test <- with(hom1.mind.test, mindfulness)
+mind.pred.test <- hom1.mind.test[,c(4,67:73,75)]
+@ 
+
+
+<<mindlasso, echo=FALSE, results=tex>>=
+mind.lasso <- penalisedRegression(x=mind.pred.train, y=mind.train, traindata=mind.pred.train, testdata=as.matrix(mind.pred.test), alpha=1, type="coefficients")
+print(xtable(as.matrix(mind.lasso), caption="Coefficients on Unseen Data, Mindfulness Regression (lasso penalisation)", label="tab:hom1mindlasso"))
+mind.lasso.pred <- penalisedRegression(x=mind.pred.train, y=mind.train, traindata=mind.pred.train, testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=1, type="response")
+@ 
+
+As shown in Table \ref{tab:hom1mindlasso}, the largest coefficient on mindfulness was optimism, and in line with the correlations seen above, it is negative. Energy Fatigue and Emotional Well being appear to be important in this particular model. 
+
+Next, a ridge regression model was fit to this data. 
+
+<<mindridge, echo=FALSE, results=tex>>=
+mind.ridge <- penalisedRegression(x=mind.pred.train, y=mind.train, traindata=mind.pred.train, testdata=as.matrix(mind.pred.test), alpha=0, type="coefficients")
+print(xtable(as.matrix(mind.ridge), caption="Coefficients on Unseen Data, Mindfulness Regression (ridge penalisation)", label="tab:hom1mindridge"))
+mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train, traindata=mind.pred.train, testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=0, type="response")
+@ 
+
+Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Next, a stepwise selection model procedure was employed on the dataset. 
+
 <<maasregfirst, echo=FALSE, results=tex>>=
-maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+College+Age+Gender+UGPG, data=hom1)
-maas.first.sum <- summary(maas.reg.first)
-maas.first.xtab <- xtable(maas.first.sum, caption="Maximal Regression Model for Mindfulness", label="tab:maasfirst")
-print(maas.first.xtab, table.placement="ht")
+maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
+mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
+mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
+print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+mind.step.pred <- predict(mind.step, hom1.mind.test, type="response")
+mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optimism"]])
 @
 
-
-
-The model was significant, F(\Sexpr{round(maas.first.sum[["fstatistic"]][[2]], 3)},\Sexpr{round(maas.first.sum[["fstatistic"]][3], 3)}) = \Sexpr{round(maas.first.sum[["fstatistic"]][1],3)} , and the adjusted $R^2$ for the model was equal to \Sexpr{round(maas.first.sum[["adj.r.squared"]], 3)}.  
-
-After eliminating all non significant variables, the final model was as shown in Table \ref{tab:maasmodfin}.
-
-<<maasmodfin, echo=FALSE, results=tex>>=
-maas.reg.fin <- lm(mindfulness~optimism+energyfat+emwellbeing+Age+rolelim+rolelimem, data=hom1)
-maas.fin.sum <- summary(maas.reg.fin)
-maas.fin.xtab <- xtable(maas.fin.sum, label="tab:maasmodfin", caption="Final Regression Model for Mindfulness")
-print(maas.fin.xtab, table.placement="ht")
-@
-
-
-The model was significant, F(7, 557) = \Sexpr{round(maas.fin.sum[["fstatistic"]],3)} , while the adjusted $R^2$ was equal to \Sexpr{round( maas.fin.sum[["adj.r.squared"]], 3)} . The residuals of the model were plotted, and they revealed no significant failures of the assumptions. 
+As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue. In contrast to the lasso and ridge fits, the model selected using this method did not include optimism. When the correlations between predicted and observed values were measured, all three model fits had correlations with the observed variables of approximately 0.44. However, in the case of the stepwise model, this correlation was negative. This unexpected result would seem to imply that this model is not particularly useful, and so either the lasso or ridge would appear to be the best model in terms of this data. 
 
 
 
