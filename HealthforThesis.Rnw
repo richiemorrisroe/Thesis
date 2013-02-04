@@ -499,35 +499,45 @@ As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection pro
 
 \subsection{Health Regressions}
 
+<<healthsetup, echo=FALSE, results=hide>>=
+hom1.health.train.ind <- with(hom1.full, createDataPartition(generalhealth, p=0.75, list=FALSE))
+hom1.health.train <- hom1.full[hom1.health.train.ind,]
+hom1.health.test <- hom1.full[-hom1.health.train.ind,]
+healthpred.train <- hom1.health.train[,c(4, 66:72, 74:75)]
+health.train <- with(hom1.health.train, generalhealth)
+healthpred.test <- hom1.health.test[,c(4, 66:72, 74:75)]
+health.test <- with(hom1.health.test, generalhealth)
+@ 
+
 
 <<healthregfirst, echo=FALSE, results=tex>>=
-health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+College+Gender+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1)
-health.sum1<-summary(health.mod1)
-health1.xtab<-xtable(health.sum1,label="tab:healthregfirst", caption="Maximal Regression Model for Health")
-print(health1.xtab, table.placement="ht")
+health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1.health.train)
+health.step <- stepAIC(health.mod1, direction="both", k=3)
+health.step.test <- lm(generalhealth~optimism+energyfat+rolelim, data=hom1.health.test)
+print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
 @
 
 
+As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. However, only energy fatigue was a significant predictor in the test sample, though the coefficient for the effect of optimism was in line with the correlations and previous analyses carried out above. 
 
-The model (shown in Table \ref{tab:healthregfirst}) was significant,F(\Sexpr{round(health.sum1[["fstatistic"]][2], 3)},\Sexpr{round(health.sum1[["fstatistic"]][3], 3)}) = \Sexpr{round(health.sum1[["fstatistic"]][1], 3)} , and the adjusted $R^2$ for the model was equal to \Sexpr{round(health.sum1[["adj.r.squared"]], 3)}.  
-
-
-<<healthmodfin, echo=FALSE, results=tex>>=
-health.modfin<-lm(generalhealth~physfun+optimism+energyfat+pain, na.action="na.omit", data=hom1)
-health.sumfin<-summary(health.modfin)
-healthfin.xtab<-xtable(health.sumfin, label="tab:healthfinal", caption="Final Regression Model for General Health")
-print(healthfin.xtab, table.placement="ht")
-@
-
-The following predictors were
-retained in the final model (shown in Table \ref{tab:healthfinal}
-below), which had a marginally better adjusted R-squared (R-squared=.3049)
-than the first model.
-
-The model was significant,F(\Sexpr{round(health.sumfin[["fstatistic"]][2], 3)},\Sexpr{round(health.sumfin[["fstatistic"]][3], 3)}) = \Sexpr{round(health.sumfin[["fstatistic"]][1], 3)} , and the adjusted $R^2$ for the model was equal to \Sexpr{round(health.sumfin[["adj.r.squared"]], 3)}.  
-Plotting of the residuals showed no significant failures of the model assumptions. 
+Next, a lasso regression model was fit to the same dataset. 
 
 
+<<healthlasso, echo=FALSE, results=hide>>=
+health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
+health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=1, type="response")
+print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
+@ 
+
+As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
+
+<<healthridge, echo=FALSE, results=hide>>=
+health.ridge <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=0, type="coefficients")
+health.ridge.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=0, type="response")
+print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression on General Health on unseen data", label="tab:hom1healthridge"))
+@ 
+
+As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. 
 
 \section{Psychometric Analyses}
 
@@ -2044,7 +2054,8 @@ The relationship between optimism and health is even clearer in sample 2 (Figure
 
 Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
 
-%This section needs to be done. 
+
+
 
 
 \subsubsection{Psychometric Analyses}
