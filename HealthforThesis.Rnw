@@ -1830,6 +1830,14 @@ randitems2c <- randitems[r3,]
 randitems.nota <- randitems[c(r2, r3),]
 randitems.notb <- randitems[c(r1, r3),]
 randitems.notc <- randitems[c(r1, r2),]
+scales <- hom2[,c(4,66:75)]
+scales.samp <- sample(1:1109, 1109)
+s1.samp <- scales.samp[1:370]
+s2.samp <- scales.samp[371:740]
+s3.samp <- scales.samp[741:length(scales.samp)]
+scales2a <- scales[s1.samp,]
+scales2b <- scales[s2.samp,]
+scales2c <- scales[s3.samp,]
 @
 
 <<maas7sem2, echo=FALSE, results=hide>>=
@@ -2022,7 +2030,7 @@ hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint
 hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
 hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
 rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
 @ 
 
 
@@ -2054,9 +2062,44 @@ The relationship between optimism and health is even clearer in sample 2 (Figure
 
 Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
 
+<<optsetup2a, echo=FALSE, results=hide>>=
+scales2a.full <- na.omit(scales2a)
+scales2a.full2 <- scales2a.full[,-11]
+opt.test2a <- with(scales2a.full, optimism)
+opt.train.ind <- with(scales2a.full, createDataPartition(optimism, p=0.75, list=FALSE))
+scales2a.opt.train <- scales2a.full[opt.train.ind,]
+scales2a.opt.test <- scales2a.full[-opt.train.ind,]
+opt.train2a <- with(scales2a.opt.train, optimism)
+opt.pred.train2a <- scales2a.opt.train[,-11]
+## opt.test2a <- with(scales2a.opt.test, optimism)
+opt.pred.test2a <- scales2a.opt.test[,-11]
+@ 
+
+<<optlassotest, echo=FALSE, results=tex>>=
+opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
+print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
+@ 
+
+As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
+
+Next, the ridge regression model was applied to the new data. 
+
+<<optridge2a, echo=FALSE, results=hide>>=
+opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
+print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
+@ 
+
+As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One.
+
+Finally, the model developed by stepwise selection was applied to the new data. 
+
+<<optstep2a, echo=FALSE, results=hide>>=
+opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Model on Test Data", caption="tab:homstepopttest2a"))
+@ 
 
 
-
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. 
 
 \subsubsection{Psychometric Analyses}
 \label{sec:psych-analys}
