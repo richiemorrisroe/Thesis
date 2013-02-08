@@ -1,7 +1,3 @@
-;;; HealthforThesis.Rnw --- HealthforThesis Sweave file
-
-;;; Commentary:
-;;This is part of my thesis 
 
 <<importdata, echo=FALSE, results=hide>>=
 hom<-read.csv("HOM data for RFINAL.csv")
@@ -14,14 +10,14 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 @ 
 \section{Aims of the Research}
 
-As discussed in the literature review, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in a number of studies, while mindfulness (and related constructs, such as need for cognition) have been proposed as mediators of the relationship between explicit and implicit measures.
+As discussed in the literature review, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
 The primary aim of this part of thesis was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research.
 
 The major hypotheses of this part of the thesis were as follows:
 \begin{itemize}
 \item Optimism and mindfulness would be positively associated with health.
 
-\item The RAND MOS would have 8 first order factors, and two second order factors, which would be correlated
+\item The RAND MOS would have 8 first order factors%% , and two second order factors, which would be correlated
 
 \item The MAAS would have one factor
 
@@ -37,7 +33,7 @@ was 10\%.
 
 %% \section{Results}
 
-\part{Sample 1}
+\part{Sample One}
 
 \section{Missing Data Analysis}
 
@@ -105,11 +101,20 @@ online.missing <- sapply(hom2, function (x) sum(is.na(x)))
 @
 \begin{figure}
 <<label=papermissingplot, echo=FALSE, fig=TRUE>>=
-ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+layer(geom="bar", binwidth=1)
+ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+geom_density()
 @
-  \caption{Histogram of Missing values in paper sample}
+  \caption{Density Plot of Missing values in paper sample. x Axis is a count of the number of missing observations in each variable }
   \label{fig:papermissingplot}
 \end{figure}
+
+\begin{figure}
+<<onlinemissingplot, echo=FALSE, fig=TRUE>>=
+  print(ggplot(as.data.frame(online.missing), aes(x=online.missing))+geom_density())
+@
+  \caption{Histogram of Missing Values, Online sample}
+  \label{fig:onlinemissingplot}
+\end{figure}
+
 
 
 
@@ -128,7 +133,7 @@ print(missing.many.xtab)
 
 It can be seen from Table \ref{tab:missingmanytable} that the problems with missing data are concentrated in four consecutive questions, RAND questions 13 through 16. These questions all load on the Role Limitations subscale, explaining why this subscale shows up with lots of missing data.  The consecutive nature of the data suggests that the reason for this may be that participants believed that it was only necessary to answer one of the questions, though that does not explain why so many people did not answer the first question.
 
-Next, we will impute the missing data using a multiple imputation procedure (as discussed in the Methodology).
+%% Next, we will impute the missing data using a multiple imputation procedure (as discussed in the Methodology).
 
 <<impute, eval=FALSE, echo=FALSE, results=hide>>=
 require(mice)
@@ -169,7 +174,7 @@ be seen in Table \ref{tab:sumstatscales} , below.
 hom.tot <- hom1[,66:75]
 tot.sum <- summary(hom.tot)
 tot.xtab <- xtable(tot.sum, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism Measures")
-print(tot.xtab, scalebox=0.75, include.rownames=FALSE)
+print(tot.xtab, scalebox=0.5, include.rownames=FALSE)
 @
 
 
@@ -208,8 +213,8 @@ pairs.panels(na.omit(hom.tot))
 hom.tot.cor <- cor(hom.tot, use="pairwise.complete.obs", method="spearman")
 hom.tot.cor <- as.data.frame(hom.tot.cor)
 names(hom.tot.cor) <- c("Physical Functioning", "Role Limitations", "Emotional Role Limitations", "Energy Fatigue", "Social Functioning", "Pain", "General Health", "Mindfulness", "Optimism")
-hom.tot.cor.xtab <- xtable(hom.tot.cor, label="tab:scalecorr", caption="Correlations Between Scales GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being.  *=p<0.05, **=p<0.01, ***=p<0.001")
-print(hom.tot.cor.xtab, scalebox=0.6)
+hom.tot.cor.xtab <- xtable(hom.tot.cor, label="tab:scalecorr", caption="Correlations Between Scales GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being.All relationships significant at p<0.01")
+print(hom.tot.cor.xtab, scalebox=0.4)
 @
 
 
@@ -236,7 +241,7 @@ The figure above \ref{fig:optplot1}, shows a linear regression of optimism again
 
 \begin{figure}
 <<optplotgend, echo=FALSE, fig=TRUE>>=
-optplotgend <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
+optplotgend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
 print(optplotgend)
 @  
   \caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
@@ -361,7 +366,7 @@ testopt <- with(hom1.test.opt, optimism)
 ## opt.pred.test <- extractPrediction(list( opt.train.rf, opt.trainenet), testX=hom1.test.opt[,-75], testY=testopt)
 @ 
 
-<<optridge, echo=FALSE, results=hide>>=
+<<optridge, echo=FALSE, results=tex>>=
 opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
 opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="response", scale=FALSE)
 ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
@@ -369,11 +374,11 @@ digits(ridge.xtab) <- 4
 print(ridge.xtab)
 @
 
-Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the typical linear regression fit. Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
 
 Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
 
-<<optlasso, echo=FALSE, results=hide>>=
+<<optlasso, echo=FALSE, results=tex>>=
 opt.lasso <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
 opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response", scale=FALSE)
 opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
@@ -384,19 +389,23 @@ lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.tr
 
 Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
 
-<<optstep, echo=FALSE, results=tex>>=
+<<optstep, echo=FALSE, results=hide>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
 opt.reg.simple <- lm(optimism~1, data=hom1.train.opt)
 opt.step <- stepAIC(opt.reg.first, direction="both", k=2)
 opt.step.pred.resp <- predict(opt.step, newdata=hom1.test.opt, type="response")
 opt.step.pred.coef <- predict(opt.step, newdata=hom1.test.opt, type="terms")
 step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimism"])
+
+@ 
+
+<<optstepprint, echo=FALSE, results=tex>>=
 print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
 @ 
 
 As Table \ref{tab:hom1optstep} shows, the stepwise selected models kept three predictors. General health and Age are retained, despite their lack of signifiance, suggesting that while they have an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
 
-<<optsteppred, echo=FALSE, results=hide>>=
+<<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=hom1.test.opt)
 print(xtable(summary(opt.step), captio="Coefficients for Stepwise Selected Model on Test Data", caption="tab:hom1stepopttest"))
 @ 
@@ -411,7 +420,7 @@ opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
 ## train.gam.loess <- train(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, method="gamLoess", tuneLength=10)
 @ 
 
-<<optreglm, echo=FALSE, results=tex>>=
+<<optreglm, echo=FALSE, results=hide>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
 opt.reg.sum <- summary(opt.reg.first)
 opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
@@ -426,7 +435,7 @@ lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
 %% Below, in Table \ref{tab:optregfinal} can be seen the final model,
 %% including all significant predictor variables.
 
-<<optregfinal, echo=FALSE, results=tex>>=
+<<optregfinal, echo=FALSE, results=hide>>=
 opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
 optfolds <- TrainTestSets(opt.part, hom1)
 opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
@@ -452,7 +461,6 @@ As has been shown above, all three kinds of regression models agreed that emotio
 A similiar procedure as described above for optimism was employed
 in the midfulness regressions.  The results are shown below.
 
-The results of the maximal model are shown in Table \ref{tab:maasfirst} below.
 
 <<mindsetup, echo=FALSE, results=hide>>=
 mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
@@ -483,14 +491,18 @@ mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train, traindat
 
 Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Next, a stepwise selection model procedure was employed on the dataset. 
 
-<<maasregfirst, echo=FALSE, results=tex>>=
-maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
-mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
+<<maasregfirst, echo=FALSE, results=hide>>=
+maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+age, data=hom1.mind.train)
+mind.step <- stepaic(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
 mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
-print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+
 mind.step.pred <- predict(mind.step, hom1.mind.test, type="response")
 mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optimism"]])
 @
+
+<<mindstepprint, echo=false, results=tex>>=
+print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+@ 
 
 As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue. In contrast to the lasso and ridge fits, the model selected using this method did not include optimism. When the correlations between predicted and observed values were measured, all three model fits had correlations with the observed variables of approximately 0.44. However, in the case of the stepwise model, this correlation was negative. This unexpected result would seem to imply that this model is not particularly useful, and so either the lasso or ridge would appear to be the best model in terms of this data. 
 
@@ -523,7 +535,7 @@ As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitatio
 Next, a lasso regression model was fit to the same dataset. 
 
 
-<<healthlasso, echo=FALSE, results=hide>>=
+<<healthlasso, echo=FALSE, results=tex>>=
 health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
 health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=1, type="response")
 print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
@@ -531,7 +543,7 @@ print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression
 
 As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
 
-<<healthridge, echo=FALSE, results=hide>>=
+<<healthridge, echo=FALSE, results=tex>>=
 health.ridge <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=0, type="coefficients")
 health.ridge.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train, traindata=as.matrix(healthpred.train), testdata=healthpred.test, newy=health.test, alpha=0, type="response")
 print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression on General Health on unseen data", label="tab:hom1healthridge"))
@@ -551,32 +563,34 @@ maasitems <- hom1[,maas.grep]
 lotr.grep <- grep("^LOTRQ", x=names(hom1))
 lotritems <- hom1[,lotr.grep]
 @
-<<retainfactors, echo=FALSE, results=tex>>=
+<<retainfactors, echo=FALSE, results=hide>>=
 sink("tmp.txt")
 rand.nscree <- nScree(x=cor(na.omit(randitems.scored), use="pairwise.complete.obs"), model="factors")
 sink(NULL)
-print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison of Criteria to retain factors"))
-
 @
+
+<<retainfactorsprint, echo=FALSE, results=tex>>=
+print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison of Criteria to retain factors"))
+@ 
 
 As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors, while the parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
-Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriel\'s method) or the typical ten fold validation common in  machine learning (Wold\'s method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
+Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
 
 <<randfactorcv, echo=FALSE, results=hide>>=
 rand.fact.gabriel <- cv.svd.gabriel(na.omit(randitems.scored), krow=2, kcol=2, maxrank=18)
 rand.fact.wold <- cv.svd.wold(na.omit(randitems.scored), k=10, maxrank=12)
 @ 
 
-<<randcvwold, echo=FALSE, results=hide>>=
-print(Svdcv(rand.fact.wold, label="tab:randfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation"))
+<<randcvwold, echo=FALSE, results=tex>>=
+print(xtable(Svdcv(rand.fact.wold, label="tab:randfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation"))
 @ 
 
 It can be seen from Table \ref{tab:randfactwold} that the Wold method of cross validation suggests that four factors should be retained for further analysis. This seems in line with the results of the other criteria.
 
 
 
-<<randcvgabriel, echo=FALSE, results=hide>>=
+<<randcvgabriel, echo=FALSE, results=tex>>=
 print(Svdcv(rand.fact.gabriel, label="tab:randfactgabriel", caption="Estimate of number of factors to retain based on leave out 2 item/subject Cross-validation"))
 @
 
@@ -586,7 +600,7 @@ To summarise, two, four, eight and thirteen factor structures will be examined f
 
 Next, the various metrics for determining the number of factors were applied to the Mindfulness scale. 
 
-<<retainmaas, echo=FALSE,results=hide >>=
+<<retainmaas, echo=FALSE, results=hide>>=
 sink("tmp.txt")
 maas.nscree <- nScree(x=cor(na.omit(maasitems), use="pairwise.complete.obs"), model="factors")
 sink(NULL)
@@ -601,20 +615,20 @@ Looking at the eigenvalues, it is clear that one factor explains the majority of
 
 <<maasfactorcv, echo=FALSE, results=tex>>=
 maasitems <- as.data.frame(lapply(maasitems, as.numeric))
-maas.fact.gabriel <- cv.svd.gabriel(na.omit(maasitems), krow=2, kcol=2, maxrank=10)
+maas.fact.gabriel <- cv.svd.gabriel(na.omit(maasitems), krow=2, kcol=2, maxrank=7)
 maas.fact.wold <- cv.svd.wold(na.omit(maasitems), k=10, maxrank=7)
 @
 
 
 <<maascvwold, echo=FALSE, results=tex>>=
-print(Svdcv(maas.fact.wold, label="tab:maasfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation"))
+print(Svdcv(maas.fact.wold, label="tab:maasfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation, MAAS Sample One"))
 @ 
 
 The Gabriel method of cross-validation, (shown in Table \ref{tab:maasfactwold}), agrees with the other criteria in suggesting that one factor should be retained. 
 
 
 <<maascvgabriel, echo=FALSE, results=tex>>=
-print(Svdcv(maas.fact.gabriel, label="tab:maasfactgabriel", caption="Estimate of number of factors to retain based on leave out 2 item/subject Cross-validation"))
+print(Svdcv(maas.fact.gabriel, label="tab:maasfactgabriel", caption="Estimate of number of factors to retain based on leave out 2 item/subject Cross-validation, MAAS Sample One"))
 @ 
 
 It can be seen from Table \ref{tab:maasfactgabriel} that the Wold method of cross-validation suggests that there are seven factors which underlie this scale. This seems relatively implausible, but it will be tested. 
@@ -622,14 +636,18 @@ It can be seen from Table \ref{tab:maasfactgabriel} that the Wold method of cros
 Therefore, one, three and seven factor solutions will be examined and their performance assessed on unseen data. 
 
 
-<<retainlotr, echo=FALSE,results=tex >>=
+<<retainlotr, echo=FALSE, results=hide>>=
 lotr.nscree <- nScree(x=cor(na.omit(lotritems), use="pairwise.complete.obs"), model="factors")
-print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison of Criteria to retain factors, LOTR"))
+@ 
+
+<<lotrprint, echo=FALSE, results=tex>>=
+print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison of Criteria to retain factors, LOTR, Sample One"))
+
 @ 
 
 As shown in Table \ref{tab:lotrretain},all of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
 
-<<lotrfactorcv, echo=FALSE, results=tex>>=
+<<lotrfactorcv, echo=FALSE, results=hide>>=
 lotritems <- as.data.frame(lapply(lotritems, as.numeric))
 lotr.fact.gabriel <- cv.svd.gabriel(na.omit(lotritems), krow=3, kcol=3, maxrank=3)
 lotr.fact.wold <- cv.svd.wold(na.omit(lotritems), k=10, maxrank=3)
@@ -767,7 +785,7 @@ The factor correlations are moderate (shown in Table \ref{tab:hom1rand8corr}) an
 
 <<rand13fact, echo=FALSE, results=tex>>=
 rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
-print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), floating.environment="sidewaystable")
+print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"))
 @
 
 PA2: "RANDQ6"  "RANDQ7"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
@@ -2039,13 +2057,6 @@ As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model pro
 \part{Sample Two}
 
 \begin{figure}
-<<onlinemissingplot, echo=FALSE, fig=TRUE>>=
-print(qplot(online.missing))
-@
-  \caption{Histogram of Missing Values, Online sample}
-  \label{fig:onlinemissingplot}
-\end{figure}
-\begin{figure}
 <<optplot2, echo=FALSE, fig=TRUE>>=
 optplot2 <- ggplot(hom2, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
 print(optplot2)
@@ -2095,7 +2106,7 @@ Finally, the model developed by stepwise selection was applied to the new data.
 
 <<optstep2a, echo=FALSE, results=hide>>=
 opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Model on Test Data", caption="tab:homstepopttest2a"))
+print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
 @ 
 
 
@@ -2104,7 +2115,7 @@ As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an 
 \subsubsection{Psychometric Analyses}
 \label{sec:psych-analys}
 
-\subsubsubsection{Factor Analyses}
+\subsection{Factor Analyses}
 \label{sec:psych-analys-1}
 
 The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the b sample, it was tested on both the a and the c sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from sample 1. The model chosen by this procedure was then used to predict factor scores for each of the participants, and was also used to predict these scores for the experimental portion of the research.
