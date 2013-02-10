@@ -5,7 +5,7 @@ Expectancies are considered to be at the core of the placebo response \cite{Mont
 
 This chaper describes an adaptation of the Credibility/Expectancy Questionnaire \cite{devilly2000psychometric}  to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
 
-While expectancies are considered the prime factor in response to placebo, there is some evidence that they are not the best predictors in all situations, and that there may be components of expectancies which are not tapped by current measures \cite{Hyland2007,Geers2005,Geers2005a}. The CEQ is useful in that it taps both cognitive and affective components of the expectancy construct, and this should lead to better predictions. This article reports on the development of the CEQ for pain measurements. 
+While expectancies are considered the prime factor in response to placebo, there is some evidence that they are not the best predictors in all situations, and that there may be components of expectancies which are not tapped by current measures \cite{Hyland2007,Geers2005,Geers2005a}. The CEQ is useful in that it taps both cognitive and affective components of the expectancy construct, and this should lead to better predictions. This chapter describes the development of the CEQ for pain measurements. 
 
 It is important to note that current or former use of the treatments measured was not a requirement for the completion of the measure, but this should not be regarded as a flaw given that many if not most participants in placebo research do not have any experience of the treatments used (and indeed, such knowledge is often an exclusion criteria for the research) \cite{Kirsch1985,Kirsch1997}. The CEQ has been used in a family therpay setting for children with conduct disorder \cite{Nock2007}, in the assessment of relational therapy for Vietnam war veterans and their spouses \cite{Devilly2002} and in the treatment of PTSD \cite{Devilly2008}. It has not been used in any non-clinical samples, and this is its first adaptation for the study of both pain and treatment response expectancies. 
 
@@ -78,6 +78,7 @@ require(OpenMx)
 require(MASS)
 require(reshape2)
 source("func.R")
+require(gridExtra)
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
 
@@ -96,13 +97,18 @@ The College of study of the respondents was also assessed, and the results are s
 
 <<gendersummary, echo=FALSE, results=tex>>=
 sum.gen<-with(tcq1, summary(Gender))
-sum.gen.xtab<-xtable(as.data.frame(sum.gen), caption="Gender of Participants in Study One", label="tab:tcq1gender")
+sum.gen <- as.data.frame(sum.gen)
+names(sum.gen) <- "Gender Breakdown"
+sum.gen.xtab<-xtable(sum.gen, caption="Gender of Participants in Study One", label="tab:tcq1gender")
 print(sum.gen.xtab)
 @ 
 
 <<tcqcollege, echo=FALSE, results=tex>>=
 sum.coll<-with(tcq1, summary(College)) 
-xtab.coll<-xtable(as.data.frame(sum.coll), label="tab:tcq1college", caption="College of Respondents, Study One")
+rownames(sum.coll)[1] <- "No College Supplied"
+sum.coll <- as.data.frame(sum.coll)
+names(sum.coll) <- "College Breakdown"
+xtab.coll<-xtable(sum.coll, label="tab:tcq1college", caption="College of Respondents, Study One")
 print(xtab.coll)
 @ 
 
@@ -172,102 +178,56 @@ sink(NULL)
 
 Next, the differences in credibility totals between Genders will be examined. 
 <<gendercred, echo=FALSE, results=hide>>=
-gendpill <- ggplot(tcq1, aes(y=PillTot, x=Gender))+geom_boxplot()
-gendcream <- ggplot(tcq1, aes(y=CreamTot, x=Gender))+geom_boxplot()
-gendinj <- ggplot(tcq1, aes(y=InjTot, x=Gender))+geom_boxplot()
-gendacu <- ggplot(tcq1, aes(y=AcuTot, x=Gender))+geom_boxplot()
+gendpill <- ggplot(na.omit(tcq1), aes(y=PillTot, x=Gender))+geom_boxplot()
+gendcream <- ggplot(na.omit(tcq1), aes(y=CreamTot, x=Gender))+geom_boxplot()
+gendinj <- ggplot(na.omit(tcq1), aes(y=InjTot, x=Gender))+geom_boxplot()
+gendacu <- ggplot(na.omit(tcq1), aes(y=AcuTot, x=Gender))+geom_boxplot()
 @ 
 
 \begin{figure}
 <<gendpill, echo=FALSE, fig=TRUE>>=
-print(gendpill)
+print(arrangeGrob(gendpill, gendcream, gendinj, gendacu))
 @   
-  \caption{Gender Differences in Pill Scores, TCQ1}
+  \caption{Gender Differences in Credibility  Scores, TCQ1}
   \label{fig:gendcredpill}
 \end{figure}
 
-\begin{figure}
-<<gendcream, echo=FALSE, fig=TRUE>>=
-print(gendcream)
-@   
-  \caption{Gender Difference in Credibility Scores for Creams, TCQ1}
-  \label{fig:gendcredcream}
-\end{figure}
-\begin{figure}
-<<gendinj, echo=FALSE, fig=TRUE>>=
-print(gendinj)
-@ 
-  
-  \caption{Gender Differences in Injection Credibility Scores, TCQ 1}
-  \label{fig:gendcredinj}
-\end{figure}
 
-\begin{figure}
-<<gendacu, echo=FALSE, results=hide>>=
-print(gendacu)
-@   
-  \caption{Gender Differences in Acupuncture Credibility Scores, TCQ 1}
-  \label{fig:gendcredacu}
-\end{figure}
 
-As can be seen from this Box plot (Figure \ref{fig:gendcredpill}), there appear to be no significant differences in median Pill scores that can be attributed to the Gender of the respondents. It can be seen, however, that the variability is larger within the male responses. 
+As can be seen from this Figure \ref{fig:gendcredpill}, there appear to be no significant differences in median Pill scores that can be attributed to the Gender of the respondents. It can be seen, however, that the variability is larger within the male responses. 
 
-Again, we see a similar pattern to the scores for Creams (Figure \ref{fig:gendcredcream}, in that there appears to be no mean differences in the credibility totals. We can see a larger variability with the responses from men.  
+Again, we see a similar pattern to the scores for Creams, in that there appears to be no mean differences in the credibility totals. We can see a larger variability with the responses from men.  
 
-From Figure \ref{fig:gendcredinj}, we can observe that again, no significant differences are visible between the credibility totals.  We can observe that men tend to report much higher variability in their assessment of injections.
+From  the figure, we can observe that again, no significant differences are visible between the credibility totals.  We can observe that men tend to report much higher variability in their assessment of injections.
 
-However, the acupuncture figure (Figure \ref{fig:gendcredacu} shows a different pattern. We can see from a simple inspection of the graph that the mean credibility totals are very different for females and males. We performed a Kruskall Wallis test to examine whether this visual difference can be backed up with a rigorous analysis. The results tended towards significance (p=0.09).
+However, the acupuncture credibility scores show a different pattern. We can see from a simple inspection of the graph that the mean credibility totals are very different for females and males. We performed a Kruskall Wallis test to examine whether this visual difference can be backed up with a rigorous analysis. The results tended towards significance (p=0.09).
 
 
 As can be seen from this, the difference, although visible is not significant, although it probably would be if the sample were larger. Again, the pattern of larger variability in the responses of men is apparent.   
 
 
 <<collegeplots, echo=FALSE, results=hide>>=
-collpill <- ggplot(na.omit(tcq1), aes(y=PillTot, x=College))+geom_boxplot()
-collcream <- ggplot(na.omit(tcq1), aes(y=CreamTot, x=College))+geom_boxplot()
-collinj <- ggplot(na.omit(tcq1), aes(y=InjTot, x=College))+geom_boxplot()
-collacu <- ggplot(na.omit(tcq1), aes(y=AcuTot, x=College))+geom_boxplot()
+collpill <- ggplot(na.omit(tcq1), aes(y=PillTot, x=College))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
+collcream <- ggplot(na.omit(tcq1), aes(y=CreamTot, x=College))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
+collinj <- ggplot(na.omit(tcq1), aes(y=InjTot, x=College))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
+collacu <- ggplot(na.omit(tcq1), aes(y=AcuTot, x=College))+geom_boxplot)+theme(axis.text.x=element_text(angle=45, hjust=1))
 @ 
 
 \begin{figure}
 <<collpill, echo=FALSE, fig=TRUE>>=
-print(collpill)
+print(arrangeGrob(collpill, collcream, collinj, collacu))
 @   
-  \caption{Pill Credibility Scores by College of Study}
+  \caption{Treatment Credibility Scores by College of Study}
   \label{fig:collpill}
 \end{figure}
 
 
-\begin{figure}
-<<collcream, echo=FALSE, fig=TRUE>>=
-print(collcream)
-@   
-  \caption{Cream Credibility Scores by College}
-  \label{fig:collcream}
-\end{figure}
-
-\begin{figure}
-<<collinj, echo=FALSE, fig=TRUE>>=
-print(collinj)
-@   
-  \caption{Injection Credibility Scores by COllege}
-  \label{fig:collinj}
-\end{figure}
-
-\begin{figure}
-<<collacu, echo=FALSE, fig=TRUE>>=
-print(collacu)
-@   
-  \caption{Acupuncture Credibility Scores by College}
-  \label{fig:collacu}
-\end{figure}
-
-From Figures \ref{fig:collpill},\ref{fig:collcream},\ref{fig:collinj},\ref{fig:collacu}, it can be seen that the were differences in the crediblity scores of various treatments across the colleges of study. These differences were only significant for the Cream ($p=0.0158$) and Injection ($p=0.0168$) credibility scores. 
+From Figure \ref{fig:collpill} it can be seen that the were differences in the crediblity scores of various treatments across the colleges of study. These differences were only significant for the Cream ($p=0.0158$) and Injection ($p=0.0168$) credibility scores. 
 
 \subsubsection{Reliability Analysis}
 
 %Reliability is an extremely important part of any measurement instrument, given that if we cannot rely on the instrument giving us similar answers on different equations, it is of no use in our studies.
-The reliability of this scale was assessed. The method used was Cronbach\'s alpha , which is the mean of all possible split half reliabilities, and is the most commonly used measure of reliability in psychological research. Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
+The reliability of this scale was assessed. The method used was Cronbachs alpha , which is the mean of all possible split half reliabilities, and is the most commonly used measure of reliability in psychological research. Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
 
 This analysis was performed on the sample, and the mean alpha was equal to .9, which is well above the threshold used for survey research (.7) and would, on the basis of this sample, qualify as a clinical instrument, for which the threshold is 0.9. This reliability analysis (shown in Tables \ref{tab:reltcq1short} and \ref{tab:tcq1rellong})  did not suggest that any of the items should be removed from the scale. 
 
@@ -291,7 +251,7 @@ print(rel.xtab)
 @ 
 
 <<reltcq2, echo=FALSE, results=tex>>=
-print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for the TCQ 1", label="tab:reltcq1rellong"))
+print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for the TCQ 1", label="tab:tcq1rellong"))
 @ 
 
 
@@ -300,7 +260,7 @@ print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for t
 
 \subsubsection{Factor Analysis}
 
-Factor Analysis is a method for examining inter-correlations between sets of variables in order to reduce the number of items required to model the instrument. It is commonly used in psychological research either to confirm a predicted structure (Confirmatory Factor Analysis) or to explore the factor structure of a new instrument (Exploratory Factor Analysis).
+%% Factor Analysis is a method for examining inter-correlations between sets of variables in order to reduce the number of items required to model the instrument. It is commonly used in psychological research either to confirm a predicted structure (Confirmatory Factor Analysis) or to explore the factor structure of a new instrument (Exploratory Factor Analysis).
 
 
 
@@ -312,7 +272,7 @@ The first analysis carried out on the data was an assessment of the number of fa
 <<faparallel, echo=FALSE, fig=TRUE>>=
 sink("tmp.txt")
 plot(fa.parallel(na.omit(tcqall)))
-VSS(na.omit(tcqall))
+## VSS(na.omit(tcqall))
 sink(NULL)
 @ 
 
@@ -352,7 +312,7 @@ Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
 
 <<tcqfact5, echo=FALSE, results=tex>>=
 tcq.fact.5 <-fa(na.omit(tcqall), 6, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.5, label="tab:tcq1fact5",caption="Five Factor Solution, TCQ 1 Promax rotation"))
+print(FactorXtab(tcq.fact.5, label="tab:tcq1fact5",caption="Five Factor Solution, TCQ 1 Promax rotation", label="tab:tc1fivefactor"))
 @ 
 <<tcq5cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.5, label="tab:tcq1fact5cor", caption="Five Factor Solution TCQ1 Correlations"))
@@ -386,7 +346,7 @@ fit6 <- FitIndices(tcq.fact.6)
 fit.tcq1 <- as.data.frame(cbind(fit4, fit5, fit6))
 fittcq1.m <- melt(fit.tcq1)
 names(fittcq1.m)[1] <- "Fit Index"
-print(xtable(fittcq1.m, caption="Fit Indices, TCQ 1", label="tab:tcq1modelcomp"), scalebox=0.6)
+print(xtable(fittcq1.m, caption="Fit Indices, TCQ 1", label="tab:tcq1modelcomp"), scalebox=0.75)
 @ 
 
 \subsubsection{Confirmatory Factor Analyses}
@@ -621,7 +581,7 @@ tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.2pl)
 <<tcqgrmcomp, echo=FALSE, results=hide>>=
 grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
 @ 
-The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative tcq (i.e. the acupuncture items) was examined under both the partial credit model and the graded response model.  
+The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative TCQ (i.e. the acupuncture items) was examined under both the partial credit model and the graded response model.  
 
 <<tcqaltpcm, echo=FALSE, results=tex>>=
 tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
@@ -641,7 +601,7 @@ tcqalt.pcm.fscores <- factor.scores(tcqalt.pcm.1pl)
 tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores)
 @ 
 
-The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcqaltpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An anova confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
+The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcqaltgpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An anova confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
 
 Next, a two parameter model was fitted to this data. 
 
@@ -779,7 +739,7 @@ tcqfull.a <- as.data.frame(cbind(Pillall.a, Creamall.a, Injall.a,
  Acuall.a, Homall.a, Reiall.a))
 @ 
 
-As in previous analyses (see Chapter \ref{cha:healthforthesis}, the second sample was much larger than the first, and therefore was split into a number of equal parts. In this case, the second sample (consisting of student and staff responses) was split into four equal sub-samples(A-D). The first of these (hereafter denoted as A), was then  used as a test sample for the models developed on the data from Sample 1. 
+As in previous analyses (see Chapter \ref{cha:health-for-thesis}, the second sample was much larger than the first, and therefore was split into a number of equal parts. In this case, the second sample (consisting of student and staff responses) was split into four equal sub-samples(A-D). The first of these (hereafter denoted as A), was then  used as a test sample for the models developed on the data from Sample 1. 
 
 \subsection{Confirmatory Factor Analysis}
 \label{sec:conf-fact-analys-1}
@@ -883,7 +843,7 @@ tcq6summ2 <- summary(tcq6fit2)
 
 <<tcq2testsemcomp, echo=FALSE, results=tex>>=
 tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq5fit2, tcq6fit2))
-print(summary(xtable(tcq2.1.comp)))
+print(xtable(summary(tcq2.1.comp), caption="Comparison of Four, Five and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
 @ 
 
 As can be seen from Table \ref{tab:tcq2testsemcomp} the six factor model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion, below.
@@ -924,7 +884,7 @@ injlm2a <- lm(Injtot~Pilltot+Creamtot+Acutot+Gender+College+UGPG, data=tcq2a)
 print(xtable(summary(injlm2a), caption="Regression of Injection Credibility Score Model from Study One on subsample from Study Two", label="tab:injlm2a"))
 @ 
 
-As can bee seen from Table \ref{tab:injlm2a}, the results of this same model on Study Two data were in line with those from Study One. That being said, both Gender Coefficients are significant in Stuyd Two, while they were not in Study One. This is interesting as it represents a larger effect being seen on an equivalent instrument. 
+As can bee seen from Table \ref{tab:injlm2a}, the results of this same model on Study Two data were in line with those from Study One. That being said, both Gender Coefficients are significant in Study Two, while they were not in Study One. This is interesting as it represents a larger effect being seen on an equivalent instrument. 
 
 Finally, the Acupuncture credibility model from Study One was examined. 
 
@@ -969,7 +929,7 @@ As can be seen from Table \ref{tab:pcmmodcomp}, the one parameter Partial Credit
 
 Next, the same process is repeated for the graded response models. 
 
-<<grmtest, echo=FALSE, results=hide>>=
+<<grmtest, echo=FALSE, results=tex>>=
 grm1pl.done <- testIRTModels(tcqconv.grm.1pl, tcq2a.conv, grmconstraint=TRUE)
 grm2pl.done <- testIRTModels(tcqconv.grm.2pl, tcq2a.conv, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
@@ -1008,7 +968,11 @@ The sample size collected was 1329, however, only 700 completed all questions. T
 
 <<tcq2demo, echo=FALSE, results=tex>>=
 tcq2.demo <- tcq2[,2:17]
-tcq2.sum <- summary(tcq2.demo)
+tcq2.demo1 <- tcq2.demo[,1:5]
+tcq2.demo2 <- tcq2.demo[,6:10]
+tcq2.demo3 <- tcq2.demo[,11:16]
+tcq2.sum1 <- summary(tcq2.demo1)
+
 print(xtable(tcq2.sum, caption="Demographic Statistics, TCQ 2", label="tab:tcq2demo"), scalebox=0.4)
 @ 
 
