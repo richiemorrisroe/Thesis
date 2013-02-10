@@ -354,33 +354,39 @@ mytrain <- trainControl(method="cv")
 @ 
 
 <<opttrain, echo=FALSE, results=hide>>=
-  ## opt.trainenet <- train(optimism~generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="enet", tuneLength=5, fitBest=FALSE, returnData=TRUE)
 testpred <- hom1.test.opt[,c("Age", "pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat", "generalhealth")]
-## opt.train.rf <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="rf", tuneLength=5)
-## opt.train.evtree <- train(optimism~generalhealth+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat, data=hom1.train.opt, method="evtree", tuneLength=5)
 trainopt <- with(hom1.train.opt, optimism)
 trainpred <- hom1.train.opt[,c(4, 66:74)]
 testopt <- with(hom1.test.opt, optimism)
-## optpredenet <- extractPrediction(list(opt.trainenet), testX=testpred, testY=testopt, verbose=TRUE)
-## opt.pred.train.enet <- extractPrediction(list(opt.trainenet))
-## opt.pred.test <- extractPrediction(list( opt.train.rf, opt.trainenet), testX=hom1.test.opt[,-75], testY=testopt)
 @ 
 
 <<optridge, echo=FALSE, results=tex>>=
 opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
-opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="response", scale=FALSE)
+opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=testpred, alpha=0, nfolds=10, type="response")
 ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
 digits(ridge.xtab) <- 4
 print(ridge.xtab)
 @
 
 Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+%% \begin{figure}
+%% <<optridgeplot, echo=FALSE, fig=TRUE>>=
+%% opt.ridge.melt <- melt(opt.ridge.pred)
+%% opt.ridge.pred.plot <- ggplot(opt.ridge.melt, aes(x=value, group=variable, colour=variable))+geom_density()
+
+%% @ 
+  
+%%   \caption{Density Plot of Predicted versus Observed Values, Optimism Ridge Regression Model}
+%%   \label{fig:optridgelassoplot}
+%% \end{figure}
+
+As can be seen from Figure \ref{fig:optridgelassoplot} the predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
 
 Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
 
 <<optlasso, echo=FALSE, results=tex>>=
 opt.lasso <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
-opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response", scale=FALSE)
+opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response")
 opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
 digits(opt.lasso.xtab) <- 4
 print(opt.lasso.xtab)
@@ -388,6 +394,17 @@ lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.tr
 @ 
 
 Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+
+
+%% \begin{figure}
+## <<optlassopredplot, echo=FALSE, results=hide>>=
+## opt.lasso.pred.m <- melt(opt.lasso.pred)
+## names(opt.lasso.pred.m)[2] <- "Optimism"
+## opt.lasso.pred.plot <- ggplot(opt.lasso.pred.m, aes(x=value, group=variable, colour=variable))+geom_density()
+%% @   
+%%   \caption{Predicted versus Observed Values, Lasso Regression, Optimism, Sample One}
+%%   \label{fig:optlassopredplot}
+%% \end{figure}
 
 <<optstep, echo=FALSE, results=hide>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
@@ -492,8 +509,8 @@ mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train, traindat
 Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Next, a stepwise selection model procedure was employed on the dataset. 
 
 <<maasregfirst, echo=FALSE, results=hide>>=
-maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+age, data=hom1.mind.train)
-mind.step <- stepaic(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
+maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
+mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
 mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
 
 mind.step.pred <- predict(mind.step, hom1.mind.test, type="response")
@@ -583,7 +600,7 @@ rand.fact.wold <- cv.svd.wold(na.omit(randitems.scored), k=10, maxrank=12)
 @ 
 
 <<randcvwold, echo=FALSE, results=tex>>=
-print(xtable(Svdcv(rand.fact.wold, label="tab:randfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation"))
+print(xtable(Svdcv(rand.fact.wold, label="tab:randfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation")))
 @ 
 
 It can be seen from Table \ref{tab:randfactwold} that the Wold method of cross validation suggests that four factors should be retained for further analysis. This seems in line with the results of the other criteria.
@@ -689,16 +706,16 @@ rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 
-PA1: "RANDQ1"  "RANDQ14" "RANDQ16" "RANDQ17" "RANDQ18" "RANDQ19" "RANDQ20" "RANDQ21" "RANDQ22" "RANDQ23" "RANDQ24" "RANDQ25" "RANDQ26" "RANDQ27"
-"RANDQ28" "RANDQ29" "RANDQ30" "RANDQ31" "RANDQ32" "RANDQ33" "RANDQ34"
-"RANDQ35" "RANDQ36". Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
+PA1: "RANDQ1",  "RANDQ14", "RANDQ16" ,"RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ21" ,"RANDQ22" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27"
+,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32" ,"RANDQ33" ,"RANDQ34"
+,"RANDQ35" ,"RANDQ36". Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
 
 PA2:"RANDQ3"  "RANDQ4"  "RANDQ5"  "RANDQ6"  "RANDQ7"  "RANDQ8"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This factor maps exactly to the Physical Functioning Scale, and so retains that name.
 
 
 
-The non-normed fit index was equal to \Sexpr{round(rand.fact.2$TLI, 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.2$RMSEA[1],3 )},with confidence intervals from \Sexpr{round(rand.fact.2$RMSEA[2],3 )} to \Sexpr{round(rand.fact.2$RMSEA[3],3 )}.
+The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
+and the RMSEA was equal to \Sexpr{round(rand.fact.2[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.2[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.2[["RMSEA"]][3],3 )}.
 
 This factor solution does not appear to be useful, as it has extremely low fit indices (NNFI=0.69), and the breakdown of the factors is rather strange. If the factors had broken down in terms of Physical and Mental Health, then this would have made more sense. The factor loadings were invariant under a number of rotations (varimax, oblimin and promax), so it appears to be a real (if less than interpretable) factor structure. 
 
@@ -718,23 +735,23 @@ print(FactorXtab(rand.fact.4, label="tab:rand4fact", caption="Four Factor Soluti
 @
 
 The loadings on the four factor solution broke down as follows. 
-PA2: "RANDQ3"  "RANDQ4"  "RANDQ5"  "RANDQ6"  "RANDQ7"  "RANDQ8"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This factor maps exactly to the Physical Functioning scale, and so retains that name. 
+PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This factor maps exactly to the Physical Functioning scale, and so retains that name. 
 
-PA1: "RANDQ17" "RANDQ18" "RANDQ19" "RANDQ20" "RANDQ23" "RANDQ24" "RANDQ25" "RANDQ26" "RANDQ27" "RANDQ28" "RANDQ29" "RANDQ30" "RANDQ31" "RANDQ32". This factor maps to the emotional role limitations, social functioning and emotional well being scales, and so can probably best be termed as Social and Emotional Functioning. 
+PA1: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32". This factor maps to the emotional role limitations, social functioning and emotional well being scales, and so can probably best be termed as Social and Emotional Functioning. 
 
-PA3: "RANDQ13" "RANDQ14" "RANDQ15" "RANDQ16" "RANDQ21" "RANDQ22". This factor maps to the role limitations and pain sub-scales, and so can probably best be termed as physical limitations. 
+PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16" ,"RANDQ21" ,"RANDQ22". This factor maps to the role limitations and pain sub-scales, and so can probably best be termed as physical limitations. 
 
-PA4: "RANDQ1"  "RANDQ3"  "RANDQ21" "RANDQ27" "RANDQ33" "RANDQ34" "RANDQ35" "RANDQ36". This scale maps to the General Health scale, with one item from the Physical Functioning and one item from Energy/Fatigue (27). However, both these items have higher loadings on other factors, and so this factor can probably best be termed as General Health. 
+PA4: "RANDQ1" , "RANDQ3" , "RANDQ21" ,"RANDQ27" ,"RANDQ33" ,"RANDQ34" ,"RANDQ35" ,"RANDQ36". This scale maps to the General Health scale, with one item from the Physical Functioning and one item from Energy/Fatigue (27). However, both these items have higher loadings on other factors, and so this factor can probably best be termed as General Health. 
 
 
 
-The non-normed fit index was equal to \Sexpr{round(rand.fact.4$TLI, 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.4$RMSEA[1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4$RMSEA[2],3 )} to \Sexpr{round(rand.fact.4$RMSEA[3],3 )}.
+The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
+and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}.
 
 The fit indices are somewhat better for this solution than for the two factor solution, though the NNFI is still quite low. The RMSEA is somewhat too high for comfort, also. 
 
 <<rand4corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.4$r.scores, label="tab:tcq1rand4corr", caption="Factor Correlations, RAND MOS Four Factor Solution, Sample One"))
+print(xtable(rand.fact.4[["r.scores"]], label="tab:tcq1rand4corr", caption="Factor Correlations, RAND MOS Four Factor Solution, Sample One"))
 @
 
 It can be seen from Table \ref{tab:tcq1rand4corr} that the factor correlations are quite low in this solution also, though they are all high enough to retain the oblique rotations.
@@ -749,21 +766,21 @@ rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
 print(FactorXtab(rand.fact.8, label="tab:tcq1rand8fact", caption="factor Loadings Eight Factor Solution, RAND MOS, Sample One"))
 @
 
-PA2: "RANDQ3"  "RANDQ4"  "RANDQ5"  "RANDQ6"  "RANDQ7"  "RANDQ8"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". Again, the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
+PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". Again, the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
-PA1: "RANDQ20" "RANDQ23" "RANDQ24" "RANDQ25" "RANDQ26" "RANDQ27" "RANDQ28" "RANDQ30" "RANDQ32". This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the energy faitigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
+PA1: "RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ30" ,"RANDQ32". This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the energy faitigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
 
-PA4: "RANDQ1"  "RANDQ33" "RANDQ34" "RANDQ36". These items map exactly to the General Health scale. Item 35 also loads on this scale, and as its loading was 0.29 while the cutoff was 0.30, it can be best characterised as part of that scale. Therefore, this factor can be best termed as General Health.
+PA4: "RANDQ1" , "RANDQ33" ,"RANDQ34" ,"RANDQ36". These items map exactly to the General Health scale. Item 35 also loads on this scale, and as its loading was 0.29 while the cutoff was 0.30, it can be best characterised as part of that scale. Therefore, this factor can be best termed as General Health.
 
-PA7: "RANDQ17" "RANDQ18" "RANDQ19" "RANDQ20". This scale maps to the Emotional Role Limitations and one item (20) from the Social Functioning scale (which asks about social events that have been missed due to health problems) and so this can probably best be termed as Emotional Role Limitations.
+PA7: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20". This scale maps to the Emotional Role Limitations and one item (20) from the Social Functioning scale (which asks about social events that have been missed due to health problems) and so this can probably best be termed as Emotional Role Limitations.
 
-PA3: "RANDQ13" "RANDQ14" "RANDQ15" "RANDQ16". This scale maps exactly to the Role Limitations sub-scale, and so retains that name. 
+PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16". This scale maps exactly to the Role Limitations sub-scale, and so retains that name. 
 
-PA5: "RANDQ29" "RANDQ31". These items are the negative items from the Energy/Fatigue scale, and so this factor can probably best be termed as Fatigue. 
+PA5: "RANDQ29" ,"RANDQ31". These items are the negative items from the Energy/Fatigue scale, and so this factor can probably best be termed as Fatigue. 
 
-PA6: "RANDQ21" "RANDQ22". These items map exactly to the Pain scale, and so retain that name. 
+PA6: "RANDQ21" ,"RANDQ22". These items map exactly to the Pain scale, and so retain that name. 
 
-PA8: "RANDQ2"  "RANDQ23" "RANDQ27". The loadings on this factor are all below .4, which argues against its unproblematic interpretation. In addition, Q2 loads on this factor, when it is not typically associated with any factor. The other two items are the positively worded items from the  Energy/Fatigue scales, and so this factor can best be termed Energy. 
+PA8: "RANDQ2" , "RANDQ23" ,"RANDQ27". The loadings on this factor are all below .4, which argues against its unproblematic interpretation. In addition, Q2 loads on this factor, when it is not typically associated with any factor. The other two items are the positively worded items from the  Energy/Fatigue scales, and so this factor can best be termed Energy. 
 
 
 
@@ -785,30 +802,30 @@ The factor correlations are moderate (shown in Table \ref{tab:hom1rand8corr}) an
 
 <<rand13fact, echo=FALSE, results=tex>>=
 rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
-print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"))
+print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), scalebox=0.8)
 @
 
-PA2: "RANDQ6"  "RANDQ7"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
+PA2: "RANDQ6" , "RANDQ7" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
 
 
-PA8: "RANDQ17" "RANDQ18" "RANDQ19" "RANDQ20". This consists of the three Emotional Role Limitations items, and a low loading on the negatively worded social functioning scale. It can therefore be named Emotional Role Limitations.
+PA8: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20". This consists of the three Emotional Role Limitations items, and a low loading on the negatively worded social functioning scale. It can therefore be named Emotional Role Limitations.
 
-PA3: "RANDQ13" "RANDQ14" "RANDQ15" "RANDQ16". This factor maps exactly to the Role Limitations scale, and thus retains that name. 
+PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16". This factor maps exactly to the Role Limitations scale, and thus retains that name. 
 
-PA7: "RANDQ23" "RANDQ26" "RANDQ27" "RANDQ30". These items map to the positive questions of Emotional Well Being and Energy/Fatigue, and therefore can best be termed as Positive Emotionality. 
+PA7: "RANDQ23" ,"RANDQ26" ,"RANDQ27" ,"RANDQ30". These items map to the positive questions of Emotional Well Being and Energy/Fatigue, and therefore can best be termed as Positive Emotionality. 
 
-PA11: "RANDQ3" "RANDQ4" "RANDQ5" "RANDQ8". These items are all from the Physical Functioning scale, and appear to all relate to relatively heavy exertions. This factor can therefore be termed Physical Exertion.
+PA11: "RANDQ3" ,"RANDQ4" ,"RANDQ5" ,"RANDQ8". These items are all from the Physical Functioning scale, and appear to all relate to relatively heavy exertions. This factor can therefore be termed Physical Exertion.
 
-PA4: "RANDQ1"  "RANDQ34" "RANDQ36". These items all relate to health and are all framed in a positive way. Therefore this factor can be termed Positive Health.
+PA4: "RANDQ1" , "RANDQ34" ,"RANDQ36". These items all relate to health and are all framed in a positive way. Therefore this factor can be termed Positive Health.
 
-PA5:"RANDQ29" "RANDQ31". These are the negatively framed items from the Energy/Fatigue scale, and can be probably best be termed Fatigue. 
+PA5:"RANDQ29" ,"RANDQ31". These are the negatively framed items from the Energy/Fatigue scale, and can be probably best be termed Fatigue. 
 
-PA6: "RANDQ21" "RANDQ22". These items map exactly to the Pain Scale, and thus retain that name. 
+PA6: "RANDQ21" ,"RANDQ22". These items map exactly to the Pain Scale, and thus retain that name. 
 
-PA1: "RANDQ24" "RANDQ25" "RANDQ28" "RANDQ30". These items mostly relate to the emotional well being scale, and are almost all negatively framed. It can probably best be termed Emotional Problems.
+PA1: "RANDQ24" ,"RANDQ25" ,"RANDQ28" ,"RANDQ30". These items mostly relate to the emotional well being scale, and are almost all negatively framed. It can probably best be termed Emotional Problems.
 
 
-PA10: "RANDQ3" "RANDQ6". These items relate to vigourous activities and climbing stairs. It can probably best be termed as Vigourous Activity.
+PA10: "RANDQ3" ,"RANDQ6". These items relate to vigourous activities and climbing stairs. It can probably best be termed as Vigourous Activity.
 
 PA9: "RANDQ33". 
 
@@ -816,15 +833,13 @@ PA12: "RANDQ20"
 
 PA13: "RANDQ24"
 
-The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate  %cite Tabachnick & Fidell here.
+The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate   %cite Tabachnick & Fidell here.
 Therefore we can stop the interpretation here, as this factor does not seem to add much to our understanding of the scale. 
 
 <<rand13corr, echo=FALSE, results=tex>>=
 print(xtable(rand.fact.13[["r.scores"]],label="tab:hom1rand13corr", caption="Factor Correlations, Thirteen Factor RAND MOS Solution, Sample One"), scalebox=0.6)
 @
 As Table \ref{tab:hom1rand13corr} shows, the factors are inter-correlated, but not in any coherent fashion. 
-
-
 
 
 
@@ -955,14 +970,14 @@ rand13summ <- summary(rand13fit)
 
 <<randsemcompare, echo=FALSE, results=tex>>=
 randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand4fit, rand8fit, rand13fit), all=TRUE)
-print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8)
+print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8, table.placement="ht")
 @
 
 As can be seen from \ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
 
 \section{Mindfulness Attention Awareness Scale}
 
-For the MAAS, parallel analysis, MAP, VSS, Kaiser\'s rule and the Wold method of cross-validation suggested a one factor solution, while the Gabriel method of cross-validation suggested a seven factor solution.  Therefore, one and seven factor solutions were extracted and the results interpreted, as shown below.
+For the MAAS, parallel analysis, MAP, VSS, Kaisers rule and the Wold method of cross-validation suggested a one factor solution, while the Gabriel method of cross-validation suggested a seven factor solution.  Therefore, one and seven factor solutions were extracted and the results interpreted, as shown below.
 
 \subsection{MAAS One Factor Solution}
 \label{sec:maas-one-factor}
@@ -985,6 +1000,8 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 \label{sec:maas-seven-factor}
 
 The next factor solution to be examined was the seven factor solution suggested by the Gabriel method of cross-validation.
+
+
 <<maas7fact, echo=FALSE, results=tex>>=
 maas.fact.7<-factor.pa(na.omit(maasitems), 7, rotate="oblimin")
 print(FactorXtab(maas.fact.7,label="tab:tcq1maas7fact", caption="Factor Loadings, Seven Factor Solution, MAAS, Sample One"))
@@ -992,20 +1009,20 @@ print(FactorXtab(maas.fact.7,label="tab:tcq1maas7fact", caption="Factor Loadings
 
 
 
-PA1: "MAASQ9"  "MAASQ10" "MAASQ11" "MAASQ12".These items all relate to automatic behaviour, and this factor can possibly best be termed as Automatic Behaviour.
+PA1: "MAASQ9",  "MAASQ10", "MAASQ11", "MAASQ12".These items all relate to automatic behaviour, and this factor can possibly best be termed as Automatic Behaviour.
 
 PA3:"MAASQ13". This factor is unlikely to be useful, as it consists only of one item. The item relates to preoccupations, and so is given that name. 
 
 
-PA7: "MAASQ7" "MAASQ8". These items both relate to rushing through activities, and can probably best be termed as Hurry. 
+PA7: "MAASQ7", "MAASQ8". These items both relate to rushing through activities, and can probably best be termed as Hurry. 
 
-PA2: "MAASQ2" "MAASQ3". These items can probably best be termed as lack of present focus.
+PA2: "MAASQ2", "MAASQ3". These items can probably best be termed as lack of present focus.
 
 PA4: "MAASQ15". This item relates to food, and so this factor can best be termed as Food Mindlessness. 
 
 PA5: "MAASQ6". This item can best be termed as Inattention.
 
-PA6:"MAASQ1" "MAASQ4" "MAASQ5" "MAASQ9". These items can probably best be termed as lack of awareness. 
+PA6:"MAASQ1", "MAASQ4", "MAASQ5", "MAASQ9". These items can probably best be termed as lack of awareness. 
 
 The non-normed fit index was equal to \Sexpr{round(maas.fact.7[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(maas.fact.7[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(maas.fact.7[["RMSEA"]][2],3 )} to \Sexpr{round(maas.fact.7[["RMSEA"]][3],3)}.
@@ -1112,11 +1129,11 @@ lotr.fact.3<-factor.pa(na.omit(lotritems), 3, rotate="oblimin")
 print(FactorXtab(lotr.fact.3,label="tab:tcq1lotr3fact", caption="Factor Loadings, Three Factor Solution, LOT-R, Sample One"))
 @
 
-PA2:"LOTRQ1"  "LOTRQ4"  "LOTRQ10". These items are all the positively framed items, and so this factor can best be termed as Optimism. 
+PA2:"LOTRQ1",  "LOTRQ4",  "LOTRQ10". These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1:"LOTRQ3" "LOTRQ7". This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. 
+PA1:"LOTRQ3", "LOTRQ7". This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. 
 
-PA3: "LOTRQ7" "LOTRQ9". This factor can best be termed Pessimism (Reversed). 
+PA3: "LOTRQ7", "LOTRQ9". This factor can best be termed Pessimism (Reversed). 
 
 
 
@@ -1168,7 +1185,7 @@ lotr3fit <- mxRun(Lotr3model)
 lotr3summ <- summary(lotr3fit)
 @
 
-<<lotrcompare, echo=FALSE, results=hide>>=
+<<lotrcompare, echo=FALSE, results=tex>>=
 lotrcomp <- mxCompare(base=lotr1fit, comparison=lotr3fit)
 lotrcomp.xtab <- xtable(lotrcomp,label="tab:semlotrcomp", caption="Comparison of CFA for the LOT-R")
 print(lotrcomp.xtab)
@@ -1339,13 +1356,15 @@ print(xtable(coef2mat(coef(emhealth.pcm.rasch)),label="tab:hom1emhealthrasch", c
 
 
 
-As can be seen from Table \ref{tab:hom1emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
+As can be seen from Table \ref{tab:hom1emhealthrasch}, the rasch model does not provide a good fit for this data, as shown by the numerous failures of the monotonicity assumption.  Therefore, the next step was to fit a more flexible model, the coefficients of which are shown in Table \ref{tab:hom1emhealth1pl}.  This model kept the constant discrimination parameter, but allowed it to be estimated from the data.
 
 <<emhealth1pl, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(emhealth.pcm.1PL)),label="tab:hom1emhealth1pl", caption="Coefficient Estimates for One Parameter Partial Credit Model, Emotional Health Scale, RAND MOS, Sample One"))
 @
 
-
+<<emhealth2pl, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(emhealth.pcm.gpcm)),label="tab:hom1emhealth2pl", caption="Coefficient Estimates for One Parameter Partial Credit Model, Emotional Health Scale, RAND MOS, Sample One"))
+@ 
 
 In Table \ref{tab:hom1emhealth2pl} can be seen the results of estimating a true two parameter model for this dataset, where the discrimination parameter was estimated seperately for each item.
 
@@ -1359,7 +1378,7 @@ hom1.emhealth.grm.2pl <- grm(irtemhealth2, constrained=FALSE)
 @ 
 
 
-<<hom1emhealthgrm1plprint, echo=FALSE, results=hide>>=
+<<hom1emhealthgrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(hom1.emhealth.grm.1pl)), label="tab:hom1memhealthgrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Emotional Health Scale, Sample One"))
 @ 
 
@@ -1367,7 +1386,7 @@ Table \ref{tab:hom1emhealthgrm1pl} shows the coefficient estimates for the one p
 
 Next, a two parameter model was fitted to this scale. 
 
-<<hom1emhealthgrm2plprint, echo=FALSE, results=hide>>=
+<<hom1emhealthgrm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(hom1.emhealth.grm.2pl)), label="tab:hom1emhealthgrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, Emotional Health RAND MOS Scale, Sample One"))
 @ 
 Table \ref{tab:hom1emhealthgrm2pl} shows the coefficient estimates for the two parameter Graded Response Model, in which all of the signs and ordering of the thresholds have reversed. 
@@ -1385,17 +1404,15 @@ print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:hom1energpcmrasch",
 It can be seen from Table \ref{tab:hom1energpcmrasch} that with the exception of Q36, all the items seem appropriately fitting. With Q36, there is no ability level where a response category of four is more probable than any of the other items, which is a failure either of the model or the scale. 
 
 
-
-
 <<genhealthpcm1pl, echo=FALSE, results=tex>>=
 irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
 print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:hom1energpcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
 @
 
-Table \ref{tab:hom1energpcm1pl} shows the coefficient estimates for the one parameter Partial Credit Model fitted to the energy RAND MOS scale. Suprisingly, the overall discrimination parameter has decreased. The most difficult question is 21, which asks about bodily pain in the past six months. The difficulty of this question would seem to be a function of the sampling procedure (i.e. students) here, rather than a function of the item's properties. Again, Q36 has the problem with the third response category, as does Q22, suggesting that the population is split bimodally on this question, with either high or low responses being more probable than a response in the middle. 
+Table \ref{tab:hom1energpcm1pl} shows the coefficient estimates for the one parameter Partial Credit Model fitted to the energy RAND MOS scale. Suprisingly, the overall discrimination parameter has decreased. The most difficult question is 21, which asks about bodily pain in the past six months. The difficulty of this question would seem to be a function of the sampling population (i.e. students) here, rather than a function of the item's properties. Again, Q36 has the problem with the third response category, as does Q22, suggesting that the population is split bimodally on this question, with either high or low responses being more probable than a response in the middle. 
 
 
-<<genhealthpcm2pl, echo=FALSE, results=hide>>=
+<<genhealthpcm2pl, echo=FALSE, results=tex>>=
 irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
 print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:hom1energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
 @
@@ -1419,7 +1436,7 @@ hom1.energy.grm.2pl <- grm(irtenergy, constrained=FALSE)
 @ 
 
 
-<<hom1energygrm1plprint, echo=FALSE, results=hide>>=
+<<hom1energygrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(hom1.energy.grm.1pl)), label="tab:hom1energygrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model on IRT Energy Scale, RAND MOS, Sample One"))
 @ 
 
@@ -1447,7 +1464,7 @@ Table \ref{tab:hom1physlimgrm1pl} shows the coefficient estimates for the one pa
 
 Next, the two parameter graded response model was examined for this scale. 
 
-<<hom1physlimgrm2pl, echo=FALSE, results=hide>>=
+<<hom1physlimgrm2pl, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(hom1.physlim.grm.2pl)), label="tab:hom1physlimgrm2pl", caption="Coefficient Estimates for Two Parameter Physical Limitations Graded Response Model, Sample One"))
 @ 
 
@@ -1458,7 +1475,7 @@ The next instrument examined was the MAAS.  Firstly, the instrument was examined
 
 <<maasassumptioncheck, echo=FALSE, results=tex>>=
 maas.scales <- aisp(na.omit(maasitems))
-print(xtable(as.matrix(maas.scales)),label="tab:maasassumptioncheck")
+print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
 As can be seen from Table \ref{tab:maasassumptioncheck}, the mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis.
@@ -1509,12 +1526,13 @@ The estimated one parameter model is shown in Table \ref{tab:maaspcm1pl}, and it
 print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
 @ 
 
-The Table (\ref{tab:maaspcm2pl}) clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
+Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
 <<maasgrmfit, echo=FALSE, results=hide>>=
 maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
 maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
 @
+
 \begin{figure}
 <<maasgrm1plplot, echo=FALSE, fig=TRUE>>=
 maasp <- ggplotGRM(maas.grm.1pl)
@@ -1543,7 +1561,7 @@ print(maas2plp)
   \label{fig:maasgrm2plplot}
 \end{figure}
 
-<<maasgrm2plprint, echo=FALSE, results=hide>>=
+<<maasgrm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
 @ 
 
@@ -1809,7 +1827,7 @@ rand13summ2 <- summary(rand13fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2, rand13fit2))
-print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for MOS data using Models from Sample 1 on Sample 2" ))
+print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.9)
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
@@ -1964,13 +1982,13 @@ lotr3fit2 <- mxRun(Lotr3model2)
 lotr3summ2 <- summary(lotr3fit2)
 @
 
-<<lotrcompare2, echo=FALSE, results=hide>>=
+<<lotrcompare2, echo=FALSE, results=tex>>=
 lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr3fit2)
 lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
 print(lotrcomp.xtab2)
 @
 
-Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the model\'s performance on new data.
+Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
 
 The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
@@ -2088,6 +2106,7 @@ opt.pred.test2a <- scales2a.opt.test[,-11]
 
 <<optlassotest, echo=FALSE, results=tex>>=
 opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
 print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
 @ 
 
@@ -2095,7 +2114,7 @@ As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coeffic
 
 Next, the ridge regression model was applied to the new data. 
 
-<<optridge2a, echo=FALSE, results=hide>>=
+<<optridge2a, echo=FALSE, results=tex>>=
 opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
 print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
 @ 
@@ -2106,9 +2125,11 @@ Finally, the model developed by stepwise selection was applied to the new data.
 
 <<optstep2a, echo=FALSE, results=hide>>=
 opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
+
+@ 
+<<optstep2aprint, echo=FALSE, results=tex>>=
 print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
 @ 
-
 
 As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. 
 
@@ -2151,46 +2172,48 @@ PA2: MAAS1-MAAS3, MAAS13. This second factor has loadings which relate to lack o
 
 <<maas2bfact3, echo=FALSE, results=tex>>=
 maas2b.fact3 <- fa(maasitems2b, 3, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact3,label="tab:tcq2bmaasfact3"))
+print(FactorXtab(maas2b.fact3,label="tab:tcq2bmaasfact3", caption="Factor Loadings for MAAS Three Factor Solution, Sample Two (Split B)"))
 @
 
 This 3 factor solution explains 48\% of the variance, and the factors break down as follows:
 
-PA1: "MAASQ4"  "MAASQ5"  "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10".  All of these items relate to the lack of awareness of bodily/physical actitivites and so this factor can best be termed lack of bodily awareness.
+PA1: "MAASQ4",  "MAASQ5",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  All of these items relate to the lack of awareness of bodily/physical actitivites and so this factor can best be termed lack of bodily awareness.
 
-PA3:"MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14" "MAASQ15".  All of these questions appear to relate to being distracted, and so this factor could best be termed distractability.
+PA3:"MAASQ11", "MAASQ12", "MAASQ13", "MAASQ14", "MAASQ15".  All of these questions appear to relate to being distracted, and so this factor could best be termed distractability.
 
-PA2:"MAASQ1" "MAASQ2" "MAASQ3".  This factor is quite similiar to the second factor in the two factor solution, and can most usefully be termed lack of present focus.
+PA2:"MAASQ1", "MAASQ2", "MAASQ3".  This factor is quite similiar to the second factor in the two factor solution, and can most usefully be termed lack of present focus.
 
 
 <<maas2bfact4, echo=FALSE, results=tex>>=
 maas2b.fact4 <- fa(maasitems2b, 4, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact4,label="tab:tcq2bmaasfact4"))
+print(FactorXtab(maas2b.fact4,label="tab:tcq2bmaasfact4", caption="Factor Loadings for MAAS Four Factor Solution, Oblimin Rotation, Sample Two, Split B"))
 @
+
 This four factor solution explains 51\% of the variance in the sample.
-PA4: "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14" "MAASQ15".  Again, somewhat like PA3 in the three factor solution, all of these items relate to being distracted, and so the factor can best be termed distractability.
 
-PA1:"MAASQ5"  "MAASQ6"  "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10".  Again, like a previous factor, all of these items relate to lack of attention to physical symptoms, and so this factor can be called lack of physical awareness.
+PA4: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ13", "MAASQ14", "MAASQ15".  Again, somewhat like PA3 in the three factor solution, all of these items relate to being distracted, and so the factor can best be termed distractability.
 
-PA2: "MAASQ1" "MAASQ2" "MAASQ3".  This factor can best be termed as lack of present awareness.
+PA1:"MAASQ5",  "MAASQ6",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  Again, like a previous factor, all of these items relate to lack of attention to physical symptoms, and so this factor can be called lack of physical awareness.
 
-PA3:"MAASQ4" "MAASQ5".  This factor is probably best described as lack of somatic awareness.
+PA2: "MAASQ1", "MAASQ2", "MAASQ3".  This factor can best be termed as lack of present awareness.
+
+PA3:"MAASQ4", "MAASQ5".  This factor is probably best described as lack of somatic awareness.
 
 <<maas2bfact5, echo=FALSE, results=tex>>=
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact5,label="tab:tcq2bmaasfact5"))
+print(FactorXtab(maas2b.fact5,label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"))
 @
 This five factor solution explained 54\% of the variance in the sample.
 
-PA1: "MAASQ5"  "MAASQ6"  "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
+PA1: "MAASQ5",  "MAASQ6",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
-PA2: "MAASQ1" "MAASQ2" "MAASQ3".  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
+PA2: "MAASQ1", "MAASQ2", "MAASQ3".  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
 
-PA3: "MAASQ4" "MAASQ5".  This factor is again termed lack of somatic awareness.
+PA3: "MAASQ4", "MAASQ5".  This factor is again termed lack of somatic awareness.
 
-PA4: "MAASQ13" "MAASQ14".  This factor can best be termed as lack of attention.
+PA4: "MAASQ13", "MAASQ14".  This factor can best be termed as lack of attention.
 
-PA5: "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ14" "MAASQ15".  This factor again can be termed distractability.
+PA5: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ14", "MAASQ15".  This factor again can be termed distractability.
 
 Now, we examine the fit indices for the five solutions.
 
@@ -2201,25 +2224,33 @@ maas2b.3fit <- FitIndices(maas2b.fact3)
 maas2b.4fit <- FitIndices(maas2b.fact4)
 maas2b.5fit <- FitIndices(maas2b.fact5)
 maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.2fit,maas2b.3fit,maas2b.4fit,maas2b.5fit))
-print(xtable(maas2bfit),label="tab:tcq2bmaassemcomp")
+print(xtable(maas2bfit,label="tab:tcq2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
 @
 
-<<lotr2bparallel, echo=FALSE, fig=TRUE>>=
+<<lotr2bparallel, echo=FALSE, results=hide>>=
 sink("tmp.txt")
 lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
 lotr2b.vss <- VSS(na.omit(lotritems2b))
 sink(NULL)
 @
+<<lotrparallelplot, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
+par(mfrow=c(1,2))
+print(lotr2b.parallel)
+print(lotr2b.vss)
+sink(NULL)
+@ 
+
 Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted.
 
 <<lotr2bfact1, echo=FALSE, results=tex>>=
 lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact1,label="tab:tcq2blotr1"))
+print(FactorXtab(lotr2b.fact1,label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
 @
 
 <<lotr2bfact2, echo=FALSE, results=tex>>=
 lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact2,label="tab:tcq2blotr2"))
+print(FactorXtab(lotr2b.fact2,label="tab:hom2blotr2"))
 @
 
 <<maas2bsemon2c, echo=FALSE, results=hide>>=
@@ -2340,7 +2371,7 @@ maas5summ2b <- summary(maas4fit2b)
 
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
 maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas2fit2b, maas3fit2b, maas4fit2b, maas5fit2b))
-print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare"))
+print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split C"), scalebox=0.9)
 @
 
 As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  this procedure is repeated for the LOT-R.
@@ -2388,7 +2419,7 @@ lotr2summ2b <- summary(lotr2fit2b)
 
 <<lotrcompare2, echo=FALSE, results=hide>>=
 lotrcomp2b <- mxCompare(base=lotr1fit2b, comparison=lotr2fit2b)
-lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp")
+lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp", caption="Comparison of LOT-R Split B Factor Solutions, Tested on Split C")
 print(lotrcomp.xtab2b)
 @
 
@@ -2453,7 +2484,7 @@ physfun2a.grm.1pl <- grm(rand2a.physfun, constrained=TRUE)
 physfun2a.grm.2pl <- grm(rand2a.physfun, constrained=FALSE)
 @ 
 
-<<physfun2agrm1plprint, echo=FALSE, results=hide>>=
+<<physfun2agrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(physfun2a.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model Physical Functioning Scale, Split A", label="tab:rand2aphysfungrm1pl"))
 @ 
 
@@ -2500,7 +2531,7 @@ neghealth2a.pcm.gpcm <- gpcm(rand2a.neghealth, constraint="gpcm")
 print(xtable(coef2mat(coef(neghealth2a.pcm.rasch)), caption="Coefficient Estimates for Rasch Partial Credit Model, Negative Health Scale, Split A", label="tab:neghealth2apcmrasch"))
 @ 
 
-Table \ref{tab:neghealth2apcmrasch} shows the coefficient estimates for the RAsch partial credit model. It can be seen that there is an extremely wide spread of abillity estimates, the physical limitations items tend to have quite low thresholds, while the items drawn from the emotional well being and energy/fatigue scales have a much broader spread. For instance, item 32 has a top ability threshold of 6.11, which is extremely high. The item asks about health problems interfering with the social life of the respondent, and given that the sample was predominantly young and students, may be the reason for the low probability of endorsement of the items (thus leading to the high estimated ability threshold). 
+Table \ref{tab:neghealth2apcmrasch} shows the coefficient estimates for the Rasch partial credit model. It can be seen that there is an extremely wide spread of abillity estimates, the physical limitations items tend to have quite low thresholds, while the items drawn from the emotional well being and energy/fatigue scales have a much broader spread. For instance, item 32 has a top ability threshold of 6.11, which is extremely high. The item asks about health problems interfering with the social life of the respondent, and given that the sample was predominantly young and students, may be the reason for the low probability of endorsement of the items (thus leading to the high estimated ability threshold). 
 
 <<neghealth2apcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative health Scale, One Parameter Partial Credit Model, Split A", label="tab:neghealth2apcm1pl"))
@@ -2509,7 +2540,7 @@ print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates
 Table \ref{tab:neghealth2apcm1pl} shows the coefficient estimates for the one parameter partial credit model. The overall estimated discrimination parameter is quite low, while the same pattern of ability esitmates as the rasch model remains. 
 
 <<neghealth2apcmgpcm, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative Health Scale, Two Parameter Partial Credit Model, Split A", label="tab:neghealth2apgm2pl"))
+print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative Health Scale, Two Parameter Partial Credit Model, Split A", label="tab:neghealth2apcm2pl"))
 @ 
 
 Table \ref{tab:neghealth2apcm2pl} shows the estimated thresholds and discrimination parameters for the two parameter partial credit model. Interestingly enough, the estimated discrimination parameters have actually decreased for the majority of the scale, which is unexpected. The ordering of the ability estimates remains the same as in previous models. 
@@ -2589,7 +2620,7 @@ irtemhealth2b.monotonicity <- check.monotonicity(na.omit(irtneghealth2b))
 @
 
 <<randneghealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtneghealth2b.item.ord[["violations"]],label="tab:tcq2randneghealthitemord", caption="Item Ordering Assumption Check for RAND Negative Health Scale, Split B"))
+print(xtable(irtneghealth2b.item.ord[["violations"]],label="tab:randneghealthitemord", caption="Item Ordering Assumption Check for RAND Negative Health Scale, Split B"))
 @
 
 As can be seen from Table \ref{tab:randneghealthitemord},quite a number of items failed the item ordering assumption (RAND29, RAND35) and so were removed from the scale before further analysis. 
@@ -2601,7 +2632,7 @@ neghealth.mono.2 <- check.monotonicity(na.omit(irtneghealth2b.s))
 print(xtable(neghealth.item.ord2[["violations"]], caption="IIO for reduced negative health scale", label="tab:randneghealth2biio"))
 @
 
-As shown in Table \ref{tab:randneghealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+As shown in Table \ref{tab:randneghealth2biio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
 
 
 
@@ -2858,7 +2889,7 @@ As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model perfo
 
 Firstly, the RAND MOS is examined to determine how many scales it consists of. 
 
-<<rand2caisp, echo=FALSE, results=hide>>=
+<<rand2caisp, echo=FALSE, results=tex>>=
 rand2c.aisp <- aisp(na.omit(randitems2c))
 print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split C", label="tab:rand2caisp"))
 @ 
@@ -2914,7 +2945,7 @@ As can be seen from Table \ref{tab:physfun2cgrm1pl}, there are no obvious proble
 print(xtable(coef2mat(coef(physfun2c.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model, Physical Functioning Scale, Split C", label="tab:physfun2cgrm2pl"))
 @ 
 
-As can be seen from Table \ref{tab:physfungrm2pl}, the discrimination parameters have lowered for the majority of items, except for 7 and 11 which refer to either walking up one flight of stairs or along one block (which presumably the non American sample here understood). 
+As can be seen from Table \ref{tab:physfun2cgrm2pl}, the discrimination parameters have lowered for the majority of items, except for 7 and 11 which refer to either walking up one flight of stairs or along one block (which presumably the non American sample here understood). 
 
 The final step in the model building process is to assess each models\' performance on unseen data. 
 
@@ -2923,7 +2954,7 @@ physfun.notc <- randitems.notc[,paste(rand, c(3:13), sep="")]
 physfun2c.grm.1pl.test <- testIRTModels(physfun2c.grm.1pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 physfun2c.grm.2pl.test <- testIRTModels(physfun2c.grm.2pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 physfun2c.grm.test.all <- rbind(physfun2c.grm.1pl.test, physfun2c.grm.2pl.test)
-print(xtable(physfun2c.grm.test.all, caption="Performance of One and Two Parameter Physical Functioning Graded Response Models on Unseen Data (Splits A and B", label="tab:physfun2ctest"))
+print(xtable(physfun2c.grm.test.all, caption="Performance of One and Two Parameter Physical Functioning Graded Response Models on Unseen Data (Splits A and B", label="tab:physfun2cgrmtest"))
 @ 
 
 As can be seen from Table \ref{tab:physfun2cgrmtest}, the one parameter model performed best on the unseen data. 
@@ -3119,7 +3150,7 @@ lotr2c.grm.1pl <- grm(lotr2c.s, constrained=TRUE)
 lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
 
-<<lotr2cgrm1plprint, echo=FALSE, results=hide>>=
+<<lotr2cgrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Esitmates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
 @ 
 
@@ -3130,7 +3161,7 @@ Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the o
 print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
 @ 
 
-Table \ref{tab:lotr2cgrm2pl} shows the estimates for the two parameter GRM. It can be seen that Q7 is not the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
+Table \ref{tab:lotr2cgrm2pl} shows the estimates for the two parameter GRM. It can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
 
 Finally, the performance of these two models is tested against unseen data. 
 
