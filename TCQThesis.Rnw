@@ -1919,7 +1919,7 @@ It can be seen from Table \ref{tab:bam3dfact3cor} that all of the factors correl
 
 \subsection{Structural Equation Modelling}
 
-Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
+Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. In essence, a boosting strategy was attempted\footnote{contrary to Richie's belief when he wrote this, this strategy is not a boosting strategy}. This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
 
 
 
@@ -3069,30 +3069,27 @@ tcq2a.conv.errors <- check.errors(na.omit(tcq2a.conv))
 tcq2a.alt.errors <- check.errors(na.omit(tcq2a.alt))
 @ 
 
-Guttman errors are interesting, provide a quick measure of person fit. They have mostly been applied to dichotomous outcomes, but are examined in this work in order to check their adequacy as a measure of person fit. 
+Guttman errors are interesting in that they can provide a quick measure of person fit. They have mostly been applied to dichotomous outcomes, but are examined in this work in order to check their adequacy as a measure of person fit. 
 
 
-\begin{figure}
-<<tcqconvguttmanplot, echo=FALSE, fig=TRUE>>=
+
+<<tcqconvguttmanplot, echo=FALSE, results=hide>>=
 conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors))+geom_histogram()
-print(conv.guttman)
+
 @   
-  \caption{Guttman Errors Histogram for TCQ 2A conventional items}
-  \label{fig:convguttman}
-\end{figure}
 \begin{figure}
   
 <<tcqaltguttmanplot, echo=FALSE, fig=TRUE>>=
 alt.guttman <- ggplot(as.data.frame(tcq2a.alt.errors), aes(x=tcq2a.alt.errors))+geom_histogram()
-print(alt.guttman)
+print(arrangeGrob(conv.guttman, alt.guttman))
 @ 
-  \caption{Guttman errors histogram for TCQ2A alternative items}
-  \label{fig:altguttman}
+  \caption{Guttman errors histogram for TCQ2A Conventional (top) and alternative (bottom) items}
+  \label{fig:convaltguttman}
 \end{figure}
 
-As can be seen from Figures \ref{fig:convguttman} and \ref{fig:altguttman}, the majority of participants had 0 guttman errors, which indicates that they were responding to the scale in a coherent manner. 
+As can be seen from Figure \ref{fig:convaltguttman} and \ref{fig:altguttman}, the majority of participants had zero guttman errors, which indicates that they were responding to the scale in a coherent manner. 
 
-The major assumptions of parametric IRT are satisfied for this split, and so the next step is the estimation of rasch, one and two parameter models. 
+The major assumptions of parametric IRT are satisfied for this split, and so the next step is the estimation of Rasch, One and Two parameter models. 
 
 <<tcq2aconvgpcm, echo=FALSE, results=hide>>=
 tcq2a.conv.gpcm.rasch <- gpcm(na.omit(tcq2a.conv), constraint="rasch")
@@ -3109,20 +3106,22 @@ tcq2a.conv.2pl.sum <- summary(tcq2a.conv.gpcm.gpcm)
 print(xtable(coef(tcq2a.conv.gpcm.rasch), label="tab:tcq2acoefrasch", caption="Coefficients for TCQ 2 Alternative Scale, Two parameter Generalised Partial Credit Model"))
 @ 
 
-Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. Even a cursory inspection of this table shows that the model does not fit well. The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities, which is a clear violation of the model\'s assumptions. Next, a one parameter IRT model is examined. 
+Table \ref{tab:tcq2acoefrasch} shows the estimated thresholds for these items under the Rasch model, which has all discrimination parameters fixed to one. %% Even a cursory inspection of this table shows that the model does not fit well. 
+The Category 3 estimates are almost all below the catgory 1 and 2 estimates, suggesting that those who responded using this category (the middle one) had the lowest estimated abilities. %% which is a clear violation of the model\'s assumptions. 
+This can occur in PCM's, as the model uses a local comparison between thresholds, and so this does not necessitate that the model should be abandoned. 
+Next, a one parameter IRT model is examined. 
 
 <<tcq2acoefpcm1pl, echo=FALSE, results=tex>>=
-
 print(xtable(coef(tcq2a.conv.gpcm.1pl), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 Conventional One Parameter Generalised Partial Credit Model"))
 @ 
 
-Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar problem arises using the one parameter model, with an estimated discrimination parameter of 1.531. This suggests that the model will need to be further expanded to allow for an acceptable fit. 
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar issue arises using the one parameter model, with an estimated discrimination parameter of 1.531. %% This suggests that the model will need to be further expanded to allow for an acceptable fit. 
 
 <<tcq2acoefgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.gpcm.gpcm), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 (Split A), Conventional Scale, Two Parameter Generalised Partial Credit Model"))
 @ 
 
-Table ~\ref{tab:tcq2aconvcoef1pl} shows that even with a discrimination parameter estimated individually for each item, the generalised partial credit models do not provide an acceptable fit to the data. Next, the one and two parameter graded response models were fit to the same items.
+Table ~\ref{tab:tcq2aconvcoef1pl} shows that even with a discrimination parameter estimated individually for each item, the generalised partial credit model still exhibits this behaviour with regards to Category C. It is possible that participants who tended to use this particular response category were using it as a default when they did not know how to answer. Next,  One and Two parameter Graded Response Models were fit to the same items.
 
 <<tcq2convgrm, echo=FALSE, results=hide>>=
 tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
@@ -3140,7 +3139,7 @@ print(xtable(coef(tcq2a.conv.grm.2pl), label="tab:tcq2aconvgrm1plsumm", caption=
 @ 
 
 Again, it can be seen from Table \ref{tab:tcq2aconvgrm1plsumm} that the Cream items appear to be the most discriminating, and possess the highest difficulty levels (on average).  
-Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Creams are the least credible treatment for pain. 
+Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Cream Itemsappear to be the least credible treatment for pain. 
 
 \begin{figure}
 <<tcq2aconvgrm1plPlot, echo=FALSE, fig=TRUE>>=
@@ -3170,7 +3169,7 @@ A likelihood ratio test was carried out for the two models, and the two paramete
 
 For models built on Split A, Splits B, C and D were used as a test set. 
 
-The first check was to examine the fit of each of the partial credit models. Although none of these models met the assumptions of the model, they may still be useful in a predictive sense. 
+The first check was to examine the fit of each of the partial credit models. %% Although none of these models met the assumptions of the model, they may still be useful in a predictive sense. 
 
 <<tcq2aconvpcmtest, echo=FALSE, results=hide>>=
 tcq2nota.conv <- tcq2nota[,c(17:34)]
@@ -3181,11 +3180,12 @@ tcq2a.pcm.gpcm.done <- testIRTModels(tcq2a.conv.gpcm.gpcm, tcq2nota.conv, gpcmco
 
 <<pcmtestprint, echo=FALSE, results=tex>>=
 tcq2a.pcm.modcomp <- rbind(tcq2a.pcm.rasch.done, tcq2a.pcm.1PL.done, tcq2a.pcm.gpcm.done)
+rownames(tcq2a.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
 pcm.modcomp2a <- xtable(tcq2a.pcm.modcomp, caption="Partial Credit Models from Split A tested on Splits B, C and D", label="tab:pcmmodcomp2a")
 print(pcm.modcomp2a)
 @ 
 
-As can be seen from Table \ref{tab:pcmmodcomp2a}, the one parameter PCM appears to provide the best predictive accuracy on the heldout data. 
+As can be seen from Table \ref{tab:pcmmodcomp2a}, the one parameter PCM appears to provide the best predictive accuracy on the heldout data. The measure of error approximation used is essentially the root mean differences between the abilities estimated directly from the new sample versus those estimated from the parameters of the new model.
 
 Next, the two graded response models were assessed. 
 
@@ -3193,6 +3193,7 @@ Next, the two graded response models were assessed.
 tcq2a.grm.1pl.done <- testIRTModels(tcq2a.conv.grm.1pl, tcq2nota.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2a.grm.2pl.done <- testIRTModels(tcq2a.conv.grm.2pl, tcq2nota.conv,gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2a.grm.done <- rbind(tcq2a.grm.1pl.done, tcq2a.grm.2pl.done)
+rownames(tcq2a.grm.done) <- c("One Parameter GRM", "Two Parameter GRM")
 tcq2a.grm.done.xtab <- xtable(tcq2a.grm.done, caption="Comparison of Split A Graded Response Models on Splits B, C and D", label="tab:grmdone2a")
 print(tcq2a.grm.done.xtab)
 @ 
@@ -3200,7 +3201,7 @@ print(tcq2a.grm.done.xtab)
 Table \ref{tab:grmdone2a} shows that the one parameter model performed best on the unseen data, suggesting that the additional complexity of a two parameter model was not necessary in this sample. 
 
 
-Next, the same process is repeated for the TCQ Alternative for Split A. 
+Next, the same process is repeated for the TCQ Alternative Scale for Split A. 
 
 <<tcq2aaltpcm, echo=FALSE, results=hide>>=
 tcq2a.alt.gpcm.rasch <- gpcm(tcq2a.alt, constraint="rasch")
@@ -3208,8 +3209,14 @@ tcq2a.alt.gpcm.1PL <- gpcm(tcq2a.alt, constraint="1PL")
 tcq2a.alt.gpcm.gpcm <- gpcm(tcq2a.alt, constraint="gpcm")
 @ 
 
+<<>>=
+@ 
 
-The Partial Credit Models were all measured, but all three had serious violations of the monotonicity assumption, so the results are not shown further here. 
+
+%% The Partial Credit Models were all measured, but all three had serious violations of the monotonicity assumption, so the results are not shown further here. 
+
+<<>>=
+@ 
 
 Next, one and two parameter Graded Response Models were applied to the TCQ Alternative for this split. 
 
@@ -3238,6 +3245,7 @@ tcq2nota.alt <- tcq2nota[,35:52]
 tcq2a.alt.grm.1pl.done <- testIRTModels(tcq2a.alt.grm.1pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2a.alt.grm.2pl.done <- testIRTModels(tcq2a.alt.grm.2pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2a.grm.modcomp <- rbind(tcq2a.alt.grm.1pl.done, tcq2a.alt.grm.2pl.done)
+rownames(tcq2a.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(tcq2a.grm.modcomp, caption="Performance of Split A Graded Response Models TCQ Alternative on Splits B, C and D", label="tab:tcq2aaltgrmmodcomp"))
 @ 
 
@@ -3325,7 +3333,7 @@ A likelihood ratio test carried out between the two models suggested that the tw
 
 Next, the performance of all the Beliefs About Medicine Models was assessed on unseen data (Splits B, C and D). 
 
-<<bampcmtest, echo=FALSE, results=hide>>=
+<<bampcmtest, echo=FALSE, results=tex>>=
 bamnota.irt <-  tcq2nota[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
 bam2a.pcm.rasch.done <- testIRTModels(bam2a.gpcm.rasch, bamnota.irt, gpcmconstraint="rasch", grmconstraint=NULL)
 bam2a.pcm.1pl.done <- testIRTModels(bam2a.gpcm.1PL, bamnota.irt, gpcmconstraint="1PL", grmconstraint=NULL)
@@ -3415,8 +3423,7 @@ print(gpcm.rasch.plot)
   \label{fig:tcq2bconvgpcmrasch}
 \end{figure}
 
-It can easily be seen from Figure \ref{fig:tcq2bconvgpcmrasch} that the Rasch generalised partial credit model does not provide a good fit for these items. Note the fact that thresholds 2 and 3 are almost identical for Inj6, Inj3, Inj2, and there are obvious violations of monotonicity for Inj2, Pill1 and Pill2. This indicates that this model is not suitable for this data. 
-
+ Figure \ref{fig:tcq2bconvgpcmrasch} shows the fit of the Rasch generalised partial credit model. Note that the model estimates the thresholds to be almost identical for categories two and three, which is surprising but not necessarily fatal to the fit of the model. 
 
 \begin{figure}
 <<tcq2bconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
@@ -3428,7 +3435,7 @@ print(gpcm.1PL.plot)
 \end{figure}
 
 Next, the fit of the one parameter GPCM was examined using an Item Parameter Plot (Figure \ref{fig:tcq2bconvgpcm1PLplot}). 
-It can be seen that there are failures of the monotonicity assumption for Inj6, Inj2, Inj5, Inj1, Cream6, Cream5, Cream4, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. In fact, most of the 2 and 3 thresholds are reversed, demonstrating that this model is not a good fit for the data. 
+%% It can be seen that there are failures of the monotonicity assumption for Inj6, Inj2, Inj5, Inj1, Cream6, Cream5, Cream4, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. In fact, most of the 2 and 3 thresholds are reversed, demonstrating that this model is not a good fit for the data. 
 
 
 \begin{figure}
@@ -3520,8 +3527,8 @@ tcq2b.alt.gpcm.1PL <- gpcm(tcq2b.alt, constraint="1PL")
 tcq2b.alt.gpcm.gpcm <- gpcm(tcq2b.alt, constraint="gpcm")
 @ 
 
-
-Three partial credit models were fit to the scale, but as they all had serious problems with monotonicity, they are not discussed further here.
+%INSERT FIT analysis of PCM's here
+%% Three partial credit models were fit to the scale, but as they all had serious problems with monotonicity, they are not discussed further here.
 
 Next, two graded response models were fit to the data. 
 
@@ -3753,7 +3760,7 @@ print(tcq2c.conv.gpcm.rasch.plot)
   \label{fig:tcq2cconvgpcmrasch}
 \end{figure}
 
-Figure \ref{fig:tcq2cconvgpcmrasch} shows that this model does not fit the data well, as there are many violations of the monotonicity assumption, arguing against the use of this model. 
+Figure \ref{fig:tcq2cconvgpcmrasch} shows that the PCM again shows non-monotonically increasing parameter estimates. 
 
 \begin{figure}
 <<tcq2cconvgpcm1PLplot, echo=FALSE, fig=TRUE>>=
@@ -3822,7 +3829,7 @@ print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum", caption="
 
 Table \ref{tab:tcq2cconv2plgrmsum} shows the estimated coefficients and discrimation paramaters for the two parameter graded response model. Interestingly enough, Pill 5 and Pill6 appear to have been the questions with the most dicriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
 
-Next, an anova LR test was carried out between the two models to determine which one fitted the data better. 
+Next, an anova likelihood ratio test was carried out between the two models to determine which one fitted the data better. 
 
 <<tcq2cconvanova, echo=FALSE, results=hide>>=
 tcq2c.conv.anova <- anova(tcq2c.conv.grm.1pl, tcq2c.conv.grm.2pl)
@@ -3837,6 +3844,7 @@ tcq2c.conv.pcm.rasch.done <- testIRTModels(tcq2c.conv.gpcm.rasch, tcq2notc.conv,
 tcq2c.conv.pcm.1pl.done <- testIRTModels(tcq2c.conv.gpcm.1PL, tcq2notc.conv, gpcmconstraint="1PL", grmconstraint=NULL)
 tcq2c.conv.pcm.gpcm.done <- testIRTModels(tcq2c.conv.gpcm.rasch, tcq2notc.conv, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2c.conv.pcm.modcomp <- rbind(tcq2c.conv.pcm.rasch.done, tcq2c.conv.pcm.1pl.done, tcq2c.conv.pcm.gpcm.done)
+rownames(tcq2c.conv.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
 tcq2c.conv.pcm.modcomp.xtab <- xtable(tcq2c.conv.pcm.modcomp, caption="Performance of IRT Models TCQ Conventional (Split C), on Splits A, B and D", label="tab:tcq2cconvpcmmodcomp")
 print(tcq2c.conv.pcm.modcomp.xtab)                            
 @ 
@@ -3849,6 +3857,7 @@ Finally, the same procedure was repeated for the graded response models for the 
 tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2c.conv.grm.modcomp <- rbind(tcq2c.conv.grm.1pl.done, tcq2c.conv.grm.2pl.done)
+rownames(tcq2c.conv.grm.modcomp) <- c("One Paramter GRM", "Two Parameter GRM")
 tcq2c.conv.grm.modcomp.xtab <- xtable(tcq2c.conv.grm.modcomp, caption="Performance of TCQ Conventional Graded Response Models (Split C) on Splits A, B and D", label="tab:tcq2convgrmmodcomp")
 print(tcq2c.conv.grm.modcomp.xtab)
 @ 
@@ -3861,7 +3870,8 @@ tcq2c.alt.pcm.1PL <- gpcm(tcq2c.alt, constraint="1PL")
 tcq2c.alt.pcm.gpcm <- gpcm(tcq2c.alt, constraint="gpcm")
 @ 
 
-Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here. 
+%% Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here.
+
 
 Next, two graded response models were fit to the data. 
 
@@ -3953,7 +3963,8 @@ Firstly, three generalised partial credit models were fit (Rasch, one parameter 
 print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Beliefs About Medicine Questionnaire Split C, Rasch generalised partial credit model"))
 @ 
 
-Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the RAsch model fitted to the BAM scale. Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported. Next, the fit of one and two parameter graded response models were examined. 
+Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the Rasch model fitted to the BAM scal%% e. Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported. 
+Next, the fit of one and two parameter graded response models were examined. 
 
 <<bam2cgrm, echo=FALSE, results=hide>>=
 bam2c.grm.1pl <- grm(bamscale2c, constrained=TRUE)
@@ -3989,7 +4000,8 @@ bam2c.gpcm.rasch.done <- testIRTModels(bam2c.gpcm.rasch, bamnotc.irt, gpcmconstr
 bam2c.gpcm.1pl.done <- testIRTModels(bam2c.gpcm.1PL, bamnotc.irt, gpcmconstraint="1PL", grmconstraint=NULL)
 bam2c.gpcm.gpcm.done <- testIRTModels(bam2c.gpcm.gpcm, bamnotc.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 bam2c.pcm.modcomp <- rbind(bam2c.gpcm.rasch.done, bam2c.gpcm.1pl.done, bam2c.gpcm.gpcm.done)
-bam2c.gpcm.modcomp.xtab <- xtable(bam2c.pcm.modcomp, caption="Results of BAM Split C Partial Credit Models on Splits A, B and D", label="tab:bam2cpcmmodcamp")
+rownames(bam2c.gpcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+bam2c.gpcm.modcomp.xtab <- xtable(bam2c.pcm.modcomp, caption="Results of BAM Split C Partial Credit Models on Splits A, B and D", label="tab:bam2cpcmmodcomp")
 print(bam2c.gpcm.modcomp.xtab)
 @ 
 
@@ -3998,7 +4010,7 @@ As can be seen from Table \ref{tab:bam2cpcmmodcomp}, the Rasch model for the Bel
 Next, we examine the performance of the Graded Response Models on unseen data. 
 
 <<bam2cgrmtest, echo=FALSE, results=tex>>=
-## bam2c.grm.1pl.done <- testIRTModels(bam2c.grm.1pl, bamnotc.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+bam2c.grm.1pl.done <- testIRTModels(bam2c.grm.1pl, bamnotc.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 @ 
 
 \subsubsection{Split D}
@@ -4106,7 +4118,7 @@ print(tcq2d.conv.gpcm.gpcm.plot)
   \label{fig:tcq2dconvgpcm2plplot}
 \end{figure}
 
-Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpcm2plplot}. Again, there are clear violations of the monotonicity assumption, and so it was concluded that the PCM was a poor fit to the TCQ conventional items. 
+Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpcm2plplot}. %% Again, there are clear violations of the monotonicity assumption, and so it was concluded that the PCM was a poor fit to the TCQ conventional items. 
 
 The next step was to examine the fit of one and two parameter Graded Response Models (GRM). 
 
@@ -4168,6 +4180,7 @@ tcq2d.conv.gpcm.rasch.done <- testIRTModels(tcq2d.conv.gpcm.rasch, tcq2notd.irt,
 tcq2d.conv.gpcm.1PL.done <- testIRTModels(tcq2d.conv.gpcm.1PL, tcq2notd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
 tcq2d.conv.gpcm.gpcm.done <- testIRTModels(tcq2d.conv.gpcm.gpcm, tcq2notd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2d.conv.pcm.modcomp <- rbind(tcq2d.conv.gpcm.rasch.done, tcq2d.conv.gpcm.1PL.done, tcq2d.conv.gpcm.gpcm.done)
+rownames(tcq2d.conv.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
 tcq2d.conv.gpcm.done.xtab <- xtable(tcq2d.conv.pcm.modcomp, caption="Performance of Split D Conventional TCQ Scale on Splits A, B and C", label="tab:tcq2dpcmmodcomp")
 print(tcq2d.conv.gpcm.done.xtab)
 @ 
@@ -4180,6 +4193,7 @@ The same process was then repeated for the graded response models.
 tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
+rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvgrmmodcomp"))
 @ 
 
@@ -4189,22 +4203,18 @@ As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Grade
 
 
 
-<<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
-tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
-tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
-print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvpcmmodcomp"))
-@ 
+
 
 Next, the same procedure is repeated for the TCQ Alternative scale in this split. 
 
-<<tca2caltpcm, echo=FALSE, results=tex>>=
+<<tca2daltpcm, echo=FALSE, results=tex>>=
 tcq2d.alt.pcm.rasch <- gpcm(tcq2d.alt, constraint="rasch")
 tcq2d.alt.pcm.1PL <- gpcm(tcq2d.alt, constraint="1PL")
 tcq2d.alt.pcm.gpcm <- gpcm(tcq2d.alt, constraint="gpcm")
 @ 
 
-Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here. 
+%% Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here.
+
 
 Next, two graded response models were fit to the data. 
 
@@ -4234,6 +4244,7 @@ tcq2notc.alt.irt <- tcq2notc[,35:52]
 tcq2d.alt.grm.1pl.done <- testIRTModels(tcq2d.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2d.alt.grm.2pl.done <- testIRTModels(tcq2d.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2d.alt.grm.modcomp <- rbind(tcq2d.alt.grm.1pl.done, tcq2d.alt.grm.2pl.done)
+rownames(tcq2d.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2daltgrmmodcomp"))
 @ 
 
@@ -4468,15 +4479,20 @@ print(p2)
 
 Following on from the graphical exploration of the relationships between the variables, the next step was to fit a linear model on this data, eliminate variables based on the decrease in AIC, and test the model on the held out data. 
 
-<<stepwiselm, echo=FALSE, results=tex>>=
+<<stepwiselm, echo=FALSE, results=hide>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 pilltotlm1.nota <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+ Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
 pilltot.step.nota <- stepAIC(object=pilltotlm1.nota, upper=pilltotlm1.nota,lower=~1, direction="both", k=3)
-print(xtable(summary(pilltot.step.nota), label="tab:tcq2stepnotA", caption="Results of Stepwise Regression Analysis on Splits B, C and D for Pill credibility scores"))
-pilltot.pred <- predict(pilltotlm1.nota, newdata=tcq2a)
+
+
+
 @
 
+<<steppilla, echo=FALSE, results=tex>>=
+print(xtable(summary(pilltot.step.nota), label="tab:tcq2stepnotA", caption="Results of Stepwise Regression Analysis on Splits B, C and D for Pill credibility scores"))
+pilltot.pred <- predict(pilltotlm1.nota, newdata=tcq2a)
+@ 
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2a)
@@ -4486,14 +4502,19 @@ Rerunning the model on the held out data, the model was highly significant F(10,
 
 The next step was to repeat this process using Cream total as a dependent variable.
 
-<<stepwiselm, echo=FALSE, results=tex>>=
+<<stepwiselm, echo=FALSE, results=hide>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 creamtotlm1.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
 creamtot.step.nota <- stepAIC(object=creamtotlm1.nota, upper=creamtotlm1,lower=~1, direction="both", k=3)
+
+
+@
+
+<<creamstepa, echo=FALSE, results=hide>>=
 print(xtable(summary(creamtot.step.nota), label="tab:creamtotlm1nota", caption="Coefficients for Cream Credibility Regression (Stepwise selection used (both forwards and backwards)"))
 creamtot.pred <- predict(creamtotlm1.nota, newdata=tcq2a)
-@
+@ 
 
 The results on the training sample are shown in Table \ref{tab:creamtotlm1nota}. The model was significant: $F(3,314)=34.24$, p-value of $p\le 0.001$. The adjusted $R^2$ for the model was 0.3861, which is extremely poor. Next the performance of the model on the held out data was assessed. 
 
@@ -4507,13 +4528,18 @@ The results for the held out data are shown in Table \ref{tab:creamlmholdoutnota
 
 Next, the same modelling procedure was applied to the Injection credibility scores. 
 
-<<stepwiselm, echo=FALSE, results=tex>>=
+<<stepwiselm, echo=FALSE, results=hide>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 injtotlm1.nota <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
 injtot.step.nota <- stepAIC(object=injtotlm1.nota, upper=injtotlm1.nota,lower=~1, direction="both", k=3)
-print(xtable(summary(injtot.step.nota), label="tab:injtotlm1.notanota", caption="Coefficients for Injection Credibility, Selected using forwards and backwards selection (Splits B, C and D)"))
+
 injtot.pred <- predict(injtotlm1.nota, newdata=tcq2a)
+@ 
+
+<<injstepa, echo=FALSE, results=tex>>=
+
+print(xtable(summary(injtot.step.nota), label="tab:injtotlm1nota", caption="Coefficients for Injection Credibility, Selected using forwards and backwards selection (Splits B, C and D)"))
 @ 
 The model results shown in Table \ref{tab:injtotlm1nota} show that Cream and Pill credibility scores were excellent predictors, as were Experience with conventional treatments and Health. The model was independently significant: F(4,313)=68.35, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4594. It is important to note that this p values cannot be trusted due to the fact that the algorithm calculated them at each step, and so a multiple comparisions problem arises. 
 
@@ -4527,13 +4553,17 @@ Table \ref{tab:injlmholdoutnota} shows the results of the model on the hjeld out
 
 Next, the same procedure was applied to the Acupuncture credibility scores. 
 
-<<stepwiselmacunota, echo=FALSE, results=tex>>=
+<<stepwiselmacunota, echo=FALSE, results=hide>>=
 tcq2nota.full <- complete.cases(tcq2nota)
 tcq2nota.complete <- tcq2nota[tcq2nota.full,]
 acutotlm1.nota <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2nota.complete)
 acutot.step.nota <- stepAIC(object=acutotlm1.nota, upper=acutotlm1.nota,lower=~1, direction="both", k=3)
-print(xtable(summary(acutot.step.nota), label="tab:acutotlm1.notanota", caption="Coefficients for Acupuncture Credibility selected using Stwpwise Forward and Back Selection"))
+
 acutot.pred <- predict(acutotlm1.nota, newdata=tcq2a)
+@ 
+
+<<acustepa, echo=FALSE, results=tex>>=
+print(xtable(summary(acutot.step.nota), label="tab:acutotlm1nota", caption="Coefficients for Acupuncture Credibility selected using Stwpwise Forward and Back Selection"))
 @ 
 
 Table \ref{tab:acutotlm1nota} shows the estimated coefficients on the training sample. It can be seen that Cream credibility, Homeopathy credibility and Reiki credibility were the only variables retained by the procedure. The model was independently significant; F(3,314)=76.69, p=value $p\le 0.001$. The adjusted $R^2$ was equal to 0.4173. This model was then applied to the validation set.
@@ -4615,6 +4645,10 @@ tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 pilltotlm1.notb <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 pilltot.step.notb <- stepAIC(object=pilltotlm1.notb, upper=pilltotlm1.notb,lower=~1, direction="both", k=3)
 pilltot.pred <- predict(pilltotlm1.notb, newdata=tcq2b)
+
+@ 
+
+<<pillstepb, echo=FALSE, results=tex>>=
 print(xtable(summary(pilltot.step.notb), label="tab:pilltotnotbsteplm", caption="Coefficients for Pill Credibility Scores selected using Stepwise Selection on Splits A, C and D"))
 @ 
 
@@ -4633,6 +4667,10 @@ tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 creamtotlm1.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 creamtot.step.notb <- stepAIC(object=creamtotlm1.notb, upper=creamtotlm1notb,lower=~1, direction="both", k=3)
 creamtot.pred <- predict(creamtotlm1.notb, newdata=tcq2b)
+
+@ 
+
+<<creamstepb, echo=FALSE, results=hide>>=
 print(xtable(summary(creamtot.step.notb), label="tab:creamtotnotbsteplm", caption="Coefficients for Cream Credibility selected by Stepwise cirtierion, Splits A, C and D"))
 @ 
 
@@ -4674,6 +4712,10 @@ tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 acutotlm1.notb <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 acutot.step.notb <- stepAIC(object=acutotlm1.notb, upper=acutotlm1notb,lower=~1, direction="both", k=3)
 acutot.pred <- predict(acutotlm1.notb, newdata=tcq2b)
+
+@ 
+
+<<acustepb, echo=FALSE, results=tex>>=
 print(xtable(summary(acutot.step.notb), label="tab:acutotnotbsteplm", caption="Coefficients for Acupuncture Credibility Scores, Selected using Stepwise criterion (k=3)"))
 @ 
 
@@ -4694,6 +4736,10 @@ tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 homtotlm1.notb <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 homtot.step.notb <- stepAIC(object=homtotlm1.notb, upper=homtotlm1notb,lower=~1, direction="both", k=3)
 homtot.pred <- predict(homtotlm1.notb, newdata=tcq2b)
+
+@ 
+
+<<homstepb, echo=FALSE, results=tex>>=
 print(xtable(summary(homtot.step.notb), label="tab:homtotnotbsteplm", caption="Coefficients for Homeopathy Credibility Scores, stepwise selection method"))
 @ 
 
@@ -4714,8 +4760,13 @@ tcq2notb.complete <- tcq2notb[tcq2notb.full,]
 reitotlm1.notb <- lm(Reitot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notb.complete)
 reitot.step.notb <- stepAIC(object=reitotlm1.notb, upper=reitotlm1notb,lower=~1, direction="both", k=3)
 reitot.pred <- predict(reitotlm1.notb, newdata=tcq2b)
+
+@
+
+<<reistepb, echo=FALSE, results=tex>>=
 print(xtable(summary(reitot.step.notb), label="tab:reitotnotbsteplm", caption="Coefficients for Reiki Credibility Scores, stepwise selection method"))
 @ 
+
 Table \ref{tab:reitotnotbsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then applied to the training set. 
 
 <<reitotnotbheldout, echo=FALSE, results=tex>>=
@@ -4735,8 +4786,14 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 pilltotlm1.notc <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 pilltot.step.notc <- stepAIC(object=pilltotlm1.notc, upper=pilltotlm1notc,lower=~1, direction="both", k=3)
 #pilltot.pred <- predict(pilltotlm1.notc, newdata=tcq2c)
+
+
+@ 
+
+<<pillstepc, echo=FALSE, results=hide>>=
 print(xtable(summary(pilltot.step.notc), label="tab:pilltotnotcsteplm", caption="Coefficients for Pill Credibility Scores, stepwise selection (Splits A, B and D)"))
 @ 
+
 The model shown in Table \ref{tab:pilltotnotcsteplm} contains almost the same four variables that were observed in Split 2 (with the inclusion of the Reiki total and the dropping of the Acupuncture total).  This suggests that these variables are likely to be truly related to Pill total credibility scores, as it is unlikely that random variation would account for the same set of four variables coming from the procedure twice in a row.  The $R^2$ for this model was equal to 0.4717, and the model was highly significant: F(4,299)=68.65, $p\le 0.0001$. These p values and test statistics are likely to be biased due to the automated inclusion and exclusion of variables for the model, and the true test is in the performance of the model on held-out data. 
 
 <<pilltotnotbheldout, echo=FALSE, results=tex>>=
@@ -4752,6 +4809,10 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 creamtotlm1.notc <- lm(Creamtot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 creamtot.step.notc <- stepAIC(object=creamtotlm1.notc, upper=creamtotlm1notc,lower=~1, direction="both", k=3)
 #creamtot.pred <- predict(creamtotlm1.notc, newdata=tcq2c)
+
+@ 
+
+<<creamstepc, echo=FALSE, results=tex>>=
 print(xtable(summary(creamtot.step.notc), label="tab:creamtotnotcsteplm", caption="Coefficients for Cream Credibility Stepwise Selection Method (Splits A, B and D)"))
 @ 
 
@@ -4772,8 +4833,14 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 injtotlm1.notc <- lm(Injtot~Creamtot+Pilltot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 injtot.step.notc <- stepAIC(object=injtotlm1.notc, upper=injtotlm1notc,lower=~1, direction="both", k=3)
 #injtot.pred <- predict(injtotlm1.notc, newdata=tcq2c)
+
+@ 
+
+
+<<injstepc, echo=FALSE, results=tex>>=
 print(xtable(summary(injtot.step.notc), label="tab:injtotnotcsteplm", caption="Coefficients for Injection Credibility Scores, stepwise Selection, Splits A, B and D"))
 @ 
+
 Table \ref{tab:injtotnotcsteplm} shows that the algorithm retained three variables, Creamtotal, Pilltotal and Experience with conventional treatments, all with positive loadings as expected. Next, the fit of this model was examined on the validation data. 
 
 <<injtotnotbheldout, echo=FALSE, results=tex>>=
@@ -4791,7 +4858,11 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 acutotlm1.notc <- lm(Acutot~Creamtot+Pilltot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 acutot.step.notc <- stepAIC(object=acutotlm1.notc, upper=acutotlm1notc,lower=~1, direction="both", k=3)
 #acutot.pred <- predict(acutotlm1.notc, newdata=tcq2c)
-      print(xtable(summary(acutot.step.notc), label="tab:acutotnotcsteplm", caption="Coefficients for Acupuncture Credibility Scores, Stepwise Selection (Splits A, B and D)"))
+
+@ 
+
+<<acustepc, echo=FALSE, results=tex>>=
+print(xtable(summary(acutot.step.notc), label="tab:acutotnotcsteplm", caption="Coefficients for Acupuncture Credibility Scores, Stepwise Selection (Splits A, B and D)"))
 @ 
 
 Table \ref{tab:acutotnotcsteplm} shows the best model as selected by the algorithm. It consists of three predictors, which will now be tested on the validation set. 
@@ -4809,6 +4880,10 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 homtotlm1.notc <- lm(Homtot~Creamtot+Pilltot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 homtot.step.notc <- stepAIC(object=homtotlm1.notc, upper=homtotlm1notc,lower=~1, direction="both", k=3)
 ## homtot.pred <- predict(homtotlm1.notc, newdata=tcq2c)
+
+@ 
+
+<<homstepc, echo=FALSE, results=tex>>=
 print(xtable(summary(homtot.step.notc), label="tab:homtotnotcsteplm", caption="Coefficients for Homeopathy Credibility Scores, stepwise selection method (Splits A, B and D)"))
 @ 
 
@@ -4827,8 +4902,13 @@ tcq2notc.complete <- tcq2notc[tcq2notc.full,]
 reitotlm1.notc <- lm(Reitot~Creamtot+Pilltot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notc.complete)
 reitot.step.notc <- stepAIC(object=reitotlm1.notc, upper=reitotlm1.notc,lower=~1, direction="both", k=3)
 ## reitot.pred <- predict(reitot.step.notc, newdata=tcq2c)
+
+@ 
+
+<<reistepc, echo=FALSE, results=tex>>=
 print(xtable(summary(reitot.step.notc), label="tab:reitotnotcsteplm", caption="Coefficients on Reiki Credibility Model, stepwise selection (Splits A, B and D"))
 @ 
+
 Table \ref{tab:reitotnotcsteplm} shows the selected model and the predictor's estimated coefficients. It can be seen that Injections, Homeopathy and Reiki were the only retained coefficients. Next, this model was tested on the validation set. 
 
 <<reitotnotbheldout, echo=FALSE, results=tex>>=
@@ -4850,7 +4930,7 @@ Table \ref{tab:bamtotnotcsteplm} shows the estimated best model for the BAM tota
 
 <<bamtotnotbheldout, echo=FALSE, results=tex>>=
 bamtotnotc.heldout.lm <- lm(Bamtot~Creamtot+Pilltot+Homtot+Expconv+Income+Health, data=tcq2c)
-print(xtable(summary(bamtotnotc.heldout.lm), label="tab:bamtotnotcheldout", caption="Performance of Beliefs About Medicine Model on Held out data, Split C"))
+print(xtable(summary(bamtotnotc.heldout.lm), label="tab:bamtotnotcheldout", caption="Performance of Beliefs About Medicine Model on Held out data, SplitC"))
 @ 
 
 Table \ref{tab:bamtotnotcheldout} shows the model's performance on the held out data. It can be seen that Homeopathy, experience with conventional treatments and Income are no longer significant. The model itself was significant; F(6,145)=7.059, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.194. 
@@ -4867,6 +4947,10 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 pilltotlm1.notd <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 pilltot.step.notd <- stepAIC(object=pilltotlm1.notd, upper=pilltotlm1.notd,lower=~1, direction="both", k=3)
 pilltot.pred <- predict(pilltotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<pillstepd, echo=FALSE, results=tex>>=
 print(xtable(summary(pilltot.step.notd), label="tab:pilltotnotdsteplm",caption="Coefficients on Pill Credibility Model, stepwise selection (Splits A, B and C"))
 @ 
 
@@ -4886,6 +4970,10 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 creamtotlm1.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 creamtot.step.notd <- stepAIC(object=creamtotlm1.notd, upper=creamtotlm1.notd,lower=~1, direction="both", k=3)
 creamtot.pred <- predict(creamtotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<creamstepd, echo=FALSE, results=tex>>=
 print(xtable(summary(creamtot.step.notd), label="tab:creamtotnotdsteplm",caption="Coefficients on Cream Credibility Model, stepwise selection (Splits A, B and C)"))
 @ 
 
@@ -4906,8 +4994,13 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 injtotlm1.notd <- lm(Injtot~Pilltot+Creamtot+Acutot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 injtot.step.notd <- stepAIC(object=injtotlm1.notd, upper=injtotlm1.notd,lower=~1, direction="both", k=3)
 injtot.pred <- predict(injtotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<injstepd, echo=FALSE, results=tex>>=
 print(xtable(summary(injtot.step.notd), label="tab:injtotnotdsteplm",caption="Coefficients on Injection Credibility Model, stepwise selection (Splits A, B and C)"))
 @ 
+
 It can be seen from Table \ref{tab:injtotnotdsteplm} that the algorithm retained five predictor variables, which is greater than has been seen in previous splits. Next, the performance of this model on the held out data was assessed. 
 
 <<injtotnotbheldout, echo=FALSE, results=tex>>=
@@ -4925,11 +5018,17 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 acutotlm1.notd <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 acutot.step.notd <- stepAIC(object=acutotlm1.notd, upper=acutotlm1.notd,lower=~1, direction="both", k=3)
 acutot.pred <- predict(acutotlm1.notd, newdata=tcq2d)
+
+@ 
+
+
+<<acustepd, echo=FALSE, results=tex>>=
 print(xtable(summary(acutot.step.notd), label="tab:acutotnotdsteplm",caption="Coefficients on Acupuncture Credibility Model, stepwise selection (Splits A, B and C)"))
 @ 
+
 Table \ref{tab:acutotnotdsteplm} shows that the algorithm retained five predictors in this case. Their fit was then examined on the held out data.
 
-<<acutotnotbheldout, echo=FALSE, results=tex>>=
+<<acutotnotdheldout, echo=FALSE, results=tex>>=
 acutotnotd.heldout.lm <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2d)
 print(xtable(summary(acutotnotd.heldout.lm), label="tab:acutotnotdheldout", caption="Performance of Acupuncture Credibility Model on Held out data, Split D"))
 @ 
@@ -4944,6 +5043,10 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 homtotlm1.notd <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 homtot.step.notd <- stepAIC(object=homtotlm1.notd, upper=homtotlm1.notd,lower=~1, direction="both", k=3)
 homtot.pred <- predict(homtotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<homstepd, echo=FALSE, results=tex>>=
 print(xtable(summary(homtot.step.notd), label="tab:homtotnotdsteplm",caption="Coefficients on Homeopathy Credibility Model, stepwise selection (Splits A, B and C)"))
 @ 
 
@@ -4964,12 +5067,16 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 reitotlm1.notd <- lm(Reitot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 reitot.step.notd <- stepAIC(object=reitotlm1.notd, upper=reitotlm1.notd,lower=~1, direction="both", k=3)
 reitot.pred <- predict(reitotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<reikinotd, echo=FALSE, results=tex>>=
 print(xtable(summary(reitot.step.notd), label="tab:reitotnotdsteplm",caption="Coefficients on Reiki Credibility Model, stepwise selection (Splits A, B and C)"))
 @ 
 
 Table \ref{tab:reitotnotdsteplm} shows the retained coefficients for the Reiki credibility scores regression. The algorithm has only retained three predictors, which is a little lower than in previous splits. Next, the fit of these predictors was examined on the held out data. 
 
-<<reitotnotbheldout, echo=FALSE, results=tex>>=
+<<reitotnotdheldout, echo=FALSE, results=tex>>=
 reitotnotd.heldout.lm <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2d)
 print(xtable(summary(reitotnotd.heldout.lm), label="tab:reitotnotdheldout", caption="Performance of Reiki Credibility Model on Held out data, Split D"))
 @ 
@@ -4984,6 +5091,10 @@ tcq2notd.complete <- tcq2notd[tcq2notd.full,]
 bamtotlm1.notd <- lm(Bamtot~Pilltot+Creamtot+Injtot+Acutot+Homtot+Expalt+Expconv+Gender+Income+Health, data=tcq2notd.complete)
 bamtot.step.notd <- stepAIC(object=bamtotlm1.notd, upper=bamtotlm1.notd,lower=~1, direction="both", k=3)
 bamtot.pred <- predict(bamtotlm1.notd, newdata=tcq2d)
+
+@ 
+
+<<bamstepd, echo=FALSE, results=tex>>=
 print(xtable(summary(bamtot.step.notd), label="tab:bamtotnotdsteplm",caption="Coefficients on Beliefs About Medicine Questionnaire Model, stepwise selection (Splits A, B and C)"))
 @ 
 
@@ -5077,7 +5188,7 @@ acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
 @ 
 Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
 
-<<acutotfinalprint, echo=FALSE, results=hide>>=
+<<acutotfinalprint, echo=FALSE, results=tex>>=
 print(xtable(summary(acutotnotc.final), label="tab:acutotfinal", caption="Final Model for Acupuncture Credibility Scores"))
 @ 
 
