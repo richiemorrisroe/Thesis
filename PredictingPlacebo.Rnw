@@ -1,6 +1,7 @@
 \documentclass[apa]{article}
 \title{Placebo: is deception always necessary?}
 \usepackage{graphicx}
+\usepackage[authoryear]{natbib}
 \begin{document}
 \maketitle
 \section{Introduction}
@@ -55,16 +56,27 @@ It is worth noting that the results of Shiv \textit{et al} are equally as suppor
 \section{Implicit Measures }
 \label{sec:impl-meas}
 
-One line of evidence which supports the idea that implicit measures may prove useful in the prediction of placebo  is the finding that the Implicit Association Test (IAT) is better at predicting spontaneous behaviour than explicit measures \cite{Conner2005,Hofmann2005}. The IAT outperforms explicit measures in some domains \cite{Greenwald2009} and these domains tend to be where there is little conscious deliberation or reflection upon the matter concerned. The placebo effect is the example \textit{par excellance} of a undeliberated and spontaneous phenomenon, as no one chooses to have such a response, as far as is known. Thus, we can take this as supporting evidence that implicit measures should predict the placebo response more effectively. 
+Implicit learning is a phenomenon which has come to the attention of psychologists in the past three decades. The research mostly focused on learning of patterns in random letter fragments and in the effects of sub-threshold sounds and pictures upon participants in a research setting.
+
+The investigation of these implicit attitudes was given a huge leap forward by the development of the Implicit Association Test \cite{Greenwald1998}. This computer administered instrument requests the participants to classify words into either trait (race, gender etc) or evaluative (self versus other, pleasant versus unpleasant) categories. This categorisation is performed separately at first, and then one of each type is paired together. This pairing is then reversed in the final step. The test works primarily based on reaction time (in milliseconds) and the assumption underlying the test is that items which are associated are easier to classify together, and that the difference in mean response latencies for classifications of each concept reflect the attitude towards that object. 
+
+
+One line of evidence which supports the idea that implicit measures may prove useful in the prediction of placebo  is the finding that the Implicit Association Test (IAT) is better at predicting spontaneous behaviour than explicit measures \cite{Conner2005,Hofmann2005}. The Conner \textit{et al} research was an experience sampling study which found that implicit association tests of heteronomous versus autonomous motivation were a better predictor of affect measured at random times throughout the study, while deliberative behaviours were better predicted by the explicit self report measures. The Hofmann study focused on shy behaviour, and determined that scores on a shyness IAT were better at predicting responses to the Trier Social Stress Task. Additionally, Richetin \textit{et al}  found that scores on a fruit-sweets IAT predicted the choice between these two items at the end of an unrelated study \cite{Richetin2007}. 
+
+The IAT outperforms explicit measures in some domains \cite{Greenwald2009} and these domains tend to be where there is little conscious deliberation or reflection upon the matter concerned. The placebo effect is the example \textit{par excellance} of a undeliberated and spontaneous phenomenon, as no one chooses to have such a response, as far as is known. Thus, we can take this as supporting evidence that implicit measures should predict the placebo response more effectively. 
+
+In the light of evidence showing that the placebo effect can be mediated by unconscious influences, and that the implicit association test can reliably measure these kinds of associations, it seems natural to propose that the IAT may be a useful predictor of the response to placebo in healthy volunteers. 
 
 \subsection{Priming and Placebo}
 \label{sec:priming-placebo}
 
-Implicit learning is a phenomenon which has come to the attention of psychologists in the past three decades. The research mostly focused on learning of patterns in random letter fragments and in the effects of sub-threshold sounds and pictures upon participants in a research setting.
+
+One issue that needs to be raised is the issue of inducing placebo responses in participants of the study. The traditional method used is conditioning, but this requires a much more complicated design. A more feasible method for the induction of placebo responses is that of priming, which has been demonstrated to work in recent years \cite{Geers2005a,Jensen1991}. The priming method used in this study was a scrambled sentence task.
 
 Additionally, methods of priming such as the scrambled sentence task \cite{bargh1996automaticity} have been shown to impact behaviour in social situations, and additionally in the placebo effect \cite{Jensen1991,Geers2005a}. However, these effects have not been shown in the area of placebo analgesia, and so this study aimed to conceptually replicate this finding so that larger, more reliable placebo effects can be induced by researchers in the field. 
 
-%The investigation of these implicit attitudes was given a huge leap forward by the development of the Implicit Association Test \cite{Greenwald1998}. This computer administered instrument requests the participants to classify words into either trait (race, gender etc) or evaluative (self versus other, pleasant versus unpleasant) categories. This categorisation is performed separately at first, and then one of each type is paired together. This pairing is then reversed in the final step. The test works primarily based on reaction time (in milliseconds) and the assumption underlying the test is that items which are associated are easier to classify together, and that the difference in mean response latencies for classifications of each concept reflect the attitude towards that object. 
+ 
+
 
 Additionally, it appears from recent research that optimism can act as a predictor of the placebo effect \citet{Geers2005}, at least in some circumstances \cite{Hyland2007}. For this reason, the Life Orientation Test (revised) \cite{Scheier1994} was administered to participants in this study. 
 
@@ -82,12 +94,6 @@ This study had one major and two minor hypotheses:
 
 
 % So, reviewing these research findings, we can note that in some cases, the placebo effect seems to emerge without conscious awareness. The Shiv \textit{et al} (2005) study showed that when participants awareness was drawn to the discounted price, the effects disappeared. A similar phenomenon occurred in the Montgomery and Kirsch (1997) \cite{Montgomery1997} study. These research findings suggest that the placebo response is at least partially determined by factors outside conscious awareness, and therefore the rationale for deception is less strong, given that if the placebo effect occurs entirely outside conscious awareness then the awareness or 
-
-
-
-
-
-One issue that needs to be raised is the issue of inducing placebo responses in participants of the study. The traditional method used is conditioning, but this requires a much more complicated design. A more feasible method for the induction of placebo responses is that of priming, which has been demonstrated to work in recent years \cite{Geers2005a,Jensen1991}. The priming method used in this study was a scrambled sentence task. 
 
 
  A secondary aim of this paper was to assess the usefulness of an implicit measure (the Implicit Association Test) in the prediction of placebo response in healthy volunteers \cite{Greenwald1998}. Finally, this paper additionally aimed to replicate the findings of Geers \textit{et al} who showed that placebo responses could be increased by priming of participants towards goals of co-operation \cite{Geers2005a}. This finding has not yet been demonstrated in the placebo response to pain, a deficit which this study aims to rectify. 
@@ -186,13 +192,13 @@ The major materials used in this study were as follows:
 
 \item Another IAT for optimism which used a self/other distinction along with words related to optimism and pessimism
 
-\item The Life Orientation Test, Revised \cite{Scheier1994}
+\item The Life Orientation Test, Revised \cite{Scheier1994}. Reliability in the sample population was assessed in three other studies, and averaged at  $\alpha = 0.84$
 
-\item The Mindful Attention Absorption Scale \cite{brown2003benefits}
+\item The Mindful Attention Absorption Scale \cite{brown2003benefits}. This fifteen item six point scale is commonly used to measure Mindfulness levels in non clinical samples. Reliability analyses carried out in the sample population showed that $\alpha = 0.9$. 
 
 \item A Treatment Credibility Questionnaire (18 items) developed by the researcher (Morrisroe et al, forthcoming). This instrument showed extremely high reliability ($\alpha=0.9$) in two development studies. 
 
-\item The majority ($n=79$) of participants completed a scrambled sentence taks, to prime them to cooperate with the experimental procedure. 
+\item The majority ($n=79$) of participants completed a scrambled sentence taks, to prime them to cooperate with the experimental procedure. The rest of the sample acted as a control for this procedure. Participants were randomised to either a prime or no prime condition seperately from the randomisation into treatment group. 
 \end{itemize}
 
 \subsection{Experimental Procedure}
@@ -207,7 +213,7 @@ Participants in the treatment group were told that the cream was a potent painki
 \subsection{Statistical Analysis}
 \label{sec:statistical-analysis}
 
-All statistical analysis was carried out in R \cite{RDevelopmentCoreTeam2011} version 2.15.1, in Ubuntu 12.04. Packages used included ggplot2 , plyr, caret, psych \cite{Revelle2010}, eRm, ltm and arm \cite{gelman2007data}. After basic demographic statistics were calculated, analysis of variance was used to ensure that all participants were comparable on variables before treatment. No discrepancies were found. Following preliminary graphing, IAT scores were calculated using both means and medians to ensure that outliers did not impact the IAT scores (the correlation between these two measures was greater than 0.9, so only the means are reported in this paper). 
+All statistical analysis was carried out in R \cite{RDevelopmentCoreTeam2011} version 2.15.1, in Ubuntu 12.04. Packages used included ggplot2 \cite{Wickham2009} , plyr \cite{Wickham2011}, caret \cite{Kuhn2013}, psych \cite{Revelle2012} , eRm \cite{Mair2012}, ltm \cite{Rizopoulos2006} and arm \cite{gelman2007data}. After basic demographic statistics were calculated, analysis of variance was used to ensure that all participants were comparable on variables before treatment. No discrepancies were found. Following preliminary graphing, IAT scores were calculated using both means and medians to ensure that outliers did not impact the IAT scores (the correlation between these two measures was greater than 0.9, so only the means are reported in this paper). 
 
 Some authors \cite{Blanton2006a,Blanton2006} have argued that the Implicit Association test is confounded by general processing speed. Therefore, correlations between the critical (Blocks 3 and 5) and non-critical blocks were examined to determine if this was the case for the sample at hand. 
 
@@ -217,8 +223,6 @@ Finally, logistic regression analyses were used to determine the results of the 
 
 \section{Results}
 \label{sec:results}
-
-At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores)[1] <-  "Participant"
@@ -232,6 +236,47 @@ Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
 Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
 ## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
+
+<<tsimport, echo=FALSE, results=hide>>=
+physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
+gsr.mat <- listToDf(physfiles, 1)
+
+ecg.mat <- listToDf(physfiles, 2)
+gsrnames <- colnames(gsr.mat)
+ecgnames <- colnames(ecg.mat)
+names(gsr.mat) <- NULL
+gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
+gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
+gsr.mean2 <- as.data.frame(gsr.mean)
+gsrnames2 <- gsub("GSR", "", gsrnames)
+gsr.mean2[,"Participant"] <- gsrnames2
+gsr.mat.t <- t(gsr.mat)
+names(ecg.mat) <- NULL
+ecg.mat.t <- t(ecg.mat)
+gsr.df <- as.data.frame(gsr.mat.t)
+gsr.df[,"Participant"] <- gsrnames2
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+@
+
+At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
+
+<<gendcond, echo=FALSE, results=tex>>=
+gend.cond <- print(xtable(with(Iatandexpmeasures.phys, table(Gender, Condition)), caption="Gender Breakdown by Condition", label="tab:gendcond"))
+@ 
+
+Table \ref{tab:gendcond} shows the breakdown of participants' gender by their condition. 
+
+<<gendprime, echo=FALSE, results=tex>>=
+prime.gend <- print(xtable(with(Iatandexpmeasures.phys, table(Gender, Prime)), caption="Gender Breakdown by Priming Condition", label="tab:primegend"))
+@ 
+
+%% \begin{figure}
+%%   \includegraphics[totalheight=0.5\textheight]{flowchart}
+%%   \caption{Flowchart of Gender and Assignment to Condition}
+%%   \label{fig:flowchart}
+%% \end{figure}
+
+
  
 <<survivaldata, echo=FALSE, results=hide>>=
 painratings <- vasscores[,c(9:53)]
@@ -281,11 +326,11 @@ painbycond[,"Time"] <- 1:45
 painbycond.m <- melt(painbycond, id.vars="Time")
 @
 
-Firstly, the implicit measures were examined to ensure that they were not contaminated by general processing speed or by method variance. 
+Firstly, the implicit measures were examined to ensure that they were not contaminated by general processing speed or by method variance. The correlations between in each block are never higher than 0.4, suggesting that the blocks are not contaminated by general processing speed. There was some autocorrelations between responses in adjacent blocks, but this was marginal. 
 
 
-\begin{figure}
-<<tcqmeanresp, echo=FALSE, figure=TRUE, eps=TRUE, pdf=TRUE>>=
+%% \begin{figure}
+<<tcqmeanresp, echo=FALSE, results=hide, eps=TRUE, pdf=TRUE>>=
 tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 ## tcqmeanresp.pl <- ggplot(tcqiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
 ## print(tcqmeanresp.pl)
@@ -294,13 +339,13 @@ tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
 tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])+geom_smooth(method="lm")
 print(tcq.block.corr.pl)
 @    
-\caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
-\label{fig:tcqblockcorr}
-\end{figure}
+%% \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
+%% \label{fig:tcqblockcorr}
+%% \end{figure}
 
-As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
+%% As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendall\'s $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
 
-<<cormatrixtcqiat, echo=FALSE, results=tex>>=
+<<cormatrixtcqiat, echo=FALSE, results=hide>>=
 cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
 print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
 
@@ -308,8 +353,8 @@ print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the bl
  
 
 Next, the same process is repeated for the Optimism IAT. 
-\begin{figure}
-<<tcqmeanresp, echo=FALSE, figure=TRUE>>=
+%% \begin{figure}
+<<tcqmeanresp, echo=FALSE, results=hide>>=
 optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
 opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
@@ -317,18 +362,18 @@ opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(met
 print(opt.block.corr.pl)
 
 @    
-   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
-   \label{fig:optblockcorr}
- \end{figure}
+ %%   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
+ %%   \label{fig:optblockcorr}
+ %% \end{figure}
 
-As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. Table \ref{tab:optcormat}. The correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
+%% As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. Table \ref{tab:optcormat}. The correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
 print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
 @ 
 
-The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
+The next question with regard to the IAT measures is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
 
 <<opttcqiatcorr, echo=FALSE, results=hide>>=
 curnames <- names(opt.iat.c)
@@ -345,16 +390,21 @@ iat.block.merge <- merge(tcq.iat.c, opt.iat.c, by="Participant")
 iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
 
 @ 
+<<buildplot, echo=FALSE, results=hide>>=
+pdf(file="corriattcqopt.pdf")
+corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")
+print(corr.iat.tcq.opt.pl)
+dev.off()
+@ 
+
 
 \begin{figure}
-  
-<<corriattcqopt, echo=FALSE, figure=TRUE>>=
+<<corriattcqopt, echo=FALSE, figure=TRUE, pdf=TRUE, eps=TRUE, png=TRUE>>=
 corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")
-
 print(corr.iat.tcq.opt.pl)
 @   
-  \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
-  \label{fig:corriattcqopt}
+\caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
+\label{fig:corriattcqopt}
 \end{figure}
 
 As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations between the two IAT's. These correlations, while significant, were quite low ($r\bar =0.20$) which equates to about 4\% of the variance. Therefore the two explicit measures can be safely be regarded as not being contaminated by method variance \cite{Mierke2003}. 
@@ -365,26 +415,7 @@ As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations betw
 
 Before moving on to the main thrust of the analyses, the differences between the three groups were examined in terms of pain using t-tests. 
 
-<<tsimport, echo=FALSE, results=hide>>=
-physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
-gsr.mat <- listToDf(physfiles, 1)
 
-ecg.mat <- listToDf(physfiles, 2)
-gsrnames <- colnames(gsr.mat)
-ecgnames <- colnames(ecg.mat)
-names(gsr.mat) <- NULL
-gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
-gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
-gsr.mean2 <- as.data.frame(gsr.mean)
-gsrnames2 <- gsub("GSR", "", gsrnames)
-gsr.mean2[,"Participant"] <- gsrnames2
-gsr.mat.t <- t(gsr.mat)
-names(ecg.mat) <- NULL
-ecg.mat.t <- t(ecg.mat)
-gsr.df <- as.data.frame(gsr.mat.t)
-gsr.df[,"Participant"] <- gsrnames2
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
-@
 
 <<meanpain, echo=FALSE, results=hide>>=
 painmean <- rowMeans(vasscores[,9:53], na.rm=TRUE)
@@ -392,15 +423,17 @@ painmeanpart <- data.frame(Participant=vasscores[,"Participant"], painmean)
 Iatandexpmeasures.pain <- merge(Iatandexpmeasures.phys, painmeanpart, by="Participant")
 @ 
 
-Surprisingly enough, there was no significant mean difference between the Deceptive and No Treatment conditions ($t=0.353, df=53.553, p=0.7255$). However, the differences between the Open Placebo group and the Deceptive Treatment group ($t=-3.422, df=53.27, p=0.0012, d=1.11$) were,  as was the difference between the  Open Placebo group and the No Treatment group ($t=-3.9154, df=87.996, p=0.0001, d=1.22$). These effects both qualify as large effects by Cohen's standards, and would match those effects found earlier in the field and assessed through meta-analysis \cite{Sauro2005}.
+Surprisingly enough, there was no significant mean difference between the Deceptive and No Treatment conditions ($t=0.353, df=53.553, p=0.7255$). However, the differences between the Open Placebo group and the Deceptive Treatment group ($t=-3.422, df=53.27, p=0.0012, d=1.11$) were significant at conventional levels,  as was the difference between the  Open Placebo group and the No Treatment group ($t=-3.9154, df=87.996, p=0.0001, d=1.22$). These effects both qualify as large effects by Cohen's standards, and would match those effects found earlier in the field and assessed through meta-analysis \cite{Sauro2005}.
 
 This would seem to support the major hypothesis of this study, that deception is not necessary to induce a placebo response. 
 
+<<buildprimeplot, echo=FALSE, results=hide>>=
+plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
+@ 
 
 
 \begin{figure}
-  
-<<placprimeplot, echo=FALSE, figure=TRUE>>=
+<<placprimeplot, echo=FALSE, figure=TRUE, pdf=TRUE, png=TRUE>>=
 plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
 print(plac.prime.pl)
 @   
@@ -424,7 +457,7 @@ Next, the relationship between the placebo response and proposed predictors were
 
 
 \begin{figure}
-<<ggplothistcond, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
+<<ggplothistcond, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
 plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(plac.resp.hist.pl)
 @   
@@ -434,8 +467,15 @@ print(plac.resp.hist.pl)
 
 From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
 
+<<buildconddensity, echo=FALSE, results=hide>>=
+pdf(file="opthistcond.pdf")
+optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+print(optiat.histcond)
+dev.off()
+@ 
+
 \begin{figure}
-<<optiatcorrsurv, echo=FALSE, figure=TRUE, eps=TRUE, pdf=TRUE>>=
+<<optiatcorrsurv, echo=FALSE, figure=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
 optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(optiat.histcond)
 @   
@@ -448,7 +488,7 @@ Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded
 
 
 \begin{figure}
-<<ggplotplacyesno, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
+<<ggplotplacyesno, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
 placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
 placrespno <- painratings[with(painratings,PlacResp=="No"),]
 placresyesmean <- apply(placrespyes[4:48], 2, mean, na.rm=TRUE)
@@ -504,10 +544,6 @@ As shown in Table \ref{tab:placmodint2}, the addition of the mean GSR for each p
 
 % To control for possible unequal error variance and to tease out the effects by Condition, a generalised linear mixed model was fitted using the previous model as a baseline. Condition and Prime were included as random effects, to assess if their effects differed across conditions. 
 
-## <<glmm1, echo=FALSE, results=tex>>=
-## placmodlmer.pain <- lmer(PlacResp~+TCQIAT.Mean*OptIAT.Mean*LOTR+(1|Prime)+(1|Condition), data=Iatandexpmeasures.pain, family=binomial(link="logit"), control=list(maxIter=10000))
-
-@ 
  
 % \subsection{Machine Learning and the Placebo Response}
 % \label{sec:mach-learn-plac}
@@ -518,7 +554,7 @@ As shown in Table \ref{tab:placmodint2}, the addition of the mean GSR for each p
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
 registerDoMC(2)
-iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
+iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "gsr.mean")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
@@ -662,20 +698,27 @@ cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"], po
 \label{sec:discussion}
 
 
-The major contribution of this  study is that replicates the findings of Kapthcuk  \textit{et al} \cite{kaptchuk2010placebos} that people given an open placebo will experience a placebo response. This finding, in fact, is made even stronger by this study as even when the administration of a deceptive placebo is a possibility, the open placebo still proves more effective. 
 
-Secondly, there appears to be a relationship between implicit measures (assessed using the IAT) and the placebo response. However, this effect needs to be replicated due to issues with multicollinearity making it difficult to establish whether the effect is real or not. A study with greater power would be necessary to definitively establish whether or not this effect is real. 
+The major aim of this study was to assess if the placebo response could be  achieved in a placebo analgesia study without deception. 
+This finding is consistent with the findings of Kapthcuk  \textit{et al} \cite{kaptchuk2010placebos} that people given an open placebo will experience a placebo response. Even when the administration of a deceptive placebo is a possibility, the open placebo still proves more effective. 
 
-There are a number of potential explanations for this unusual finding. Firstly, the primary researcher's thesis was on placebo, and he possessed a strong belief that placebos actually work. This could easily have been communicated to the participants. Secondly, the experimenter was not comfortable with the deception involved in informing participants that they were about to receive a real drug, and this may have been communicated to the participants also. Additionally, the lack of any side-effects or sensory stimulus from the inert cream used in this study may have cued participants to believe that they were not getting a particularly good medication. It may also have been the case that the use of the term ``recently approved'' for the deceptive placebo administration may have had an impact on the response to this placebo.
+Secondly, there appears to be a relationship between implicit measures (assessed using the IAT) and the placebo response. However, this effect needs to be replicated due to issues with multicollinearity making it difficult to establish whether the effect is real or not. A study with greater power would be necessary to establish whether or not this effect is replicable. 
 
-Finally, it appears that priming manipulations are as effective in placebo analgesia as they have been in other areas of social cognition. This is important as priming is a less resource intensive way to increase the size of placebo effects, which is important if these effects are to be studied effectively. 
+There are a number of potential explanations for this unusual finding. Firstly, the primary researcher's thesis was on placebo, and he possessed a strong belief that placebos actually work. This could easily have been communicated to the participants \cite{Blasi2001}. 
+
+Secondly, the experimenter was not comfortable with the deception involved in informing participants that they were about to receive a real drug, and this may have been communicated to the participants also. Additionally, the lack of any side-effects or sensory stimulus from the inert cream used in this study may have cued participants to believe that they were not getting a particularly good medication. It may also have been the case that the use of the term ``recently approved'' for the deceptive placebo administration may have had an impact on the response to this placebo, though this phrase is common in placebo research \cite{Whalley2008}. 
+
+Finally, it appears that priming manipulations are as effective in placebo analgesia as they have been in other areas of social cognition \cite{bargh2012automaticity}. This is important as priming is a less resource intensive way to increase the size of placebo effects, which is important if these effects are to be studied effectively. 
+
+Some strengths of the study are as follows. Firstly, all measures had previously been validated on samples from the same population, suggesting that these measures were appropriate. Secondly, the one experimenter design ensured that effects relating to the provider of the treatment remained constant. 
 
 Some limitations of this study included that it was conducted entirely on students, and to that extent may not be widely generalisable. Secondly, the experimenter was not blinded, so demand characteristics cannot be ruled out as an explanation \footnote{that being said, the experimenter was as surprised as anyone when the results were analysed}. Another limitation of this study was the relatively small sample size. Although 111 participants took part in the study, only 66 of them were in either the Open or Deceptive Placebo group, which bounded the potential number of placebo responders. 
 
 
+Some implications of the results are as follows. Firstly, open placebo appears to be effective in some situations, and further research is required to delinate these. Secondly, priming appears to be a valid way to increase the size and frequency of placebo effects in experimental studies. Ideally, this hypothesis could be tested in a randomised controlled trial, as this hypothesis has not yet been tested using a double blind methodology. Finally, this research would seem to suggest that in some cases, placebo prescription may be ethical and effective. 
 
 
-
+\bibliographystyle{apa}
 \bibliography{placebo2,IAT2,statistics,healthoptmind2,probabilities2}
 
 \end{document}
