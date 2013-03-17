@@ -65,6 +65,7 @@ It is important to note that current or former use of the treatments measured wa
 
 Summary statistics for the ages of the participants are shown in the table \ref{tab:tcq1age} 
 <<packagesanddata, echo=FALSE, results=hide>>=
+require(cacheSweave)
 require(ggplot2)
 require(reshape2)
 require(lmtest)
@@ -166,16 +167,16 @@ print(xtab.totals)
 
 
 As can be seen,  none of these distributions are normally distributed, a point which is reinforced by Figure \ref{fig:tcqscatterplotmat} below, which shows both the correlations between the scale totals and their distribution. 
-\begin{figure}
-	\centering
-<<scatterplotmat, echo=FALSE, fig=TRUE, cache=TRUE>>=
-sink("tmp.txt")
-print(pairs.panels(totals))
-sink(NULL)
-@ 
-\caption{Scatterplot Matrix, TCQ 1}
-\label{fig:tcqscatterplotmat}
-\end{figure}
+%% \begin{figure}
+%% 	\centering
+## <<scatterplotmat, echo=FALSE, fig=TRUE, cache=TRUE>>=
+## sink("tmp.txt")
+## print(pairs.panels(totals))
+## sink(NULL)
+%% @ 
+%% \caption{Scatterplot Matrix, TCQ 1}
+%% \label{fig:tcqscatterplotmat}
+%% \end{figure}
 
 Next, the differences in credibility totals between Genders will be examined. 
 <<gendercred, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1529,9 +1530,6 @@ print(FactorCor(bam2b.fact5,label="tab:bam2bfact5cor", caption="Factor Correlati
 
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
 
-
-\subsection{Split C}
-\label{sec:split-c}
 
 \subsection{TCQ, Split C}
 \label{sec:tcq-split-c}
@@ -3851,7 +3849,13 @@ print(tcq2c.conv.gpcm.rasch.plot)
   \label{fig:tcq2cconvgpcmrasch}
 \end{figure}
 
-Figure \ref{fig:tcq2cconvgpcmrasch} shows that the PCM again shows non-monotonically increasing parameter estimates. 
+Figure \ref{fig:tcq2cconvgpcmrasch} shows that the PCM again shows non-monotonically increasing parameter estimates, which is allowable in a PCM. This may mean that category 3 could be collapsed into the two adjacent categories. 
+
+<<tcq2cgpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.conv.gpcm.rasch), label="tab:tcq2cconvgpcmrasch", caption="Coefficient Estimates for Split C TCQ, Conventional Items, Partial Credit Rasch Model"))
+@ 
+
+The coefficient estimates for the Rasch PCM on the conventional items can be seen in Table \ref{tab:tcq2convgpcmrasch}. It can be seen that the pill items appear to have the lowest estimated threshold for category 1, while the injection items have the lowest threshold for category five. As has happened before, the cream items are regarded as the most difficult to endorse, and category 3 estimates appear to show that this catgory is being used as the base response, when participants have little to no opinion. 
 
 \begin{figure}
 <<tcq2cconvgpcm1PLplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
@@ -3864,6 +3868,14 @@ print(tcq2c.conv.gpcm.1PL.plot)
 
 Again, as can clearly be seen from Figure \ref{fig:tcq2cconvgpcm1PLplot}, the monotonicity assumption was not met for this model. 
 
+<<tcq2cconvgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.conv.gpcm.1PL), label="tab:tcq2cconvgpcm1pl", caption="Coefficient Estimates for TCQ Conventional One Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:tcq2cgpcmconv1pl} shows the estimated coefficients for the one parameter PCM. The discrimination parameter has risen, but the majority of items retain the rank order from the Rasch estimated model. 
+
+
+
 \begin{figure}
 <<tcq2cconvgpcmgpcmplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
 tcq2c.conv.gpcm.gpcm.plot <- ggplotGRM(tcq2c.conv.gpcm.gpcm)
@@ -3875,6 +3887,12 @@ print(tcq2c.conv.gpcm.gpcm.plot)
 
 
 Figure \ref{fig:tcq2cconvgpcm2plplot} shows that like the simpler models, the two parameter generalised partial credit model does not fit the data particularly well. 
+
+<<tcq2cconvgpcmgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.conv.gpcm.gpcm), label="tab:tcq2cconvgpcmgpcm", caption="Coefficient Estimates for TCQ Conventional, Two Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:tcq2cconvgpcmgpmcm} shows the estimated coefficients for the two parameter model. It can be seen that the Cream items have traded off some difficulty and gained higher estimated discrimination parameters, while some of the injection and pill items actually have discrimination parameters lower than one, suggesting that they are less directly informative about the differences between participants of low and high ability. 
 
 <<tcq2cconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE)
@@ -3961,8 +3979,41 @@ tcq2c.alt.pcm.1PL <- gpcm(tcq2c.alt, constraint="1PL")
 tcq2c.alt.pcm.gpcm <- gpcm(tcq2c.alt, constraint="gpcm")
 @ 
 
-%% Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here.
+<<tcq2caltgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.alt.pcm.rasch), label="tab:tcq2caltgpcmrasch", caption="Coefficient Estimates for TCQ Alternative Rasch PCM, Split C"))
+@ 
 
+Table \ref{tab:tcq2caltgpcmrasch} shows the estimated coefficients for the alternative scale in this split. It can be seen that all of the items have higher thresholds than those for the conventional scale, and that the Acupuncture items have somewhat lower thresholds than do the Homeopathy and Reiki items. 
+
+Next, a one parameter PCM was examined on this scale. 
+
+<<tcq2caltgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.alt.pcm.1PL), label="tab:tcq2caltgpcm1pl", caption="Coefficient Estimates for TCQ Alternative, One Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:tcq2caltgpcm1pl} shows the estimated coefficients for this model. It can be seen that the discrimination parameter has risen substantially, suggesting that the alternative items are good at distinguishing between high and low ability participants. The relative thresholds of all three sets of items have remained stable, however. 
+
+Finally, a two parameter PCM was fit to this scale. 
+
+<<tcq2caltgpcmgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2c.alt.pcm.gpcm), label="tab:tcq2caltgpcmgpcm", caption="Coefficient Estimates for TCQ Alternative, Two Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:tcq2caltgpcmgpcm} shows the estimated parameters for the two parameter scale. It can be seen that the Homeopathy items are the most dicriminating, although the Reiki items have higher category four thresholds. This would seem to suggest that these items would be the most useful for discriminating between high and low ability participants. 
+
+<<tcq2caltpcmmodcomp, echo=FALSE, results=tex, cache=TRUE>>=
+tcq2notc.alt <- tcq2notc[,35:52]
+tcq2c.alt.pcm.rasch.done <- testIRTModels(tcq2c.alt.pcm.rasch, tcq2notc.alt, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2c.alt.pcm.1pl.done <- testIRTModels(tcq2c.alt.pcm.1PL, tcq2notc.alt, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2c.alt.pcm.pcm.done <- testIRTModels(tcq2c.alt.pcm.rasch, tcq2notc.alt, gpcmconstraint="gpcm", grmconstraint=NULL)
+tcq2c.alt.pcm.modcomp <- rbind(tcq2c.alt.pcm.rasch.done, tcq2c.alt.pcm.1pl.done, tcq2c.alt.pcm.pcm.done)
+rownames(tcq2c.alt.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+tcq2c.alt.pcm.modcomp.xtab <- xtable(tcq2c.alt.pcm.modcomp, caption="Performance of IRT Models TCQ Conventional (Split C), on Splits A, B and D", label="tab:tcq2caltpcmmodcomp")
+print(tcq2c.alt.pcm.modcomp.xtab)                            
+
+@ 
+
+As can be seen from Table \ref{tab:tcq2caltpcmmodcomp}, the Rasch PCM provided the best fit on unseen data, though there was not much different between the Rasch and the one parameter model. 
 
 Next, two graded response models were fit to the data. 
 
@@ -4054,7 +4105,25 @@ Firstly, three generalised partial credit models were fit (Rasch, one parameter 
 print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Beliefs About Medicine Questionnaire Split C, Rasch generalised partial credit model"))
 @ 
 
-Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the Rasch model fitted to the BAM scal%% e. Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported. 
+Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the Rasch model fitted to the BAM scale. It can be seen that the estimated thresholds are in line with the ranges from the conventional items, while it might have been expected that they would be more along the lines of the alternative items (given the overlap between negativity towards conventional medicines and positivity towards alternative treatments). 
+% % . Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported.
+
+Next, the fit of a one parameter PCM was examined on this scale.
+
+<<bam2cpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Coefficient Estimates for BAM Scale, One Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:bam2cgpcmrasch} shows the estimated coefficients for this model. Interestingly enough, the discrimination parameter has lowered for all of the items. This suggests that these items are less good than would be expected at discriminating between high and low ability participants. 
+
+Finally, the fit of the two parameter PCM was examined on this scale.
+
+<<bam2cgpcmgpcmprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef2mat(coef(bam2c.gpcm.gpcm)), label="tab:bam2cgpcmgpcm", caption="Coefficient Estimates, BAM Scale, Two Parameter PCM, Split C"))
+@ 
+
+Table \ref{tab:bam2cgpcmgpcm} shows the estimated coefficients for the two parameter PCM. It can be seen that Q6, 14 and 17 are the most discrimination question, and that 3,4, 9 and 10 appear to have been the drivers of the discrimination parameter being below 1 in the one parameter model. 
+
 Next, the fit of one and two parameter graded response models were examined. 
 
 <<bam2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
@@ -4186,7 +4255,13 @@ print(tcq2d.conv.gpcm.rasch.plot)
   \label{fig:tcq2dconvgpcmrasch}
 \end{figure}
 
-The next step was to examine the fit of three partial credit models, and in Figure \ref{fig:tcq2dconvgpcmrasch}, it is easily seen that the Rasch PCM violates the monotonicity assumption. 
+The next step was to examine the fit of three partial credit models, and in Figure \ref{fig:tcq2dconvgpcmrasch}, it can be seen that there are problems with category 3 responses in this split also. 
+
+<<tcq2dconvgpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.conv.gpcm.rasch), label="tab:tcq2dgpcmrasch", caption="Coefficient Estimates for TCQ Conventional Items, Rasch PCM, Split D"))
+@ 
+
+Table \ref{tab:tcq2dgpcmrasch} shows the estimated coefficients for the Rasch PCM for the conventional items in this split. Again, a similar pattern as was seen in other splits emerges, where the Pill items have the lowest threshold for category 1, while the injection items are the easiest to endorse at the category 4 level. Again, the difficulties of the cream items, especially at the higher level, is apparent. 
 
 \begin{figure}
 <<tcq2dconvgpcm1PLplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
@@ -4197,7 +4272,14 @@ print(tcq2d.conv.gpcm.1PL.plot)
   \label{fig:tcq2dconvgpcm1PLplot}
 \end{figure}
 
-Next, the fit of a one parameter PCM (one discrimination parameter estimated from the data) is examined. It can be seen from Figure \ref{fig:tcq2dconvgpcm1PLplot}, that the monotonicity assumption is clearly violated for this model. 
+Next, the fit of a one parameter PCM (one discrimination parameter estimated from the data) is examined (see Figure \ref{fig:tcq2dconvgpcm1PLplot}). 
+
+<<tcq2dgpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.conv.gpcm.1pl), label="tab:tcq2dconvgpcm1pl", caption="Coefficient Estimates for TCQ Conventional, One Parameter PCM, Split D"))
+@ 
+
+
+Table \ref{tab:tcq2dconvgpcm1pl} shows the estimated coefficients for this model. It can be seen that the discrimination parameter has risen, although the relative difficulties of the items have stayed the same, much like in the previous split. 
 
 
 \begin{figure}
@@ -4209,7 +4291,14 @@ print(tcq2d.conv.gpcm.gpcm.plot)
   \label{fig:tcq2dconvgpcm2plplot}
 \end{figure}
 
-Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpcm2plplot}. %% Again, there are clear violations of the monotonicity assumption, and so it was concluded that the PCM was a poor fit to the TCQ conventional items. 
+Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpcm2plplot}. 
+
+
+<<tcq2dconvgpcmgpcmprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.gpcm.gpcm), label="tab:tcq2dconvgpcmgpcm", caption="Coefficient Estimates for Two Parameter PCM, TCQ Conventional, Split D"))
+@ 
+
+Table \ref{tab:tcq2dconvgpcmgpcm} shows the estimated coefficients for the two parameter model. It can be seen that the discrimination parameters for the pill and injection items have lowered, while those for the cream items have increased substantially, suggesting that these items are good for dividing the sample into low and high ability participants. 
 
 The next step was to examine the fit of one and two parameter Graded Response Models (GRM). 
 
@@ -4291,21 +4380,48 @@ print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Convent
 As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Graded Response Model appears to provide the best fit to the unseen data. 
 
 
-
-
-
-
-
 Next, the same procedure is repeated for the TCQ Alternative scale in this split. 
 
-<<tca2daltpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tca2daltpcm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.alt.pcm.rasch <- gpcm(tcq2d.alt, constraint="rasch")
 tcq2d.alt.pcm.1PL <- gpcm(tcq2d.alt, constraint="1PL")
 tcq2d.alt.pcm.gpcm <- gpcm(tcq2d.alt, constraint="gpcm")
 @ 
 
-%% Three partial credit models were fitted, but each of them had failures of the monotonicity assumption, and so they are not considered further here.
+<<tcq2daltpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.alt.pcm.rasch), label="tab:tcq2daltpcmrasch", caption="Coefficient Estimates for TCQ Alternative, Rasch PCM, Split D"))
+@ 
 
+Table \ref{tab:tcq2daltpcmrasch} shows the estimated coefficients for the TCQ Alternative Rasch Partial Credit Model. It can be seen that the alternative items have much higher estimated thresholds than do the conventional items, with Acupuncture items being slightly easier to endorse than either Homeopathy or Reiki items. 
+
+Next, a one parameter model was fit to this scale.
+
+<<tcq2daltpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.pcm1PL), label="tab:tcq2daltpcm1pl", caption="Coefficient Estimates, TCQ Alternative, One Parameter PCM, Split D"))
+@ 
+
+Table \ref{tab:tcq2daltpcm1pl} shows the estimated coefficients for this model. It can be seen that the discrimination parameter has risen quite signigicantly, while leave the relative ordering of the item sets much the same as it was in the Rasch model. 
+
+Finally, a two parameter PCM was fit to this scale.
+
+<<tcq2daltpcmgpcmprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(tcq2d.alt.pcm.gpcm), label="tab:tcq2daltpcm2pl", caption="Coefficient Estimates, TCQ Alternative, Two Parameter PCM, Split D"))
+@ 
+
+Table \ref{tab:tcq2daltpcm2pl} shows the estimated coefficients for the two parameter PCM. It can be seen that the Homeopathy and Reiki items have extremelty high discrimination parameters, while those for the Acupuncture items have lowered. Note that the Reiki items have much higher discrimination parameters in this split, unlike Split C. 
+
+<<tcq2daltpcmmodcomp, echo=FALSE, results=tex, cache=TRUE>>=
+tcq2notd.irt <- tcq2notd[,35:52]
+tcq2d.alt.gpcm.rasch.done <- testIRTModels(tcq2d.alt.pcm.rasch, tcq2notd.irt, gpcmconstraint="rasch", grmconstraint=NULL)
+tcq2d.alt.gpcm.1PL.done <- testIRTModels(tcq2d.alt.pcm.1PL, tcq2notd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
+tcq2d.alt.gpcm.gpcm.done <- testIRTModels(tcq2d.alt.pcm.gpcm, tcq2notd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
+tcq2d.alt.pcm.modcomp <- rbind(tcq2d.alt.gpcm.rasch.done, tcq2d.alt.gpcm.1PL.done, tcq2d.alt.gpcm.gpcm.done)
+rownames(tcq2d.alt.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+tcq2d.alt.gpcm.done.xtab <- xtable(tcq2d.alt.pcm.modcomp, caption="Performance of Split D Alternative TCQ Scale on Splits A, B and C", label="tab:tcq2daltpcmmodcomp")
+print(tcq2d.alt.gpcm.done.xtab)
+@ 
+
+As can be seen from Table \ref{tab:tcq2daltpcmmodcomp}, the Rasch PCM provided the best performance on the unseen data. 
 
 Next, two graded response models were fit to the data. 
 
@@ -4395,13 +4511,27 @@ bam2d.gpcm.gpcm <- gpcm(bamscale2d, constraint="gpcm")
 Next, three generalised partial credit models were fitted to the scale, and the results of the Rasch fit are shown below. 
 
 
-
-
 <<bam2dgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
 print(xtable(coef2mat(coef(bam2d.gpcm.rasch)), label="tab:bam2dgpcmrasch", caption="Coefficients for Beliefs About Medicine Questionnaire (Split D), Rasch Generalised Partial Credit Model"))
 @ 
 
-As can be seen from Table \ref{tab:bam2dgpcmrasch}, this model does not fit the BAM data very well, as shown by the numerous violations of monotonicity between Category 2 and 3. The same pattern appeared in the one and two parameter partial credit models, suggesting that these models were not useful for this scale. 
+As can be seen from Table \ref{tab:bam2dgpcmrasch}, it can be seen that the majority of the categories have relatively low thresholds, with the exception of category 4. 
+
+Next, a one parameter PCM was fitted to this scale. 
+
+<<bam2dpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(bam2d.gpcm.1PL), label="tab:bam2dpcm1pl", caption="Coefficient Estimates for BAM Scale, One Parameter PCM, Split D"))
+@ 
+
+Table \ref{tab:bam2dpcm1pl} shows the estimated coefficients for the one parameter model. It can be seen that similarly to the Split C scale, the discrimination parameters have lowered in this model, while the estimated thresholds have risen slightly. 
+
+Finally, a two parameter PCM was fitted to this scale.
+
+<<bam2dpcm2plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef2mat(coef(bam2d.gpcm.gpcm)), label="tab:bam2dpcm2pl", caption="Coefficient Estimates for BAM Scale, Two Parameter PCM, Split D"))
+@ 
+
+As can be seen from Table \ref{tab:bam2dpcm2pl}, the same pattern as was seen in Split C gas emerged, with some of the questions having quite high discrimination parameters, while others have rather low discriminations. Note in particular Q3, which has the huighest estimated threshold along with very low discrimination. 
 
 <<bam2dgrm, echo=FALSE, results=hide, cache=TRUE>>=
 bam2d.grm.1pl <- grm(bamscale2d, constrained=TRUE)
@@ -4495,7 +4625,7 @@ print(p2)
 
 
 \begin{figure}
-<<ggplotconvaltcollege, echo=FALSE, , cache=TRUE>>=
+<<ggplotconvaltcollege, echo=FALSE,figure=TRUE , cache=TRUE>>=
 p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
 p2 <- p+geom_smooth(method="lm")
 p3 <- p2+facet_grid(.~College)
@@ -4520,7 +4650,7 @@ print(medyearplot)
 \end{figure}
 
 \begin{figure}
-<<ggplotpillincome, echo=FALSE, , cache=TRUE>>=
+<<ggplotpillincome, echo=FALSE, figure=TRUE , cache=TRUE>>=
 p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
 p2 <- p+layer(geom="smooth", method="lm")
 p3 <- p2+facet_grid(.~Health)
