@@ -668,9 +668,10 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
 }
 
   
-penalisedRegression <- function(x, y, traindata, testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), ...) {
+penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), ...) {
   x.mat <- as.matrix(x)
   testdata.mat <- as.matrix(testdata)
+  ## browser()
   cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds)
   mod <- glmnet(x=x.mat, y=y, alpha=alpha)
   pred.coef <- predict(mod, testdata.mat, s=cvres$lambda.min, type=type)
