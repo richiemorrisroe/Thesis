@@ -78,6 +78,7 @@ require(xtable)
 require(OpenMx)
 require(MASS)
 require(reshape2)
+require(glmnet)
 source("func.R")
 require(gridExtra)
 require(stargazer)
@@ -4275,7 +4276,7 @@ print(tcq2d.conv.gpcm.1PL.plot)
 Next, the fit of a one parameter PCM (one discrimination parameter estimated from the data) is examined (see Figure \ref{fig:tcq2dconvgpcm1PLplot}). 
 
 <<tcq2dgpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(coef(tcq2d.conv.gpcm.1pl), label="tab:tcq2dconvgpcm1pl", caption="Coefficient Estimates for TCQ Conventional, One Parameter PCM, Split D"))
+print(xtable(  coef(tcq2d.conv.gpcm.1PL), label="tab:tcq2dconvgpcm1pl", caption="Coefficient Estimates for TCQ Conventional, One Parameter PCM, Split D"))
 @ 
 
 
@@ -4295,7 +4296,7 @@ Finally, the fit of a two parameter PCM is shown in Figure \ref{fig:tcq2dconvgpc
 
 
 <<tcq2dconvgpcmgpcmprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(coef(tcq2d.gpcm.gpcm), label="tab:tcq2dconvgpcmgpcm", caption="Coefficient Estimates for Two Parameter PCM, TCQ Conventional, Split D"))
+print(xtable(coef(tcq2d.conv.gpcm.gpcm), label="tab:tcq2dconvgpcmgpcm", caption="Coefficient Estimates for Two Parameter PCM, TCQ Conventional, Split D"))
 @ 
 
 Table \ref{tab:tcq2dconvgpcmgpcm} shows the estimated coefficients for the two parameter model. It can be seen that the discrimination parameters for the pill and injection items have lowered, while those for the cream items have increased substantially, suggesting that these items are good for dividing the sample into low and high ability participants. 
@@ -4397,7 +4398,7 @@ Table \ref{tab:tcq2daltpcmrasch} shows the estimated coefficients for the TCQ Al
 Next, a one parameter model was fit to this scale.
 
 <<tcq2daltpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(coef(tcq2d.pcm1PL), label="tab:tcq2daltpcm1pl", caption="Coefficient Estimates, TCQ Alternative, One Parameter PCM, Split D"))
+print(xtable(coef(tcq2d.alt.pcm.1PL), label="tab:tcq2daltpcm1pl", caption="Coefficient Estimates, TCQ Alternative, One Parameter PCM, Split D"))
 @ 
 
 Table \ref{tab:tcq2daltpcm1pl} shows the estimated coefficients for this model. It can be seen that the discrimination parameter has risen quite signigicantly, while leave the relative ordering of the item sets much the same as it was in the Rasch model. 
@@ -4732,14 +4733,14 @@ pill2a.lasso <- penalisedRegression(predpill2a, pill2a, testdata=predpill2a.test
 @
 
 <<pill2alassoprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(pill2a.lasso, label="tab:tcq2apilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable"))
+print(xtable(as.matrix(pill2a.lasso), label="tab:tcq2apilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable"))
 @ 
 
 Table \ref{tab:tcq2apilllasso} shows the estimated coefficients for the lasso regression solution on held out data. As can be seen, there were small negative effects of Cream total and injection total (which is a little surprising) and a strong effect of Mean belief in conventional treatments, which is in line with expectations. 
 
 <<pill2aridge, echo=FALSE, results=tex, cache=TRUE>>=
 pill2a.ridge <- penalisedRegression(predpill2a, pill2a, predpill2a.test, alpha=0, newy=pill2a.test, type="coefficients")
-print(xtable(pill2a.ridge, label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
+print(xtable(as.matrix(pill2a.ridge), label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
 @ 
 
 Table \ref{tab:tcq2apillridge} shows the estimated coefficients for the ridge regression solution. It can be seen that the results are broadly in line with those from the lasso regression, except that ConvMean, while still important to the model has a coefficient of half the size. Note that ridge regression will not remove variables from the model, but if the coefficients are sufficiently close to zero, they can be regarded as adding little to no predictive power. 
@@ -4779,7 +4780,7 @@ predcream2a <- tcq2nota.complete[, c(71, 73:81)]
 predcream2a.test <- na.omit(tcq2a[,c(71, 73:81)])
 cream2a.test <- with(na.omit(tcq2a), Creamtot)
 cream2a.lasso <- penalisedRegression(predcream2a, cream2a, testdata=predcream2a.test, newy=cream2a.test, alpha=1, type="coefficients")
-print(xtable(cream2a.lasso, label="tab:tcq2acreamlasso", caption="Coefficient Estimates for Creamtotal Lasso regression, Split A"))
+print(xtable(as.matrix(cream2a.lasso), label="tab:tcq2acreamlasso", caption="Coefficient Estimates for Creamtotal Lasso regression, Split A"))
 @ 
 
 
@@ -4787,7 +4788,7 @@ As can be seen from Table \ref{tab:tcq2acreamlasso}, the only major preidctor wa
 
 <<cream2aridge, echo=FALSE, results=tex, cache=TRUE>>=
 cream2a.ridge <- penalisedRegression(predcream2a, cream2a, predcream2a.test, cream2a.test, alpha=0, type="coefficients")
-print(xtable(cream2a.ridge, label="tab:tcq2acreamridge", caption="Coefficient Estimates for Ridge Regression on Cream Credibility, Split A"))
+print(xtable(as.matrix(cream2a.ridge), label="tab:tcq2acreamridge", caption="Coefficient Estimates for Ridge Regression on Cream Credibility, Split A"))
 @ 
 
 Table \ref{tab:tcq2acreamridge} shows a similar enough pattern to the results of the lasso regression, The coefficients have all been shrunken more, but their relative rank ordering has been retained. 
@@ -4825,6 +4826,7 @@ inj2a.test <- with(na.omit(tcq2a), Injtot)
 inj2a.lasso <- penalisedRegression(predinj2a, inj2a, testdata=predinj2a.test, newy=inj2a.test, alpha=1, type="coefficients")
 print(xtable(as.matrix(inj2a.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Injtotal Lasso regression, Split A"))
 @ 
+
 
 Table \ref{tab:tcq2ainjlasso} shows the coefficient estimates for the lasso regression model. It can be seen that experience with conventional treatments had a small impact, and the two conventional treatments were retained by the model. Additionally, Reiki credibility was slightly negatively correlated. 
 
@@ -4900,6 +4902,27 @@ print(xtable(summary(Homtotlm.holdout), label="tab:homlmholdoutnota", caption="C
 @ 
 Table \ref{tab:homlmholdoutnota} shows the performance of the model on the validation set. It can be seen that Pill and cream credibility scores are no longer significant, suggesting that their inclusion was an artifact of the selection algorithm. The model was significant: F(4,144)=29.09, $p\le 0.001$, and the adjusted $R^2$ was equal to 0.4316. 
 
+<<hom2alasso, echo=FALSE, results=tex, cache=TRUE>>=
+hom2a <- with(tcq2nota.complete, Homtot)
+predhom2a <- tcq2nota.complete[, c(71:72, 76:78, 80:81)]
+predhom2a.test <- na.omit(tcq2a[,c(71:74, 76:78, 80:81)])
+hom2a.test <- with(na.omit(tcq2a), Homtot)
+hom2a.lasso <- penalisedRegression(predhom2a, hom2a, testdata=predhom2a.test, newy=hom2a.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(hom2a.lasso), label="tab:tcq2ahomlasso", caption="Coefficient Estimates for Homtotal Lasso regression, Split A"))
+@ 
+
+Table \ref{tab;tcq2ahomlasso} shows the estimated coefficients derived from the lasso model. It can be seen that Reiki credibility and Bamtotal were related to the outcome, along with experience of alternative treatments.
+
+Next, a ridge regression model was fit to the same dataset. 
+
+
+<<hom2aridge, echo=FALSE, results=tex, cache=TRUE>>=
+hom2a.ridge <- penalisedRegression(predhom2a, hom2a, predhom2a.test, hom2a.test, alpha=0, type="coefficients")
+print(xtable(as.matrix(hom2a.ridge), label="tab:tcq2ahomridge", caption="Coefficient Estimates for Hompuncture Ridge Regression, Split A"))
+@ 
+
+Table \ref{tab:tcq2ahomridge} shows the estimated coefficients from the ridge model. Iy can be seen that these are extremely similar to those obtained from the lasso model, suggesting that these coefficients are associated with the response variable in this sample. 
+
 Next, the selection and testing procedure was applied to the Reiki totals. 
 <<stepwiselm, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2nota.full <- complete.cases(tcq2nota)
@@ -4917,6 +4940,24 @@ print(xtable(summary(Reitotlm.holdout), label="tab:reilmholdoutnota", caption="C
 @ 
 
 Table \ref{tab:reilmholdoutnota} shows the estimated coefficients on the validation set. It can be seen that all variables remain significant. The model itself was significant:F(3,139)=17.71, $p\le 0.001$. The adjusted $R^2$ value for the model on the validation set was equal to 0.2609.
+
+<<rei2alasso, echo=FALSE, results=tex, cache=TRUE>>=
+rei2a <- with(tcq2nota.complete, Reitot)
+predrei2a <- tcq2nota.complete[, c(71:75, 77:78, 80:81)]
+predrei2a.test <- na.omit(tcq2a[,c(71:75, 77:78, 80:81)])
+rei2a.test <- with(na.omit(tcq2a), Reitot)
+rei2a.lasso <- penalisedRegression(predrei2a, rei2a, testdata=predrei2a.test, newy=rei2a.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(rei2a.lasso), label="tab:tcq2areilasso", caption="Coefficient Estimates for Reitotal Lasso regression, Split A"))
+@ 
+
+Table \ref{tab:tcq2areilasso} shows the estimated coefficients for the lasso model in this split. It can be seen that Homeopathy credibility totals have a large impact on the variable, while acupuncture totals are not related. No other variable has an major impact on the model. 
+
+<<rei2aridge, echo=FALSE, results=tex, cache=TRUE>>=
+rei2a.ridge <- penalisedRegression(predrei2a, rei2a, predrei2a.test, rei2a.test, alpha=0, type="coefficients")
+print(xtable(as.matrix(rei2a.ridge), label="tab:tcq2areiridge", caption="Coefficient Estimates for Reipuncture Ridge Regression, Split A"))
+@ 
+
+Table \ref{tab:tcq2areiridge} shows the estimated coefficients obtained from the ridge regression model. It can be seen that they are relatively similiar in pattern to those obtained from the lasso regression method. 
 
 Finally, the stepwise variable selection procedure was applied to the Beliefs about Medicine Total (long form).
 
@@ -4967,6 +5008,26 @@ print(xtable(summary(pilltotnotb.heldout.lm), label="tab:pilltotnotbheldout", ca
 
 It can be seen from Table \ref{tab:pilltotnotbheldout} that this model performs extremely well on the held out data, with a highly significant model - F(4,162)=65.79, $p\le 0.0001$, and an adjusted $R^2$ of .6096, indicating that 60\% of the variance in the Pilltotals can be explained by the predictor variables. Its worth noting that the sign of the Experience with conventional treatments variable has reversed, and is now in line with expectations. 
 
+<<pill2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+pill2b <- with(tcq2notb.complete, Pilltot)
+predpill2b <- tcq2notb.complete[, 72:77,79:81]
+predpill2b.test <- na.omit(tcq2b[,72:77, 79:81])
+pill2b.test <- with(na.omit(tcq2b), Pilltot)
+pill2b.lasso <- penalisedRegression(predpill2b, pill2b, testdata=predpill2b.test, newy=pill2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(pill2b.lasso), label="tab:tcq2bpilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcq2bpilllasso} shows the estimated coefficients for this model. It can be seen that Cream and Injection credibility have a large impact on the outcome, and there are small negative coefficients for the BAM scale and the alternative credibility scores. 
+
+Next, a ridge regression model was fit to the data. 
+
+<<pill2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+pill2b.ridge <- penalisedRegression(predpill2b, pill2b, predpill2b.test, alpha=0, newy=pill2b.test, type="coefficients")
+print(xtable(as.matrix(pill2b.ridge), label="tab:tcq2bpillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split B"))
+@ 
+
+Table \ref{tab:tcq2bpillridge} shows the estimated coefficients for the ridge regression model. It can be seen that they are mostly in line with the coefficients obtained from the lasso regression method. 
+
 <<creamtotlmnotb, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notb.full <- complete.cases(tcq2notb)
 tcq2notb.complete <- tcq2notb[tcq2notb.full,]
@@ -4990,6 +5051,26 @@ print(xtable(summary(creamtotnotb.heldout.lm), label="tab:creamtotnotbheldout", 
 
 Table \ref{tab:creamtotnotbheldout} shows the performance of the model on the validation set. It can be seen that Pilltot and Acutot, along with Health, remain significant, but overall performance is worse than on the training set.  The model was significant; F(8,156)=13.02, $p\le 0.001$. The adjusted $R^2$ value was 0.3696.  
 
+<<cream2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+cream2b <- with(tcq2notb.complete, Creamtot)
+predcream2b <- tcq2notb.complete[, c(71,73:77,79:81)]
+predcream2b.test <- na.omit(tcq2b[,c(71,73:77, 79:81)])
+cream2b.test <- with(na.omit(tcq2b), Creamtot)
+cream2b.lasso <- penalisedRegression(predcream2b, cream2b, testdata=predcream2b.test, newy=cream2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(cream2b.lasso), label="tab:tcq2bcreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcq2bcreamlasso} shows the estimated coefficients for the lasso regression on the cream data in this split. It can be seen that not many variables got removed from the model, suggesting that none of them are particularly important to the response. 
+
+Next, a ridge regression model was fit to this dataset. 
+
+<<cream2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+cream2b.ridge <- penalisedRegression(predcream2b, cream2b, predcream2b.test, alpha=0, newy=cream2b.test, type="coefficients")
+print(xtable(as.matrix(cream2b.ridge), label="tab:tcq2bcreamridge", caption="Coefficient Estimates on Held Out Data for Creamtotal, Ridge Regression, Split B"))
+@ 
+
+Table \ref{tab:tcq2bcreamridge} shows the estimated coefficients for the ridge regression model. It can be seen that they are mostly in line with those achieved from the lasso regression method. 
+
 Next, the stepwise selection procedure was carried out for the Injection credibility total.
 
 <<injtotlmnotb, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5010,6 +5091,24 @@ print(xtable(summary(injtotnotb.heldout.lm), label="tab:injtotnotbheldout", capt
 
 Table \ref{tab:injtotnotbheldout} shows the estimated coefficients on the held out data. It can be seen that only Pill credibility remains significant. The model is significant; F(5,159)=30.37, $p\le 0.0001$, and has an adjusted $R^2$ of .4724, which is excellent performance on the validation set. This is not really that surprising, as the Factor Analyses carried out earlier did reduce Pills and Injections to one factor in all of the five factor solutions to the TCQ. 
 
+<<inj2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+inj2b <- with(tcq2notb.complete, Injtot)
+predinj2b <- tcq2notb.complete[, c(71:72,74:77,79:81)]
+predinj2b.test <- na.omit(tcq2b[,c(71:72,74:77, 79:81)])
+inj2b.test <- with(na.omit(tcq2b), Injtot)
+inj2b.lasso <- penalisedRegression(predinj2b, inj2b, testdata=predinj2b.test, newy=inj2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(inj2b.lasso), label="tab:tcq2binjlasso", caption="Coefficient Estimates for Lasso Regression using Injtotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcqqq2binjlasso} shows the estimated coefficients for the lasso model on injection credibility scores. It can be seen that the other two conventional treatments show a strong association with the outcome, while there is an effect of experience with conventional treatments and no real impact of the alternative credibility scores. 
+
+<<inj2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+inj2b.ridge <- penalisedRegression(predinj2b, inj2b, predinj2b.test, alpha=0, newy=inj2b.test, type="coefficients")
+print(xtable(as.matrix(inj2b.ridge), label="tab:tcq2binjridge", caption="Coefficient Estimates on Held Out Data for Injtotal, Ridge Regression, Split B"))
+@ 
+
+Table \ref{tab:tcq2binjridge} shows the estimated coefficients for the ridge regression model on injection totals. It can be seen that the coefficients are quite similar to those from the lasso regression shown above. 
+
 Next, the stepwise selection and validation procedure was carried out on the Acupuncture total.
 
 <<acutotlmnotb, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5029,10 +5128,29 @@ Table \ref{tab:acutotnotbsteplm} shows the retained coefficients following stepw
 
 <<acutotnotbheldout, echo=FALSE, results=tex, cache=TRUE>>=
 acutotnotb.heldout.lm <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2b)
-print(xtable(summary(acutotnotb.heldout.lm), label="tab:acutotnotbheldout", caption="Coefficients for Stepwise Model on held out data (Split C)"))
+print(xtable(summary(acutotnotb.heldout.lm), label="tab:acutotnotbheldout", caption="Coefficients for Stepwise Model on held out data (Split B)"))
 @ 
 
 Table \ref{tab:acutotnotbheldout} shows the estimated coefficients on the validation set. It can be seen that only the other alternative treatment variables have remained significant. The model was significant; $F(5,164)=27.91$, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.4433. 
+
+<<acu2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+acu2b <- with(tcq2notb.complete, Acutot)
+predacu2b <- tcq2notb.complete[, c(71:73,75:78,80:81)]
+predacu2b.test <- na.omit(tcq2b[,c(71:73,75:78,80:81)])
+acu2b.test <- with(na.omit(tcq2b), Acutot)
+acu2b.lasso <- penalisedRegression(predacu2b, acu2b, testdata=predacu2b.test, newy=acu2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(acu2b.lasso), label="tab:tcq2baculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcq2baculasso} shows the coefficients for the lasso regression on the acupuncture credibility totals. It can be seen that the coefficients for the other alternative treatments are quite high, as is the coefficient for cream. This, along with some of the IRT analyses suggesting that cream is the least credible of the conventional treatments would seem to suggest that what is being measured here is the absence of faith in a treatment rather than its presence. 
+
+
+<<acu2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+acu2b.ridge <- penalisedRegression(predacu2b, acu2b, predacu2b.test, alpha=0, newy=acu2b.test, type="coefficients")
+print(xtable(as.matrix(acu2b.ridge), label="tab:tcq2bacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split B"))
+@ 
+
+It can be seen from Table \ref{tabtcq2bacuridge} that the ridge repression is quite similar to the lasso fit. Interestingly enough, pilltotal did not get shrunk as much in this model and shows a negative correlation with Acupuncture credibility (as would be expected). The strange positive correlation with Cream credibility remains.
 
 Next, the Homeopathy total was regressed on the other predictors using stepwise selection and tested against the held out data.
 
@@ -5058,6 +5176,26 @@ print(xtable(summary(homtotnotb.heldout.lm), label="tab:homtotnotbheldout", capt
 
 Table \ref{tab:homtotnotbheldout} shows the estimated coefficients on the validation set. It can be seen that the alternative treatments are the only ones which have remained significant. Note that the intercept is not significant, which suggests that the mean level of the response variable was not significantly different from 0 (conditional on the other variables in the model). The model itself was significant; F(4,165)=60.48, $p\le 0.0001$, and the adjusted $R^2$ of the model was equal to 0.5847. 
 
+<<hom2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+hom2b <- with(tcq2notb.complete, Homtot)
+predhom2b <- tcq2notb.complete[, c(71:74,76:78,80:81)]
+predhom2b.test <- na.omit(tcq2b[,c(71:74,76:78,80:81)])
+hom2b.test <- with(na.omit(tcq2b), Homtot)
+hom2b.lasso <- penalisedRegression(predhom2b, hom2b, testdata=predhom2b.test, newy=hom2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(hom2b.lasso), label="tab:tcq2bhomlasso", caption="Coefficient Estimates for Lasso Regression using Homtotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcq2bhomlasso} shows the estimated coefficients for the lasso regression on homeopathy. Interestingly, the signs of Pill and Cream credibility have reversed in this mode. The largest coefficient is for Reiki, and the coefficient for Beliefs About Medicine is also quite large. 
+
+Next, a ridge regression fit was carried out for this dataset. 
+
+<<hom2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+hom2b.ridge <- penalisedRegression(predhom2b, hom2b, predhom2b.test, alpha=0, newy=hom2b.test, type="coefficients")
+print(xtable(as.matrix(hom2b.ridge), label="tab:tcq2bhomridge", caption="Coefficient Estimates on Held Out Data for Homtotal, Ridge Regression, Split B"))
+@ 
+
+It can be seen from Table \ref{tab:tcq2bhomridge} that the ridge regression model gives almost the same coefficients as did the lasso fit above. 
+
 Next, the same procedure was applied to the Reiki credibility score. 
 
 <<reitotlmnotb, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5080,6 +5218,28 @@ reitotnotb.heldout.lm <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2b)
 print(xtable(summary(reitotnotb.heldout.lm), label="tab:reitotnotbheldout", caption="Regression Coefficients for Reiki Credibility Scores on Held out data (Split B)"))
 @ 
 Table \ref{tab:reitotnotbheldout} shows the model's performance on the held out data. All predictors remain significant, and the model was significant as a whole; $F(3,167)=78.23$, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.5768. 
+
+<<rei2blasso, echo=FALSE, results=tex, cache=TRUE>>=
+rei2b <- with(tcq2notb.complete, Reitot)
+predrei2b <- tcq2notb.complete[, c(71:75,77:78,80:81)]
+predrei2b.test <- na.omit(tcq2b[,c(71:75,77:78,80:81)])
+rei2b.test <- with(na.omit(tcq2b), Reitot)
+rei2b.lasso <- penalisedRegression(predrei2b, rei2b, testdata=predrei2b.test, newy=rei2b.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(rei2b.lasso), label="tab:tcq2breilasso", caption="Coefficient Estimates for Lasso Regression using Reitotal as a dependent variable, Split B"))
+@ 
+
+Table \ref{tab:tcq2breilasso} shows the estimated coefficients for this model. It can be seen that Homeopathy credibility has the largest coefficient, while almost all of the conventional credibility scores have been shrunken to zero (or almost, in the case of Injection credibility). 
+
+Next, a ridge regression model was applied to this dataset. 
+
+<<rei2bridge, echo=FALSE, results=tex, cache=TRUE>>=
+rei2b.ridge <- penalisedRegression(predrei2b, rei2b, predrei2b.test, alpha=0, newy=rei2b.test, type="coefficients")
+print(xtable(as.matrix(rei2b.ridge), label="tab:tcq2breiridge", caption="Coefficient Estimates on Held Out Data for Reitotal, Ridge Regression, Split B"))
+@ 
+
+Table \ref{tab:tcq2breiridge} shows the estimated  coefficients for a ridge regression on Reiki credibility. It can be seen that the coefficients are quite similar to those of the lasso model, further validating this solution. 
+
+
 
 \subsubsection{Split C}
 \label{sec:split-3}
@@ -5109,6 +5269,29 @@ print(xtable(summary(pilltotnotc.heldout.lm), label="tab:pilltotnotcheldout", ca
 
 This model did not fit quite as well as that in Split 2, but nonetheless, performance was acceptable. Table \ref{tab:pilltotnotcheldout} shows the estimated regression coefficients. While Cream and Injection credibility scores are still highly significant, Reiki and Experience with Conventional Treatments do not perform well on the held out data. The model itself is still highly significant; F(4,154)=34.53, $p\le 0.001$ and the adjusted $R^2$ is equal to 0.4591. 
 
+<<pill2classo, echo=FALSE, results=tex, cache=TRUE>>=
+pill2c <- with(tcq2notb.complete, Pilltot)
+predpill2c <- tcq2notb.complete[, 72:77,79:81]
+predpill2c.test <- na.omit(tcq2c[,72:77, 79:81])
+pill2c.test <- with(na.omit(tcq2c), Pilltot)
+pill2c.lasso <- penalisedRegression(predpill2c, pill2c, testdata=predpill2c.test, newy=pill2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(pill2c.lasso), label="tab:tcq2cpilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable, Split C"))
+@ 
+
+
+
+Table \ref{tab:tcq2cpilllasso} shows the estimated coefficients for the lasso model in this split. It can be seen that the other conventional treatments have quite high coefficients, while those of the alternative treatments have quite small negative coefficients, in line with expectations. 
+
+Next, a ridge regression model was fit to this variable. 
+
+<<pill2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+pill2c.ridge <- penalisedRegression(predpill2c, pill2c, predpill2c.test, alpha=0, newy=pill2c.test, type="coefficients")
+print(xtable(as.matrix(pill2c.ridge), label="tab:tcq2cpillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split C"))
+@ 
+
+Table \ref{tcq2cpillridge} shows the estimated coefficients for the ridge model, and there are quite similar to those of the lasso model. 
+
+
 <<creamtotlmnotc, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
@@ -5130,6 +5313,26 @@ print(xtable(summary(creamtotnotc.heldout.lm), label="tab:creamtotnotcheldout", 
 @ 
 
 Table \ref{tab:creamtotnotcheldout} shows that only Injection total remains significant on the validation set. The model was significant; F(4,153)=18.22, $p\le 0.00001$. The adjusted $R^2$ for the model was equal to 0.3049. 
+
+<<cream2classo, echo=FALSE, results=tex, cache=TRUE>>=
+cream2c <- with(tcq2notb.complete, Creamtot)
+predcream2c <- tcq2notb.complete[, c(71,73:77,79:81)]
+predcream2c.test <- na.omit(tcq2c[,c(71,73:77,79:81)])
+cream2c.test <- with(na.omit(tcq2c), Creamtot)
+cream2c.lasso <- penalisedRegression(predcream2c, cream2c, testdata=predcream2c.test, newy=cream2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(cream2c.lasso), label="tab:tcq2ccreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable, Split B"))
+@ 
+
+
+Table \ref{tab:tcq2ccreamlasso} shows the estimated coefficients for the lasso regression model in this split. It can be seen that the other conventional treatments appear to exert a strong impact on the scores, and there are some negative correlations between Cream credibility and and the alternative treatments, which is to be expected. 
+
+<<cream2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+cream2c.ridge <- penalisedRegression(predcream2c, cream2c, predcream2c.test, alpha=0, newy=cream2c.test, type="coefficients")
+print(xtable(as.matrix(cream2c.ridge), label="tab:tcq2ccreamridge", caption="Coefficient Estimates on Held Out Data for Creamtotal, Ridge Regression, Split C"))
+@ 
+
+
+Table \ref{tab:tcq2ccreamridge} shows the estimated coefficients from the ridge regression model. It can be seen that these are quite similar to the coefficients from the lasso regression. 
 
 Next, the stepwise selection and validation procedure was applied to the Injection credibility scores.
 
@@ -5156,6 +5359,28 @@ print(xtable(summary(injtotnotc.heldout.lm), label="tab:injtotnotcheldout", capt
 
 Table \ref{tab:injtotnotcheldout} shows that all three variables remained significant when tested on the validation set. The model was significant; $F(3,159)=46.77$, $p\le 0.0001$ and had an adjusted $R^2$ of 0.4587. 
 
+
+<<inj2classo, echo=FALSE, results=tex, cache=TRUE>>=
+inj2c <- with(tcq2notb.complete, Injtot)
+predinj2c <- tcq2notb.complete[, c(71:72,74:77,79:81)]
+predinj2c.test <- na.omit(tcq2c[,c(71:72,74:77,79:81)])
+inj2c.test <- with(na.omit(tcq2c), Injtot)
+inj2c.lasso <- penalisedRegression(predinj2c, inj2c, testdata=predinj2c.test, newy=inj2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(inj2c.lasso), label="tab:tcq2cinjlasso", caption="Coefficient Estimates for Lasso Regression using Injtotal as a dependent variable, Split C"))
+@ 
+
+Table \ref{tab:tcq2cinjlasso} shows the estimates for the injection credibility model. Ity can be seen that there are large coefficients for the othe two conventional treatments, while those for the alternative treatments have been sunk nearly to zero. 
+
+Next a ridge regression model was applied to this dataset.
+
+<<inj2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+inj2c.ridge <- penalisedRegression(predinj2c, inj2c, predinj2c.test, alpha=0, newy=inj2c.test, type="coefficients")
+print(xtable(as.matrix(inj2c.ridge), label="tab:tcq2cinjridge", caption="Coefficient Estimates on Held Out Data for Injtotal, Ridge Regression, Split C"))
+@ 
+
+Table \ref{tab:tcq2cinjridge} shows the estimated coefficients for the ridge regression model. It can be seen that the estimated coefficients and patterns are quite similar to that seen with the lasso regression model. 
+Note that experience with alternative treatments correlated negatively with the credibility scores for injections in both models, which is interesting. 
+
 Next, this procedure was applied to the Acupuncture mean score in Split C. 
 
 <<acutotlmnotc, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5179,6 +5404,24 @@ print(xtable(summary(acutotnotc.heldout.lm), label="tab:acutotnotcheldout", capt
 @ 
 As shown in Table \ref{tab:acutotnotcheldout}, the fit on the validation set was extremely similiar to that observed on the training set. The model was significant, $F(3,158)=35.94$, $p\le 0.0001$, and the model had an adjusted $R^2$ of 0.3943. 
 
+<<acu2classo, echo=FALSE, results=tex, cache=TRUE>>=
+acu2c <- with(tcq2notb.complete, Acutot)
+predacu2c <- tcq2notb.complete[, c(71:73,75:78,80:81)]
+predacu2c.test <- na.omit(tcq2c[,c(71:73,75:78,80:81)])
+acu2c.test <- with(na.omit(tcq2c), Acutot)
+acu2c.lasso <- penalisedRegression(predacu2c, acu2c, testdata=predacu2c.test, newy=acu2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(acu2c.lasso), label="tab:tcq2caculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable, Split C"))
+@ 
+Table \ref{tcq2caculasso} shows the coefficient estimates for the lasso regression on Acupuncture credibility. Again, in common with previous splits, the cream credibility total has a positive correlation with the response variable. This coefficient is similar in magnitude to those of the alternative treatments, so it suggests that there is a pattern of similarity to how these treatments are perceived by participants. Again, like in previous splits, there is a negative coefficient for pill credibility on this outcome measure. 
+
+Next a ridge regression model was applied to this split. 
+
+<<acu2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+acu2c.ridge <- penalisedRegression(predacu2c, acu2c, predacu2c.test, alpha=0, newy=acu2c.test, type="coefficients")
+print(xtable(as.matrix(acu2c.ridge), label="tab:tcq2cacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split C"))
+@ 
+
+Table \ref{tab:tcq2cacuridge} shows the estimated coefficients from the ridge regression model. It can be seen that the cream coefficient is still of similar magnitude as are the other coefficients. Experience with alternative treatments has a large coefficient, which is what would be expected. 
 
 <<homtotlmnotc, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notc.full <- complete.cases(tcq2notc)
@@ -5202,6 +5445,27 @@ print(xtable(summary(homtotnotc.heldout.lm), label="tab:homtotnotcheldout", capt
 
 Table \ref{tab:homtotnotcheldout} shows that all the variables remained significant on the validation set (with the exception of the intercept). The model was significant; $F(3,152)=57$, $p\le 0.0001$ and had an adjusted $R^2$ of 0.5201.
 
+<<hom2classo, echo=FALSE, results=tex, cache=TRUE>>=
+hom2c <- with(tcq2notb.complete, Homtot)
+predhom2c <- tcq2notb.complete[, c(71:74,76:78,80:81)]
+predhom2c.test <- na.omit(tcq2c[,c(71:74,76:78,80:81)])
+hom2c.test <- with(na.omit(tcq2c), Homtot)
+hom2c.lasso <- penalisedRegression(predhom2c, hom2c, testdata=predhom2c.test, newy=hom2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(hom2c.lasso), label="tab:tcq2chomlasso", caption="Coefficient Estimates for Lasso Regression using Homtotal as a dependent variable, Split C"))
+@ 
+
+Table \ref{tab:tcq2chomlasso} shows the estimated coefficients for the lasso model on acupuncture credibility in this split. It can be seen that, consistent with previous splits, cream credibility now has a negative coefficient while Pilltotal has a positive one. Again, however, the two other forms of alternative treatment make a much greater contribution to the model. 
+
+
+
+<<hom2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+hom2c.ridge <- penalisedRegression(predhom2c, hom2c, predhom2c.test, alpha=0, newy=hom2c.test, type="coefficients")
+print(xtable(as.matrix(hom2c.ridge), label="tab:tcq2chomridge", caption="Coefficient Estimates on Held Out Data for Homtotal, Ridge Regression, Split C"))
+@ 
+
+Table \ref{tab:tcq2chomridge} shows the estimated coefficients for the ridge regression model in this split. It can be seen that the major patterns from the lasso fit above remain unchanged. 
+
+
 <<reitotlmnotc, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notc.full <- complete.cases(tcq2notc)
 tcq2notc.complete <- tcq2notc[tcq2notc.full,]
@@ -5222,6 +5486,24 @@ reitotnotc.heldout.lm <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2c)
 print(xtable(summary(reitotnotc.heldout.lm), label="tab:reitotnotcheldout", caption="Performance of Reiki Credibility Model on Held out data, Split C"))
 @ 
 As Table \ref{tab:reitotnotcheldout} shows, all of the coefficients selected on the training set remained significant on the validation set. The model was significant; F(3,158)=68.36, $p\le 0.0001$. The adjusted $R^2$ was equal to 0.5566.
+
+<<rei2classo, echo=FALSE, results=tex, cache=TRUE>>=
+rei2c <- with(tcq2notb.complete, Reitot)
+predrei2c <- tcq2notb.complete[, c(71:75,77:78,80:81)]
+predrei2c.test <- na.omit(tcq2c[,c(71:75,77:78,80:81)])
+rei2c.test <- with(na.omit(tcq2c), Reitot)
+rei2c.lasso <- penalisedRegression(predrei2c, rei2c, testdata=predrei2c.test, newy=rei2c.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(rei2c.lasso), label="tab:tcq2creilasso", caption="Coefficient Estimates for Lasso Regression using Reitotal as a dependent variable, Split C"))
+@ 
+
+Table \ref{tab:tcq2creilasso} shows the estimated coefficients for a lasso regression on Reiki credibility scores. Ity can be seen that, similarly to previous splits, homeopathy credibility scores have the largest coefficient, while Pills and Injections have small negative coefficients. Strangely, the beliefs about medicine totals are negatively associated with the response variable, which is unexpected. 
+
+<<rei2cridge, echo=FALSE, results=tex, cache=TRUE>>=
+rei2c.ridge <- penalisedRegression(predrei2c, rei2c, predrei2c.test, alpha=0, newy=rei2c.test, type="coefficients")
+print(xtable(as.matrix(rei2c.ridge), label="tab:tcq2creiridge", caption="Coefficient Estimates on Held Out Data for Reitotal, Ridge Regression, Split C"))
+@ 
+
+Table \ref{tab:tcq2creiridge} that the two alternative treatments have large  positive coefficients, while the conventional treatments have small negative ones. The overall pattern is quite similar to the lasso fit shown above. 
 
 <<bamtotlmnotc, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notc.full <- complete.cases(tcq2notc)
@@ -5270,6 +5552,25 @@ print(xtable(summary(pilltotnotd.heldout.lm), label="tab:pilltotnotdheldout", ca
 @ 
 Table \ref{tab:pilltotnotdheldout} shows the results of fitting the trained model to the heldout data. It can be seen that Creams, Injections and Acupuncture are significant, while Experience and Gender are not. The adjusted $R^2$ value is equal to 0.3822, the lowest of all the splits, while the model is significant; F(6,201)=22.34, with a p-value of $p\le 0.001$. 
 
+<<pill2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+pill2d <- with(tcq2notb.complete, Pilltot)
+predpill2d <- tcq2notb.complete[, 72:77,79:81]
+predpill2d.test <- na.omit(tcq2d[,72:77, 79:81])
+pill2d.test <- with(na.omit(tcq2d), Pilltot)
+pill2d.lasso <- penalisedRegression(predpill2d, pill2d, testdata=predpill2d.test, newy=pill2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(pill2d.lasso), label="tab:tcq2dpilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable, Split D"))
+@ 
+
+Table \ref{tab:tcq2dpilllasso} shows the estimated coefficients for a lasso regession on pill credibility in this split. It can be seen that a similar pattern emerges as was seen in previous splits, with large positive coefficients from the other conventional treatments, and small negative ones for the alternative treatments. 
+
+
+<<pill2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+pill2d.ridge <- penalisedRegression(predpill2d, pill2d, predpill2d.test, alpha=0, newy=pill2d.test, type="coefficients")
+print(xtable(as.matrix(pill2d.ridge), label="tab:tcq2dpillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split D"))
+@ 
+
+Table \ref{tab:tcq2dpillridge} shows the estimates coefficients for the ridge regression model on Pill Credibility scores. It can be seen that the model is extremely similar to that of the lasso fit referenced earlier. 
+
 <<creamtotlmnotd, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2notd.full <- complete.cases(tcq2notd)
 tcq2notd.complete <- tcq2notd[tcq2notd.full,]
@@ -5291,6 +5592,24 @@ print(xtable(summary(creamtotnotd.heldout.lm), label="tab:creamtotnotdheldout", 
 @ 
 
 Table \ref{tab:creamtotnotdheldout} shows the performance of the model on the held out data. It can be seen that Injections, Acupuncture, Experience with Treatments are no longer significant, while Pill credibility still is.The model is significant; F(7,193)=12.49, $p\le 0.0001$ and has an adjusted $R^2$ value of 0.2868, which is quite poor. 
+
+<<cream2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+cream2d <- with(tcq2notb.complete, Creamtot)
+predcream2d <- tcq2notb.complete[, c(71,73:77,79:81)]
+predcream2d.test <- na.omit(tcq2d[,c(71,73:77, 79:81)])
+cream2d.test <- with(na.omit(tcq2d), Creamtot)
+cream2d.lasso <- penalisedRegression(predcream2d, cream2d, testdata=predcream2d.test, newy=cream2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(cream2d.lasso), label="tab:tcq2dcreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable, Split D"))
+@ 
+
+Table \ref{tab:tcq2dcreamlasso} shows the estimated coefficients for the lasso fit on the cream credibility totals. It can be seen that the major contributions come from the other conventional treatments, along with acupuncture. There's quite a large negative coefficient for BAM totals, also. 
+
+<<cream2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+cream2d.ridge <- penalisedRegression(predcream2d, cream2d, predcream2d.test, alpha=0, newy=cream2d.test, type="coefficients")
+print(xtable(as.matrix(cream2d.ridge), label="tab:tcq2dcreamridge", caption="Coefficient Estimates on Held Out Data for Creamtotal, Ridge Regression, Split D"))
+@ 
+
+Table \ref{tab:tcq2dcreamridge} shows the estimated coefficients for the ridge regression model on this variable. It can be seen that the coefficients are extremely similar to those obtained from the lasso fit above. 
 
 Next, the same procedure was applied to the Injection credibility totals for this split. 
 
@@ -5315,6 +5634,24 @@ print(xtable(summary(injtotnotd.heldout.lm), label="tab:injtotnotdheldout", capt
 @ 
 
 Table \ref{tab:injtotnotdheldout} shows the estimated coefficients for this model on the held-out data. It can be seen that Pill credibility scores and Experience with conventional treatments are the only variables that remain significant. The model was significant: F(5,201)=13.46, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.2321, which is extremely poor. 
+
+<<inj2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+inj2d <- with(tcq2notb.complete, Injtot)
+predinj2d <- tcq2notb.complete[, c(71:72,74:77,79:81)]
+predinj2d.test <- na.omit(tcq2d[,c(71:72,74:77, 79:81)])
+inj2d.test <- with(na.omit(tcq2d), Injtot)
+inj2d.lasso <- penalisedRegression(predinj2d, inj2d, testdata=predinj2d.test, newy=inj2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(inj2d.lasso), label="tab:tcq2dinjlasso", caption="Coefficient Estimates for Lasso Regression using Injtotal as a dependent variable, Split D"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2dinjlasso}, the conventional variables both had large coefficients, while those for the alternative treatments were shrunk almost entirely towards zero. Experience with conventional treatments also had a relatively large coefficient. 
+
+<<inj2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+inj2d.ridge <- penalisedRegression(predinj2d, inj2d, predinj2d.test, alpha=0, newy=inj2d.test, type="coefficients")
+print(xtable(as.matrix(inj2d.ridge), label="tab:tcq2dinjridge", caption="Coefficient Estimates on Held Out Data for Injtotal, Ridge Regression, Split D"))
+@ 
+
+As shown in Table \ref{tab:tcq2dinjridge}, the coefficients for the ridge fit were almost identical to those from the lasso fit, reinforcing our belief in the model. 
 
 Next, a model was built and tested on the Acupuncture credibility scores. 
 
@@ -5341,6 +5678,24 @@ print(xtable(summary(acutotnotd.heldout.lm), label="tab:acutotnotdheldout", capt
 
 Table \ref{tab:acutotnotdheldout} shows the performance of the model on the held out data. It can be seen that only Homeopathy and Reiki credibility scores remain significant on this data set. The model was significant: F(5,203)=18.78, $p\le 0.0001$, and the adjusted $R^2$ of the model was equal to 0.2995, which is quite poor. 
 
+<<acu2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+acu2d <- with(tcq2notb.complete, Acutot)
+predacu2d <- tcq2notb.complete[, c(71:73,75:78,80:81)]
+predacu2d.test <- na.omit(tcq2d[,c(71:73,75:78, 80:81)])
+acu2d.test <- with(na.omit(tcq2d), Acutot)
+acu2d.lasso <- penalisedRegression(predacu2d, acu2d, testdata=predacu2d.test, newy=acu2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(acu2d.lasso), label="tab:tcq2daculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable, Split D"))
+@ 
+
+Table \ref{tab:tcq2daculasso} shows the estimated coefficients for the lasso model on Acupuncture credibility scores. It can be seen that there is a positive coefficient for cream credibility again, along with a negative coefficient for Pill credibility. As per usual, the two other alternative treatments had positive coefficients. 
+
+<<acu2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+acu2d.ridge <- penalisedRegression(predacu2d, acu2d, predacu2d.test, alpha=0, newy=acu2d.test, type="coefficients")
+print(xtable(as.matrix(acu2d.ridge), label="tab:tcq2dacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split D"))
+@ 
+
+Table \ref{tab:tcq2dacuridge} shows the estimated coefficients for the ridge regression model on this dataset. It can be seen that the fit is quite similar to the lasso fit reported earlier, and consistent with what was seen in other splits. 
+
 Next, the model development and validation procedure was applied to the Homeopathy credibility scores. 
 
 <<homtotlmnotd, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5365,6 +5720,24 @@ print(xtable(summary(homtotnotd.heldout.lm), label="tab:homtotnotdheldout", capt
 
 Table \ref{tab:homtotnotdheldout} shows the performance of the model on the heldout data. It can be seen that both Acupuncture and Reiki remain extremely significant, but experience with alternative treatments does not. The model was significant: F(3,200)=75.17, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.5229, which is extremely good performance. 
 
+<<hom2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+hom2d <- with(tcq2notb.complete, Homtot)
+predhom2d <- tcq2notb.complete[, c(71:74,76:78,80:81)]
+predhom2d.test <- na.omit(tcq2d[,c(71:74,76:78, 80:81)])
+hom2d.test <- with(na.omit(tcq2d), Homtot)
+hom2d.lasso <- penalisedRegression(predhom2d, hom2d, testdata=predhom2d.test, newy=hom2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(hom2d.lasso), label="tab:tcq2dhomlasso", caption="Coefficient Estimates for Lasso Regression using Homtotal as a dependent variable, Split D"))
+@ 
+
+Table \ref{tab:tcq2dhomlasso} shows the estimated coefficients for a lasso regression fit on the Homeopathy credibility scores in this split. It can be seen that the pattern with cream and pill scores has again replicated, suggesting that it is not due to random sampling. In fact, all of the coefficients are very similar to what was seen in the other splits. 
+
+<<hom2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+hom2d.ridge <- penalisedRegression(predhom2d, hom2d, predhom2d.test, alpha=0, newy=hom2d.test, type="coefficients")
+print(xtable(as.matrix(hom2d.ridge), label="tab:tcq2dhomridge", caption="Coefficient Estimates on Held Out Data for Homtotal, Ridge Regression, Split D"))
+@ 
+
+Table \ref{tab:tcq2dhomridge} shows the estimated coefficients for the ridge regression fit on the Homeopathy credibility scores. It can be seen that the same pattern as was seen with the lasso fit has emerged from this data. 
+
 Next, the model selection and validation procedure was applied to the Reiki credibility scores. 
 
 <<reitotlmnotd, echo=FALSE, results=hide, cache=TRUE>>=
@@ -5388,6 +5761,24 @@ print(xtable(summary(reitotnotd.heldout.lm), label="tab:reitotnotdheldout", capt
 @ 
 
 Table \ref{tab:reitotnotdheldout} shows the performance of these predictors on the heldout data. It can be seen that both acupuncture and homeopathy remain significant, but Injections does not. The model was significant: F(3,206)=75.43, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.5165, which is extremely good. 
+
+<<rei2dlasso, echo=FALSE, results=tex, cache=TRUE>>=
+rei2d <- with(tcq2notb.complete, Reitot)
+predrei2d <- tcq2notb.complete[, c(71:75,77:78,80:81)]
+predrei2d.test <- na.omit(tcq2d[,c(71:75,77:78, 80:81)])
+rei2d.test <- with(na.omit(tcq2d), Reitot)
+rei2d.lasso <- penalisedRegression(predrei2d, rei2d, testdata=predrei2d.test, newy=rei2d.test, alpha=1, type="coefficients")
+print(xtable(as.matrix(rei2d.lasso), label="tab:tcq2dreilasso", caption="Coefficient Estimates for Lasso Regression using Reitotal as a dependent variable, Split D"))
+@ 
+Table \ref{tab:tcq2dreilasso} shows the estimated coefficients for the lasso fit on Reiki credibility scores. It can be seen that most of the conventional treatment scores have been removed from the model and that the only major predictors were the other alternative credibility scores, in contrast to previous splits. 
+
+<<rei2dridge, echo=FALSE, results=tex, cache=TRUE>>=
+rei2d.ridge <- penalisedRegression(predrei2d, rei2d, predrei2d.test, alpha=0, newy=rei2d.test, type="coefficients")
+print(xtable(as.matrix(rei2d.ridge), label="tab:tcq2dreiridge", caption="Coefficient Estimates on Held Out Data for Reitotal, Ridge Regression, Split D"))
+@ 
+
+Table \ref{tab:tcq2dreiridge} shows the estimated coefficients for the ridge regression model, and as can be seen these are quite similar to those seen for the lasso fit above.
+
 
 Finally, this model selection and validation procedure was applied to the Beliefs About Medicine Total. 
 
