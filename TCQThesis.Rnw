@@ -85,7 +85,7 @@ require(stargazer)
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
 
-<<agesummary, echo=FALSE, results=tex, cache=TRUE>>=
+<<agesummary, echo=FALSE, results=tex>>=
 sum.age<-with(tcq1, summary(Age)) 
 sum.age.mat<-as.data.frame(as.matrix(sum.age))
 names(sum.age.mat) <- "Age"
@@ -98,7 +98,7 @@ print(xtab.age)
 
 The College of study of the respondents was also assessed, and the results are shown in Table \ref{tab:tcq1college} below. 
 
-<<gendersummary, echo=FALSE, results=tex, cache=TRUE>>=
+<<gendersummary, echo=FALSE, results=tex>>=
 sum.gen<-with(tcq1, summary(Gender))
 sum.gen <- as.data.frame(sum.gen)
 names(sum.gen) <- "Gender Breakdown"
@@ -106,7 +106,7 @@ sum.gen.xtab<-xtable(sum.gen, caption="Gender of Participants in Study One", lab
 print(sum.gen.xtab)
 @ 
 
-<<tcqcollege, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqcollege, echo=FALSE, results=tex>>=
 sum.coll<-with(tcq1, summary(College)) 
 names(sum.coll)[1] <- "No College Supplied"
 sum.coll <- as.data.frame(sum.coll)
@@ -122,7 +122,7 @@ print(xtab.coll)
 As we can see from Table \ref{tab:tcq1college}, again the breakdown roughly follows the distribution of students in the population. However, there are a few more Medicine and Health students than one would expect, presumably because this survey was somewhat more salient to them, given their field. 
 
 The next demographic variable we will examine is the breakdown between undergraduates and postgraduates in the sample. The results can be seen in Table 3 below. 
-<<upgsummary, echo=FALSE, results=tex, cache=TRUE>>=
+<<upgsummary, echo=FALSE, results=tex>>=
 sum.ugpg<-with(tcq1, summary(UGPG))
 sum.ugpg <- as.data.frame(sum.ugpg)
 names(sum.ugpg) <- "Proportion of Under and Post Graduates in the Sample"
@@ -136,7 +136,7 @@ As we can see from table \ref{tab:tcq1ugpg}, approximately 16\% of the sample ar
 
 The next demographic variable examined is that of year of study, and the results can be seen in Table \ref{tab:tcq1year} below.
 
-<<yearsummary, echo=FALSE, results=tex, cache=TRUE>>=
+<<yearsummary, echo=FALSE, results=tex>>=
 sum.year<-with(tcq1, summary(as.factor(Year)))
 mat.year<-as.data.frame(sum.year)
 names(mat.year) <- "Year of Study"
@@ -158,7 +158,7 @@ totals <- tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")]
 @
 
 
-<<totalsummary, echo=FALSE, results=tex, cache=TRUE>>=
+<<totalsummary, echo=FALSE, results=tex>>=
 sum.totals<-summary(totals)
 mat.totals<-as.matrix(sum.totals)
 xtab.totals<-xtable(mat.totals, caption="Summary Statistics, Total Credibility Scores", label="tab:tcq1sumtotals")
@@ -167,17 +167,8 @@ print(xtab.totals)
 
 
 
-As can be seen,  none of these distributions are normally distributed, a point which is reinforced by Figure \ref{fig:tcqscatterplotmat} below, which shows both the correlations between the scale totals and their distribution. 
-%% \begin{figure}
-%% 	\centering
-## <<scatterplotmat, echo=FALSE, fig=TRUE, cache=TRUE>>=
-## sink("tmp.txt")
-## print(pairs.panels(totals))
-## sink(NULL)
-%% @ 
-%% \caption{Scatterplot Matrix, TCQ 1}
-%% \label{fig:tcqscatterplotmat}
-%% \end{figure}
+%% As can be seen,  none of these distributions are normally distributed, a point which is reinforced by Figure \ref{fig:tcqscatterplotmat} below, which shows both the correlations between the scale totals and their distribution. 
+
 
 Next, the differences in credibility totals between Genders will be examined. 
 <<gendercred, echo=FALSE, results=hide, cache=TRUE>>=
@@ -188,7 +179,7 @@ gendacu <- ggplot(na.omit(tcq1), aes(y=AcuTot, x=Gender))+geom_boxplot()
 @ 
 
 \begin{figure}
-<<gendpill, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<gendpill, echo=FALSE, figure=TRUE>>=
 print(arrangeGrob(gendpill, gendcream, gendinj, gendacu))
 @   
   \caption{Gender Differences in Credibility  Scores, TCQ1}
@@ -217,8 +208,8 @@ collacu <- ggplot(na.omit(tcq1), aes(y=AcuTot, x=College))+geom_boxplot()+theme(
 @ 
 
 \begin{figure}
-<<collpill, echo=FALSE, fig=TRUE, cache=TRUE>>=
-print(arrangeGrob(collpill, collcream, collinj, collacu))+theme(axis.text.x=element_text(angle=45, hjust=1))
+<<collpill, echo=FALSE, figure=TRUE>>=
+grid.arrange(arrangeGrob(collpill, collcream, collinj, collacu))+theme(axis.text.x=element_text(angle=45, hjust=1))
 @   
   \caption{Treatment Credibility Scores by College of Study}
   \label{fig:collpill}
@@ -253,12 +244,12 @@ rel.tcq <- psych:::alpha(na.omit(tcqall))
 @ 
 
 
-<<reltcq, echo=FALSE, results=tex, cache=TRUE>>=
+<<reltcq, echo=FALSE, results=tex>>=
 rel.xtab<-xtable(rel.tcq[["total"]],caption="Reliability Statistics for TCQ 1", label="tab:reltcq1short") 
 print(rel.xtab)
 @ 
 
-<<reltcq2, echo=FALSE, results=tex, cache=TRUE>>=
+<<reltcq2, echo=FALSE, results=tex>>=
 print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for the TCQ 1", label="tab:tcq1rellong"))
 @ 
 
@@ -277,7 +268,7 @@ The first analysis carried out on the data was an assessment of the number of fa
 
 \begin{figure}
 	\centering
-<<faparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<faparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 plot(fa.parallel(na.omit(tcqall)))
 ## VSS(na.omit(tcqall))
@@ -289,17 +280,17 @@ sink(NULL)
 
 
 
-<<tcqfact4, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqfact4, echo=FALSE, results=tex>>=
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
 print(FactorXtab(tcq.fact.4, label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation"))
 @ 
 
-<<factorloadings4, echo=FALSE, results=verbatim, cache=TRUE>>=
+<<factorloadings4, echo=FALSE, results=verbatim, eval=FALSE>>=
 print(ExtractLoadings(tcq.fact.4))
 @ 
 
 
-<<factorcor4, echo=FALSE, results=tex, cache=TRUE>>=
+<<factorcor4, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.4, label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations"))
 @ 
 
@@ -318,11 +309,11 @@ This four factor solution explains 74\% of the variance, which is extremely high
 
 Below, in Table \ref{tab:tcq1fivefactor} the five factor solution is examined.
 
-<<tcqfact5, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqfact5, echo=FALSE, results=tex>>=
 tcq.fact.5 <-fa(na.omit(tcqall), 5, rotate='oblimin', fm="pa")
 print(FactorXtab(tcq.fact.5, label="tab:tcq1fact5",caption="Five Factor Solution, TCQ 1 Promax rotation"))
 @ 
-<<tcq5cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq5cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.5, label="tab:tcq1fact5cor", caption="Five Factor Solution TCQ1 Correlations"))
 @ 
 
@@ -333,13 +324,13 @@ Although in Table \ref{tab:tcq1fact5} the oblimin solution is shown, simplimax, 
 Finally, the six factor solution was examined for interpretability, and the results are shown in Table \ref{tab:tcq1fact6}
 
 
-<<tcqfact6, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
 print(FactorXtab(tcq.fact.6, label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation"))
 @ 
 
 
-<<tcq6cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq6cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations"))
 @ 
 
@@ -347,7 +338,7 @@ print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Sol
 
 As can be seen in Table \ref{tab:tcq1fact6} the four factors from the original solution still have the highest loadings, but there are a number of lower loadings on the fifth and sixth factors. This suggests that a CFA using a maximum likelihood approach is needed to determine which of these solutions can reproduce the covariance matrix most accurately. 
 
-<<fitindices,echo=FALSE, results=tex, cache=TRUE>>=
+<<fitindices,echo=FALSE, results=tex, eval=FALSE>>=
 fit4 <- FitIndices(tcq.fact.4)
 fit5 <- FitIndices(tcq.fact.5)
 fit6 <- FitIndices(tcq.fact.6)
@@ -508,7 +499,7 @@ tcqconv.monotonicity <- check.monotonicity(na.omit(convtcq))
 tcqalt.monotonicity <- check.monotonicity(na.omit(tcqalt))
 @ 
 
-<<tcqconvitemord, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqconvitemord, echo=FALSE, results=tex>>=
 print(xtable(tcqconv.item.ord[["violations"]], caption="Item Ordering Assumption Test for TCQ 1 Conventional Scale", label="tab:tcq1itemordconv"))
 convtcq <- convtcq[,-2]
 @ 
@@ -517,11 +508,11 @@ From Table \ref{tab:tcq1itemordconv} it can be seen that Pill2 was the only item
 
 Next, the assumptions of monotonicity were examined for the conventional items, and the results are shown in Table \ref{tab:tcq1convmono}. 
 
-<<convmonotonicity, echo=FALSE, results=tex, cache=TRUE>>=
+<<convmonotonicity, echo=FALSE, results=tex>>=
 print(xtable(summary(tcqconv.monotonicity), caption="Test of Monotonicity Assumption, TCQ 1 Conventional Scale", label="tab:tcq1convmono"))
 @ 
 
-<<tcqaltitemord, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqaltitemord, echo=FALSE, results=tex>>=
 print(xtable(tcqalt.item.ord[["violations"]], caption="Test of Item Ordering Assumptions for TCQ1 Alternative Scale", label="tab:tcq1altitemord"))
 
 @ 
@@ -530,7 +521,7 @@ Table \ref{tab:tcq1altitemord} demonstrates that there were no violations of the
 
 Next, the assumption of monotonicity was examined for the acupcunture items, and the results are shown in Table \ref{tab:tcq1altmono}. The results indicate that there are no violations of monotonicity for these items. 
 
-<<altmonotonicity, echo=FALSE, results=tex, cache=TRUE>>=
+<<altmonotonicity, echo=FALSE, results=tex>>=
 print(xtable(summary(tcqalt.monotonicity), caption="Test of Monotonicity Assumption for TCQ1 Alternative Scale", label="tab:tcq1altmono"))
 @ 
 
@@ -539,53 +530,65 @@ print(xtable(summary(tcqalt.monotonicity), caption="Test of Monotonicity Assumpt
 <<tcqconvpcm, echo=FALSE, results=tex, cache=TRUE>>=
 tcqconv.pcm.rasch<-gpcm(convtcq, constraint="rasch")
 tcqcoef <- coef(tcqconv.pcm.rasch)
-print(xtable(tcqcoef, label="tab:tcq1convpcmrasch", caption="Coefficients for TCQ1 Partial Credit Model (Rasch)"))
+
 tcqconv.pcm.fscores.rasch <- factor.scores(tcqconv.pcm.rasch)
 tcqconv.pcm.absest.rasch <- getIRTestimates(tcqconv.pcm.fscores.rasch)
 @ 
 
+<<tcqconvraschprint, echo=FALSE, results=tex>>=
+print(xtable(tcqcoef, label="tab:tcq1convpcmrasch", caption="Coefficients for TCQ1 Partial Credit Model (Rasch)"))
+@ 
 Even a cursory glance at Table \ref{tab:tcq1convpcmrasch} demonstrates that there are serious problems with this model, as the estimates are not monotonically increasing for each higher category. The  next model to be examined is a one parameter model, where the discrimination parameter is estimated from the data rather than being fixed at one. 
 
-<<tcqconvpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqconvpcm1pl, echo=FALSE, results=hide, cache=TRUE>>=
 tcqconv.pcm.1pl <- gpcm(convtcq, constraint="1PL")
 tcqconv1pl.coef <- coef(tcqconv.pcm.1pl)
-print(xtable(tcqconv1pl.coef, label="tab:tcqconvpcm1pl", caption="Coefficients for TCQ 1 Partial Credit Model, One Parameter"))
+
 tcqconv.pcm.fscores.1pl <- factor.scores(tcqconv.pcm.1pl)
 tcqconv.pcm.absest.1pl <- getIRTestimates(tcqconv.pcm.fscores.1pl)
 @ 
-
+<<tcqconv1plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqconv1pl.coef, label="tab:tcqconvpcm1pl", caption="Coefficients for TCQ 1 Partial Credit Model, One Parameter"))
+@ 
 From Table \ref{tab:tcqconvpcm1pl} it can be seen that the model still has a number of problems with item ordering, especially in the Pill and Injection sections of the questionnaire. Indeed, it appears to be Category 3 which is causing the problems, which may suggest that participants were using this category as a base rather than actually considering the alternatives in a consistent manner. Next, a 2 parameter model will be fitted to assess if allowing individual discrimination parameters will prove to be a better approach. 
 
 <<tcqconvpcm2pl, echo=FALSE, results=tex, cache=TRUE>>=
 tcqconv.pcm.gpcm <- gpcm(convtcq, constraint="gpcm")
 tcqconv.gpcm.coef <- coef(tcqconv.pcm.gpcm)
-print(xtable(tcqconv.gpcm.coef, caption="Coefficients for TCQ1 Conventional Two Parameter Partial Credit Model", label="tab:tcq1convpcm2pl"))
+
 tcqconv.pcm.fscores.gpcm <- factor.scores(tcqconv.pcm.gpcm)
 tcqconv.pcm.absest.gpcm <- getIRTestimates(tcqconv.pcm.fscores.gpcm)
 @ 
-
+<<tcqconv2plprint, echo=FALSE, results=hide>>=
+print(xtable(tcqconv.gpcm.coef, caption="Coefficients for TCQ1 Conventional Two Parameter Partial Credit Model", label="tab:tcq1convpcm2pl"))
+@ 
 Unfortunately, the approach of attempting to allow for a more flexible modelling approach in order to garner more coherent parameters for the model appears to have failed, in that Table \ref{tab:tcq1convpcm2pl} shows that the issues around item ordering have not been resolved by allowing for a two parameter model. 
 
 Thus far, the generalised partial credit model has been shown to be entirely inappropriate for the analysis of the conventional scale items in this sample. The next step is to attempt to fit a more flexible model, the graded response model, and examine if this model can be fit accurately to the dataset at hand. 
 
-<<tcqconvgrmconstrained, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqconvgrmconstrained, echo=FALSE, results=hide, cache=TRUE>>=
 tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
 tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
-print(xtable(tcqconv.grm1.coef, label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
+
 tcqconv.grm.fscores.1pl <- factor.scores(tcqconv.grm.1pl)
 tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.1pl)
 @ 
 
+<<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqconv.grm1.coef, label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
+@ 
 It can be seen from Table \ref{tab:tcq1convgrm1pl} that the fit is much better for this model, with no violations of monotonicity. The next step taken is to examine the fit of a more flexible model (with a discrimination parameter for each item), and assess whether or not this represents a significant enough improvement over the model above.
 
 <<tcqconvgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
 tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
-print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
+
 tcqconv.grm.fscores.2pl <- factor.scores(tcqconv.grm.2pl)
 tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.2pl)
 @ 
-
+<<tcqconvgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
+@ 
 <<tcqgrmcomp, echo=FALSE, results=hide, cache=TRUE>>=
 grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
 @ 
@@ -594,21 +597,27 @@ The result of this model comparison exercise showed that the 1 parameter model w
 <<tcqaltpcm, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
 tcqaltcoef <- coef(tcqalt.pcm.rasch)
-print(xtable(tcqaltcoef, label="tab:tcq1altgpcmrasch", caption="Coefficients for TCQ 1 Alternative Scale, Rasch Generalised Partial Credit Model"))
+
 tcqalt.pcm.fscores.rasch <- factor.scores(tcqalt.pcm.rasch)
 tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores.rasch)
 @ 
 
+
+<<tcqaltgpcmraschprint, echo=FALSE, results=hide>>=
+print(xtable(tcqaltcoef, label="tab:tcq1altgpcmrasch", caption="Coefficients for TCQ 1 Alternative Scale, Rasch Generalised Partial Credit Model"))
+@ 
 Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcq1altgpcmrasch}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
 
 <<tcqaltpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.pcm.1pl <- gpcm(tcqalt, constraint="1PL")
 tcqaltcoef.1pl <- coef(tcqalt.pcm.1pl)
-print(xtable(tcqaltcoef.1pl, label="tab:tcq1altgpcm1pl", caption="Coefficients for TCQ1 Alternative, One Parameter Generalised Partial Credit Model"))
+
 tcqalt.pcm.fscores <- factor.scores(tcqalt.pcm.1pl)
 tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores)
 @ 
-
+<<tcqaltgpcm1plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqaltcoef.1pl, label="tab:tcq1altgpcm1pl", caption="Coefficients for TCQ1 Alternative, One Parameter Generalised Partial Credit Model"))
+@ 
 The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcqaltgpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An anova confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
 
 Next, a two parameter model was fitted to this data. 
@@ -616,6 +625,9 @@ Next, a two parameter model was fitted to this data.
 <<tcqaltpcm2pl, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.pcm.2pl <- gpcm(tcqalt, constraint="gpcm")
 tcqaltcoef.2pl <- coef(tcqalt.pcm.2pl)
+
+@ 
+<<tcqaltgpcm2plprint, echo=FALSE, results=hide>>=
 print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients for TCQ1 Alternative Scale, Two Parameter Graded Response Model"))
 @ 
 The two parameter model (shown in Table \ref{tab:tcq1altgpcm2pl}) has some interesting features compared to the one parameter model. Firstly, the discrimanation parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has icnreased substantially. An anova between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
@@ -625,21 +637,25 @@ Next, two graded response models were fit to the the alternative tcq question-se
 <<tcqaltgrm1, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
-print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
+
 tcqalt.grm1.fscores <- factor.scores(tcqalt.grm.constrained)
 tcqalt.grm1.absest <- getIRTestimates(tcqalt.grm1.fscores)
 @ 
-
+<<tcaltgrm1plprint, echo=FALSE, results=hide>>=
+print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
+@ 
 The model described in Table \ref{tab:tcq1altgrm1pl} is quite different from the one parameter model estimated under the partial credit model. Firstly, the discrimination parameter is estimated at a much lower level (3.88 as opposed to 5.20). In addition, the parameter estimates are much more closely distributed around zero, and the category 4 parameter estimates are much less extreme. 
 
 <<tcqaltgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.grm2 <- grm(tcqalt)
 tcqalt.grm2.coef <- coef(tcqalt.grm2)
-print(xtable(tcqalt.grm2.coef, label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
+
 tcqalt.grm2.fscores <- factor.scores(tcqalt.grm2)
 tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
-
+<<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqalt.grm2.coef, label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
+@ 
 Again, the model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
 
 
@@ -648,7 +664,7 @@ Again, the model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimat
 
 In this section, the totals for each of the treatment modalities are examined to determine if any of the demographic variables can account for them. Firstly, a linear regression was run on the Pilltotal variable using the demographics as predictors.
 
-<<pilltotreg1, echo=FALSE, results=tex, cache=TRUE>>=
+<<pilltotreg1, echo=FALSE, results=tex>>=
 pillLm1 <- lm((PillTot/5)~CreamTot+InjTot+AcuTot+Gender+College+UGPG+Year, data=tcq1)
 print(xtable(summary(pillLm1), caption="Coefficient for Linear Regression on Pill Credibility Scores, TCQ1", label="tab:tcq1pilllmsum"))
 @ 
@@ -657,7 +673,7 @@ As can be seen from Table \ref{tab:tcq1pilllmsum}, there were no only Cream and 
 
 Next, we examine the relationship of cream credibility variables to others in the sample.
 
-<<creamlm,echo=FALSE, results=tex, cache=TRUE>>=
+<<creamlm,echo=FALSE, results=tex>>=
 creamlm <- lm(CreamTot~PillTot+InjTot+AcuTot+Gender+College+UGPG, data=tcq1)
 print(xtable(summary(creamlm), caption="Cream Credibility Linear Regression Results",label="tab:creamlm"))
 @ 
@@ -666,7 +682,7 @@ As can be seen from the model in Table \ref{tab:creamlm}, there appears to only 
 
 Next, we examine the relationship between Injection Credibility scores and the other variables in the sample.
 
-<<injlm, echo=FALSE, results=tex, cache=TRUE>>=
+<<injlm, echo=FALSE, results=tex>>=
 injlm <- lm(InjTot~PillTot+CreamTot+AcuTot+Gender+College+UGPG, data=tcq1)
 print(xtable(summary(injlm), caption="Injection Credibility Totals Regression, Study One", label="tab:injlm1"))
 @ 
@@ -675,7 +691,7 @@ As can be seen from Table \ref{tab:injlm1}, a similar pattern as was seen for th
 
 Finally, we examine the relationship between Acupuncture credibility and other variables in the sample. 
 
-<<acutotlm, echo=FALSE, results=tex, cache=TRUE>>=
+<<acutotlm, echo=FALSE, results=tex>>=
 acutotlm <- lm(AcuTot~PillTot+CreamTot+InjTot+Gender+College+UGPG, data=tcq1)
 print(xtable(summary(acutotlm), caption="Acupuncture Credibility Linear Regression, Study One", label="tab:acutotlm1"))
 @ 
@@ -849,9 +865,9 @@ tcq6fit2 <- mxRun(Tcq6model2)
 tcq6summ2 <- summary(tcq6fit2)
 @ 
 
-<<tcq2testsemcomp, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2testsemcomp, echo=FALSE, results=tex>>=
 tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq5fit2, tcq6fit2))
-print(xtable(summary(tcq2.1.comp), caption="Comparison of Four, Five and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
+print(xtable(tcq2.1.comp, caption="Comparison of Four, Five and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
 @ 
 
 As can be seen from Table \ref{tab:tcq2testsemcomp} the six factor model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion, below.
@@ -869,7 +885,7 @@ Given that the models developed on the first data set are useful, then they shou
 
 Firstly, the Pill credibility model was replicated on a subset of the new data. 
 
-<<pilllm2a, echo=FALSE, results=tex, cache=TRUE>>=
+<<pilllm2a, echo=FALSE, results=tex>>=
 pilllm2a <- lm(Pilltot~Creamtot+Injtot+Acutot+Gender+College+UGPG, data=tcq2a)
 print(xtable(summary(pilllm2a), caption="Replication of Pill Credibility Model from Study One on a subsample from Study 2", label="tab:pilllm2a"))
 @ 
@@ -878,7 +894,7 @@ As can be seen from Table \ref{tab:pilllm2a}, the significant variables from the
 
 Next, the original model on cream credibility scores was examined. 
 
-<<creamlm2a, echo=FALSE, results=tex, cache=TRUE>>=
+<<creamlm2a, echo=FALSE, results=tex>>=
 creamlm2a <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+College+UGPG, data=tcq2a)
 print(xtable(summary(creamlm2a), caption="Regression of Cream Credibility Scores Model from Study One on a subsample of Study Two Data", label="tab:creamlm2a"))
 @ 
@@ -887,7 +903,7 @@ As can be seen from Table \ref{tab:creamlm2a}, a similar pattern  as was seen fr
 
 Next, we examine the Injection Credibility model developed on the first sample. 
 
-<<injlm2a, echo=FALSE, results=tex, cache=TRUE>>=
+<<injlm2a, echo=FALSE, results=tex>>=
 injlm2a <- lm(Injtot~Pilltot+Creamtot+Acutot+Gender+College+UGPG, data=tcq2a)
 print(xtable(summary(injlm2a), caption="Regression of Injection Credibility Score Model from Study One on subsample from Study Two", label="tab:injlm2a"))
 @ 
@@ -896,7 +912,7 @@ As can bee seen from Table \ref{tab:injlm2a}, the results of this same model on 
 
 Finally, the Acupuncture credibility model from Study One was examined. 
 
-<<acutotlm2a, echo=FALSE, results=tex, cache=TRUE>>=
+<<acutotlm2a, echo=FALSE, results=tex>>=
 acutotlm2a <- lm(Acutot~Pilltot+Creamtot+Injtot+Gender+College+UGPG, data=tcq2a)
 acutot2a.xtab <- xtable(summary(acutotlm2a), caption="Acupuncture Credibility Model from Study One replicated on a subsample from Study Two", label="tab:acutotlm2a")
 print(acutot2a.xtab)
@@ -926,13 +942,16 @@ pcm.1pl.done <- testIRTModels(tcqconv.pcm.1pl, tcq2a.conv, gpcmconstraint="1PL",
 pcm.gpcm.done <- testIRTModels(tcqconv.pcm.gpcm, tcq2a.conv, gpcmconstraint="gpcm", grmconstraint=NULL)
 @ 
 
-<<pcmmodcomp, echo=FALSE, results=tex, cache=TRUE>>=
+<<pcmmodcomp, echo=FALSE, results=hide, cache=TRUE>>=
 pcm.mod.comp <- rbind(pcm.rasch.done, pcm.1pl.done, pcm.gpcm.done)
 rownames(pcm.mod.comp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+
+
+@ 
+<<pcmmodcompprint, echo=FALSE, results=tex>>=
 pcm.mod.comp.xtab <- xtable(pcm.mod.comp, caption="Comparison of Performance of IRT PCM Models on Study Two Data", label="tab:pcmmodcomp")
 print(pcm.mod.comp.xtab)
 @ 
-
 As can be seen from Table \ref{tab:pcmmodcomp}, the one parameter Partial Credit Model appears to fit better in that it has a lower square root of the sum of the squared errors, and the predicted scores and actual scores correlate higher than those for the rasch model. However, despite these fit indices an argument can be made for the Rasch model in terms of simplicity (even though a complexity parameter was added to the error term to account for this possibility). 
 
 Next, the same process is repeated for the graded response models. 
@@ -942,10 +961,12 @@ grm1pl.done <- testIRTModels(tcqconv.grm.1pl, tcq2a.conv, grmconstraint=TRUE)
 grm2pl.done <- testIRTModels(tcqconv.grm.2pl, tcq2a.conv, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
 rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
+
+@ 
+<<grmmodcompprint, echo=FALSE, results=tex>>=
 grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
 print(grm.modcomp.xtab)
 @ 
-
 As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model in each case)
 
 
@@ -998,7 +1019,7 @@ The next step in the analysis is visualisation of data using scatterplot matrice
 
 \begin{figure}
 	\centering
-<<tcq2pairs, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2pairs, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 print(pairs.panels(tcqtotals))
 sink(NULL)
@@ -1019,7 +1040,7 @@ As can be seen from Table \ref{fig:tcq2credgend}, the sample scores showed some 
 
 
 \begin{figure}
-<<credgender, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<credgender, echo=FALSE, figure=TRUE>>=
 gendPill <- ggplot(na.omit(tcq2), aes(y=Pilltot, x=Gender))+geom_boxplot()
 gendcream <- ggplot(na.omit(tcq2), aes(y=Creamtot, x=Gender))+geom_boxplot()
 gendInj <- ggplot(na.omit(tcq2), aes(y=Injtot, x=Gender))+geom_boxplot()
@@ -1033,7 +1054,7 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 \end{figure}
 
 \begin{figure}
-<<collcredplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<collcredplot, echo=FALSE, figure=TRUE>>=
 collpill <- ggplot(tcq2, aes(x=College, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
 collCream <- ggplot(tcq2, aes(x=College, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
 collInj <- ggplot(tcq2, aes(x=College, y=Injtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
@@ -1092,7 +1113,7 @@ The results of factor analysis on the Treatment credibility Questionnaire can be
 
 \begin{figure}
 	\centering
-<<tcq2aparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2aparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 tcq2a.para <- fa.parallel(na.omit(tcqall2a))
 tcq2a.vss <- VSS(na.omit(tcqall2a))
@@ -1105,7 +1126,7 @@ sink(NULL)
 As can be seen from Figure \ref{fig:tcq2aparallel}, both the parallel analysis and the scree plot agree that six factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, both the six and seven factor solutions will be examined for interpretability. 
 
 
-<<tcq2afact6, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2afact6, echo=FALSE, results=tex>>=
 tcq2a.fact.6 <- fa(na.omit(tcqall2a), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2a.fact.6, label="tab:tcq2afact6", caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
@@ -1116,7 +1137,7 @@ As can be seen from Table \ref{tab:tcq2afact6} , this factor structure fits the 
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2a6factorcor}.
 
 
-<<tcq2afactorcor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2afactorcor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2a.fact.6, label="tab:tcq2a6factorcor", caption="Factor Correlations, Six Factor Solution TCQ 2"))
 @ 
 
@@ -1129,7 +1150,7 @@ As can be seen from Table \ref{tab:tcq2a6factorcor}, the correlations between fa
 
 
 
-<<tcq2afact7, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2afact7, echo=FALSE, results=tex>>=
 tcq2a.fact.7 <- fa(na.omit(tcqall2a), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2a.fact.7, label="tab:tcq2afact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
@@ -1139,11 +1160,11 @@ print(FactorXtab(tcq2a.fact.7, label="tab:tcq2afact7",caption="Seven Factor Solu
 Table \ref{tab:tcq2afact7} is enlightening in that it can be seen that factor 7 has no questions loading highest on it. Therefore, we can probably use the six factor structure on the basis of this data. 
 The correlations between the factors are reported in Table \ref{tab:tcq2a7factorcorr}.
 
-<<tcq2a7factorcorr, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2a7factorcorr, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2a.fact.7, label="tcq2a7factorcorr", caption="Correlations Between factors, TCQ 2A, Seven factor solution"))
 @ 
 
-<<tcq2afitindices, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2afitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
 tcq2aFit6 <- FitIndices(tcq2a.fact.6)
 tcq2aFit7 <- FitIndices(tcq2a.fact.7)
 tcq2afit <- as.data.frame(cbind(tcq2aFit6, tcq2aFit7))
@@ -1153,7 +1174,7 @@ print(xtable(tcq2afit.m,caption="Fit Indices, TCQ 2", label="tab:tcq2afit"))
 #Fix this godawffully ugly table, possibily using cast
 @ 
 
-In Table \ref{tab:tcq2afit}, the fit indices for each of the solutions are shown.
+%% In Table \ref{tab:tcq2afit}, the fit indices for each of the solutions are shown.
 
 
 \subsubsection{Beliefs About Medicine Questionnaire}
@@ -1165,7 +1186,7 @@ Next, the beliefs about medicine questionnaire will be examined in terms of fact
 This questionnaire was developed for use with chronic pain patients. It appears to be the standard in the field, however, it was only analysed using a principal components method and Varimax rotation, neither of which are appropriate for an instrument of this kind. 
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
 
-<<bamparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<bamparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 bam.para <- fa.parallel(na.omit(bamall2a))
 bam.vss <- VSS(na.omit(bamall2a))
@@ -1181,7 +1202,7 @@ The parallel analysis suggests that there are four factors, while the MAP criter
 
 
 
-<<bam2afact1, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact1, echo=FALSE, results=tex>>=
 bam2a.fact1 <- fa(na.omit(bamall2a), 1, fm="pa")
 print(FactorXtab(bam2a.fact1, label="tab:bam2afact1", caption="One Factor Solution, Beliefs About Medicine Questionnaire, Sample Two"))
 @ 
@@ -1193,7 +1214,7 @@ As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extre
 
 
 
-<<bam2afact2, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact2, echo=FALSE, results=tex>>=
 bam2a.fact2 <- fa(na.omit(bamall2a), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact2, label="tab:bam2afact2"))
 @ 
@@ -1206,7 +1227,7 @@ PA2: "BAM2",  "BAM7",  "BAM10", "BAM11". These items all appear to relate to nat
 Although there appears to be an interpretable factor structure emerging from this solution, it should be noted that the large number of items not loading on any solution and the low proportion of variance explained caution against over-interpretation of this solution. 
 
 
-<<bam2afact2cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact2cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2a.fact2,label="tab:bam2afact2cor"))
 @ 
 
@@ -1218,7 +1239,7 @@ As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderatel
 
 
 
-<<bam2afact3, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact3, echo=FALSE, results=tex>>=
 bam2a.fact3 <- fa(na.omit(bamall2a), 3, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact3, label="bam2afact3"))
 @ 
@@ -1232,14 +1253,14 @@ PA2: "BAM1",  "BAM2",  "BAM7",  "BAM10", "BAM11". These items relate to the  res
 
 
 
-<<bam2afact3cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact3cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2a.fact3,label="tab:bam2afact3cor"))
 @ 
 
 Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 with the other factors are quite small. 
 
 
-<<bam2afact4, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact4, echo=FALSE, results=tex>>=
 bam2a.fact4 <- fa(na.omit(bamall2a), 4, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2a.fact4, label="tab:bam2afact4"))
 @ 
@@ -1255,7 +1276,7 @@ PA2: "BAM1",  "BAM2",  "BAM7",  "BAM10", "BAM11", "BAM16", "BAM18". These items 
 PA4: "BAM5". This factor is almost certainly spurious, given that it only has one item on it. This item relates to regular taking of medicines, and so it can be termed Regular Taking of Medicines. 
 
 
-<<bam2afact4cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2afact4cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2a.fact4,label="tab:bam2afact4cor"))
 @ 
 
@@ -1282,7 +1303,7 @@ bamall2b <- tcq2b[,53:70]
 
 \begin{figure}
 	\centering
-<<tcq2aparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2aparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 tcq2b.para <- fa.parallel(na.omit(tcqall2b))
 tcq2b.vss <- VSS(na.omit(tcqall2b))
@@ -1299,7 +1320,7 @@ As can be seen from Figure \ref{fig:tcq2bparallel}, both the parallel analysis a
 
 
 
-<<tcq2afact5, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2afact5, echo=FALSE, results=tex>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2b.fact.5, label="tab:tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
 @ 
@@ -1320,7 +1341,7 @@ PA4: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This factor consisted solel
 
 Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
 
-<<tcq2bfactorcor5, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bfactorcor5, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2b.fact.5,label="tab:tcq2bfactorcor5"))
 @ 
 
@@ -1330,7 +1351,7 @@ print(FactorCor(tcq2b.fact.5,label="tab:tcq2bfactorcor5"))
 
 
 
-<<tcq2bfact6, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bfact6, echo=FALSE, results=tex>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2b.fact.6,label="tab:tcq2bfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
@@ -1341,7 +1362,7 @@ As can be seen from Table \ref{tab:tcq2bfact6} , the six factor structure fits t
 Below can be seen the correlations between factors, in Table \ref{tab:tcq2.sixfactorcorr} . 
 
 
-<<tcq2bfactorcor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bfactorcor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2b.fact.6,label="tab:tcq2b6factorcor",caption="Factor Correlations, Six Factor Solution TCQ 2B"))
 @ 
 
@@ -1358,7 +1379,7 @@ As can be seen from Table \ref{tab:tcq2b6factorcor}, the correlations between fa
 
 
 
-<<tcq2bfact7, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bfact7, echo=FALSE, results=tex>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2b.fact.7, label="tab:tcq2bfact7",caption="Seven Factor Solution, TCQ 2B, Oblimin Rotation"))
 @ 
@@ -1383,11 +1404,11 @@ PA7: "Pill3",  "Cream3", "Inj1",   "Inj3" . This factor is a little strange, as 
 
 The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
 
-<<tcq2b7factorcorr, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2b7factorcorr, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr", caption="Factor Correlations, TCQ2B, Seven factor Solution"))
 @ 
 
-<<tcq2bfitindices, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
 tcq2bFit5 <- FitIndices(tcq2b.fact.5)
 tcq2bFit6 <- FitIndices(tcq2b.fact.6)
 tcq2bFit7 <- FitIndices(tcq2b.fact.7)
@@ -1404,13 +1425,17 @@ print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfi
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
-
-<<bamparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+\begin{figure}
+<<bamparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 bam.para <- fa.parallel(na.omit(bamall2b))
 bam.vss <- VSS(na.omit(bamall2b))
 sink(NULL)
-@ 
+@   
+  \caption{Parallel Analysis and VSS Criteria for Beliefs About Medicine Scale, Split B}
+  \label{fig:bam2bparallel}
+\end{figure}
+
 
 The parallel analysis suggests that there are five factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all five factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
 
@@ -1419,7 +1444,7 @@ The parallel analysis suggests that there are five factors, while the MAP criter
 
 
 
-<<bam2bfact1, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact1, echo=FALSE, results=tex>>=
 bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
 print(FactorXtab(bam2b.fact1, label="tab:bam2bfact1", caption="One factor Solution, Beliefs About Medicine Questionnaire, Split 2B"))
 @ 
@@ -1431,7 +1456,7 @@ As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extre
 
 
 
-<<bam2bfact2, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact2, echo=FALSE, results=tex>>=
 bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2b.fact2, label="tab:bam2bfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
@@ -1442,7 +1467,7 @@ PA1: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM11", "BA
 PA2: "BAM1",  "BAM2",  "BAM11", "BAM16", "BAM18". These items relate to the responsible use of medicines, and thus this factor gets that name. 
 
 
-<<bam2bfact2cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact2cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2b.fact2,label="tab:bam2bfact2cor", caption="Factor Correlations for Two Factor Solution, Beliefs About Medicine Questionnaire, Split B"))
 @ 
 
@@ -1453,7 +1478,7 @@ As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost en
 
 
 
-<<bam2bfact3, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact3, echo=FALSE, results=tex>>=
 bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2b.fact3,label="tab:bam2bfact3", caption="Three factor solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
@@ -1468,7 +1493,7 @@ PA3: "BAM13", "BAM14", "BAM17". This factor can perhaps best be termed Medicine 
 PA2: "BAM1",  "BAM2",  "BAM11", "BAM16", "BAM18". Again, this factor can best be termed responsible use of medicines. 
 
 
-<<bam2bfact3cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact3cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2b.fact3,label="tab:bam2bfact3cor", caption="Factor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
 @ 
 
@@ -1479,7 +1504,7 @@ Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat 
 
 
 
-<<bam2bfact4, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact4, echo=FALSE, results=tex>>=
 bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2b.fact4,label="tab:bam2bfact4", caption="Four Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
 @ 
@@ -1497,7 +1522,7 @@ PA1: "BAM6",  "BAM8",  "BAM9",  "BAM18". These items all relate to safety or dan
 
 
 
-<<bam2bfact4cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact4cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2b.fact4,label="tab:bam2bfact4cor", caption="Factor Correlations, Beliefs About Medicine Questionnaire Four Factor Solution, TCQ 2, Split B"))
 @ 
 
@@ -1508,7 +1533,7 @@ As before, Table \ref{tab:bam2afact4cor} shows large correlations between factor
 
 
 
-<<bam2bfact5, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact5, echo=FALSE, results=tex>>=
 bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2b.fact5,label="tab:bam2bfact5", caption="Five Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
 @ 
@@ -1525,7 +1550,7 @@ PA1: "BAM6",  "BAM11", "BAM18". These items all relate to the safety of medicine
 
 PA5: "BAM8",  "BAM9",  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
 
-<<bam2bfact5cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bfact5cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2b.fact5,label="tab:bam2bfact5cor", caption="Factor Correlations, Beliefs About Medicine Five Factor Solution, TCQ 2, Split B"))
 @ 
 
@@ -1544,7 +1569,7 @@ bamall2c <- tcq2c[,53:70]
 
 \begin{figure}
 	\centering
-<<tcq2cparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 tcq2c.para <- fa.parallel(na.omit(tcqall2c))
 tcq2c.vss <- VSS(na.omit(tcqall2c))
@@ -1561,7 +1586,7 @@ Figure \ref{fig:tcq2cparallel} shows the results of parallel analysis on Split C
 \label{sec:five-factor-solution}
 
 
-<<tcq2cfact5, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfact5, echo=FALSE, results=tex>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.5,label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
 @ 
@@ -1591,7 +1616,7 @@ PA3: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". PA3 maps to the acupuncture
 
 
 
-<<tcq2cfactorcor5, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfactorcor5, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2c.fact.5,label="tab:tcq2cfactorcor5", caption="Factor Correlations, TCQ 2 Five Factor Solution, Split C"))
 @ 
 
@@ -1603,7 +1628,7 @@ Table \ref{tab:tcq2cfactorcor5} shows that the Pills/Injections factor correlate
 
 
 
-<<tcq2cfact6, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfact6, echo=FALSE, results=tex>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.6,label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
 @ 
@@ -1612,7 +1637,7 @@ print(FactorXtab(tcq2c.fact.6,label="tab:tcq2cfact6",caption="Six factor Solutio
 Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
 
 
-<<tcq2cfactorcor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfactorcor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2c.fact.6,label="tab:tcq2c6factorcorr",caption="Factor Correlations, Six Factor Solution TCQ 2, Split C"))
 @ 
 
@@ -1620,7 +1645,7 @@ Again (Table \ref{tab:tcq2c6factorcorr} ) shows that Acupuncture again shows cor
 
 
 
-<<tcq2cfact7, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfact7, echo=FALSE, results=tex>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.7,label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
 @ 
@@ -1646,13 +1671,13 @@ PA7: "Pill3", "Inj1",  "Inj3" . This factor has supplementary loadings for some 
 
 The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
 
-<<tcq2c7factorcorr, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2c7factorcorr, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2c.fact.7,label="tab:tcq2c7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split C"))
 @ 
 
 The seven factor solution (Table \ref{tab:tcq2c7factorcorr} shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
 
-<<tcq2cfitindices, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
 tcq2cFit5 <- FitIndices(tcq2c.fact.5)
 tcq2cFit6 <- FitIndices(tcq2c.fact.6)
 tcq2cFit7 <- FitIndices(tcq2c.fact.7)
@@ -1663,7 +1688,7 @@ print(xtable(tcq2cfit.m,caption="Fit Indices, TCQ 2 (Split C)", label="tab:tcq2c
 @ 
 
 
-It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
+%% It can be seen from Table \ref{tab:tcq2cfit} that the NNFI increases across all factor solutions, but is still quite low for an acceptable factor structure. The BIC performs likewise, reaching its lowest value for the seven factor solution. The RMSEA are uniformly poor, but again appear to be best for the seven factor solution. 
 
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
@@ -1671,13 +1696,17 @@ Next, the beliefs about medicine questionnaire will be examined in terms of fact
 \label{sec:beli-about-medic}
 
 
-
-<<bam2cparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+\begin{figure}
+<<bam2cparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 bam2c.para <- fa.parallel(na.omit(bamall2c))
 bam2c.vss <- VSS(na.omit(bamall2c))
 sink(NULL)
-@ 
+@   
+  \caption{Parallel Analysis and VSS Criteria for Beliefs About Medicine Scale, Split C}
+  \label{fig:bam2cparallel}
+\end{figure}
+
 
 The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
 
@@ -1686,7 +1715,7 @@ The parallel analysis criterion suggests three factors here, while the MAP crite
 
 
 
-<<bam2cfact1, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cfact1, echo=FALSE, results=tex>>=
 bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
 print(FactorXtab(bam2c.fact1,label="tab:bam2cfact1", caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
@@ -1697,7 +1726,7 @@ The loadings and communalities are uniformly low (shown in Table \ref{tab:bam2cf
 \label{sec:two-factor-solution}
 
 
-<<bam2cfact2, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cfact2, echo=FALSE, results=tex>>=
 bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
                                                   print(FactorXtab(bam2c.fact2,label="tab:bam2cfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
@@ -1708,13 +1737,13 @@ PA1: "BAM2",  "BAM6",  "BAM8",  "BAM9",  "BAM10", "BAM13", "BAM14", "BAM17", "BA
 
 PA2: "BAM2",  "BAM3",  "BAM7",  "BAM10", "BAM11", "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
 
-<<bam2cfact2cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cfact2cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2c.fact2,label="tab:bam2cfact2cor", caption="Factor Correlations, Two Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
 As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
 
-<<bam2cfact3, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cfact3, echo=FALSE, results=tex>>=
 bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2c.fact3,label="tab:bam2cfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
 @ 
@@ -1728,7 +1757,7 @@ PA3: "BAM3",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM18". All these it
 
 PA2: "BAM2",  "BAM3",  "BAM11", "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
 
-<<bam2cfact3cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cfact3cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2c.fact3,label="tab:bam2cfact3cor", caption="Factor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
 @ 
 
@@ -1752,7 +1781,7 @@ bamall2d <- tcq2d[,53:70]
 
 \begin{figure}
 	\centering
-<<tcq2dparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 par(mfrow=c(1,2))
 tcq2d.para <- fa.parallel(na.omit(tcqall2d))
@@ -1770,7 +1799,7 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 
 
-<<tcq2dfact6, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dfact6, echo=FALSE, results=tex>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.6,label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
 @ 
@@ -1779,7 +1808,7 @@ print(FactorXtab(tcq2d.fact.6,label="tab:tcq2dfact6",caption="Six factor Solutio
 As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors, as is clearly shown in Table \ref{tab:tcq2dfact6}. This solution explained 81\% of the variance. 
 
 
-<<tcq2dfactorcor, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dfactorcor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2 (Split D)"))
 @ 
 
@@ -1791,7 +1820,7 @@ Similiarly to the results in other splits, the three conventional treatment fact
 
 
 
-<<tcq2dfact7, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dfact7, echo=FALSE, results=tex>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.7,label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
 @ 
@@ -1816,12 +1845,12 @@ PA7: "Pill3",  "Cream3", "Inj3" This factor has emerged in the other splits also
 
 
 
-<<tcq2d7factorcorr, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2d7factorcorr, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2d.fact.7,label="tab:tcq2d7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split D"))
 @ 
 
 
-<<tcq2dfitindices, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
 tcq2dFit6 <- FitIndices(tcq2d.fact.6)
 tcq2dFit7 <- FitIndices(tcq2d.fact.7)
 tcq2dfit <- as.data.frame(cbind( tcq2dFit6, tcq2dFit7))
@@ -1831,7 +1860,7 @@ print(xtable(tcq2dfit.m,caption="Fit Indices, TCQ 2 (Split D)",label="tab:tcq2df
 @ 
 
 
-From Table \ref{tab:tcq2dfit}, the same pattern  as has been seen in previous splits emerges in that the NNFI increases while  the BIC decreases along with the RMSEA. 
+%% From Table \ref{tab:tcq2dfit}, the same pattern  as has been seen in previous splits emerges in that the NNFI increases while  the BIC decreases along with the RMSEA. 
 
 \subsubsection{Beliefs About Medicine Questionnaire, Split D}
 \label{sec:beli-about-medic}
@@ -1841,7 +1870,7 @@ From Table \ref{tab:tcq2dfit}, the same pattern  as has been seen in previous sp
 Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
 
 \begin{figure}
-<<bam2dparallel, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<bam2dparallel, echo=FALSE, figure=TRUE>>=
 sink("tmp.txt")
 bam2d.para <- fa.parallel(na.omit(bamall2d))
 bam2d.vss <- VSS(na.omit(bamall2d))
@@ -1859,7 +1888,7 @@ The parallel analysis criterion suggests three factors here (shown in Figure \re
 
 
 
-<<bam2dfact1, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2dfact1, echo=FALSE, results=tex>>=
 bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
 print(FactorXtab(bam2d.fact1,label="tab:bam2dfact1",caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2 Split D"))
 @ 
@@ -1871,7 +1900,7 @@ As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number
 
 
 
-<<bam2dfact2, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2dfact2, echo=FALSE, results=tex>>=
 bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2d.fact2,label="tab:bam2dfact2", caption="Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
@@ -1882,7 +1911,7 @@ PA2: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM11", "BA
 
 PA1: "BAM2",  "BAM6",  "BAM13", "BAM14", "BAM17". Most of these items relate to doctors and their use of medicines, and so this factor can best be termed Doctors and Medicines. 
 
-<<bam2dfact2dcor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2dfact2dcor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2d.fact2, label="tab:bam2dfact2dcor", caption="Factor Correlations Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
 
@@ -1896,7 +1925,7 @@ It can be seen from Table \ref{tab:bam2dfact2dcor} that the two factors are mode
 
 
 
-<<bam2dfact3, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2dfact3, echo=FALSE, results=tex>>=
 bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
 print(FactorXtab(bam2d.fact3,label="tab:bam2dfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
 @ 
@@ -1910,7 +1939,7 @@ PA3: "BAM1",  "BAM3",  "BAM6",  "BAM8",  "BAM18". These items all relate to the 
 PA2: "BAM7",  "BAM9",  "BAM10", "BAM11". These items all appear to relate to the dangers and avoidance of medicines, and so this factor can best be termed avoidance of medicines. 
 
 
-<<bam2dfact3cor, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2dfact3cor, echo=FALSE, results=tex>>=
 print(FactorCor(bam2d.fact3, label="tab:bam2dfact3cor", caption="Factor Correlations, Three factor solution, Beliefs About Medicine, Questionnaire, Split D"))
 @ 
 
@@ -2005,7 +2034,7 @@ tcq7fit.notA <- mxRun(Tcq7modelnotA)
 tcq7summ.notA <- summary(tcq7fit.notA)
 @ 
 
-<<tcq2notAsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2notAsemcompare, echo=FALSE, results=tex>>=
 tcq2.notA.semcompare <- mxCompare(tcq6fit.notA, tcq7fit.notA)
 print(xtable(tcq2.notA.semcompare, label="tab:tcq2notAsemcompare", caption="Comparison of Factor Models built on Split A on Splits B, C and D"))
 @ 
@@ -2108,7 +2137,7 @@ Bam4fitnotA <- mxRun(Bam4modelnotA)
 Bam4asummnotA <- summary(Bam4fitnotA)
 @ 
 
-<<bamnotAsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<bamnotAsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
 print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare", captio="Comparison of Beliefs About Medicine Factor Solutions from Split A Tested on Splits B, C and D"))
 @ 
@@ -2236,7 +2265,7 @@ tcq7fit.notB <- mxRun(Tcq7modelnotB)
 tcq7summ.notB <- summary(tcq7fit.notB)
 @ 
 
-<<tcq2notBsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
 print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"))
 @ 
@@ -2339,7 +2368,7 @@ Bam4fitnotB <- mxRun(Bam4modelnotB)
 Bam4asummnotB <- summary(Bam4fitnotB)
 @ 
 
-<<bamnotBsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<bamnotBsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
 print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare", caption="Beliefs About Medicine Questionnaire Split B Models Tested Against Splits A, C and D"))
 @ 
@@ -2470,7 +2499,7 @@ tcq7fit.notC <- mxRun(Tcq7modelnotC)
 tcq7summ.notC <- summary(tcq7fit.notC)
 @ 
 
-<<tcq2notCsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
 print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"))
 @ 
@@ -2547,7 +2576,7 @@ Bam3asummnotC <- summary(Bam3fitnotC)
 @ 
 
 
-<<bamnotCsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<bamnotCsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
 print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split C tested against Splits A, B and D"))
 @ 
@@ -2640,7 +2669,7 @@ tcq7fit.notD <- mxRun(Tcq7modelnotD)
 tcq7summ.notD <- summary(tcq7fit.notD)
 @ 
 
-<<tcq2notDsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
 print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"))
 @ 
@@ -2717,7 +2746,7 @@ Bam3asummnotD <- summary(Bam3fitnotD)
 @ 
 
 
-<<bamnotDsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<bamnotDsemcompare, echo=FALSE, results=tex>>=
 bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
 print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split D, tested against Splits A, B and C"))
 @ 
@@ -2993,14 +3022,14 @@ Bam1fitnotD.all <- mxRun(Bam1modelnotD.all)
 Bam1asumm.notD.all <- summary(Bam1fitnotD.all)
 @
 
-<<bamallsemcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<bamallsemcompare, echo=FALSE, results=tex>>=
 bamall.semcompare <- mxCompare(Bam4fitnotA.all, c(Bam2fitnotB.all, Bam1fitnotC.all, Bam1fitnotD.all))
 print(xtable(bamall.semcompare, label="tab:bamallsemcompare", caption="Best Model from Each Split tested against one another on the full dataset, Beliefs About Medicine Questionnaire"))
 @ 
 
 As can be seen from Table \ref{tab:bamallsemcompare}, the two factor model from Split B provided the best fit to all of the data, striking a balance between the complexity of the four factor model and the over simplicity of the one factor model. 
 
-<<tcqall2semcompare, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
 print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset Results"))
 @ 
@@ -3021,7 +3050,7 @@ The next step in the analysis procedure was to examine the treatment credibility
 
 
 
-<<tcq2aitemselection, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aitemselection, echo=FALSE, results=tex>>=
 tcq.aisp <- aisp(na.omit(tcqall2a))
 print(xtable(tcq.aisp, label="tab:tcq2aitemselection", caption="Item selection procedure, TCQ 2 Split A"))
 @ 
@@ -3035,14 +3064,14 @@ tcq2a.conv <- tcqall2a[,1:18]
 tcq2a.alt <- tcqall2a[,19:36]
 @ 
 
-<<tcq2aconvcheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
 tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
 print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio", caption="Check of Item Ordering Assumptions, TCQ 2 Conventional Split A"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
 
-<<tcq2aaltitemord, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltitemord, echo=FALSE, results=tex>>=
 tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
 print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio", caption="Item Ordering Assumption Check for TCQ Alternative, Split A"))
 @ 
@@ -3050,13 +3079,13 @@ Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional item
 
 Next, the assumption of monotonicity was assesed for both scales. 
 
-<<tcq2aconvmonotonicity, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aconvmonotonicity, echo=FALSE, results=tex>>=
 tcq2aconv.mono <- check.monotonicity(na.omit(tcq2a.conv))
 print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity", caption="Monotonicity Check Results for TCQ 2 Conventional, Split A"))
 @ 
 As can be seen from Table \ref{tab:tcq2aconvmonotonicity}, there were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
 
-<<tcq2aaltmonotonicity, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltmonotonicity, echo=FALSE, results=tex>>=
 tcq2aalt.mono <- check.monotonicity(na.omit(tcq2a.alt))
 print(xtable(summary(tcq2aalt.mono), label="tab:tcq2aaltmonotonicity"))
 @ 
@@ -3078,7 +3107,7 @@ conv.guttman <- ggplot(as.data.frame(tcq2a.conv.errors), aes(x=tcq2a.conv.errors
 @   
 \begin{figure}
   
-<<tcqaltguttmanplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcqaltguttmanplot, echo=FALSE, figure=TRUE>>=
 alt.guttman <- ggplot(as.data.frame(tcq2a.alt.errors), aes(x=tcq2a.alt.errors))+geom_histogram()
 print(arrangeGrob(conv.guttman, alt.guttman))
 @ 
@@ -3110,13 +3139,13 @@ The Category 3 estimates are almost all below the catgory 1 and 2 estimates, sug
 This can occur in PCM's, as the model uses a local comparison between thresholds, and so this does not necessitate that the model should be abandoned. 
 Next, a one parameter IRT model is examined. 
 
-<<tcq2acoefpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2acoefpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.gpcm.1pl), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 Conventional One Parameter Generalised Partial Credit Model"))
 @ 
 
 Table ~\ref{tab:tcq2aconvcoef1pl} shows that a similiar issue arises using the one parameter model, with an estimated discrimination parameter of 1.531. %% This suggests that the model will need to be further expanded to allow for an acceptable fit. 
 
-<<tcq2acoefgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2acoefgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.gpcm.gpcm), label="tab:tcq2aconvcoef1pl", caption="Coefficients for TCQ2 (Split A), Conventional Scale, Two Parameter Generalised Partial Credit Model"))
 @ 
 
@@ -3127,13 +3156,13 @@ tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
 tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
 @ 
 
-<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm", caption="Coefficients for TCQ 2 (Split A) Conventional Scale, One parameter Graded Response Model"))
 @ 
 
 As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a much better fit to the data.  There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment.  The next model fit was a two parameter graded response model.  
 
-<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.conv.grm.2pl), label="tab:tcq2aconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split A), Two Parameter Graded Response Model"))
 @ 
 
@@ -3141,7 +3170,7 @@ Again, it can be seen from Table \ref{tab:tcq2aconvgrm1plsumm} that the Cream it
 Both the pill and injection items seem to be endorsed by a much large proportion of the sample. This suggests that Cream Itemsappear to be the least credible treatment for pain. 
 
 \begin{figure}
-<<tcq2aconvgrm1plPlot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2aconvgrm1plPlot, echo=FALSE, figure=TRUE>>=
 print(ggplotGRM(tcq2a.conv.grm.1pl))
 @   
   \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
@@ -3154,7 +3183,7 @@ The same plot for the two parameter model can be seen in Figure \ref{fig:tcq2aco
 
 
 \begin{figure}
-<<tcq2aconvgrm2plPlot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2aconvgrm2plPlot, echo=FALSE, figure=TRUE>>=
 print(ggplotGRM(tcq2a.conv.grm.2pl))
 @   
   \caption{Item Parameter Plot for TCQ2 (Split A). The Threshold parameter indicates the ability point where the next response becomes most likely. If the thresholds are not in order, this indicates a failure of montonicity}
@@ -3170,7 +3199,7 @@ For models built on Split A, Splits B, C and D were used as a test set.
 
 The first check was to examine the fit of each of the partial credit models. %% Although none of these models met the assumptions of the model, they may still be useful in a predictive sense. 
 
-<<tcq2aconvpcmtest, echo=FALSE, results=hide, cache=TRUE>>=
+<<tcq2aconvpcmtest, echo=FALSE, results=hide>>=
 tcq2nota.conv <- tcq2nota[,c(17:34)]
 tcq2a.pcm.rasch.done <- testIRTModels(tcq2a.conv.gpcm.rasch, tcq2nota.conv, gpcmconstraint="rasch", grmconstraint=NULL)
 tcq2a.pcm.1PL.done <- testIRTModels(tcq2a.conv.gpcm.1pl, tcq2nota.conv, gpcmconstraint="1PL", grmconstraint=NULL)
@@ -3208,21 +3237,21 @@ tcq2a.alt.gpcm.1PL <- gpcm(tcq2a.alt, constraint="1PL")
 tcq2a.alt.gpcm.gpcm <- gpcm(tcq2a.alt, constraint="gpcm")
 @ 
 
-<<tcq2aaltgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltgpcmrasch, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.alt.gpcm.rasch), caption="Estimated Coefficients for Rasch Partial Credit Model, TCQ2, Split A, Alternative Scale", label="tab:tcq2aaltgpcmrasch"))
 @ 
 
 It can be seen from Table \ref{tab:tcq2aaltgpcmrasch} that the estimated difficulty coefficients for the alternative scale are much higher than those for the conventional scale, which makes sense given that these are both less familiar, and less accepted treatments for pain. However, it as also apparent that these high difficulties are more a factor of the difficulty of the highest category more than anything else. The estimated thresholds for the other three categories are in line with those of the conventional scale, at least for acupuncture. It is possible that these difficulty levels may be lowered when a more flexible one parameter model is fit. 
 
 
-<<tcq2aaltgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltgpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.alt.gpcm.1PL), caption="Coefficient Estimates for One Parameter Partial Credit Model, TCQ2, Split A, Alternative Scale", label="tab:tcq2aaltgpcm1pl"), table.placement="ht")
 @ 
 
 
 Table \ref{tab:tcq2aaltgpcm1pl} shows that this did occur, as the discrimination parameter has increased to 1.852, while the average difficulty of the top threshold has noticeably dropped. Finally, a two parameter model was fit to this scale. It would be exepected that the discrimination parameters of Q4 in each scale will increase, while those of the Acupuncture questions will fall. 
 
-<<tcq2aaltgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltgpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.alt.gpcm.gpcm), caption="Coefficient Estimates for Two Parameter Partial Credit Model, TCQ2, Split A, Alternative Scale", label="tab:tcq2aaltgpcm2pl"), table.placement="ht")
 @ 
 
@@ -3237,14 +3266,14 @@ tcq2a.alt.grm.1pl <- grm(tcq2a.alt, constrained=TRUE)
 tcq2a.alt.grm.2pl <- grm(tcq2a.alt, constrained=FALSE)
 @
 
-<<tcq2agrm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2agrm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.alt.grm.1pl), caption="Coefficients for TCQ Alternative (Split A) One Parameter Graded Response Model", label="tab:tcq2aaltgrm1pl"))
 @ 
 
 The coefficients for the one parameter graded response model for the alternative scale are shown in Table \ref{tab:tcq2aaltgrm1pl}. It can be seen that the estimated discrimination parameter is quite high, suggesting that all of these items are harder to endorse than those relating to conventional treatments. The Homeopathy and Reiki items tend to be harder to endorse than are the Acupuncture items. 
 
 
-<<tcq2agrm2pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2agrm2pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2a.alt.grm.2pl), caption="Coefficients for TCQ Alternative (Split A) Two Parameter Graded Response Model", label="tab:tcq2aaltgrm2pl"))
 @ 
 
@@ -3252,20 +3281,22 @@ Table \ref{tab:tcq2aaltgrm2pl} shows the corresponding coefficients for the two 
 
 The next step was to assess the performance of each of these models on unseen data. 
 
-<<tcq2aaltgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2aaltgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2nota.alt <- tcq2nota[,35:52]
 tcq2a.alt.grm.1pl.done <- testIRTModels(tcq2a.alt.grm.1pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2a.alt.grm.2pl.done <- testIRTModels(tcq2a.alt.grm.2pl, tcq2nota.alt, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2a.grm.modcomp <- rbind(tcq2a.alt.grm.1pl.done, tcq2a.alt.grm.2pl.done)
 rownames(tcq2a.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
+
+@ 
+<<tcqconv2agrmtestprint, echo=FALSE, results=tex>>=
 print(xtable(tcq2a.grm.modcomp, caption="Performance of Split A Graded Response Models TCQ Alternative on Splits B, C and D", label="tab:tcq2aaltgrmmodcomp"))
 @ 
-
 As can be seen from Table \ref{tab:tcq2aaltgrmmodcomp}, the one parameter model performed significantly better on the unseen data. 
 
 Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
 
-<<bam2ascales, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2ascales, echo=FALSE, results=tex>>=
 bam2a.scales <- aisp(na.omit(bamall2a))
 print(xtable(bam2a.scales, label="tab:bam2ascales", caption=" Item Scale Analysis  for Beliefs About Medicine Questionnaire, IRT scale, Split A"))
 @ 
@@ -3282,14 +3313,14 @@ bam2ascale <- bamall2a[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
 
 The next step is to check the assumption of invariant item ordering. This is less important here, but is checked for the sake of completeness. 
 
-<<bam2aiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2aiio, echo=FALSE, results=tex>>=
 bam2a.iio <- check.iio(na.omit(bam2ascale))
 print(xtable(bam2a.iio$violations, label="tab:bam2aiio", caption="Item Ordering Assumption Check for Reduced Beliefs About Medicine Questionnaire, Split A"))
 @ 
 
 As can be seen from Table ~\ref{tab:bam2aiio}, no items violated the invariant item ordering assumption, and so are are retained until the next stage. The next step is to check the assumption of monotonicity.
 
-<<bam2acheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2acheckmono, echo=FALSE, results=tex>>=
 bam2a.mono <- check.monotonicity(na.omit(bam2ascale))
 print(xtable(summary(bam2a.mono), label="tab:bam2amono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split A"))
 @ 
@@ -3298,8 +3329,13 @@ Table \ref{tab:bam2amono} shows that there were no violations of monotonicity in
 
 The next step in our analysis plan is to fit a rasch model to the beliefs about medicine scale. 
 
-<<bam2arasch, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2agpcm, echo=FALSE, results=hide, cache=TRUE>>=
 bam2a.gpcm.rasch <- gpcm(bam2ascale, constraint="rasch")
+bam2a.gpcm.1PL <- gpcm(bam2ascale, constraint="1PL")
+bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
+@ 
+
+<<bam2arasch, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2a.gpcm.rasch)), label="tab:bam2arasch", caption="Coefficients for Beliefs About Medicine Questionnaire, Rasch partial credit model"))
 @ 
 
@@ -3307,8 +3343,8 @@ As can be seen from Table ~\ref{tab:bam2arasch}, this model shows problems typic
 
 We next examine the fit of a one paramater generalised partial credit model with a discrimination parameter estimated from the data. 
 
-<<bam2a1PL, echo=FALSE, results=tex, cache=TRUE>>=
-bam2a.gpcm.1PL <- gpcm(bam2ascale, constraint="1PL")
+<<bam2a1PL, echo=FALSE, results=tex>>=
+
 print(xtable(coef2mat(coef(bam2a.gpcm.1PL)), label="tab:bam2a1PL", caption="Coefficients for Beliefs About Medicine Questionnaire, One parameter Generalised Partial Credit Model"))
 @ 
 
@@ -3316,16 +3352,21 @@ Again, Table \ref{tab:bam2a1PL} makes it very clear that the one parameter GPCM 
 
 Next, the fit of a two parameter GPCM to this scale was examined. 
 
-<<bam2agpcm, echo=FALSE, results=tex, cache=TRUE>>=
-bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
+<<bam2agpcm, echo=FALSE, results=tex>>=
+
 print(xtable(coef2mat(coef(bam2a.gpcm.gpcm)), label="tab:bam2agpcm", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, Two Parameter Generalised Partial Credit Model"))
 @ 
 It can be clearly seen from Table ~\ref{tab:bam2agpcm} that the two parameter GPCM provides a more interesting picture. Again, 7 is the most difficult, but has a very low discrimination parameter, suggesting that it is relatively poor at clustering high and low scorers on the scale. However, 17 has lowered its difficulties, but shows much better discrimination. 
 
 In line with previous practice, the next models fit were the one and two parameter graded response models. 
 
-<<bam2agrm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2agrm, echo=FALSE, results=hide, cache=TRUE>>=
 bam2a.grm.1pl <- grm(na.omit(bam2ascale), constrained=TRUE)
+bam2a.grm.2pl <- grm(na.omit(bam2ascale), constrained=FALSE, Hessian=TRUE)
+@ 
+
+<<bam2agrm1pl, echo=FALSE, results=tex>>=
+
 bam2acoef.mat <- coef2mat(coef(bam2a.grm.1pl))
 print(xtable(bam2acoef.mat, label="tab:bam2agrm1pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, One parameter Graded Response Model"))
 @ 
@@ -3334,8 +3375,8 @@ It can be seen from Table \ref{tab:bam2agrm1pl} that the fit of this model is mu
 
 The next step is to fit a two parameter GRM, and examine the differences in fit between the two models. 
 
-<<bam2agrm2pl, echo=FALSE, results=tex, cache=TRUE>>=
-bam2a.grm.2pl <- grm(na.omit(bam2ascale), constrained=FALSE, Hessian=TRUE)
+<<bam2agrm2pl, echo=FALSE, results=tex>>=
+
 bam2acoef.mat <- coef2mat(coef(bam2a.grm.2pl))
 print(xtable(bam2acoef.mat, label="tab:bam2agrm2pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, Two parameter Graded Response Model"))
 @ 
@@ -3353,10 +3394,12 @@ bam2a.pcm.1pl.done <- testIRTModels(bam2a.gpcm.1PL, bamnota.irt, gpcmconstraint=
 bam2a.pcm.gpcm.done <- testIRTModels(bam2a.gpcm.gpcm, bamnota.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 bam2a.pcm.modcomp <- rbind(bam2a.pcm.rasch.done, bam2a.pcm.1pl.done, bam2a.pcm.gpcm.done)
 rownames(bam2a.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+
+@ 
+<<bam2apcmmodcompprint, echo=FALSE, results=tex>>=
 bam2a.pcm.modcomp.xtab <- xtable(bam2a.pcm.modcomp, caption="Partial Credit Models for BAM Scale from Split A Performance on Heldout Data", label="tab:bam2apcmmodcomp")
 print(bam2a.pcm.modcomp.xtab)
 @ 
-
 From Table \ref{tab:bam2apcmmodcomp} it can be seen that the rasch model provided the best performance on unseen data. 
 
 Next, the performance of the graded response models on unseen  data was assessed. 
@@ -3374,7 +3417,7 @@ The next task was to repeat the analyses on Split B. The TCQ was the instrument 
 
 Again, the first step is to examine whether or not the TCQ should be split into seperate scales, examine the monotonicity, the invariant item ordering assumption and examine a plot of Guttman errors. 
 
-<<tcq2baisp, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baisp, echo=FALSE, results=tex>>=
 tcq2b.aisp <- aisp(na.omit(tcqall2b))
 print(xtable(tcq2b.aisp, label="tab:tcq2baisp", caption="Item Selection Procedure for TCQ 2, Split B"))
 @ 
@@ -3388,7 +3431,7 @@ tcq2b.alt <- tcqall2b[,19:36]
 
 The first step in the examination of the tcq conventional in split B is to check the IIO assumption. 
 
-<<tcq2bcheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bcheckiio, echo=FALSE, results=tex>>=
 tcq2b.conv.iio <- check.iio(na.omit(tcq2b.conv))
 print(xtable(tcq2b.conv.iio$violations, label="tab:tcq2bcheckiio", caption="Item Ordering Assumption Check, TCQ 2 Conventional, Split B"))
 @ 
@@ -3397,7 +3440,7 @@ As can be seen from Table \ref{tab:tcq2bcheckiio}, there were no violations of t
 
 Next the assumption of montonicity was checked. 
 
-<<tcq2bconvcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconvcheckmono, echo=FALSE, results=tex>>=
 tcq2b.conv.mono <- check.monotonicity(na.omit(tcq2b.conv))
 print(xtable(summary(tcq2b.conv.mono), label="tab:tcq2bconvcheckmono", caption="Monotonicity Check, TCQ2 Conventional (Split B)"))
 @ 
@@ -3429,7 +3472,7 @@ tcq2b.conv.gpcm.gpcm <- gpcm(tcq2b.conv, constraint="gpcm")
 @ 
 
 \begin{figure}
-<<tcq2bconvgpcmraschplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2bconvgpcmraschplot, echo=FALSE, figure=TRUE>>=
 gpcm.rasch.plot <- ggplotGRM(tcq2b.conv.gpcm.rasch)
 print(gpcm.rasch.plot)
 @   
@@ -3440,7 +3483,7 @@ print(gpcm.rasch.plot)
  Figure \ref{fig:tcq2bconvgpcmrasch} shows the fit of the Rasch generalised partial credit model. Note that the model estimates the thresholds to be almost identical for categories two and three, which is surprising but not necessarily fatal to the fit of the model. 
 
 \begin{figure}
-<<tcq2bconvgpcm1PLplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2bconvgpcm1PLplot, echo=FALSE, figure=TRUE>>=
 gpcm.1PL.plot <- ggplotGRM(tcq2b.conv.gpcm.1PL)
 print(gpcm.1PL.plot)
 @   
@@ -3453,7 +3496,7 @@ Next, the fit of the one parameter GPCM was examined using an Item Parameter Plo
 
 
 \begin{figure}
-<<tcq2bconvgpcmgpcmplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2bconvgpcmgpcmplot, echo=FALSE, figure=TRUE>>=
 gpcm.gpcm.plot <- ggplotGRM(tcq2b.conv.gpcm.gpcm)
 print(gpcm.gpcm.plot)
 @   
@@ -3463,7 +3506,7 @@ print(gpcm.gpcm.plot)
 
 As shown in Figure \ref{fig:tcq2bconvgpcm2plplot}, there are some failures of monotonicity here. Inj6, In5, Inj4, Inj3, Inj2, Inj1, Cream2, Cream1, Pill6, Pill5, Pill4, Pill3, Pill2 and Pill1. 
 
-<<tcq2bconvpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconvpcmraschprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.conv.gpcm.rasch), caption="Coefficient Estimates, TCQ2 Conventional, Split B for Rasch Partial Credit Model", label="tab:tcq2bpcmrasch"))
 @ 
 
@@ -3471,7 +3514,7 @@ As can be seen from Table \ref{tab:tcq2bprcmrasch}, the issues with category thr
 
 Next, we examine the coefficients for a one parameter PCM. 
 
-<<tcq2bconvpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconvpcm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.conv.gpcm.1PL), caption="Coefficient Estimates, TCQ2 Conventional, Split B for One Parameter Partial Credit Model", label="tab:tcq2bpcm1pl"))
 @ 
 
@@ -3479,7 +3522,7 @@ Table \ref{tab:tcq2bpcm1pl} shows a similar pattern to the Rasch model, with the
 
 Finally, the ability estimates and discrimination parameters for the two parameter model were examined. 
 
-<<tcq2bconvpcm2plprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconvpcm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.conv.gpcm.gpcm), caption="Coefficient Estimates, TCQ2 Conventional, Split B for Two Parameter Partial Credit Model", label="tab:tcq2bpcm2pl"))
 @ 
 
@@ -3494,7 +3537,7 @@ tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE)
 
 
 \begin{figure}
-<<tcq2bconvgrm1plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2bconvgrm1plot, echo=FALSE, figure=TRUE>>=
 tcq2convgrm1plot <- ggplotGRM(tcq2b.conv.grm.1pl)
 print(tcq2convgrm1plot)
 @   
@@ -3504,14 +3547,14 @@ print(tcq2convgrm1plot)
 
 As shown in Figure \ref{fig:tcq2bconvgrm1plot}, there were no violations of monotonicity for the one parameter GRM. 
 
-<<tcq2bconvgrm1plsumm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconvgrm1plsumm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.conv.grm.1pl), label="tab:tcq2bconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split B), One parameter Graded Response Model"))
 @ 
 
 Table \ref{tab:tcq2bconvgrm1plsumm} shows that the cream items were the least endorsed, especially the highest response category. The estimated discrimination parameter is also quite high, at 2.08. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
 
 \begin{figure}
-<<tcq2bconvgrm2plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2bconvgrm2plot, echo=FALSE, figure=TRUE>>=
 tcq2convgrm2plot <- ggplotGRM(tcq2b.conv.grm.2pl)
 print(tcq2convgrm2plot)
 @   
@@ -3522,7 +3565,7 @@ print(tcq2convgrm2plot)
 
 As can be seen from Figure \ref{fig:tcq2bconvgrm2plot}, there were no violations of monotonicity for the two parameter GRM. 
 
-<<tcq2bconv2plgrmsum, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2bconv2plgrmsum, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.conv.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) Two Parameter Graded Response Model"))
 @ 
 
@@ -3536,10 +3579,12 @@ tcq2b.pcm.rasch.done <- testIRTModels(tcq2b.conv.gpcm.rasch, tcqconv.notb, gpcmc
 tcq2b.pcm.1pl.done <- testIRTModels(tcq2b.conv.gpcm.1PL, tcqconv.notb, gpcmconstraint="1PL", grmconstraint=NULL)
 tcq2b.pcm.gpcm.done <- testIRTModels(tcq2b.conv.gpcm.gpcm, tcqconv.notb, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2b.pcm.modcomp <- rbind(tcq2b.pcm.rasch.done, tcq2b.pcm.1pl.done, tcq2b.pcm.gpcm.done)
+
+@ 
+<<tcq2bpcmmodcompprint, echo=FALSE, results=tex>>=
 tcq2b.pcm.modcomp.xtab <- xtable(tcq2b.pcm.modcomp, caption="Comparison of Splt B TCQ Conventional Scale Partial Credit Models on Splits A, C and D", label="tab:tcq2bpcmmodcomp")
 print(tcq2b.pcm.modcomp.xtab)
 @ 
-
 As can be seen from Table \ref{tab:tcq2bpcmmodcomp}, the one parameter PCM model performed best on the unseen data, suggesting that the minimal flexibility allowed by the discrimination parameter was enough for an effective model. 
 
 Next, this process is repeated for the graded response models. 
@@ -3548,10 +3593,12 @@ Next, this process is repeated for the graded response models.
 tcq2b.grm.1pl.done <- testIRTModels(tcq2b.conv.grm.1pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2b.grm.2pl.done <- testIRTModels(tcq2b.conv.grm.2pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2b.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
+
+@ 
+<<tcq2bgrmmodcomp, echo=FALSE, results=tex>>=
 tcq2b.grm.modcomp.xtab <- xtable(tcq2b.pcm.modcomp, caption="Performance of TCQ Conventional Graded Response Models from Split B, tested on Splits A, C and D", label="tab:tcq2bgrmmodcomp")
 print(tcq2b.grm.modcomp.xtab)
 @ 
-
 
 As shown in Table \ref{tab:tcq2bgrmmodcomp}, the one parameter Graded Response Model provided the best performance on unseen data. 
 
@@ -3563,7 +3610,7 @@ tcq2b.alt.gpcm.1PL <- gpcm(tcq2b.alt, constraint="1PL")
 tcq2b.alt.gpcm.gpcm <- gpcm(tcq2b.alt, constraint="gpcm")
 @ 
 
-<<tcq2baltpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baltpcmraschprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.alt.gpcm.rasch), caption="Coefficient Estimates for Rasch Partial Credit Model, Split B, TCQ Conventional", label="tab:tcq2baltpcmrasch"))
 @ 
 
@@ -3571,7 +3618,7 @@ Table \ref{tab:tcq2baltpcmrasch} shows that similarly to the pattern seen in Spl
 
 Next, the coefficients for the one parameter PCM are examined. 
 
-<<tcq2baltpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baltpcm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.alt.gpcm.1PL), caption="Coefficient Estimates for One Parameter Partial Credit Model, Split B, TCQ Conventional", label="tab:tcq2baltpcm1pl"))
 @ 
 
@@ -3579,7 +3626,7 @@ Table \ref{tab:tcq2baltpcm1pl} shows that the discrimination parameter has incre
 
 Finally, the estimated two parameter PCM was examined. 
 
-<<tcq2baltpcm2plprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baltpcm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.alt.gpcm.gpcm), caption="Coefficient Estimates for Two Parameter Partial Credit Model, Split B, TCQ Conventional", label="tab:tcq2baltpcmgpcm"))
 @
 
@@ -3593,9 +3640,11 @@ tcq2b.alt.gpcm.1pl.done <- testIRTModels(tcq2b.alt.gpcm.1PL, tcq2notb.alt.irt, g
 tcq2b.alt.gpcm.gpcm.done <- testIRTModels(tcq2b.alt.gpcm.gpcm, tcq2notb.alt.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2b.alt.gpcm.modcomp <- rbind( tcq2b.alt.gpcm.rasch.done,tcq2b.alt.gpcm.1pl.done, tcq2b.alt.gpcm.gpcm.done)
 rownames(tcq2b.alt.gpcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+
+@ 
+<<tcq2baltpcmmodcompprint, echo=FALSE, results=tex>>=
 print(xtable(tcq2b.alt.gpcm.modcomp, caption="Performance of Split B TCQ Alternative Partial Credit Models on Splits B, C and D", label="tab:tcq2baltgpcmmodcomp"))
 @ 
-
 As can be seen from Table \ref{tab:tcq2baltgpcmmodcomp}, the one parameter PCM provided the best fit to the unseen data. 
 
 
@@ -3605,7 +3654,7 @@ Next, two graded response models were fit to the data.
 tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
 tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE)
 @ 
-<<tcq2baltgrm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baltgrm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.alt.grm.1pl), label="tab:tcq2bconv1plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) One Parameter Graded Response Model"))
 @
 
@@ -3614,7 +3663,7 @@ In Table \ref{tab:tcq2bconv1plgrmsum} are shown the coefficient estimates for th
 
 It can be seen that the ability estimates are extremely low, while the discrimination parameter is far higher than was seen in Split A. 
 
-<<tcq2baltgrm2pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2baltgrm2pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2b.alt.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) Two Parameter Graded Response Model"))
 @
 
@@ -3628,14 +3677,16 @@ tcq2b.alt.grm.1pl.done <- testIRTModels(tcq2b.alt.grm.1pl, tcq2notb.alt.irt, gpc
 tcq2b.alt.grm.2pl.done <- testIRTModels(tcq2b.alt.grm.2pl, tcq2notb.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2b.alt.grm.modcomp <- rbind(tcq2b.alt.grm.1pl.done, tcq2b.alt.grm.2pl.done)
 rownames(tcq2b.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
+
+@ 
+<<tcq2baltgrmmodcomp, echo=FALSE, results=tex>>=
 print(xtable(tcq2b.alt.grm.modcomp, caption="Performance of Split B TCQ Alternative Graded Response Model on Splits B, C and D", label="tab:tcq2baltgrmmodcomp"))
 @ 
-
 As shown in Table \ref{tab:tcq2baltgrmmodcomp}, the two parameter model provided a better approximation to the unseen data. 
 
 The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
 
-<<bam2baisp, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2baisp, echo=FALSE, results=tex>>=
 bam2b.aisp <- aisp(na.omit(bamall2b))
 print(xtable(bam2b.aisp, label="tab:bam2baisp", caption="Item Selection Procedure for Beliefs About Medicine Questionnaire, Split B"))
 @ 
@@ -3644,13 +3695,13 @@ As shown in Table \ref{tab:bam2baisp}, some items do not load on any scales, and
 
 The scale that will be analysed consists of BAM3, BAM4, BAM6, BAM9, BAM10, BAM11, BAM13, BAM14 and BAM17. This is a larger scale than was observed with Split A. 
 
-<<bamscale2b,echo=FALSE, results=hide, cache=TRUE>>=
+<<bamscale2b,echo=FALSE, results=hide>>=
 bamscale2b <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
 @ 
 
 The first step is to examine the invariant item ordering assumption.
 
-<<bam2checkiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2checkiio, echo=FALSE, results=tex>>=
 bam2b.iio <- check.iio(na.omit(bamscale2b))
 print(xtable(bam2b.iio$violations, label="tab:bam2checkiio", caption="Item Ordering Assumption Check for Beliefs About Medicine Scale, Split B"))
 @ 
@@ -3659,7 +3710,7 @@ In line with the results of Split A, no items were in violation of this assumpti
 
 The next assumption which needs to be checked is the monotonicity assumption. 
 
-<<bam2bcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bcheckmono, echo=FALSE, results=tex>>=
 bam2b.mono <- check.monotonicity(na.omit(bamscale2b))
 print(xtable(summary(bam2b.mono), label="tab:bam2bcheckmono", caption="Monotonicity Check, Beliefs About Medicine Scale, Split B"))
 @ 
@@ -3668,7 +3719,7 @@ Table \ref{tab:bam2bcheckmono} shows clearly that there were no violations of th
 
 The final preliminary model check consists of a plot displaying the number of Guttman errors for each participant.
 \begin{figure}
-<<bam2bguttman, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<bam2bguttman, echo=FALSE, figure=TRUE>>=
 bam2b.guttman <- check.errors(na.omit(bamscale2b))
 bam2b.guttplot <- ggplot(as.data.frame(bam2b.guttman), aes(x=bam2b.guttman))+geom_histogram(binwidth=2)
 print(bam2b.guttplot)
@@ -3694,7 +3745,7 @@ bam2b.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
 The estimated parameters for the Rasch model are shown  in Table \ref{tab:bam2bgpcmrasch}. 
 
 
-<<bam2bgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bgpcmrasch, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2b.gpcm.rasch)), label="tab:bam2bgpcmrasch", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, Rasch generalised Partial Credit Model"))
 @ 
 
@@ -3703,7 +3754,7 @@ It can be seen from Table \ref{tab:bam2bgpcmrasch} that the Rasch PCM has thresh
 Next, the coefficients are examined for a one parameter PCM on this scale. 
 
 
-<<bam2bgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bgpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2b.gpcm.1PL)), label="tab:bam2bgpcm1pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, One Parameter Generalised Partial Credit Model"))
 @ 
 
@@ -3712,7 +3763,7 @@ Table \ref{tab:bam2bgpcm1pl} shows the estimated coefficients for this model. It
 
 Finally, the fit of a two parameter PCM was examined.
 
-<<bam2bgpcmgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bgpcmgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2b.gpcm.gpcm)), label="tab:bam2bgpcm2pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, Two Parameter Generalised Partial Credit Model"))
 @ 
 
@@ -3725,13 +3776,13 @@ bam2b.grm.1pl <- grm(bamscale2b, constrained=TRUE)
 bam2b.grm.2pl <- grm(bamscale2b, constrained=FALSE)
 @ 
 
-<<bam2bgrm1sum, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bgrm1sum, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2b.grm.1pl)), label="tab:bam2bgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, One Parameter Graded Response Model"))
 @ 
 
 Table \ref{tab:bam2bgrm1sum} shows no signs of problems with monotonicity, and the fit appears acceptable. Next, the two parameter GRM was examined.
 
-<<bam2bgrm2sum, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2bgrm2sum, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2b.grm.2pl)), label="tab:bam2bgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Two parameter Graded Response Model"))
 @ 
 
@@ -3752,10 +3803,12 @@ bam2b.gpcm.rasch.done <- testIRTModels(bam2b.gpcm.rasch,  bamnotb.irt, gpcmconst
 bam2b.gpcm.1PL.done <- testIRTModels(bam2b.gpcm.1PL, bamnotb.irt, gpcmconstraint="1PL", grmconstraint=NULL)
 bam2b.gpcm.gpcm.done <- testIRTModels(bam2b.gpcm.gpcm, bamnotb.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 bam2b.gpcm.modcomp <- rbind(bam2b.gpcm.rasch.done, bam2b.gpcm.1PL.done, bam2b.gpcm.gpcm.done)
+
+@ 
+<<bam2bgpcmmodcompprint, echo=FALSE, results=tex>>=
 bam2b.gpcm.modcomp.xtab <- xtable(bam2b.gpcm.modcomp, caption="Performance of Beliefs About Medicine IRT Scale from Split B on Splits A, C and D", label="tab:bam2bpcmmodcomp")
 print(bam2b.gpcm.modcomp.xtab)
 @ 
-
 As can be seen from Table \ref{tab:bam2bpcmmodcomp}, the Rasch PCM provided the best performance on unseen data.
 
 Next, the same procedure was applied to the Graded Response Models. 
@@ -3773,7 +3826,7 @@ Next, the same procedure was applied to the Graded Response Models.
 
 
 
-<<tcq2caisp, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caisp, echo=FALSE, results=tex>>=
 tcq2c.aisp <- aisp(na.omit(tcqall2c))
 print(xtable(tcq2c.aisp, label="tab:tcq2caisp", caption="Item Selection Procedure Results, TCQ 2, Split C"))
 @ 
@@ -3787,7 +3840,7 @@ tcq2c.alt <- tcqall2c[,19:36]
 
 
 
-<<tcq2ccheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2ccheckiio, echo=FALSE, results=tex>>=
 tcq2c.conv.iio <- check.iio(na.omit(tcq2c.conv))
 print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio", caption="Item Ordering Assumption Check, TCQ2 Conventional, Split C"))
 @ 
@@ -3795,7 +3848,7 @@ print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio", caption="Item
 As can be seen from Table \ref{tab:tcq2ccheckiio}, there were no violations of the item ordering assumption in this sample. 
 
 
-<<tcq2cconvcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cconvcheckmono, echo=FALSE, results=tex>>=
 tcq2c.conv.mono <- check.monotonicity(na.omit(tcq2c.conv))
 print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono", caption="Monotonicity Check, TCQ 2 Conventional, Split C"))
 @ 
@@ -3805,7 +3858,7 @@ Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmon
 Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
 
 \begin{figure}
-<<tcq2cconvguttman, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvguttman, echo=FALSE, figure=TRUE>>=
 tcq2c.conv.gutt <- check.errors(na.omit(tcq2c.conv))
 tcq2c.conv.gutt.plot <- ggplot(as.data.frame(tcq2c.conv.gutt), aes(x=tcq2c.conv.gutt))+geom_histogram(binwidth=5)
 print(tcq2c.conv.gutt.plot)
@@ -3818,7 +3871,7 @@ The plot shown in Figure \ref{fig:tcq2cconvguttplot} is interesting. It can be s
 
 Next, the assumptions of IRT were checked for the TCQ alternative items in this split. 
 
-<<tcq2caltcheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltcheckiio, echo=FALSE, results=tex>>=
 tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
 print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="Item Ordering Assumption Check, TCQ2 Alternative, Split C"))
 @ 
@@ -3826,7 +3879,7 @@ print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="It
 Table \ref{tab:tcq2caltcheckiio} shows that there were no violations of the invariant item ordering assumption in this split for the alternative items. 
 
 
-<<tcq2caltcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltcheckmono, echo=FALSE, results=tex>>=
 tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
 print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono", caption="Monotonicity Check, TCQ2 Alternative, Split C"))
 @ 
@@ -3842,7 +3895,7 @@ tcq2c.conv.gpcm.gpcm <- gpcm(tcq2c.conv, constraint="gpcm")
 @ 
 
 \begin{figure}
-<<tcq2cconvgpcmraschplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvgpcmraschplot, echo=FALSE, figure=TRUE>>=
 tcq2c.conv.gpcm.rasch.plot <- ggplotGRM(tcq2c.conv.gpcm.rasch)
 print(tcq2c.conv.gpcm.rasch.plot)
 @   
@@ -3852,14 +3905,14 @@ print(tcq2c.conv.gpcm.rasch.plot)
 
 Figure \ref{fig:tcq2cconvgpcmrasch} shows that the PCM again shows non-monotonically increasing parameter estimates, which is allowable in a PCM. This may mean that category 3 could be collapsed into the two adjacent categories. 
 
-<<tcq2cgpcmraschprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cgpcmraschprint, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.conv.gpcm.rasch), label="tab:tcq2cconvgpcmrasch", caption="Coefficient Estimates for Split C TCQ, Conventional Items, Partial Credit Rasch Model"))
 @ 
 
 The coefficient estimates for the Rasch PCM on the conventional items can be seen in Table \ref{tab:tcq2convgpcmrasch}. It can be seen that the pill items appear to have the lowest estimated threshold for category 1, while the injection items have the lowest threshold for category five. As has happened before, the cream items are regarded as the most difficult to endorse, and category 3 estimates appear to show that this catgory is being used as the base response, when participants have little to no opinion. 
 
 \begin{figure}
-<<tcq2cconvgpcm1PLplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvgpcm1PLplot, echo=FALSE, figure=TRUE>>=
 tcq2c.conv.gpcm.1PL.plot <- ggplotGRM(tcq2c.conv.gpcm.1PL)
 print(tcq2c.conv.gpcm.1PL.plot)
 @   
@@ -3869,7 +3922,7 @@ print(tcq2c.conv.gpcm.1PL.plot)
 
 Again, as can clearly be seen from Figure \ref{fig:tcq2cconvgpcm1PLplot}, the monotonicity assumption was not met for this model. 
 
-<<tcq2cconvgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cconvgpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.conv.gpcm.1PL), label="tab:tcq2cconvgpcm1pl", caption="Coefficient Estimates for TCQ Conventional One Parameter PCM, Split C"))
 @ 
 
@@ -3878,7 +3931,7 @@ Table \ref{tab:tcq2cgpcmconv1pl} shows the estimated coefficients for the one pa
 
 
 \begin{figure}
-<<tcq2cconvgpcmgpcmplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvgpcmgpcmplot, echo=FALSE, figure=TRUE>>=
 tcq2c.conv.gpcm.gpcm.plot <- ggplotGRM(tcq2c.conv.gpcm.gpcm)
 print(tcq2c.conv.gpcm.gpcm.plot)
 @   
@@ -3889,7 +3942,7 @@ print(tcq2c.conv.gpcm.gpcm.plot)
 
 Figure \ref{fig:tcq2cconvgpcm2plplot} shows that like the simpler models, the two parameter generalised partial credit model does not fit the data particularly well. 
 
-<<tcq2cconvgpcmgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cconvgpcmgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.conv.gpcm.gpcm), label="tab:tcq2cconvgpcmgpcm", caption="Coefficient Estimates for TCQ Conventional, Two Parameter PCM, Split C"))
 @ 
 
@@ -3903,7 +3956,7 @@ tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
 Next, the fit of one and two parameter graded response models (GRM) was examined. 
 
 \begin{figure}
-<<tcq2cconvgrm1plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvgrm1plot, echo=FALSE, figure=TRUE>>=
 tcq2c.convgrm1plot <- ggplotGRM(tcq2c.conv.grm.1pl)
 print(tcq2c.convgrm1plot)
 @   
@@ -3913,7 +3966,7 @@ print(tcq2c.convgrm1plot)
 
 Figure \ref{fig:tcq2cconvgrm1plot} shows that, in contrast to the partial credit models, the one parameter model provides a good fit to this scale. 
 
-<<tcq2cconvgrm1plsumm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cconvgrm1plsumm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split C), One Parameter Graded Response Model"))
 @ 
 
@@ -3921,7 +3974,7 @@ In Table \ref{tab:tcq2cconvgrm1plsumm} the estimated thresholds for the one para
 
 
 \begin{figure}
-<<tcq2cconvgrm2plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2cconvgrm2plot, echo=FALSE, figure=TRUE>>=
 tcq2convgrm2plot <- ggplotGRM(tcq2c.conv.grm.2pl)
 print(tcq2convgrm2plot)
 @   
@@ -3933,7 +3986,7 @@ print(tcq2convgrm2plot)
 Firstly, the fit of the two parameter graded response model was examined graphically, as shown in Figure \ref{fig:tcq2cconvgrm2plot}. This figure demonstrates that there are no obvious violations of monotonicity, and the coefficients are the next focus of attention.
 
 
-<<tcq2cconv2plgrmsum, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2cconv2plgrmsum, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum", caption="Coefficients for TCQ 2 Split C Two Parameter Graded Response Model"))
 @ 
 
@@ -3955,10 +4008,12 @@ tcq2c.conv.pcm.1pl.done <- testIRTModels(tcq2c.conv.gpcm.1PL, tcq2notc.conv, gpc
 tcq2c.conv.pcm.gpcm.done <- testIRTModels(tcq2c.conv.gpcm.rasch, tcq2notc.conv, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2c.conv.pcm.modcomp <- rbind(tcq2c.conv.pcm.rasch.done, tcq2c.conv.pcm.1pl.done, tcq2c.conv.pcm.gpcm.done)
 rownames(tcq2c.conv.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
-tcq2c.conv.pcm.modcomp.xtab <- xtable(tcq2c.conv.pcm.modcomp, caption="Performance of IRT Models TCQ Conventional (Split C), on Splits A, B and D", label="tab:tcq2cconvpcmmodcomp")
-print(tcq2c.conv.pcm.modcomp.xtab)                            
+ 
 @ 
-
+<<tcq2cconvpcmmodcompprint, echo=FALSE, results=tex>>=
+tcq2c.conv.pcm.modcomp.xtab <- xtable(tcq2c.conv.pcm.modcomp, caption="Performance of IRT Models TCQ Conventional (Split C), on Splits A, B and D", label="tab:tcq2cconvpcmmodcomp")
+print(tcq2c.conv.pcm.modcomp.xtab)                           
+@ 
 From Table \ref{tab:tcq2cconvpcmmodcomp}, it can be seen that the one parameter partial credit model was the best performing on unseen data. 
 
 Finally, the same procedure was repeated for the graded response models for the TCQ conventional scale developed in this split. 
@@ -3968,10 +4023,12 @@ tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcq2notc.conv, gpcm
 tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2c.conv.grm.modcomp <- rbind(tcq2c.conv.grm.1pl.done, tcq2c.conv.grm.2pl.done)
 rownames(tcq2c.conv.grm.modcomp) <- c("One Paramter GRM", "Two Parameter GRM")
+
+@ 
+<<tcq2cconvgrmmodcomp, echo=FALSE, results=tex>>=
 tcq2c.conv.grm.modcomp.xtab <- xtable(tcq2c.conv.grm.modcomp, caption="Performance of TCQ Conventional Graded Response Models (Split C) on Splits A, B and D", label="tab:tcq2convgrmmodcomp")
 print(tcq2c.conv.grm.modcomp.xtab)
 @ 
-
 As can be seen from Table \ref{tab:tcq2convgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
 
 <<tca2caltpcm, echo=FALSE, results=tex, cache=TRUE>>=
@@ -3980,7 +4037,7 @@ tcq2c.alt.pcm.1PL <- gpcm(tcq2c.alt, constraint="1PL")
 tcq2c.alt.pcm.gpcm <- gpcm(tcq2c.alt, constraint="gpcm")
 @ 
 
-<<tcq2caltgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgpcmrasch, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.alt.pcm.rasch), label="tab:tcq2caltgpcmrasch", caption="Coefficient Estimates for TCQ Alternative Rasch PCM, Split C"))
 @ 
 
@@ -3988,7 +4045,7 @@ Table \ref{tab:tcq2caltgpcmrasch} shows the estimated coefficients for the alter
 
 Next, a one parameter PCM was examined on this scale. 
 
-<<tcq2caltgpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgpcm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.alt.pcm.1PL), label="tab:tcq2caltgpcm1pl", caption="Coefficient Estimates for TCQ Alternative, One Parameter PCM, Split C"))
 @ 
 
@@ -3996,7 +4053,7 @@ Table \ref{tab:tcq2caltgpcm1pl} shows the estimated coefficients for this model.
 
 Finally, a two parameter PCM was fit to this scale. 
 
-<<tcq2caltgpcmgpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgpcmgpcm, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.alt.pcm.gpcm), label="tab:tcq2caltgpcmgpcm", caption="Coefficient Estimates for TCQ Alternative, Two Parameter PCM, Split C"))
 @ 
 
@@ -4009,11 +4066,13 @@ tcq2c.alt.pcm.1pl.done <- testIRTModels(tcq2c.alt.pcm.1PL, tcq2notc.alt, gpcmcon
 tcq2c.alt.pcm.pcm.done <- testIRTModels(tcq2c.alt.pcm.rasch, tcq2notc.alt, gpcmconstraint="gpcm", grmconstraint=NULL)
 tcq2c.alt.pcm.modcomp <- rbind(tcq2c.alt.pcm.rasch.done, tcq2c.alt.pcm.1pl.done, tcq2c.alt.pcm.pcm.done)
 rownames(tcq2c.alt.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+
+@ 
+<<tcq2caltpcmmodcompprint, echo=FALSE, results=hide>>=
 tcq2c.alt.pcm.modcomp.xtab <- xtable(tcq2c.alt.pcm.modcomp, caption="Performance of IRT Models TCQ Conventional (Split C), on Splits A, B and D", label="tab:tcq2caltpcmmodcomp")
 print(tcq2c.alt.pcm.modcomp.xtab)                            
 
 @ 
-
 As can be seen from Table \ref{tab:tcq2caltpcmmodcomp}, the Rasch PCM provided the best fit on unseen data, though there was not much different between the Rasch and the one parameter model. 
 
 Next, two graded response models were fit to the data. 
@@ -4023,7 +4082,7 @@ tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
 tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
 @ 
 
-<<tcq2caltgrm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgrm1pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.alt.grm.1pl), caption="Coefficients of TCQ Alternative (Split C) One Parameter Graded Response Model", label="tab:tcq2caltgrm1pl"))
 @ 
 
@@ -4031,7 +4090,7 @@ As can be seen in Table \ref{tab:tcq2caltgrm1pl}, there are no obvious problems 
 
 
 
-<<tcq2caltgrm2pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgrm2pl, echo=FALSE, results=tex>>=
 print(xtable(coef(tcq2c.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2caltgrm2pl"))
 @ 
 
@@ -4044,15 +4103,17 @@ tcq2notc.alt.irt <- tcq2notc[,35:52]
 tcq2c.alt.grm.1pl.done <- testIRTModels(tcq2c.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2c.alt.grm.2pl.done <- testIRTModels(tcq2c.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2c.alt.grm.modcomp <- rbind(tcq2c.alt.grm.1pl.done, tcq2c.alt.grm.2pl.done)
+
+@ 
+<<tcq2caltgrmmodcomprint, echo=FALSE, results=tex>>=
 print(xtable(tcq2c.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2caltgrmmodcomp"))
 @ 
-
 As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the two parameter model provides a better fit to the unseen data. 
 
 
 Next, the beliefs about medicine questionnaire was examined in this split. 
 
-<<bam2caisp, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2caisp, echo=FALSE, results=tex>>=
 bam2c.aisp <- aisp(na.omit(bamall2b))
 print(xtable(bam2c.aisp, label="tab:bam2caisp", caption="Item Selection Procedure, Beliefs About Medicine Questionnaire, Split C"))
 @ 
@@ -4065,7 +4126,7 @@ bamscale2c <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","B
 
 The first assumption to be checked was the invariant item ordering assumption, and the results are shown in Table \ref{tab:bam2checkiio}. 
 
-<<bam2ccheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2ccheckiio, echo=FALSE, results=tex>>=
 bam2c.iio <- check.iio(na.omit(bamscale2c))
 print(xtable(bam2c.iio$violations, label="tab:bam2checkiio", caption="Item Ordering Assumption Check, Beliefs About Medicine Questionnaire, Split C"))
 @ 
@@ -4073,7 +4134,7 @@ print(xtable(bam2c.iio$violations, label="tab:bam2checkiio", caption="Item Order
 As can be seen from Table \ref{tab:bam2checkiio}, no items violated this assumption and therefore all of them were retained. 
 
 
-<<bam2ccheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2ccheckmono, echo=FALSE, results=tex>>=
 bam2c.mono <- check.monotonicity(na.omit(bamscale2c))
 print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split C"))
 @ 
@@ -4081,7 +4142,7 @@ print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono", caption="Monotonic
 Following the check of the IIO assumption, the next step in assumption checking was a monotonicity check. The results of this check are shown in Table \ref{tab:bam2ccheckmono}. This shows that no items violated this assumption (though the ItemH coefficients are close to the cutoff of 0.3). 
 
 \begin{figure}
-<<bam2cguttman, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<bam2cguttman, echo=FALSE, figure=TRUE>>=
 bam2c.guttman <- check.errors(na.omit(bamscale2c))
 bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+geom_histogram(binwidth=2)
 print(bam2c.guttplot)
@@ -4102,7 +4163,7 @@ bam2c.gpcm.gpcm <- gpcm(bamscale2c, constraint="gpcm")
 Firstly, three generalised partial credit models were fit (Rasch, one parameter and two parameter). The results are shown below. 
 
 
-<<bam2cgpcmrasch, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cgpcmrasch, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Beliefs About Medicine Questionnaire Split C, Rasch generalised partial credit model"))
 @ 
 
@@ -4111,7 +4172,7 @@ Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the Rasch mod
 
 Next, the fit of a one parameter PCM was examined on this scale.
 
-<<bam2cpcm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cpcm1plprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Coefficient Estimates for BAM Scale, One Parameter PCM, Split C"))
 @ 
 
@@ -4119,7 +4180,7 @@ Table \ref{tab:bam2cgpcmrasch} shows the estimated coefficients for this model. 
 
 Finally, the fit of the two parameter PCM was examined on this scale.
 
-<<bam2cgpcmgpcmprint, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cgpcmgpcmprint, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2c.gpcm.gpcm)), label="tab:bam2cgpcmgpcm", caption="Coefficient Estimates, BAM Scale, Two Parameter PCM, Split C"))
 @ 
 
@@ -4132,7 +4193,7 @@ bam2c.grm.1pl <- grm(bamscale2c, constrained=TRUE)
 bam2c.grm.2pl <- grm(bamscale2c, constrained=FALSE)
 @ 
 
-<<bam2cgrm1sum, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cgrm1sum, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2c.grm.1pl)), label="tab:bam2cgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire, One Parameter Graded Response Model (Split C)"))
 @ 
 
@@ -4141,7 +4202,7 @@ Table \ref{tab:bam2cgrm1sum} shows that there are no monotonicity problems with 
 
 
 
-<<bam2cgrm2sum, echo=FALSE, results=tex, cache=TRUE>>=
+<<bam2cgrm2sum, echo=FALSE, results=tex>>=
 print(xtable(coef2mat(coef(bam2c.grm.2pl)), label="tab:bam2cgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Split C, Two parameter Graded Response Model"))
 @ 
 
@@ -4162,10 +4223,12 @@ bam2c.gpcm.1pl.done <- testIRTModels(bam2c.gpcm.1PL, bamnotc.irt, gpcmconstraint
 bam2c.gpcm.gpcm.done <- testIRTModels(bam2c.gpcm.gpcm, bamnotc.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
 bam2c.pcm.modcomp <- rbind(bam2c.gpcm.rasch.done, bam2c.gpcm.1pl.done, bam2c.gpcm.gpcm.done)
 rownames(bam2c.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
+
+@ 
+<<bam2cpcmmodcompprint, echo=FALSE, results=tex>>=
 bam2c.gpcm.modcomp.xtab <- xtable(bam2c.pcm.modcomp, caption="Results of BAM Split C Partial Credit Models on Splits A, B and D", label="tab:bam2cpcmmodcomp")
 print(bam2c.gpcm.modcomp.xtab)
 @ 
-
 As can be seen from Table \ref{tab:bam2cpcmmodcomp}, the Rasch model for the Beliefs About Medicine Questionnaire provided the best fit to unseen data. 
 
 Next, we examine the performance of the Graded Response Models on unseen data. 
@@ -4179,7 +4242,7 @@ bam2c.grm.1pl.done <- testIRTModels(bam2c.grm.1pl, bamnotc.irt, gpcmconstraint=N
 
 Next, the fourth and final split was examined. Again, the first step is to examine the Treatment Credibility Questionnaire and assess how many scales the items break down into.
 
-<<tcq2daisp, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2daisp, echo=FALSE, results=tex>>=
 tcq2d.aisp <- aisp(na.omit(tcqall2d))
 print(xtable(tcq2d.aisp, label="tab:tcq2daisp", caption="Item Selection Procedure Results, TCQ 2 Split D"))
 @ 
@@ -4193,7 +4256,7 @@ tcq2d.alt <- tcqall2d[,19:36]
 
 The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. The first assumption to be checked is the invariant item ordering assumption. 
 
-<<tcq2dcheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dcheckiio, echo=FALSE, results=tex>>=
 tcq2d.conv.iio <- check.iio(na.omit(tcq2d.conv))
 print(xtable(tcq2d.conv.iio$violations, label="tab:tcq2dcheckiio", caption="Item Ordering Assumption Check, TCQ2 Conventional, Split D"))
 @ 
@@ -4201,7 +4264,7 @@ print(xtable(tcq2d.conv.iio$violations, label="tab:tcq2dcheckiio", caption="Item
 As can be seen from Table \ref{tab:tcq2dcheckiio}, all of the items in the TCQ conventional scale met the IIO assumption. Next, the monotonicity assumption was examined for the conventional scale. 
 
 
-<<tcq2dconvcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2dconvcheckmono, echo=FALSE, results=tex>>=
 tcq2d.conv.mono <- check.monotonicity(na.omit(tcq2d.conv))
 print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono", caption="Monotonicity Check, TCQ 2 Conventional Split D"))
 @ 
@@ -4209,7 +4272,7 @@ print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono", caption="
 As can be seen from Table \ref{tab:tcq2dconvcheckmono}, all of the items in the conventional scale met this assumption. Next, the scale was checked for guttman scaling errors, and these were plotted. 
 
 \begin{figure}
-<<tcq2dconvguttman, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvguttman, echo=FALSE, figure=TRUE>>=
 tcq2d.conv.gutt <- check.errors(na.omit(tcq2d.conv))
 tcq2d.conv.gutt.plot <- ggplot(as.data.frame(tcq2d.conv.gutt), aes(x=tcq2d.conv.gutt))+geom_histogram(binwidth=2)
 print(tcq2d.conv.gutt.plot)
@@ -4223,7 +4286,7 @@ As shown in Figure \ref{fig:tcq2dconvguttplot}, the majority of participants had
 
 Next, the assumptions were checked for the alternative items. 
 
-<<tcq2daltcheckiio, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2daltcheckiio, echo=FALSE, results=tex>>=
 tcq2d.alt.iio <- check.iio(na.omit(tcq2d.alt))
 print(xtable(tcq2d.alt.iio$violations, label="tab:tcq2daltcheckiio", caption="Item Ordering Assumption Check, TCQ 2 Alternative, Split D"))
 @ 
@@ -4233,7 +4296,7 @@ As can be seen from Table \ref{tab:tcq2daltcheckiio}, there were no violations o
 Next, the monotonicity assumption was examined for the alternative scale.
 
 
-<<tcq2daltcheckmono, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2daltcheckmono, echo=FALSE, results=tex>>=
 tcq2d.alt.mono <- check.monotonicity(na.omit(tcq2d.alt))
 print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Monotonicity Check, TCQ 2 Alternative, Split D"))
 @ 
@@ -4241,14 +4304,14 @@ print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Mo
 As shown in Table \ref{tab:tcq2daltcheckmono}, there were no violations of the monotonicity assumption, and the itemH coefficients are quite high, which suggests that this is a well-devised scale. 
 
 
-<<tcq2dconvgpcm, echo=FALSE, results=hide, cache=TRUE>>=
+<<tcq2dconvgpcm, echo=FALSE, results=hide>>=
 tcq2d.conv.gpcm.rasch <- gpcm(tcq2d.conv, constraint="rasch")
 tcq2d.conv.gpcm.1PL <- gpcm(tcq2d.conv, constraint="1PL")
 tcq2d.conv.gpcm.gpcm <- gpcm(tcq2d.conv, constraint="gpcm")
 @ 
 
 \begin{figure}
-<<tcq2dconvgpcmraschplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvgpcmraschplot, echo=FALSE, figure=TRUE>>=
 tcq2d.conv.gpcm.rasch.plot <- ggplotGRM(tcq2d.conv.gpcm.rasch)
 print(tcq2d.conv.gpcm.rasch.plot)
 @   
@@ -4265,7 +4328,7 @@ print(xtable(coef(tcq2d.conv.gpcm.rasch), label="tab:tcq2dgpcmrasch", caption="C
 Table \ref{tab:tcq2dgpcmrasch} shows the estimated coefficients for the Rasch PCM for the conventional items in this split. Again, a similar pattern as was seen in other splits emerges, where the Pill items have the lowest threshold for category 1, while the injection items are the easiest to endorse at the category 4 level. Again, the difficulties of the cream items, especially at the higher level, is apparent. 
 
 \begin{figure}
-<<tcq2dconvgpcm1PLplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvgpcm1PLplot, echo=FALSE, figure=TRUE, cache=TRUE>>=
 tcq2d.conv.gpcm.1PL.plot <- ggplotGRM(tcq2d.conv.gpcm.1PL)
 print(tcq2d.conv.gpcm.1PL.plot)
 @   
@@ -4284,7 +4347,7 @@ Table \ref{tab:tcq2dconvgpcm1pl} shows the estimated coefficients for this model
 
 
 \begin{figure}
-<<tcq2dconvgpcmgpcmplot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvgpcmgpcmplot, echo=FALSE, figure=TRUE, cache=TRUE>>=
 tcq2d.conv.gpcm.gpcm.plot <- ggplotGRM(tcq2d.conv.gpcm.gpcm)
 print(tcq2d.conv.gpcm.gpcm.plot)
 @   
@@ -4311,7 +4374,7 @@ tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE)
 
 
 \begin{figure}
-<<tcq2dconvgrm1plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvgrm1plot, echo=FALSE, figure=TRUE, cache=TRUE>>=
 tcq2d.convgrm1plot <- ggplotGRM(tcq2d.conv.grm.1pl)
 print(tcq2d.convgrm1plot)
 @   
@@ -4330,7 +4393,7 @@ Table \ref{tab:tcq2dconvgrm1plsumm} shows the coefficient estimates for the one 
 
 
 \begin{figure}
-<<tcq2dconvgrm2plot, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<tcq2dconvgrm2plot, echo=FALSE, figure=TRUE, cache=TRUE>>=
 tcq2donvgrm2plot <- ggplotGRM(tcq2d.conv.grm.2pl)
 print(tcq2donvgrm2plot)
 @   
@@ -4492,7 +4555,7 @@ Next, the assumption of monotonicity was tested. The results of this test are sh
 
 
 \begin{figure}
-<<bam2dguttman, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<bam2dguttman, echo=FALSE, figure=TRUE, cache=TRUE>>=
 bam2d.guttman <- check.errors(na.omit(bamscale2d))
 bam2d.guttplot <- ggplot(as.data.frame(bam2d.guttman), aes(x=bam2d.guttman))+geom_histogram(binwidth=2)
 print(bam2d.guttplot)
@@ -4594,7 +4657,7 @@ The next part of the analysis to be carried out was regression analysis. There w
 The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
 
 \begin{figure}
-<<splitApairs, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<splitApairs, echo=FALSE, figure=TRUE, cache=TRUE>>=
 tcq2.nota.tot <- tcq2nota[,71:77]
 tcq2.nota.pairs <- pairs.panels(na.omit(tcq2.nota.tot))
 @   
@@ -4640,7 +4703,7 @@ print(p3)
 Figure \ref{fig:convaltmeancollege} shows a regression of alternative  treatment mean scores against conventional treatment mean scores, stratified based on college. It can be seen that for Arts, Science and Business and Law, increased scores on the alternative treatments were associated with increased scores on the conventional treatments, while for medicine and health, the reverse was true - which suggests that either these participants had a different relationship to these forms of treatment, or that their course of study had altered their perceptions. As can be seen from Figure \ref{fig:medhealthyear}, the second alternative appears to be the case, given that the relationship is positive in Year 1, but then turns sharply negative. 
 
 \begin{figure}
-<<medhealthyear, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<medhealthyear, echo=FALSE, figure=TRUE, cache=TRUE>>=
 medhealth <- tcq2[with(tcq2, College=="Medicine and Health"),]
 medyearplot <- ggplot(na.omit(medhealth), aes(x=ConvMean, y=AltMean))+geom_smooth(method="lm")+facet_grid(.~Year)
 print(medyearplot)
@@ -4668,7 +4731,7 @@ Figure \ref{fig:convaltmeanhealth} shows the regression of conventional treatmen
 Next, summary scores for experience with conventional treatments and alternative treatments were calculated, and the relationships of these two variables to demographic variables were examined.
 
 \begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<expconvaltgender, echo=FALSE, figure=TRUE, cache=TRUE>>=
 p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
 p2 <- p+geom_smooth(method="lm")+facet_grid(.~Gender)
 print(p2)
@@ -4678,7 +4741,7 @@ print(p2)
 \end{figure}
 
 \begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<expconvaltgender, echo=FALSE, figure=TRUE, cache=TRUE>>=
 p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
 p2 <- p+layer(geom="smooth", method="lm")
 p3 <- p2+facet_grid(.~College)
@@ -4690,7 +4753,7 @@ print(p3)
 
 
 \begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, cache=TRUE>>=
+<<expconvaltgender, echo=FALSE, figure=TRUE, cache=TRUE>>=
 p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
 p2 <- p+geom_smooth(method="lm")+facet_grid(.~Health)
 print(p2)
@@ -5804,132 +5867,132 @@ print(xtable(summary(bamtotnotd.heldout.lm), label="tab:bamtotnotdheldout", capt
 
 Table \ref{tab:bamtotnotdheldout} shows the performance of the model on the validation set. It can be seen that Pilltotal, Homeopathy total and Experience with conventional treatments remain significant, but the other variables do not. The model was significant: F(7,182)=5.448, $p\le 0.0001$, and the adjusted $R^2$ for the model was equal to 0.1414, which is extremely poor but in line with previous splits. 
 
-\subsubsection{Final Regression Models}
-\label{sec:final-regr-models}
+%% \subsubsection{Final Regression Models}
+%% \label{sec:final-regr-models}
 
-The next step in the data analysis procedure was to determine which of the models developed on each of the splits were the best fit to the data. As all of the data has been used in previous test and validation splits, the following approach was taken. Firstly, a random sample of 75 observations was drawn from each of the four splits, and then these samples were combined. The chosen models from each of the splits were then fitted to this new data set, and were compared using AIC and likelihood ratio tests. This approaches balances the advantages of cross-validation and avoids the problems of multiple comparison endemic to stepwise variable selection and repeated model fitting. 
+%% The next step in the data analysis procedure was to determine which of the models developed on each of the splits were the best fit to the data. As all of the data has been used in previous test and validation splits, the following approach was taken. Firstly, a random sample of 75 observations was drawn from each of the four splits, and then these samples were combined. The chosen models from each of the splits were then fitted to this new data set, and were compared using AIC and likelihood ratio tests. This approaches balances the advantages of cross-validation and avoids the problems of multiple comparison endemic to stepwise variable selection and repeated model fitting. 
 
-<<tcq2new, echo=FALSE, results=hide, cache=TRUE>>=
-set.seed(23)
-tcq2a.finalsamp <- tcq2nota.complete[sample(1:nrow(tcq2nota.complete), 75),]
-tcq2b.finalsamp <- tcq2notb.complete[sample(1:nrow(tcq2nota.complete), 75),]
-tcq2c.finalsamp <- tcq2notc.complete[sample(1:nrow(tcq2nota.complete), 75),]
-tcq2d.finalsamp <- tcq2notd.complete[sample(1:nrow(tcq2nota.complete), 75),]
-tcq2final <- as.data.frame(rbind(tcq2a.finalsamp,tcq2b.finalsamp,tcq2c.finalsamp,tcq2d.finalsamp))
-@ 
+%% <<tcq2new, echo=FALSE, results=hide, cache=TRUE>>=
+%% set.seed(23)
+%% ptcq2a.finalsamp <- tcq2nota.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2b.finalsamp <- tcq2notb.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2c.finalsamp <- tcq2notc.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2d.finalsamp <- tcq2notd.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2final <- as.data.frame(rbind(tcq2a.finalsamp,tcq2b.finalsamp,tcq2c.finalsamp,tcq2d.finalsamp))
+%% @ 
 
-<<pillfinalfits, echo=FALSE, results=hide, cache=TRUE>>=
-pilltotlm.nota <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
-pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
-pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
-pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
-pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
-pillcanddtest <- jtest(pilltotnotc, pilltotnotd)
-pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
-pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
-@ 
+%% <<pillfinalfits, echo=FALSE, results=hide, cache=TRUE>>=
+%% pilltotlm.nota <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+%% pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+%% pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+%% pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
+%% pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
+%% pillcanddtest <- jtest(pilltotnotc, pilltotnotd)
+%% pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
+%% pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
+%% @ 
 
-<<ABcompprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(pillaandbtest, label="tab:pillAandBtest", caption="Model Comparison between Pill Credibility Models, Splits A and B"))
-@ 
+%% <<ABcompprint, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(pillaandbtest, label="tab:pillAandBtest", caption="Model Comparison between Pill Credibility Models, Splits A and B"))
+%% @ 
 
-<<ABcompprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(pillcanddtest, label="tab:pillCandDtest",caption="Model Comparison between Pill Credibility Models, Splits C and D"))
-@ 
+%% <<ABcompprint, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(pillcanddtest, label="tab:pillCandDtest",caption="Model Comparison between Pill Credibility Models, Splits C and D"))
+%% @ 
 
-As shown in Tables \ref{tab:pillAandBtest} and \ref{tab:pillCandDtest}, the model developed on Split A appears to preovide the best fit on this resampled data. The model tested on split A was also significantly better than C and D, therefore we can regard this model as the best for the Pill credibility scores. The model was significant: $F(4,283)=68.81$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4859. 
+%% As shown in Tables \ref{tab:pillAandBtest} and \ref{tab:pillCandDtest}, the model developed on Split A appears to preovide the best fit on this resampled data. The model tested on split A was also significantly better than C and D, therefore we can regard this model as the best for the Pill credibility scores. The model was significant: $F(4,283)=68.81$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4859. 
 
-Next, the models for cream credibility scores were assessed. 
+%% Next, the models for cream credibility scores were assessed. 
 
-<<creamfinal, echo=FALSE, results=hide, cache=TRUE>>=
-creamtotlm.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2final)
-creamtotlm.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2final)
-creamtotlm.notc <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2final)
-creamtotlm.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2final)
-creamaandbtest <- jtest(creamtotlm.nota, creamtotlm.notb)
-creamcanddtest <- jtest(creamtotlm.notc, creamtotlm.notd)
-creamdanbctest <- jtest(creamtotlm.notd, creamtotlm.notc)
-creamaanddtest <- jtest(creamtotlm.nota, creamtotlm.notd)
-@ 
+%% <<creamfinal, echo=FALSE, results=hide, cache=TRUE>>=
+%% creamtotlm.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2final)
+%% creamtotlm.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2final)
+%% creamtotlm.notc <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2final)
+%% creamtotlm.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2final)
+%% creamaandbtest <- jtest(creamtotlm.nota, creamtotlm.notb)
+%% creamcanddtest <- jtest(creamtotlm.notc, creamtotlm.notd)
+%% creamdanbctest <- jtest(creamtotlm.notd, creamtotlm.notc)
+%% creamaanddtest <- jtest(creamtotlm.nota, creamtotlm.notd)
+%% @ 
 
-The results for this split were a little more ambiguous, as Models A and B were equivalent in terms of model testing. Model D was better than Model C, but Model A was better than Model D. Therefore we can regard Model D as the best fitting model for the Cream credibility scores. The model was significant: F(5,282)=43.51, $p\le 0.0001$, with an adjusted $R^2$ of 0.4255, which is acceptable. 
+%% The results for this split were a little more ambiguous, as Models A and B were equivalent in terms of model testing. Model D was better than Model C, but Model A was better than Model D. Therefore we can regard Model D as the best fitting model for the Cream credibility scores. The model was significant: F(5,282)=43.51, $p\le 0.0001$, with an adjusted $R^2$ of 0.4255, which is acceptable. 
 
-Next, the same procedure was repeated for the Injection credibility scores. 
+%% Next, the same procedure was repeated for the Injection credibility scores. 
 
-<<injfinal, echo=FALSE, results=hide, cache=TRUE>>=
-injtotnota.final <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2final)
-injtotnotb.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2final)
-injtotnotc.final <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2final)
-injtotnotd.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2final)
-inj.aandb.test <- jtest(injtotnota.final, injtotnotb.final)
-inj.candd.test <- jtest(injtotnotc.final, injtotnotd.final)
-inj.bandd.test <- jtest(injtotnotb.final, injtotnotd.final)
-@ 
+%% <<injfinal, echo=FALSE, results=hide, cache=TRUE>>=
+%% injtotnota.final <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2final)
+%% injtotnotb.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2final)
+%% injtotnotc.final <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2final)
+%% injtotnotd.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2final)
+%% inj.aandb.test <- jtest(injtotnota.final, injtotnotb.final)
+%% inj.candd.test <- jtest(injtotnotc.final, injtotnotd.final)
+%% inj.bandd.test <- jtest(injtotnotb.final, injtotnotd.final)
+%% @ 
 
-<<modeldshow, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(summary(injtotnotd.final), label="tab:injnotdfinal", caption="Final Model for Injection Credibility Scores"))
-@ 
+%% <<modeldshow, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(summary(injtotnotd.final), label="tab:injnotdfinal", caption="Final Model for Injection Credibility Scores"))
+%% @ 
 
-Following repeated tests of the fit of the models, Model D appears to be the best fitting on this data. The model was significant: $F(5,282)=48.56$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.3955. The coefficients for the model are shown in Table \ref{tab:injnotdfinal}. 
+%% Following repeated tests of the fit of the models, Model D appears to be the best fitting on this data. The model was significant: $F(5,282)=48.56$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.3955. The coefficients for the model are shown in Table \ref{tab:injnotdfinal}. 
 
-Next, this procedure was repeated for the Acupuncture models. 
+%% Next, this procedure was repeated for the Acupuncture models. 
 
-<<acufinaltest, echo=FALSE, results=hide, cache=TRUE>>=
-acutotnota.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
-acutotnotb.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2final)
-acutotnotc.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
-acutotnotd.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
-acu.aandb.test <- jtest(acutotnota.final, acutotnotb.final)
-acu.candd.test <- jtest(acutotnotc.final, acutotnotd.final)
-acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
-@ 
-Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
+%% <<acufinaltest, echo=FALSE, results=hide, cache=TRUE>>=
+%% acutotnota.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+%% acutotnotb.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2final)
+%% acutotnotc.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+%% acutotnotd.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+%% acu.aandb.test <- jtest(acutotnota.final, acutotnotb.final)
+%% acu.candd.test <- jtest(acutotnotc.final, acutotnotd.final)
+%% acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
+%% @ 
+%% Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
 
-<<acutotfinalprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(summary(acutotnotc.final), label="tab:acutotfinal", caption="Final Model for Acupuncture Credibility Scores"))
-@ 
+%% <<acutotfinalprint, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(summary(acutotnotc.final), label="tab:acutotfinal", caption="Final Model for Acupuncture Credibility Scores"))
+%% @ 
 
-The coefficients and p values for the individual terms in the model can be seen in Table \ref{tab:acutotfinal}. The model was significant: $F(3,284)=79.31$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4501. 
+%% The coefficients and p values for the individual terms in the model can be seen in Table \ref{tab:acutotfinal}. The model was significant: $F(3,284)=79.31$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4501. 
 
-Next, this procedure was applied to the homeopathy models developed on each of the splits. 
+%% Next, this procedure was applied to the homeopathy models developed on each of the splits. 
 
-<<hommodfinal, echo=FALSE, results=tex, cache=TRUE>>=
-homtotnota.final <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2final)
-homtotnotb.final <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2final)
-homtotnotc.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
-homtotnotd.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
-hom.aandb.test <- jtest(homtotnota.final, homtotnotb.final)
-hom.candd.test <- jtest(homtotnotc.final, homtotnotb.final)
-hom.bandc.test <- jtest(homtotnotb.final, homtotnotc.final)
-@ 
+%% <<hommodfinal, echo=FALSE, results=tex, cache=TRUE>>=
+%% homtotnota.final <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2final)
+%% homtotnotb.final <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2final)
+%% homtotnotc.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+%% homtotnotd.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+%% hom.aandb.test <- jtest(homtotnota.final, homtotnotb.final)
+%% hom.candd.test <- jtest(homtotnotc.final, homtotnotb.final)
+%% hom.bandc.test <- jtest(homtotnotb.final, homtotnotc.final)
+%% @ 
 
-Following assessment of all four models, Model C was determined to be marginally the best.
+%% Following assessment of all four models, Model C was determined to be marginally the best.
 
-<<homfinalshow, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(summary(homtotnotc.final), label="tab:homtotfinal", caption="Final Model for Homeopathy Credibility Scores"))
-@ 
+%% <<homfinalshow, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(summary(homtotnotc.final), label="tab:homtotfinal", caption="Final Model for Homeopathy Credibility Scores"))
+%% @ 
 
-Table \ref{tab:homtotfinal} shows the estimated coefficients and p values for each of the predictors on the final dataset. The model was significant: $F(3,284)=177.7$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.6487. 
+%% Table \ref{tab:homtotfinal} shows the estimated coefficients and p values for each of the predictors on the final dataset. The model was significant: $F(3,284)=177.7$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.6487. 
 
-Next, the same procedure was applied to the Reiki credibility models. 
+%% Next, the same procedure was applied to the Reiki credibility models. 
 
-<<reikimodfinal, echo=FALSE, results=hide, cache=TRUE>>=
-reitotnota.final <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2final)
-reitotnotb.final <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2final)
-reitotnotc.final <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2final)
-reitotnotd.final <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2final)
-rei.aandb.test <- jtest(reitotnota.final, reitotnotb.final)
-rei.candd.test <- jtest(reitotnotc.final, reitotnotd.final)
-rei.bandd.test <- jtest(reitotnotb.final, reitotnotd.final)
-@ 
+%% <<reikimodfinal, echo=FALSE, results=hide, cache=TRUE>>=
+%% reitotnota.final <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2final)
+%% reitotnotb.final <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2final)
+%% reitotnotc.final <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2final)
+%% reitotnotd.final <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2final)
+%% rei.aandb.test <- jtest(reitotnota.final, reitotnotb.final)
+%% rei.candd.test <- jtest(reitotnotc.final, reitotnotd.final)
+%% rei.bandd.test <- jtest(reitotnotb.final, reitotnotd.final)
+%% @ 
 
-Following fitting and testing of the four models, Model D was determined to be the best fit to this new data. 
+%% Following fitting and testing of the four models, Model D was determined to be the best fit to this new data. 
 
-<<reifinalshow, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(summary(reitotnotd.final), label="tab:reitotfinal", caption="Final Model for Reiki Credibility Scores"))
-@ 
+%% <<reifinalshow, echo=FALSE, results=tex, cache=TRUE>>=
+%% print(xtable(summary(reitotnotd.final), label="tab:reitotfinal", caption="Final Model for Reiki Credibility Scores"))
+%% @ 
 
-Table \ref{tab:reitotfinal} shows the estimated coefficients for the Reiki credibility scores regression on the resampled data. The model was significant: $F(3,284)=167.7$, $p\le 0.0001$, with an adjusted $R^2$ of 0.6354, which is excellent. 
+%% Table \ref{tab:reitotfinal} shows the estimated coefficients for the Reiki credibility scores regression on the resampled data. The model was significant: $F(3,284)=167.7$, $p\le 0.0001$, with an adjusted $R^2$ of 0.6354, which is excellent. 
 
 \subsection{Discussion}
 
