@@ -154,7 +154,7 @@ print(meanmedtcqpl)
 
 
 
-<<tcqiatboot, echo=FALSE, results=hide>>=
+%%<<tcqiatboot, echo=FALSE, results=hide>>=
 ## tcqcritblocks <- merge(tcqiatblock3, tcqiatblock5, by="Participant")
 ## Iatcalctcq <- function (data=tcqcritblocks, indices=rep(0.00885, 113)) {
 ## d <- data[sample(indices, replace=TRUE),]
@@ -171,20 +171,20 @@ print(meanmedtcqpl)
 ## names(tcqmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
 ## tcqmeanconf.xtab <- xtable(tcqmeanconf, label="tab:tcqmeanconf", caption="TCQ IAT mean D scores bootstrap confidence estimates")
 ## tcqbootplot <- plot(tcqboot)
-@ 
+%%@ 
 
-<<tcqmeanconf, echo=FALSE, results=tex>>=
+%%<<tcqmeanconf, echo=FALSE, results=tex>>=
 ## print(tcqmeanconf.xtab)
-@ 
+%%@ 
 
 % As can be seen in Table \ref{tab:tcqmeanconf} the estimated mean IAT score on the treatment credibility IAT is also quite unstable, however as shown below in Figure, the normal approximation seems appropriate. 
 
-<<tcqbootplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%%<<tcqbootplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 ## print(tcqbootplot)
-@ 
+%%@ 
 
 
-<<tcqstimboot, echo=FALSE, results=hide>>=
+%% <<tcqstimboot, echo=FALSE, results=hide>>=
 ## tcqmeanboot <- function (data, indices=rep(0.00885, 113)) {
 ##   d <- data[sample(indices, replace=TRUE),]
 ##  tcqmeans <- apply(d[,5:20], 2, mean, na.rm=TRUE)
@@ -192,7 +192,7 @@ print(meanmedtcqpl)
 ## tcqstimboot <- boot(tcqiatsorted, statistic=tcqmeanboot, R=1000)
 ## tcqstimbootci <- boot.ci(tcqstimboot)
 ## tcqstimbootplot <- plot(tcqstimboot)
-@ 
+%%@ 
  
 The next question is whether or not the IAT\'s have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
 
@@ -203,7 +203,7 @@ tcqstimblock3.m <- melt(tcqstimblock3, id.vars="part.tcq")
 tcqstimblock3.m[,"part.tcq"] <- with(tcqstimblock3.m, as.factor(part.tcq))
 print(ggplot(tcqstimblock3.m, aes(x=log(value), colour=as.factor(part.tcq)))+geom_density()+theme(legend.position="none"))
 @  
-  \caption{TCQ IAT Stimuli Response Times in Block 3. Each density plot represents the distribution of each participants' response times. Plot is truncated at 5000ms to show majority of responses clearly}
+  \caption{TCQ IAT Stimuli Response Times in Block 3. Each density plot represents the distribution of each participants' response times. Plot is on log scale }
   \label{fig:tcqstimblock3}
 \end{figure}
 
@@ -218,8 +218,8 @@ tcqstimreal5.m[,"variable"] <- with(tcqstimreal5.m, gsub("Block5\\.","",x=variab
 names(tcqstimreal3.m)[1] <- "Block3"
 names(tcqstimreal5.m)[1] <- "Block5"
 
-stimreal3.pl <- ggplot(tcqstimreal3.m, aes(x=Block3, y=value))+geom_boxplot()
-stimreal5.pl <- ggplot(tcqstimreal5.m, aes(x=Block5, y=value))+geom_boxplot()
+stimreal3.pl <- ggplot(tcqstimreal3.m, aes(x=Block3, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+stimreal5.pl <- ggplot(tcqstimreal5.m, aes(x=Block5, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
 print(arrangeGrob(stimreal3.pl, stimreal5.pl))
 @   
   \caption{Real versus Fake Stimuli, TCQ IAT. Boxplots of response times to each stimuli, Block 3 (top) and Block 5 (bottom)}
@@ -230,7 +230,7 @@ As can be seen from Figure \ref{fig:tcqstimrealpl}, the majority of items were r
 
 
 As can be seen from Figure \ref{fig:tcqstimblock3} above, the distribution of participant response times was clearly not normal, being far too skewed to the right and heavy tailed. The log transformation helps matters, but the tails are still extremely long (a point further reinforced by the outliers seen in Figure \ref{fig:tcqstimrealpl} also). 
-
+\begin{figure}
 <<tcqstimconvaltpl, echo=FALSE, fig=TRUE, eps=TRUE, png=TRUE, pdf=TRUE>>=
 tcqstim3convalt <- tcqstimblock3[,10:17]
 tcqstim5convalt <- tcqstimblock5[,10:17]
@@ -240,36 +240,78 @@ tcqstim3conv.m[,"variable"] <- with(tcqstim3conv.m, gsub("Block3\\.", "", x=vari
 tcqstim5conv.m[,"variable"] <- with(tcqstim5conv.m, gsub("Block5\\.", "", x=variable))
 names(tcqstim3conv.m)[1] <- "Block3"
 names(tcqstim5conv.m)[1] <- "Block5"
-tcqstimconv3pl <- ggplot(tcqstim3conv.m, aes(x=Block3, y=value))+geom_boxplot()
-tcqstimconv5pl <- ggplot(tcqstim5conv.m, aes(x=Block5, y=value))+geom_boxplot()
+tcqstimconv3pl <- ggplot(tcqstim3conv.m, aes(x=Block3, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+tcqstimconv5pl <- ggplot(tcqstim5conv.m, aes(x=Block5, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
 print(arrangeGrob(tcqstimconv3pl, tcqstimconv5pl))
-@ 
-
-
-Again, a similiar pattern as above emerges, with the exception that surgery correlates extremely well with almost all of the other stimuli. Those relationships appear to be driven by a number of extremely large outliers which are visible in the plot and the correlations lowered significantly once these were excluded. 
-
-<<optstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-print(plotmatrix(optstimblock3)+geom_smooth(method="lm"))
-@ 
-
-Again a similiar pattern emerges from the Optimism Block 3 results. There are some strange correlations, but these appear to be accounted for by a number of outliers. These will be downweighted and the data re-analysed.
-
-<<optstimblock5, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-print(plotmatrix(optstimblock5)+geom_smooth())
-@ 
-
-The results from Block 5 appear to be more in line with expectations, as all of the positive words and negative words correlate reasonably highly amongst themselves. 
-\begin{figure}
-<<optiatplotself, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-print(plotmatrix(optiatsorted[5:10])+geom_smooth())
 @   
- \caption{Plot of Optimism IAT self versus other words. Top triangle shows the correlations scaled by absolute value, bottom triangle shows scatterplots of each variable against the others, and diagonal line shows histograms with density estimation.}
- \label{fig:optiatplotself}
+  \caption{Boxplots for Conventional and Alternative Stimuli, TCQ IAT, Block 3 (top) Block 5 (bottom)}
+  \label{fig:stimblockconvalt}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:stimblockconvalt} a similar pattern emerges from the conventional and alternative stimuli. Interestingly, it appears that response times were slower overall in Block 5, which may represent fatigue. However, the order of IAT's was counterbalanced, so one would expect to see the same pattern in the Optimism IAT's if this was the case. 
+
+\begin{figure}
+<<optstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+optstimblock3.m <- melt(optstimblock3, id.vars="part.opt")
+optstimblock3.m[,"part.opt"] <- with(optstimblock3.m, as.factor(part.opt))
+names (optstimblock3.m) [3] <- "ResponseTime"
+partstim3opt <- ggplot(optstimblock3.m, aes(x=log(ResponseTime), colour=as.factor(part.opt)))+geom_density()+theme(legend.position="none")
+optstimblock5.m <- melt(optstimblock5, id.vars="part.opt")
+optstimblock5.m[,"part.opt"] <- with(optstimblock5.m, as.factor(part.opt))
+names (optstimblock5.m) [3] <- "ResponseTime"
+partstim5opt <- ggplot(optstimblock5.m, aes(x=log(ResponseTime), colour=as.factor(part.opt)))+geom_density()+theme(legend.position="none")
+print (arrangeGrob (partstim3opt, partstim5opt))
+@   
+  \caption{Density Plots for Response Times of Each Participant, Block 3 (top) and Block 5 (bottom) All response times are plotted on a log scale}
+  \label{fig:optstimblock3part}
+\end{figure}
+
+As can be seen from Figure \ref{fig:optstimblock3part}, the distributions for the optimism IAT were relatively similar, except that they were overall shifted towards the right, indicating that response times were generally slower to each of these words. Note that one participant has almost the entirity of their distribution beyond the tails of most of the other participants, which given that this is a log-scale plot, indicates that something is very wrong here. Note additionally that the Block 5 results are much more variable than those from Block 3, which again may represent fatigue. 
+\begin{figure}
+<<optstimposneg, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+optstimblock3.real <- optstimblock3[,2:8]
+optstimreal3.m <- melt(optstimblock3.real)
+optstimblock5.real <- optstimblock5[,2:8]
+optstimreal5.m <- melt(optstimblock5.real)
+optstimreal3.m[,"variable"] <- with(optstimreal3.m, gsub("Block3\\.","",x=variable))
+optstimreal5.m[,"variable"] <- with(optstimreal5.m, gsub("Block5\\.","",x=variable))
+names(optstimreal3.m)[1] <- "Block3"
+names(optstimreal5.m)[1] <- "Block5"
+
+stimreal3.pl <- ggplot(optstimreal3.m, aes(x=Block3, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+stimreal5.pl <- ggplot(optstimreal5.m, aes(x=Block5, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+print(arrangeGrob(stimreal3.pl, stimreal5.pl))
+@   
+  \caption{Boxplots for Self/Other words in Optimism IAT, Block 3 (top) and Block 5 (bottom).}
+  \label{fig:optstimmeyou}
+\end{figure}
+
+As can be seen from Figure \ref{fig:optstimmeyou}, the same pattern emerged for the optimism IAT in that the Block 5 scores were much more variable and overall participants responded slower to this block. 
+
+
+
+<<optiatplotself, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+optstimblock3.posneg <- optstimblock3[,9:15]
+optstimpos3.m <- melt(optstimblock3.posneg)
+optstimblock5.posneg <- optstimblock5[,9:15]
+optstimpos5.m <- melt(optstimblock5.posneg)
+optstimpos3.m[,"variable"] <- with(optstimpos3.m, gsub("Block3\\.","",x=variable))
+optstimpos5.m[,"variable"] <- with(optstimpos5.m, gsub("Block5\\.","",x=variable))
+names(optstimpos3.m)[1] <- "Block3"
+names(optstimpos5.m)[1] <- "Block5"
+
+stimpos3.pl <- ggplot(optstimpos3.m, aes(x=Block3, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+stimpos5.pl <- ggplot(optstimpos5.m, aes(x=Block5, y=value))+geom_boxplot()+theme (axis.text.x=element_text (angle=45, hjust=1))
+print(arrangeGrob(stimpos3.pl, stimpos5.pl))
+@   
+ \caption{Boxplots of Response Times to Positive and Negative Words, Optimism IAT Block 3 (top), Block 5 (bottom).}
+ \label{fig:optiatplotpos}
 \end{figure}
 
 
 
- As can be seen in Figure \ref{fig:optiatplotself} the three self related words correlated weakly amongst themselves, as did the three other related words. The distributions of the responses (on the diagonal) shows that the reaction times followed a typical long tailed distribution common to reaction time measures. The lower triangle (scatterplots with loess line fitted) show that in general, reaction times were quicker for the self related words, which is typical in IAT research. 
+ As can be seen in Figure \ref{fig:optiatplotself}, the pattern of Block 5 responses tending to be slower was repeated. Note that disimproving appears to be the word with the highest mean latency, which is not surprising given its relatively unfamiliarity (compared to the other words, at least). 
  
  Next, the correlation between the different block times is assessed. As discussed in Chapter \ref{cha:literature-review}, some correlation would be expected given the nature of the IAT task, but the aim here is to quantify what effect, if any it would have had on the results. 
  
@@ -291,7 +333,7 @@ As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relative
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
-print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendall\'s $\tau$. All correlations are significant at the p<0.001 level"))
+print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the blocks of the treatment credibility IAT (Kendalls $\tau$. All correlations are significant at the p<0.001 level"))
 @ 
  
 
@@ -367,11 +409,11 @@ optiatdemographics <- merge(expmeasures, optiatsorted, by="Participant")
 opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), label="tab:optblocktimedemo", caption="Summary of Linear Regression of Block Time by Block, Age and Gender")
 print(opt.demo)
 @  
-As can be seen from Table, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with males tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
+As can be seen from Table \ref{tab:optblocktimedemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with males tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). 
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
 tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
-tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics), caption="Summary of Linear Rehression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo")) 
+tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), caption="Summary of Linear Regression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo" )
 print(tcq.demo)
 @ 
 
@@ -386,7 +428,7 @@ print(tcqiatgender)
 
 
 
-As can be seen from Figure \ref{fig:tcqiatgend} above, there were no significant differences ($t=-0.4973, p=0.6211$) between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument described in Chapter \ref{cha:tcqthesis}).
+As can be seen from Figure \ref{fig:tcqiatgend} above, there were no significant differences ($t=-0.4973, p=0.6211$) between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument described in Chapter \ref{cha:tcq-thesis}).
 
 \begin{figure}
 <<optiatgender, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -452,8 +494,10 @@ print(xtable(tcqrasch.df, label="tab:tcqiatrasch", caption="Ability Estimates fo
 
 \begin{figure}
 <<tcqiatpiplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcqiat.piplot <- plotPImap(tcqiat.rasch)
-print(tcqiat.piplot)
+sink("tmp.txt")
+print(plotPImap(tcqiat.rasch))
+sink(NULL)
+## print(tcqiat.piplot)
 @   
   \caption{Person Item Difficulty Map, Treatment Credibility IAT}
   \label{fig:tcqpimap}
@@ -469,7 +513,7 @@ Next, the relationships between the explicit and implicit measures were examined
 
 <<corrtestimplexpl, echo=FALSE, results=tex>>=
 corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
-print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"))
+print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.7)
 @ 
 
 It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative). Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion.  
@@ -479,11 +523,15 @@ It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really cor
 \label{sec:explicit-measures}
 
 
-
+\begin{figure}
 <<lotrmaas, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Condition)
 print(lotrmaas)
-@ 
+@   
+  \caption{Scatterplot of LOT-R Scores by Condition, with a linear regression smooth}
+  \label{fig:lotrmaas}
+\end{figure}
+
 
 The plot above in Figure \ref{fig:lotrmaas} shows that optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapter \ref{cha:general-discussion}. 
 
@@ -496,24 +544,18 @@ Given the focus of this thesis on the integration of survey and experimental res
 
 \begin{figure}
 <<surveyoptimism, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-survey.opt.pl <- ggplot(hom.data, aes(x=optimism))+geom_histogram()
-print(survey.opt.pl)
+survey.opt.pl <- ggplot(hom.data, aes(x=optimism))+geom_density()
+exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_density()
+
+print(arrangeGrob ( survey.opt.pl, exp.opt.pl))
 @   
-  \caption{Histogram of Optimism Scores in the Survey samples}
-  \label{fig:surveyoptimism}
+  \caption{Density Plot of Optimism Scores in the Survey samples (top), and the experimental sample (bottom) }
+  \label{fig:compoptimism}
 \end{figure}
 
 
-In Figure \ref{fig:surveyoptimism} the distribution of optimism scores in the survey samples can be seen, while Figure \ref{fig:expoptimism} shows the equivalent plot for the experimental sample. It can be seen that the two plots are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
+In Figure \ref{fig:compoptimism}  can be seen that the two plots are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
 
-\begin{figure}
-<<experimentoptimism, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_histogram()
-print(exp.opt.pl)
-@   
-  \caption{Distribution of Optimism Scores in the Experimental Sample}
-  \label{fig:expoptimism}
-\end{figure}
 
 
 Next, the differences in mindfulness levels between the two samples were assessed. 
@@ -521,22 +563,14 @@ Next, the differences in mindfulness levels between the two samples were assesse
 \begin{figure} 
 <<surveymindfulness, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 surv.mind.pl <- ggplot(hom.data, aes(x=mindfulness))+geom_density()
-print(surv.mind.pl)
-@  
-  \caption{Density Plot for Mindfulness Scores, Survey Sample}
-  \label{fig:surveymind}
-\end{figure}
-
-As can be seen from Figures \ref{fig:surveymind} and \ref{fig:expmind}, the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were higheer in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study. 
-
-\begin{figure}
-<<experimentmindfulness, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 exp.mind.pl <- ggplot(Iatandexpmeasures, aes(x=MAAS))+geom_density()
-print(exp.mind.pl)
-@   
-  \caption{Density Plot for Mindfulness Scores, Experimental Sample}
-  \label{fig:expmind}
+print(arrangeGrob ( surv.mind.pl, exp.mind.pl))
+@  
+  \caption{Density Plot for Mindfulness Scores, Survey Sample (top), and Experimental Sample (bottom)}
+  \label{fig:compmind}
 \end{figure}
+
+As can be seen from Figure \ref{fig:compmind}, the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were higheer in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study. 
 
 
 Finally, the treatment credibility questionnaire scores were examined to assess the differences between the survey and experimental samples. 
@@ -546,88 +580,84 @@ First, the differences between the two samples in terms of Pill credibility were
 \begin{figure}
 <<surveypill, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 surv.pill.pl <- ggplot(credtotals, aes(x=Pilltot))+geom_density()
-print(surv.pill.pl)
-@   
-  \caption{Pill Credibility Density Plot, Survey Sample (sample 2)}
-  \label{fig:surveypill}
-\end{figure}
-
-\begin{figure}
-<<experimentpill, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
-print(exp.pill.pl)
+print(arrangeGrob ( surv.pill.pl, exp.pill.pl))
 @   
-  \caption{Pill Credibility Density Plot, Experimental Sample}
-  \label{fig:exppill}
+  \caption{Pill Credibility Density Plot, Survey Sample (sample 2) (top), and Experimental Sample (bottom)}
+  \label{fig:comppill}
 \end{figure}
 
-As can be seen from Figures \ref{fig:surveypill} and \ref{fig:exppill}, the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
+
+As can be seen from Figure \ref{fig:comppill}, the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
 
 Next, the difference between Cream Credibility scores were assessed. 
 
 \begin{figure}
 <<surveycream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 surv.cream.pl <- ggplot(credtotals, aes(x=Creamtot))+geom_density()
-print(surv.cream.pl)
-@   
-  \caption{Density Plot for Distribution of Cream Credibility Scores, Survey Sample (sample 2)}
-  \label{fig:surveycream}
-\end{figure}
-
-
-\begin{figure}
-<<experimentcream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 exp.cream.pl <- ggplot(Iatandexpmeasures, aes(x=Cream))+geom_density()
-print(exp.cream.pl)
+print(arrangeGrob (surv.cream.pl, exp.cream.pl))
 @   
-  \caption{Density Plot for Distribution of Cream Credibility Scores, Experimental Sample}
-  \label{fig:expcream}
+  \caption{Density Plot for Distribution of Cream Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
+  \label{fig:compcream}
 \end{figure}
 
-As shown in Figures \ref{fig:surveycream} and \ref{fig:expcream}, the survey group tended to have a more positive view of painkilling creams. While the survey group is strongly peaked at the right of the plot, the experimental group were more even distributed, with a peak at the centre of the plot. This is interesting, as one might expect the experimental group to be more positive towards painkilling treatments in general, given that they had agreed to take part in  a study which examined the effects of a new analgesic.
+
+
+As shown in Figure \ref{fig:compcream}, the survey group tended to have a more positive view of painkilling creams. While the survey group is strongly peaked at the right of the plot, the experimental group were more evenly distributed, with a peak at the centre of the plot. This is interesting, as one might expect the experimental group to be more positive towards painkilling treatments in general, given that they had agreed to take part in  a study which examined the effects of a new analgesic.
 
 Next, the credibility scores for injection painkilling treatments were examined between the survey and experimental groups. 
 
 \begin{figure}
 <<surveyinj, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 surv.inj.pl <- ggplot(tcq2, aes(x=Injtot))+geom_density()
-print(surv.inj.pl)
-@   
-  \caption{Injection Credibility Density Plot, Survey Sample (sample two)}
-  \label{fig:surveyinj}
-\end{figure}
-
-
-\begin{figure}
-<<expinj, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 exp.inj.pl <- ggplot(Iatandexpmeasures, aes(x=Inj))+geom_density()
-print(exp.inj.pl)
+print(arrangeGrob ( surv.inj.pl, exp.inj.pl))
 @   
-  \caption{Density Plot for Injection Credibility Scores, Experimental Sample}
-  \label{fig:expinj}
+  \caption{Injection Credibility Density Plot, Survey Sample (sample two) (top), Experimental Sample (bottom)}
+  \label{fig:compinj}
 \end{figure}
 
 
-Figures \ref{fig:surveyinj} and \ref{fig:expinj} show that the Injection credibility scores were almost identical in their distributions between the two samples. 
+Figure \ref{fig:compinj}  show that the Injection credibility scores were almost identical in their distributions between the two samples. 
 
 Next, the Alternative treatment scores were examined between the two samples.
 \begin{figure}
   
 <<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-print(plotmatrix(credtotals[,4:6])+geom_smooth()+geom_jitter())
-@   \caption{Density and Scatterplots for Alternative Treatments, Survey Sample}
-  \label{fig:altsurvey}
+surv.acu.pl <- ggplot(tcq2, aes(x=Acutot))+geom_density()
+exp.acu.pl <- ggplot(Iatandexpmeasures, aes(x=Acu))+geom_density()
+print(arrangeGrob ( surv.acu.pl, exp.acu.pl))
+@   \caption{Density Plots for Acupuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
+  \label{fig:compacu}
 \end{figure}
+
+
+Figure ref{fig:compacu} shows that Acupuncture levels in the experimental sample were a little lower than those in the survey sample. 
 
 \begin{figure}
-<<alttreatmentsexp, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-print(plotmatrix(Iatandexpmeasures[,19:21])+geom_smooth()+geom_jitter())
-@   
-  \caption{Scatter and Density Plots for Alternative Treatments, Experimental Sample}
-  \label{fig:alttreatmentsexp}
+  
+<<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+surv.hom.pl <- ggplot(tcq2, aes(x=Homtot))+geom_density()
+exp.hom.pl <- ggplot(Iatandexpmeasures, aes(x=Hom))+geom_density()
+print(arrangeGrob ( surv.hom.pl, exp.hom.pl))
+@   \caption{Density Plots for Hompuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
+  \label{fig:comphom}
 \end{figure}
 
-Figures \ref{fig:altsurvey} and \ref{fig:alttreatmentsexp} show scatter and density plots for the survey and experimental samples, respectively. The only credibility score which looks significantly different is those for Homeopathy, which is significantly more bi-modal in the survey sample. 
+Figure \ref{fig:comphom} shows the levels of homeopathy credibility in both survey and experimental samples. It can be seen that, contrary to the Acupuncture totals, the credibility scores for Homeopathy were slightly higher in the experimental sample than in the survey sample. 
+
+\begin{figure}
+  
+<<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+surv.rei.pl <- ggplot(tcq2, aes(x=Reitot))+geom_density()
+exp.rei.pl <- ggplot(Iatandexpmeasures, aes(x=Rei))+geom_density()
+print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
+@   \caption{Density Plots for Reipuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
+  \label{fig:comprei}
+\end{figure}
+
+Figure \ref{fig:comprei} shows the credibility totals for Reiki in the survey and experimental samples. While credibility totals were quite low in both samples, they were a little lower in the survey sample. 
 
 
 \subsection{Randomisation Checks}
@@ -654,8 +684,8 @@ print(opt.xtab)
 
 As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT, the optimism IAT did not differ by Condition. 
 
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexp{chisq.gend[["p.value"]]}).
-In addition, the priming manipulation was not significantly different across groups (p=\Sexp{chisq.prime[["p.value"]]}).
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{chisq.gend[["p.value"]]}).
+In addition, the priming manipulation was not significantly different across groups.
 
 
 
