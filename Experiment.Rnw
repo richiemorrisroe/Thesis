@@ -31,6 +31,8 @@ setwd("../..")
 @ 
 
 <<loadpackages, echo=FALSE, results=hide>>=
+require (cacheSweave)
+require (gridExtra)
 require(psych)
 require(xtable)
 require(arm)
@@ -82,7 +84,7 @@ print(meanmedoptiatplot)
 
 
 
-<<optiatboot, echo=FALSE, results=hide>>=
+<<optiatboot, echo=FALSE, results=hide, cache=TRUE>>=
 optcritblocks <- merge(optstimblock3, optstimblock5, by="part.opt")
 Iatcalcopt <- function (data, indices=rep(0.00885, 113)) {
   d <- data[sample(indices, replace=TRUE),]
@@ -454,7 +456,7 @@ tcqiat.diff <- iatDiff(tcqblock3, tcqblock5)
 optdiffs.dich <- apply(optiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
 tcqdiffs.dich <- apply(tcqiat.diff, c(1,2), function (x) ifelse(x>0, 1, 0))
 @ 
-<<optiatirt, echo=FALSE, results=hide>>=
+<<optiatirt, echo=FALSE, results=hide, cache=TRUE>>=
 optiat.rasch <- RM(na.omit(optdiffs.dich))
 optiat.ppar <- person.parameter(optiat.rasch)
 optiat.elim <- stepwiseIt(optiat.rasch)
@@ -480,7 +482,7 @@ Table \ref{tab:optrasch} shows the estimated parameters for a Rasch model of the
 
 A process of stepwise elimination was carried out to eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
 
-<<tcqiatirt, echo=FALSE, results=hide>>=
+<<tcqiatirt, echo=FALSE, results=hide, cache=TRUE>>=
 tcqiat.rasch <- RM(tcqdiffs.dich)
 
 tcqiat.elim <- stepwiseIt(tcqiat.rasch)
@@ -1015,7 +1017,7 @@ From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on th
 
 Given the confusing results obtained from linear statistical modelling of the placebo response, it was decided to fit a more flexible model, treating the placebo response as a two valued (Yes, No) classification task. A random forest model was used for this purpose. 
 
-<<randomforestCV, echo=FALSE, results=hide>>=
+<<randomforestCV, echo=FALSE, results=hide, cache=TRUE>>=
 train.ind <- sample(1:54, 40, replace=FALSE)
 iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
 iatandexpfull <- na.omit(iatandexpfull)
@@ -1061,7 +1063,7 @@ print(varImpPlot(rf.train[["finalModel"]]))
 As can be seen from Figure \ref{fig:varimprf}, all three variables were important to the fit, however the TCQ IAT appeared to be the most important, followed by the mean credibility score for conventional treatments, followed by the Optimism IAT, followed by scores on the LOT-R.
 
 
-<<evtree, echo=FALSE, results=hide>>=
+<<evtree, echo=FALSE, results=hide, cache=TRUE>>=
 evtree.train <- train(PlacResp~OptIAT.Mean+TCQIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
 evtree.pred <- predict(evtree.train, iatandexpfull.test)
 evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
