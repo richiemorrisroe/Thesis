@@ -30,6 +30,8 @@ tcqiat <- read.csv("tcqiatres.csv")
 setwd("../..")
 @ 
 
+
+
 <<loadpackages, echo=FALSE, results=hide>>=
 require (randomForest)
 require (cacheSweave)
@@ -1219,7 +1221,7 @@ print (squeeez.pl)
 As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
 
 <<physlen, echo=FALSE, results=hide>>=
-physlen <- read.csv ("Physlengths.txt", header=FALSE)
+physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
 names (physlen) <- c ("Time", "Participant")
 physlen [,"Participant"] <- with (physlen, as.factor (Participant))
 survlength.ratings <- Iatandexpmeasures [,c ("Participant","BandageOn", "lengthsurv")]
