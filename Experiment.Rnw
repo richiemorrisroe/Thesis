@@ -6,10 +6,10 @@
 \subsection{Experimental Procedure}
 <<healthenv, echo=FALSE, results=hide>>=
 ## load("healthforthesis.rda")
-load("tcq2.rda")
+## load("tcq2.rda")
 load("homdata.rda")
 load("credtotals.rda")
-## load("tcqthesis.rda")
+load("tcqthesis.rda")
 @ 
 
 
@@ -31,6 +31,7 @@ setwd("../..")
 @ 
 
 <<loadpackages, echo=FALSE, results=hide>>=
+require (randomForest)
 require (cacheSweave)
 require (gridExtra)
 require(psych)
@@ -684,10 +685,10 @@ print(tcq.xtab)
 print(opt.xtab)
 @ 
 
-As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT, the optimism IAT did not differ by Condition. 
+As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT or the optimism IAT did not differ by Condition. 
 
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{chisq.gend[["p.value"]]}).
-In addition, the priming manipulation was not significantly different across groups.
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{round ( chisq.gend[["p.value"]], 3)}.
+In) addition, the priming manipulation was not significantly different across groups.
 
 
 
@@ -843,9 +844,12 @@ As can be seen above, the autocorrelation plots for the three groups appear to b
 \begin{figure}
 <<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 plot.new()
+par (mfrow=c (2,2))
+sink ("tmp.txt")
 print(acf(na.omit(with(meangrouppainratings, meannotreatpain))))
 print(acf(na.omit(with(meangrouppainratings,  meandeceptivepain))))
 print(acf(na.omit(with(meangrouppainratings,meanplacebopain))))
+sink (NULL)
 @   
   \caption{Mean Autocorrelation plots for pain ratings over time}
   \label{fig:meanautocorrplot}
@@ -950,7 +954,7 @@ In order to examine whether or not the IAT scores were predictive of placebo res
 
 <<placmod1, echo=FALSE, results=tex>>=
 placmod1 <- glm(PlacResp~TCQIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod1.xtab <- xtable(summary(placmod1))
+placmod1.xtab <- xtable(summary(placmod1),label="tab:placmod1", caption="Logistic Regression of Treatment Credibility IAT on Placebo Response")
 print(placmod1.xtab)
 @ 
 
@@ -958,7 +962,7 @@ As can be seen above in Table \ref{tab:placmod1}, the treatment credibility IAT 
 
 <<placmod2, echo=FALSE, results=tex>>=
 placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod2.xtab <- xtable(summary(placmod2))
+placmod2.xtab <- xtable(summary(placmod2), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
 print(placmod2.xtab)
 @ 
 
@@ -966,27 +970,28 @@ As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent sign
 
 <<placebolotr, echo=FALSE, results=tex>>=
 placmod.lotr<- glm(PlacResp~LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod.lotr.xtab <- xtable(summary(placmod.lotr))
+placmod.lotr.xtab <- xtable(summary(placmod.lotr), label="tab:placebolotr", caption="Regression of LOT-R Scores on Placebo Response")
 print(placmod.lotr.xtab)
 @ 
 
-In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{placebolotr}.
+In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{tab:placebolotr}.
 
 However, when these three variables are placed into the model together, the result is significant.
 
 <<placeboglm, echo=FALSE, results=tex>>=
 placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod.xtab <- xtable(summary(placmod6))
+placmod.xtab <- xtable(summary(placmod6), label="tab:placmodinter", caption="Regression of TCQIAT, OptIAT and LOT-R on Placebo Response")
 print(placmod.xtab)
 @ 
 
-As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variable's interactions were also significant. 
+As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variables interactions were also significant. 
 
 In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
 
 
 
-
+\begin{figure}
+  
 <<ggplot3wayinter, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
@@ -995,20 +1000,33 @@ iatexpyes <- na.omit(iatexpyes)
 iatexpyesno <- rbind(iatexpyes, iatexpno)
 lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
 print(lotriatplot)
-@ 
- The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+@   
+  \caption{Scatterplot of Optimism IAT, Treatment Credibility and LOT-R scores against mean survival time by Condition}
+  \label{fig:3wayinter}
+\end{figure}
 
+ The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+ \begin{figure}
 <<lotrtcqsmoothplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))+geom_point()
 print(lotrtcqplot)
-@  
+@     
+   \caption{Scatterplot of LOT-R Scores against TCQ IAT Scores, Placebo Response is denoted using colour}
+   \label{fig:lotrtcplot}
+ \end{figure}
+
 
 This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
 
+\begin{figure}
 <<lotroptplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotroptplot <- ggplot(iatexpyesno, aes(x=LOTR, y=OptIAT.Mean , colour=PlacResp))+geom_point()
 print(lotroptplot)
-@ 
+@   
+  \caption{LOTR Scores against Optimism Scores, colour denotes placebo response}
+  \label{fig:lotroptplot}
+\end{figure}
+
 
 From Figure \ref{fig:lotroptplot} it can be seen that scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response. 
 
@@ -1026,7 +1044,7 @@ iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
 iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
 rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
 rf.pred <- predict(rf.train, iatandexpfull.test)
-test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table, label="tab:rfplac", caption="Random Forest Accuracy on Placebo Response (Test set)")
+
 var.used.count <- varUsed(rf.train[["finalModel"]])
 var.used.count <- as.data.frame(var.used.count)
 rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv", "LOTR")
@@ -1036,7 +1054,7 @@ rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv", "LOTR")
 
 @ 
 
-<<rf2, echo=FALSE, results=hide>>=
+<<rf2, echo=FALSE, results=hide, cache=TRUE>>=
 iatandexpfull.train.ind2 <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train2 <- iatandexpfull[iatandexpfull.train.ind2,]
 iatandexpfull.test2 <- iatandexpfull[-iatandexpfull.train.ind2,]
@@ -1045,6 +1063,7 @@ rf.pred2 <- predict(rf.train2, iatandexpfull.test2)
 @ 
 
 <<rfTestResults, echo=FALSE, results=tex>>=
+test.xtab <- xtable(confusionMatrix(rf.pred, iatandexpfull.test$PlacResp)$table, label="tab:rfplac", caption="Random Forest Accuracy on Placebo Response (Test set)")
 print(test.xtab)
 @ 
 
@@ -1054,7 +1073,10 @@ Other models which were fit to the data included a naive bayes classifier ($Acc=
 
 \begin{figure}
 <<varImpPlot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+sink ("tmp.txt")
+par(mfrow=c (1,1))
 print(varImpPlot(rf.train[["finalModel"]]))
+sink (NULL)
 @   
   \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
   \label{fig:varimprf}
@@ -1071,13 +1093,13 @@ evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 
 To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, the Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
 
-\begin{figure}
-<<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 print(plot(evtree.train$finalModel))
 @   
-  \caption{Evolutionary Tree plot for Prediction of Placebo Response}
-  \label{fig:evtreeplot}
-\end{figure}
+%%   \caption{Evolutionary Tree plot for Prediction of Placebo Response}
+%%   \label{fig:evtreeplot}
+%% \end{figure}
 
 
 
@@ -1113,11 +1135,15 @@ meangsr <- lapply(meangsr, as.numeric )
 meangsr <- as.data.frame(lapply(meangsr, scale))
 meangsr[,"Time"] <- 1:nrow(meangsr)
 @ 
-
+\begin{figure}
 <<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-par(mfrow=c(2,2))
+par(mfrow=c(1,3))
 plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
-@ 
+@   
+  \caption{Mean GSR Levels by Condition over Time}
+  \label{fig:meangsr}
+\end{figure}
+
 
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
@@ -1138,10 +1164,14 @@ medgsr <- lapply(medgsr, as.numeric)
 medgsr <- as.data.frame(medgsr)
 medgsr <- as.data.frame(lapply(medgsr, scale))
 @ 
-
+\begin{figure}
 <<gsrmedianplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
-@ 
+@   
+  \caption{Median GSR by Condition Over Time}
+  \label{fig:mediangsr}
+\end{figure}
+
 
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
 
@@ -1152,8 +1182,59 @@ print(meangsrplot)
 @ 
 
 
+\subsection{Examining the Effect of Pain on GSR}
+\label{sec:exam-effect-pain}
+
+The next step in the analysis was to examine the impact of the particular painful stimuli administered on skin conductance. Some preliminary research has suggested that this may be a useful predictor of painful stimuli, and this question will be covered in the following section. However, in this section, the impact of the painful stimuli on skin conductance will be assessed. Note that due to experimenter error, not all participants had the band to induce pain at 300s into the experiment. This time of administration was recorded, and additionally as participants squeezed either more slowly or more quickly, there was some variability in these times. 
+
+The first step in this analysis was to examine the size of these disparities. 
+
+<<bandagequeeze, echo=FALSE, results=hide>>=
+bandage.squeeze <- Iatandexpmeasures [,c ("Participant", "BandageOn", "SqueezStop")]
+bandage.squeeze [,"SqueezingTime"] <- with (bandage.squeeze, SqueezStop-BandageOn)
+@ 
  
 
+\begin{figure}
+<<bandonoff, echo=FALSE, fig=TRUE>>=
+band.m <- melt (bandage.squeeze [,1:3], id.vars="Participant")
+print (ggplot (band.m, aes (x=value, fill=variable))+geom_density (alpha=0.5))
+@ 
+  \caption{Density Plots for Time of Application of Bandage and Stopping Squeezing}
+  \label{fig:onoffplot}
+\end{figure}
+
+Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
+
+\begin{figure}
+<<squeezeplot, echo=FALSE, fig=TRUE>>=
+squeeez.pl <- ggplot (bandage.squeeze, aes (x=SqueezingTime))+geom_density ()
+print (squeeez.pl)
+@ 
+  \caption{Density Plot of Time Spent Squeezing the Hand Exerciser}
+  \label{fig:squeezplot}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+
+<<physlen, echo=FALSE, results=hide>>=
+physlen <- read.csv ("Physlengths.txt", header=FALSE)
+names (physlen) <- c ("Time", "Participant")
+physlen [,"Participant"] <- with (physlen, as.factor (Participant))
+survlength.ratings <- Iatandexpmeasures [,c ("Participant","BandageOn", "lengthsurv")]
+len.test <- merge (physlen, survlength.ratings, by="Participant")
+len.test [,"Time"] <- with (len.test, Time/1000)
+len.test [,"Diff"] <- with (len.test, Time-lengthsurv)
+@ 
+
+Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. 
+
+
+<<physpaindiffplot, echo=FALSE, fig=TRUE>>=
+physpaindiff.pl <- ggplot (len.test, aes (x=Diff))+geom_density ()
+print (physpaindiff.pl)
+@ 
 
 \section{Discussion} 
 
