@@ -1,13 +1,13 @@
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @param ... 
-##' @return 
+##' @title
+##' @param x
+##' @param ...
+##' @return
 ##' @author Richard Morrisroe
 FactorXtab <-  function (x, ...) {
-  x.load<-x$loadings 
+  x.load<-x$loadings
 x.comm<-x$communality
 x.names <- colnames(x.load)
 len <- length(colnames(x.load))
@@ -22,10 +22,10 @@ fact.xtab
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @param ... 
-##' @return 
+##' @title
+##' @param x
+##' @param ...
+##' @return
 ##' @author Richard Morrisroe
 FactorCor <- function (x, ...) {
   res <- x$score.cor
@@ -38,10 +38,10 @@ FactorCor <- function (x, ...) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @param loadings 
-##' @return 
+##' @title
+##' @param x
+##' @param loadings
+##' @return
 ##' @author Richard Morrisroe
 ExtractLoadings <- function (x, loadings=0.3) {
   x.load <- x$loadings
@@ -56,9 +56,9 @@ ExtractLoadings <- function (x, loadings=0.3) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @return 
+##' @title
+##' @param x
+##' @return
 ##' @author Richard Morrisroe
 Extracth2u2 <- function (x) {
   x.comm <- x$communality
@@ -70,10 +70,10 @@ Extracth2u2 <- function (x) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @param ... 
-##' @return 
+##' @title
+##' @param x
+##' @param ...
+##' @return
 ##' @author Richard Morrisroe
 IrtXtab <- function (x, ...) {
   eta<-x$etapar #$
@@ -88,9 +88,9 @@ IrtXtab <- function (x, ...) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @return 
+##' @title
+##' @param x
+##' @return
 ##' @author Richard Morrisroe
 coefreshape <-  function (x) {
 #  mxlength <- lapply(x, max.length)
@@ -105,9 +105,9 @@ coefreshape <-  function (x) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param x 
-##' @return 
+##' @title
+##' @param x
+##' @return
 ##' @author Richard Morrisroe
 FitIndices <- function (x) {
   tli <- x$TLI
@@ -125,13 +125,13 @@ FitIndices <- function (x) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param data 
-##' @param factors 
-##' @param meth 
-##' @param rotation 
-##' @param scores 
-##' @return 
+##' @title
+##' @param data
+##' @param factors
+##' @param meth
+##' @param rotation
+##' @param scores
+##' @return
 ##' @author Richard Morrisroe
 MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   orthrotations <- c("none", "varimax", "quartimax", "bentlerT", "geominT" )
@@ -146,9 +146,9 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   for (i in seq_along(along.with=allrot)) {
    x <- fa(na.omit(data), nfactors=fno, rotate=allrot[i], fm="ml")
   assign(paste("rot", i,sep=""), value=x)
-  
+
    rotlist[[i]] <- get(paste("rot", i, sep=""))
-   
+
 }
   names(rotlist) <- allrot
   reslist <- rotlist
@@ -161,14 +161,14 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
 }
   names(fmlist) <- meth
   res <- c(factormethods=fmlist, rotations=reslist)
-  
+
 }
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param mfa 
-##' @return 
+##' @title
+##' @param mfa
+##' @return
 ##' @author Richard Morrisroe
 getLoadings <- function (mfa) {
   ind <- lapply(mfa, ExtractLoadings)
@@ -177,20 +177,20 @@ getLoadings <- function (mfa) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param mfa 
-##' @return 
+##' @title
+##' @param mfa
+##' @return
 ##' @author Richard Morrisroe
 combineLoadings <-  function (mfa) {
   loadlist <- list()
   for (i in seq_along(along.with=mfa)) {
     loadlist[[i]] <- mfa[[i]]$loadings
-    
+
   }
   loadlist
   loadings <- list()
   for (j in seq_along(along.with=loadlist)) {
-    
+
 
     loadings[[j]] <- as.matrix(unclass(loadlist[[j]]))
   }
@@ -201,11 +201,11 @@ combineLoadings <-  function (mfa) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param mfa 
-##' @param method 
-##' @param rotreq 
-##' @return 
+##' @title
+##' @param mfa
+##' @param method
+##' @param rotreq
+##' @return
 ##' @author Richard Morrisroe
 displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   rotationreq <- rotreq
@@ -213,14 +213,14 @@ displayRot <- function (mfa, method=NULL, rotreq=NULL) {
   resind <- grep(rotationreq, x=names(mfa))
   res <- mfa[[resind]]
 }
-  
+
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param grm 
-##' @param ... 
-##' @return 
+##' @title
+##' @param grm
+##' @param ...
+##' @return
 ##' @author Richard Morrisroe
 ggplotGRM <- function (grm, ...) {
   x <- coef(grm)
@@ -240,16 +240,16 @@ ggplotGRM <- function (grm, ...) {
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title 
-##' @param gpcm 
-##' @return 
+##' @title
+##' @param gpcm
+##' @return
 ##' @author Richard Morrisroe
 coef2mat <- function (gpcm) {
   if(is.matrix(gpcm)) {
     return(gpcm)
   }
   else {
-    
+
     len <- lapply(gpcm, length)
     probelem <- which.min(as.matrix(unlist(len)))
     dimcols <- max(as.matrix(unlist(len)))
@@ -267,11 +267,11 @@ coef2mat <- function (gpcm) {
     rownames(mat.res) <- names(gpcm)
     probelemlength <- length(gpcm[[probelem]])
     ## browser()
-    missingvalue <- which(is.na(mat.res)) #this gives a scalar, as internally matrices are stored as vectors 
+    missingvalue <- which(is.na(mat.res)) #this gives a scalar, as internally matrices are stored as vectors
     wrongvalue <- missingvalue-nrow(mat.res) #get the element where is the discrimination parameter has ended up
     mat.res[missingvalue] <- mat.res[wrongvalue]
     mat.res[wrongvalue] <- NA
-   
+
     categories <- lapply(gpcm, names)
     categorynames <- categories[[which.max(sapply(categories, length))]]
     colnames(mat.res) <- categorynames
@@ -304,7 +304,7 @@ return(dataret)
 }
     ##   return(randitems)
 ## }
-createSumScores <- function(data) { 
+createSumScores <- function(data) {
 data$physfun <- rowMeans(data[,grep("RANDQ[3456789]$|RANDQ[1][012]$",x=names(data))], na.rm=TRUE)
 data$rolelim <- rowMeans(data[,grep("RANDQ[1][3456]$",x=names(data))], na.rm=TRUE)
 data$rolelimem <- rowMeans(data[,grep("RANDQ[1][789]$",x=names(data))], na.rm=TRUE)
@@ -341,7 +341,7 @@ SeperateTestandTrain <- function(data, test=TRUE) {
     res <- data[indtest]
   }
   else {
-    indtrain <- grep("Train$", names(data)) 
+    indtrain <- grep("Train$", names(data))
     res <- data[indtrain]
   }
   res
@@ -402,7 +402,7 @@ IRTcv <- function (data, model=c("grm", "gpcm"), constraint=c(TRUE, FALSE, "rasc
   }
 }
 IrtCV <- function(x) {
-  
+
 #get observed frequencies from display command in package ltm
 obs <- descript(x)$perc
 totscores <- descript(x)$items
@@ -410,7 +410,7 @@ totscores[totscores==0] <- NA
 model <- grm(x)
 model.scores <- factor.scores(model, resp.patterns=x)
 abilities <- model.scores$score.dat["z1"]
-pointsweights <- model$GH 
+pointsweights <- model$GH
 cutpoints <- pointsweights[[1]]
 weights <- pointsweights[[2]]
 q <- seq(from=0, to=1, by=0.05) #create 21 points
@@ -420,7 +420,7 @@ totscores2[totscores2==0] <- NA
 ab.scores <- as.matrix(cbind(totscores2, abilities))
 res <- list(obsscores=obs, totscores=totscores2, abscores=ab.scores, model=model, scores=model.scores, abilities=abilities, weights=weights)
 }
-## getscores <- function(x) { #this function appears to be completely pointless, in fact it may also have been causing my problems with the function below. 
+## getscores <- function(x) { #this function appears to be completely pointless, in fact it may also have been causing my problems with the function below.
 ##   reslist <- list()
 ##   x <- as.data.frame(x)
 ##   probmat <- matrix(NA, nrow=100, ncol=30)
@@ -438,7 +438,7 @@ res <- list(obsscores=obs, totscores=totscores2, abscores=ab.scores, model=model
 probcalc <- function(x, totscores) {
     res <- sapply(x, calcprob, totscores)
   }
- 
+
 calcprob <- function (x) {
   x2 <- x[,2]
   totscores <- x[,1]
@@ -455,7 +455,7 @@ calcprob <- function (x) {
            probcal[[i]] <- NA
          }
          else{
-           p1 <- na.omit(length((y==y[j])))/ length(totscores) 
+           p1 <- na.omit(length((y==y[j])))/ length(totscores)
            p2 <- length(y==y[j])/length(na.omit(totscores))
            p3 <- na.omit(length(y[j]))/length(na.omit(y))
            browser()
@@ -464,14 +464,14 @@ calcprob <- function (x) {
            probcal[[i]] <- p5
          }
        }
-           
+
        probcal
      }
      probcal
    }
   probcal
 }
- 
+
 #Estimate conditional distribution of test scores for each trait level p(Ability|score)= p(score)*p(ability)/p(score)
 #p(abilities|totscores) (probably need to merge them into one dataframe for this).
 #p(abilities|totscores)=P(ability)*P(totscores)/p(abilities)
@@ -481,7 +481,7 @@ calcprob <- function (x) {
 # Method 1: multiply the conditional probability by the weight associated with the quadrature point. (these are stored in the grm model as GH).  This provides an estimation of the expected proportion of participants having an observed test score.
 #multiply the expected proportion by the sample size, the result is the expected frequency of of participants having a particular test score
 #Method 2: if individual ability estimates are available for all participants, the marginal expected frequency for a given score is the sum of the conditional probabilities for this score across the N participants.
-#This can be displayed graphically. In addition, a chi square test can be performed between the observed and expected frequencies, to give a measure of model mis-fit (with all the problems that the Chi-square test is heir too). 
+#This can be displayed graphically. In addition, a chi square test can be performed between the observed and expected frequencies, to give a measure of model mis-fit (with all the problems that the Chi-square test is heir too).
 CondProbIrt <- function(x) {
   abilities <- x[,1]
   totscores <- x[,2]
@@ -515,7 +515,7 @@ CondProbIrt <- function(x) {
 ##'
 ##' .. content for \details{} ..
 ##' @title Calculate the IAT score of a dataset
-##' @param data - a dataframe containing the stimuli names and response times, with one row per block 
+##' @param data - a dataframe containing the stimuli names and response times, with one row per block
 ##' @param Code the participant identifier code
 ##' @param method either use mean or median to calculate scores
 ##' @param words a vector of strings giving the names of the stimuli
@@ -524,7 +524,7 @@ CondProbIrt <- function(x) {
 calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
   if(nrow(data)%%5!=0) {
     warning("not all participants have complete responses")
-  
+
   partlen <- with(data, tapply(Block, Code,length))
   droppart <- partlen[partlen!=5]
   drop <- which(data$Code==names(droppart))
@@ -536,7 +536,7 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
   else {
     func <- method[2]
   }
-  
+
   data2 <- data[,c(Code, words)]
   block3 <- data2[data$Block=="Block 3",]
   block5 <- data2[data$Block=="Block 5",]
@@ -593,7 +593,7 @@ for (i in seq(from=1, to=length(data))) {
 }
   if(ind==1) {
     colnames(res) <- paste("GSR", dnames, sep="")
-  }
+p  }
   if(ind==2) {
     colnames(res) <- paste("ECG", dnames, sep="")
   }
@@ -621,16 +621,16 @@ repeatCV <- function(form, data, method=method, n, responsevariable, ...) {
     trainset <- data2[trainind,]
     testset <- data2[-trainind,]
     train.res <- train(formula=form, data=trainset, ...)
-    
+
     train.pred <- predict(train.res, testset)
     res[[i]] <- confusionMatrix(train.pred, testset[,responsevariable])
     Accuracy[i] <- res[[i]]$overall[1]
   }
-  
+
   res2 <- list(res, Accuracy)
 }
-                     
-                     
+
+
 getIRTestimates <- function(fscores) {
   data <- fscores[["score.dat"]]
   abest <- data[,c("z1", "se.z1")]
@@ -650,7 +650,7 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
     funlist2 <- substitute(newdata)
     #more awesome metaprogramming stuff that I haven't figured out how to do yet....
   }
-  
+
   comp.para <- length(unique(as.vector(coef(oldmodel))))
   predscores <- getIRTestimates(factor.scores(oldmodel, resp.patterns=newdata))
   if(class(oldmodel)=="gpcm") {
@@ -667,7 +667,7 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
   return(res)
 }
 
-  
+
 penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), ...) {
   x.mat <- as.matrix(x)
   testdata.mat <- as.matrix(testdata)
@@ -697,3 +697,29 @@ tuneLoess <- function(formula, data, newdata, tuneLength, ...) {
           }
     fitlist
 }
+lazyload <- function (files) {
+  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
+  outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
+  for (i in 1:length(files)) {
+    temp <- read.table(files[i])
+    gsr <- temp[,1]
+    write.table(gsr, file=outfilenames[i])
+  }
+}
+lazylength <- function(files) {
+    tp <- gsub(".*/", "", x=files)
+    tp.split <- strsplit(as.character(tp), "-")
+    pp <- lapply(tp.split, "[", 3)
+    pp <- gsub(".txt", "", x=pp)
+    ## browser()
+    lengthmat <- matrix(NA, 114, ncol=2)
+    for (i in 1:length(files)) {
+        temp <- read.table(files[i])
+        len <- dim(temp)[1]
+        lengthmat[i,1] <- pp[i]
+        lengthmat[i,2] <- len
+        rm(temp); gc()
+    }
+    lengthmat
+}
+
