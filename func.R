@@ -707,11 +707,8 @@ lazyload <- function (files) {
   }
 }
 lazylength <- function(files) {
-    tp <- gsub(".*/", "", x=files)
-    tp.split <- strsplit(as.character(tp), "-")
-    pp <- lapply(tp.split, "[", 3)
-    pp <- gsub(".txt", "", x=pp)
-    ## browser()
+
+    pp <- getPPfromFiles(files)
     lengthmat <- matrix(NA, 114, ncol=2)
     for (i in 1:length(files)) {
         temp <- read.table(files[i])
@@ -722,4 +719,41 @@ lazylength <- function(files) {
     }
     lengthmat
 }
+getPPfromFiles <- function(files) {
+    tp <- gsub(".*/", "", x=files)
+    tp.split <- strsplit(as.character(tp), "-")
+    pp <- lapply(tp.split, "[", 3)
+    pp <- gsub(".txt", "", x=pp)
+    return(pp)
+}
+calcChangePoints <- function(files, fun, changepoints) {
+    resmat <- matrix(NA, nrow=length(files), ncol=4)
+    pp <- getPPfromFiles(files)
+    resmat[,1] <- pp
+    chplist <- list()
+    reslist <- list()
+    for (i in 1:length(files)) {
+        points <- changepoints[with(changepoints, PPNo.==pp[i]),]
+        points2 <- as.numeric(points[,2:5])
+        points2 <- c(0, points2)
+        if(any(is.na(points2))) {
+           next
+        }
 
+
+
+        }
+
+        tmp <- read.table(files[i])
+
+        browser()
+    }
+
+
+createPartitions <- function(files, changepoints) {
+    partlist <- vector(mode=list, length=length(files))
+    pp <- getPPfromFiles(files)
+
+    for(j in 1:(length(points2)-1)) {
+        part <- seq(points2[j], points2[j+1])
+        reslist[[j]] <- part
