@@ -111,6 +111,24 @@ After this, linear regressions were run to examine the differential effects of e
 
 The performance of all methods was then assessed on held-out data. In the case of Sample one, some of sample 2 was used as a heldout data set. For Sample two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately, and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures. 
 
+\subsection{Crossvalidation Approaches}
+\label{sec:crossv-appr}
+
+\subsubsection{Crossvalidation for factor selection}
+\label{sec:crossv-fact-select}
+
+ As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this should be sufficient.
+
+\subsubsection{CrossValidation for Psychometric Models}
+\label{sec:crossv-psych-models}
+
+ A solution that was proposed to this problem was cross-validation.  Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for factor analyses, around 300 observations are typically needed for accurate estimation of parameters.  Therefore, models were developed on the first sample, and then will be fitted to a subset of the second sample.  This procedure will then be repeated with the data not used for testing in the second sample and the first sample.  This will allow the issues of overfitting to be avoided, and will allow for the most promising models to be applied to the experimental data, which by itself would not be sufficient to engage in any useful psychometric analyses.
+
+
+The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
+
+A different procedure will be followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
+
 
 \section{Results}
 
@@ -676,7 +694,7 @@ print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison o
 
 As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors, while the parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
-Another approach which can be applied to select the number of factors is a cross-validation method. As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. 
+Another approach which can be applied to select the number of factors is a cross-validation method.
 
 <<randfactorcv, echo=FALSE, results=hide>>=
 rand.fact.gabriel <- cv.svd.gabriel(na.omit(randitems.scored), krow=2, kcol=2, maxrank=18)
@@ -917,7 +935,7 @@ PA12: "RANDQ20"
 
 PA13: "RANDQ24"
 
-The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate   %cite Tabachnick & Fidell here.
+The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate.   %cite Tabachnick & Fidell here.
 Therefore we can stop the interpretation here, as this factor does not seem to add much to our understanding of the scale. 
 
 <<rand13corr, echo=FALSE, results=tex>>=
@@ -928,7 +946,9 @@ As Table \ref{tab:hom1rand13corr} shows, the factors are inter-correlated, but n
 
 
 The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}. Although the factor structure from this solution looks unlikely to be useful (given that there are three factors consisting only of one item each), the fit indices indicate that this is a better solution than any of the other proposed structures. That being said, this structure is unlikely to replicate, due to presumed overfitting. 
+and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}. 
+
+Although the factor structure from this solution looks unlikely to be useful (given that there are three factors consisting only of one item each), the fit indices indicate that this is a better solution than any of the other proposed structures. That being said, this structure is unlikely to replicate, due to presumed overfitting. 
 
 
 \paragraph{CFA for RAND MOS}
@@ -1318,66 +1338,41 @@ irtphyslim <- randitems[,paste(rand, c(13:16), sep="")]
 irtsickness <- randitems[,paste(rand, c(33,35), sep="")]
 @
 
+\subsection{IRT Physical Functioning Scale}
+\label{sec:irt-phys-funct}
+
+Firstly, the physical functioning scale suggested by the item selection procedure was checked using non-parametric IRT methods before being modelled using successively more complex parametric IRT models. 
+
 <<randphysfun, echo=FALSE, results=hide>>=
 irtphys.item.ord <- check.iio(na.omit(irtphysfun))
 irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
 @
 
 
-<<randphysfuncitemord, echo=FALSE, results=tex>>=
+<<randphysfuncitemord, echo=FALSE, results=tex, eval=FALSE>>=
 print(xtable(irtphys.item.ord[["violations"]],label="tab:randphysfuncitemord", caption="IRT Physical Functioning Item Ordering Results"))
 @
 
-As can be seen from Table \ref{tab:randphysfuncitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
+There were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least. Two items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale, which may suggest that this scale is not valid from an IRT point of view.  The removal of  these two items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
+
+The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
+
+<<physfunrasch, echo=FALSE, results=hide>>=
+physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
+physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
+physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
+@
 
 <<randemhealth, echo=FALSE, results=hide>>=
 irtemhealth.item.ord <- check.iio(na.omit(irtemhealth))
 irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
 @
 
-<<randEmhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtemhealth.item.ord[["violations"]],label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
-@
-
-As can be seen from Table \ref{tab:randemhealthitemord}, quite a number of items failed the item ordering assumption (RAND20, RAND32) and so were removed from the scale before further analysis. Interestingly enough, these items represent the Social Functioning scale, which may suggest that this scale is not valid from an IRT point of view.  
-
-<<newIrtEmHealth, echo=FALSE, results=tex>>=
-irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
-emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
-emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
-print(xtable(emhealth.item.ord2[["violations"]], caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
-@
-
-As shown in Table \ref{tab:randemhealth2iio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
-
 
 
 <<randphyslim, echo=FALSE, results=hide>>=
 irtphyslim.item.ord <- check.iio(na.omit(irtphyslim))
 irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
-@
-
-The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
-
-
-
-<<randgenhealth, echo=FALSE, results=hide>>=
-irtenergy.item.ord <- check.iio(na.omit(irtenergy))
-irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
-irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
-@
-
-There were two violations of the item ordering assumption for the Energy scale, RAND21 and RAND23, and these items were removed before further analyses.
-
-<<randGenhealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtenergy.item.ord[["violations"]],label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
-@
-
-
-<<physfunrasch, echo=FALSE, results=hide>>=
-physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
-physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
-physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
@@ -1426,6 +1421,97 @@ grmanova <- anova(physfun.grm.1pl, physfun.grm.2pl)
 @ 
 
 However, a better predictor of the usefulness of a model is to examine its fit on unseen data, and this was done in Section \ref{sec:predictions}. 
+
+
+\subsection{IRT Energy Scale}
+\label{sec:irt-energy-scale}
+
+
+
+<<randenergycheck, echo=FALSE, results=hide>>=
+irtenergy.item.ord <- check.iio(na.omit(irtenergy))
+irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
+irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
+@
+
+<<randenergyprint, echo=FALSE, results=hide>>=
+print(xtable(irtenergy.item.ord[["violations"]],label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
+@
+
+There were two violations of the item ordering assumption for the Energy scale, RAND21 and RAND23, and these items were removed before further analyses.
+
+The next scale to be examined is the  Energy scale.  The first analysis undertaken was to fit a partial credit rasch model to the scale.
+
+<<genhealthPCM, echo=FALSE, results=tex>>=
+irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
+print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:hom1energpcmrasch", caption="Coefficient Estimates for IRT Energy Scale, Rasch Partial Credit Model"))
+@
+
+
+It can be seen from Table \ref{tab:hom1energpcmrasch} that with the exception of Q36, all the items seem appropriately fitting. With Q36, there is no ability level where a response category of four is more probable than any of the other items, which is a failure either of the model or the scale. 
+
+
+<<genhealthpcm1pl, echo=FALSE, results=tex>>=
+irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
+print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:hom1energpcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
+@
+
+Table \ref{tab:hom1energpcm1pl} shows the coefficient estimates for the one parameter Partial Credit Model fitted to the energy RAND MOS scale. Suprisingly, the overall discrimination parameter has decreased. The most difficult question is 21, which asks about bodily pain in the past six months. The difficulty of this question would seem to be a function of the sampling population (i.e. students) here, rather than a function of the item's properties. Again, Q36 has the problem with the third response category, as does Q22, suggesting that the population is split bimodally on this question, with either high or low responses being more probable than a response in the middle. 
+
+
+<<genhealthpcm2pl, echo=FALSE, results=tex>>=
+irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
+print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:hom1energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
+@
+
+
+Table \ref{tab:hom1energpcm2pl} shows the coefficient estimates for the two parameter PCM on this scale. Again, items 36 and 22 have issues with category 3 estimates, and the discrimination parameters are all quite low with over half the scale having discrimination parameters of less than one, meaning that they discriminate less well between high and low ability respondents than would questions meeting the assumptions of a Rasch model. 
+
+<<genhealthpcmcompare, echo=FALSE, results=tex>>=
+anova.rasch.1pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.1pl)
+anova.1pl.2pl <- anova.gpcm(irtenergy.pcm.1pl, irtenergy.pcm.2pl)
+anova.rasch.2pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.2pl)
+@
+
+An anova conducted on the three models indicated that the 2 parameter model fit the data best ($p \le 0.001$), subject to the caveats above.
+
+
+Next, one and two parameter Graded Response Models were fit to the energy scale. 
+
+<<hom1irtenergygrm, echo=FALSE, results=hide>>=
+hom1.energy.grm.1pl <- grm(irtenergy, constrained=TRUE)
+hom1.energy.grm.2pl <- grm(irtenergy, constrained=FALSE)
+@ 
+
+
+<<hom1energygrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef2mat(coef(hom1.energy.grm.1pl)), label="tab:hom1energygrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model on IRT Energy Scale, RAND MOS, Sample One"))
+@ 
+
+Table \ref{tab:hom1energygrm1pl} shows the coefficient estimates for the one parameter model on the Energy scale. It can be seen that the Graded Response Model does not have the same issues with category 3 for items 22 and 36, which implies that this issue above was a property of the model rather than the scale. The discrimination parameter is estimated as much higher under this model also, as are the ability thresholds, though the rank ordering remains the same. 
+
+<<hom1energygrm2plprint, echho=FALSE, results=hide>>=
+print(xtable(coef2mat(coef(hom1.energy.grm.2pl)), label="tab:hom1energygrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, IRT Energy Scale, RAND MOS, Sample One"))
+@ 
+
+Table \ref{tab:hom1energygrm2pl} shows the coefficient estimates for the two parameter Graded Response Model. It can be seen that the discrimination parameters are very different from those of a similar Partial Credit Model (see Table \ref{tab:hom1energygpcm2pl}). Additionally, the ability estimates are much higher on average, with Q22 having the highest ability threshold. 
+
+
+
+\subsection{IRT Emotional Health Scale}
+
+
+
+<<randEmhealthItemord, echo=FALSE, results=tex, eval=FALSE>>=
+print(xtable(irtemhealth.item.ord[["violations"]],label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
+@
+
+<<newIrtEmHealth, echo=FALSE, results=hide>>=
+irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
+emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
+emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
+print(xtable(emhealth.item.ord2[["violations"]], caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
+@
 
 <<emhealthPCM, echo=FALSE, results=hide>>=
 emhealth.pcm.rasch <- gpcm(irtemhealth2, constraint="rasch")
@@ -1477,60 +1563,10 @@ Table \ref{tab:hom1emhealthgrm2pl} shows the coefficient estimates for the two p
 
 
 
-The next scale to be examined is the  Energy scale.  The first analysis undertaken was to fit a partial credit rasch model to the scale.
 
-<<genhealthPCM, echo=FALSE, results=tex>>=
-irtenergy.pcm.rasch <- gpcm(na.omit(irtenergy), constraint="rasch")
-print(xtable(coef2mat(coef(irtenergy.pcm.rasch)), label="tab:hom1energpcmrasch", caption="Coefficient Estimates for IRT Energy Scale, Rasch Partial Credit Model"))
-@
+\subsection{IRT Physical Limitations Scale}
+\label{sec:irt-phys-limit}
 
-
-It can be seen from Table \ref{tab:hom1energpcmrasch} that with the exception of Q36, all the items seem appropriately fitting. With Q36, there is no ability level where a response category of four is more probable than any of the other items, which is a failure either of the model or the scale. 
-
-
-<<genhealthpcm1pl, echo=FALSE, results=tex>>=
-irtenergy.pcm.1pl <- gpcm(na.omit(irtenergy), constraint="1PL")
-print(xtable(coef2mat(coef(irtenergy.pcm.1pl)), label="tab:hom1energpcm1pl", caption="Coefficients for IRT Energy Scale, One parameter Partial Credit Model"))
-@
-
-Table \ref{tab:hom1energpcm1pl} shows the coefficient estimates for the one parameter Partial Credit Model fitted to the energy RAND MOS scale. Suprisingly, the overall discrimination parameter has decreased. The most difficult question is 21, which asks about bodily pain in the past six months. The difficulty of this question would seem to be a function of the sampling population (i.e. students) here, rather than a function of the item's properties. Again, Q36 has the problem with the third response category, as does Q22, suggesting that the population is split bimodally on this question, with either high or low responses being more probable than a response in the middle. 
-
-
-<<genhealthpcm2pl, echo=FALSE, results=tex>>=
-irtenergy.pcm.2pl <- gpcm(na.omit(irtenergy), constraint="gpcm")
-print(xtable(coef2mat(coef(irtenergy.pcm.2pl)), label="tab:hom1energypcm2pl", caption="Coefficients of IRT Energy Scale PCM, Two Parameter Model"))
-@
-
-
-Table \ref{tab:hom1energpcm2pl} shows the coefficient estimates for the two parameter PCM on this scale. Again, items 36 and 22 have issues with category 3 estimates, and the discrimination parameters are all quite low with over half the scale having discrimination parameters of less than one, meaning that they discriminate less well between high and low ability respondents than would questions meeting the assumptions of a Rasch model. 
-
-<<genhealthpcmcompare, echo=FALSE, results=tex>>=
-anova.rasch.1pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.1pl)
-anova.1pl.2pl <- anova.gpcm(irtenergy.pcm.1pl, irtenergy.pcm.2pl)
-anova.rasch.2pl <- anova.gpcm(irtenergy.pcm.rasch, irtenergy.pcm.2pl)
-@
-
-An anova conducted on the three models indicated that the 2 parameter model fit the data best ($p \le 0.001$), subject to the caveats above.
-
-Next, one and two parameter Graded Response Models were fit to the energy scale. 
-
-<<hom1irtenergygrm, echo=FALSE, results=hide>>=
-hom1.energy.grm.1pl <- grm(irtenergy, constrained=TRUE)
-hom1.energy.grm.2pl <- grm(irtenergy, constrained=FALSE)
-@ 
-
-
-<<hom1energygrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(hom1.energy.grm.1pl)), label="tab:hom1energygrm1pl", caption="Coefficient Estimates for One Parameter Graded Response Model on IRT Energy Scale, RAND MOS, Sample One"))
-@ 
-
-Table \ref{tab:hom1energygrm1pl} shows the coefficient estimates for the one parameter model on the Energy scale. It can be seen that the Graded Response Model does not have the same issues with category 3 for items 22 and 36, which implies that this issue above was a property of the model rather than the scale. The discrimination parameter is estimated as much higher under this model also, as are the ability thresholds, though the rank ordering remains the same. 
-
-<<hom1energygrm2plprint, echho=FALSE, results=hide>>=
-print(xtable(coef2mat(coef(hom1.energy.grm.2pl)), label="tab:hom1energygrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, IRT Energy Scale, RAND MOS, Sample One"))
-@ 
-
-Table \ref{tab:hom1energygrm2pl} shows the coefficient estimates for the two parameter Graded Response Model. It can be seen that the discrimination parameters are very different from those of a similar Partial Credit Model (see Table \ref{tab:hom1energygpcm2pl}). Additionally, the ability estimates are much higher on average, with Q22 having the highest ability threshold. 
 
 
 Next, we assess the usefulness of one and two parameter GRM\'s for the physical limitations scale. 
@@ -1555,6 +1591,11 @@ print(xtable(coef2mat(coef(hom1.physlim.grm.2pl)), label="tab:hom1physlimgrm2pl"
 
 Table \ref{tab:hom1physlimgrm2pl} shows the coefficient estimates for the two paramter GRM for the physical limitations scale. It can be seen that the discrimination parameters have lowered signigicantly for Q14 and Q16, while have raised for Q13 and Q15. 
 
+\subsection{MAAS}
+\label{sec:maas}
+
+
+
 The next instrument examined was the MAAS.  Firstly, the instrument was examined using mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
 <<maasassumptioncheck, echo=FALSE, results=tex>>=
@@ -1562,7 +1603,7 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-As can be seen from Table \ref{tab:maasassumptioncheck}, the mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis.
+As can be seen from Table \ref{tab:maasassumptioncheck}, the mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
 <<maasreduced, echo=FALSE, results=hide>>=
 maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
@@ -1571,21 +1612,18 @@ maas.irt <- maasitems[,maas.irt]
 
 Next, item ordering was examined for this scale.
 
-<<maasitemord, echo=FALSE, results=tex>>=
+<<maasitemord, echo=FALSE, results=hide>>=
 maas.iio <- check.iio(na.omit(maas.irt))
 print(xtable(maas.iio[["violations"]],label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
 @
 
-As can be seen from Table \ref{tab:maasitemord}, there were no violations of item ordering with the reduced scale.
 
-Next, monotonicity was examined for the reduced scale.
-
-<<maasmonotonicity, echo=FALSE, results=tex>>=
+<<maasmonotonicity, echo=FALSE, results=hide>>=
 maas.mono <- check.monotonicity(na.omit(maas.irt))
 print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
 @
 
-As can be seen from Table \ref{tab:maasmono}, there were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
+
 
 
 <<maasitemspcm, echo=FALSE, results=hide>>=
@@ -1660,6 +1698,11 @@ anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 
 The three models were subjected to anova comparison and the 1 parameter model was significantly ($p \le 0.001$) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model ($p \le 0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
+\subsection{LOTR}
+\label{sec:lotr}
+
+
+
 The Life Orientation Test was the next instrument to be examined using the IRT approach.
 
 Firstly, the scale analysis was conducted to determine which items fit best together.
@@ -1671,20 +1714,19 @@ print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
 
 As can be seen from Table \ref{tab:lotrscales}, all of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
 
-<<lotritemord, echo=FALSE, results=tex>>=
+<<lotritemord, echo=FALSE, results=hide>>=
 lotr.iio <- check.iio(na.omit(lotritems))
 print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
 @
 
 
-As can be seen from Table \ref{tab:lotritemord}, Q1 needs to be removed from the scale in order to meet the assumptions of the model.
+Q1 needs to be removed from the scale in order to meet the assumptions of the model. There were no violations of monotonicity in the sample.
 
-<<lotrmono, echo=FALSE, results=tex>>=
+<<lotrmono, echo=FALSE, results=hide>>=
 lotr.mono <- check.monotonicity(na.omit(lotritems))
 print(xtable(summary(lotr.mono),label="tab:lotrmono"))
 @
 
-As can be seen from Table \ref{tab:lotrmono}, there were no violations of monotonicity in the sample.
 
 <<lotrreduced, echo=FALSE, results=hide>>=
 lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
@@ -1769,12 +1811,7 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 \section{Predictions}
 \label{sec:predictions}
 
-As discussed in the methodology, one of the problems with psychometric methods is the problem of overfitting.  A solution that was proposed to this problem was cross-validation.  Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for factor analyses, around 300 observations are typically needed for accurate estimation of parameters.  Therefore, models were developed on the first sample, and then will be fitted to a subset of the second sample.  This procedure will then be repeated with the data not used for testing in the second sample and the first sample.  This will allow the issues of overfitting to be avoided, and will allow for the most promising models to be applied to the experimental data, which by itself would not be sufficient to engage in any useful psychometric analyses.
-
-
-The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
-
-A different procedure will be followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
+As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. 
 
 <<hom2scales, echo=FALSE, results=hide>>=
 randitems.paste <- paste(rand, c(1:36), sep="")
@@ -1787,7 +1824,7 @@ lotritems2 <- hom2[,lotritems.paste]
 
 
 
-One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this should be sufficient.
+
 
 
 
