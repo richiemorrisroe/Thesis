@@ -593,7 +593,7 @@ for (i in seq(from=1, to=length(data))) {
 }
   if(ind==1) {
     colnames(res) <- paste("GSR", dnames, sep="")
-  }
+p  }
   if(ind==2) {
     colnames(res) <- paste("ECG", dnames, sep="")
   }
@@ -697,3 +697,13 @@ tuneLoess <- function(formula, data, newdata, tuneLength, ...) {
           }
     fitlist
 }
+lazyload <- function (files) {
+  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
+  outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
+  for (i in 1:length(files)) {
+    temp <- read.table(files[i])
+    gsr <- temp[,1]
+    write.table(gsr, file=outfilenames[i])
+  }
+}
+    
