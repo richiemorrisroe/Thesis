@@ -1827,6 +1827,9 @@ lotritems2 <- hom2[,lotritems.paste]
 
 
 
+\subsection{RAND MOS CFA on Sample Two (Split A)}
+\label{sec:rand-mos-cfa}
+
 
 
 <<rand2semhom2, echo=FALSE, results=hide>>=
@@ -1953,7 +1956,10 @@ print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparis
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
 
-Next, the full cross-validation procedure was carried out on the MAAS and LOTR instruments.  To do this, the second sample was randomly split into three sets, and the models from the first sample were fit to this data, to examine which of them provided the best fit.
+\subsection{MAAS CFA on Sample Two (Split A)}
+\label{sec:maas-cfa-sample}
+
+
 
 <<splitsample, echo=FALSE, results=hide>>=
 set.seed(17)
@@ -2059,6 +2065,10 @@ print(maascomp.xtab2)
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
 
+\subsection{LOTR CFA on Sample Two (Split A)}
+\label{sec:lotr-cfa-sample}
+
+
 
 <<lotr1sem2, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
@@ -2116,6 +2126,11 @@ The next part of the analyses was examining the predictive ability of the IRT mo
 \subsection{Confirmatory IRT Analyses}
 \label{sec:conf-irt-analys}
 
+\subsubsection{Physical Functioning Scale}
+\label{sec:phys-funct-scale}
+
+
+
 The first scale to be examined was the RAND MOS Physical Functioning Scale. 
 
 <<hom1physfuntest, echo=FALSE, results=tex>>=
@@ -2127,6 +2142,10 @@ print(xtable(hom1.grm.test.all, label="tab:hom1physfungrmtest", caption="Perform
 @
 
 As can be seen from Table \ref{tab:hom1physfungrmtest}, the one parameter model performed better on the unseen data. 
+
+\subsubsection{Emotional Health Scale}
+\label{sec:emot-health-scale}
+
 
 
 Next, the performance of the two emotional health GRM\'s on unseen data was assessed. 
@@ -2140,6 +2159,11 @@ print(xtable(hom1.emhealth.grm.all, caption="Performance of One and Two Paramete
 
 As can be seen from Table \ref{tab:hom1emhealthgrmtest}, the one parameter model performed best on the unseen data.
 
+\subsubsection{Energy Scale}
+\label{sec:energy-scale}
+
+
+
 
 Next, we assess the performance of the two graded response models on the energy scale.
 
@@ -2152,6 +2176,11 @@ print(xtable(hom1.energy.grm.all, caption="Performance of One and Two Parameter 
 @ 
 
 As can be seen from Table \ref{tab:hom1energygrmtest}, the one parameter GRM provided the best fit to the unseen data. 
+
+\subsubsection{Physical Limitations Scale}
+\label{sec:phys-limit-scale}
+
+
 
 Next, we examine the performance of one and two parameter GRM's on the physical limitations scale from Sample One. 
 
@@ -2195,6 +2224,8 @@ As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model pro
 
 \part{Sample Two}
 
+Next, sample two was examined in and of itself. This sample was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
+
 \begin{figure}
 <<optplot2, echo=FALSE, fig=TRUE>>=
 optplot2 <- ggplot(hom2, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
@@ -2207,7 +2238,7 @@ print(optplot2)
 
 The relationship between optimism and health is even clearer in sample 2 (Figure \ref{fig:genhealthoptplot2}) (note the narrower confidence intervals and the steeper slope of the line).
 
-\subsubsection{Regression Analyses}
+\section{Regression Analyses}
 \label{sec:regression-analyses}
 
 Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
