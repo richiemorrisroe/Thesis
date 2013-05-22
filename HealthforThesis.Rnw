@@ -8,6 +8,14 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 ## setOptions("xtable.include.rownames"=FALSE)
 ## setOption("xtable.format.args", list=(big.mark=","))
 @ 
+
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+
+
 \section{Aims of the Research}
 
 As discussed in the literature review, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
@@ -31,7 +39,81 @@ The response rate for Sample One (paper) was approximately
 was 10\%.
 
 
-%% \section{Results}
+
+
+\section{Methods}
+
+The results and discussion of this data analytic procedure are described in Chapter \ref{cha:preliminary-research}, in Section \ref{cha:preliminary-research-1}.
+
+\subsection{Measures for Health, Optimism and Mindfulness Research}
+
+There were three measures used for this part of the research.
+\begin{enumerate}
+\item \textit{RAND-MOS}: The RAND Medical Outcomes Survey produced the most widely used instrument of HRQoL (Health Related Quality of Life) worldwide \cite{hays1993rand}. The instrument was later revised and the number of response categories standardised across scales and renamed the SF-36. The older version was used for this research, as they are extremely similar and the newer version is under copyright and extremely expensive to use, even for non-commercial research. The RAND-MOS has 36 questions, and is divided into 8 sub-scales, General Health (GH),
+Physical Functioning (PF), Role Limitations (RL), Emotional Role Limitations
+(RLE), Pain (PN), Energy (EN), Emotional Well Being (EMWB) and Social
+Functioning (SF). All sub-scales showed acceptable reliability
+(>.7) in this and in other studies over the years\cite{Lam2007,Ferreira2000}.
+The instrument has 8 first order factors and two higher order factors
+\cite{Hann2008}. The scale involves dichotomous, trichotomous and
+five and six point scales for various items, so all questions are
+transformed to a 100 point scale before analysis, where higher scores
+represent better functioning.
+\item The \textit{mindful attention awareness scale (MAAS)}
+\cite{brown2003benefits} is a 15 item scale which is scored on
+a six point scale from almost always to almost never. The scale uses
+questions which measure mindlessness. The summary score is produced
+from the mean of all indvidual scores. The scale has shown adequate
+psychometric validity in many samples, with alpha ranging from 0.7
+to 0.9\cite{brown2003benefits,Ruth2006}.
+\item \textit{Life Orientation Test, Revised:} The Life Orientation Test Revised (LOT-R) was developed and revised
+by Scheier and Carver \cite{Scheier1994}, and consists of 10 items.
+Three of the items load on pessimism, three on optimism and four are
+distractor items. The LOT-R has shown excellent psychometric validity,
+and is very commonly used as a measure of optimism/pessimism. The
+scale is scored on a 5 point scale,
+and the sum of all items after items 3,7 and 9 are reverse coded are taken to produce the overall score.
+\end{enumerate}
+
+
+
+\subsection{Sampling for Health, Optimism and Mindfulness Data}
+
+The first 392 participants completed the forms by hand between August and October 2009. The participants were sampled pseudo-randomly from all of the public areas (coffeeshops, restuarants etc) of the campus.
+
+Following this pen and paper approach to sampling, the survey was sent to a random selection of students via email on December 12th 2009, and data was collected and analysed from this point until the 24th of December 2009. Differences between the samples and the possible effects of these on the results obtained are discussed in the appropriate section. In addition, due to the unexpected results of the analysis, a third sample was collected in Summer 2011. 
+
+\subsection{Analysis for Health, Optimism and Mindfulness Data}
+% Analysis was carried out seperately on the two samples, to allow for development of factor analysis and IRT models on the first sample and validation on the second. In addition, it could not be assumed that two samples collected in different ways would be comparable. 
+
+Firstly, the proportion of missing data was identified, and multiple imputation was employed to combat this problem in cases where there were substantial amounts of missing data. This was only necessary in the case of the sample collected by online methods. 
+
+
+The data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions.
+
+Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. % Next, the data was tested for normality using a Shapiro-Wilks test. 
+Following this, a correlation matrix for the data was calculated and analysed.
+
+% After these preliminary procedures, the data-set was analysed to assess if there were any differences in the samples which could be attributed to collection method (pen and paper versus on-line). As there were no major differences between the two samples, further analyses were carried out on the two samples as a whole.
+
+Next, simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. After this, factor solutions were extracted using maximum likelihood, principal axis and minimum residuals methods, and these structures were examined to assess the invariance of the loadings using different methods of estimation. Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation. After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
+
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions.
+
+The successful SEM models from the first sample were then tested on a subset of the second sample, to determine their performance on new data. 
+
+Following the development and testing of SEM models, each of these was tested on the validation set and factor scores were created for each of the measures.
+
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
+
+Following this, a Rasch model was fitted to the data, and person and item parameters estimated from the data. Item and person fit statistics were also calculated, and as this model did not fit any of the three scales, a two parameter model was fit to the data. Again, item and person estimates were obtained and the relevant fit statistics calculated. % The person estimates were then used as predictors in a logistic regression analysis, as a way of assessing the fit of the model.
+
+
+After this, linear regressions were run to examine the differential effects of each of the correlated variables. Stepwise selection on the training set was carried out, along with lasso, ridge and least angle regression methods. The performance of each of these methods was then assessed on held-out data. In the case of Sample one, some of sample 2 was used as a heldout data set. For Sample two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately, and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures. 
+
+
+\section{Results}
+
 
 \part{Sample One}
 
