@@ -185,7 +185,7 @@ online.missing <- sapply(hom2, function (x) sum(is.na(x)))
 <<label=papermissingplot, echo=FALSE, fig=TRUE>>=
 ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+geom_density()
 @
-  \caption{Density Plot of Missing values in paper sample. x Axis is a count of the number of missing observations in each variable }
+  \caption{Density Plot of Missing values in paper sample. x Axis is the proportion of responses with that  number of missing observations in each variable }
   \label{fig:papermissingplot}
 \end{figure}
 
@@ -203,7 +203,7 @@ ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+geom_de
 As can be seen from Figure \ref{fig:papermissingplot}, there are quite low levels of missing data for the sample collected by paper.
 
 
-However, the situation is very different with the second sample, as can be seen from Figure \ref{fig:onlinemissingplot}, where there are a number of items which have between six and eight hundred missing values.  It would perhaps be wise to investigate this further, as this amount of missing values in a small set of the data may cause problems further on.
+However, the situation is very different with the second sample, as can be seen from Figure \ref{fig:onlinemissingplot}, where there are a number of items which have between six and eight hundred missing values.  This was investigated further, as this amount of missing values in a small set of the data may cause problems in the course of the analysis. 
 
 <<missingvaluestable, echo=FALSE, results=tex>>=
 missing.many <- online.missing[online.missing>300]
@@ -621,14 +621,16 @@ health.test <- with(hom1.health.test, generalhealth)
 @ 
 
 
-<<healthregfirst, echo=FALSE, results=tex>>=
+<<healthregfirst, echo=FALSE, results=hide>>=
 health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1.health.train)
 health.step <- stepAIC(health.mod1, direction="both", k=3)
 health.step.test <- lm(generalhealth~optimism+energyfat+rolelim, data=hom1.health.test)
-print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
+
 @
 
-
+<<healthregfirstprint, echo=FALSE, results=tex>>=
+print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
+@ 
 As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. However, only energy fatigue was a significant predictor in the test sample, though the coefficient for the effect of optimism was in line with the correlations and previous analyses carried out above. 
 
 Next, a lasso regression model was fit to the same dataset. 
