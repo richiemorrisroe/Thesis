@@ -9,7 +9,7 @@
 ## load("tcq2.rda")
 load("homdata.rda")
 load("credtotals.rda")
-load("tcqthesis.rda")
+## load("tcqthesis.rda")
 @ 
 
 
@@ -615,7 +615,7 @@ Next, the credibility scores for injection painkilling treatments were examined 
 
 \begin{figure}
 <<surveyinj, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.inj.pl <- ggplot(tcq2, aes(x=Injtot))+geom_density()
+surv.inj.pl <- ggplot(credtotals, aes(x=Injtot))+geom_density()
 exp.inj.pl <- ggplot(Iatandexpmeasures, aes(x=Inj))+geom_density()
 print(arrangeGrob ( surv.inj.pl, exp.inj.pl))
 @   
@@ -630,7 +630,7 @@ Next, the Alternative treatment scores were examined between the two samples.
 \begin{figure}
   
 <<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.acu.pl <- ggplot(tcq2, aes(x=Acutot))+geom_density()
+surv.acu.pl <- ggplot(credtotals, aes(x=Acutot))+geom_density()
 exp.acu.pl <- ggplot(Iatandexpmeasures, aes(x=Acu))+geom_density()
 print(arrangeGrob ( surv.acu.pl, exp.acu.pl))
 @   \caption{Density Plots for Acupuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
@@ -643,7 +643,7 @@ Figure ref{fig:compacu} shows that Acupuncture levels in the experimental sample
 \begin{figure}
   
 <<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.hom.pl <- ggplot(tcq2, aes(x=Homtot))+geom_density()
+surv.hom.pl <- ggplot(credtotals, aes(x=Homtot))+geom_density()
 exp.hom.pl <- ggplot(Iatandexpmeasures, aes(x=Hom))+geom_density()
 print(arrangeGrob ( surv.hom.pl, exp.hom.pl))
 @   \caption{Density Plots for Hompuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
@@ -655,7 +655,7 @@ Figure \ref{fig:comphom} shows the levels of homeopathy credibility in both surv
 \begin{figure}
   
 <<alttreatmentssurvey, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.rei.pl <- ggplot(tcq2, aes(x=Reitot))+geom_density()
+surv.rei.pl <- ggplot(credtotals, aes(x=Reitot))+geom_density()
 exp.rei.pl <- ggplot(Iatandexpmeasures, aes(x=Rei))+geom_density()
 print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 @   \caption{Density Plots for Reipuncture Scores, Survey sample (top) and Experimental Sample (bottom)}
@@ -866,7 +866,7 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
 <<tsimport, echo=FALSE, results=hide>>=
-physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
+physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
 gsr.mat <- listToDf(physfiles, 1)
 
 ecg.mat <- listToDf(physfiles, 2)
@@ -1233,7 +1233,7 @@ len.test [,"Diff"] <- with (len.test, Time-lengthsurv)
 Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. 
 
 
-<<physpaindiffplot, echo=FALSE, fig=TRUE>>=
+<<physpaindiffplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
 physpaindiff.pl <- ggplot (len.test, aes (x=Diff))+geom_density ()
 print (physpaindiff.pl)
 @ 
