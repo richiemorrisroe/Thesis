@@ -2346,17 +2346,18 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 
 The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the b sample, it was tested on both the a and the c sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from sample 1. The model chosen by this procedure was then used to predict factor scores for each of the participants, and was also used to predict these scores for the experimental portion of the research.
 
-\subsubsection{Split B}
-\label{sec:split-b}
+%% \subsubsection{Split B}
+%% \label{sec:split-b}
 
-
+\subsection{MAAS}
+\label{sec:maas-1}
 
 <<maas2bparallel, echo=FALSE, fig=TRUE, results=hide>>=
 maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
 vss.maas.2b <- VSS(na.omit(maasitems2b))
 @
 
-The parallel analysis procedure suggests that this sample of the responses to the MAAS has five factors, while the MAP criterion suggests that it has only one.  Following our previous approach, each of these factor solutions will be examined and interpreted before a CFA is applied on the remainder of the dataset.
+The parallel analysis procedure for Split B suggests that this sample of the responses to the MAAS has five factors, while the MAP criterion suggests that it has only one.  Following our previous approach, each of these factor solutions will be examined and interpreted before a CFA is applied on the remainder of the dataset.
 
 <<maas2b1, echo=FALSE, results=tex>>=
 maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
@@ -2432,32 +2433,6 @@ maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.2fit,maas2b.3fit,maas2b.4fit
 print(xtable(maas2bfit,label="tab:tcq2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
 @
 
-<<lotr2bparallel, echo=FALSE, results=hide>>=
-sink("tmp.txt")
-lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
-lotr2b.vss <- VSS(na.omit(lotritems2b))
-sink(NULL)
-@
-<<lotrparallelplot, echo=FALSE, fig=TRUE>>=
-sink("tmp.txt")
-par(mfrow=c(1,2))
-print(lotr2b.parallel)
-print(lotr2b.vss)
-sink(NULL)
-@ 
-
-Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted.
-
-<<lotr2bfact1, echo=FALSE, results=tex>>=
-lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact1,label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
-@
-
-<<lotr2bfact2, echo=FALSE, results=tex>>=
-lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact2,label="tab:hom2blotr2"))
-@
-
 <<maas2bsemon2c, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
@@ -2475,7 +2450,7 @@ Maas1model2b <- mxModel(name="MAAS12b",
                       )
 maas1fit2b <- mxRun(Maas1model2b)
 maas1summ2b <- summary(maas1fit2b)
-@
+@ 
 
 <<maas2sem2b, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
@@ -2497,7 +2472,6 @@ Maas2model2b <- mxModel(name="MAAS22b",
 maas2fit2b <- mxRun(Maas2model2b)
 maas2summ2b <- summary(maas2fit2b)
 @
-
 
 <<maas3sem2b, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
@@ -2547,6 +2521,7 @@ maas4fit2b <- mxRun(Maas4model2b)
 maas4summ2b <- summary(maas4fit2b)
 @
 
+
 <<maas5sem2b, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
@@ -2580,6 +2555,112 @@ print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of
 @
 
 As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  this procedure is repeated for the LOT-R.
+
+\subsubsection{IRT Analyses}
+\label{sec:irt-analyses}
+
+Next, we examine the Mindful Attention Awareness Scale, using the same methodologies. 
+
+First, the assumptions underlying item response theory modelling are checked. 
+
+<<maas2bcheck, echo=FALSE, results=hide>>=
+maas2b.iio <- check.iio(na.omit(maasitems2b))
+maas2b.mono <- check.monotonicity(na.omit(maasitems2b))
+@ 
+
+<<maas2bitemord, echo=FALSE, results=tex>>=
+print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check, MAAS Split B", label="tab:maas2bitemord"))
+maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
+@ 
+
+As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
+
+Firstly, three partial credit models are fit to the data. 
+
+<<maas2bpcm, echo=FALSE, results=hide>>=
+maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
+maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
+maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
+@ 
+
+All of these partial credit models had problems with non-monotonically increasing parameter estimates, and so are not reported further.
+
+Next, one and two parameter graded response models were fit to the data. 
+
+<<maas2bgrm, echo=FALSE, results=hide>>=
+maas2b.grm.1pl <- grm(maas2b.s, constrained=TRUE)
+maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
+@ 
+
+
+<<maas2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
+@ 
+
+
+It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
+
+<<maas2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
+@ 
+
+It can be seen from Table \ref{tab:maas2bgrm2pl} that there were no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
+
+Finally, we examine the performance of these models on unseen data.
+
+<<maas2bgrmtest, echo=FALSE, results=hide>>=
+maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
+maas2b.grm.1pl.test <- testIRTModels(maas2b.grm.1pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+maas2b.grm.2pl.test <- testIRTModels(maas2b.grm.2pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
+maas2b.grm.test.all <- rbind(maas2b.grm.1pl.test, maas2b.grm.2pl.test)
+print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models for MAAS on Unseen Data", label="tab:maas2bgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provided the best fit to the unseen data. 
+
+
+\subsection{LOTR}
+\label{sec:lotr-1}
+
+
+
+<<lotr2bparallel, echo=FALSE, results=hide>>=
+sink("tmp.txt")
+lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
+lotr2b.vss <- VSS(na.omit(lotritems2b))
+sink(NULL)
+@
+<<lotrparallelplot, echo=FALSE, fig=TRUE>>=
+sink("tmp.txt")
+par(mfrow=c(1,2))
+print(lotr2b.parallel)
+print(lotr2b.vss)
+sink(NULL)
+@ 
+
+Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted.
+
+<<lotr2bfact1, echo=FALSE, results=tex>>=
+lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2b.fact1,label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
+@
+
+<<lotr2bfact2, echo=FALSE, results=tex>>=
+lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2b.fact2,label="tab:hom2blotr2"))
+@
+
+
+
+
+
+
+
+
+
+
+
 
 <<lotr1sem2b, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
@@ -2629,14 +2710,66 @@ print(lotrcomp.xtab2b)
 @
 
 
+\subsubsection{IRT Analyses}
+\label{sec:irt-analyses-1}
 
-\subsubsection{Item Response Theory Analyses}
-\label{sec:item-response-theory-1}
+Next, we examine the LOT-R in this split. 
 
-\subsubsection{Split A}
-\label{sec:split-a}
+<<lotr2bcheck, echo=FALSE, results=hide>>=
+lotr2b.iio <- check.iio(na.omit(lotritems2b))
+lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
+@ 
 
-The next stage in the analyses was to examine the response structure of the items in all three splits of the second sample data. 
+The LOT-R had no problems with either item ordering or monotonicity. 
+
+Firstly, three partial credit models were fit to the data. 
+
+<<lotr2bpcm, echo=FALSE, results=hide>>=
+lotr2b.pcm.rasch <- gpcm(lotritems2b, constraint="rasch")
+lotr2b.pcm.1PL <- gpcm(lotritems2b, constraint="1PL")
+lotr2b.pcm.gpcm <- gpcm(lotritems2b, constraint="gpcm")
+@ 
+
+All of the partial credit models had non-monotonically increasing parameter estimates and so are not reported further here. 
+
+Next, one and two parameter Graded Response Models were fit to the data. 
+
+<<lotr2bgrm, echo=FALSE, results=hide>>=
+lotr2b.grm.1pl <- grm(lotritems2b, constrained=TRUE)
+lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
+@ 
+
+
+<<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Esitmates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
+@ 
+
+Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
+
+<<lotr2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
+@ 
+
+
+It can be seen from Table \ref{tab:lotr2bgrm2pl} that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
+
+
+Finally, we assess the performance of each of these models on unseen data. 
+
+<<lotr2bgrmtest, echo=FALSE, results=tex>>=
+lotr2b.grm.1pl.test <- testIRTModels(lotr2b.grm.1pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+lotr2b.grm.2pl.test <- testIRTModels(lotr2b.grm.2pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
+lotr2b.grm.test.all <- rbind(lotr2b.grm.1pl.test, lotr2b.grm.2pl.test)
+print(xtable(lotr2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:lotr2bgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data. 
+
+
+\section{RAND MOS}
+\label{sec:rand-mos}
+
+The next stage in the analyses was to examine the 
 
 This process was begun with the RAND MOS.
 
@@ -2650,12 +2783,22 @@ print(xtable(rand2a.aisp, caption="Item Selection Procedure Results for RAND MOS
 
 Table \ref{tab:rand2aaisp} shows the breakdown of items and their assignment to particular scales. 
 The first scale consists of items 3 to 12 and is the physical functioning scale and so retains that name. 
-
 The second scale consists of the role limitations scales and the negatively worded questions from the emotional well being and energy/faatigue scales, and can probably be best termed as negative health. 
 
 The third scale consists of the general health, pain and positively worded questions for emotional well being and energy/fatigue scales, and can probably best be termed as overall health. 
 
-Two items (2 and 24) do not load on any scale, while 33 and 35 load on a seperate scale. This scale (4 in the table) was not analysed, as two items is not enough to make a useful scale. 
+Two items (2 and 24) do not load on any scale, while 33 and 35 load on a separate scale. This scale (4 in the table) was not analysed, as two items is not enough to make a useful scale. 
+
+<<randcheckassumptions, echo=FALSE, results=hide>>=
+rand.scales <- aisp(na.omit(randitems2b))
+@
+
+<<rand2caisp, echo=FALSE, results=tex>>=
+rand2c.aisp <- aisp(na.omit(randitems2c))
+print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split C", label="tab:rand2caisp"))
+@ 
+
+
 
 <<rand2ascales, echo=FALSE, results=hide>>=
 rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
@@ -2781,9 +2924,8 @@ print(xtable(coef2mat(coef(neghealth2a.grm.1pl)), caption="Coefficient Estimates
 
 
 
-<<randcheckassumptions, echo=FALSE, results=hide>>=
-rand.scales <- aisp(na.omit(randitems2b))
-@
+
+
 
 <<randscales, echo=FALSE, results=tex>>=
 print(xtable(rand.scales,caption="Automatic Item Selection Procedure, RAND MOS, Split B",label="tab:randscales2b"))
@@ -2979,127 +3121,15 @@ print(xtable(poshealth2b.grm.test.all, caption="Performance of One and Two Param
 
 As can be seen from Table \ref{tab:poshealth2btest}, the one parameter model provided a better fit to the unseen data. 
 
-Next, we examine the Mindful Attention Awareness Scale, using the same methodologies. 
-
-First, the assumptions underlying item response theory modelling are checked. 
-
-<<maas2bcheck, echo=FALSE, results=hide>>=
-maas2b.iio <- check.iio(na.omit(maasitems2b))
-maas2b.mono <- check.monotonicity(na.omit(maasitems2b))
-@ 
-
-<<maas2bitemord, echo=FALSE, results=tex>>=
-print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check, MAAS Split B", label="tab:maas2bitemord"))
-maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
-@ 
-
-As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
-
-Firstly, three partial credit models are fit to the data. 
-
-<<maas2bpcm, echo=FALSE, results=hide>>=
-maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
-maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
-maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
-@ 
-
-All of these partial credit models had problems with non-monotonically increasing parameter estimates, and so are not reported further.
-
-Next, one and two parameter graded response models were fit to the data. 
-
-<<maas2bgrm, echo=FALSE, results=hide>>=
-maas2b.grm.1pl <- grm(maas2b.s, constrained=TRUE)
-maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
-@ 
 
 
-<<maas2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
-@ 
-
-
-It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
-
-<<maas2bgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
-@ 
-
-It can be seen from Table \ref{tab:maas2bgrm2pl} that there were no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
-
-Finally, we examine the performance of these models on unseen data.
-
-<<maas2bgrmtest, echo=FALSE, results=hide>>=
-maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
-maas2b.grm.1pl.test <- testIRTModels(maas2b.grm.1pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-maas2b.grm.2pl.test <- testIRTModels(maas2b.grm.2pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
-maas2b.grm.test.all <- rbind(maas2b.grm.1pl.test, maas2b.grm.2pl.test)
-print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models for MAAS on Unseen Data", label="tab:maas2bgrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provided the best fit to the unseen data. 
-
-Next, we examine the LOT-R in this split. 
-
-<<lotr2bcheck, echo=FALSE, results=hide>>=
-lotr2b.iio <- check.iio(na.omit(lotritems2b))
-lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
-@ 
-
-The LOT-R had no problems with either item ordering or monotonicity. 
-
-Firstly, three partial credit models were fit to the data. 
-
-<<lotr2bpcm, echo=FALSE, results=hide>>=
-lotr2b.pcm.rasch <- gpcm(lotritems2b, constraint="rasch")
-lotr2b.pcm.1PL <- gpcm(lotritems2b, constraint="1PL")
-lotr2b.pcm.gpcm <- gpcm(lotritems2b, constraint="gpcm")
-@ 
-
-All of the partial credit models had non-monotonically increasing parameter estimates and so are not reported further here. 
-
-Next, one and two parameter Graded Response Models were fit to the data. 
-
-<<lotr2bgrm, echo=FALSE, results=hide>>=
-lotr2b.grm.1pl <- grm(lotritems2b, constrained=TRUE)
-lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
-@ 
-
-
-<<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Esitmates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
-@ 
-
-Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
-
-<<lotr2bgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
-@ 
-
-
-It can be seen from Table \ref{tab:lotr2bgrm2pl} that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
-
-
-Finally, we assess the performance of each of these models on unseen data. 
-
-<<lotr2bgrmtest, echo=FALSE, results=tex>>=
-lotr2b.grm.1pl.test <- testIRTModels(lotr2b.grm.1pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-lotr2b.grm.2pl.test <- testIRTModels(lotr2b.grm.2pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-lotr2b.grm.test.all <- rbind(lotr2b.grm.1pl.test, lotr2b.grm.2pl.test)
-print(xtable(lotr2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:lotr2bgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data. 
 
 \subsubsection{Split C}
 \label{sec:split-c}
 
 Firstly, the RAND MOS is examined to determine how many scales it consists of. 
 
-<<rand2caisp, echo=FALSE, results=tex>>=
-rand2c.aisp <- aisp(na.omit(randitems2c))
-print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split C", label="tab:rand2caisp"))
-@ 
+
 
 As can be seen in Table \ref{tab:rand2caisp} again the RAND MOS divides into three scales. 
 
