@@ -1811,7 +1811,17 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 \section{Predictions}
 \label{sec:predictions}
 
-As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. 
+As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. This problem was dealt with for this research by building the models on the first dataset, and then fitting them on a seperate sample \footnote{a process conventionally known as replication}. 
+
+This section covers the following assessments of models developed on Sample One
+
+\begin{enumerate}
+\item Confirmatory Factor Analyses are carried out for the RAND MOS, the LOTR and the MAAS. 
+
+\item The IRT models are assessed using a process of prediction of factor scores using the old model and a new one developed on the second sample. 
+
+\item The regression models are refit to new data and the errors in prediction are examined. 
+\end{enumerate}
 
 <<hom2scales, echo=FALSE, results=hide>>=
 randitems.paste <- paste(rand, c(1:36), sep="")
@@ -1824,10 +1834,13 @@ lotritems2 <- hom2[,lotritems.paste]
 
 
 
+\subsection{Confirmatory Factor Analyses}
+\label{sec:conf-fact-analys}
 
 
 
-\subsection{RAND MOS CFA on Sample Two (Split A)}
+
+\subsubsection{RAND MOS CFA on Sample Two (Split A)}
 \label{sec:rand-mos-cfa}
 
 
@@ -1956,7 +1969,7 @@ print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparis
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
 
-\subsection{MAAS CFA on Sample Two (Split A)}
+\subsubsection{MAAS CFA on Sample Two (Split A)}
 \label{sec:maas-cfa-sample}
 
 
@@ -2065,7 +2078,7 @@ print(maascomp.xtab2)
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
 
-\subsection{LOTR CFA on Sample Two (Split A)}
+\subsubsection{LOTR CFA on Sample Two (Split A)}
 \label{sec:lotr-cfa-sample}
 
 
@@ -2180,8 +2193,6 @@ As can be seen from Table \ref{tab:hom1energygrmtest}, the one parameter GRM pro
 \subsubsection{Physical Limitations Scale}
 \label{sec:phys-limit-scale}
 
-
-
 Next, we examine the performance of one and two parameter GRM's on the physical limitations scale from Sample One. 
 
 <<hom1physlimtest, echo=FALSE, results=tex>>=
@@ -2222,6 +2233,88 @@ print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Paramet
 
 As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data. 
 
+\subsection{Regression Model Predictions}
+\label{sec:regr-model-pred}
+
+<<optsetup2a, echo=FALSE, results=hide>>=
+scales2a.full <- na.omit(scales2a)
+scales2a.full2 <- scales2a.full[,-11]
+opt.test2a <- with(scales2a.full, optimism)
+opt.train.ind <- with(scales2a.full, createDataPartition(optimism, p=0.75, list=FALSE))
+scales2a.opt.train <- scales2a.full[opt.train.ind,]
+scales2a.opt.test <- scales2a.full[-opt.train.ind,]
+opt.train2a <- with(scales2a.opt.train, optimism)
+opt.pred.train2a <- scales2a.opt.train[,-11]
+## opt.test2a <- with(scales2a.opt.test, optimism)
+opt.pred.test2a <- scales2a.opt.test[,-11]
+@ 
+
+<<optlassotest, echo=FALSE, results=tex>>=
+opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
+opt.lasso.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
+@ 
+
+As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
+
+Next, the accuracy of the predictions was assessed using a RMSEA approach. For the optimism lasso data. The error in the estimation was equal to 0.755, suggesting that the predictions were approximately 25\% accurate. This can be seen more clearly in Figure \ref{fig:plotoptlassopred} below. As can be seen there is no real systematic error in the predictions, they are just inaccurate.
+
+
+\begin{figure}
+<<plotlassopredobs, echo=FALSE, figure=TRUE>>=
+print (ggplot (opt.lasso.test2a.resp, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
+@   
+  \caption{Predicted versus observed values of Optimism in second sample, Split A, lasso regression}
+  \label{fig:plotoptlassopred}
+\end{figure}
+
+
+Next, the ridge regression model was applied to the new data. 
+
+<<optridge2a, echo=FALSE, results=tex>>=
+opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
+print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
+opt.ridge.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="response")
+rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
+@ 
+
+As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
+\begin{figure}
+<<optridgeplot2a, echo=FALSE, figure=TRUE>>=
+print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth)
+@   
+  \caption{Ridge Regression Predictions, Optimism, Split 2A}
+  \label{fig:ridgepredplot2a}
+\end{figure}
+
+
+As can be seen from Figure \ref{ridgepredplot2a}, again the errors do not appear to be systematicall biased, but rather spread both evenly above and below the line of perfect prediction. 
+
+Finally, the model developed by stepwise selection was applied to the new data. 
+
+<<optstep2a, echo=FALSE, results=hide>>=
+opt.step.test2a <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
+opt.step.pred.resp <- predict (opt.step.test, newdata=scales2a.full, type="response")
+opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
+rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
+@ 
+<<optstep2aprint, echo=FALSE, results=tex>>=
+print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
+@ 
+
+\begin{figure}
+<<optsteppredplot, echo=FALSE, figure=TRUE>>=
+print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
+@   
+  \caption{Stepwise Regression Predictions, Optimism Split 2A}
+  \label{fig:optstepredplot}
+\end{figure}
+
+
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. The RMSEA metric gave a value of 0.746, which is marginally better than either the lasso or ridge predictions. Figure \ref{fig:optsteppredplot} shows this in more detail, and in fact is quite similar to the plots for the lasso and ridge solutions. This would seem to suggest that each of the three models are converging on a relatively common solution, increasing our confidence that we have explored the linear relationships between these variables. 
+
+
 \part{Sample Two}
 
 Next, sample two was examined in and of itself. This sample was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
@@ -2243,50 +2336,10 @@ The relationship between optimism and health is even clearer in sample 2 (Figure
 
 Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
 
-<<optsetup2a, echo=FALSE, results=hide>>=
-scales2a.full <- na.omit(scales2a)
-scales2a.full2 <- scales2a.full[,-11]
-opt.test2a <- with(scales2a.full, optimism)
-opt.train.ind <- with(scales2a.full, createDataPartition(optimism, p=0.75, list=FALSE))
-scales2a.opt.train <- scales2a.full[opt.train.ind,]
-scales2a.opt.test <- scales2a.full[-opt.train.ind,]
-opt.train2a <- with(scales2a.opt.train, optimism)
-opt.pred.train2a <- scales2a.opt.train[,-11]
-## opt.test2a <- with(scales2a.opt.test, optimism)
-opt.pred.test2a <- scales2a.opt.test[,-11]
-@ 
 
-<<optlassotest, echo=FALSE, results=tex>>=
-opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
-opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
-print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
-@ 
 
-As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
-
-Next, the ridge regression model was applied to the new data. 
-
-<<optridge2a, echo=FALSE, results=tex>>=
-opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
-print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
-@ 
-
-As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One.
-
-Finally, the model developed by stepwise selection was applied to the new data. 
-
-<<optstep2a, echo=FALSE, results=hide>>=
-opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
-
-@ 
-<<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
-@ 
-
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. 
-
-\subsubsection{Psychometric Analyses}
-\label{sec:psych-analys}
+%% \subsubsection{Psychometric Analyses}
+%% \label{sec:psych-analys}
 
 \subsection{Factor Analyses}
 \label{sec:psych-analys-1}
@@ -2574,6 +2627,8 @@ lotrcomp2b <- mxCompare(base=lotr1fit2b, comparison=lotr2fit2b)
 lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp", caption="Comparison of LOT-R Split B Factor Solutions, Tested on Split C")
 print(lotrcomp.xtab2b)
 @
+
+
 
 \subsubsection{Item Response Theory Analyses}
 \label{sec:item-response-theory-1}
