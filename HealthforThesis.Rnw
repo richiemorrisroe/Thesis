@@ -2423,8 +2423,7 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 
 
 
-\section{Factor Analyses}
-\label{sec:psych-analys-1}
+
 
 
 
@@ -2432,7 +2431,10 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 %% \label{sec:split-b}
 
 \subsection{MAAS}
-\label{sec:maas-1}
+\label{sec:maas-samp-two}
+
+\subsection{Factor Analyses}
+\label{sec:fact-maas}
 
 <<maas2bparallel, echo=FALSE, fig=TRUE, results=hide>>=
 maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
@@ -2441,6 +2443,15 @@ vss.maas.2b <- VSS(na.omit(maasitems2b))
 
 The parallel analysis procedure for Split B suggests that this sample of the responses to the MAAS has five factors, while the MAP criterion suggests that it has only one.  Following our previous approach, each of these factor solutions will be examined and interpreted before a CFA is applied on the remainder of the dataset.
 
+For split C, the same procedure was carried out, and the various methods both suggested five and one factors, respectively. 
+
+<<maas2cparallel, echo=FALSE, fig=TRUE, results=hide>>=
+maas2c.parallel <- fa.parallel(na.omit(maasitems2c))
+vss.maas.2c <- VSS(na.omit(maasitems2c))
+@
+
+
+
 <<maas2b1, echo=FALSE, results=tex>>=
 maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact1,label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"))
@@ -2448,44 +2459,14 @@ print(FactorXtab(maas2b.fact1,label="tab:maas2bfact1", caption="MAAS One Factor 
 
 The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
 
-<<maas2bfact2, echo=FALSE, results=tex>>=
-maas2b.fact2 <- fa(maasitems2b, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact2,label="tab:maas2bfact2", caption="MAAS Two Factor Solution, Sample 2B"))
+<<maas2c1, echo=FALSE, results=tex>>=
+maas2c.fact1 <- fa(maasitems2c, 1, rotate="oblimin", fm="pa")
+print(FactorXtab(maas2c.fact1,label="tab:maas2cfact1", caption="MAAS One Factor Solution, Sample 2C"))
 @
 
-As can be seen from Table \ref{tab:maas2bfact2}, a clear two factor solution emerges from the data.
-PA1: MAAS4-MAAS12, MAAS14,MAAS15. This factor can probably best be termed lack of attention.
-PA2: MAAS1-MAAS3, MAAS13. This second factor has loadings which relate to lack of awareness to the present, and as such can be termed lack of present awareness.
+Table \ref{tab:maas2cfact1} shows the one factor loadings for split C. In this split, the same solution only explained 36\% of the variance in the item loadings, which is in line with Split B, though much lower than the original published research in which the MAAS was developed. 
 
 
-<<maas2bfact3, echo=FALSE, results=tex>>=
-maas2b.fact3 <- fa(maasitems2b, 3, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact3,label="tab:tcq2bmaasfact3", caption="Factor Loadings for MAAS Three Factor Solution, Sample Two (Split B)"))
-@
-
-This 3 factor solution explains 48\% of the variance, and the factors break down as follows:
-
-PA1: "MAASQ4",  "MAASQ5",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  All of these items relate to the lack of awareness of bodily/physical actitivites and so this factor can best be termed lack of bodily awareness.
-
-PA3:"MAASQ11", "MAASQ12", "MAASQ13", "MAASQ14", "MAASQ15".  All of these questions appear to relate to being distracted, and so this factor could best be termed distractability.
-
-PA2:"MAASQ1", "MAASQ2", "MAASQ3".  This factor is quite similiar to the second factor in the two factor solution, and can most usefully be termed lack of present focus.
-
-
-<<maas2bfact4, echo=FALSE, results=tex>>=
-maas2b.fact4 <- fa(maasitems2b, 4, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact4,label="tab:tcq2bmaasfact4", caption="Factor Loadings for MAAS Four Factor Solution, Oblimin Rotation, Sample Two, Split B"))
-@
-
-This four factor solution explains 51\% of the variance in the sample.
-
-PA4: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ13", "MAASQ14", "MAASQ15".  Again, somewhat like PA3 in the three factor solution, all of these items relate to being distracted, and so the factor can best be termed distractability.
-
-PA1:"MAASQ5",  "MAASQ6",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  Again, like a previous factor, all of these items relate to lack of attention to physical symptoms, and so this factor can be called lack of physical awareness.
-
-PA2: "MAASQ1", "MAASQ2", "MAASQ3".  This factor can best be termed as lack of present awareness.
-
-PA3:"MAASQ4", "MAASQ5".  This factor is probably best described as lack of somatic awareness.
 
 <<maas2bfact5, echo=FALSE, results=tex>>=
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
@@ -2503,6 +2484,24 @@ PA4: "MAASQ13", "MAASQ14".  This factor can best be termed as lack of attention.
 
 PA5: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ14", "MAASQ15".  This factor again can be termed distractability.
 
+<<maas2cfact5, echo=FALSE, results=tex>>=
+maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
+print(FactorXtab(maas2c.fact5,label="tab:tcq2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"))
+@
+
+PA1: "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ14"
+All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
+PA2: "MAASQ9"  "MAASQ13"
+Q9 loads on both PA1 and PA2, and as PA2 has really only Q13 loading to any major extent on it, no interpretation of this factor was performed. It was named lack of present awareness. 
+PA4: "MAASQ2"  "MAASQ3"  "MAASQ14"
+This factor can probably best be termed lack of attention. 
+PA5: "MAASQ1" "MAASQ4" "MAASQ5"
+Most of these items relate to lack of bodily attention, and this can probably best be termed lack of somatic awareness. 
+PA3: "MAASQ4" "MAASQ6" "MAASQ7" "MAASQ8"
+Note that MAASQ4 loads slightly on both PA3 and PA5, and is not considered in the interpretation here. These items can probably best be termed lack of awareness. 
+
+The factor solution for Split C (shown in Table \ref{tab:hom2cmaasfact5}) is somewhat different from the five factor solution for Split B. Note that PA3 is somewhat similar to PA1 (Distractability) from Split B. 
+
 Now, we examine the fit indices for the five solutions.
 
 <<maas2bfitindices, echo=FALSE, results=tex>>=
@@ -2513,6 +2512,14 @@ maas2b.4fit <- FitIndices(maas2b.fact4)
 maas2b.5fit <- FitIndices(maas2b.fact5)
 maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.2fit,maas2b.3fit,maas2b.4fit,maas2b.5fit))
 print(xtable(maas2bfit,label="tab:tcq2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
+@
+
+
+<<maas2cfitindices, echo=FALSE, results=tex>>=
+maas2c.1fit <- FitIndices(maas2c.fact1)
+maas2c.5fit <- FitIndices(maas2c.fact5)
+maas2cfit <- as.data.frame(cbind(maas2c.1fit,maas2c.5fit))
+print(xtable(maas2cfit,label="tab:tcq2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
 @
 
 <<maas2bsemon2c, echo=FALSE, results=hide>>=
@@ -2534,74 +2541,27 @@ maas1fit2b <- mxRun(Maas1model2b)
 maas1summ2b <- summary(maas1fit2b)
 @ 
 
-<<maas2sem2b, echo=FALSE, results=hide>>=
+
+<<maas2csemon2b, echo=FALSE, results=hide>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
-latents <- c("Unawareness", "Distractability")
-unawareness <- paste(maas, c(4:12, 14:15), sep="")
-distractability <- paste(maas, c(1:3, 13), sep="")
-Maas2model2b <- mxModel(name="MAAS22b",
+latents <- c("Unawareness")
+unawareness <- paste(maas, c(1:15), sep="")
+Maas1model2c <- mxModel(name="MAAS12c",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Unawareness", to=unawareness),
-                        mxPath(from="Distractability", to=distractability),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2c)), type="cov", numObs=370)
+                      mxData(observed=cov(na.omit(maasitems2b)), type="cov", numObs=370)
                       )
-maas2fit2b <- mxRun(Maas2model2b)
-maas2summ2b <- summary(maas2fit2b)
-@
+maas1fit2c <- mxRun(Maas1model2c)
+maas1summ2c <- summary(maas1fit2c)
+@ 
 
-<<maas3sem2b, echo=FALSE, results=hide>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Lack of Bodily Awareness", "Distractability", "Lack of present focus")
-bodyunaware <- paste(maas, c(4,5,7:10), sep="")
-distractability <- paste(maas, c(11:15), sep="")
-lackpresfocus <- paste(maas, c(1:3), sep="")
-Maas3model2b <- mxModel(name="MAAS32b",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Lack of Bodily Awareness", to=bodyunaware),
-                        mxPath(from="Distractability", to=distractability),
-                        mxPath(from="Lack of present focus", to=lackpresfocus),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2c)), type="cov", numObs=370)
-                      )
-maas3fit2b <- mxRun(Maas3model2b)
-maas3summ2b <- summary(maas3fit2b)
-@
 
-<<maas42b, echo=FALSE, results=hide>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Lack of Bodily Awareness", "Distractability", "Lack of present focus", "Lack of somatic awareness")
-bodyunaware <- paste(maas, c(6:10), sep="")
-distractability <- paste(maas, c(11:15), sep="")
-lackpresfocus <- paste(maas, c(1:3), sep="")
-lacksomaware <- paste(maas, c(4,5), sep="")
-Maas4model2b <- mxModel(name="MAAS42b",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Lack of Bodily Awareness", to=bodyunaware),
-                        mxPath(from="Distractability", to=distractability),
-                        mxPath(from="Lack of present focus", to=lackpresfocus),
-                        mxPath(from="Lack of somatic awareness", to=lacksomaware),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2c)), type="cov", numObs=370)
-                      )
-maas4fit2b <- mxRun(Maas4model2b)
-maas4summ2b <- summary(maas4fit2b)
-@
 
 
 <<maas5sem2b, echo=FALSE, results=hide>>=
@@ -2631,12 +2591,47 @@ maas5fit2b <- mxRun(Maas5model2b)
 maas5summ2b <- summary(maas4fit2b)
 @
 
+<<maas5sem2c, echo=FALSE, results=hide>>=
+maas <- "MAASQ"
+maasitems.cols <- paste(maas, 1:15, sep="")
+manifests <- maasitems.cols
+latents <- c("lack of present focus", "lack of present awareness", "lack of attention", "Lack of somatic awareness", "lack of awareness")
+bodyunaware <- paste(maas, c(1, 4, 5), sep="")
+lackaware <- paste(maas, c(6:8), sep="")
+lackpresfocus <- paste(maas, c(7:12, 14), sep="")
+lacksomaware <- paste(maas, c(4,5), sep="")
+lackattention <- paste(maas, c(2, 3, 14), sep="")
+Maas5model2c <- mxModel(name="MAAS52c",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Lack of somatic awareness", to=bodyunaware),
+                        mxPath(from="lack of present awareness", to=lackpresfocus),
+                        mxPath (from="lack of attention", to=lackattention),
+                        mxPath (from="lack of awareness", to=lackaware),
+                        mxPath (from="lack of present focus", to=lackpresfocus),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(maasitems2b)), type="cov", numObs=370)
+                      )
+maas5fit2c <- mxRun(Maas5model2c)
+maas5summ2c <- summary(maas5fit2c)
+@
+
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
-maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas2fit2b, maas3fit2b, maas4fit2b, maas5fit2b))
+maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c( maas5fit2b))
 print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split C"), scalebox=0.9)
 @
 
-As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  this procedure is repeated for the LOT-R.
+As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  item response modelling is applied to this scale. 
+
+
+<<maas2csemcompare, echo=FALSE, results=tex>>=
+maas2c.semcomp <- mxCompare(base=maas1fit2c, comparison=c( maas5fit2c))
+print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of Factor Structures for MAAS 2C Solutions, Tested on Split B"), scalebox=0.9)
+@
+
+As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was again superior to the five factor model in Split C. 
 
 \subsubsection{IRT Analyses}
 \label{sec:irt-analyses}
