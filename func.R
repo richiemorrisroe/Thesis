@@ -707,3 +707,10 @@ lazyload <- function (files) {
   }
 }
     
+rmsea <- function(data) {
+    erro <- with(data, pred-obs)
+    err.sq <- erro^2
+    root.err <- sqrt(mean(err.sq))
+    return(root.err)
+}
+        
