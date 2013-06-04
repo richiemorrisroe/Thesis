@@ -2506,12 +2506,9 @@ Now, we examine the fit indices for the five solutions.
 
 <<maas2bfitindices, echo=FALSE, results=tex>>=
 maas2b.1fit <- FitIndices(maas2b.fact1)
-maas2b.2fit <- FitIndices(maas2b.fact2)
-maas2b.3fit <- FitIndices(maas2b.fact3)
-maas2b.4fit <- FitIndices(maas2b.fact4)
 maas2b.5fit <- FitIndices(maas2b.fact5)
-maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.2fit,maas2b.3fit,maas2b.4fit,maas2b.5fit))
-print(xtable(maas2bfit,label="tab:tcq2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
+maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.5fit))
+print(xtable(maas2bfit,label="tab:hom2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
 @
 
 
@@ -2519,7 +2516,7 @@ print(xtable(maas2bfit,label="tab:tcq2bmaassemcomp", caption=" Comparison of Fit
 maas2c.1fit <- FitIndices(maas2c.fact1)
 maas2c.5fit <- FitIndices(maas2c.fact5)
 maas2cfit <- as.data.frame(cbind(maas2c.1fit,maas2c.5fit))
-print(xtable(maas2cfit,label="tab:tcq2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
+print(xtable(maas2cfit,label="tab:hom2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
 @
 
 <<maas2bsemon2c, echo=FALSE, results=hide>>=
@@ -2623,7 +2620,7 @@ maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c( maas5fit2b))
 print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split C"), scalebox=0.9)
 @
 
-As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.  Next,  item response modelling is applied to this scale. 
+As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.
 
 
 <<maas2csemcompare, echo=FALSE, results=tex>>=
@@ -2650,9 +2647,17 @@ print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check
 maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
 @ 
 
-As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
+As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
 
-Firstly, three partial credit models are fit to the data. 
+<<maas2ccheck, echo=FALSE, results=hide>>=
+maas2c.iio <- check.iio(na.omit(maasitems2c))
+maas2c.mono <- check.monotonicity(na.omit(maasitems2c))
+maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
+@ 
+
+For Split C, items 5 and 11 fail the item ordering check, and so is removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
+
+Firstly, three partial credit models are fit to Split B.
 
 <<maas2bpcm, echo=FALSE, results=hide>>=
 maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
@@ -2660,9 +2665,19 @@ maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
 maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
 @ 
 
-All of these partial credit models had problems with non-monotonically increasing parameter estimates, and so are not reported further.
+An ANOVA suggested that the two parameter model provided a better fit to the data ($p\le 0.001$). 
 
-Next, one and two parameter graded response models were fit to the data. 
+Firstly, three partial credit models are fit to Split C. 
+
+<<maas2cgpcm, echo=FALSE, results=hide>>=
+maas2c.gpcm.rasch <- gpcm(maas2c.s, constraint="rasch")
+maas2c.gpcm.1PL <- gpcm(maas2c.s, constraint="1PL")
+maas2c.gpcm.gpcm <- gpcm(maas2c.s, constraint="gpcm")
+@ 
+
+None of the partial credit models are analysed further, as they all had non-monotonically increasing parameter estimates. 
+
+Next, one and two parameter graded response models were fit to Split B. 
 
 <<maas2bgrm, echo=FALSE, results=hide>>=
 maas2b.grm.1pl <- grm(maas2b.s, constrained=TRUE)
@@ -2696,25 +2711,7 @@ print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter 
 
 As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provided the best fit to the unseen data. 
 
-<<maas2ccheck, echo=FALSE, results=hide>>=
-maas2c.iio <- check.iio(na.omit(maasitems2c))
-maas2c.mono <- check.monotonicity(na.omit(maasitems2c))
-maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
-@ 
-
-Additionally, item 5 fails the item ordering check, and so is alsop removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
-
-Firstly, three partial credit models are fit to the data. 
-
-<<maas2cgpcm, echo=FALSE, results=hide>>=
-maas2c.gpcm.rasch <- gpcm(maas2c.s, constraint="rasch")
-maas2c.gpcm.1PL <- gpcm(maas2c.s, constraint="1PL")
-maas2c.gpcm.gpcm <- gpcm(maas2c.s, constraint="gpcm")
-@ 
-
-None of the partial credit models are analysed further, as they all had non-monotonically increasing parameter estimates. 
-
-Next, one and two parameter Graded Response Models are fit to the scale. 
+Next, one and two parameter Graded Response Models are fit to Split C.
 
 <<maas2cgrm, echo=FALSE, results=hide>>=
 maas2c.grm.1pl <- grm(maas2c.s, constrained=TRUE)
@@ -2749,6 +2746,7 @@ print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Param
 
 As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). 
 
+%INSERT backtest on Split A here. 
 
 \subsection{LOTR}
 \label{sec:lotr-1}
@@ -2942,9 +2940,7 @@ As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provi
 \section{RAND MOS}
 \label{sec:rand-mos}
 
-The next stage in the analyses was to examine the 
-
-This process was begun with the RAND MOS.
+The final step in the analysis was to model  the RAND MOS using the approaches outlined above. 
 
 The first step was to examine the breakdown of items within scales. 
 
