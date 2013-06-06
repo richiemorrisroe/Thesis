@@ -2759,7 +2759,14 @@ lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
 lotr2b.vss <- VSS(na.omit(lotritems2b))
 sink(NULL)
 @
-<<lotrparallelplot, echo=FALSE, fig=TRUE>>=
+
+<<lotr2cparallel, echo=FALSE, results=hide>>=
+sink("tmp.txt")
+lotr2c.parallel <- fa.parallel(na.omit(lotritems2c))
+lotr2c.vss <- VSS(na.omit(lotritems2c))
+sink(NULL)
+@
+<<lotrparallelplot2b, echo=FALSE, fig=TRUE>>=
 sink("tmp.txt")
 par(mfrow=c(1,2))
 print(lotr2b.parallel)
@@ -2767,18 +2774,33 @@ print(lotr2b.vss)
 sink(NULL)
 @ 
 
-Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted.
+Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted for both splits, as the results were broadly similar. 
 
 <<lotr2bfact1, echo=FALSE, results=tex>>=
 lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2b.fact1,label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
 @
 
+
+<<lotr2cfact1, echo=FALSE, results=tex>>=
+lotr2c.fact1 <- fa(lotritems2c, 1, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2c.fact1,label="tab:hom2clotr1", caption="One Factor Solution, LOT-R, Sample Two, Split C"))
+@
+
+Tables \ref{tab:hom2blotr1} and \ref{tab:hom2clotr1} show the estimated coefficients for the one factor solutions in both splits. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. 
+
+
 <<lotr2bfact2, echo=FALSE, results=tex>>=
 lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2b.fact2,label="tab:hom2blotr2"))
 @
 
+<<lotr2cfact2, echo=FALSE, results=tex>>=
+lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2c.fact2,label="tab:hom2clotr2"))
+@
+
+Tables \ref{tab:hom2blotr2} and \ref{tab:hom2clotr3} show some differences. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
 
 <<lotr1sem2b, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
@@ -2799,6 +2821,25 @@ lotr1fit2b <- mxRun(Lotr1model2b)
 lotr1summ2b <- summary(lotr1fit2b)
 @
 
+
+<<lotr1sem2c, echo=FALSE, results=hide>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism")
+optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
+Lotr1model2c <- mxModel(name="LOTR1c",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems2b)), type="cov", numObs=370)
+                      )
+lotr1fit2c <- mxRun(Lotr1model2c)
+lotr1summ2c <- summary(lotr1fit2c)
+@
 
 <<lotr2sem2b, echo=FALSE, results=hide>>=
 lotr <- "LOTRQ"
@@ -2821,12 +2862,39 @@ lotr2fit2b <- mxRun(Lotr2model2b)
 lotr2summ2b <- summary(lotr2fit2b)
 @
 
-<<lotrcompare2, echo=FALSE, results=hide>>=
+<<lotr2sem2c, echo=FALSE, results=hide>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism", "Pessimism")
+optimism <- paste(lotr, c(1,4,10), sep="")
+pessimism <- paste(lotr, c(3,7,9), sep="")
+Lotr2model2c <- mxModel(name="LOTR2c",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from="Pessimism", to=pessimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems2b)), type="cov", numObs=370)
+                      )
+lotr2fit2c <- mxRun(Lotr2model2c)
+lotr2summ2c <- summary(lotr2fit2c)
+@
+
+<<lotrcompare2b, echo=FALSE, results=hide>>=
 lotrcomp2b <- mxCompare(base=lotr1fit2b, comparison=lotr2fit2b)
 lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp", caption="Comparison of LOT-R Split B Factor Solutions, Tested on Split C")
 print(lotrcomp.xtab2b)
 @
 
+
+<<lotrcompare2c, echo=FALSE, results=hide>>=
+lotrcomp2c <- mxCompare(base=lotr1fit2c, comparison=lotr2fit2c)
+lotrcomp.xtab2c <- xtable(lotrcomp2c,label="tab:tcq2clotrcomp", caption="Comparison of LOT-R Split C Factor Solutions, Tested on Split B")
+print(lotrcomp.xtab2c)
+@ 
 
 \subsubsection{IRT Analyses}
 \label{sec:irt-analyses-1}
