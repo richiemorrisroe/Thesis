@@ -2896,6 +2896,8 @@ lotrcomp.xtab2c <- xtable(lotrcomp2c,label="tab:tcq2clotrcomp", caption="Compari
 print(lotrcomp.xtab2c)
 @ 
 
+Tables \ref{tab:lotr2blotrcomp} and \ref{tab:tcq2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, while the two factor solution had a lower negative log likelihood, when controlling for parameters the one factor solution performed much better. 
+
 \subsubsection{IRT Analyses}
 \label{sec:irt-analyses-1}
 
@@ -2982,7 +2984,7 @@ lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Esitmates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
 @ 
 
-Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the one parameter Graded Response Model. It can be seen that the discrimination parameter is quite high, and that the most difficult question is Q10 which is ``Overall, I expect more good things to happen to me than bad''. The ``easiest'' question is Q7, which is one of the negative.ly fphrased question, suggesting that the two of these questions would be enough to garner a rough estimate of ability from participants. 
+Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the one parameter Graded Response Model. It can be seen that the discrimination parameter is quite high, and that the most difficult question is Q10 which is ``Overall, I expect more good things to happen to me than bad''. The ``easiest'' question is Q7, which is one of the negatively phrased questions, suggesting that the two of these questions would be enough to garner a rough estimate of ability from participants. 
 
 
 <<lotr2cgrm2plprint, echo=FALSE, results=tex>>=
