@@ -1,5 +1,5 @@
 
-<<importdata, echo=FALSE, results=hide>>=
+<<importdata, echo=FALSE, results=hide, cache=TRUE>>=
 hom<-read.csv("HOM data for RFINAL.csv")
 hom <- hom[,1:65]
 write.csv(hom, "homfinal.csv")
@@ -202,7 +202,7 @@ The approach taken to the psychometric analysis of the second sample of data was
 \subsubsection{Crossvalidation for factor selection}
 \label{sec:crossv-fact-select}
 
- As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown below. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this should be sufficient.
+ As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown in Section \ref{sec:rand-mos-1}. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this was considered sufficient. 
 
 \subsubsection{CrossValidation for Psychometric Models}
 \label{sec:crossv-psych-models}
@@ -224,7 +224,7 @@ A different procedure will be followed for the IRT models, using  three fold cro
 
 The first step in the analysis was the assessment of how much data was missing.
 
-<<loadpackages, echo=FALSE, results=hide>>=
+<<loadpackages, echo=FALSE, results=hide, cache=TRUE>>=
 require(ggplot2)
 require(psych)
 require(xtable)
@@ -237,7 +237,7 @@ require(bcv)
 require(glmnet)
 @
 
-<<sourcefunc, echo=FALSE, results=hide>>=
+<<sourcefunc, echo=FALSE, results=hide, cache=TRUE>>=
 source("func.R")
 @
 
@@ -280,7 +280,7 @@ hom2 <- hom[hom$CollectMeth=="Online",]
 
 
 
-<<missingdata, echo=FALSE, results=hide>>=
+<<missingdata, echo=FALSE, results=hide, cache=TRUE>>=
 paper.missing <- sapply(hom1, function (x) sum(is.na(x)))
 online.missing <- sapply(hom2, function (x) sum(is.na(x)))
 @
@@ -320,7 +320,7 @@ It can be seen from Table \ref{tab:missingmanytable} that the problems with miss
 
 %% Next, we will impute the missing data using a multiple imputation procedure (as discussed in the Methodology).
 
-<<impute, eval=FALSE, echo=FALSE, results=hide>>=
+<<impute, eval=FALSE, echo=FALSE, results=hide, cache=TRUE>>=
 require(mice)
 hom.imp <- mice(hom[,2:length(hom)], m=10) #remove first column as it causes problems with the imputation
 hom.comp1 <- complete(hom.imp, 1)
@@ -341,7 +341,7 @@ for (i in 1:length(homlist)) {
   
 @ 
 
-<<readcomphom, echo=FALSE, results=hide>>=
+<<readcomphom, echo=FALSE, results=hide, cache=TRUE>>=
 homfiles <- list.files(pattern="homcomp")
 homlist <- lapply(homfiles, read.csv)
 @ 
@@ -530,7 +530,7 @@ Given the correlation matrix reported above in Table \ref{tab:scalecorr}, regres
 %  A maximal model approach was
 % taken for this regression.  The fit was carried out using lasso regression (as described in the methodology) and the $\lambda$ parameter was selected by using ten-fold cross-validation.
 
-<<cvsetup, echo=FALSE, results=hide>>=
+<<cvsetup, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.full <- na.omit(hom1)
 hom1.partition <- with(hom1.full, createDataPartition(optimism, list=FALSE, p=0.8))
 hom1.train.opt <- hom1.full[hom1.partition,]
@@ -538,7 +538,7 @@ hom1.test.opt <- hom1.full[-hom1.partition,]
 mytrain <- trainControl(method="cv")
 @ 
 
-<<opttrain, echo=FALSE, results=hide>>=
+<<opttrain, echo=FALSE, results=hide, cache=TRUE>>=
 testpred <- hom1.test.opt[,c("Age", "pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat", "generalhealth")]
 trainopt <- with(hom1.train.opt, optimism)
 trainpred <- hom1.train.opt[,c(4, 66:74)]
@@ -582,7 +582,7 @@ Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most 
 
 
 %% \begin{figure}
-## <<optlassopredplot, echo=FALSE, results=hide>>=
+## <<optlassopredplot, echo=FALSE, results=hide, cache=TRUE>>=
 ## opt.lasso.pred.m <- melt(opt.lasso.pred)
 ## names(opt.lasso.pred.m)[2] <- "Optimism"
 ## opt.lasso.pred.plot <- ggplot(opt.lasso.pred.m, aes(x=value, group=variable, colour=variable))+geom_density()
@@ -591,7 +591,7 @@ Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most 
 %%   \label{fig:optlassopredplot}
 %% \end{figure}
 
-<<optstep, echo=FALSE, results=hide>>=
+<<optstep, echo=FALSE, results=hide, cache=TRUE>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
 opt.reg.simple <- lm(optimism~1, data=hom1.train.opt)
 opt.step <- stepAIC(opt.reg.first, direction="both", k=2)
@@ -614,7 +614,7 @@ print(xtable(summary(opt.step), captio="Coefficients for Stepwise Selected Model
 
 As shown in Table \ref{tab:hom1stepopttest} the model performs much more poorly on unseen data. However, the correlation between predicted values and optimism is 0.5, which is better than either the lasso or ridge performance on unseen data. 
 
-<<optloess, echo=FALSE, results=hide, eval=FALSE>>=
+<<optloess, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 opt.loess <- loess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt)
 ## opt.loess.fit <- tuneLoess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, tuneLength=10, newdata=hom1.test.opt)
 opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
@@ -622,7 +622,7 @@ opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
 ## train.gam.loess <- train(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, method="gamLoess", tuneLength=10)
 @ 
 
-<<optreglm, echo=FALSE, results=hide>>=
+<<optreglm, echo=FALSE, results=hide, cache=TRUE>>=
 opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
 opt.reg.sum <- summary(opt.reg.first)
 opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
@@ -637,7 +637,7 @@ lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
 %% Below, in Table \ref{tab:optregfinal} can be seen the final model,
 %% including all significant predictor variables.
 
-<<optregfinal, echo=FALSE, results=hide>>=
+<<optregfinal, echo=FALSE, results=hide, cache=TRUE>>=
 opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
 optfolds <- TrainTestSets(opt.part, hom1)
 opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
@@ -664,7 +664,7 @@ A similiar procedure as described above for optimism was employed
 in the midfulness regressions.  The results are shown below.
 
 
-<<mindsetup, echo=FALSE, results=hide>>=
+<<mindsetup, echo=FALSE, results=hide, cache=TRUE>>=
 mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
 hom1.mind.train <- hom1.full[mind.ind, ]
 hom1.mind.test <- hom1.full[-mind.ind,]
@@ -693,7 +693,7 @@ mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train, traindat
 
 Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Next, a stepwise selection model procedure was employed on the dataset. 
 
-<<maasregfirst, echo=FALSE, results=hide>>=
+<<maasregfirst, echo=FALSE, results=hide, cache=TRUE>>=
 maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
 mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
 mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
@@ -713,7 +713,7 @@ As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection pro
 
 \subsection{Health Regressions}
 
-<<healthsetup, echo=FALSE, results=hide>>=
+<<healthsetup, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.health.train.ind <- with(hom1.full, createDataPartition(generalhealth, p=0.75, list=FALSE))
 hom1.health.train <- hom1.full[hom1.health.train.ind,]
 hom1.health.test <- hom1.full[-hom1.health.train.ind,]
@@ -724,7 +724,7 @@ health.test <- with(hom1.health.test, generalhealth)
 @ 
 
 
-<<healthregfirst, echo=FALSE, results=hide>>=
+<<healthregfirst, echo=FALSE, results=hide, cache=TRUE>>=
 health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1.health.train)
 health.step <- stepAIC(health.mod1, direction="both", k=3)
 health.step.test <- lm(generalhealth~optimism+energyfat+rolelim, data=hom1.health.test)
@@ -759,7 +759,7 @@ As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regres
 
 \subsection{Number of Factors to retain}
 
-<<scaleitems, echo=FALSE, results=hide>>=
+<<scaleitems, echo=FALSE, results=hide, cache=TRUE>>=
 ## rand.grep <- grep("^RAND", x=names(hom1))
 ## randitems <- hom1[,rand.grep]
 maas.grep <- grep("^MAASQ", x=names(hom1))
@@ -767,7 +767,7 @@ maasitems <- hom1[,maas.grep]
 lotr.grep <- grep("^LOTRQ", x=names(hom1))
 lotritems <- hom1[,lotr.grep]
 @
-<<retainfactors, echo=FALSE, results=hide>>=
+<<retainfactors, echo=FALSE, results=hide, cache=TRUE>>=
 sink("tmp.txt")
 rand.nscree <- nScree(x=cor(na.omit(randitems.scored), use="pairwise.complete.obs"), model="factors")
 sink(NULL)
@@ -781,7 +781,7 @@ As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and th
 
 Another approach which can be applied to select the number of factors is a cross-validation method.
 
-<<randfactorcv, echo=FALSE, results=hide>>=
+<<randfactorcv, echo=FALSE, results=hide, cache=TRUE>>=
 rand.fact.gabriel <- cv.svd.gabriel(na.omit(randitems.scored), krow=2, kcol=2, maxrank=18)
 rand.fact.wold <- cv.svd.wold(na.omit(randitems.scored), k=10, maxrank=12)
 @ 
@@ -804,7 +804,7 @@ To summarise, two, four, eight and thirteen factor structures will be examined f
 
 Next, the various metrics for determining the number of factors were applied to the Mindfulness scale. 
 
-<<retainmaas, echo=FALSE, results=hide>>=
+<<retainmaas, echo=FALSE, results=hide, cache=TRUE>>=
 sink("tmp.txt")
 maas.nscree <- nScree(x=cor(na.omit(maasitems), use="pairwise.complete.obs"), model="factors")
 sink(NULL)
@@ -840,7 +840,7 @@ It can be seen from Table \ref{tab:maasfactgabriel} that the Wold method of cros
 Therefore, one, three and seven factor solutions will be examined and their performance assessed on unseen data. 
 
 
-<<retainlotr, echo=FALSE, results=hide>>=
+<<retainlotr, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.nscree <- nScree(x=cor(na.omit(lotritems), use="pairwise.complete.obs"), model="factors")
 @ 
 
@@ -851,7 +851,7 @@ print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison o
 
 As shown in Table \ref{tab:lotrretain},all of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
 
-<<lotrfactorcv, echo=FALSE, results=hide>>=
+<<lotrfactorcv, echo=FALSE, results=hide, cache=TRUE>>=
 lotritems <- as.data.frame(lapply(lotritems, as.numeric))
 lotr.fact.gabriel <- cv.svd.gabriel(na.omit(lotritems), krow=3, kcol=3, maxrank=3)
 lotr.fact.wold <- cv.svd.wold(na.omit(lotritems), k=10, maxrank=3)
@@ -873,7 +873,7 @@ It can be seen from Table \ref{tab:lotrfactgabriel} that the Gabriel method of c
 
 Therefore, one and three factor solutions will be assessed for the LOT-R, and their performance evaluated on unseen data. 
 
-<<mapall, echo=FALSE, results=hide>>=
+<<mapall, echo=FALSE, results=hide, cache=TRUE>>=
 MAP.rand<-VSS(na.omit(randitems.scored), n=12, rotate="oblimin", fm="ml", plot=FALSE )
 MAP.maas<-VSS(na.omit(maasitems),rotate="oblimin", fm="ml", plot=FALSE )
 MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
@@ -885,7 +885,7 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 
 
 \subsection{RAND MOS}
-
+\label{sec:rand-mos-1}
 Two, four, eight and thirteen factor solutions were extracted and interpreted from the RAND MOS items. 
 
 <<rand2fact, echo=FALSE, results=tex>>=
@@ -1039,7 +1039,7 @@ Although the factor structure from this solution looks unlikely to be useful (gi
 \paragraph{CFA for RAND MOS}
 
 
-<<rand2sem, echo=FALSE, results=hide>>=
+<<rand2sem, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "General and Emotional Health")
@@ -1059,7 +1059,7 @@ rand2fit <- mxRun(Rand2model)
 rand2summ <- summary(rand2fit)
 @
 
-<<rand4sem, echo=FALSE, results=hide>>=
+<<rand4sem, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "Social and Emotional Functioning", "General Health", "Physical Limitations")
@@ -1083,7 +1083,7 @@ rand4fit <- mxRun(Rand4model)
 rand4summ <- summary(rand4fit)
 @
 
-<<rand8sem, echo=FALSE, results=hide>>=
+<<rand8sem, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "Social and Emotional Wellbeing", "General Health", "Emotional Role Limitations", "Role Limitations", "Fatigue", "Pain", "Energy")
@@ -1115,7 +1115,7 @@ rand8fit <- mxRun(Rand8model)
 rand8summ <- summary(rand8fit)
 @
 
-<<rand13sem, echo=FALSE, results=hide>>=
+<<rand13sem, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigorous Activity","RAND20", "RAND24" )
@@ -1222,7 +1222,7 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.7[["RMSEA"]][1],3 )},with conf
 \subsection{CFA for MAAS}
 \label{sec:cfa-maas}
 
-<<maas7sem, echo=FALSE, results=hide>>=
+<<maas7sem, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -1256,7 +1256,7 @@ maas7summ <- summary(maas7fit)
 
 
 
-<<maas1fit, echo=FALSE, results=hide>>=
+<<maas1fit, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -1331,7 +1331,7 @@ PA3: "LOTRQ7", "LOTRQ9". This factor can best be termed Pessimism (Reversed).
 \subsection{CFA for LOTR}
 \label{sec:cfa-lotr}
 
-<<lotr1sem, echo=FALSE, results=hide>>=
+<<lotr1sem, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -1351,7 +1351,7 @@ lotr1summ <- summary(lotr1fit)
 @
 
 
-<<lotr3sem, echo=FALSE, results=hide>>=
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -1387,13 +1387,13 @@ As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provide
 
 In addition to the classical test theory analyses carried out, each scale was also subjected to item response theory analyses.  The first step in this process was to use Mokken scaling to test the assumptions required for item response theory modelling (as described in the methodology section).
 
-<<loadirtpackages, echo=FALSE, results=hide>>=
+<<loadirtpackages, echo=FALSE, results=hide, cache=TRUE>>=
 require(mokken)
 require(eRm)
 require(ltm)
 @
 
-<<randcheckassumptions, echo=FALSE, results=hide>>=
+<<randcheckassumptions, echo=FALSE, results=hide, cache=TRUE>>=
 rand.scales <- aisp(na.omit(randitems))
 @
 
@@ -1415,7 +1415,7 @@ Scale 4: RAND13-RAND16. This maps to the role limitations scale, and can probabl
 
 Scale 5:  RANDQ33, RANDQ35. This maps to the negatively phrased items from the General Health scale, and can best be termed Sickness. However, this scale will not be analysed as there are not enough items to allow for the analytic procedure to work.
 
-<<randirtscales, echo=FALSE, results=hide>>=
+<<randirtscales, echo=FALSE, results=hide, cache=TRUE>>=
 irtphysfun <- randitems[,paste(rand, c(3:12), sep="")]
 irtemhealth <- randitems[,paste(rand, c(16:20,24,25,28,29,31,32), sep="")]
 irtenergy <-  randitems[,paste(rand, c(1,20:23,26:27,30,34,36), sep="")]
@@ -1428,7 +1428,7 @@ irtsickness <- randitems[,paste(rand, c(33,35), sep="")]
 
 Firstly, the physical functioning scale suggested by the item selection procedure was checked using non-parametric IRT methods before being modelled using successively more complex parametric IRT models. 
 
-<<randphysfun, echo=FALSE, results=hide>>=
+<<randphysfun, echo=FALSE, results=hide, cache=TRUE>>=
 irtphys.item.ord <- check.iio(na.omit(irtphysfun))
 irtphys.monotonicity <- check.monotonicity(na.omit(irtphysfun))
 @
@@ -1442,20 +1442,20 @@ There were no violations of item ordering for this sample.  This demonstrates th
 
 The IIO and monotonicity assumptions were checked for the physical limitations scale, and there were no violations. 
 
-<<physfunrasch, echo=FALSE, results=hide>>=
+<<physfunrasch, echo=FALSE, results=hide, cache=TRUE>>=
 physfun.gpcm.rasch <- gpcm(na.exclude(irtphysfun), constraint="rasch")
 physfun.gpcm.1pl <- gpcm(na.exclude(irtphysfun), constraint="1PL")
 physfun.gpcm.gpcm <- gpcm(na.exclude(irtphysfun), constraint="gpcm")
 @
 
-<<randemhealth, echo=FALSE, results=hide>>=
+<<randemhealth, echo=FALSE, results=hide, cache=TRUE>>=
 irtemhealth.item.ord <- check.iio(na.omit(irtemhealth))
 irtemhealth.monotonicity <- check.monotonicity(na.omit(irtemhealth))
 @
 
 
 
-<<randphyslim, echo=FALSE, results=hide>>=
+<<randphyslim, echo=FALSE, results=hide, cache=TRUE>>=
 irtphyslim.item.ord <- check.iio(na.omit(irtphyslim))
 irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
 @
@@ -1480,7 +1480,7 @@ Table \ref{tab:randphysfungpcm} shows that RANDQ12 is still a problematic item f
 
 
 
-<<physfungrm1, echo=FALSE, results=hide>>=
+<<physfungrm1, echo=FALSE, results=hide, cache=TRUE>>=
 physfun.grm.1pl <- grm(irtphysfun, constrained=TRUE)
 physfun.grm.2pl <- grm(irtphysfun, constrained=FALSE)
 @ 
@@ -1501,7 +1501,7 @@ From Table \ref{tab:randphysfungrm2pl}, it can be seen that the allowing the dis
 
 The results of this ANOVA showed that the two parameter model was a much better fit to the data ($p \le 0.001$). 
 
-<<grmanova, echo=FALSE, results=hide>>=
+<<grmanova, echo=FALSE, results=hide, cache=TRUE>>=
 grmanova <- anova(physfun.grm.1pl, physfun.grm.2pl)
 @ 
 
@@ -1513,13 +1513,13 @@ However, a better predictor of the usefulness of a model is to examine its fit o
 
 
 
-<<randenergycheck, echo=FALSE, results=hide>>=
+<<randenergycheck, echo=FALSE, results=hide, cache=TRUE>>=
 irtenergy.item.ord <- check.iio(na.omit(irtenergy))
 irtenergy.monotonicity <- check.monotonicity(na.omit(irtenergy))
 irtenergy2 <- randitems[,paste(rand, c(1,20,22,26,30,34), sep="")]
 @
 
-<<randenergyprint, echo=FALSE, results=hide>>=
+<<randenergyprint, echo=FALSE, results=hide, cache=TRUE>>=
 print(xtable(irtenergy.item.ord[["violations"]],label="tab:randenergyitemord", caption="IRT RAND Energy Scale, Invariant Item Ordering Results"))
 @
 
@@ -1563,7 +1563,7 @@ An anova conducted on the three models indicated that the 2 parameter model fit 
 
 Next, one and two parameter Graded Response Models were fit to the energy scale. 
 
-<<hom1irtenergygrm, echo=FALSE, results=hide>>=
+<<hom1irtenergygrm, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.energy.grm.1pl <- grm(irtenergy, constrained=TRUE)
 hom1.energy.grm.2pl <- grm(irtenergy, constrained=FALSE)
 @ 
@@ -1575,7 +1575,7 @@ print(xtable(coef2mat(coef(hom1.energy.grm.1pl)), label="tab:hom1energygrm1pl", 
 
 Table \ref{tab:hom1energygrm1pl} shows the coefficient estimates for the one parameter model on the Energy scale. It can be seen that the Graded Response Model does not have the same issues with category 3 for items 22 and 36, which implies that this issue above was a property of the model rather than the scale. The discrimination parameter is estimated as much higher under this model also, as are the ability thresholds, though the rank ordering remains the same. 
 
-<<hom1energygrm2plprint, echho=FALSE, results=hide>>=
+<<hom1energygrm2plprint, echho=FALSE, results=hide, cache=TRUE>>=
 print(xtable(coef2mat(coef(hom1.energy.grm.2pl)), label="tab:hom1energygrm2pl", caption="Coefficient Estimates for Two Parameter Graded Response Model, IRT Energy Scale, RAND MOS, Sample One"))
 @ 
 
@@ -1591,14 +1591,14 @@ Table \ref{tab:hom1energygrm2pl} shows the coefficient estimates for the two par
 print(xtable(irtemhealth.item.ord[["violations"]],label="tab:randemhealthitemord", caption="IRT Emotional Health Scale Item Ordering Results"))
 @
 
-<<newIrtEmHealth, echo=FALSE, results=hide>>=
+<<newIrtEmHealth, echo=FALSE, results=hide, cache=TRUE>>=
 irtemhealth2 <- randitems[,paste(rand, c(16:19,25,28,29,31), sep="")]
 emhealth.item.ord2 <- check.iio(na.omit(irtemhealth2))
 emhealth.mono.2 <- check.monotonicity(na.omit(irtemhealth2))
 print(xtable(emhealth.item.ord2[["violations"]], caption="IIO for reduced emotional health scale", label="tab:randemhealth2iio"))
 @
 
-<<emhealthPCM, echo=FALSE, results=hide>>=
+<<emhealthPCM, echo=FALSE, results=hide, cache=TRUE>>=
 emhealth.pcm.rasch <- gpcm(irtemhealth2, constraint="rasch")
 emhealth.pcm.1PL <- gpcm(na.omit(irtemhealth2), constraint="1PL")
 emhealth.pcm.gpcm <- gpcm(na.omit(irtemhealth2), constraint="gpcm")
@@ -1627,7 +1627,7 @@ A likelihood test was carried out between these three models, and the results sh
 
 Next, one and two parameter Graded Response Models were fit to the data. 
 
-<<hom1emhealthgrm, echo=FALSE, results=hide>>=
+<<hom1emhealthgrm, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.emhealth.grm.1pl <- grm(irtemhealth2, constrained=TRUE)
 hom1.emhealth.grm.2pl <- grm(irtemhealth2, constrained=FALSE)
 @ 
@@ -1656,7 +1656,7 @@ Table \ref{tab:hom1emhealthgrm2pl} shows the coefficient estimates for the two p
 
 Next, we assess the usefulness of one and two parameter GRM\'s for the physical limitations scale. 
 
-<<physlimgrm, echo=FALSE, results=hide>>=
+<<physlimgrm, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.physlim.grm.1pl <- grm(irtphyslim, constrained=TRUE)
 hom1.physlim.grm.2pl <- grm(irtphyslim, constrained=FALSE)
 @ 
@@ -1690,20 +1690,20 @@ print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="It
 
 As can be seen from Table \ref{tab:maasassumptioncheck}, the mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
-<<maasreduced, echo=FALSE, results=hide>>=
+<<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
 maas.irt <- maasitems[,maas.irt]
 @
 
 Next, item ordering was examined for this scale.
 
-<<maasitemord, echo=FALSE, results=hide>>=
+<<maasitemord, echo=FALSE, results=hide, cache=TRUE>>=
 maas.iio <- check.iio(na.omit(maas.irt))
 print(xtable(maas.iio[["violations"]],label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
 @
 
 
-<<maasmonotonicity, echo=FALSE, results=hide>>=
+<<maasmonotonicity, echo=FALSE, results=hide, cache=TRUE>>=
 maas.mono <- check.monotonicity(na.omit(maas.irt))
 print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
 @
@@ -1711,7 +1711,7 @@ print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Chec
 
 
 
-<<maasitemspcm, echo=FALSE, results=hide>>=
+<<maasitemspcm, echo=FALSE, results=hide, cache=TRUE>>=
 maas.pcm.rasch <- gpcm(na.omit(maas.irt), constraint="rasch")
 maas.pcm.1pl <- gpcm(na.omit(maas.irt), constraint="1PL")
 maas.pcm.2pl <- gpcm(na.omit(maas.irt), constraint="gpcm")
@@ -1735,7 +1735,7 @@ print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial C
 
 Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data. The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
-<<maasgrmfit, echo=FALSE, results=hide>>=
+<<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
 maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
 maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
 @
@@ -1751,7 +1751,7 @@ print(maasp)
 
 As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
 
-<<maasgrm1plprint, echo=FALSE, results=hide>>=
+<<maasgrm1plprint, echo=FALSE, results=hide, cache=TRUE>>=
 print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
 @ 
 
@@ -1775,7 +1775,7 @@ print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Par
 
 Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. IT can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates sugegst that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
-<<maasanovacomp, echo=FALSE, results=hide>>=
+<<maasanovacomp, echo=FALSE, results=hide, cache=TRUE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
 anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
 anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
@@ -1799,7 +1799,7 @@ print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
 
 As can be seen from Table \ref{tab:lotrscales}, all of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
 
-<<lotritemord, echo=FALSE, results=hide>>=
+<<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.iio <- check.iio(na.omit(lotritems))
 print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
 @
@@ -1807,18 +1807,18 @@ print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
 
 Q1 needs to be removed from the scale in order to meet the assumptions of the model. There were no violations of monotonicity in the sample.
 
-<<lotrmono, echo=FALSE, results=hide>>=
+<<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.mono <- check.monotonicity(na.omit(lotritems))
 print(xtable(summary(lotr.mono),label="tab:lotrmono"))
 @
 
 
-<<lotrreduced, echo=FALSE, results=hide>>=
+<<lotrreduced, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
 lotr.irt <- lotritems[,lotr.paste]
 @
 
-<<lotrmodelsirt, echo=FALSE, results=hide>>=
+<<lotrmodelsirt, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.pcm.rasch <- gpcm(na.omit(lotr.irt), constraint="rasch")
 lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
 lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
@@ -1842,7 +1842,7 @@ print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter
 
 The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
 
-<<lotranovacomp, echo=FALSE, results=hide>>=
+<<lotranovacomp, echo=FALSE, results=hide, cache=TRUE>>=
 anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
 anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
 anova.rasch.lotr.2pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.2pl)
@@ -1854,7 +1854,7 @@ However, the difference in likelihoods was extremely small between the Rasch and
 
 The next stage in the analysis of the LOTR was the fitting of one and two parameter Graded Response Models. 
 
-<<lotrgrmfit, echo=FALSE, results=hide>>=
+<<lotrgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
 lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
 @ 
@@ -1881,7 +1881,7 @@ print(lotr2plgrm)
 
 Again, Figure \ref{fig:lotr2plgrm} shows no violations of the modelling assumptions for the two parameter GRM. The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
 
-<<anovagrmlotr, echo=FALSE, results=hide>>=
+<<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
 anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 @ 
 
@@ -1908,7 +1908,7 @@ This section covers the following assessments of models developed on Sample One
 \item The regression models are refit to new data and the errors in prediction are examined. 
 \end{enumerate}
 
-<<hom2scales, echo=FALSE, results=hide>>=
+<<hom2scales, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.paste <- paste(rand, c(1:36), sep="")
 randitems2 <- hom2[,randitems.paste]
 maasitems.paste <- paste(maas, c(1:15), sep="")
@@ -1930,7 +1930,7 @@ lotritems2 <- hom2[,lotritems.paste]
 
 
 
-<<rand2semhom2, echo=FALSE, results=hide>>=
+<<rand2semhom2, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "General and Emotional Health")
@@ -1950,7 +1950,7 @@ rand2fit2 <- mxRun(Rand2model2)
 rand2summ2 <- summary(rand2fit2)
 @
 
-<<rand4semhom2, echo=FALSE, results=hide>>=
+<<rand4semhom2, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "Social and Emotional Functioning", "General Health", "Physical Limitations")
@@ -1973,7 +1973,7 @@ Rand4model2 <- mxModel(name="RAND4Samp2",
 rand4fit2 <- mxRun(Rand4model2)
 rand4summ2 <- summary(rand4fit2)
 @ 
-<<rand8semhom2, echo=FALSE, results=hide>>=
+<<rand8semhom2, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning", "Social and Emotional Wellbeing", "General Health", "Emotional Role Limitations", "Role Limitations", "Fatigue", "Pain", "Energy")
@@ -2005,7 +2005,7 @@ rand8fit2 <- mxRun(Rand8model2)
 rand8summ2 <- summary(rand8fit2)
 @
 
-<<rand13sem2, echo=FALSE, results=hide>>=
+<<rand13sem2, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
 latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigourous Activity","RAND20", "RAND24" )
@@ -2059,7 +2059,7 @@ As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the
 
 
 
-<<splitsample, echo=FALSE, results=hide>>=
+<<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
 set.seed(17)
 maassamp <- sample(1:1109, 1109)
 ms1 <- maassamp[1:370]
@@ -2101,7 +2101,7 @@ scales2b <- scales[s2.samp,]
 scales2c <- scales[s3.samp,]
 @
 
-<<maas7sem2, echo=FALSE, results=hide>>=
+<<maas7sem2, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2133,7 +2133,7 @@ maas7summ2 <- summary(maas7fit2)
 @
 
 
-<<maas1sem2, echo=FALSE, results=hide>>=
+<<maas1sem2, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2168,7 +2168,7 @@ Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provid
 
 
 
-<<lotr1sem2, echo=FALSE, results=hide>>=
+<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2188,7 +2188,7 @@ lotr1summ2 <- summary(lotr1fit2)
 @
 
 
-<<lotr3sem, echo=FALSE, results=hide>>=
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2321,7 +2321,7 @@ As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model pro
 \subsection{Regression Model Predictions}
 \label{sec:regr-model-pred}
 
-<<optsetup2a, echo=FALSE, results=hide>>=
+<<optsetup2a, echo=FALSE, results=hide, cache=TRUE>>=
 scales2a.full <- na.omit(scales2a)
 scales2a.full2 <- scales2a.full[,-11]
 opt.test2a <- with(scales2a.full, optimism)
@@ -2367,7 +2367,7 @@ rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
 As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
 \begin{figure}
 <<optridgeplot2a, echo=FALSE, figure=TRUE>>=
-print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth)
+print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth())
 @   
   \caption{Ridge Regression Predictions, Optimism, Split 2A}
   \label{fig:ridgepredplot2a}
@@ -2378,7 +2378,7 @@ As can be seen from Figure \ref{ridgepredplot2a}, again the errors do not appear
 
 Finally, the model developed by stepwise selection was applied to the new data. 
 
-<<optstep2a, echo=FALSE, results=hide>>=
+<<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
 opt.step.test2a <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
 opt.step.pred.resp <- predict (opt.step.test, newdata=scales2a.full, type="response")
 opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
@@ -2436,7 +2436,7 @@ Similiar regression analyses were carried out on the test sample from Study 2 as
 \subsection{Factor Analyses}
 \label{sec:fact-maas}
 
-<<maas2bparallel, echo=FALSE, fig=TRUE, results=hide>>=
+<<maas2bparallel, echo=FALSE, fig=TRUE, results=hide, cache=TRUE>>=
 maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
 vss.maas.2b <- VSS(na.omit(maasitems2b))
 @
@@ -2445,7 +2445,7 @@ The parallel analysis procedure for Split B suggests that this sample of the res
 
 For split C, the same procedure was carried out, and the various methods both suggested five and one factors, respectively. 
 
-<<maas2cparallel, echo=FALSE, fig=TRUE, results=hide>>=
+<<maas2cparallel, echo=FALSE, fig=TRUE, results=hide, cache=TRUE>>=
 maas2c.parallel <- fa.parallel(na.omit(maasitems2c))
 vss.maas.2c <- VSS(na.omit(maasitems2c))
 @
@@ -2519,7 +2519,7 @@ maas2cfit <- as.data.frame(cbind(maas2c.1fit,maas2c.5fit))
 print(xtable(maas2cfit,label="tab:hom2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
 @
 
-<<maas2bsemon2c, echo=FALSE, results=hide>>=
+<<maas2bsemon2c, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2539,7 +2539,7 @@ maas1summ2b <- summary(maas1fit2b)
 @ 
 
 
-<<maas2csemon2b, echo=FALSE, results=hide>>=
+<<maas2csemon2b, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2561,7 +2561,7 @@ maas1summ2c <- summary(maas1fit2c)
 
 
 
-<<maas5sem2b, echo=FALSE, results=hide>>=
+<<maas5sem2b, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2588,7 +2588,7 @@ maas5fit2b <- mxRun(Maas5model2b)
 maas5summ2b <- summary(maas4fit2b)
 @
 
-<<maas5sem2c, echo=FALSE, results=hide>>=
+<<maas5sem2c, echo=FALSE, results=hide, cache=TRUE, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
 manifests <- maasitems.cols
@@ -2637,7 +2637,7 @@ Next, we examine the Mindful Attention Awareness Scale, using the same methodolo
 
 First, the assumptions underlying item response theory modelling are checked. 
 
-<<maas2bcheck, echo=FALSE, results=hide>>=
+<<maas2bcheck, echo=FALSE, results=hide, cache=TRUE>>=
 maas2b.iio <- check.iio(na.omit(maasitems2b))
 maas2b.mono <- check.monotonicity(na.omit(maasitems2b))
 @ 
@@ -2649,7 +2649,7 @@ maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
 
 As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
 
-<<maas2ccheck, echo=FALSE, results=hide>>=
+<<maas2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 maas2c.iio <- check.iio(na.omit(maasitems2c))
 maas2c.mono <- check.monotonicity(na.omit(maasitems2c))
 maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
@@ -2659,7 +2659,7 @@ For Split C, items 5 and 11 fail the item ordering check, and so is removed. The
 
 Firstly, three partial credit models are fit to Split B.
 
-<<maas2bpcm, echo=FALSE, results=hide>>=
+<<maas2bpcm, echo=FALSE, results=hide, cache=TRUE>>=
 maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
 maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
 maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
@@ -2669,7 +2669,7 @@ An ANOVA suggested that the two parameter model provided a better fit to the dat
 
 Firstly, three partial credit models are fit to Split C. 
 
-<<maas2cgpcm, echo=FALSE, results=hide>>=
+<<maas2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
 maas2c.gpcm.rasch <- gpcm(maas2c.s, constraint="rasch")
 maas2c.gpcm.1PL <- gpcm(maas2c.s, constraint="1PL")
 maas2c.gpcm.gpcm <- gpcm(maas2c.s, constraint="gpcm")
@@ -2679,7 +2679,7 @@ None of the partial credit models are analysed further, as they all had non-mono
 
 Next, one and two parameter graded response models were fit to Split B. 
 
-<<maas2bgrm, echo=FALSE, results=hide>>=
+<<maas2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
 maas2b.grm.1pl <- grm(maas2b.s, constrained=TRUE)
 maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
 @ 
@@ -2700,7 +2700,7 @@ It can be seen from Table \ref{tab:maas2bgrm2pl} that there were no problems wit
 
 Finally, we examine the performance of these models on unseen data.
 
-<<maas2bgrmtest, echo=FALSE, results=hide>>=
+<<maas2bgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
 maas2b.grm.1pl.test <- testIRTModels(maas2b.grm.1pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 maas2b.grm.2pl.test <- testIRTModels(maas2b.grm.2pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
@@ -2713,7 +2713,7 @@ As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provi
 
 Next, one and two parameter Graded Response Models are fit to Split C.
 
-<<maas2cgrm, echo=FALSE, results=hide>>=
+<<maas2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 maas2c.grm.1pl <- grm(maas2c.s, constrained=TRUE)
 maas2c.grm.2pl <- grm(maas2c.s, constrained=FALSE)
 @ 
@@ -2736,7 +2736,7 @@ The two parameter model (shown in Table \ref{tab:maas2cgrm2pl}), is not that muc
 
 The final step in the analysis of the MAAS scale is to test the performance of the models on unseen  data. 
 
-<<maas2cgrmtest, echo=FALSE, results=hide>>=
+<<maas2cgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt.notc <- maasitems.notc[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 maas2c.grm.1pl.test <- testIRTModels(maas2c.grm.1pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 maas2c.grm.2pl.test <- testIRTModels(maas2c.grm.2pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
@@ -2753,14 +2753,14 @@ As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provi
 
 
 
-<<lotr2bparallel, echo=FALSE, results=hide>>=
+<<lotr2bparallel, echo=FALSE, results=hide, cache=TRUE>>=
 sink("tmp.txt")
 lotr2b.parallel <- fa.parallel(na.omit(lotritems2b))
 lotr2b.vss <- VSS(na.omit(lotritems2b))
 sink(NULL)
 @
 
-<<lotr2cparallel, echo=FALSE, results=hide>>=
+<<lotr2cparallel, echo=FALSE, results=hide, cache=TRUE>>=
 sink("tmp.txt")
 lotr2c.parallel <- fa.parallel(na.omit(lotritems2c))
 lotr2c.vss <- VSS(na.omit(lotritems2c))
@@ -2802,7 +2802,7 @@ print(FactorXtab(lotr2c.fact2,label="tab:hom2clotr2"))
 
 Tables \ref{tab:hom2blotr2} and \ref{tab:hom2clotr3} show some differences. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
 
-<<lotr1sem2b, echo=FALSE, results=hide>>=
+<<lotr1sem2b, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2822,7 +2822,7 @@ lotr1summ2b <- summary(lotr1fit2b)
 @
 
 
-<<lotr1sem2c, echo=FALSE, results=hide>>=
+<<lotr1sem2c, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2841,7 +2841,7 @@ lotr1fit2c <- mxRun(Lotr1model2c)
 lotr1summ2c <- summary(lotr1fit2c)
 @
 
-<<lotr2sem2b, echo=FALSE, results=hide>>=
+<<lotr2sem2b, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2862,7 +2862,7 @@ lotr2fit2b <- mxRun(Lotr2model2b)
 lotr2summ2b <- summary(lotr2fit2b)
 @
 
-<<lotr2sem2c, echo=FALSE, results=hide>>=
+<<lotr2sem2c, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
@@ -2883,14 +2883,14 @@ lotr2fit2c <- mxRun(Lotr2model2c)
 lotr2summ2c <- summary(lotr2fit2c)
 @
 
-<<lotrcompare2b, echo=FALSE, results=hide>>=
+<<lotrcompare2b, echo=FALSE, results=hide, cache=TRUE>>=
 lotrcomp2b <- mxCompare(base=lotr1fit2b, comparison=lotr2fit2b)
 lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:tcq2blotrcomp", caption="Comparison of LOT-R Split B Factor Solutions, Tested on Split C")
 print(lotrcomp.xtab2b)
 @
 
 
-<<lotrcompare2c, echo=FALSE, results=hide>>=
+<<lotrcompare2c, echo=FALSE, results=hide, cache=TRUE>>=
 lotrcomp2c <- mxCompare(base=lotr1fit2c, comparison=lotr2fit2c)
 lotrcomp.xtab2c <- xtable(lotrcomp2c,label="tab:tcq2clotrcomp", caption="Comparison of LOT-R Split C Factor Solutions, Tested on Split B")
 print(lotrcomp.xtab2c)
@@ -2903,7 +2903,7 @@ Tables \ref{tab:lotr2blotrcomp} and \ref{tab:tcq2clotrcomp} show the performance
 
 Next, we examine the LOT-R using IRT approaches. 
 
-<<lotr2bcheck, echo=FALSE, results=hide>>=
+<<lotr2bcheck, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2b.iio <- check.iio(na.omit(lotritems2b))
 lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
 @ 
@@ -2912,7 +2912,7 @@ The LOT-R for Split B had no problems with either item ordering or monotonicity.
 
 Firstly, three partial credit models were fit to the data. 
 
-<<lotr2bpcm, echo=FALSE, results=hide>>=
+<<lotr2bpcm, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2b.pcm.rasch <- gpcm(lotritems2b, constraint="rasch")
 lotr2b.pcm.1PL <- gpcm(lotritems2b, constraint="1PL")
 lotr2b.pcm.gpcm <- gpcm(lotritems2b, constraint="gpcm")
@@ -2922,7 +2922,7 @@ All of the partial credit models had non-monotonically increasing parameter esti
 
 Next, one and two parameter Graded Response Models were fit to the data. 
 
-<<lotr2bgrm, echo=FALSE, results=hide>>=
+<<lotr2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2b.grm.1pl <- grm(lotritems2b, constrained=TRUE)
 lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
 @ 
@@ -2953,11 +2953,11 @@ print(xtable(lotr2b.grm.test.all, caption="Performance of One and Two Parameter 
 
 As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data. 
 
-<<lotr2caisp, echo=FALSE, results=hide>>=
+<<lotr2caisp, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.aisp <- aisp(na.omit(lotritems2c))
 @ 
 
-<<lotr2ccheck, echo=FALSE, results=hide>>=
+<<lotr2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.iio <- check.iio(na.omit(lotritems2c))
 lotr2c.mono <- check.monotonicity(na.omit(lotritems2c))
 lotr2c.s <- lotritems2c[,paste(lotr, c(3,4,7,9,10), sep="")]
@@ -2965,7 +2965,7 @@ lotr2c.s <- lotritems2c[,paste(lotr, c(3,4,7,9,10), sep="")]
 
 An examination of the item ordering assumption showed that Q1 did not fit this model, and so was removed from the scale. There were no failures of the monotonicity assumption, and thus the modelling could commence. 
 
-<<lotr2cpcm, echo=FALSE, results=hide>>=
+<<lotr2cpcm, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.pcm.rasch <- gpcm(lotr2c.s, constraint="rasch")
 lotr2c.pcm.1PL <- gpcm(lotr2c.s, constraint="1PL")
 lotr2c.pcm.gpcm <- gpcm(lotr2c.s, constraint="gpcm")
@@ -2975,7 +2975,7 @@ All Partial Credit Models suffered from non-monotonically increasing parameter e
 
 Next, one and two parameter Graded Response Models were fit to the scale.
 
-<<lotr2cgrm, echo=FALSE, results=hide>>=
+<<lotr2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.grm.1pl <- grm(lotr2c.s, constrained=TRUE)
 lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
@@ -3028,7 +3028,7 @@ The third scale consists of the general health, pain and positively worded quest
 
 Two items (2 and 24) do not load on any scale, while 33 and 35 load on a separate scale. This scale (4 in the table) was not analysed, as two items is not enough to make a useful scale. 
 
-<<randcheckassumptions, echo=FALSE, results=hide>>=
+<<randcheckassumptions, echo=FALSE, results=hide, cache=TRUE>>=
 rand.scales <- aisp(na.omit(randitems2b))
 @
 
@@ -3039,7 +3039,7 @@ print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split 
 
 
 
-<<rand2ascales, echo=FALSE, results=hide>>=
+<<rand2ascales, echo=FALSE, results=hide, cache=TRUE>>=
 rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
 rand2a.neghealth <- randitems2a[,paste(rand, c(13:19, 25,28, 29,31,32), sep="")]
 rand2a.ovhealth <- randitems2a[,paste(rand, c(1, 22,23, 26,27,34,36), sep="")]
@@ -3049,7 +3049,7 @@ Firstly, the item ordering and monotonicity assumptions were checked for the phy
 
 
 
-<<rand2aphysfuncheck, echo=FALSE, results=hide>>=
+<<rand2aphysfuncheck, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2a.iio <- check.iio(na.omit(rand2a.physfun))
 physfun2a.mono <- check.monotonicity(na.omit(rand2a.physfun))
 @ 
@@ -3058,7 +3058,7 @@ There were no violations of either the item ordering or monotonicity assumptions
 
 The first step was to fit three partial credit models to this scale.
 
-<<physfun2apcm, echo=FALSE,results=hide >>=
+<<physfun2apcm, echo=FALSE,results=hide, cache=TRUE >>=
 physfun2a.pcm.rasch <- gpcm(rand2a.physfun, constraint="rasch")
 physfun2a.pcm.1PL <- gpcm(rand2a.physfun, constraint="1PL")
 physfun2a.pcm.gpcm <- gpcm(rand2a.physfun, constraint="gpcm")
@@ -3068,7 +3068,7 @@ All three partial credit models had non increasing parameter estimates, and thus
 
 Next, one and two parameter Graded Response Models were fit to this scale. 
 
-<<physfun2agrm, echo=FALSE, results=hide>>=
+<<physfun2agrm, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2a.grm.1pl <- grm(rand2a.physfun, constrained=TRUE)
 physfun2a.grm.2pl <- grm(rand2a.physfun, constrained=FALSE)
 @ 
@@ -3101,7 +3101,7 @@ As can be seen from Table \ref{tab:physfun2agrmtest}, the one paramter model pro
 
 Next, the negative health scale is checked for violations of the item ordering and monotonicity assumptions. 
 
-<<neghealth2acheck, echo=FALSE, results=hide>>=
+<<neghealth2acheck, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2a.iio <- check.iio(na.omit(rand2a.neghealth))
 neghealth2a.mono <- check.monotonicity(na.omit(rand2a.neghealth))
 @
@@ -3110,7 +3110,7 @@ There were no violations of either the item ordering assumption or the monotonic
 
 The next step was to fit three partial credit models to this scale. 
 
-<<neghealth2apcm, echo=FALSE, results=hide>>=
+<<neghealth2apcm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2a.pcm.rasch <- gpcm(rand2a.neghealth, constraint="rasch")
 neghealth2a.pcm.1PL <- gpcm(rand2a.neghealth, constraint="1PL")
 neghealth2a.pcm.gpcm <- gpcm(rand2a.neghealth, constraint="gpcm")
@@ -3149,7 +3149,7 @@ Table \ref{tab:neghealth2apcmtest} shows that the one parameter model provided a
 
 Next, one and two parameter Graded Response Models were fit to the negative health scale. 
 
-<<neghealth2agrm, echo=FALSE, results=hide>>=
+<<neghealth2agrm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2a.grm.1pl <- grm(rand2a.neghealth, constrained=TRUE)
 neghealth2a.grm.2pl <- grm(rand2a.neghealth, constrained=FALSE)
 @ 
@@ -3182,13 +3182,13 @@ Scale 3: RANDQ1, RANDQ20, RANDQ23, RANDQ26, RANDQ27, RANDQ30, RANDQ34, RANDQ36: 
 Scale 4: RAND21-RAND22. This maps to the  pain scale, and can probably best be termed as pain. This scale will not be analysed further as two items is not enough to model the response structure properly. 
 
 
-<<randirtscales, echo=FALSE, results=hide>>=
+<<randirtscales, echo=FALSE, results=hide, cache=TRUE>>=
 irtphysfun2b <- randitems2b[,paste(rand, c(3:12), sep="")]
 irtneghealth2b <- randitems2b[,paste(rand, c(17:19, 24:25,28,29,31,35 ), sep="")]
 irtposhealth2b <- randitems2b[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
 @
 
-<<randphysfun, echo=FALSE, results=hide>>=
+<<randphysfun, echo=FALSE, results=hide, cache=TRUE>>=
 irtphys2b.item.ord <- check.iio(na.omit(irtphysfun2b))
 irtphys2b.monotonicity <- check.monotonicity(na.omit(irtphysfun2b))
 @
@@ -3202,7 +3202,7 @@ print(xtable(irtphys2b.item.ord[["violations"]],label="tab:physfunc2bitemord", c
 
 As can be seen from Table \ref{tab:physfunc2bitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
 
-<<randneghealth, echo=FALSE, results=hide>>=
+<<randneghealth, echo=FALSE, results=hide, cache=TRUE>>=
 irtneghealth2b.item.ord <- check.iio(na.omit(irtneghealth2b))
 irtemhealth2b.monotonicity <- check.monotonicity(na.omit(irtneghealth2b))
 @
@@ -3224,7 +3224,7 @@ As shown in Table \ref{tab:randneghealth2biio}, the removal of items from the em
 
 
 
-<<randposhealth, echo=FALSE, results=hide>>=
+<<randposhealth, echo=FALSE, results=hide, cache=TRUE>>=
 irtposhealth2b.item.ord <- check.iio(na.omit(irtposhealth2b))
 irtposhealth2b.monotonicity <- check.monotonicity(na.omit(irtposhealth2b))
 @
@@ -3240,7 +3240,7 @@ Additionally, the smaller scale showed no violations of the monotonicity assumpt
 Having checked the assumptions for all three scales, the next step was to fit partial credit and graded response models to each of the scales, and to examine their fit on unseen data. 
 
 
-<<physfunrasch, echo=FALSE, results=hide>>=
+<<physfunrasch, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2b.gpcm.rasch <- gpcm(na.exclude(irtphysfun2b), constraint="rasch")
 physfun2b.gpcm.1pl <- gpcm(na.exclude(irtphysfun2b), constraint="1PL")
 physfun2b.gpcm.gpcm <- gpcm(na.exclude(irtphysfun2b), constraint="gpcm")
@@ -3250,18 +3250,18 @@ Three partial credit models were fit (rasch, one parameter and two parameter). H
 
 The next step in the modelling process was to fit a one and two parameter GRM. 
 
-<<physfun2bgrm, echo=FALSE, results=hide>>=
+<<physfun2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2b.grm.1pl <- grm(na.omit(irtphysfun2b), constrained=TRUE)
 physfun2b.grm.2pl <- grm(na.omit(irtphysfun2b), constrained=FALSE)
 @ 
 
-<<physfun2bgrm1plprint, echo=FALSE, results=hide>>=
+<<physfun2bgrm1plprint, echo=FALSE, results=hide, cache=TRUE>>=
 print(xtable(coef(physfun2b.grm.1pl), caption="One Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm1pl"))
 @ 
 
 As can be seen from Table \ref{tab:physfun2bgrm1pl}, there were no violations of monotonicity for the one parameter GRM. Note that the discrimination parameter is extremely high, which is not [particularly surprising given the use of a non-clinical sample. 
 
-<<physfun2bgrm2plprint, echo=FALSE, results=hide>>=
+<<physfun2bgrm2plprint, echo=FALSE, results=hide, cache=TRUE>>=
 print(xtable(coef(physfun2b.grm.2pl), caption="Two Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm2pl"))
 @ 
 
@@ -3279,7 +3279,7 @@ As can be seen from Table \ref{tab:physfun2btest}, the one parameter model provi
 
 The next sub-scale to be examined is Negative Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
 
-<<neghealthpcm, echo=FALSE, results=hide>>=
+<<neghealthpcm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2b.pcm.rasch <- gpcm(irtneghealth2b, constraint="rasch")
 neghealth2b.pcm.1PL <- gpcm(irtneghealth2b, constraint="1PL")
 neghealth2b.pcm.gpcm <- gpcm(irtneghealth2b, constraint="gpcm")
@@ -3289,7 +3289,7 @@ Three partial credit models were fitted, but all had non-monotonically increasin
 
 Next, one and two parameter Graded Response Models were fitted. 
 
-<<neghealthgrm, echo=FALSE, results=hide>>=
+<<neghealthgrm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2b.grm.1pl <- grm(irtneghealth2b, constrained=TRUE)
 neghealth2b.grm.2pl <- grm(irtneghealth2b, constrained=FALSE)
 @ 
@@ -3322,7 +3322,7 @@ As can be seen from Table \ref{tab:neghealth2bgrmtest}, the one parameter model 
 
 Finally, for this split, the positive health scale was examined using partial credirt and graded response models. 
 
-<<irtposhealthpcm, echo=FALSE, results=hide>>=
+<<irtposhealthpcm, echo=FALSE, results=hide, cache=TRUE>>=
 irtposhealth2b.pcm.rasch <- gpcm(irtposhealth2b, constraint="rasch")
 irtposhealth2b.pcm.1PL <- gpcm(irtposhealth2b, constraint="1PL")
 irtposhealth2b.pcm.gpcm <- gpcm(irtposhealth2b, constraint="gpcm")
@@ -3330,7 +3330,7 @@ irtposhealth2b.pcm.gpcm <- gpcm(irtposhealth2b, constraint="gpcm")
 
 Three partial credit models were fit to the data, but all had problems with the parameter estimates and are not reported further here. 
 
-<<poshealth2bgrm, echo=FALSE, results=hide>>=
+<<poshealth2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
 poshealth2b.grm.1pl <- grm(irtposhealth2b, constrained=TRUE)
 poshealth2b.grm.2pl <- grm(irtposhealth2b, constrained=FALSE)
 @ 
@@ -3342,7 +3342,7 @@ print(xtable(coef2mat(coef(poshealth2b.grm.1pl)), caption="Coefficients for One 
 
 As can be seen from Table \ref{tab:poshealth2bgrm1pl}, there were no problems with the parameter estimates for this model. The questions marked as most difficult (1, 30 and 23) relate to emotional well being and the general health scale. The discrimination parameter is relatively low in comparison to other scales, again probably due to the non-clinical sample used in this study. 
 
-<<poshealth2bgrm2plprint, echo=FALSE, results=hide>>=
+<<poshealth2bgrm2plprint, echo=FALSE, results=hide, cache=TRUE>>=
 print(xtable(coef2mat(coef(poshealth2b.grm.2pl)), caption="Coefficients for Two Parameter Graded Response Model on Positive Health Scale, Split B", label="tab:poshealth2bgrm2pl"))
 @ 
 
@@ -3378,7 +3378,7 @@ The second scale consists of most of the physical and role limitations scales an
 
 The third scale consists of the rest of the items, that is the general health, social functioning and emotional well being and energy/fatigue items which are positively worded, and can best be termed as positive health. 
 
-<<rand2cscales, echo=FALSE, results=hide>>=
+<<rand2cscales, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2c <- randitems2c[,paste(rand, c(3:13), sep="")]
 poshealth2c <- randitems2c[,paste(rand, c(1,20,22:23, 26:27, 30, 34, 36), sep="")]
 neghealth2c <- randitems2c[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
@@ -3386,7 +3386,7 @@ neghealth2c <- randitems2c[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
 
 Firstly, the assumptions underlying IRT modelling must be assessed before modelling can commence. 
 
-<<physfun2ccheck, echo=FALSE, results=hide>>=
+<<physfun2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2c.iio <- check.iio(na.omit(physfun2c))
 physfun2c.mono <- check.monotonicity(na.omit(physfun2c))
 @ 
@@ -3395,7 +3395,7 @@ There were no violations of either the item ordering assumption or the monotonic
 
 The preliminaries having been dealt with, the next step was to fit three partial credit models. 
 
-<<physfun2cgpcm, echo=FALSE, results=hide>>=
+<<physfun2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2c.gpcm.rasch <- gpcm(physfun2c, constraint="rasch")
 physfun2c.gpcm.1pl <- gpcm(physfun2c, constraint="1PL")
 physfun2c.gpcm.gpcm <- gpcm(physfun2c, constraint="gpcm")
@@ -3406,7 +3406,7 @@ All three partial credit models had problems with the ability estimates in that 
 Next, one and two parameter Graded Response Models were fit to the data.
 
 
-<<physfun2cgrm, echo=FALSE, results=hide>>=
+<<physfun2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 physfun2c.grm.1pl <- grm(physfun2c, constrained=TRUE)
 physfun2c.grm.2pl <- grm(physfun2c, constrained=FALSE)
 @ 
@@ -3437,7 +3437,7 @@ As can be seen from Table \ref{tab:physfun2cgrmtest}, the one parameter model pe
 
 Next, the negative health scale was checked to ensure suitability for IRT modelling. 
 
-<<neghealth2ccheck, echo=FALSE, results=hide>>=
+<<neghealth2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2c.iio <- check.iio(na.omit(neghealth2c))
 neghealth2c.mono <- check.monotonicity(na.omit(neghealth2c))
 @ 
@@ -3446,7 +3446,7 @@ The negative health scale for this split showed no failures of the item ordering
 
 Next, three partial credit models were fit to the data. 
 
-<<neghealth2cgpcm, echo=FALSE, results=hide>>=
+<<neghealth2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2c.gpcm.rasch <- gpcm(neghealth2c, constraint="rasch")
 neghealth2c.gpcm.1PL <- gpcm(neghealth2c, constraint="1PL")
 neghealth2c.gpcm.gpcm <- gpcm(neghealth2c, constraint="gpcm")
@@ -3456,7 +3456,7 @@ All three partial credit models suffered from non-monotonically increasing param
 
 Next, one and two parameter Graded Response Models were fit to the data. 
 
-<<neghealth2cgrm, echo=FALSE, results=hide>>=
+<<neghealth2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 neghealth2c.grm.1pl <- grm(neghealth2c, constrained=TRUE)
 neghealth2c.grm.2pl <- grm(neghealth2c, constrained=FALSE)
 @ 
@@ -3488,7 +3488,7 @@ As can be seen from Table \ref{tab:neghealth2cgrmtest}, both models performed eq
 
 Next, the assumptions are checked for the positive health scale in this split. 
 
-<<poshealth2ccheck, echo=FALSE, results=hide>>=
+<<poshealth2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 poshealth2c.iio <- check.iio(na.omit(poshealth2c))
 poshealth2c.mono <- check.monotonicity(na.omit(poshealth2c))
 @ 
@@ -3497,7 +3497,7 @@ There were no violations of the item ordering or monotonicity assumptions for th
 
 Next, three partial credit models were fitted. 
 
-<<poshealth2cgpcm, echo=FALSE, results=hide>>=
+<<poshealth2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
 poshealth2c.gpcm.rasch <- gpcm(poshealth2c, constraint="rasch")
 poshealth2c.gpcm.1PL <- gpcm(poshealth2c, constraint="1PL")
 poshealth2c.gpcm.gpcm <- gpcm(poshealth2c, constraint="gpcm")
@@ -3508,7 +3508,7 @@ All three partial credit models has non-monotonic parameter estimates, and are n
 
 Next, one and two parameter Graded Response Models were fitted to this scale.
 
-<<poshealth2cgrm, echo=FALSE, results=hide>>=
+<<poshealth2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 poshealth2c.grm.1pl <- grm(poshealth2c, constrained=TRUE)
 poshealth2c.grm.2pl <- grm(poshealth2c, constrained=FALSE)
 @ 
@@ -3648,7 +3648,7 @@ further research is needed to examine how these psychological variables
 are mediated by culture into differential biological outcomes.
 
 
-<<writefileforexperiment, echo=FALSE, results=hide>>=
+<<writefileforexperiment, echo=FALSE, results=hide, cache=TRUE>>=
 save.image("healthforthesis.rda")
 @ 
 
