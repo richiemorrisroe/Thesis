@@ -2746,7 +2746,6 @@ print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Param
 
 As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). 
 
-%INSERT backtest on Split A here. 
 
 \subsection{LOTR}
 \label{sec:lotr-1}
@@ -3607,6 +3606,62 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 \label{sec:maas-1}
 
 Next,  a similar procedure was applied to the MAAS. Both Splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
+
+<<maasbacktestsem1full, echo=FALSE, results=hide>>=
+manifests.maas <- paste0(maas, 1:15)
+latents.maas <- "Mindfulness"
+maas.bt.full <- mxModel(name="MAASBackTestFull", 
+                        type="RAM",
+                        manifestVars=manifests.maas,
+                        latentVars=latents.maas,
+                        mxPath(from=latents.maas, to=manifests.maas),
+                        mxPath(from=latents.maas, arrows=2, free=FALSE,
+                               values=1),
+                        mxPath(from=manifests.maas, arrows=2),
+                        mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=356))
+maas.bt.full.fit <- mxRun(maas.bt.full)
+@ 
+
+<<maasbacktestreduced1, echo=FALSE, results=hide, cache=TRUE>>=
+
+maasitems.red1 <- paste0(maas, c(1:4, 7:15))
+maasitems.s1 <- maasitems[,maasitems.red1]
+latents <- "Mindfulness"
+maas.bt.reduced1 <- mxModel("MAASBackTestReduced1",
+                            type="RAM",
+                            manifestVars=maasitems.red1,
+                            latentVars=latents,
+                            mxPath(from=latents, to=maasitems.red1),
+                            mxPath(from=latents, arrows=2, free=FALSE,
+                                   values=1),
+                            mxPath(from=maasitems.red1, arrows=2),
+                            mxData(observed=cov(na.omit(maasitems.s1)), type="cov", numObs=356))
+maas.bt.red1.fit <- mxRun(maas.bt.reduced1)
+@ 
+
+
+<<maasbacktestreduced2, echo=FALSE, results=hide, cache=TRUE>>=
+maasitems.red2 <- paste0(maas, c(1:4, 6:10, 12:15))
+maasitems.s2 <- maasitems[,maasitems.red2]
+latents.maas <- "Mindfulness"
+maas.bt.reduced2 <- mxModel(name="MAASBackTestReduced2", 
+                            type="RAM",
+                            manifestVars=maasitems.red2,
+                            latentVars=latents.maas,
+                            mxPath(from=latents.maas, to=maasitems.red2),
+                            mxPath(from=maasitems.red2, arrows=2),
+                            mxPath(from=latents.maas, arrows=2, free=FALSE,
+                                   values=1),
+                            mxData(observed=cov(na.omit(maasitems.s2)), type="cov",
+                                   numObs=356))
+maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
+@ 
+
+<<maasbacktestsemcompare, echo=FALSE, results=tex>>=
+print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"))
+@ 
+
+As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5 and 6 provided the best fit to the unseen data. 
 
 \subsection{Discussion}
 
