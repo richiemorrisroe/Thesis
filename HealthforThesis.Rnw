@@ -3641,7 +3641,7 @@ maas.bt.red1.fit <- mxRun(maas.bt.reduced1)
 
 
 <<maasbacktestreduced2, echo=FALSE, results=hide, cache=TRUE>>=
-maasitems.red2 <- paste0(maas, c(1:4, 6:10, 12:15))
+maasitems.red2 <- paste0(maas, c(1:4, 7:10, 12:14))
 maasitems.s2 <- maasitems[,maasitems.red2]
 latents.maas <- "Mindfulness"
 maas.bt.reduced2 <- mxModel(name="MAASBackTestReduced2", 
@@ -3661,9 +3661,30 @@ maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
 print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"))
 @ 
 
-As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5 and 6 provided the best fit to the unseen data. 
+As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5, 6 and 15  provided the best fit to the unseen data. 
 
-\subsection{Discussion}
+
+
+\subsection{IRT Backtesting - MAAS}
+\label{sec:irt-backtesting-maas}
+
+The next step in the backtesting procedure was to test the IRT models on Sample One. 
+
+
+<<maasbacktestirt, echo=FALSE, results=hide, cache=TRUE>>=
+
+maas.bt.grm.1pl2b <- testIRTModels(maas2b.grm.1pl, maasitems.s1, gpcmconstraint=NULL, grmconstraint=TRUE)
+maas.bt.grm.1pl2c <- testIRTModels(maas2c.grm.1pl, maasitems.s2, gpcmconstraint=NULL, grmconstraint=TRUE)
+@ 
+
+<<maasbacktestresprint, echo=FALSE, results=tex>>=
+maas.bt.grm.test.all <- rbind(maas.bt.grm.1pl2b, maas.bt.grm.1pl2c)
+print(xtable(maas.bt.grm.test.all, label="tab:maasbtgrmtest", caption="Backtesting of MAAS IRT Models on Sample One Data"))
+@ 
+
+
+It can be seen that the model developed from Split C (without items 5,6 and 15) provides the best fit to the unseen data, and this model will be used to generate scores for the experimental participants. 
+\section{Discussion}
 
 There are a number of interesting findings which have emerged from
 the study.  The most striking is the large negative correlation between
