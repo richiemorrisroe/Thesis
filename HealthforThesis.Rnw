@@ -755,6 +755,8 @@ print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression
 
 As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. 
 
+
+
 \section{Psychometric Analyses}
 
 \subsection{Number of Factors to retain}
@@ -1892,6 +1894,58 @@ print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficie
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
+
+\section{Modeling the relationship between health, optimism and mindfulness}
+\label{sec:model-relat-betw}
+
+The next step in the analytic procedure was to examine the relationships between health, optimism and mindfulness somewhat more deeply, drawing on the work carried out so far with the data. 
+
+The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. The best model for each scale was used, and the relationships between the latent traits estimated. This model was then compared to a model fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the lasso, ridge and stepwise regressions (on unseen data). 
+
+
+\subsection{Optimism and Health}
+\label{sec:optimism-health}
+
+The most unexpected finding of this piece of research was the direction of the relationship between the LOT-R and the RAND MOS General Health scale. This section examines a number of different models, to determine which of the solutions is more likely, given the data. 
+
+The models used in this section were as follows:
+
+\begin{itemize}
+\item A model where both health and mindfulness, along with the other regression predictors, directly affect optimism;
+
+\item A model where the effect of health and optimism is mediated through the other predictor variables;
+
+\item Each of these models was fit both to the summary scores and the latent factors.
+\end{itemize}
+
+The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
+
+<<lotrranddirect, echo=FALSE, results=hide>>=
+predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
+response <- "optimism"
+variables <- c(predictors, response)
+lotr.rand.direct <- mxModel(name="LOTRRandDirect",
+                            type="RAM",
+                            mxData(observed=na.omit(hom1.opt.sem),
+                                   type="raw" ,
+                                   means=NA,
+                                   numObs=NA),
+                            manifestVars=variables,
+                            mxPath(from=variables, arrows=2),
+                            mxPath(from="mindfulness", to="generalhealth", free=TRUE, values=0.5, arrows=2),
+                       mxPath(from="mindfulness", to="emwellbeing", free=TRUE, values=0.5, arrows=2),     
+                            mxPath(from="mindfulness", to="energyfat", free=TRUE, values=0.5, arrows=2),
+                            mxPath(from="mindfulness", to="Age", free=TRUE, values=0.5, arrows=2),
+mxPath(from="generalhealth", to="emwellbeing", free=TRUE, values=0.5),
+mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5),
+                            mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5),
+                            mxPath(from="generalhealth", to="Age", free=TRUE, values=0.5),
+                            mxPath(from="emwellbeing", to="energyfat", free=TRUE, values=0.5),
+                            mxPath(from="emwellbeing", to="Age", free=TRUE, values=0.5),
+                            mxPath(from="one", to=variables, arrows=1),
+                            mxPath(from=predictors, to=response))
+opt.direct.fit <- mxRun(model=lotr.rand.direct, intervals=TRUE)
+@ 
 
 \section{Predictions}
 \label{sec:predictions}
