@@ -1913,7 +1913,7 @@ The models used in this section were as follows:
 \begin{itemize}
 \item A model where both health and mindfulness, along with the other regression predictors, directly affect optimism;
 
-\item A model where the effect of health and optimism is mediated through the other predictor variables;
+\item A model where the effect of health on optimism is mediated through the other predictor variables;
 
 \item Each of these models was fit both to the summary scores and the latent factors.
 \end{itemize}
@@ -1921,6 +1921,7 @@ The models used in this section were as follows:
 The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
 
 <<lotrranddirect, echo=FALSE, results=hide>>=
+hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
 predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
 response <- "optimism"
 variables <- c(predictors, response)
@@ -1936,15 +1937,86 @@ lotr.rand.direct <- mxModel(name="LOTRRandDirect",
                        mxPath(from="mindfulness", to="emwellbeing", free=TRUE, values=0.5, arrows=2),     
                             mxPath(from="mindfulness", to="energyfat", free=TRUE, values=0.5, arrows=2),
                             mxPath(from="mindfulness", to="Age", free=TRUE, values=0.5, arrows=2),
-mxPath(from="generalhealth", to="emwellbeing", free=TRUE, values=0.5),
-mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5),
-                            mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5),
-                            mxPath(from="generalhealth", to="Age", free=TRUE, values=0.5),
-                            mxPath(from="emwellbeing", to="energyfat", free=TRUE, values=0.5),
-                            mxPath(from="emwellbeing", to="Age", free=TRUE, values=0.5),
+mxPath(from="generalhealth", to="emwellbeing", free=TRUE, values=0.5, arrows=2),
+mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5, arrows=2),
+                            mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5, arrows=2),
+                            mxPath(from="generalhealth", to="Age", free=TRUE, values=0.5, arrows=2),
+                            mxPath(from="emwellbeing", to="energyfat", free=TRUE, values=0.5, arrows=2),
+                            mxPath(from="emwellbeing", to="Age", free=TRUE, values=0.5, arrows=2),
                             mxPath(from="one", to=variables, arrows=1),
-                            mxPath(from=predictors, to=response))
-opt.direct.fit <- mxRun(model=lotr.rand.direct, intervals=TRUE)
+                            mxPath(from="Age", to="optimism", arrows=1),
+                            mxPath(from="energyfat", to="optimism", arrows=1),
+                            mxPath(from="emwellbeing", to="optimism", arrows=1),
+                            mxPath(from="mindfulness", to="optimism", arrows=1),
+                            mxPath(from="generalhealth", to="optimism",arrows=1))
+                            
+## mxPath(from=predictors, to=respnse))
+opt.direct.fit <- mxRun(model=lotr.rand.direct)
+@ 
+
+<<opthealthmaaasmdediated, echo=FALSE, results=hide, cache=TRUE>>=
+
+opt.health.indirect.maas <- mxModel(lotr.rand.direct, mxPath(from=predictors, to=response), remove=TRUE)
+rand.lotr.indirect.done <- mxModel(opt.health.indirect,
+                                   name="LOTRRandIndirectMAAS",
+                                   mxPath(from="generalhealth", to="mindfulness"),
+                                   mxPath(from="Age", to="mindfulness"),
+                                   mxPath(from="energyfat", to="mindfulness"),
+                                   mxPath(from="emwellbeing", to="mindfulness"),
+                                   mxPath(from="mindfulness", to="optimism"), independent=TRUE)
+rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
+@ 
+
+
+
+<<randindirectemwelleing, echo=FALSE, results=hide, cache=TRUE>>=
+rand.indirect.emwellbeing <- mxModel(rand.lotr.indirect.done, remove=TRUE, mxPath(from=predictors, to=response))
+rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
+                                      name="RandIndirectEmWellBeing", 
+                                      mxPath(from="Age", to="emwellbeing", arrows=1),
+                                      mxPath(from="energyfat", to="emwellbeing"),
+                                      mxPath(from="generalhealth", to="emwellbeing"),
+                                      mxPath(from="mindfulness", to="emwellbeing"),
+                                      mxPath(from="emwellbeing", to="optimism"))
+lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
+@ 
+
+<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
+lotr.indirect.energyfat <- mxModel(lotr.indirect,
+                                   name="LOTRIndirectEnergyFatigue",
+                                   mxPath(from="Age", to="energyfat"),
+                                   mxPath(from="emwellbeing", to="energyfat"),
+                                   mxPath(from="generalhealth", to="energyfat"),
+                                   mxPath(from="mindfulness", to="energyfat"),
+                                   mxPath(from="energyfat", to="optimism"))
+lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
+@ 
+
+<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.indirect.genhealth <- mxModel(lotr.indirect, 
+                                   name="LOTRIndirectGenHealth",
+                                   mxPath(from="Age", to="generalhealth"),
+                                   mxPath(from="energyfat", to="generalhealth"),
+                                   mxPath(from="emwellbeing", to="generalhealth"),
+                                   mxPath(from="mindfulness", to="generalhealth"),
+                                   mxPath(from="generalhealth", to="optimism"))
+lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
+@ 
+<<lotrmodcomp, echo=FALSE, results=tex>>=
+lotr.comp <- mxCompare(base=lotr.rand.direct, comp=c(lotr.indirect, lotr.indirect.emwellbeing, lotr.indirect.energyfat, lotr.indirect.genhealth, rand.lotr.indirect.maas.fit))
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"))
+@ 
+
+The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this Table, the majority of models (including the direct one) failed to converge. Only the model where either mindfulness or emotional well being mediated the relationships between the other variables and optimism converged, suggesting that these are the most useful models. Of these, the model in which Emotional Well Being moderated the relationship between the other variables and optimism provided the best fit to the data (though the difference was small). 
+
+<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
+lotr.health.med2 <- mxModel(lotr.rand.direct, 
+                            name="LOTRHealthMediated",
+                            mxPath(from="generalhealth", to="mindfulness"),
+                            mxPath(from="mindfulness", to="optimism"))
+lotr.health.med.fit <- mxRun(lotr.health.med2)
 @ 
 
 \section{Predictions}
