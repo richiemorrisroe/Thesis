@@ -1,5 +1,5 @@
 
-<<importdata, echo=FALSE, results=hide, cache=TRUE>>=
+<<importdata, echo=FALSE, results=hide>>=
 hom<-read.csv("HOM data for RFINAL.csv")
 hom <- hom[,1:65]
 write.csv(hom, "homfinal.csv")
@@ -14,19 +14,61 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 \section{Introduction}
 \label{sec:introduction}
 
-In recent years, psychologists and researchers have become
-more interested in studying the effects of positive psychological variables
-including positive affect, mindfulness, optimism and  on psychological and physical 
-health\cite{Miller2009,dockray2010positive,pressman2005does,Steptoe2006,steptoe2008positive,dockray2010positive}.
-Along with positive emotions including happiness and gratitude, much of the clinical research examining 
-positive psychology constructs has focused on the role of mindfulness
- and optimism in health and wellbeing\cite{Carver2010,grossman2008measuring} .
-Mindfulness has tended to be researched as an outcome to meditation programmes, rather than as a trait or personality disposition.
- Futhermore, the roles of mindfulness and optimism as personality characteristics have rarely, if ever, 
- been researched alongside. In the next section, we briefly discuss the constructs of mindfulness and optimism, 
- outlining some of the recent empirical research based largely on systematic reviews,
-  before introducing the present study which embraces these two psychological variables to examine 
-  the extent to which each acts as a predictor of health in a student population.
+
+The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was considered important to administer some instruments which had been shown to be associated with it in previous studies.
+
+The only measure for which a well-validated scale exists which has been shown to impact the placebo response is optimism \cite{Geers2005,morton2009reproducibility}. Specifically, the Life Orientation test (Revised) has been shown in a number of studies to be associated with the response to placebo. Interestingly enough, the morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism was discussed in more detail in \ref{sec:optimism}, in Chapter \ref{cha:literature-review} and will not be further reviewed here. 
+
+%% It is surprising that optimism has not been investigated as a predictor of the placebo response before, given that the creators of the LOT-R describe optimism as ``generalised positive expectancies around the future''. \cite{Carver2010} This definition would seem to share some similarities with the definition of optimism used by Kirsch and other researchers in the field. 
+
+The relationship between optimism and health is well known. 
+Optimism was recently reviewed in relation to its 
+effect on physical health and wellbeing \cite{Carver2010}, 
+optimism has been used as a predictor for many years in the area of Psychoneuroimmunology (PNI)
+and appears to be usually associated with better health outcomes than
+is pessimism \cite{Baker2007} \cite{Conway2008}. Optimism has also
+been associated with lower mortality risk in a large longitudinal
+cross-sectional study of individuals at risk for cardio-vascular disease
+(the Women's Health Initiative) \cite{Tindle2009}. 
+
+A meta-analysis
+has also confirmed this link between optimism and better coping styles,
+as well as a strong negative relationship between optimism and negative
+affect \cite{andersson1996benefits,Segerstrom2006}. Higher levels
+of optimism have also been associated with quicker recovery from surgery,
+insulin therapy and chemotherapy \cite{Allison2000}. A prospective
+study looking at outcomes from a group of head and neck cancer patients
+found that optimists consistently reported better health outcomes
+than pessimists \cite{Allison2000}. A meta-analysis reported on correlations
+between optimism and post-traumatic growth, which found a mean effect
+size of 0.2, but the studies were of quite poor quality, so this finding
+must be regarded as tentative \cite{Bostock2009}.
+
+The question of the mechanism by which optimism manifests differences
+in health is still unclear. Some researchers argue for a direct effect
+of optimism on immune function ,  while others
+argue that optimism exerts its protective effects through the effects
+of persistent striving after health goals \cite{Segerstrom2003}.
+
+\subsection{Factorial Structure of the LOT-R}
+\label{sec:fact-struct-lot}
+
+The factor structure of the LOT-R (and indeed, the dimensionality of the optimism construct more generally), has been a subject of some debate. The originators argue for a one-factor structure \cite{Carver2010}\cite{Scheier1994}, while other researchers have found that the scale is better modeled as having both optimism and pessimism components. The Geers work referenced above took a latter approach, dichotomising the scores on the scale to create groups of optimists and pessimists \footnote{this approach is not without its problems}. Therefore, both one and two factor models were applied to the scale to determine if a one or two factor structure fit better in the population of interest. 
+
+
+%% In recent years, psychologists and researchers have become
+%% more interested in studying the effects of positive psychological variables
+%% including positive affect, mindfulness, optimism and  on psychological and physical 
+%% health\cite{Miller2009,dockray2010positive,pressman2005does,Steptoe2006,steptoe2008positive,dockray2010positive}.
+%% Along with positive emotions including happiness and gratitude, much of the clinical research examining 
+%% positive psychology constructs has focused on the role of mindfulness
+%%  and optimism in health and wellbeing\cite{Carver2010,grossman2008measuring} .
+%% Mindfulness has tended to be researched as an outcome to meditation programmes, rather than as a trait or personality disposition.
+%%  Futhermore, the roles of mindfulness and optimism as personality characteristics have rarely, if ever, 
+%%  been researched alongside. In the next section, we briefly discuss the constructs of mindfulness and optimism, 
+%%  outlining some of the recent empirical research based largely on systematic reviews,
+%%   before introducing the present study which embraces these two psychological variables to examine 
+%%   the extent to which each acts as a predictor of health in a student population.
 
 \subsection{Mindfulness}
 
@@ -67,36 +109,7 @@ Giluk explored the relationship between mindfulness, Big Five personality and af
 
 
 \subsection{Optimism}
-Optimism, which is defined as positive generalised outcome expectancies
-about the future \cite{Carver2010} is perhaps the most well known of
-the psychological influences on health.Recently reviewed in relation to its 
-effect on physical health and wellbeing \cite{Carver2010}, optimism has been used as
-a predictor for many years in the area of Psychoneuroimmunology (PNI)
-and appears to be usually associated with better health outcomes than
-is pessimism \cite{Baker2007} \cite{Conway2008}. Optimism has also
-been associated with lower mortality risk in a large longitudinal
-cross-sectional study of individuals at risk for cardio-vascular disease
-(the Women's Health Initiative) \cite{Tindle2009}. A meta-analysis
-has also confirmed this link between optimism and better coping styles,
-as well as a strong negative relationship between optimism and negative
-affect \cite{andersson1996benefits,Segerstrom2006}. Higher levels
-of optimism have also been associated with quicker recovery from surgery,
-insulin therapy and chemotherapy \cite{Allison2000}. A prospective
-study looking at outcomes from a group of head and neck cancer patients
-found that optimists consistently reported better health outcomes
-than pessimists \cite{Allison2000}. A meta-analysis reported on correlations
-between optimism and post-traumatic growth, which found a mean effect
-size of 0.2, but the studies were of quite poor quality, so this finding
-must be regarded as tentative \cite{Bostock2009}.
 
-The question of the mechanism by which optimism manifests differences
-in health is still unclear. Some researchers argue for a direct effect
-of optimism on immune function ,  while others
-argue that optimism exerts its protective effects through the effects
-of persistent striving after health goals \cite{Segerstrom2003}.
-
-In summation, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.
-The aim of this study was to examine the relationshiop between mindfulness, optimism and subjective health in a sample of University students. We hypothesised that both optimism and mindfulness would be positively associated with health.
 
 
 \subsection{Aims of the Research}
@@ -224,7 +237,7 @@ A different procedure will be followed for the IRT models, using  three fold cro
 
 The first step in the analysis was the assessment of how much data was missing.
 
-<<loadpackages, echo=FALSE, results=hide, cache=TRUE>>=
+<<loadpackages, echo=FALSE, results=hide>>=
 require(ggplot2)
 require(psych)
 require(xtable)
@@ -237,7 +250,7 @@ require(bcv)
 require(glmnet)
 @
 
-<<sourcefunc, echo=FALSE, results=hide, cache=TRUE>>=
+<<sourcefunc, echo=FALSE, results=hide>>=
 source("func.R")
 @
 
@@ -1389,7 +1402,7 @@ As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provide
 
 In addition to the classical test theory analyses carried out, each scale was also subjected to item response theory analyses.  The first step in this process was to use Mokken scaling to test the assumptions required for item response theory modelling (as described in the methodology section).
 
-<<loadirtpackages, echo=FALSE, results=hide, cache=TRUE>>=
+<<loadirtpackages, echo=FALSE, results=hide>>=
 require(mokken)
 require(eRm)
 require(ltm)
@@ -1463,19 +1476,19 @@ irtphyslim.monotonicity <- check.monotonicity(na.omit(irtphyslim))
 @
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.rasch),label="tab:physfunrasch", caption="Coefficient Estimates, Rasch Partial Credit Model, Sample One"))
+print(xtable(coef2mat(coef(physfun.gpcm.rasch)),label="tab:physfunrasch", caption="Coefficient Estimates, Rasch Partial Credit Model, Sample One"))
 @
 
 As can be seen from Table \ref{tab:physfunrasch}, the Rasch model was not a good fit to these items, as RANDQ7 and RANDQ12 showed non increasing item difficulty estimates. 
 
 <<physfunraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.gpcm.1pl),label="tab:randphysfun1pl", caption="Coefficient Estimates, Rand MOS One Parameter Partial Credit Model, Sample One"))
+print(xtable(coef2mat(coef(physfun.gpcm.1pl)),label="tab:randphysfun1pl", caption="Coefficient Estimates, Rand MOS One Parameter Partial Credit Model, Sample One"))
 @ 
 
 As shown in Table \ref{tab:randphysfun1pl}, the one parameter model also proved a poor fit to the data, as RANDQ7 and RANDQ12 still show problems with the ordering of abilities. 
 
 <<physfungpcmprint, echo=FALSE, results=tex>>=
-  print(xtable(coef(physfun.gpcm.gpcm),label="tab:randphysfungpcm", caption="Coefficient Estimates for RAND Physical Functioning IRT Scale, Two Parameter Partial Credit Model, Sample One"))
+  print(xtable(coef2mat(coef(physfun.gpcm.gpcm)),label="tab:randphysfungpcm", caption="Coefficient Estimates for RAND Physical Functioning IRT Scale, Two Parameter Partial Credit Model, Sample One"))
 @ 
 
 Table \ref{tab:randphysfungpcm} shows that RANDQ12 is still a problematic item for the two parameter model, though RANDQ7 does not show the problems seen earlier. The next step in the modelling process was to fit a one and two parameter GRM.  
@@ -1488,14 +1501,14 @@ physfun.grm.2pl <- grm(irtphysfun, constrained=FALSE)
 @ 
 
 <<physfungrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.grm.1pl), label="tab:physfungrm1", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+print(xtable(coef2mat(coef(physfun.grm.1pl)), label="tab:physfungrm1", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
 @ 
 
 As can be seen from Table \ref{tab:physfungrm1}, there appear to be no problems with the fit of this model as all of the coefficients are monotonically increasing. Next, a two parameter GRM was fit to this scale. 
 
 
 <<physfungrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(physfun.grm.2pl), label="tab:randphysfungrm2pl", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
+print(xtable(coef2mat(coef(physfun.grm.2pl)), label="tab:randphysfungrm2pl", caption="Coefficient Estimates for One Parameter Graded Response Model, IRT Physical Functioning Scale"))
 @ 
 
 
@@ -1920,7 +1933,7 @@ The models used in this section were as follows:
 
 The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
 
-<<lotrranddirect, echo=FALSE, results=hide>>=
+<<lotrranddirect, echo=FALSE, results=hide, eval=FALSE>>=
 hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
 predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
 response <- "optimism"
@@ -1981,7 +1994,7 @@ rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
 lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
 @ 
 
-<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE>>=
+<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
 lotr.indirect.energyfat <- mxModel(lotr.indirect,
                                    name="LOTRIndirectEnergyFatigue",
@@ -1993,7 +2006,7 @@ lotr.indirect.energyfat <- mxModel(lotr.indirect,
 lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
 @ 
 
-<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE>>=
+<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 lotr.indirect.genhealth <- mxModel(lotr.indirect, 
                                    name="LOTRIndirectGenHealth",
                                    mxPath(from="Age", to="generalhealth"),
@@ -2003,14 +2016,14 @@ lotr.indirect.genhealth <- mxModel(lotr.indirect,
                                    mxPath(from="generalhealth", to="optimism"))
 lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
 @ 
-<<lotrmodcomp, echo=FALSE, results=tex>>=
+<<lotrmodcomp, echo=FALSE, results=tex, eval=FALSE>>=
 lotr.comp <- mxCompare(base=lotr.rand.direct, comp=c(lotr.indirect, lotr.indirect.emwellbeing, lotr.indirect.energyfat, lotr.indirect.genhealth, rand.lotr.indirect.maas.fit))
 print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"))
 @ 
 
 The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this Table, the majority of models (including the direct one) failed to converge. Only the model where either mindfulness or emotional well being mediated the relationships between the other variables and optimism converged, suggesting that these are the most useful models. Of these, the model in which Emotional Well Being moderated the relationship between the other variables and optimism provided the best fit to the data (though the difference was small). 
 
-<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
+<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
 lotr.health.med2 <- mxModel(lotr.rand.direct, 
                             name="LOTRHealthMediated",
@@ -3694,6 +3707,7 @@ lotr.bt.mod.form.fit <- mxRun(lotr.mod.formative) ##doesn't complete
 
 <<lotrbacktestsem1reduced, echo=FALSE, results=hide, cache=TRUE>>=
 manifests.s <- paste0(lotr, c(3, 4, 7,9,10))
+lotritems.s <- lotritems[,paste0(lotr, c(3,4,7,9,10))]
 lotr.bt.small <- mxModel(name="LOTRBackTestReduced",
     type="RAM", 
                          manifestVars=manifests.s,
