@@ -19,7 +19,14 @@ The major experimental work of this thesis involved the placebo effect, and as t
 
 The only measure for which a well-validated scale exists which has been shown to impact the placebo response is optimism \cite{Geers2005,morton2009reproducibility}. Specifically, the Life Orientation test (Revised) has been shown in a number of studies to be associated with the response to placebo. Interestingly enough, the morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism was discussed in more detail in \ref{sec:optimism}, in Chapter \ref{cha:literature-review} and will not be further reviewed here. 
 
-%% It is surprising that optimism has not been investigated as a predictor of the placebo response before, given that the creators of the LOT-R describe optimism as ``generalised positive expectancies around the future''. \cite{Carver2010} This definition would seem to share some similarities with the definition of optimism used by Kirsch and other researchers in the field. 
+Mindfulness, on the other hand is a construct that has both been associated with health \cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures \cite{Levesque2007}, and as such provided a construct which had been associated with the IAT in previous work (c.f. \ref{cha:literture-review}) and could plausibly be associated with health. 
+
+Health (in the form of the RAND-MOS) was included in this piece of research both to replicate the optimism-health link and examine if the health-mindfulness link held when both constructs were measured using survey methods, and as a weak proxy for the placebo effect. This follows as if the placebo effect is the result of expectancies, then there should be some shared variance between the response to placebo and other health-related cognitions. Additionally, the study formed an opportunity to collect background data for the population of interest, to assess if the participants in the experiment were systematically different from those who had responded to a survey invitation. 
+
+
+\subsection{Optimism}
+\label{sec:optimism}
+
 
 The relationship between optimism and health is well known. 
 Optimism was recently reviewed in relation to its 
@@ -50,33 +57,35 @@ of optimism on immune function ,  while others
 argue that optimism exerts its protective effects through the effects
 of persistent striving after health goals \cite{Segerstrom2003}.
 
+Additionally, there appears to be a curvi-linear relationship between optimism and health in some studies, which the authors attribute to participants holding both high optimistic and high pessimistic outcome expectancies simultaneously. 
+
 \subsection{Factorial Structure of the LOT-R}
 \label{sec:fact-struct-lot}
 
 The factor structure of the LOT-R (and indeed, the dimensionality of the optimism construct more generally), has been a subject of some debate. The originators argue for a one-factor structure \cite{Carver2010}\cite{Scheier1994}, while other researchers have found that the scale is better modeled as having both optimism and pessimism components. The Geers work referenced above took a latter approach, dichotomising the scores on the scale to create groups of optimists and pessimists \footnote{this approach is not without its problems}. Therefore, both one and two factor models were applied to the scale to determine if a one or two factor structure fit better in the population of interest. 
 
 
-%% In recent years, psychologists and researchers have become
-%% more interested in studying the effects of positive psychological variables
-%% including positive affect, mindfulness, optimism and  on psychological and physical 
-%% health\cite{Miller2009,dockray2010positive,pressman2005does,Steptoe2006,steptoe2008positive,dockray2010positive}.
-%% Along with positive emotions including happiness and gratitude, much of the clinical research examining 
-%% positive psychology constructs has focused on the role of mindfulness
-%%  and optimism in health and wellbeing\cite{Carver2010,grossman2008measuring} .
-%% Mindfulness has tended to be researched as an outcome to meditation programmes, rather than as a trait or personality disposition.
-%%  Futhermore, the roles of mindfulness and optimism as personality characteristics have rarely, if ever, 
-%%  been researched alongside. In the next section, we briefly discuss the constructs of mindfulness and optimism, 
-%%  outlining some of the recent empirical research based largely on systematic reviews,
-%%   before introducing the present study which embraces these two psychological variables to examine 
-%%   the extent to which each acts as a predictor of health in a student population.
-
-\subsection{Mindfulness}
+\section{Mindfulness}
 
 The construct of Mindfulness or 'attentional control' has been defined as: 'a mental ability which facilitates a direct and 
 immediate perception of the present moment with non-judgemental awareness' \cite{kohls2009facets} (p. 2). Derived from the Buddhist 
 contemplative traditions, mindfulness represents attention to the thought process, rather than to thought content \cite{brown2007addressing}. 
 Jon Kabat-Zinn popularised the practice of mindfulness in the West \cite{Kabat-Zinn2003}, developing an eight-week 
 long Mindfulness Based Stress Reduction (MBSR) programme which is now often used in clinical settings for patients with chronic illnesses. 
+
+The usefulness of mindfulness in this research was twofold
+\begin{enumerate}
+\item It has been shown to be a predictor of health, and treatment programs developed around mindfulness practice have been associated with improved physiological and psychological outcomes
+
+\item Additionally, the construct has also been implicated as a moderator of the relationship between explicit and implicit measures \cite{Levesque2007}
+\end{enumerate}
+
+The combination of these two features was why mindfulness (specifically the Mindful Attention Awareness Scale) was chosen as the measure of moderation between explicit and implicit expectancies. 
+
+\subsection{Health benefits of Mindfulness}
+\label{sec:health-benef-mindf}
+
+
 
 In a study of cancer patients mindfulness training was found to reduce stress and to improve quality of life \cite{Carlson2007}, 
 while in a study of patients who were HIV positive, MBSR training was associated with improved natural killer cell activity 
@@ -87,7 +96,8 @@ into a number of different scales including the Mindful Attention Awareness Scal
 the Kentucky Inventory of Mindfulness Skills \cite{Ruth2004} and the Five Facet Mindfulness Questionnaire (FFMQ), 
 which was developed by the factor analysis of items from a number of different scales \cite{Ruth2006}. The most popular instrument is
  the Mindful Attention Awareness Scale (MAAS) \cite{brown2003benefits}.
-Interestingly, while higher MAAS scores have been found to be associated with meditation experience in some 
+
+ Interestingly, while higher MAAS scores have been found to be associated with meditation experience in some 
 studies \cite{brown2003benefits}, other research using student samples found no significant correlation between 
 MAAS scores and experience with meditative practices (assessed by self report) \cite{MacKillop2007} . This finding which
  was also replicated by Thompson and Waltz \cite{thompson2007everyday}  who suggest that this may be due to the fact that 
@@ -102,14 +112,9 @@ with self reported health \cite{Hansen2009}. Hansen, using a cross-sectional des
 found that MAAS scores correlated with a five point one item measure of health,   
 a very crude measure of health status. In a recent meta-analysis of 29 studies, 
 Giluk explored the relationship between mindfulness, Big Five personality and affect \cite{giluk2009mindfulness}.
- She found that mindfulness was strongly correlated with neuroticism and negative affect,
+She found that mindfulness was strongly correlated with neuroticism and negative affect,
  though its not obvious whether being mindful lowers neuroticism or 
  whether neuroticism interferes with mindfulness. 
-
-
-
-\subsection{Optimism}
-
 
 
 \subsection{Aims of the Research}
@@ -121,6 +126,8 @@ The major hypotheses of this part of the thesis were as follows:
 \begin{itemize}
 \item Optimism and mindfulness would be positively associated with health.
 
+\item Optimism and mindfulness would be positively associated with one another. 
+
 \item The RAND MOS would have 8 first order factors%% , and two second order factors, which would be correlated
 
 \item The MAAS would have one factor
@@ -128,11 +135,11 @@ The major hypotheses of this part of the thesis were as follows:
 \item The LOT-R would have one factor.
 \end{itemize}
 
-The major types of analysis carried out are described in the Methodology chapter, as are the sample sizes and sampling methods. 
+The major types of analysis carried out are described below. 
 
 The response rate for Sample One (paper) was approximately
 90\% of those asked, while the response rate for Sample Two (Online)
-was 10\%.
+was 10\%. Note that psuedo-random sampling was used for sample one, while simple random sampling was used for Sample Two. 
 
 \section{Methods}
 
@@ -178,8 +185,9 @@ Following this pen and paper approach to sampling, the survey was sent to a rand
 \subsection{Analysis for Health, Optimism and Mindfulness Data}
 % Analysis was carried out seperately on the two samples, to allow for development of factor analysis and IRT models on the first sample and validation on the second. In addition, it could not be assumed that two samples collected in different ways would be comparable. 
 
-Firstly, the proportion of missing data was identified, and multiple imputation was employed to combat this problem in cases where there were substantial amounts of missing data. This was only necessary in the case of the sample collected by online methods. 
+%% Firstly, the proportion of missing data was identified, and multiple imputation was employed to combat this problem in cases where there were substantial amounts of missing data. This was only necessary in the case of the sample collected by online methods. 
 
+All missing data was assumed to be Missing Completely at Random (MCAR) \cite{little1987statistical}, and thus a complete-cases analysis was carried out on all data. 
 
 The data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions.
 
@@ -198,6 +206,8 @@ The successful SEM models from the first sample were then tested on a subset of 
 
 Following the development and testing of SEM models, each of these was tested on the validation set and factor scores were created for each of the measures.
 
+Additionally, SEM models were applied to determine the best fitting model for the relationships between the three primary constructs of interest (general health, optimism and mindfulness). 
+
 Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, Mokken analyses  were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
 
 Following this, a Rasch model was fitted to the data, and person and item parameters estimated from the data. Item and person fit statistics were also calculated, and as this model did not fit any of the three scales, a two parameter model was fit to the data. Again, item and person estimates were obtained and the relevant fit statistics calculated. 
@@ -212,10 +222,10 @@ The approach taken to the psychometric analysis of the second sample of data was
 \subsection{Crossvalidation Approaches}
 \label{sec:crossv-appr}
 
-\subsubsection{Crossvalidation for factor selection}
-\label{sec:crossv-fact-select}
+%% \subsubsection{Crossvalidation for factor selection}
+%% \label{sec:crossv-fact-select}
 
- As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown in Section \ref{sec:rand-mos-1}. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this was considered sufficient. 
+%%  As discussed in the Methodology, there are two main approaches here, either item-subject CV (known as Gabriels method) or the typical ten fold validation common in  machine learning (Wolds method). Both of these approaches were examined for the RAND items, and the results are shown in Section \ref{sec:rand-mos-1}. In the gabriel approach, a leave two of item and subject out was used, while ten fold cross-validation was used for the Wold method. One problem with this approach is that there were a huge number of non-responses to questions 13-16 on the RAND MOS, for unknown reasons.  This brings down the potential sample on this instrument to 281, which is not enough for the full analysis.  However, it is enough to test the factor solutions from the first sample, and as the RAND was not used in the experimental part of the research, this was considered sufficient. 
 
 \subsubsection{CrossValidation for Psychometric Models}
 \label{sec:crossv-psych-models}
@@ -233,9 +243,9 @@ A different procedure will be followed for the IRT models, using  three fold cro
 
 \part{Sample One}
 
-\section{Missing Data Analysis}
+%% \section{Missing Data Analysis}
 
-The first step in the analysis was the assessment of how much data was missing.
+%% The first step in the analysis was the assessment of how much data was missing.
 
 <<loadpackages, echo=FALSE, results=hide>>=
 require(ggplot2)
@@ -297,29 +307,29 @@ hom2 <- hom[hom$CollectMeth=="Online",]
 paper.missing <- sapply(hom1, function (x) sum(is.na(x)))
 online.missing <- sapply(hom2, function (x) sum(is.na(x)))
 @
-\begin{figure}
-<<label=papermissingplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<label=papermissingplot, echo=FALSE, results=hide,  eval=FALSE>>=
 ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+geom_density()
 @
-  \caption{Density Plot of Missing values in paper sample. x Axis is the proportion of responses with that  number of missing observations in each variable }
-  \label{fig:papermissingplot}
-\end{figure}
+%%   \caption{Density Plot of Missing values in paper sample. x Axis is the proportion of responses with that  number of missing observations in each variable }
+%%   \label{fig:papermissingplot}
+%% \end{figure}
 
-\begin{figure}
-<<onlinemissingplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<onlinemissingplot, echo=FALSE, results=hide, eval=FALSE>>=
   print(ggplot(as.data.frame(online.missing), aes(x=online.missing))+geom_density())
 @
-  \caption{Histogram of Missing Values, Online sample}
-  \label{fig:onlinemissingplot}
-\end{figure}
+%%   \caption{Histogram of Missing Values, Online sample}
+%%   \label{fig:onlinemissingplot}
+%% \end{figure}
 
 
 
 
-As can be seen from Figure \ref{fig:papermissingplot}, there are quite low levels of missing data for the sample collected by paper.
+%% As can be seen from Figure \ref{fig:papermissingplot}, there are quite low levels of missing data for the sample collected by paper.
 
 
-However, the situation is very different with the second sample, as can be seen from Figure \ref{fig:onlinemissingplot}, where there are a number of items which have between six and eight hundred missing values.  This was investigated further, as this amount of missing values in a small set of the data may cause problems in the course of the analysis. 
+%% However, the situation is very different with the second sample, as can be seen from Figure \ref{fig:onlinemissingplot}, where there are a number of items which have between six and eight hundred missing values.  This was investigated further, as this amount of missing values in a small set of the data may cause problems in the course of the analysis. 
 
 <<missingvaluestable, echo=FALSE, results=tex>>=
 missing.many <- online.missing[online.missing>300]
@@ -360,7 +370,6 @@ homlist <- lapply(homfiles, read.csv)
 @ 
 
 \section{Descriptive Statistics}
-% \section{Methods}
 
 
 
@@ -372,7 +381,7 @@ be seen in Table \ref{tab:sumstatscales} , below.
 hom.tot <- hom1[,66:75]
 tot.sum <- summary(hom.tot)
 tot.xtab <- xtable(tot.sum, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism Measures")
-print(tot.xtab, scalebox=0.5, include.rownames=FALSE)
+print(tot.xtab, scalebox=0.5, include.rownames=FALSE, folating.environment="sidewaystable") #include packing rotating if fails here
 @
 
 
@@ -403,7 +412,7 @@ be addressed.
 <<pairsplot, echo=FALSE, fig=TRUE>>=
 pairs.panels(na.omit(hom.tot))
 @
-\caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation.  GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being}
+\caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation.}
 \label{fig:pairsplot}
 \end{figure}
 
@@ -412,7 +421,7 @@ hom.tot.cor <- cor(hom.tot, use="pairwise.complete.obs", method="spearman")
 hom.tot.cor <- as.data.frame(hom.tot.cor)
 names(hom.tot.cor) <- c("Physical Functioning", "Role Limitations", "Emotional Role Limitations", "Energy Fatigue", "Social Functioning", "Pain", "General Health", "Mindfulness", "Optimism")
 hom.tot.cor.xtab <- xtable(hom.tot.cor, label="tab:scalecorr", caption="Correlations Between Scales GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being.All relationships significant at p<0.01")
-print(hom.tot.cor.xtab, scalebox=0.4)
+print(hom.tot.cor.xtab, scalebox=0.4, floating.environment="sidewaystable")
 @
 
 
@@ -567,16 +576,16 @@ print(ridge.xtab)
 @
 
 Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
-%% \begin{figure}
-%% <<optridgeplot, echo=FALSE, fig=TRUE>>=
-%% opt.ridge.melt <- melt(opt.ridge.pred)
-%% opt.ridge.pred.plot <- ggplot(opt.ridge.melt, aes(x=value, group=variable, colour=variable))+geom_density()
+\begin{figure}
+<<optridgeplot, echo=FALSE, fig=TRUE, pdf=TRUE, eps=TRUE, png=TRUE, jpg=TRUE>>=
+opt.ridge.melt <- melt(opt.ridge.pred)
+opt.ridge.pred.plot <- ggplot(opt.ridge.melt, aes(x=value, group=variable, colour=variable))+geom_density()
 
-%% @ 
+@ 
   
-%%   \caption{Density Plot of Predicted versus Observed Values, Optimism Ridge Regression Model}
-%%   \label{fig:optridgelassoplot}
-%% \end{figure}
+  \caption{Density Plot of Predicted versus Observed Values, Optimism Ridge Regression Model}
+  \label{fig:optridgelassoplot}
+\end{figure}
 
 As can be seen from Figure \ref{fig:optridgelassoplot} the predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
 
@@ -591,7 +600,7 @@ print(opt.lasso.xtab)
 lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
 @ 
 
-Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep}. However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep} ). However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
 
 
 %% \begin{figure}
@@ -622,7 +631,7 @@ As Table \ref{tab:hom1optstep} shows, the stepwise selected models kept three pr
 
 <<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=hom1.test.opt)
-print(xtable(summary(opt.step), captio="Coefficients for Stepwise Selected Model on Test Data", caption="tab:hom1stepopttest"))
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:hom1stepopttest"))
 @ 
 
 As shown in Table \ref{tab:hom1stepopttest} the model performs much more poorly on unseen data. However, the correlation between predicted values and optimism is 0.5, which is better than either the lasso or ridge performance on unseen data. 
@@ -782,7 +791,7 @@ maasitems <- hom1[,maas.grep]
 lotr.grep <- grep("^LOTRQ", x=names(hom1))
 lotritems <- hom1[,lotr.grep]
 @
-<<retainfactors, echo=FALSE, results=hide, cache=TRUE>>=
+<<retainfactors, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 sink("tmp.txt")
 rand.nscree <- nScree(x=cor(na.omit(randitems.scored), use="pairwise.complete.obs"), model="factors")
 sink(NULL)
@@ -792,7 +801,8 @@ sink(NULL)
 print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison of Criteria to retain factors"))
 @ 
 
-As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors, while the parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
+As shown in Table \ref{tab:randretain}, the optimal co-ordinates criteria and the acceleration curve suggest that there are two factors. 
+The parallel analysis criterion and the kaiser criterion suggest eight factors. These latter two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
 Another approach which can be applied to select the number of factors is a cross-validation method.
 
@@ -830,7 +840,7 @@ sink(NULL)
 print(xtable(summary(maas.nscree), label="tab:maasretain", caption="Comparison of Criteria to retain factors, MAAS"))
 @ 
 
-Looking at the eigenvalues, it is clear that one factor explains the majority of the variance. However, both the Kaiser criterion and parallel analysis suggest that three factors should be retained, while the VSS and the Minimum Average Partial criterion procedures suggest a one factor solutions.
+Looking at the eigenvalues, it is clear that one factor explains the majority of the variance. However, both the Kaiser criterion and parallel analysis suggest that three factors should be retained, while the VSS and the Minimum Average Partial criterion procedures suggest a one factor solution.
 
 <<maasfactorcv, echo=FALSE, results=tex>>=
 maasitems <- as.data.frame(lapply(maasitems, as.numeric))
@@ -843,7 +853,7 @@ maas.fact.wold <- cv.svd.wold(na.omit(maasitems), k=10, maxrank=7)
 print(Svdcv(maas.fact.wold, label="tab:maasfactwold", caption="Estimate of number of factors to retain based on 10-fold Cross Validation, MAAS Sample One"))
 @ 
 
-The Gabriel method of cross-validation, (shown in Table \ref{tab:maasfactwold}), agrees with the other criteria in suggesting that one factor should be retained. 
+The Wold method of cross-validation, (shown in Table \ref{tab:maasfactwold}), agrees with the other criteria in suggesting that one factor should be retained. 
 
 
 <<maascvgabriel, echo=FALSE, results=tex>>=
@@ -858,6 +868,7 @@ Therefore, one, three and seven factor solutions will be examined and their perf
 <<retainlotr, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.nscree <- nScree(x=cor(na.omit(lotritems), use="pairwise.complete.obs"), model="factors")
 @ 
+
 
 <<lotrprint, echo=FALSE, results=tex>>=
 print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison of Criteria to retain factors, LOTR, Sample One"))
@@ -1933,7 +1944,7 @@ The models used in this section were as follows:
 
 The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
 
-<<lotrranddirect, echo=FALSE, results=hide, eval=FALSE>>=
+<<lotrranddirect, echo=FALSE, results=hide>>=
 hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
 predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
 response <- "optimism"
@@ -1964,25 +1975,32 @@ mxPath(from="generalhealth", to="energyfat", free=TRUE, values=0.5, arrows=2),
                             mxPath(from="generalhealth", to="optimism",arrows=1))
                             
 ## mxPath(from=predictors, to=respnse))
+
+@ 
+
+<<opthealthdirectfit, echo=FALSE, results=hide, eval=FALSE>>=
 opt.direct.fit <- mxRun(model=lotr.rand.direct)
 @ 
 
-<<opthealthmaaasmdediated, echo=FALSE, results=hide, cache=TRUE>>=
+<<opthealthmaaasmdediated, echo=FALSE, results=hide>>=
 
 opt.health.indirect.maas <- mxModel(lotr.rand.direct, mxPath(from=predictors, to=response), remove=TRUE)
-rand.lotr.indirect.done <- mxModel(opt.health.indirect,
+rand.lotr.indirect.done <- mxModel(opt.health.indirect.maas,
                                    name="LOTRRandIndirectMAAS",
                                    mxPath(from="generalhealth", to="mindfulness"),
                                    mxPath(from="Age", to="mindfulness"),
                                    mxPath(from="energyfat", to="mindfulness"),
                                    mxPath(from="emwellbeing", to="mindfulness"),
                                    mxPath(from="mindfulness", to="optimism"), independent=TRUE)
+
+@ 
+
+<<fitopthealthmediated1, echo=FALSE, results=hide, eval=FALSE>>=
 rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
 @ 
 
 
-
-<<randindirectemwelleing, echo=FALSE, results=hide, cache=TRUE>>=
+<<randindirectemwelleing, echo=FALSE, results=hide, eval=FALSE>>=
 rand.indirect.emwellbeing <- mxModel(rand.lotr.indirect.done, remove=TRUE, mxPath(from=predictors, to=response))
 rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
                                       name="RandIndirectEmWellBeing", 
@@ -1991,10 +2009,14 @@ rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
                                       mxPath(from="generalhealth", to="emwellbeing"),
                                       mxPath(from="mindfulness", to="emwellbeing"),
                                       mxPath(from="emwellbeing", to="optimism"))
+
+@ 
+
+<<opthealthmediatedfit2, echo=FALSE, results=hide, eval=FALSE>>=
 lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
 @ 
 
-<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
+<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
 lotr.indirect.energyfat <- mxModel(lotr.indirect,
                                    name="LOTRIndirectEnergyFatigue",
@@ -2003,10 +2025,14 @@ lotr.indirect.energyfat <- mxModel(lotr.indirect,
                                    mxPath(from="generalhealth", to="energyfat"),
                                    mxPath(from="mindfulness", to="energyfat"),
                                    mxPath(from="energyfat", to="optimism"))
+
+@ 
+
+<<opthealthmediatedfit3, echo=FALSE, results=hide, eval=FALSE>>=
 lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
 @ 
 
-<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
+<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.indirect.genhealth <- mxModel(lotr.indirect, 
                                    name="LOTRIndirectGenHealth",
                                    mxPath(from="Age", to="generalhealth"),
@@ -2014,6 +2040,10 @@ lotr.indirect.genhealth <- mxModel(lotr.indirect,
                                    mxPath(from="emwellbeing", to="generalhealth"),
                                    mxPath(from="mindfulness", to="generalhealth"),
                                    mxPath(from="generalhealth", to="optimism"))
+
+@ 
+
+<<lotrindirectfit4, echo=FALSE, results=hide, eval=FALSE>>=
 lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
 @ 
 <<lotrmodcomp, echo=FALSE, results=tex, eval=FALSE>>=
@@ -2724,7 +2754,7 @@ Maas5model2b <- mxModel(name="MAAS52b",
                       mxData(observed=cov(na.omit(maasitems2c)), type="cov", numObs=370)
                       )
 maas5fit2b <- mxRun(Maas5model2b)
-maas5summ2b <- summary(maas4fit2b)
+maas5summ2b <- summary(maas5fit2b)
 @
 
 <<maas5sem2c, echo=FALSE, results=hide, cache=TRUE, cache=TRUE>>=
@@ -3826,6 +3856,11 @@ print(xtable(maas.bt.grm.test.all, label="tab:maasbtgrmtest", caption="Backtesti
 It can be seen that the model developed from Split C (without items 5,6 and 15) provides the best fit to the unseen data, and this model will be used to generate scores for the experimental participants. 
 \section{Discussion}
 
+\subsection{Optimism and Health}
+\label{sec:optimism-health-1}
+
+
+
 There are a number of interesting findings which have emerged from
 the study.  The most striking is the large negative correlation between
 optimism and self reported health.  The sample in this study is quite
@@ -3875,6 +3910,16 @@ report health problems and visits to medical professionals over the
 course of a year.  Such a study could allow the casual chains of this
 effect to be untangled.
 
+The Structual Equation Model reported for Sample One is a good place to start in this regard.
+The only models which converged were those which moderated the effect of health on optimism 
+through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being 
+model was marginally superior, there are good reasons to believe that mindfulness is more 
+important (c.f. the experimental portion of the research). 
+
+
+\subsection{Mindfulness}
+\label{sec:mindfulness}
+
 Another interesting finding which arose from this research is the
 impact of mindfulness scores on other health variables.  MAAS scores
 correlated positively with all of the health sub-scales, very significantly
@@ -3891,12 +3936,18 @@ these constructs using self-report measures, and this finding was not expected t
 MBSR programs have been found to increase optimism in a number of studies \cite{Carson2004},
 but our results seem to show that mindfulness and optimism may be inversely related.
 
+
 There are a number of reasons why this could be so.  Optimism is defined as generalised positive outcome expectancies about the future,
 while mindfulness is defined as non-judgmental awareness of the content of thoughts.
 It seems plausible that increased mindfulness could lead persons to become less optimistic,
  as their newfound awareness of their own thought patterns and behaviours makes them aware
 that events have not always worked out well.  This increased awareness could temper future
-assessments of the future, and decrease optimism as measured by the Life Orientation Test Revised.
+assessments of the future, and decrease optimism as measured by the Life Orientation Test Revised. However, work in the experimental sample casts new light on this theory, and is discussed further in Chapter \ref{cha:primary-research}
+
+\subsection{Psychometric Analysis}
+\label{sec:psych-analys}
+
+
 
 This study also confirms the proposed one factor structure for the MAAS, in line with previous research.
 This sample also appears to show that the LOT-R can be modelled without loss of information with
@@ -3911,13 +3962,17 @@ variables.  We would argue that the use of multiple decision criteria on a regul
 in factor analytic research would help us to understand which method suits a particular
 application best.
 
-A major limitation of this study was the exclusive use of self report
-measures, and a student sample.  That being said, the sample was large
-and representative of the general student population.  Given that over
-70\% of Irish people of this age group now attend college, it could
-be argued that this sample is relatively representative of Irish young
-people at large.  This, however, is somewhat speculative and further
-research would need to investigate this proposition further.
+Additionally, this study found that a combination of IRT analyses and CTT analyses provided the best fitting models for both the MAAS and the LOT-R. In both cases, a model fitted using the scales developed from the use of Mokken analysis and IRT fit indices provided better performance on unseen data than did the models developed exclusively through factor analysis. 
+
+This provides evidence that the combination of these two methods is more useful than either of them alone, and it has allowed for the building of a useful model tailored to the population under study in this thesis which can be used in the experimental portion of the research. The success of these models is discussed further in Chapter \ref{cha:primaryresearch}.
+
+%% A major limitation of this study was the exclusive use of self report
+%% measures, and a student sample.  That being said, the sample was large
+%% and representative of the general student population.  Given that over
+%% 70\% of Irish people of this age group now attend college, it could
+%% be argued that this sample is relatively representative of Irish young
+%% people at large.  This, however, is somewhat speculative and further
+%% research would need to investigate this proposition further.
 
 In conclusion, this study points towards the importance of considering
 psychosocial variables and their impact on health, and suggests that
