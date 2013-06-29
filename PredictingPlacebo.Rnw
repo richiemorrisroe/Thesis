@@ -237,7 +237,7 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
 ## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
 
-<<tsimport, echo=FALSE, results=hide>>=
+<<tsimport, echo=FALSE, results=hide, eval=FALSE>>=
 physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richie1ps", pattern=".txt$")
 gsr.mat <- listToDf(physfiles, 1)
 
@@ -255,19 +255,19 @@ names(ecg.mat) <- NULL
 ecg.mat.t <- t(ecg.mat)
 gsr.df <- as.data.frame(gsr.mat.t)
 gsr.df[,"Participant"] <- gsrnames2
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+## Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
 @
 
 At baseline, none of the three groups (Deceptive Placebo (n=35), Open Placebo (n=39) and No treatment (n=36) differed on any of the variables of interest. This allowed analysis to proceed without adjusting for potential confounders. 
 
 <<gendcond, echo=FALSE, results=tex>>=
-gend.cond <- print(xtable(with(Iatandexpmeasures.phys, table(Gender, Condition)), caption="Gender Breakdown by Condition", label="tab:gendcond"))
+gend.cond <- print(xtable(with(Iatandexpmeasures, table(Gender, Condition)), caption="Gender Breakdown by Condition", label="tab:gendcond"))
 @ 
 
 Table \ref{tab:gendcond} shows the breakdown of participants' gender by their condition. 
 
 <<gendprime, echo=FALSE, results=tex>>=
-prime.gend <- print(xtable(with(Iatandexpmeasures.phys, table(Gender, Prime)), caption="Gender Breakdown by Priming Condition", label="tab:primegend"))
+prime.gend <- print(xtable(with(Iatandexpmeasures, table(Gender, Prime)), caption="Gender Breakdown by Priming Condition", label="tab:primegend"))
 @ 
 
 %% \begin{figure}
@@ -399,7 +399,7 @@ dev.off()
 
 
 \begin{figure}
-<<corriattcqopt, echo=FALSE, figure=TRUE, pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<corriattcqopt, echo=FALSE, fig=TRUE, pdf=TRUE, eps=TRUE, png=TRUE, jpg=TRUE, eps=TRUE>>=
 corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")
 print(corr.iat.tcq.opt.pl)
 @   
@@ -420,7 +420,7 @@ Before moving on to the main thrust of the analyses, the differences between the
 <<meanpain, echo=FALSE, results=hide>>=
 painmean <- rowMeans(vasscores[,9:53], na.rm=TRUE)
 painmeanpart <- data.frame(Participant=vasscores[,"Participant"], painmean)
-Iatandexpmeasures.pain <- merge(Iatandexpmeasures.phys, painmeanpart, by="Participant")
+Iatandexpmeasures.pain <- merge(Iatandexpmeasures, painmeanpart, by="Participant")
 @ 
 
 Surprisingly enough, there was no significant mean difference between the Deceptive and No Treatment conditions ($t=0.353, df=53.553, p=0.7255$). However, the differences between the Open Placebo group and the Deceptive Treatment group ($t=-3.422, df=53.27, p=0.0012, d=1.11$) were significant at conventional levels,  as was the difference between the  Open Placebo group and the No Treatment group ($t=-3.9154, df=87.996, p=0.0001, d=1.22$). These effects both qualify as large effects by Cohen's standards, and would match those effects found earlier in the field and assessed through meta-analysis \cite{Sauro2005}.
@@ -433,7 +433,7 @@ plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+fac
 
 
 \begin{figure}
-<<placprimeplot, echo=FALSE, figure=TRUE, pdf=TRUE, png=TRUE>>=
+<<placprimeplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, jpg=TRUE, eps=TRUE>>=
 plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
 print(plac.prime.pl)
 @   
@@ -457,7 +457,7 @@ Next, the relationship between the placebo response and proposed predictors were
 
 
 \begin{figure}
-<<ggplothistcond, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
+<<ggplothistcond, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE, jpg=TRUE,eps=TRUE>>=
 plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(plac.resp.hist.pl)
 @   
@@ -475,7 +475,7 @@ dev.off()
 @ 
 
 \begin{figure}
-<<optiatcorrsurv, echo=FALSE, figure=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
+<<optiatcorrsurv, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE, jpg=TRUE,eps=TRUE>>=
 optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(optiat.histcond)
 @   
@@ -488,7 +488,7 @@ Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded
 
 
 \begin{figure}
-<<ggplotplacyesno, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
+<<ggplotplacyesno, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, png=TRUE, jpg=TRUE,eps=TRUE>>=
 placrespyes <- painratings[with(painratings,PlacResp=="Yes"),]
 placrespno <- painratings[with(painratings,PlacResp=="No"),]
 placresyesmean <- apply(placrespyes[4:48], 2, mean, na.rm=TRUE)
@@ -508,7 +508,7 @@ A number of findings are apparent from the plot above in Figure \ref{fig:placyes
 
 \begin{figure}
   \centering
-<<ggplot3wayinter, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE>>=
+<<ggplot3wayinter, echo=FALSE, fig=TRUE, eps=TRUE, pdf=TRUE, jpg=TRUE,eps=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
 iatexpno <- na.omit(iatexpno)
@@ -527,7 +527,7 @@ The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be 
 
 
 <<placmodlog, echo=FALSE, results=tex>>=
-placmod.int <- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures.phys, family=binomial(link="logit"))
+placmod.int <- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 print(xtable(summary(placmod.int), label="tab:placmodint", caption="Logistic Regression of IAT measures and optimism on the Placebo Response"))                   
 @ 
 
@@ -536,7 +536,7 @@ From Table \ref{tab:placmodint}, it can be seen that the effect of the treatment
 Next, the mean GSR for each participant was included in the model, and allowed to interact with all the other variables in the model. 
 
 <<placmodint2, echo=FALSE, results=tex>>=
-placmod.int2 <- glm(PlacResp~(TCQIAT.Mean*OptIAT.Mean*LOTR*gsr.mean)^2, data=Iatandexpmeasures.phys, family=binomial(link="logit"))
+placmod.int2 <- glm(PlacResp~(TCQIAT.Mean*OptIAT.Mean*LOTR)^2, data=Iatandexpmeasures, family=binomial(link="logit"))
 print(xtable(summary(placmod.int2), label="tab:placmodint2", caption="Regression of IAT on Treatment Credibility IAT, Optimism IAT, Optimism and Mean GSR"))
 @ 
 
@@ -554,7 +554,7 @@ As shown in Table \ref{tab:placmodint2}, the addition of the mean GSR for each p
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
 registerDoMC(2)
-iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "gsr.mean")]
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
