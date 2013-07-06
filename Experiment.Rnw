@@ -10,7 +10,21 @@ However, the use of these self report instruments carries with it a number of pr
 
 Another large factor which affects placebo analgesia research is the issue of response biases. The problem is that if participants receive a treatment which they believe to be effective, then their thresholds of perception may be altered without any actual biochemical changes. This is the theory put forward by Allan \& Siegel's \cite{Allan2002} analysis of the placebo phenomenon in terms of signal detection theory. These two factors were proposed to account for the entirety of the placebo effect in pain by Hrobjarrstsson \& Goetzche \cite{hrobjartsson2001}. This interpretation of placebo seems less likely given that placebo effects have been observed on biochemical parameters, and also  given that placebo analgesia can be removed by the administration of naloxone \cite{Levine1979,benedetti2003a}. 
 
+\subsection{Measurement Issues}
+\label{sec:measurement-issues}
 
+The measurement of placebo has improved greatly over the past fifty years since Beecher started examining the phenomenon. However, it still suffers from a number of problems.
+
+The first problem is the consistent use of ANOVA and regression methods to examine differences between groups \cite{Colloca2008b,Pollo2001}. While there is nothing intrinsically wrong with this method (as long as it is not within person differences which are examined), it is a waste of statistical power. The issue here is that in placebo analgesia research (which this thesis made use of) typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$ (cf Chapter \ref{cha:methodology}). This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information. One study which did use more appropriate methods was \cite{Bausell2005} who examined the effects of expectancies and acupuncture using survival analysis. 
+
+More appropriate methods for these analyses are time series analyses and survival analysis, both of which are discussed in Chapter \ref{cha:methodology}. Additionally, in trials of functional bowel disorders, placebo effects correlate with the size of the trial, which suggests that regression to the mean effects are having an impact \cite{Enck2005a}. 
+
+The next major problem with the current analytic strategies taken towards placebo is that most of the techniques used (ANOVA, linear models etc) assume that the mean is an appropriate measure of central tendency. However, given that placebo response can be modelled as binary (it either occurs or it does not) then the distribution would be expected to be bi-modal, in which case the mean can be very misleading. In reference to this point, a re-analysis of a number of placebo trials showed vast differences between the mean and median placebo responses \cite{McQuay1996}. 
+
+Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions will be discussed further in Chapter \ref{cha:notes-towards-theory}. 
+
+
+One final issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assummed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. In the next section, the rationale behind this approach is explained. 
 
 
 \section{Methodology}
