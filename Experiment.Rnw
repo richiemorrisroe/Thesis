@@ -60,6 +60,86 @@ load("credtotals.rda")
 ## load("tcqthesis.rda")
 @ 
 
+\subsection{Recruitment for the Experimental Procedure}
+
+Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw carried out after the experimental procedure was carried out for all participants.  After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive.
+
+\subsection{Measures used in the Experiment}
+\label{sec:meas-used-exper}
+
+The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:preliminary-research}, Section \ref{cha:preliminary-research-2}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as follows:
+\textup{Treatment Credibility IAT:}
+Conventional: creams, pills, surgery, injections
+Alternative: homeopathy, acupuncture, reiki, flower essence
+Real: Real, accurate, true
+Fake: Fake, inaccurate, false
+Optimism IAT
+Optimism: Optimism, happy, improving, succeeding
+Pessimism: Pessimism, unhappy, disimproving, failing
+Self: Me, mine, myself
+Other: You, yours, yourselves. 
+
+Further details of the development and piloting of each IAT are in Chapter \ref{cha:preliminary-research-5}. 
+In addition, participants gave verbal reports of their pain levels to the experimenter at one minute intervals, and these were recorded (along with condition and exact time of application of bandage and when the squeezing stopped) on a sheet of paper, along with the participants identification number. 
+
+
+\subsection{Experimental Procedure}
+
+All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
+
+Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10.
+
+If the participant was in the treatment or placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. ECG and EDA recordings were taken one thousand times per second second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of moisturiser in a pharmacuetical container, and was unlabelled.
+
+Participants in the treatment group were told that \textit{the cream was a potent painkiller, recently approved and proven to reduce pain, which would take effect almost immediately}. Participants in the placebo group were told that \textit{they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately}.
+
+\subsubsection{Analysis of Experimental Data}
+
+The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests (for numerical data) and ANOVA's (for categorical data). There were no differences in pre-treatment levels for any of the variables, and so analytical techniques did not need to include any variables to ensure comparability. This finding demonstrated that the randomisation was successful. 
+
+\paragraph{Analysis of IAT data}
+
+Firstly,  an ex-Gaussian distribution was fit to the data. This distribution is a mixture distribution of a normal and an exponential, and can be used to account for the extremely long tails present in such data. If this distribution proved a reasonable fit to the data, then estimation of confidence intervals and predictions could be made more easily from the data.
+In addition, as described previously, quantiles were determined for each participant in each Block, and these individual level quantiles were used to derive the group level distributions for each block and condition. 
+Another approach was taken to the data in tandem with this. This approach involves ordinal test theory \cite{schulman1975test}. All of the reaction time data occurs on a common scale. The differences between the responses to a word ,$w$ in condition 1 and condition 2 are on the same scale, and a distance matrix can be constructed from this data. This distance matrix can either be ranked (which makes fewer assumptions and is less affected by outliers) or the Euclidean distance can be used in analysis. The advantage of the distance approach is that it discards less information, though at the cost of making more assumptions. A clustering approach was then used, to assess whether or not the stimuli fell into the same categories. This clustering approach was repeated 10 times with different seeds and the results averaged in order to reduce random variability inherent to the k-means approach. $k$ was also varied from 1 to 10, and the results averaged also.
+
+The ordinal/euclidean matrix was then factor analysed and examined using item response theory to assess its psychometric structure, and assess fit or lack thereof.
+
+Another approach which was applied to this data was to fit Samejina's continuous response model, which is a generalisation of the Graded Response Model % (described above in Section \ref{sec:polyt-item-resp})
+to the reaction time data. This procedure aimed to produce ability estimates which were then applied to the prediction of placebo response data. 
+
+\paragraph{Analysis of Pain Rating Data}
+\label{sec:analysis-pain-rating}
+
+The pain ratings were modelled as time series, and individual and gender, condition and group level ARIMA models were fitted to the data. In addition, their cross-correlations were examined with the physiological time series collected as part of the placebo analgesia experiment. The model fitting procedure was as follows:
+\begin{itemize}
+\item Examine the time series to assess stationarity
+
+\item Examine the ACF plots to assess lag needed
+
+\item Plot the lagged and differenced series
+
+
+\item Examine the ACF and residuals of the newly lagged and differenced series
+
+\item If residuals were white noise and the series was stationary, accept the model. If not, repeat the process until the residuals are white noise and the series was  stationary
+\end{itemize}
+
+\paragraph{Analysis of Placebo Response Data}
+\label{sec:analys-plac-resp}
+
+The first step was to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
+
+Because of the autocorrelation inherent in the pain ratings, general linear models were not entirely appropriate for this data. Therefore, the autocorrelation structure was determined for the pain ratings, and a generalised linear mixed model was fitted to the data using the IAT, explicit and physiological data as predictors. These models were carried out using stepwise, lasso, ridge and least angle regression methods, and validated using ten-fold cross validation. In addition, these models were compared against models using both factor scores and IRT ability estimates to determine the usefulness of this model based approach. 
+
+\paragraph{Analysis of Physiological Data}
+\label{sec:analys-phys-data}
+
+The physiological data was collected (as described above) from  two different sources. The first was skin conductance, and the second was electro-cardiogram data. Both of these sources provided recordings every 1000th of one second for the entire procedure (and normally a few seconds after the blood pressure gauge). The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals. In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
+
+Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in the appropriate Chapter (\ref{cha:primary-research-2}).
+
+
 \subsubsection{Time Series Analysis}
 
 Time Series Analysis is an extremely widely used statistical tecnhique.  The models in use today in the social sciences tend to be ARIMA models and their descendents, and these were developed in the 1970's by Box and Jenkins\cite{box1970time}.  \footnote{ARIMA stands for Auto Regressive Integrated Moving Average models}, The features of these models are described below \cite{mccleary1980applied}.
