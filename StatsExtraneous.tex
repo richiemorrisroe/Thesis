@@ -281,49 +281,73 @@ Another difference concerns the assumptions about the parameters estimated from 
 
 The approach taken in this research  was the following. Firstly, all measures were administered to a random sample of the population from which experimental participants were to be drawn (students at University College Cork). These large datasets ($n$ between 800 and 1500) were then used to build and test models based on both factor analysis and item response theory.
 
-% N fold Cross-validation \cite{friedman2009elements} (see also Section \ref{problems-sample-infer}) approaches were employed to decide amongst the different methods of scoring. N-fold cross-validation involves splitting the data into N sets, fitting the models on N-1 of these sets and testing the model on the remaining split. This process is repeated for all splits. These models were then  applied to the response patterns of the experimental participants, and estimates of their abilities and scores were created, along with a determination of the best model(s), which was then applied to the experimental data. 
+N fold Cross-validation \cite{friedman2009elements} (see also Section \ref{problems-sample-infer}) approaches were employed to decide amongst the different methods of scoring. N-fold cross-validation involves splitting the data into N sets, fitting the models on N-1 of these sets and testing the model on the remaining split. This process is repeated for all splits. These models were then  applied to the response patterns of the experimental participants, and estimates of their abilities and scores were created, along with a determination of the best model(s), which was then applied to the experimental data. 
 
  This allows for the psychometric tools developed for analysis of large samples to be applied to experimental data where there would not have been enough respondents to fit a model on if this was the only data available. This is important, as many measures (including the ones described in Chapter \ref{cha:health-for-thesis} and \ref{cha:tcq-thesis}) have structure which implies that the use of means, medians or sum-scores would be invalid, and the collection of large amounts of data allowed for models to be applied to the scales which can then be used to predict the response to placebo more accurately in Chapter \ref{cha:primary-research}. 
 
 
-% The most important feature of a time series model is parsimony, as there are many ARIMA models which can fit a sequence equally well, and the best approach is to start from an extremely simple model and add extra parameters until an acceptable level of fit is reached.  In order for any kind of ARIMA model to be fit, $N>50$, which is often quite difficult in some applications. Given the nature of the time series data included in this research (physiological series measured once per second) this was not expected to cause any problems. It was however, a problem for some of the pain ratings, as these were only collected once per minute. Resolutions for this problem are discussed below. 
+The most important feature of a time series model is parsimony, as there are many ARIMA models which can fit a sequence equally well, and the best approach is to start from an extremely simple model and add extra parameters until an acceptable level of fit is reached.  In order for any kind of ARIMA model to be fit, $N>50$, which is often quite difficult in some applications. Given the nature of the time series data included in this research (physiological series measured once per second) this was not expected to cause any problems. It was however, a problem for some of the pain ratings, as these were only collected once per minute. Resolutions for this problem are discussed below. 
 
-% \paragraph{Assumptions of Time Series Analysis}
+\paragraph{Assumptions of Time Series Analysis}
 
-% There are a number of conditions that must be met in order to carry out a time series analysis:
-% \begin{itemize}
-% \item Each observation is considered to be on an interval scale;
-% \item The time between each observation must be constant;
-% \item  The time series must be stationary in both level and variance;
-% \item  The data generating process must be identified;
-% \item  The residuals must be white noise (i.e. drawn from the standard normal).
-% \end{itemize}
+There are a number of conditions that must be met in order to carry out a time series analysis:
+\begin{itemize}
+\item Each observation is considered to be on an interval scale;
+\item The time between each observation must be constant;
+\item  The time series must be stationary in both level and variance;
+\item  The data generating process must be identified;
+\item  The residuals must be white noise (i.e. drawn from the standard normal).
+\end{itemize}
 
-% \paragraph{General Definitions}
+\paragraph{General Definitions}
 
-% In the context of a time series $Y_t$, \textit{trend} refers to movement in a specific direction; i.e. any systematic change in the level of a time series. If a time series in trendless, and the subsequent values are generated as standard normal random shocks, then the best estimate of the time series at any point in the future will be the mean. However, very few time series are trendless, there is often something which moves the series in a particular direction. There are two options for dealing with trend: it must either be removed, or it must be modelled. Older texts on time series suggest regression as a means to remove trend, but this is not recommended as it will be heavily biased by outliers \cite{mccleary1980applied}.
+In the context of a time series $Y_t$, \textit{trend} refers to movement in a specific direction; i.e. any systematic change in the level of a time series. If a time series in trendless, and the subsequent values are generated as standard normal random shocks, then the best estimate of the time series at any point in the future will be the mean. However, very few time series are trendless, there is often something which moves the series in a particular direction. There are two options for dealing with trend: it must either be removed, or it must be modelled. Older texts on time series suggest regression as a means to remove trend, but this is not recommended as it will be heavily biased by outliers \cite{mccleary1980applied}.
 
-% % Mathematically, a time series can be regarded as a random walk, that is, the independent realisation of a long sequence of independent and identically distributed events (the random shocks) \cite{venables2002modern}.
-%  A better way of dealing with trend in a time series is through differencing, where each observation is subtracted from the last observation. This allows us to consider the time series as particular individual changes from one observation to the next, having accounted for (by differencing) all of the changes up to that point. A differenced time series can be referred to as $z_t=Yt-Yt-1$.
+% Mathematically, a time series can be regarded as a random walk, that is, the independent realisation of a long sequence of independent and identically distributed events (the random shocks) \cite{venables2002modern}.
+ A better way of dealing with trend in a time series is through differencing, where each observation is subtracted from the last observation. This allows us to consider the time series as particular individual changes from one observation to the next, having accounted for (by differencing) all of the changes up to that point. A differenced time series can be referred to as $z_t=Yt-Yt-1$.
 
-% The general form of ARIMA models is as follows: ARIMA(p,d,q) where $d$ is the number of differences required to make the time series stationary. In most social science cases, the order of $d$ will typically be less than 2 \cite{mccleary1980applied}.
+The general form of ARIMA models is as follows: ARIMA(p,d,q) where $d$ is the number of differences required to make the time series stationary. In most social science cases, the order of $d$ will typically be less than 2 \cite{mccleary1980applied}.
 
-% In the general form of the ARIMA(p,d,q) models, $d$ has already been discussed. In this context, $p$ refers to the number of lagged observations that must be retained in order to model the current observation $Y_t$. This is referred to as the Auto Regressive portion of the model, where $p$ is the autoregressive parameter. If the ARIMA model is (p,0,0) then it is already stationary, but other processes can be differenced to reach this point. Some authors note that first order AR processes are most common in social science applications \cite{mccleary1980applied}. The autoregressive parameter $\phi$ falls between -1 and 1 (if it does not, this represents a serious failure of the model) and thus, each lagged term converges towards zero (as the parameter is raised to the power of n lags).
-% % If $\phi$ is not constrained, then past shocks would become exponentially more important as time went on, which defies the common experience of processes moving over time.
+In the general form of the ARIMA(p,d,q) models, $d$ has already been discussed. In this context, $p$ refers to the number of lagged observations that must be retained in order to model the current observation $Y_t$. This is referred to as the Auto Regressive portion of the model, where $p$ is the autoregressive parameter. If the ARIMA model is (p,0,0) then it is already stationary, but other processes can be differenced to reach this point. Some authors note that first order AR processes are most common in social science applications \cite{mccleary1980applied}. The autoregressive parameter $\phi$ falls between -1 and 1 (if it does not, this represents a serious failure of the model) and thus, each lagged term converges towards zero (as the parameter is raised to the power of n lags).
+% If $\phi$ is not constrained, then past shocks would become exponentially more important as time went on, which defies the common experience of processes moving over time.
 
-% Following the differencing procedure, the time series should be stationary in level. However, while this is necessary for an analysis of time series, it is not sufficient. In order for the time series to be analysed, it must be stationary both in level and in variance. One common way to acheive variance stationarity is by using a natural log transform. One major advantage in this approach is that coefficients garnered from this time series can merely be exponentiated in order to intepret them on the scale of the original data \cite{gelman2007data}.  
-
-
-% The final term is the general form of ARIMA models, $q$ represents the moving average. Essentially, it is a measure of how long a random shock stays in the system before its effects can be ignored. An ARIMA (0,0,2) model would imply that the current term is made up from the previous two terms, and no more are necessary. Again, the parameters need to be constrained to the range between -1 and +1 \cite{mccleary1980applied}.
+Following the differencing procedure, the time series should be stationary in level. However, while this is necessary for an analysis of time series, it is not sufficient. In order for the time series to be analysed, it must be stationary both in level and in variance. One common way to acheive variance stationarity is by using a natural log transform. One major advantage in this approach is that coefficients garnered from this time series can merely be exponentiated in order to intepret them on the scale of the original data \cite{gelman2007data}.  
 
 
-% \paragraph{Identification of ARIMA models}
+The final term is the general form of ARIMA models, $q$ represents the moving average. Essentially, it is a measure of how long a random shock stays in the system before its effects can be ignored. An ARIMA (0,0,2) model would imply that the current term is made up from the previous two terms, and no more are necessary. Again, the parameters need to be constrained to the range between -1 and +1 \cite{mccleary1980applied}.
 
-% The models discussed above represent the general form of ARIMA models. These need to be estimated from the data, and this section deals with  methods of doing this. The general approach here is to use what is called the Auto Correlation Function (ACF)\cite{mccleary1980applied}. Essentially, the ACF is a generalised correlation coefficient for dependent (i.e. time-series) data. The ACF is normally calculated for different lags, and the results plotted. These plots are then primary tools to identify the ARIMA model which best fits the data. For example, an ARIMA(0,0,0) process will have ACF's for all lags which are essentially zero. An ARIMA(0,1,0) will have equal ACF for all lags. The ARIMA(0,0,1) will have a non-zero ACF(1) and all others will be zero. More generally, an ARIMA(0,0,q) will have $ACF(1)\ldots, ACF(q)$ which are not significantly different from  zero.ARIMA(1,0,0) processes will have exponentially decaying ACF's. Examination of the ACF plots and their absolute value can also determine whether or not a time series needs to be differenced.
 
-% In addition, the Partial Auto-Correlation Function is also used in the identification of ARIMA models. The PACF is defined as the correlation between $t$ and $k$ after all lags inside that interval have been partialled out. Essentially, the PACF is equivalent conceptually to the differenced time series \cite{mccleary1980applied}.
+\paragraph{Identification of ARIMA models}
 
-% An issue which often causes problems for time series analyses is that of seasonality. Seasonality is defined as recurring patterns that occur at a higher order level of the time series. For example, time series of retail sales tend to spike in December and January, and this is an example of seasonality. Generally, seasonal effects are modelled using a higher order ARIMA(p,d,q) structure so a typical model of retail sales data might look like this ARIMA(2,0,0)(0,0,2). However, seasonal patterns are much rarer in physiological data, and so they will not be further discussed here.
+The models discussed above represent the general form of ARIMA models. These need to be estimated from the data, and this section deals with  methods of doing this. The general approach here is to use what is called the Auto Correlation Function (ACF)\cite{mccleary1980applied}. Essentially, the ACF is a generalised correlation coefficient for dependent (i.e. time-series) data. The ACF is normally calculated for different lags, and the results plotted. These plots are then primary tools to identify the ARIMA model which best fits the data. For example, an ARIMA(0,0,0) process will have ACF's for all lags which are essentially zero. An ARIMA(0,1,0) will have equal ACF for all lags. The ARIMA(0,0,1) will have a non-zero ACF(1) and all others will be zero. More generally, an ARIMA(0,0,q) will have $ACF(1)\ldots, ACF(q)$ which are not significantly different from  zero.ARIMA(1,0,0) processes will have exponentially decaying ACF's. Examination of the ACF plots and their absolute value can also determine whether or not a time series needs to be differenced.
+
+In addition, the Partial Auto-Correlation Function is also used in the identification of ARIMA models. The PACF is defined as the correlation between $t$ and $k$ after all lags inside that interval have been partialled out. Essentially, the PACF is equivalent conceptually to the differenced time series \cite{mccleary1980applied}.
+
+An issue which often causes problems for time series analyses is that of seasonality. Seasonality is defined as recurring patterns that occur at a higher order level of the time series. For example, time series of retail sales tend to spike in December and January, and this is an example of seasonality. Generally, seasonal effects are modelled using a higher order ARIMA(p,d,q) structure so a typical model of retail sales data might look like this ARIMA(2,0,0)(0,0,2). However, seasonal patterns are much rarer in physiological data, and so they will not be further discussed here.
+
+
+A final issue in the use of linear regression is the popularity of stepwise approaches to variable selection in regression models\cite{antonakis2010looking}. In these approaches, the computer is told which variables to start with, and an alogrithmic approach to the analysis is taken, whereby variables are added or removed from the model on the basis of their p value (or AIC). These models, which appear to remove all responsibility from the researcher, lead to biased estimates, far too narrow confidence intervals and incorrect F tests \cite{antonakis2010looking} \cite{gelman2007data}. Indeed, Antonakis \& Dietz found that using stepwise multiple regression they were able to fit a model explaining 80\% of the variance to 20 variables distrbuted normally, which is merely fitting a model to noise. However, this problem occurs even when variables are added or removed from a model manually, as the false positive rate increases linearly with the number of models fit. The $R^2$ tended to decrease as they increased their sample size in the MCMC study, but any appreciable model should not be constructable from pure noise \cite{antonakis2010looking}.
+
+There are solutions to this dilemma. Perhaps the most justifiable solution is to only add or remove variables from the model based on theory. This is an excellent solution which if followed consistently would lead to much more parsimonous and replicable models. However, any approach which starts with a model and then adds or subtracts variables from it, whether driven by theory or an algorithmic approach, still suffers from the multiple comparisions problems and needs to have the p values adjusted \cite{friedman2009elements}. 
+
+The major problem with this approach is that it removes the opportunity for serendipituous findings from research. While the use of theory driven regressions may cut down on the discovery of spurious relationships, it does so at the cost of removing all opportunity for unexpected findings.
+
+One simple solution, which can be implemented in all statistical packages is through the use of cross-validation. With this approach, predictor variables are selected on N-1 splits of the data, and the model is then tested on the remaining split. This avoids the multiple comparison problems which stepwise variable selection methods incur, and allows for accurate p-values and standard errors to be estimated from the data, while allowing for serendipituous discovery of accurate models. This approach also harnesses the ability of the computer to fit an extremely large number of models and retain those predictors which perform the best. In this research, this form of stepwise selection was used, selecting predictor variables using a psuedo-AIC which penalises models with more parameters \cite{venables2002modern}.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Another solution lies in regression methods developed in the last thirty years which are designed to compensate for the deficiencies of stepwise approaches. These methods are known as lasso, ridge and least angle regression, and the premise behind them is simple. They allow variables to enter and exit algorithmically, but they penalise the coefficients towards zero each time this occurs\cite{friedman2009elements}. This allows for the effects of overfitting to be greatly reduced while at the same time enabling a variety of models to be fit to limited data. Combined with cross-validation of all models, these approaches hold real promise for reducing spurious findings and increasing the usefulness of models for prediction in this research.
+
 
 %%% Local Variables: 
 %%% mode: latex

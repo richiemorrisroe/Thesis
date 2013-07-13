@@ -87,6 +87,26 @@ In this research, a particular form of time series analysis was used, which is k
 
 A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental procedure. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them.
 
+\subsubsection{Analysis of Reaction Time Data}
+
+Reaction time data has been studied by (mostly cognitive) psychologists for many years. The Implicit Association Test has been used in almost 300 published papers and reports (and doubtless many more times where the results were not published). However, with a few exceptions, there has been almost no overflow from one area of study to the other.
+
+Classic work in examining the distributions of reaction time data was carried out by Ratcliff\cite{ratcliff1979group}\cite{ratcliff1993methods}. In the 1979 paper he suggested that a quantile based approach should be used for individual reaction time scores. This involves ranking each of the latencies for each individual participant, and using certain percentages of these as quantiles, which can then be used to estimate group distributions. This approach will be utilised in this research, and four quantiles will be used, as given that some conditions (Blocks one, two and four) have only twelve observations, and quartiles divide each of the block sizes (12 and 36) equally. These quartiles were then used to estimate group, block and condition level distributions for the reaction time data. 
+
+The typical approach to analysis of IAT data goes as follows  \cite{Greenwald1998}: firstly, the data is checked for outliers. Outliers, in this case are defined as responses less than 300ms and greater than 3000ms. Any such outliers are recoded to 300 or 3000ms respectively. Following this procedure, a mean is taken of the items in each condition. These means along with standard deviations are reported. The response latencies are then log transformed (to reduce positive skew) and the IAT score is calculated as follows. 
+
+Given the participants mean latency in each condition, their IAT score is the mean for the incompatible condition (i.e. White + Unpleasant) less the mean from the compatible condition (i.e. White + pleasant) divided by the average of the two within group standard deviations. This measure is typically called $D$, and was developed after extensive analysis of an extremely large sample of IAT responses\cite{Greenwald2003a}.In addition to the change of scoring procedure in the 2003 revisions, the threshold for outliers was also substantially widened to 10000 ms. Given that the sample used for this re-analysis was over one hundred thousand, this widening of the threshold was presumably based on experience with a much broader population than was used in many early IAT experiments (typically college students). 
+
+There are a number of problems with this approach. Firstly, the approach throws away much information, more than once. In the first case, information regarding extreme responses is censored, in an unsystematic and theoretically unjustified manner. The breakpoints of 300 and 3000 milliseconds appear to have been chosen to allow for the use of the mean as a group value rather than for any principled reasons. 
+
+It is arguable as to whether or not this censoring represents a good strategy, but certainly it is something which should have been examined in a principled fashion, which does not appear to have happened. The second issue relates again to the calculation of a mean.
+
+While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. 
+
+The choice of log transform (while slightly more justifiable) is decidedly inferior to a more data driven approach. Again, the issue here is not that such choices in analysis were made, but rather that they have been made once and repeated many times in the later literature. Even those who have criticised the IAT \cite{Klauer2005,Mierke2003,Blanton2006} on methodological grounds appear to have ignored this issue. Possible resolutions of this issue are discussed below in Section \ref{sec:experimental-data-analysis}
+
+Given the typical right skew observed in reaction time distributions, the median would seem to be a much better measure of central location than would the mean. This right skew typically occurs as there is a hard bound on how quickly a participant can respond, but no such bound (unless enforced by the procedure) in the maximum time taken to respond. Therefore, in this research, medians will be used for all reaction time based measures. The differences between the mean and median based approaches will be examined and reported, to determine if it makes any difference. 
+
 
 
 \section{Results}
