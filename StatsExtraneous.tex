@@ -332,7 +332,9 @@ There are solutions to this dilemma. Perhaps the most justifiable solution is to
 
 The major problem with this approach is that it removes the opportunity for serendipituous findings from research. While the use of theory driven regressions may cut down on the discovery of spurious relationships, it does so at the cost of removing all opportunity for unexpected findings.
 
-One simple solution, which can be implemented in all statistical packages is through the use of cross-validation. With this approach, predictor variables are selected on N-1 splits of the data, and the model is then tested on the remaining split. This avoids the multiple comparison problems which stepwise variable selection methods incur, and allows for accurate p-values and standard errors to be estimated from the data, while allowing for serendipituous discovery of accurate models. This approach also harnesses the ability of the computer to fit an extremely large number of models and retain those predictors which perform the best. In this research, this form of stepwise selection was used, selecting predictor variables using a psuedo-AIC which penalises models with more parameters \cite{venables2002modern}.  
+One simple solution, which can be implemented in all statistical packages is through the use of cross-validation. With this approach, predictor variables are selected on N-1 splits of the data, and the model is then tested on the remaining split. This avoids the multiple comparison problems which stepwise variable selection methods incur, and allows for accurate p-values and standard errors to be estimated from the data, while allowing for serendipituous discovery of accurate models. This approach also harnesses the ability of the computer to fit an extremely large number of models and retain those predictors which perform the best. In this research, this form of stepwise selection was used, selecting predictor variables using a psuedo-AIC which penalises models with more parameters~\cite{venables2002modern}.  
+
+
 
 
 
