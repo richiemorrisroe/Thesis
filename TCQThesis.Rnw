@@ -9,6 +9,60 @@ While expectancies are considered the prime factor in response to placebo, there
 
 It is important to note that current or former use of the treatments measured was not a requirement for the completion of the measure, but this should not be regarded as a flaw given that many if not most participants in placebo research do not have any experience of the treatments used (and indeed, such knowledge is often an exclusion criteria for the research) \cite{Kirsch1985,Kirsch1997}. The CEQ has been used in a family therpay setting for children with conduct disorder \cite{Nock2007}, in the assessment of relational therapy for Vietnam war veterans and their spouses \cite{Devilly2002} and in the treatment of PTSD \cite{Devilly2008}. It has not been used in any non-clinical samples, and this is its first adaptation for the study of both pain and treatment response expectancies. 
 
+\section{Methodology}
+\label{sec:methodology}
+
+
+\subsubsection{Measures}
+
+\paragraph{Development of Treatment Credibility Questionnaire}
+
+The Treatment Credibility Questionnaire was a measure developed for this research project, to compensate for the perceived lack of detail in placebo response expectancy measurement. The questionnaire was based on the Credibility/Expectancy Questionnaire developed by Devilly and Borkovec which consisted of six questions, three which tapped credibility and three which tapped expectancies \cite{Devilly2000}. The scale was developed to assess expectancies around treatment and each question was scored on a 10 point scale (0-9). A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X (where X is one of the treatments listed above).
+
+The questions were as follows:
+
+
+\begin{enumerate}
+	\item How logical does the therapy offered to you seem?
+	\item How successful do you think this treatment will be in reducing your symptoms?
+ 	\item How confident would you be in recommending this treatment to a friend?
+	\item How much improvement in your symptoms do you think will occur?
+	\item How much do you really \textit{feel} that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really \textit{feel} will occur?
+\end{enumerate}
+
+\paragraph{Beliefs About Medicine Questionnaire}
+
+In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines\cite{Horne1999}. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors. The eight items were those retained from a pool of 16 items which derived from interviews with chronic pain patients. All 16 items were administered to all participants, of which 8 are the items selected for the final questionnaire by the original authors, and the other 8 are items which were dropped due to poor loadings.
+
+\subsubsection{Sampling for Treatment Credibility Questionnaire and Beliefs about Medicine Questionnaire}
+
+The sampling for the Treatment Credibility Questionnaire was conducted in two rounds, as the instrument needed to be validated in one sample, and then confirmed and revised in another. The first sample was sent to a random subset of students at the University in February 2010, to which 299 students responded. This data was analysed over the next two months, and following this, a revised version of the questionnaire was sent to both staff and students at the University. Along with this (full details in the Appendix) the Beliefs About Medicine Questionnaire was also sent, to assess the construct validity of the TCQ.
+
+\subsubsection{Analysis for Treatment Credibility Questionnaire}
+
+Sample one was treated as one training set, and the results tested on a subset of Sample 2. 
+
+All data analysis was preceded by fitting a multiple imputation model where necessary, and was split into 4 parts as described above under the section Analysis for Health, Optimism and Mindfulness.
+
+Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. Next, the data was tested for normality using a Shapiro-Wilks test. Following this, a correlation matrix for the data was calculated and analysed.
+
+Next, simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. After this, factor solutions were extracted using maximum likelihood, principal axis and minimum residuals methods, and these structures were examined to assess the invariance of the loadings using different methods of estimation. Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation used.
+
+After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
+
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx package for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions.
+
+
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. Following this, a Rasch model was fitted to the data, and person and item parameters estimated from the data. Item and person fit statistics were also calculated, and as this model did not fit any of the three scales, a two parameter model was fit to the data. Again, item and person estimates were obtained and the relevant fit statistics calculated. The person estimates were then used as predictors in a logistic regression analysis, as a way of assessing the fit of the model.
+
+
+After this, linear regressions were run to examine the differential effects of each of the correlated variables. Stepwise selection on the training set was carried out, along with lasso, ridge and least angle regression methods. The performance of each of these methods was then assessed on held-out data. In the case of Sample one, some of sample 2 was used as a heldout data set. For Sample two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately, and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures.
+
+% After this, linear regressions were run to examine the differential effects of each of the correlated variables. A two step procedure was used. In the first, a simple model was run using one predictor and one response variable. At the next step, a new variable was added to the model, and its impact on the fit and explanatory power assessed. This step was repeated with all variables thought to be of importance to the response variable, until all useful predictor variables had been added and either retained or removed from the model. In the second stage, all variables were entered into the model and its fit assessed. Then, the least significant variables were removed from the model one by one, until a minimal parsimonious model was obtained. At each step of these regressions, qq-plots and plots of the residuals were examined to ensure that the assumptions of homoscedasity and normality of errors were met. As the residuals for the TCQ did not fit the assumptions of linear regression, a generalised linear model was fit to the data, using a poisson error structure, and allowing for over-dispersion.
+
+The Beliefs About Medicine Questionnaire was a special case in this analysis. As only eight items are included in the canonical version of the scale, the other eight were given to test the hypothesis that different items might load better in a general population sample, rather than a clinical sample. Given the small sample sizes in the original research, and the inappropriate use of principal components analysis, this was also used as an opportunity to examine the structure using better methods. Therefore, the eight items of the published scale were analysed first, and then all analyses reported in this section were carried out on the larger sixteen item set. Results of these analyses are in the appropriate section, and the implications are discussed both in the discussion in that section and in the General Discussion.
+
 % \section{Study One}
 
 % \subsection{Materials and Methods}
