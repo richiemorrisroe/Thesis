@@ -6,15 +6,17 @@
 ##' @param ...
 ##' @return
 ##' @author Richard Morrisroe
-FactorXtab <-  function (x, ...) {
+FactorXtab <-  function (x, names=NULL, ...) {
   x.load<-x$loadings
 x.comm<-x$communality
 x.names <- colnames(x.load)
 len <- length(colnames(x.load))
 x.names[len+1] <- "Communalities"
 x.comm.load<-cbind(x.load, x.comm)
+  names2 <- c(names, "Communalites")
 x.mat.df<-as.matrix.data.frame(x.comm.load)
-colnames(x.mat.df) <- x.names
+  colnames(x.mat.df) <- names2
+
 #colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
 fact.xtab <- xtable(x.mat.df, ...)
 fact.xtab
@@ -233,8 +235,8 @@ ggplotGRM <- function (grm, ...) {
   x.t$response <- response
   x.tm <- melt(x.t, id="response")
   names(x.tm) <- c("threshold", "item", "ability")
-  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=as.factor(threshold)), ...)
-  plot2 <- plot1+layer(geom="point")
+  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=as.factor(threshold), colour=as.factor(threshold)), ...)
+  plot2 <- plot1+geom_point()+geom_rug()
   plot2
   }
 ##' .. content for \description{} (no empty lines) ..
@@ -706,7 +708,6 @@ lazyload <- function (files) {
     write.table(gsr, file=outfilenames[i])
   }
 }
-<<<<<<< HEAD
     
 rmsea <- function(data) {
     erro <- with(data, pred-obs)
@@ -715,7 +716,7 @@ rmsea <- function(data) {
     return(root.err)
 }
         
-=======
+
 lazylength <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
@@ -733,7 +734,7 @@ lazylength <- function(files) {
     lengthmat
 }
 
->>>>>>> 792dd32875a42604f37e7912293e3533e855dd15
+
 lazyload <- function (files) {
   outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
   outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
