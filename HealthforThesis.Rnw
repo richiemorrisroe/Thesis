@@ -353,7 +353,7 @@ ggplot(as.data.frame(paper.missing),aes(x=paper.missing, y=..density..))+geom_de
 
 %% However, the situation is very different with the second sample, as can be seen from Figure \ref{fig:onlinemissingplot}, where there are a number of items which have between six and eight hundred missing values.  This was investigated further, as this amount of missing values in a small set of the data may cause problems in the course of the analysis. 
 
-<<missingvaluestable, echo=FALSE, results=tex>>=
+<<missingvaluestable, echo=FALSE, results=hide>>=
 missing.many <- online.missing[online.missing>300]
 missing.many.df <- as.data.frame(missing.many)
 names(missing.many.df) <- "Number of Missing Observations"
@@ -361,7 +361,7 @@ missing.many.xtab <- xtable(missing.many.df, label="tab:missingmanytable", capti
 print(missing.many.xtab)
 @
 
-It can be seen from Table \ref{tab:missingmanytable} that the problems with missing data are concentrated in four consecutive questions, RAND questions 13 through 16. These questions all load on the Role Limitations subscale, explaining why this subscale shows up with lots of missing data.  The consecutive nature of the data suggests that the reason for this may be that participants believed that it was only necessary to answer one of the questions, though that does not explain why so many people did not answer the first question.
+%% It can be seen from Table \ref{tab:missingmanytable} that the problems with missing data are concentrated in four consecutive questions, RAND questions 13 through 16. These questions all load on the Role Limitations subscale, explaining why this subscale shows up with lots of missing data.  The consecutive nature of the data suggests that the reason for this may be that participants believed that it was only necessary to answer one of the questions, though that does not explain why so many people did not answer the first question.
 
 %% Next, we will impute the missing data using a multiple imputation procedure (as discussed in the Methodology).
 
@@ -396,8 +396,8 @@ homlist <- lapply(homfiles, read.csv)
 
 
 To begin the analysis, frequencies, means and ranges were calculated
-for all the variables of interest.  The results of this analysis can
-be seen in Table \ref{tab:sumstatscales} , below.
+for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
+be seen in Table \ref{tab:sumstatscales}, below.
 
 <<sumstats, echo=FALSE,results=tex>>=
 hom.tot <- hom1[,66:75]
@@ -444,7 +444,7 @@ pairs.panels(na.omit(hom.tot))
 
 
 
-As can be seen from Table \ref{tab:scalecorr}, the optimism hypothesis
+As can be seen from Figure \ref{fig:pairsplot}, the optimism hypothesis
 was not supported.  Contrary to predictions, optimism was negatively
 correlated with health.
 Possible explanations are examined in the Discussion section.  In fact, optimism correlated negatively with all of the other totals, suggesting that something strange happened in the sample.
@@ -459,7 +459,7 @@ print(optplot1)
 \end{figure}
 
 
-The figure above \ref{fig:optplot1}, shows a linear regression of optimism against general health in the sample collected by paper.  It can be clearly seen that the relationship is negative, an unexpected and surprising occurence.  %a fact which is borne out in the examination of Figure \ref{fig:optplot2} below.
+Figure~\ref{fig:optplot1}, shows a linear regression of optimism against general health in the sample collected by paper.  It can be clearly seen that the relationship is negative, an unexpected and surprising occurence.  %a fact which is borne out in the examination of Figure \ref{fig:optplot2} below.
 
 
 
@@ -577,7 +577,7 @@ digits(ridge.xtab) <- 4
 print(ridge.xtab)
 @
 
-Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+Next, a form of penalised regression known as ridge regression (or L2 regression) was used. Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
 
 
 
@@ -594,7 +594,7 @@ print(opt.lasso.xtab)
 lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt, traindata=hom1.train.opt, testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
 @ 
 
-Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep} ). However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
+Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection (see Table \ref{tab:hom1optstep}). %% However, these two models are not directly comparable as the OLS model was fitted to the same datset repeatedly, while the lasso and ridge models were fitted to new data. 
 
 
 
@@ -744,9 +744,6 @@ As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regres
 
 
 \section{Psychometric Analyses}
-
-\subsection{Number of Factors to retain}
-
 <<scaleitems, echo=FALSE, results=hide, cache=TRUE>>=
 ## rand.grep <- grep("^RAND", x=names(hom1))
 ## randitems <- hom1[,rand.grep]
@@ -755,6 +752,18 @@ maasitems <- hom1[,maas.grep]
 lotr.grep <- grep("^LOTRQ", x=names(hom1))
 lotritems <- hom1[,lotr.grep]
 @
+
+<<calcalpha, echo=FALSE, results=hide>>=
+maas.alpha <- alpha(maasitems)
+lotr.alpha <- alpha(lotritems)
+@ 
+
+
+Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
+
+\subsection{Number of Factors to retain}
+
+
 <<retainfactors, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 sink("tmp.txt")
 rand.nscree <- nScree(x=cor(na.omit(randitems.scored), use="pairwise.complete.obs"), model="factors")
@@ -880,7 +889,7 @@ Two, four and eight  factor solutions were extracted and interpreted from the RA
 
 <<rand2fact, echo=FALSE, results=tex>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
-print(FactorXtab(rand.fact.2, label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
+print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 
 PA1: "RANDQ1",  "RANDQ14", "RANDQ16" ,"RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ21" ,"RANDQ22" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27"
@@ -908,7 +917,7 @@ The factor correlations were quite low for this solution, at 0.17. This suggests
 
 <<rand4fact, echo=FALSE, results=tex>>=
 rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
-print(FactorXtab(rand.fact.4, label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
+print(FactorXtab(rand.fact.4, names=c("PhysFunc", "SocEmFunc", "PhysLim", "GenHealth"), label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
 @
 
 The loadings on the four factor solution broke down as follows. 
@@ -940,7 +949,7 @@ The factor correlations are quite low in this solution also, though they are all
 
 <<rand8fact, echo=FALSE, results=tex>>=
 rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
-print(FactorXtab(rand.fact.8, label="tab:tcq1rand8fact", caption="factor Loadings Eight Factor Solution, RAND MOS, Sample One"))
+print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="factor Loadings Eight Factor Solution, RAND MOS, Sample One"))
 @
 
 PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". Again, the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
@@ -971,7 +980,7 @@ This factor structure definitely makes sense, and the fit indices are relatively
 print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an othrogonal rotation. 
+The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
 
 
@@ -1066,14 +1075,14 @@ As can be seen from \ref{tab:randsemcompare}, the 8 factor solution appears to f
 
 \section{Mindfulness Attention Awareness Scale}
 
-For the MAAS, parallel analysis, MAP, VSS, Kaisers rule and the Wold method of cross-validation suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
+For the MAAS, parallel analysis, MAP, VSS, Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
 
 \subsection{MAAS One Factor Solution}
 \label{sec:maas-one-factor}
 
 <<maas1fact, echo=FALSE, results=tex>>=
 maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
-print(FactorXtab(maas.fact.1,label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One"))
+print(FactorXtab(maas.fact.1, names=c("Mindfulness"),label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One"))
 @
 
 The results of the one factor solution for the MAAS are shown in Table \ref{tab:hom1maas1fact}. 
@@ -1086,12 +1095,12 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 \subsection{MAAS Three Factor Solution}
 \label{sec:maas-seven-factor}
 
-The next factor solution to be examined was the three factor solution suggested by the Gabriel method of cross-validation.
+The next factor solution to be examined was the three factor solution. 
 
 
 <<maas7fact, echo=FALSE, results=tex>>=
 maas.fact.3<-factor.pa(na.omit(maasitems), 3, rotate="oblimin")
-print(FactorXtab(maas.fact.3,label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"))
+print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAttention"), label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"))
 @
 
 
@@ -1173,7 +1182,7 @@ The factor structure is not reported here as all factors loaded on the first fac
 in the sample, which is low.  Possible explanations for this are discussed below. 
 
 
-\subsection{Life Orientation Test, Revised}
+\section{Life Orientation Test, Revised}
 
 Parallel Analysis indicated that two factors should be extracted, while the MAP criterion suggested one.  Therefore, both one and two factor solutions were extracted from the matrix and their results examined for adequacy and interpretability.
 
@@ -1269,7 +1278,7 @@ As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provide
 
 
 
-The next instrument examined was the MAAS.  Firstly, the instrument was examined using mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
+The next instrument examined was the MAAS.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
 <<maasassumptioncheck, echo=FALSE, results=hide>>=
 maas.scales <- aisp(na.omit(maasitems))
@@ -1341,7 +1350,7 @@ print(maasp)
 
 As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
 
-<<maasgrm1plprint, echo=FALSE, results=hide, cache=TRUE>>=
+<<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
 print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
 @ 
 
@@ -1371,7 +1380,7 @@ anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
 anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 @
 
-The three models were subjected to anova comparison and the 1 parameter model was significantly ($p \le 0.001$) better than the rasch model, and the 2 parameter model was significantly better than the 1 parameter model ($p \le 0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
+The three models were subjected to ANOVA comparison and the 1 parameter model was significantly ($p\le0.001$) better than the Rasch model, and the two parameter model was significantly better than the one parameter model ($p\le0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
 \subsection{LOTR}
 \label{sec:lotr}
@@ -1548,9 +1557,18 @@ lotr.rand.direct <- mxModel(name="LOTRRandDirect",
 
 @ 
 
-<<opthealthdirectfit, echo=FALSE, results=hide, eval=FALSE>>=
+<<opthealthdirectfit, echo=FALSE, results=hide>>=
 opt.direct.fit <- mxRun(model=lotr.rand.direct)
+omxGraphviz(opt.direct.fit, dotFilename="lotrdirect.dot")
 @ 
+
+\begin{figure}
+\includegraphics{lotrdirect}  
+  \caption{Direct Model for Optimism and Health}
+  \label{fig:lotrdirect}
+\end{figure}
+
+
 
 <<opthealthmaaasmdediated, echo=FALSE, results=hide>>=
 opt.health.indirect.maas <- mxModel(lotr.rand.direct, mxPath(from=predictors, to=response), remove=TRUE)
@@ -1564,12 +1582,19 @@ rand.lotr.indirect.done <- mxModel(opt.health.indirect.maas,
 
 @ 
 
-<<fitopthealthmediated1, echo=FALSE, results=hide, eval=FALSE>>=
+<<fitopthealthmediated1, echo=FALSE, results=hide>>=
 rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
+omxGraphviz(rand.lotr.indirect.maas.fit, dotFilename="lotrindirectmaas.dot")
 @ 
 
+\begin{figure}
+\includegraphics{lotrindirectmass}  
+  \caption{Optimism and Health Mediated by Mindfulness}
+  \label{fig:lotrhealthmind}
+\end{figure}
 
-<<randindirectemwelleing, echo=FALSE, results=hide, eval=FALSE>>=
+
+<<randindirectemwelleing, echo=FALSE, results=hide>>=
 rand.indirect.emwellbeing <- mxModel(rand.lotr.indirect.done, remove=TRUE, mxPath(from=predictors, to=response))
 rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
                                       name="RandIndirectEmWellBeing", 
@@ -1581,11 +1606,19 @@ rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
 
 @ 
 
-<<opthealthmediatedfit2, echo=FALSE, results=hide, eval=FALSE>>=
+<<opthealthmediatedfit2, echo=FALSE, results=hide>>=
 lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
+omxGraphviz(lotr.indirect.emwellbeing, dotFilename="lotrindirectemwellbeing.dot")
 @ 
 
-<<lotrindirectenergyfat, echo=FALSE, results=hide, cache=TRUE>>=
+
+\begin{figure}
+  \includegraphics{lotrindirectemwellbeing}
+  \caption{Optimism and Health, Mediated by Emotional Well Being}
+  \label{fig:lotrhealthemwellbeing}
+\end{figure}
+
+<<lotrindirectenergyfat, echo=FALSE, results=hide>>=
 lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
 lotr.indirect.energyfat <- mxModel(lotr.indirect,
                                    name="LOTRIndirectEnergyFatigue",
@@ -1597,11 +1630,18 @@ lotr.indirect.energyfat <- mxModel(lotr.indirect,
 
 @ 
 
-<<opthealthmediatedfit3, echo=FALSE, results=hide, eval=FALSE>>=
+<<opthealthmediatedfit3, echo=FALSE, results=hide>>=
 lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
+omxGraphviz(lotr.indirect.energyfat.fit, dotFilename="lotrindirectenergyfat.dot")
 @ 
 
-<<lotrindirectgenhealth, echo=FALSE, results=hide, cache=TRUE>>=
+\begin{figure}
+  \includegraphics{lotrindirectenergyfat}
+  \caption{Optimism and Health Mediated by Energy/Fatigue}
+  \label{fig:lotrhealthenergyfat}
+\end{figure}
+
+<<lotrindirectgenhealth, echo=FALSE, results=hide>>=
 lotr.indirect.genhealth <- mxModel(lotr.indirect, 
                                    name="LOTRIndirectGenHealth",
                                    mxPath(from="Age", to="generalhealth"),
@@ -1612,21 +1652,35 @@ lotr.indirect.genhealth <- mxModel(lotr.indirect,
 
 @ 
 
-<<lotrindirectfit4, echo=FALSE, results=hide, eval=FALSE>>=
+<<lotrindirectfit4, echo=FALSE, results=hide>>=
 lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
+omxGraphviz(lotr.indirect.genhealth.fit, dotFilename="lotrindirectgenhealth.dot")
 @ 
 
 
-<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
+\begin{figure}
+  \includegraphics{lotrindirectgenhealth}
+  \caption{Optimism Directly Affected by Health}
+  \label{fig:optindirectgenhealth}
+\end{figure}
+
+<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
 lotr.health.med2 <- mxModel(lotr.rand.direct, 
                             name="LOTRHealthMediated",
                             mxPath(from="generalhealth", to="mindfulness"),
                             mxPath(from="mindfulness", to="optimism"))
 lotr.health.med.fit <- mxRun(lotr.health.med2)
+omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 @ 
 
-<<lotrmodcomp, echo=FALSE, results=tex, eval=FALSE>>=
+\begin{figure}
+  \includegraphics{lotrindirectmindfulness}
+  \caption{Optimism and Health Mediated by Mindfulness}
+  \label{fig:lotrhealthmind2}
+\end{figure}
+
+<<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
 print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"))
 @ 
