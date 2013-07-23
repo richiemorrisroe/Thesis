@@ -11,20 +11,21 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 
 
 
-\section{Introduction}
+\part{Introduction}
 \label{sec:introduction}
 
 
 The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was considered important to administer some instruments which had been shown to be associated with it in previous studies.
 
-The only measure for which a well-validated scale exists which has been shown to impact the placebo response is optimism \cite{Geers2005,morton2009reproducibility}. Specifically, the Life Orientation Test, Revised (LOT-R) has been shown in a number of studies to be associated with the response to placebo. Interestingly enough, the Morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism is discussed in more detail in Section \ref{sec:optimism} below. 
+The only measure for which a well-validated scale exists which has been shown to impact the placebo response is optimism \cite{Geers2005,morton2009reproducibility}. Specifically, the Life Orientation Test, Revised (LOT-R) has been shown in a number of studies to be associated with the response to placebo. 
+%% Interestingly enough, the Morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism is discussed in more detail in Section \ref{sec:optimism} below. 
 
 Mindfulness, on the other hand is a construct that has both been associated with health \cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures \cite{Levesque2007}, and as such provided a construct which had been associated with the IAT in previous work (c.f. \ref{cha:literature-review}) and could plausibly be associated with health. Some more in-depth discussions of this potential relationship were outlined in Chapter \ref{cha:methodology}, in Section \ref{sec:embod-cogn-plac}. 
 
 Health (in the form of the RAND-MOS) was included in this piece of research both to replicate the optimism-health link and examine if the health-mindfulness link held when both constructs were measured using survey methods, and as a weak proxy for the placebo effect. This follows as if the placebo effect is the result of expectancies, then there should be some shared variance between the response to placebo and other health-related cognitions. Additionally, the study formed an opportunity to collect background data for the population of interest, to assess if the participants in the experiment were systematically different from those who had responded to a survey invitation. 
 
 
-\subsection{Optimism and Placebo}
+\section{Optimism and Placebo}
 \label{sec:optimism}
 
 
@@ -63,10 +64,10 @@ of optimism have also been associated with quicker recovery from surgery,
 insulin therapy and chemotherapy \cite{Allison2000}. A prospective
 study looking at outcomes from a group of head and neck cancer patients
 found that optimists consistently reported better health outcomes
-than pessimists \cite{Allison2000}. A meta-analysis reported on correlations
-between optimism and post-traumatic growth, which found a mean effect
-size of 0.2, but the studies were of quite poor quality, so this finding
-must be regarded as tentative \cite{Bostock2009}.
+than pessimists \cite{Allison2000}.%%  A meta-analysis reported on correlations
+%% between optimism and post-traumatic growth, which found a mean effect
+%% size of 0.2, but the studies were of quite poor quality, so this finding
+%% must be regarded as tentative \cite{Bostock2009}.
 
 The question of the mechanism by which optimism manifests differences
 in health is still unclear. Some researchers argue for a direct effect
@@ -74,7 +75,7 @@ of optimism on immune function ,  while others
 argue that optimism exerts its protective effects through the effects
 of persistent striving after health goals \cite{Segerstrom2003}.
 
-Additionally, there appears to be a curvi-linear relationship between optimism and health in some studies, which the authors attribute to participants holding both high optimistic and high pessimistic outcome expectancies simultaneously. 
+Additionally, there appears to be a curvi-linear relationship between optimism and health in some studies, which some authors attribute to participants holding both high optimistic and high pessimistic outcome expectancies simultaneously. 
 
 \subsection{Factorial Structure of the LOT-R}
 \label{sec:fact-struct-lot}
@@ -134,7 +135,7 @@ She found that mindfulness was strongly correlated with neuroticism and negative
  whether neuroticism interferes with mindfulness. 
 
 
-\subsection{Aims of the Research}
+\section{Aims of the Research}
 
 As discussed above, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
 The primary aim of this part of thesis was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research.
@@ -159,11 +160,12 @@ The response rate for Sample One (paper) was approximately
 was 10\%. Note that psuedo-random sampling was used for sample one, while simple random sampling was used for Sample Two. 
 
 \section{Methods}
+\label{sec:methods}
 
 The methods used for this part of the thesis were primarily psychometric. Cross-validation approaches (described in Chapter \ref{cha:methodology}) were applied to both samples to increase generalisability of the models to the experimental portion of the research. This section describes the measures used for this part of the study, followed by a description of the sample, and concludes with a description of the methods of analysis used in this study. 
 
-\subsection{Measures for Health, Optimism and Mindfulness Research}
-
+\subsection{Measures}
+\label{sec:measures}
 There were three measures used for this part of the research.
 \begin{enumerate}
 \item \textit{RAND-MOS}: The RAND Medical Outcomes Survey produced the most widely used instrument of HRQoL (Health Related Quality of Life) worldwide \cite{hays1993rand}. The instrument was later revised and the number of response categories standardised across scales and renamed the SF-36. The older version was used for this research, as they are extremely similar and the newer version is under copyright and expensive to use, even for non-commercial research. The RAND-MOS has 36 questions, and is divided into 8 sub-scales, General Health (GH),
@@ -178,7 +180,7 @@ transformed to a 100 point scale before analysis, where higher scores
 represent better functioning.
 \item The \textit{Mindful Attention Awareness Scale (MAAS)}
 \cite{brown2003benefits} is a 15 item scale which is scored on
-a six point scale from ``almost always'' to ``almost never''. The scale usesquestions which measure mindlessness. The summary score is produced
+a six point scale from ``almost always'' to ``almost never''. The scale uses questions which measure mindlessness. The summary score is produced
 from the mean of all indvidual scores. The scale has shown adequate
 psychometric validity in many samples, with alpha ranging from 0.7
 to 0.9\cite{brown2003benefits,Ruth2006}.
@@ -199,8 +201,8 @@ The first 392 participants completed the forms by hand between August and Octobe
 
 Following this pen and paper approach to sampling, the survey was sent to a random selection of students via email on December 12th 2009, and data was collected and analysed from this point until the 24th of December 2009. Differences between the samples and the possible effects of these on the results obtained are discussed below. %% In addition, due to the unexpected results of the analysis, a third sample was collected in Summer 2011. 
 
-\subsection{Analysis for Health, Optimism and Mindfulness Data}
-% Analysis was carried out seperately on the two samples, to allow for development of factor analysis and IRT models on the first sample and validation on the second. In addition, it could not be assumed that two samples collected in different ways would be comparable. 
+\section{Analysis}
+Analysis was carried out seperately on the two samples, to allow for development of factor analysis and IRT models on the first sample and validation on the second. In addition, it could not be assumed that two samples collected in different ways would be comparable. 
 
 %% Firstly, the proportion of missing data was identified, and multiple imputation was employed to combat this problem in cases where there were substantial amounts of missing data. This was only necessary in the case of the sample collected by online methods. 
 
@@ -211,7 +213,7 @@ The data was checked for errors in entry or recording using summary functions an
 Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. 
 Following this, a correlation matrix for the data was calculated and analysed.
 
-% After these preliminary procedures, the data-set was analysed to assess if there were any differences in the samples which could be attributed to collection method (pen and paper versus on-line). As there were no major differences between the two samples, further analyses were carried out on the two samples as a whole.
+
 
 Next, simple reliability analyses (Cronbach's $\alpha$) were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. After this, factor solutions were extracted using principal axis methods, with maximum likelihood estimation used if these failed to converge. Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation.
 
@@ -232,9 +234,9 @@ Following this, a Rasch model was fitted to the data, and person and item parame
 
 After this, linear regressions were run to examine the differential effects of each of the correlated variables. Stepwise selection on the training set was carried out, along with lasso and ridge regression  methods. Within each split, each regression model used ten-fold cross-validation to choose the optimal penalty criterion. 
 
-The performance of all methods was then assessed on held-out data. In the case of Sample one, some of sample 2 was used as a heldout data set. For Sample two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately, and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures. 
+The performance of all methods was then assessed on held-out data. In the case of Sample One, some of Sample Two was used as a heldout data set. For Sample Two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately. %% and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures. 
 
-The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the b sample, it was tested on both the a and the c sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from sample 1. The model chosen by this procedure was then used to predict these scores for the experimental portion of the research.
+The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the B sample, it was tested on both the A and the C sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from Sample One. The model(s) chosen by this procedure was then used to predict these scores for the experimental portion of the research (and compared against the typical scoring methods). 
 
 \subsection{Crossvalidation Approaches}
 \label{sec:crossv-appr}
@@ -247,18 +249,18 @@ The approach taken to the psychometric analysis of the second sample of data was
 \subsubsection{CrossValidation for Psychometric Models}
 \label{sec:crossv-psych-models}
 
- A solution that was proposed to this problem was cross-validation.  Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for factor analyses, around 300 observations are typically needed for accurate estimation of parameters.  Therefore, models were developed on the first sample, and then will be fitted to a subset of the second sample.  This procedure will then be repeated with the data not used for testing in the second sample and the first sample.  This will allow the issues of overfitting to be avoided, and will allow for the most promising models to be applied to the experimental data, which by itself would not be sufficient to engage in any useful psychometric analyses.
+Cross-validation is a tool for developing and testing models where data is limited or it is desirable that all data should be used efficiently, while guarding against over-fitting, which is when transitory features of a particular data-set are modeled, which reduces generalisability. 
+
+Typical cross-validation holds back some data in order to test the models developed on the rest.  This hold-out sample is typically of the order of 10\%.  However, for factor analyses, around 300 observations are typically needed for accurate estimation of parameters.  
+In this research, models were developed on the first sample, and then were fitted to a subset of the second sample.  This procedure was then  repeated with the data not used for testing in the second sample and the first sample.  This reduced the potential influence of over-fitting, while developing psychometric models which could be applied to the experimental sample. 
 
 
-The testing will be carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
+The testing was carried out using a few different methods.  Firstly, the predict scores method will be used for all factor analytic solutions.  Secondly,  CFA models will be fitted to the new data, allowing for comparision of their effectiveness on unseen data.  
 
-A different procedure will be followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
-
-
-\section{Results}
+A different procedure was  followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
 
 
-\part{Sample One}
+\part{Sample One - Results}
 
 %% \section{Missing Data Analysis}
 
@@ -2007,7 +2009,7 @@ The aims for the second sample collected were as follows:
 \end{itemize}
 
 
-\part{Sample Two}
+\part{Sample Two Results}
 
 Next, sample two was examined. This sample was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
 
@@ -2573,11 +2575,7 @@ lotr2c.s <- lotritems2c[,paste(lotr, c(3,4,7,9,10), sep="")]
 
 An examination of the item ordering assumption showed that Q1 did not fit this model, and so was removed from the scale. There were no failures of the monotonicity assumption, and thus the modelling could commence. 
 
-<<lotr2cpcm, echo=FALSE, results=hide, cache=TRUE>>=
-lotr2c.pcm.rasch <- gpcm(lotr2c.s, constraint="rasch")
-lotr2c.pcm.1PL <- gpcm(lotr2c.s, constraint="1PL")
-lotr2c.pcm.gpcm <- gpcm(lotr2c.s, constraint="gpcm")
-@ 
+
 
 All Partial Credit Models suffered from non-monotonically increasing parameter estimates, and so are not analysed further here. 
 
@@ -2615,536 +2613,6 @@ print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and 
 As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
 
 
-\section{RAND MOS}
-\label{sec:rand-mos}
-
-The final step in the analysis was to model  the RAND MOS using the approaches outlined above. 
-
-The first step was to examine the breakdown of items within scales. 
-
-<<rand2aaiasp, echo=FALSE, results=tex>>=
-rand2a.aisp <- aisp(na.omit(randitems2a))
-rand2a.aisp <- as.data.frame(rand2a.aisp)
-print(xtable(rand2a.aisp, caption="Item Selection Procedure Results for RAND MOS, Split A", label="tab:rand2aaisp"))
-@ 
-
-Table \ref{tab:rand2aaisp} shows the breakdown of items and their assignment to particular scales. 
-The first scale consists of items 3 to 12 and is the physical functioning scale and so retains that name. 
-The second scale consists of the role limitations scales and the negatively worded questions from the emotional well being and energy/faatigue scales, and can probably be best termed as negative health. 
-
-The third scale consists of the general health, pain and positively worded questions for emotional well being and energy/fatigue scales, and can probably best be termed as overall health. 
-
-Two items (2 and 24) do not load on any scale, while 33 and 35 load on a separate scale. This scale (4 in the table) was not analysed, as two items is not enough to make a useful scale. 
-
-<<randcheckassumptions, echo=FALSE, results=hide, cache=TRUE>>=
-rand.scales <- aisp(na.omit(randitems2b))
-@
-
-<<rand2caisp, echo=FALSE, results=tex>>=
-rand2c.aisp <- aisp(na.omit(randitems2c))
-print(xtable(rand2c.aisp, caption="Item Selection Procedure for RAND MOS, Split C", label="tab:rand2caisp"))
-@ 
-
-
-
-<<rand2ascales, echo=FALSE, results=hide, cache=TRUE>>=
-rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
-rand2a.neghealth <- randitems2a[,paste(rand, c(13:19, 25,28, 29,31,32), sep="")]
-rand2a.ovhealth <- randitems2a[,paste(rand, c(1, 22,23, 26,27,34,36), sep="")]
-@ 
-
-Firstly, the item ordering and monotonicity assumptions were checked for the physical functioning scale. 
-
-
-
-<<rand2aphysfuncheck, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2a.iio <- check.iio(na.omit(rand2a.physfun))
-physfun2a.mono <- check.monotonicity(na.omit(rand2a.physfun))
-@ 
-
-There were no violations of either the item ordering or monotonicity assumptions for the physical functioning scale in this split, so IRT modelling can proceed.
-
-The first step was to fit three partial credit models to this scale.
-
-<<physfun2apcm, echo=FALSE,results=hide, cache=TRUE >>=
-physfun2a.pcm.rasch <- gpcm(rand2a.physfun, constraint="rasch")
-physfun2a.pcm.1PL <- gpcm(rand2a.physfun, constraint="1PL")
-physfun2a.pcm.gpcm <- gpcm(rand2a.physfun, constraint="gpcm")
-@ 
-
-All three partial credit models had non increasing parameter estimates, and thus are not considered further here. 
-
-Next, one and two parameter Graded Response Models were fit to this scale. 
-
-<<physfun2agrm, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2a.grm.1pl <- grm(rand2a.physfun, constrained=TRUE)
-physfun2a.grm.2pl <- grm(rand2a.physfun, constrained=FALSE)
-@ 
-
-<<physfun2agrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(physfun2a.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model Physical Functioning Scale, Split A", label="tab:rand2aphysfungrm1pl"))
-@ 
-
-Table \ref{tab:rand2aphysfungrm1pl} shows the coefficient estimates for this scale. It can be seen that the discrimination parameter is quite high, while the ability estimates are quite low. This is presumably because many of these items are intended more for a clinical sample than the non-clincial sample used in this research. 
-
-<<physfun2agrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(physfun2a.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model for Physical Functioning Scale, Split A", label="tab:physfun2agrm2pl"))
-@ 
-
-Table \ref{tab:physfun2agrm2pl} shows the coefficient estimates for the two parameter model. It can  be seen that while the ability estimates have remained quite low, the discrimination parameters have altered significantly. Q7 and 11 have the two highest discrimination parameters, which makes sense as they ask respectively regarding difficulties in climbing one flight of stairs or walking one block. Again, the ability estimates for each threshold are quite low. 
-
-The next step is to examine the performance of each of these models on unseen data. 
-
-<<rand2agrmtest, echo=FALSE, results=tex>>=
-physfun.nota <- randitems.nota[,paste(rand, 3:12, sep="")]
-physfun2a.grm.1pl.test <- testIRTModels(physfun2a.grm.1pl, physfun.nota, gpcmconstraint=NULL, grmconstraint=TRUE)
-physfun2a.grm.2pl.test <- testIRTModels(physfun2a.grm.2pl, physfun.nota, gpcmconstraint=NULL, grmconstraint=FALSE)
-physfun2a.grm.all <- rbind(physfun2a.grm.1pl.test, physfun2a.grm.2pl.test)
-print(xtable(physfun2a.grm.all, caption="Performance of Physical Functioning One and Two Parameter Graded Response Models (Split A) on unseen data", label="tab:physfun2agrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:physfun2agrmtest}, the one paramter model provided the best fit to the unseen data. 
-
-
-Next, the negative health scale is checked for violations of the item ordering and monotonicity assumptions. 
-
-<<neghealth2acheck, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2a.iio <- check.iio(na.omit(rand2a.neghealth))
-neghealth2a.mono <- check.monotonicity(na.omit(rand2a.neghealth))
-@
-
-There were no violations of either the item ordering assumption or the monotonicity assumption for this scale. 
-
-The next step was to fit three partial credit models to this scale. 
-
-<<neghealth2apcm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2a.pcm.rasch <- gpcm(rand2a.neghealth, constraint="rasch")
-neghealth2a.pcm.1PL <- gpcm(rand2a.neghealth, constraint="1PL")
-neghealth2a.pcm.gpcm <- gpcm(rand2a.neghealth, constraint="gpcm")
-@ 
-
-<<neghealth2apcmraschprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2a.pcm.rasch)), caption="Coefficient Estimates for Rasch Partial Credit Model, Negative Health Scale, Split A", label="tab:neghealth2apcmrasch"))
-@ 
-
-Table \ref{tab:neghealth2apcmrasch} shows the coefficient estimates for the Rasch partial credit model. It can be seen that there is an extremely wide spread of abillity estimates, the physical limitations items tend to have quite low thresholds, while the items drawn from the emotional well being and energy/fatigue scales have a much broader spread. For instance, item 32 has a top ability threshold of 6.11, which is extremely high. The item asks about health problems interfering with the social life of the respondent, and given that the sample was predominantly young and students, may be the reason for the low probability of endorsement of the items (thus leading to the high estimated ability threshold). 
-
-<<neghealth2apcm1pl, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative health Scale, One Parameter Partial Credit Model, Split A", label="tab:neghealth2apcm1pl"))
-@ 
-
-Table \ref{tab:neghealth2apcm1pl} shows the coefficient estimates for the one parameter partial credit model. The overall estimated discrimination parameter is quite low, while the same pattern of ability esitmates as the rasch model remains. 
-
-<<neghealth2apcmgpcm, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2a.pcm.1PL)), caption="Coefficient Estimates for Negative Health Scale, Two Parameter Partial Credit Model, Split A", label="tab:neghealth2apcm2pl"))
-@ 
-
-Table \ref{tab:neghealth2apcm2pl} shows the estimated thresholds and discrimination parameters for the two parameter partial credit model. Interestingly enough, the estimated discrimination parameters have actually decreased for the majority of the scale, which is unexpected. The ordering of the ability estimates remains the same as in previous models. 
-
-Next, the performance of these three partial credit models was assessed on unseen data. 
-
-<<neghealth2apcmtest, echo=FALSE, results=tex>>=
-neghealth.nota <- randitems.nota[,paste(rand, c(13:19, 25,28, 29,31,32), sep="")]
-neghealth2a.pcm.rasch.test <- testIRTModels(neghealth2a.pcm.rasch, neghealth.nota, gpcmconstraint="rasch", grmconstraint=NULL)
-neghealth2a.pcm.1PL.test <- testIRTModels(neghealth2a.pcm.1PL, neghealth.nota, gpcmconstraint="1PL", grmconstraint=NULL)
-neghealth2a.pcm.gpcm.test <- testIRTModels(neghealth2a.pcm.gpcm, neghealth.nota, gpcmconstraint="gpcm", grmconstraint=NULL)
-neghealth2a.pcm.test.all <- rbind(neghealth2a.pcm.rasch.test, neghealth2a.pcm.1PL.test, neghealth2a.pcm.gpcm.test)
-print(xtable(neghealth2a.pcm.test.all, caption="Performance of Negative Health Partial Credit Models (Split A) on unseen data (Splits B and C)", label="tab:neghealth2apcmtest"))
-@ 
-
-Table \ref{tab:neghealth2apcmtest} shows that the one parameter model provided a better fit to the unseen data. 
-
-Next, one and two parameter Graded Response Models were fit to the negative health scale. 
-
-<<neghealth2agrm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2a.grm.1pl <- grm(rand2a.neghealth, constrained=TRUE)
-neghealth2a.grm.2pl <- grm(rand2a.neghealth, constrained=FALSE)
-@ 
-
-<<neghealth2agrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2a.grm.1pl)), caption="Coefficient Estimates for Negative Health One Parameter Graded Response Model, Split A"))
-@ 
-
-\subsubsection{Split B}
-\label{sec:split-b-1}
-
-
-
-
-
-
-<<randscales, echo=FALSE, results=tex>>=
-print(xtable(rand.scales,caption="Automatic Item Selection Procedure, RAND MOS, Split B",label="tab:randscales2b"))
-@
-As can be seen from Table \ref{tab:randscales}, the item selection procedure suggests that there are four scales in the RAND MOS.  In addition, one item does not load on any scale.  This is RANDQ2, which is not surprising given that it is not supposed to score on any scale.  The analysis of the RAND scales continues now, but using the four scales suggested by the item selection procedure.
-
-The scales can be termed as follows:
-
-Scale 1: RANDQ3-RANDQ12: This maps exactly to the physical functioning scale.
-
-Scale 2: RANDQ17-RANDQ19,24-25,28-32,35. This scale incorporates the Role Limitations, Social Functioning, Emotional Well Being and Energy scales, and can best be termed as Negative Health.
-
-Scale 3: RANDQ1, RANDQ20, RANDQ23, RANDQ26, RANDQ27, RANDQ30, RANDQ34, RANDQ36: This scale maps to the general health and positively worded questions from the energy/fatigue and emotional health scales, and so can best be termed Positive Health.  
-
-Scale 4: RAND21-RAND22. This maps to the  pain scale, and can probably best be termed as pain. This scale will not be analysed further as two items is not enough to model the response structure properly. 
-
-
-<<randirtscales, echo=FALSE, results=hide, cache=TRUE>>=
-irtphysfun2b <- randitems2b[,paste(rand, c(3:12), sep="")]
-irtneghealth2b <- randitems2b[,paste(rand, c(17:19, 24:25,28,29,31,35 ), sep="")]
-irtposhealth2b <- randitems2b[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
-@
-
-<<randphysfun, echo=FALSE, results=hide, cache=TRUE>>=
-irtphys2b.item.ord <- check.iio(na.omit(irtphysfun2b))
-irtphys2b.monotonicity <- check.monotonicity(na.omit(irtphysfun2b))
-@
-
-The check for invariant item ordering shows that all items  meet the Invariant Item Ordering  assumption. The check on the monotonicity assumption shows that all of the items meet this assumption. 
-
-
-<<randphysfuncitemord, echo=FALSE, results=tex>>=
-print(xtable(irtphys2b.item.ord[["violations"]],label="tab:physfunc2bitemord", caption="Item Ordering Check for RAND Physical Functioning Scale, Split B"))
-@
-
-As can be seen from Table \ref{tab:physfunc2bitemord}, there were no violations of item ordering for this sample.  This demonstrates that there are no violations of monotonicity for this subscale, and suggests that item response theory modelling can proceed, for this scale at least.
-
-<<randneghealth, echo=FALSE, results=hide, cache=TRUE>>=
-irtneghealth2b.item.ord <- check.iio(na.omit(irtneghealth2b))
-irtemhealth2b.monotonicity <- check.monotonicity(na.omit(irtneghealth2b))
-@
-
-<<randneghealthItemord, echo=FALSE, results=tex>>=
-print(xtable(irtneghealth2b.item.ord[["violations"]],label="tab:randneghealthitemord", caption="Item Ordering Assumption Check for RAND Negative Health Scale, Split B"))
-@
-
-As can be seen from Table \ref{tab:randneghealthitemord},quite a number of items failed the item ordering assumption (RAND29, RAND35) and so were removed from the scale before further analysis. 
-
-<<irtneghealth, echo=FALSE, results=tex>>=
-irtneghealth2b.s <- irtneghealth2b[,paste(rand, c(25,28,24,29,31,17,19,18), sep="")]
-neghealth.item.ord2 <- check.iio(na.omit(irtneghealth2b.s))
-neghealth.mono.2 <- check.monotonicity(na.omit(irtneghealth2b.s))
-print(xtable(neghealth.item.ord2[["violations"]], caption="IIO for reduced negative health scale", label="tab:randneghealth2biio"))
-@
-
-As shown in Table \ref{tab:randneghealth2biio}, the removal of items from the emotional health scale appears to have removed the problems with invariant item ordering. The reduced scale had no issues with non-monotonic item responses. 
-
-
-
-<<randposhealth, echo=FALSE, results=hide, cache=TRUE>>=
-irtposhealth2b.item.ord <- check.iio(na.omit(irtposhealth2b))
-irtposhealth2b.monotonicity <- check.monotonicity(na.omit(irtposhealth2b))
-@
-
-<<poshealthitemord2b, echo=FALSE, results=tex>>=
-print(xtable(irtposhealth2b.item.ord[["violations"]], caption="Item Ordering Checks for RAND MOS Positive Health Scale, Split B", label="tab:rand2bposhealthitemord"))
-@ 
-As can be seen from Table \ref{tab:rand2bposhealthitemord}, all items met the item ordering assumption. 
-Additionally, the smaller scale showed no violations of the monotonicity assumption. 
-
-
-
-Having checked the assumptions for all three scales, the next step was to fit partial credit and graded response models to each of the scales, and to examine their fit on unseen data. 
-
-
-<<physfunrasch, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2b.gpcm.rasch <- gpcm(na.exclude(irtphysfun2b), constraint="rasch")
-physfun2b.gpcm.1pl <- gpcm(na.exclude(irtphysfun2b), constraint="1PL")
-physfun2b.gpcm.gpcm <- gpcm(na.exclude(irtphysfun2b), constraint="gpcm")
-@
-
-Three partial credit models were fit (rasch, one parameter and two parameter). However, all of them had non-monotonically increasing ability estimates, and so are not reported further here. 
-
-The next step in the modelling process was to fit a one and two parameter GRM. 
-
-<<physfun2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2b.grm.1pl <- grm(na.omit(irtphysfun2b), constrained=TRUE)
-physfun2b.grm.2pl <- grm(na.omit(irtphysfun2b), constrained=FALSE)
-@ 
-
-<<physfun2bgrm1plprint, echo=FALSE, results=hide, cache=TRUE>>=
-print(xtable(coef(physfun2b.grm.1pl), caption="One Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm1pl"))
-@ 
-
-As can be seen from Table \ref{tab:physfun2bgrm1pl}, there were no violations of monotonicity for the one parameter GRM. Note that the discrimination parameter is extremely high, which is not [particularly surprising given the use of a non-clinical sample. 
-
-<<physfun2bgrm2plprint, echo=FALSE, results=hide, cache=TRUE>>=
-print(xtable(coef(physfun2b.grm.2pl), caption="Two Parameter Graded Response Model for Physical Functioning IRT Scale, Split B", label="tab:physfun2bgrm2pl"))
-@ 
-
-It can be seen from Table \ref{tab:physfun2bgrm2pl} that the average ability estimates have risen while discrimination parameters have dropped for most of the items. The next step is to examine the performance of each of these models on unseen data (i.e. that from Splits A and C). 
-
-<<physfun2bgrmtest, echo=FALSE, results=tex>>=
-physfun.notb <- randitems.notb[,paste(rand, c(3:12), sep="")]
-physfun2b.grm.1pl.test <- testIRTModels(physfun2b.grm.1pl, physfun.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-physfun2b.grm.2pl.test <- testIRTModels(physfun2b.grm.2pl, physfun.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
-physfun2b.grm.test.all <- rbind(physfun2b.grm.1pl.test, physfun2b.grm.2pl.test)
-print(xtable(physfun2b.grm.test.all, caption="Performance of One and Two Parameter GRM's on Unseen Data (Splits A and C)", label="tab:physfun2btest"))
-@ 
-
-As can be seen from Table \ref{tab:physfun2btest}, the one parameter model provided a better fit to the unseen data. 
-
-The next sub-scale to be examined is Negative Health, described above.  This process begins, as above, with the fitting of a simple one parameter model, in this case, the partial credit model.
-
-<<neghealthpcm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2b.pcm.rasch <- gpcm(irtneghealth2b, constraint="rasch")
-neghealth2b.pcm.1PL <- gpcm(irtneghealth2b, constraint="1PL")
-neghealth2b.pcm.gpcm <- gpcm(irtneghealth2b, constraint="gpcm")
-@ 
-
-Three partial credit models were fitted, but all had non-monotonically increasing parameter estimates, and so are not reported further here. 
-
-Next, one and two parameter Graded Response Models were fitted. 
-
-<<neghealthgrm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2b.grm.1pl <- grm(irtneghealth2b, constrained=TRUE)
-neghealth2b.grm.2pl <- grm(irtneghealth2b, constrained=FALSE)
-@ 
-
-<<negghealth2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2b.grm.1pl)), caption="Coefficients for One Parameter Graded Response Model Negative Health Scale, Split B", label="tab:neghealth2bgrm1pl"))
-@ 
-
-
-As shown in Table \ref{tab:neghealth2bgrm1pl}, there were no problemw ith non-monotonically increasing parameter estimates for this model. Of interests is the relatively low discrimination parameter, which suggests that these items were more applicable to the sample. Also of interest is that the emotional role limitations questions (17,18,19) did not have any responses that were not no, suggesting that this scale was not particularly useful for this sample. 
-
-<<neghealth2bgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2b.grm.2pl)), caption="Coefficients for Negative Health Scale, Two Parameter Graded Response Model, Split B", label="tab:neghealth2bgrm2pl"))
-@ 
-
-
-As can be seen from Table \ref{tab:neghealth2bgrm2pl}, the discrimination parameter has lowered (in line with previous models) while the estimated abilities have widened. Note that question 25 and 28 appear to have been the source of the high discrimination parameter in the one parameter model. 
-
-Next, the fit of each of these models on unseen data was examined. 
-
-<<neghealth2bgrmtest, echo=FALSE, results=tex>>=
-neghealth.notb <- randitems.notb[,paste(rand, c(17:19, 24:25,28,29,31,35 ), sep="")] 
-neghealth2b.grm.1pl.test <- testIRTModels(neghealth2b.grm.1pl, neghealth.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-neghealth2b.grm.2pl.test <- testIRTModels(neghealth2b.grm.2pl, neghealth.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
-neghealth2b.grm.test.all <- rbind(neghealth2b.grm.1pl.test, neghealth2b.grm.2pl.test)
-print(xtable(neghealth2b.grm.test.all, caption="Performance of Negative health Split B Graded Response Models on Unseen Data", label="tab:neghealth2bgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:neghealth2bgrmtest}, the one parameter model performed slightly better on the unseen data, though there is not much in the difference. 
-
-Finally, for this split, the positive health scale was examined using partial credirt and graded response models. 
-
-<<irtposhealthpcm, echo=FALSE, results=hide, cache=TRUE>>=
-irtposhealth2b.pcm.rasch <- gpcm(irtposhealth2b, constraint="rasch")
-irtposhealth2b.pcm.1PL <- gpcm(irtposhealth2b, constraint="1PL")
-irtposhealth2b.pcm.gpcm <- gpcm(irtposhealth2b, constraint="gpcm")
-@ 
-
-Three partial credit models were fit to the data, but all had problems with the parameter estimates and are not reported further here. 
-
-<<poshealth2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
-poshealth2b.grm.1pl <- grm(irtposhealth2b, constrained=TRUE)
-poshealth2b.grm.2pl <- grm(irtposhealth2b, constrained=FALSE)
-@ 
-
-<<poshealth2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(poshealth2b.grm.1pl)), caption="Coefficients for One Parameter Graded Response Model on Positive Health Scale, Split B", label="tab:poshealth2bgrm1pl"))
-@ 
-
-
-As can be seen from Table \ref{tab:poshealth2bgrm1pl}, there were no problems with the parameter estimates for this model. The questions marked as most difficult (1, 30 and 23) relate to emotional well being and the general health scale. The discrimination parameter is relatively low in comparison to other scales, again probably due to the non-clinical sample used in this study. 
-
-<<poshealth2bgrm2plprint, echo=FALSE, results=hide, cache=TRUE>>=
-print(xtable(coef2mat(coef(poshealth2b.grm.2pl)), caption="Coefficients for Two Parameter Graded Response Model on Positive Health Scale, Split B", label="tab:poshealth2bgrm2pl"))
-@ 
-
-Again, there were no problems with parameter estimates for this scale (Table \ref{tab:poshealth2bgrm2pl}). For the majority of items the ability estimates have increased while the discrimination parameter(s) have lowered. 
-
-Finally, we assess the fit of each of these models on unseen data. 
-
-<<poshealth2bgrmtest, echo=FALSE, results=tex>>=
-poshealth.notb <- randitems.notb[,paste(rand, c(1, 20, 23, 26,27,30, 34,36), sep="")]
-poshealth2b.grm.1pl.test <- testIRTModels(poshealth2b.grm.1pl, poshealth.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
-poshealth2b.grm.2pl.test <- testIRTModels(poshealth2b.grm.2pl, poshealth.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
-poshealth2b.grm.test.all <- rbind(poshealth2b.grm.1pl.test, poshealth2b.grm.2pl.test)
-print(xtable(poshealth2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:poshealth2btest"))
-@ 
-
-As can be seen from Table \ref{tab:poshealth2btest}, the one parameter model provided a better fit to the unseen data. 
-
-
-
-
-\subsubsection{Split C}
-\label{sec:split-c}
-
-Firstly, the RAND MOS is examined to determine how many scales it consists of. 
-
-
-
-As can be seen in Table \ref{tab:rand2caisp} again the RAND MOS divides into three scales. 
-
-The first scale consists of items 3 through 13, and can be best termed as physical functioning (although it contains one item from the physical role limitations subscale). 
-
-The second scale consists of most of the physical and role limitations scales and the negatively worded items from the emotional well being and social functioning scales and can again, as in the previous split, be termed as negative health. 
-
-The third scale consists of the rest of the items, that is the general health, social functioning and emotional well being and energy/fatigue items which are positively worded, and can best be termed as positive health. 
-
-<<rand2cscales, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2c <- randitems2c[,paste(rand, c(3:13), sep="")]
-poshealth2c <- randitems2c[,paste(rand, c(1,20,22:23, 26:27, 30, 34, 36), sep="")]
-neghealth2c <- randitems2c[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
-@ 
-
-Firstly, the assumptions underlying IRT modelling must be assessed before modelling can commence. 
-
-<<physfun2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2c.iio <- check.iio(na.omit(physfun2c))
-physfun2c.mono <- check.monotonicity(na.omit(physfun2c))
-@ 
-
-There were no violations of either the item ordering assumption or the monotonicity assumptions for the physical functioning scale in this split. 
-
-The preliminaries having been dealt with, the next step was to fit three partial credit models. 
-
-<<physfun2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2c.gpcm.rasch <- gpcm(physfun2c, constraint="rasch")
-physfun2c.gpcm.1pl <- gpcm(physfun2c, constraint="1PL")
-physfun2c.gpcm.gpcm <- gpcm(physfun2c, constraint="gpcm")
-@ 
-
-All three partial credit models had problems with the ability estimates in that they were not montonotically increasing, and so are not discussed further here. 
-
-Next, one and two parameter Graded Response Models were fit to the data.
-
-
-<<physfun2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
-physfun2c.grm.1pl <- grm(physfun2c, constrained=TRUE)
-physfun2c.grm.2pl <- grm(physfun2c, constrained=FALSE)
-@ 
-
-<<physfun2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(physfun2c.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model, Physical Functioning Scale, Split C", label="tab:physfun2cgrm1pl"))
-@ 
-
-As can be seen from Table \ref{tab:physfun2cgrm1pl}, there are no obvious problems with this model. The rather low ability estimates are interesting in that they are all negative, but the discrimination parameter is quite high suggesting that there is much information in the choosing of one response over another. 
-
-<<physfun2cgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(physfun2c.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model, Physical Functioning Scale, Split C", label="tab:physfun2cgrm2pl"))
-@ 
-
-As can be seen from Table \ref{tab:physfun2cgrm2pl}, the discrimination parameters have lowered for the majority of items, except for 7 and 11 which refer to either walking up one flight of stairs or along one block (which presumably the non American sample here understood). 
-
-The final step in the model building process is to assess each models\' performance on unseen data. 
-
-<<physfun2cgrmtest, echo=FALSE, results=tex>>=
-physfun.notc <- randitems.notc[,paste(rand, c(3:13), sep="")]
-physfun2c.grm.1pl.test <- testIRTModels(physfun2c.grm.1pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
-physfun2c.grm.2pl.test <- testIRTModels(physfun2c.grm.2pl, physfun.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
-physfun2c.grm.test.all <- rbind(physfun2c.grm.1pl.test, physfun2c.grm.2pl.test)
-print(xtable(physfun2c.grm.test.all, caption="Performance of One and Two Parameter Physical Functioning Graded Response Models on Unseen Data (Splits A and B", label="tab:physfun2cgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:physfun2cgrmtest}, the one parameter model performed best on the unseen data. 
-
-Next, the negative health scale was checked to ensure suitability for IRT modelling. 
-
-<<neghealth2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2c.iio <- check.iio(na.omit(neghealth2c))
-neghealth2c.mono <- check.monotonicity(na.omit(neghealth2c))
-@ 
-
-The negative health scale for this split showed no failures of the item ordering assumption or of the monotonicity assumption. 
-
-Next, three partial credit models were fit to the data. 
-
-<<neghealth2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2c.gpcm.rasch <- gpcm(neghealth2c, constraint="rasch")
-neghealth2c.gpcm.1PL <- gpcm(neghealth2c, constraint="1PL")
-neghealth2c.gpcm.gpcm <- gpcm(neghealth2c, constraint="gpcm")
-@ 
-
-All three partial credit models suffered from non-monotonically increasing parameter estimate problems, and are not discussed here further. 
-
-Next, one and two parameter Graded Response Models were fit to the data. 
-
-<<neghealth2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
-neghealth2c.grm.1pl <- grm(neghealth2c, constrained=TRUE)
-neghealth2c.grm.2pl <- grm(neghealth2c, constrained=FALSE)
-@ 
-
-
-<<neghealth2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2c.grm.1pl)), caption="Coefficient Estimates for One Parameter Graded Response Model, Negative Health Scale, Split C", label="tab:neghealth2cgrm1pl"))
-@ 
-
-As can be seen from Table \ref{tab:neghealth2cgrm1pl}, there are no obvious problems with this model. The estimated discrimination parameter is quite low, suggesting that the items convey only the information in their location thresholds. 
-
-<<neghealth2cgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(neghealth2c.grm.2pl)), caption="Coefficient Estimates for Two Parameter Graded Response Model, Negative Health Scale, Split C", label="tab:neghealth2cgrm2pl"))
-@ 
-
-It can be see from Table \ref{tab:neghealth2bgrm2pl}, that the ability estimates have lowered significantly, as have most of the discrimination parameters. 
-
-Finally, the performance of each of these models was examined on unseen data. 
-
-<<neghealth2cgrmtest, echo=FALSE, results=tex>>=
-neghealth.notc <- randitems.notc[,paste(rand, c(14:19, 24:25, 28:29, 31), sep="")]
-neghealth2c.grm.1pl.test <- testIRTModels(neghealth2c.grm.1pl, neghealth.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
-neghealth2c.grm.2pl.test <- testIRTModels(neghealth2c.grm.2pl, neghealth.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
-neghealth2c.grm.test.all <- rbind(neghealth2c.grm.1pl.test, neghealth2c.grm.1pl.test)
-print(xtable(neghealth2c.grm.test.all, caption="Performance of One and Two Parameter Negative Health Graded Response Models on Unseen Data (Splits A and B)", label="tab:neghealth2cgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:neghealth2cgrmtest}, both models performed equivalently on the unseen data, therefore the simpler one parameter model is chosen. 
-
-Next, the assumptions are checked for the positive health scale in this split. 
-
-<<poshealth2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
-poshealth2c.iio <- check.iio(na.omit(poshealth2c))
-poshealth2c.mono <- check.monotonicity(na.omit(poshealth2c))
-@ 
-
-There were no violations of the item ordering or monotonicity assumptions for this scale in this split.
-
-Next, three partial credit models were fitted. 
-
-<<poshealth2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-poshealth2c.gpcm.rasch <- gpcm(poshealth2c, constraint="rasch")
-poshealth2c.gpcm.1PL <- gpcm(poshealth2c, constraint="1PL")
-poshealth2c.gpcm.gpcm <- gpcm(poshealth2c, constraint="gpcm")
-@ 
-
-All three partial credit models has non-monotonic parameter estimates, and are not analysed further here. 
-
-
-Next, one and two parameter Graded Response Models were fitted to this scale.
-
-<<poshealth2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
-poshealth2c.grm.1pl <- grm(poshealth2c, constrained=TRUE)
-poshealth2c.grm.2pl <- grm(poshealth2c, constrained=FALSE)
-@ 
-
-<<poshealth2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(poshealth2c.grm.1pl)), caption="Coefficient Estimates for Positive Health One Parameter Graded Response Model, Split C", label="tab:poshealth2cgrm1pl"))
-@ 
-
-The coefficient estimates for this model are shown in Table \ref{tab:poshealth2cgrm1pl}. It can be seen that the discrimination parameter is quite low, and the ability estimates (especially for question 1) are quite high. One would expect this to alter under a two parameter model. 
-
-<<poshealth2cgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(poshealth2c.grm.2pl)), caption="Coefficient Estimates for Positive Health Two Parameter Graded Response Model, Split C", label="tab:poshealth2cgrm2pl"))
-@ 
-
-Table \ref{tab:poshealth2cgrm2pl} shows that the speculation regarding the shape of ability estimates and discrimination parameters was quite wrong, ad Q1 retains its extremely high ability estimates and Question 22 lowers its discrimination parameter significantly while gaining an extremely high estimate for ability. Q22 refers to pain, and this appears to be an extremely strong predictor of overall health, as the other two questions with as high abilities represent overall health questions.
-
-Finally for this scale, its performance on unseen data is assessed. 
-
-<<poshealth2cgrmtest, echo=FALSE, results=tex>>=
-poshealth.notc <- randitems.notc[,paste(rand, c(1,20,22:23, 26:27, 30, 34, 36), sep="")]
-poshealth2c.grm.1pl.test <- testIRTModels(poshealth2c.grm.1pl, poshealth.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
-poshealth2c.grm.2pl.test <- testIRTModels(poshealth2c.grm.2pl, poshealth.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
-poshealth2c.grm.test.all <- rbind(poshealth2c.grm.1pl.test, poshealth2c.grm.2pl.test)
-print(xtable(poshealth2c.grm.test.all, caption="Performance of Positive Health One and Two Parameter Models (Split C) on unseen data (Splits A and B)", label="tab:poshealth2cgrmtest"))
-@ 
-
-As is shown in Table \ref{tab:poshealth2cgrmtest}, the one parameter model provided a batter fit to the unseen data. 
-
 
 
 \section{Backtesting}
@@ -3155,9 +2623,7 @@ The final step in the analysis was to take the most successful model for the LOT
 This process was begun with the CFA model for the LOT-R. Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the backtesting process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
 <<lotrbacktestsem1full, echo=FALSE, results=hide, cache=TRUE>>=
-
 optimism <- paste(lotr, c(1, 3, 4, 7, 9, 10), sep="")
-
 latents <- c("Optimism")
 manifests <- optimism
 lotr.full.bt.model <- mxModel(name="LOTRBacktestFull", 
@@ -3172,7 +2638,6 @@ lotr.full.bt.model <- mxModel(name="LOTRBacktestFull",
 lotr.bt.full.fit <- mxRun(lotr.full.bt.model)
 lotr.mod.formative <- mxModel(name="LOTRFullBTFormative", model=lotr.full.bt.model, mxPath(from=optimism, to=latents))
 lotr.bt.mod.form.fit <- mxRun(lotr.mod.formative) ##doesn't complete
-
 @ 
 
 <<lotrbacktestsem1reduced, echo=FALSE, results=hide, cache=TRUE>>=
@@ -3188,7 +2653,6 @@ lotr.bt.small <- mxModel(name="LOTRBackTestReduced",
                                      values=0.01),
                               mxData(observed=cov(na.omit(lotritems.s)), type="cov", numObs=356)) 
 lotr.bt.small.fit <- mxRun(lotr.bt.small)
-
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
@@ -3294,9 +2758,9 @@ print(xtable(maas.bt.grm.test.all, label="tab:maasbtgrmtest", caption="Backtesti
 
 
 It can be seen that the model developed from Split C (without items 5,6 and 15) provides the best fit to the unseen data, and this model will be used to generate scores for the experimental participants. 
-\section{Discussion}
+\part{Discussion}
 
-\subsection{Optimism and Health}
+\section{Optimism and Health}
 \label{sec:optimism-health-1}
 
 
