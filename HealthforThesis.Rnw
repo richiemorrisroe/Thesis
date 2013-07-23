@@ -1190,22 +1190,17 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-\subsection{LOTR Three Factor Solution}
-\label{sec:lotr-three-factor}
+\subsection{LOTR Two Factor Solution}
+\label{sec:lotr-two-factor}
 
 <<lotr3fact, echo=FALSE, results=tex>>=
-lotr.fact.3<-factor.pa(na.omit(lotritems), 3, rotate="oblimin")
-print(FactorXtab(lotr.fact.3,label="tab:tcq1lotr3fact", caption="Factor Loadings, Three Factor Solution, LOT-R, Sample One"))
+lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
+print(FactorXtab(lotr.fact.2,label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
 @
 
 PA2:"LOTRQ1",  "LOTRQ4",  "LOTRQ10". These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1:"LOTRQ3", "LOTRQ7". This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. 
-
-PA3: "LOTRQ7", "LOTRQ9". This factor can best be termed Pessimism (Reversed). 
-
-
-
+PA1:"LOTRQ3", "LOTRQ7", ``LOTRQ9'', ``LOTRQ10'' This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
 
 
 \subsection{CFA for LOTR}
@@ -1235,17 +1230,15 @@ lotr1summ <- summary(lotr1fit)
 lotr <- "LOTRQ"
 lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
 manifests <- lotritems.cols
-latents <- c("Optimism", "Pessimism", "Pessimism2")
+latents <- c("Optimism", "Pessimism")
 optimism <- paste(lotr, c(1,4,10), sep="")
-pessimism <- paste(lotr, c(3,7), sep="")
-pessimism2 <- paste(lotr, c(7,9), sep="")
-Lotr3model <- mxModel(name="LOTR3",
+pessimism <- paste(lotr, c(3,7, 9, 10), sep="")
+Lotr2model <- mxModel(name="LOTR2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
                       mxPath(from="Optimism", to=optimism),
                       mxPath(from="Pessimism", to=pessimism),
-                      mxPath(from="Pessimism2", to=pessimism2),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
                       mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=364)

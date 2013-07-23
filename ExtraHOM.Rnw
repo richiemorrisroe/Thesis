@@ -1,0 +1,172 @@
+\begin{figure}
+<<optplotcollege, echo=FALSE, results=hide>>=
+optplotcoll <- ggplot(hom1, aes(x=generalhealth, y=optimism,colour=College))+layer(geom="smooth", method="lm")## +facet_grid(~.College)
+print(optplotcoll)
+@  
+  \caption{Plot of General Health against Optimism stratified by Faculty of respondents. Dark areas of plot represent errors of estimates. }
+  \label{fig:optplotcollege}
+\end{figure}
+
+<<corrmatrix, echo=FALSE, results=hide>>=
+hom.tot.cor <- cor(hom.tot, use="pairwise.complete.obs", method="spearman")
+hom.tot.cor <- as.data.frame(hom.tot.cor)
+names(hom.tot.cor) <- c("Physical Functioning", "Role Limitations", "Emotional Role Limitations", "Energy Fatigue", "Social Functioning", "Pain", "General Health", "Mindfulness", "Optimism")
+hom.tot.cor.xtab <- xtable(hom.tot.cor, label="tab:scalecorr", caption="Correlations Between Scales GH=Gen Health, PF=Physical Funct, RL=Role Lim, RLE=Emotional Role Lim, EmWB=Emotional Well Being.All relationships significant at p<0.01")
+print(hom.tot.cor.xtab, scalebox=0.4, floating.environment="sidewaystable")
+@
+
+\begin{figure}
+<<optmaasplot, echo=FALSE, fig=TRUE>>=
+optplot.maas<- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism, colour=mindfulness, size=mindfulness))+geom_point(method="lm")
+print(optplot.maas)
+@  
+  \caption{Scatterplot of General Health against Optimism, stratified by Mindfulness }
+  \label{fig:optplotmaas}
+\end{figure}
+
+
+It can be seen from Figure \ref{fig:optplotmaas} that higher levels of mindfulness are associated with higher levels of Health and also with lower levels of Optimism.
+
+\begin{figure}
+<<lotrageplot, echo=FALSE, fig=TRUE>>=
+lotrage <- ggplot(na.omit(hom1), aes(x=Age, y=optimism, ))+layer(geom="smooth",method="lm")
+print(lotrage)
+@  
+  \caption{Regression Line of Optimism against Age (linear regression smooth). Dark areas on plot surrounding line represent confidence intervals}
+  \label{fig:lotrageplot}
+\end{figure}
+
+Above, in Figure \ref{fig:lotrageplot} it can be seen that Optimism levels decreased as a function of age, but this finding should be taken with caution as the majority of partiticipants in this study were between 18 and 25, and those who were not are not likely to be typical of the general population (as they are all students).
+
+<<healthmaassamp, echo=FALSE, fig=TRUE>>=
+healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
+print(healthmaas.samp)
+@  
+  \caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
+  \label{fig:healthmaasmethplot}
+\end{figure}
+
+
+It can be seen from Figure \ref{fig:healthmaasmethplot} that the relationship between health and mindfulness was slightly stronger in the paper sample, but not significantly so.
+\begin{figure}
+<<healthmaasgend, echo=FALSE, fig=TRUE>>=
+healthmaas.gend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=Gender))+layer(geom="smooth", method="lm")
+print(healthmaas.gend)
+@  
+  \caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
+  \label{fig:healthmaasgend}
+\end{figure}
+
+
+Again, from Figure \ref{fig:healthmaasgend} it can be seen that Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
+\begin{figure}
+<<healthmaas, echo=FALSE, fig=TRUE>>=
+healthmaas1 <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=College))+layer(geom="smooth", method="lm")
+print(healthmaas1)
+@  
+  \caption{General Health against Mindfulness stratified by College using a linear regression smooth}
+  \label{fig:healthmaascoll}
+\end{figure}
+
+\begin{figure}
+<<optridgeplot, echo=FALSE, fig=TRUE, pdf=TRUE, eps=TRUE, png=TRUE, jpg=TRUE>>=
+opt.ridge.melt <- melt(opt.ridge.pred)
+opt.ridge.pred.plot <- ggplot(opt.ridge.melt, aes(x=value, group=variable, colour=variable))+geom_density()
+
+@ 
+  
+  \caption{Density Plot of Predicted versus Observed Values, Optimism Ridge Regression Model}
+  \label{fig:optridgelassoplot}
+\end{figure}
+
+\paragraph{Rand MOS 13 factor Solution}
+
+<<rand13fact, echo=FALSE, results=tex>>=
+rand.fact.13<-factor.pa(na.omit(randitems.scored), 13, rotate="oblimin")
+print(FactorXtab(rand.fact.13,label="tab:tcq1rand13fact", caption="Factor Loadings, Thirteen Factor Solution RAND MOS, Sample One (oblimin rotation)"), scalebox=0.8)
+@
+
+PA2: "RANDQ6" , "RANDQ7" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This appears to be the majority of the Physical Functioning scale, and therefore retains that name.
+
+
+PA8: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20". This consists of the three Emotional Role Limitations items, and a low loading on the negatively worded social functioning scale. It can therefore be named Emotional Role Limitations.
+
+PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16". This factor maps exactly to the Role Limitations scale, and thus retains that name. 
+
+PA7: "RANDQ23" ,"RANDQ26" ,"RANDQ27" ,"RANDQ30". These items map to the positive questions of Emotional Well Being and Energy/Fatigue, and therefore can best be termed as Positive Emotionality. 
+
+PA11: "RANDQ3" ,"RANDQ4" ,"RANDQ5" ,"RANDQ8". These items are all from the Physical Functioning scale, and appear to all relate to relatively heavy exertions. This factor can therefore be termed Physical Exertion.
+
+PA4: "RANDQ1" , "RANDQ34" ,"RANDQ36". These items all relate to health and are all framed in a positive way. Therefore this factor can be termed Positive Health.
+
+PA5:"RANDQ29" ,"RANDQ31". These are the negatively framed items from the Energy/Fatigue scale, and can be probably best be termed Fatigue. 
+
+PA6: "RANDQ21" ,"RANDQ22". These items map exactly to the Pain Scale, and thus retain that name. 
+
+PA1: "RANDQ24" ,"RANDQ25" ,"RANDQ28" ,"RANDQ30". These items mostly relate to the emotional well being scale, and are almost all negatively framed. It can probably best be termed Emotional Problems.
+
+
+PA10: "RANDQ3" ,"RANDQ6". These items relate to vigourous activities and climbing stairs. It can probably best be termed as Vigourous Activity.
+
+PA9: "RANDQ33". 
+
+PA12: "RANDQ20"
+
+PA13: "RANDQ24"
+
+The last three factors have only one item loading on them, and three is normally regarded as the minimum for a factor to replicate.   %cite Tabachnick & Fidell here.
+Therefore we can stop the interpretation here, as this factor does not seem to add much to our understanding of the scale. 
+
+<<rand13corr, echo=FALSE, results=tex>>=
+print(xtable(rand.fact.13[["r.scores"]],label="tab:hom1rand13corr", caption="Factor Correlations, Thirteen Factor RAND MOS Solution, Sample One"), scalebox=0.6)
+@
+As Table \ref{tab:hom1rand13corr} shows, the factors are inter-correlated, but not in any coherent fashion. 
+
+
+
+The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
+and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}. 
+
+Although the factor structure from this solution looks unlikely to be useful (given that there are three factors consisting only of one item each), the fit indices indicate that this is a better solution than any of the other proposed structures. That being said, this structure is unlikely to replicate, due to presumed overfitting. 
+
+<<rand13sem, echo=FALSE, results=hide, cache=TRUE>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigorous Activity","RAND20", "RAND24" )
+physfun <- paste(rand, c(3:12), sep="")
+emrolelim <- paste(rand, c(17:20), sep="")
+rolelim <- paste(rand, c(13:16), sep="")
+posemotions <- paste(rand, c(23,26,27,30), sep="")
+physexertions <- paste(rand, c(3,4:5, 8), sep="")
+poshealth <- paste(rand, c(1,34, 36), sep="")
+fatigue <- paste(rand, c(29, 31), sep="")
+pain <- paste(rand, c(21:22), sep="")
+emproblems <- paste(rand, c(24, 25, 28, 30), sep="")
+sickness <- paste(rand, 33, sep="")
+vigactivity <- paste(rand, c(3,6), sep="")
+rand20 <- "RANDQ20"
+rand24 <- "RANDQ24"
+Rand13model <- mxModel(name="RAND13Samp1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                       mxPath(from="Emotional Role Limitations", to=emrolelim),
+                       mxPath(from="Role Limitations", to=rolelim),
+                       mxPath(from="Positive Emotionality", to=posemotions),
+                      mxPath(from="Physical Exertion", to=physexertions),
+                       mxPath(from="Positive Health", to=poshealth),
+                       mxPath(from="Pain", to=pain),
+                       mxPath(from="Fatigue", to=fatigue),
+                       mxPath(from="Emotional Problems", to=emproblems),
+                       mxPath(from="Vigorous Activity", to=vigactivity),
+                      mxPath(from="Sickness", to=sickness),
+                      mxPath(from="RANDQ20", to=rand20),
+                       mxPath(from="RANDQ24", to=rand24),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=364)
+                      )
+rand13fit <- mxRun(Rand13model)
+rand13summ <- summary(rand13fit)
+@ 
