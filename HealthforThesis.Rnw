@@ -2069,8 +2069,6 @@ print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regres
 Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
 
 
-%% \subsubsection{Split B}
-%% \label{sec:split-b}
 
 \subsection{MAAS}
 \label{sec:maas-samp-two}
@@ -2144,22 +2142,6 @@ Note that MAASQ4 loads slightly on both PA3 and PA5, and is not considered in th
 
 The factor solution for Split C (shown in Table \ref{tab:hom2cmaasfact5}) is somewhat different from the five factor solution for Split B. Note that PA3 is somewhat similar to PA1 (Distractability) from Split B. 
 
-Now, we examine the fit indices for the five solutions.
-
-<<maas2bfitindices, echo=FALSE, results=tex>>=
-maas2b.1fit <- FitIndices(maas2b.fact1)
-maas2b.5fit <- FitIndices(maas2b.fact5)
-maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.5fit))
-print(xtable(maas2bfit,label="tab:hom2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
-@
-
-
-<<maas2cfitindices, echo=FALSE, results=tex>>=
-maas2c.1fit <- FitIndices(maas2c.fact1)
-maas2c.5fit <- FitIndices(maas2c.fact5)
-maas2cfit <- as.data.frame(cbind(maas2c.1fit,maas2c.5fit))
-print(xtable(maas2cfit,label="tab:hom2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
-@
 
 <<maas2bsemon2c, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
@@ -2284,12 +2266,12 @@ maas2b.iio <- check.iio(na.omit(maasitems2b))
 maas2b.mono <- check.monotonicity(na.omit(maasitems2b))
 @ 
 
-<<maas2bitemord, echo=FALSE, results=tex>>=
+<<maas2bitemord, echo=FALSE, results=hide>>=
 print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check, MAAS Split B", label="tab:maas2bitemord"))
 maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
 @ 
 
-As can be seen from Table \ref{tab:maas2bitemord}, questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
+Questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
 
 <<maas2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 maas2c.iio <- check.iio(na.omit(maasitems2c))
@@ -2299,25 +2281,15 @@ maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 
 For Split C, items 5 and 11 fail the item ordering check, and so is removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
 
-Firstly, three partial credit models are fit to Split B.
+%% Firstly, three partial credit models are fit to Split B.
 
-<<maas2bpcm, echo=FALSE, results=hide, cache=TRUE>>=
-maas2b.pcm.rasch <- gpcm(maas2b.s, constraint="rasch")
-maas2b.pcm.1PL <- gpcm(maas2b.s, constraint="1PL")
-maas2b.pcm.gpcm <- gpcm(maas2b.s, constraint="gpcm")
-@ 
 
-An ANOVA suggested that the two parameter model provided a better fit to the data ($p\le 0.001$). 
 
-Firstly, three partial credit models are fit to Split C. 
 
-<<maas2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-maas2c.gpcm.rasch <- gpcm(maas2c.s, constraint="rasch")
-maas2c.gpcm.1PL <- gpcm(maas2c.s, constraint="1PL")
-maas2c.gpcm.gpcm <- gpcm(maas2c.s, constraint="gpcm")
-@ 
 
-None of the partial credit models are analysed further, as they all had non-monotonically increasing parameter estimates. 
+
+
+Three partial credit models were fit to Splits B and C, but were analysed further, as they provided a poor fit to the data. 
 
 Next, one and two parameter graded response models were fit to Split B. 
 
@@ -2539,8 +2511,7 @@ print(lotrcomp.xtab2c)
 
 Tables \ref{tab:lotr2blotrcomp} and \ref{tab:tcq2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, while the two factor solution had a lower negative log likelihood, when controlling for parameters the one factor solution performed much better. 
 
-\subsubsection{IRT Analyses}
-\label{sec:irt-analyses-1}
+
 
 Next, we examine the LOT-R using IRT approaches. 
 
@@ -2551,16 +2522,12 @@ lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
 
 The LOT-R for Split B had no problems with either item ordering or monotonicity. 
 
-Firstly, three partial credit models were fit to the data. 
 
-<<lotr2bpcm, echo=FALSE, results=hide, cache=TRUE>>=
-lotr2b.pcm.rasch <- gpcm(lotritems2b, constraint="rasch")
-lotr2b.pcm.1PL <- gpcm(lotritems2b, constraint="1PL")
-lotr2b.pcm.gpcm <- gpcm(lotritems2b, constraint="gpcm")
-@ 
+
+
+
 
 All of the partial credit models had non-monotonically increasing parameter estimates and so are not reported further here. 
-
 Next, one and two parameter Graded Response Models were fit to the data. 
 
 <<lotr2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
