@@ -575,4 +575,19 @@ print(xtable(hom1.physlim.grm.all, caption="Performance of One and Two Parameter
 @ 
 
 As can be seen from Table \ref{tab:hom1physlimgrmtest}, the one parameter GRM provided the best fit to the unseen data. 
+%% Now, we examine the fit indices for the five solutions.
+<<maas2bfitindices, echo=FALSE, results=tex>>=
+maas2b.1fit <- FitIndices(maas2b.fact1)
+maas2b.5fit <- FitIndices(maas2b.fact5)
+maas2bfit <- as.data.frame(cbind(maas2b.1fit,maas2b.5fit))
+print(xtable(maas2bfit,label="tab:hom2bmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.5)
+@
+
+<<maas2cfitindices, echo=FALSE, results=tex>>=
+maas2c.1fit <- FitIndices(maas2c.fact1)
+maas2c.5fit <- FitIndices(maas2c.fact5)
+maas2cfit <- as.data.frame(cbind(maas2c.1fit,maas2c.5fit))
+print(xtable(maas2cfit,label="tab:hom2cmaassemcomp", caption=" Comparison of Fit Indices for MAAS Factor Solutions, Sample Two Split B"), scalebox=0.8)
+@
+
 

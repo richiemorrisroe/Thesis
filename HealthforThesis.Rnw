@@ -1881,7 +1881,7 @@ The next part of the analyses was examining the predictive ability of the IRT mo
 \label{sec:conf-irt-analys}
 
 
-Next, the performance of the MAAS models are assessed on unseen data. 
+Firstly, the performance of the MAAS models are assessed on unseen data. 
 
 <<hom1maasgrmtest, echo=FALSE, results=tex>>=
 maas.irt2a <- maasitems2a[,paste(maas, c(1,3:5,7:15), sep="")]
@@ -1989,10 +1989,27 @@ print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth
 
 As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. The RMSEA metric gave a value of 0.746, which is marginally better than either the lasso or ridge predictions. Figure \ref{fig:optsteppredplot} shows this in more detail, and in fact is quite similar to the plots for the lasso and ridge solutions. This would seem to suggest that each of the three models are converging on a relatively common solution, increasing our confidence that we have explored the linear relationships between these variables. 
 
+\section{Discussion}
+\label{sec:discussion}
+
+A number of interesting findings, some expected and others not have arisen from this study. Firstly, in contrast to published research, optimism and health were negatively associated. This relationship appears to be mediated through Emotional Well Being, which may point to some earlier work suggesting that the optimism-health connection was mediated through negative affect. This result would seem to contribute some new information to this debate. 
+
+Secondly, the factor structures for the RAND-MOS, the MAAS and the LOT-R were more or less confirmed, and more importantly from the perspective of this thesis, reduced versions of these scales were developed which were more predictive on new data. 
+
+The aims for the second sample collected were as follows:
+
+\begin{itemize}
+\item To replicate the finding of a negative relationship between optimism and health
+
+\item To determine if this relationship was still moderated by emotional well-being. 
+
+\item To improve the models for the MAAS and the LOT-R to aid in the prediction of placebo in the experimental portion of the research. 
+\end{itemize}
+
 
 \part{Sample Two}
 
-Next, sample two was examined in and of itself. This sample was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
+Next, sample two was examined. This sample was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
 
 \begin{figure}
 <<optplot2, echo=FALSE, fig=TRUE>>=
@@ -2009,12 +2026,47 @@ The relationship between optimism and health is even clearer in sample 2 (Figure
 \section{Regression Analyses}
 \label{sec:regression-analyses}
 
-Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample.  The first action taken was to predict the coefficients in the new data set from the models developed on the first sample.
+Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample, focusing mainly on the relationship of optimism to the other variables in the sample, as this was the major finding from Sample One. Similarly to the earlier work, stepwise linear regression models, along with lasso and ridge regression were applied to the data. 
+
+<<optsetup2b, echo=FALSE, results=hide, cache=TRUE>>=
+scales2b.full <- na.omit(scales2b)
+scales2b.full2 <- scales2b.full[,-11]
+opt.test2b <- with(scales2b.full, optimism)
+opt.train.ind <- with(scales2b.full, createDataPartition(optimism, p=0.75, list=FALSE))
+scales2b.opt.train <- scales2b.full[opt.train.ind,]
+scales2b.opt.test <- scales2b.full[-opt.train.ind,]
+opt.train2b <- with(scales2b.opt.train, optimism)
+opt.pred.train2b <- scales2b.opt.train[,-11]
+opt.test2b <- with(scales2b.opt.test, optimism)
+opt.pred.test2b <- scales2b.opt.test[,-11]
+@ 
+
+<<optlasso2b, echo=FALSE, results=hide, cache=TRUE>>=
+opt.lasso.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2b"))
+opt.lasso.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+@ 
+
+<<optlassoprint, echo=FALSE, results=tex>>=
+print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Lasso Regression, Split B", label="tab:optlasso2b"))
+@ 
 
 
+Table \ref{tab:optlasso2b} shows the estimated coefficients for the lasso regression model. It can be seen that the pattern is quite similar to that from Sample one, with Age, emotional well being, general health and mindfulness being retained by the model, with the same sign as in the previous sample. 
 
+<<optridge2b, echo=FALSE, results=hide, cache=TRUE>>=
+opt.ridge.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
+opt.ridge.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2b"))
+opt.ridge.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b, traindata=opt.pred.train2b, testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+@ 
 
+<<optridge2bprint, echo=FALSE, results=tex>>=
+print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regression Model on Optimism, Split B", label="tab:optridge2b"))
+@ 
 
+Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
 
 
 %% \subsubsection{Split B}
