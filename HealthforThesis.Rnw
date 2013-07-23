@@ -1707,6 +1707,8 @@ Rand4model2 <- mxModel(name="RAND4Samp2",
 rand4fit2 <- mxRun(Rand4model2)
 rand4summ2 <- summary(rand4fit2)
 @ 
+
+
 <<rand8semhom2, echo=FALSE, results=hide, cache=TRUE>>=
 randitems.cols <- paste(rand, 1:36, sep="")
 manifests <- randitems.cols
@@ -1739,50 +1741,10 @@ rand8fit2 <- mxRun(Rand8model2)
 rand8summ2 <- summary(rand8fit2)
 @
 
-<<rand13sem2, echo=FALSE, results=hide, cache=TRUE>>=
-randitems.cols <- paste(rand, 1:36, sep="")
-manifests <- randitems.cols
-latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigourous Activity","RAND20", "RAND24" )
-physfun <- paste(rand, c(3:12), sep="")
-emrolelim <- paste(rand, c(17:20), sep="")
-rolelim <- paste(rand, c(13:16), sep="")
-posemotions <- paste(rand, c(23,26,27,30), sep="")
-physexertions <- paste(rand, c(3,4:5, 8), sep="")
-poshealth <- paste(rand, c(1,34, 36), sep="")
-fatigue <- paste(rand, c(29, 31), sep="")
-pain <- paste(rand, c(21:22), sep="")
-emproblems <- paste(rand, c(24, 25, 28, 30), sep="")
-sickness <- paste(rand, 33, sep="")
-vigactivity <- paste(rand, c(3,6), sep="")
-rand20 <- "RANDQ20"
-rand24 <- "RANDQ24"
-Rand13model2 <- mxModel(name="RAND13Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Physical Functioning", to=physfun),
-                       mxPath(from="Emotional Role Limitations", to=emrolelim),
-                       mxPath(from="Role Limitations", to=rolelim),
-                       mxPath(from="Positive Emotionality", to=posemotions),
-                      mxPath(from="Physical Exertion", to=physexertions),
-                       mxPath(from="Positive Health", to=poshealth),
-                       mxPath(from="Pain", to=pain),
-                       mxPath(from="Fatigue", to=fatigue),
-                       mxPath(from="Emotional Problems", to=emproblems),
-                       mxPath(from="Vigourous Activity", to=vigactivity),
-                      mxPath(from="Sickness", to=sickness),
-                      mxPath(from="RANDQ20", to=rand20),
-                       mxPath(from="RANDQ24", to=rand24),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
-                      )
-rand13fit2 <- mxRun(Rand13model2)
-rand13summ2 <- summary(rand13fit2)
-@ 
+
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
-randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2, rand13fit2))
+randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
 print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.9)
 @
 
@@ -1790,8 +1752,6 @@ As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the
 
 \subsubsection{MAAS CFA on Sample Two (Split A)}
 \label{sec:maas-cfa-sample}
-
-
 
 <<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
 set.seed(17)
@@ -1836,34 +1796,9 @@ scales2c <- scales[s3.samp,]
 @
 
 <<maas7sem2, echo=FALSE, results=hide, cache=TRUE>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Automatic Behaviour", "Preoccupations", "Hurry",  "Lack of Present Focus", "Food Mindlessness", "Inattention", "Lack of Awareness")
-automaticbehaviour <- paste(maas, c(9:12), sep="")
-preoccupations <- "MAASQ13"
-hurry <- paste(maas, c(7:8), sep="")
-lackpresfocus <- paste(maas, c(2:3), sep="")
-foodmindlessness <- "MAASQ15"
-inattention <- "MAASQ6"
-lackawareness <- paste(maas, c(1,4:5,9), sep="")
-Maas7model2 <- mxModel(name="MAAS7Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Automatic Behaviour", to=automaticbehaviour),
-                      mxPath(from="Preoccupations", to=preoccupations),
-                      mxPath(from="Hurry", to=hurry),
-                      mxPath(from="Lack of Present Focus", to=lackpresfocus),
-                      mxPath(from="Lack of Awareness", to=lackawareness),
-                           mxPath(from="Inattention", to=inattention),
-                           mxPath(from="Lack of Present Focus", to=lackpresfocus),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313)
-                      )
-maas7fit2 <- mxRun(Maas7model2)
-maas7summ2 <- summary(maas7fit2)
+maas3model2 <- mxModel(Maas3model, name="MAAS3Fit2", mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313))
+maas3fit2 <- mxRun(maas3model2)
+maas3fitsum <- summary(maas3fit2)
 @
 
 
@@ -1880,7 +1815,7 @@ Maas1model2 <- mxModel(name="MAAS1Samp2",
                       mxPath(from="Unawareness", to=unawareness),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=313)
+                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313)
                       )
 maas1fit2 <- mxRun(Maas1model2)
 maas1summ2 <- summary(maas1fit2)
@@ -1890,7 +1825,7 @@ maas1summ2 <- summary(maas1fit2)
 
 
 <<maassemcompare2, echo=FALSE, results=tex>>=
-maascomp2 <- mxCompare(base=maas1fit2, comparison=maas7fit2)
+maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
 maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
 print(maascomp.xtab2)
 @
@@ -1923,30 +1858,17 @@ lotr1summ2 <- summary(lotr1fit2)
 
 
 <<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism", "Pessimism", "Pessimism2")
-optimism <- paste(lotr, c(1,4,10), sep="")
-pessimism <- paste(lotr, c(3,7), sep="")
-pessimism2 <- paste(lotr, c(7,9), sep="")
-Lotr3model2 <- mxModel(name="LOTR3Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
-                      mxPath(from="Pessimism", to=pessimism),
-                      mxPath(from="Pessimism2", to=pessimism2),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=313)
-                      )
-lotr3fit2 <- mxRun(Lotr3model2)
-lotr3summ2 <- summary(lotr3fit2)
+Lotr2model2 <- mxModel(Lotr2model, 
+                       name="LOTR2Model2",
+                      mxData(
+                          observed=cov(na.omit(lotritems2a)), 
+                          type="cov", numObs=313))
+lotr2fit2 <- mxRun(Lotr2model2)
+lotr2summ2 <- summary(lotr2fit2)
 @
 
 <<lotrcompare2, echo=FALSE, results=tex>>=
-lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr3fit2)
+lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
 lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
 print(lotrcomp.xtab2)
 @
@@ -1958,72 +1880,6 @@ The next part of the analyses was examining the predictive ability of the IRT mo
 \subsection{Confirmatory IRT Analyses}
 \label{sec:conf-irt-analys}
 
-\subsubsection{Physical Functioning Scale}
-\label{sec:phys-funct-scale}
-
-
-
-The first scale to be examined was the RAND MOS Physical Functioning Scale. 
-
-<<hom1physfuntest, echo=FALSE, results=tex>>=
-rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
-hom1.grm.1pl.test <- testIRTModels(physfun.grm.1pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.grm.2pl.test <- testIRTModels(physfun.grm.2pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.grm.test.all <- rbind(hom1.grm.1pl.test, hom1.grm.2pl.test)
-print(xtable(hom1.grm.test.all, label="tab:hom1physfungrmtest", caption="Performance of One and Two Parameter Graded Response Models from Sample One on a Subset of Sample Two (Split A)"))
-@
-
-As can be seen from Table \ref{tab:hom1physfungrmtest}, the one parameter model performed better on the unseen data. 
-
-\subsubsection{Emotional Health Scale}
-\label{sec:emot-health-scale}
-
-
-
-Next, the performance of the two emotional health GRM\'s on unseen data was assessed. 
-<<hom1emhealthtest, echo=FALSE, results=tex>>=
-emhealth2a <- randitems2a[,paste(rand, c(16:19,25,28,29,31), sep="")]
-hom1.emhealth.grm.1pl.test <- testIRTModels(hom1.emhealth.grm.1pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.emhealth.grm.2pl.test <- testIRTModels(hom1.emhealth.grm.2pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.emhealth.grm.all <- rbind(hom1.emhealth.grm.1pl.test, hom1.emhealth.grm.2pl.test)
-print(xtable(hom1.emhealth.grm.all, caption="Performance of One and Two Parameter Graded Response Models from Sample One on a subset of Data from Sample Two (Split A)", label="tab:hom1emhealthgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:hom1emhealthgrmtest}, the one parameter model performed best on the unseen data.
-
-\subsubsection{Energy Scale}
-\label{sec:energy-scale}
-
-
-
-
-Next, we assess the performance of the two graded response models on the energy scale.
-
-<<hom1energygrmtest, echo=FALSE, results=tex>>=
-energy2a <- randitems2a[,paste(rand, c(1,20:23,26:27,30,34,36), sep="")]
-hom1.energy.grm.1pl.test <- testIRTModels(hom1.energy.grm.1pl, energy2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.energy.grm.2pl.test <- testIRTModels(hom1.energy.grm.2pl, energy2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.energy.grm.all <- rbind(hom1.energy.grm.1pl.test, hom1.energy.grm.2pl.test)
-print(xtable(hom1.energy.grm.all, caption="Performance of One and Two Parameter Graded Response Models from Sample One on Sample Two (Split A)", label="tab:hom1energygrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:hom1energygrmtest}, the one parameter GRM provided the best fit to the unseen data. 
-
-\subsubsection{Physical Limitations Scale}
-\label{sec:phys-limit-scale}
-
-Next, we examine the performance of one and two parameter GRM's on the physical limitations scale from Sample One. 
-
-<<hom1physlimtest, echo=FALSE, results=tex>>=
-physlim2a <- randitems2a[,paste(rand, c(13:16), sep="")]
-hom1.physlim.grm.1pl.test <- testIRTModels(hom1.physlim.grm.1pl, physlim2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.physlim.grm.2pl.test <- testIRTModels(hom1.physlim.grm.2pl, physlim2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.physlim.grm.all <- rbind(hom1.physlim.grm.1pl.test, hom1.physlim.grm.2pl.test)
-rownames(hom1.physlim.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.physlim.grm.all, caption="Performance of One and Two Parameter GRM's from Sample One on a subset of Sample Two Data (Split A)", label="tab:hom1physlimgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:hom1physlimgrmtest}, the one parameter GRM provided the best fit to the unseen data. 
 
 Next, the performance of the MAAS models are assessed on unseen data. 
 

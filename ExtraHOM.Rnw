@@ -465,3 +465,114 @@ print(xtable(coef2mat(coef(hom1.physlim.grm.2pl)), label="tab:hom1physlimgrm2pl"
 
 Table \ref{tab:hom1physlimgrm2pl} shows the coefficient estimates for the two paramter GRM for the physical limitations scale. It can be seen that the discrimination parameters have lowered signigicantly for Q14 and Q16, while have raised for Q13 and Q15. 
 
+
+<<rand13sem2, echo=FALSE, results=hide, cache=TRUE>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning","Emotional Role Limitations","Role Limitations", "Positive Emotionality", "Physical Exertion", "Positive Health","Fatigue","Pain", "Emotional Problems", "Sickness", "Vigourous Activity","RAND20", "RAND24" )
+physfun <- paste(rand, c(3:12), sep="")
+emrolelim <- paste(rand, c(17:20), sep="")
+rolelim <- paste(rand, c(13:16), sep="")
+posemotions <- paste(rand, c(23,26,27,30), sep="")
+physexertions <- paste(rand, c(3,4:5, 8), sep="")
+poshealth <- paste(rand, c(1,34, 36), sep="")
+fatigue <- paste(rand, c(29, 31), sep="")
+pain <- paste(rand, c(21:22), sep="")
+emproblems <- paste(rand, c(24, 25, 28, 30), sep="")
+sickness <- paste(rand, 33, sep="")
+vigactivity <- paste(rand, c(3,6), sep="")
+rand20 <- "RANDQ20"
+rand24 <- "RANDQ24"
+Rand13model2 <- mxModel(name="RAND13Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                       mxPath(from="Emotional Role Limitations", to=emrolelim),
+                       mxPath(from="Role Limitations", to=rolelim),
+                       mxPath(from="Positive Emotionality", to=posemotions),
+                      mxPath(from="Physical Exertion", to=physexertions),
+                       mxPath(from="Positive Health", to=poshealth),
+                       mxPath(from="Pain", to=pain),
+                       mxPath(from="Fatigue", to=fatigue),
+                       mxPath(from="Emotional Problems", to=emproblems),
+                       mxPath(from="Vigourous Activity", to=vigactivity),
+                      mxPath(from="Sickness", to=sickness),
+                      mxPath(from="RANDQ20", to=rand20),
+                       mxPath(from="RANDQ24", to=rand24),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
+                      )
+rand13fit2 <- mxRun(Rand13model2)
+rand13summ2 <- summary(rand13fit2)
+@ 
+
+
+\subsubsection{Physical Functioning Scale}
+\label{sec:phys-funct-scale}
+
+
+
+The first scale to be examined was the RAND MOS Physical Functioning Scale. 
+
+<<hom1physfuntest, echo=FALSE, results=tex>>=
+rand2a.physfun <- randitems2a[,paste(rand, 3:12, sep="")]
+hom1.grm.1pl.test <- testIRTModels(physfun.grm.1pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.grm.2pl.test <- testIRTModels(physfun.grm.2pl, rand2a.physfun, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.grm.test.all <- rbind(hom1.grm.1pl.test, hom1.grm.2pl.test)
+print(xtable(hom1.grm.test.all, label="tab:hom1physfungrmtest", caption="Performance of One and Two Parameter Graded Response Models from Sample One on a Subset of Sample Two (Split A)"))
+@
+
+As can be seen from Table \ref{tab:hom1physfungrmtest}, the one parameter model performed better on the unseen data. 
+
+\subsubsection{Emotional Health Scale}
+\label{sec:emot-health-scale}
+
+
+
+Next, the performance of the two emotional health GRM\'s on unseen data was assessed. 
+<<hom1emhealthtest, echo=FALSE, results=tex>>=
+emhealth2a <- randitems2a[,paste(rand, c(16:19,25,28,29,31), sep="")]
+hom1.emhealth.grm.1pl.test <- testIRTModels(hom1.emhealth.grm.1pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.emhealth.grm.2pl.test <- testIRTModels(hom1.emhealth.grm.2pl, emhealth2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.emhealth.grm.all <- rbind(hom1.emhealth.grm.1pl.test, hom1.emhealth.grm.2pl.test)
+print(xtable(hom1.emhealth.grm.all, caption="Performance of One and Two Parameter Graded Response Models from Sample One on a subset of Data from Sample Two (Split A)", label="tab:hom1emhealthgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1emhealthgrmtest}, the one parameter model performed best on the unseen data.
+
+\subsubsection{Energy Scale}
+\label{sec:energy-scale}
+
+
+
+
+Next, we assess the performance of the two graded response models on the energy scale.
+
+<<hom1energygrmtest, echo=FALSE, results=tex>>=
+energy2a <- randitems2a[,paste(rand, c(1,20:23,26:27,30,34,36), sep="")]
+hom1.energy.grm.1pl.test <- testIRTModels(hom1.energy.grm.1pl, energy2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.energy.grm.2pl.test <- testIRTModels(hom1.energy.grm.2pl, energy2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.energy.grm.all <- rbind(hom1.energy.grm.1pl.test, hom1.energy.grm.2pl.test)
+print(xtable(hom1.energy.grm.all, caption="Performance of One and Two Parameter Graded Response Models from Sample One on Sample Two (Split A)", label="tab:hom1energygrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1energygrmtest}, the one parameter GRM provided the best fit to the unseen data. 
+
+\subsubsection{Physical Limitations Scale}
+\label{sec:phys-limit-scale}
+
+Next, we examine the performance of one and two parameter GRM's on the physical limitations scale from Sample One. 
+
+<<hom1physlimtest, echo=FALSE, results=tex>>=
+physlim2a <- randitems2a[,paste(rand, c(13:16), sep="")]
+hom1.physlim.grm.1pl.test <- testIRTModels(hom1.physlim.grm.1pl, physlim2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.physlim.grm.2pl.test <- testIRTModels(hom1.physlim.grm.2pl, physlim2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.physlim.grm.all <- rbind(hom1.physlim.grm.1pl.test, hom1.physlim.grm.2pl.test)
+rownames(hom1.physlim.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.physlim.grm.all, caption="Performance of One and Two Parameter GRM's from Sample One on a subset of Sample Two Data (Split A)", label="tab:hom1physlimgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1physlimgrmtest}, the one parameter GRM provided the best fit to the unseen data. 
+
