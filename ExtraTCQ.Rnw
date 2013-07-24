@@ -1,0 +1,49 @@
+\section{Study One}
+
+\subsection{Materials and Methods}
+
+\subsubsection{Participants}
+
+All participants in Study 1 were students at the University of the researchers. 299 began the survey, and 281 completed the analysis in full. These 281 participants are the those on whom the analyses reported here were based. Ages, Gender and other demographic variables about the participants can be found in the Results section, under the heading of Descriptive Statistics. 
+
+\subsubsection{Measures}
+
+The Treatment Credibility Questionnaire was adapted from the Devilly and Borkovec Credibility/Expectancy Questionnaire. This questionnaire consists of six questions, asking about the cognitive and affective responses to the therapy. Given that this research project concerns the use of placebo analgesia, the questionnaires were modified to make them refer to procedures for the relief of pain.
+The general format is as follows: 
+\begin{quotation}
+You have been suffering pain for a number of weeks, you go to the doctor and he suggests that you try X for this pain. Answer the following questions below.   
+\end{quotation}
+
+In this case, X represents a pain killing treatment. In order, the ones utilised in this research were Pills, Creams, Injections and Acupuncture. 
+There were six questions under each method, giving the scale 24 questions in all. Following the analysis of the results of Study 1, the instrument was modified to include six questions each on Homeopathy and Reiki, another two methods within the field of complementary and alternative medicine.  
+
+
+ 
+
+The questions were as follows:
+
+
+\begin{enumerate}
+	\item How logical does the therapy offered to you seem?
+	\item How successful do you think this treatment will be in reducing your symptoms?
+ 	\item How confident would you be in recommending this treatment to a friend2
+	\item How much improvement in your symptoms do you think will occur?
+	\item How much do you really \textit{feel} that therapy will help you to reduce your symptoms?
+	\item How much improvement in your symptoms do you really \textit{feel} will occur?
+\end{enumerate}
+
+The CEQ has had alphas of between 0.75 and 0.86 in various research, and test-retest reliabilities average at about 0.75 \cite{devilly2000psychometric}. 
+
+\subsubsection{Data Collection}
+
+Data were collected online through the use of an online data collection tool. The email request for completion was sent through the moderator of the All Students list to a total of 4551 students. By the date alloted for collection of responses, 299 had been returned, giving a response rate of 6.3\%, which is extremely low. 
+
+The following demographic variables were also assessed: Age, College of Study, Gender, and whether the respondent was an undergraduate or a postgraduate. 
+
+\subsubsection{Data Analysis}
+
+As this was a first draft of the survey, representativeness was not rated as important as other factors. The priority here was to assess the reliability and factor structure of the of instrument, to allow further validation in clinical and non-clinical groups over time.  All data analysis was conducted using R 2.11.0, an open source data analysis environment based on the commercial S Plus language\cite{RDevelopmentCoreTeam2010}. The pysch package was used for all factor and reliability analyses \cite{Revelle2010} while the eRm package was used for the IRT analyses and plots \cite{Mair2010} and the xtable package \cite{Dahl2009} to export R objects for LaTeX  along with the Sweave package to allow R code to processed through LaTeX editors, enabling reproducible research \cite{Leisch2002}. Structural Equation Modelling was carried out using the OpenMx package \cite{Bokerinpress}. All code and data are available from the first author upon request. 
+
+Factor Analysis was carried out using a principal axis method, as normality could not be assumed.In this piece of research, Exploratory Factor Analysis was used, as the researcher had no prior hypotheses on the nature and structure of the underlying latent variables. 
+Many researchers recommend utilising a number of different methods of data reduction, as the evidence suggests that a factor structure which remains invariant after multiple different reductions is the most likely solution that can be fitted to the data\cite{costello2005best,henson2006use}. This was the approach taken in this research report. Other research has shown that parallel analysis and the Minimum Average Partial criterion, along with the scree plot are two the most effective means of assessing the number of factors to retain, and both of these criteria were used in this research. Kruskal-Wallis tests were used for assessment of differences between groups, as normality was not assumed (and indeed was not found). 
+
