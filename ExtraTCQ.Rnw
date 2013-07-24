@@ -47,3 +47,466 @@ As this was a first draft of the survey, representativeness was not rated as imp
 Factor Analysis was carried out using a principal axis method, as normality could not be assumed.In this piece of research, Exploratory Factor Analysis was used, as the researcher had no prior hypotheses on the nature and structure of the underlying latent variables. 
 Many researchers recommend utilising a number of different methods of data reduction, as the evidence suggests that a factor structure which remains invariant after multiple different reductions is the most likely solution that can be fitted to the data\cite{costello2005best,henson2006use}. This was the approach taken in this research report. Other research has shown that parallel analysis and the Minimum Average Partial criterion, along with the scree plot are two the most effective means of assessing the number of factors to retain, and both of these criteria were used in this research. Kruskal-Wallis tests were used for assessment of differences between groups, as normality was not assumed (and indeed was not found). 
 
+
+The College of study of the respondents was also assessed, and the results are shown in Table \ref{tab:tcq1college} below. 
+
+<<gendersummary, echo=FALSE, results=hide>>=
+sum.gen<-with(tcq1, summary(Gender))
+sum.gen <- as.data.frame(sum.gen)
+names(sum.gen) <- "Gender Breakdown"
+rownames(sum.gen)[1] <- "No Gender Supplied"
+sum.gen.xtab<-xtable(sum.gen, caption="Gender of Participants in Study One", label="tab:tcq1gender")
+print(sum.gen.xtab)
+@ 
+
+The next demographic variable we will examine is the breakdown between undergraduates and postgraduates in the sample. The results can be seen in Table 3 below. 
+<<upgsummary, echo=FALSE, results=tex>>=
+sum.ugpg<-with(tcq1, summary(UGPG))
+sum.ugpg <- as.data.frame(sum.ugpg)
+names(sum.ugpg) <- "Proportion of Under and Post Graduates in the Sample"
+xtab.ugpg<-xtable(sum.ugpg, caption="Distribution of Undergraduates and Postgraduate Respondents, TCQ 1", label="tab:tcq1ugpg")
+print(xtab.ugpg)
+@ 
+
+As we can see from table \ref{tab:tcq1ugpg}, approximately 16\% of the sample are postgraduates, which fits reasonably well with the figures from the population. 
+
+The next demographic variable examined is that of year of study, and the results can be seen in Table \ref{tab:tcq1year} below.
+
+<<agesummary, echo=FALSE, results=hide, eval=FALSE>>=
+sum.age<-with(tcq1, summary(Age)) 
+sum.age.mat<-as.data.frame(as.matrix(sum.age))
+names(sum.age.mat) <- "Age"
+xtab.age<-xtable(sum.age.mat, label="tab:tcq1age", caption="Age Distribution of Participants in Study One")
+print(xtab.age)
+@ 
+
+<<tcqcollege, echo=FALSE, results=tex>>=
+sum.coll<-with(tcq1, summary(College)) 
+names(sum.coll)[1] <- "No College Supplied"
+sum.coll <- as.data.frame(sum.coll)
+names(sum.coll) <- "College Breakdown"
+xtab.coll<-xtable(sum.coll, label="tab:tcq1college", caption="College of Respondents, Study One")
+print(xtab.coll)
+@ 
+
+As we can see from Table \ref{tab:tcq1college}, again the breakdown roughly follows the distribution of students in the population. However, there are a few more Medicine and Health students than one would expect, presumably because this survey was somewhat more salient to them, given their field. 
+
+<<yearsummary, echo=FALSE, results=tex>>=
+sum.year<-with(tcq1, summary(as.factor(Year)))
+mat.year<-as.data.frame(sum.year)
+names(mat.year) <- "Year of Study"
+xtab.year<-xtable(mat.year, caption="Year of Study, TCQ 1",label="tab:tcq1year")
+print(xtab.year)
+@ 
+
+As one can see from Table \ref{tab:tcq1year} , the largest number of respondents came from first year, which argues against the representativeness of the sample. However, given that both first year undergraduates and first year postgraduates could have used this response, it may not be that much of a threat to representativeness. 
+
+<<reltcq, echo=FALSE, results=hide>>=
+rel.xtab<-xtable(rel.tcq[["total"]],caption="Reliability Statistics for TCQ 1", label="tab:reltcq1short") 
+print(rel.xtab)
+@ 
+
+<<faparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+plot(fa.parallel(na.omit(tcqall)))
+## VSS(na.omit(tcqall))
+sink(NULL)
+@ 
+
+The scree plot seems to suggest that four factors should be retained, but the MAP criterion  suggests that the six factor solution is more appropriate.
+As can be seen, the red lines (representing the random values) cut off the blue lines of the actual data somewhere at 4 factors, and the numerical output claims that a four factor solution is most optimal. 
+Therefore, 4 factors were retained. The theoretical rationale for accepting this analysis is outlined below. 
+
+Below, in Table \ref{tab:tcq1fact5} the five factor solution is examined.
+
+<<tcqfact5, echo=FALSE, results=tex>>=
+tcq.fact.5 <-fa(na.omit(tcqall), 5, rotate='oblimin', fm="pa")
+print(FactorXtab(tcq.fact.5, names=c("Acu", "Cream", "Inj", "Pill", "Fact5" ), label="tab:tcq1fact5",caption="Five Factor Solution, TCQ 1 Promax rotation"))
+@ 
+<<tcq5cor, echo=FALSE, results=tex>>=
+print(FactorCor(tcq.fact.5, label="tab:tcq1fact5cor", caption="Five Factor Solution TCQ1 Correlations"))
+@ 
+
+
+
+Although in Table \ref{tab:tcq1fact5} the oblimin solution is shown, simplimax, varimax and promax rotations were attempted on the data specifying five factors. In no case did any of the items load highest on this factor, so this factor can be regarded as not adding anything to the model. 
+
+
+<<tcq5sem, echo=FALSE, results=hide, cache=TRUE>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Fifth")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+fifth <- c("Pill4", "Pill5", "Pill6", "Cream5", "Cream6", "Inj6")
+Tcq5model <- mxModel(name="TCQ5", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Pills", to=pills), 
+                      mxPath(from="Creams", to=creams),
+                      mxPath(from="Injections", to=inj),
+                      mxPath(from="Acupuncture", to=Acu),
+                     mxPath(from="Fifth", to=fifth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(tcqall)), type="cov", numObs=264))
+tcq5fit <- mxRun(Tcq5model)
+tcq5summ <- summary(tcq5fit)
+@ 
+
+<<tcqscales, echo=FALSE, results=hide>>=
+print(xtable(tcq.scales, caption="Automatic Item Selection Procedure for TCQ 1", label="tab:tcq1aisp"))
+convtcq <- as.data.frame(cbind(Pillall, Creamall, Injall))
+tcqalt <- Acuall
+@ 
+
+<<tcqconvitemord, echo=FALSE, results=hide>>=
+print(xtable(tcqconv.item.ord[["violations"]], caption="Item Ordering Assumption Test for TCQ 1 Conventional Scale", label="tab:tcq1itemordconv"), scalebox=0.8)
+convtcq <- convtcq[,-2]
+@ 
+
+From Table \ref{tab:tcq1itemordconv} 
+
+<<convmonotonicity, echo=FALSE, results=tex>>=
+print(xtable(summary(tcqconv.monotonicity), caption="Test of Monotonicity Assumption, TCQ 1 Conventional Scale", label="tab:tcq1convmono"), scalebox=0.8)
+@ 
+
+<<tcqaltitemord, echo=FALSE, results=tex>>=
+print(xtable(tcqalt.item.ord[["violations"]], caption="Test of Item Ordering Assumptions for TCQ1 Alternative Scale", label="tab:tcq1altitemord"))
+
+@ 
+
+Table \ref{tab:tcq1altitemord} demonstrates that there were no violations of the item ordering assumptions for the acupuncture items.
+
+Next, the assumption of monotonicity was examined for the acupcunture items, and the results are shown in Table \ref{tab:tcq1altmono}. The results indicate that there are no violations of monotonicity for these items. 
+
+<<altmonotonicity, echo=FALSE, results=tex>>=
+print(xtable(summary(tcqalt.monotonicity), caption="Test of Monotonicity Assumption for TCQ1 Alternative Scale", label="tab:tcq1altmono"))
+@ 
+
+<<tcqconvraschprint, echo=FALSE, results=tex>>=
+print(xtable(tcqcoef, label="tab:tcq1convpcmrasch", caption="Coefficients for TCQ1 Partial Credit Model (Rasch)"))
+@ 
+Even a cursory glance at Table \ref{tab:tcq1convpcmrasch} demonstrates that there are serious problems with this model, as the estimates are not monotonically increasing for each higher category. The  next model to be examined is a one parameter model, where the discrimination parameter is estimated from the data rather than being fixed at one. 
+
+<<tcqconvpcm1pl, echo=FALSE, results=hide, cache=TRUE>>=
+tcqconv.pcm.1pl <- gpcm(convtcq, constraint="1PL")
+tcqconv1pl.coef <- coef(tcqconv.pcm.1pl)
+
+tcqconv.pcm.fscores.1pl <- factor.scores(tcqconv.pcm.1pl)
+tcqconv.pcm.absest.1pl <- getIRTestimates(tcqconv.pcm.fscores.1pl)
+@ 
+<<tcqconv1plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqconv1pl.coef, label="tab:tcqconvpcm1pl", caption="Coefficients for TCQ 1 Partial Credit Model, One Parameter"))
+@ 
+From Table \ref{tab:tcqconvpcm1pl} it can be seen that the model still has a number of problems with item ordering, especially in the Pill and Injection sections of the questionnaire. Indeed, it appears to be Category 3 which is causing the problems, which may suggest that participants were using this category as a base rather than actually considering the alternatives in a consistent manner. Next, a 2 parameter model will be fitted to assess if allowing individual discrimination parameters will prove to be a better approach. 
+
+<<tcqconvpcm2pl, echo=FALSE, results=tex, cache=TRUE>>=
+tcqconv.pcm.gpcm <- gpcm(convtcq, constraint="gpcm")
+tcqconv.gpcm.coef <- coef(tcqconv.pcm.gpcm)
+
+tcqconv.pcm.fscores.gpcm <- factor.scores(tcqconv.pcm.gpcm)
+tcqconv.pcm.absest.gpcm <- getIRTestimates(tcqconv.pcm.fscores.gpcm)
+@ 
+
+<<tcqconv2plprint, echo=FALSE, results=tex>>=
+print(xtable(tcqconv.gpcm.coef, caption="Coefficients for TCQ1 Conventional Two Parameter Partial Credit Model", label="tab:tcq1convpcm2pl"))
+@ 
+
+
+Unfortunately, the approach of attempting to allow for a more flexible modelling approach in order to garner more coherent parameters for the model appears to have failed, in that Table \ref{tab:tcq1convpcm2pl} shows that the issues around item ordering have not been resolved by allowing for a two parameter model. 
+
+<<tcqaltpcm, echo=FALSE, results=tex, cache=TRUE>>=
+tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
+tcqaltcoef <- coef(tcqalt.pcm.rasch)
+
+tcqalt.pcm.fscores.rasch <- factor.scores(tcqalt.pcm.rasch)
+tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores.rasch)
+@ 
+\begin{figure}
+	\centering
+<<tcq2aparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+tcq2a.para <- fa.parallel(na.omit(tcqall2a))
+tcq2a.vss <- VSS(na.omit(tcqall2a))
+sink(NULL)
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2}
+	\label{fig:tcq2aparallel}
+\end{figure}
+
+The results of factor analysis on the Treatment credibility Questionnaire can be seen in Figure \ref{fig:tcq2aparallel}, below. 
+
+\subsubsection{Beliefs About Medicine Questionnaire}
+\label{sec:beli-about-medic}
+
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+This questionnaire was developed for use with chronic pain patients. It appears to be the standard in the field, however, it was only analysed using a principal components method and Varimax rotation, neither of which are appropriate for an instrument of this kind. 
+The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
+
+<<bamparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+bam.para <- fa.parallel(na.omit(bamall2a))
+bam.vss <- VSS(na.omit(bamall2a))
+sink(NULL)
+@ 
+
+The parallel analysis suggests that there are four factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all four factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
+
+%Insert reliability analyses here
+
+\paragraph{One Factor Solution}
+\label{sec:one-factor-solution}
+
+
+<<bam2afact1, echo=FALSE, results=tex>>=
+bam2a.fact1 <- fa(na.omit(bamall2a), 1, fm="pa")
+print(FactorXtab(bam2a.fact1, names=c("BAM1"), label="tab:bam2afact1", caption="One Factor Solution, Beliefs About Medicine Questionnaire, Sample Two"))
+@ 
+
+As can be seen from Table \ref{tab:bam2afact1}, the one factor solution is extremely poor. Only 11 of the 18 items have loadings above 0.3, which is typically used as a cutoff for the assigning of items to the factor. In addition, the communalities for all of the items are extremely low, all below 0.5 which indicates that the common variance of this solution is quite low. This one factor solution only explains 17\% of the variance and so is somewhat inadequate in all senses. 
+
+\paragraph{Two Factor Solution}
+\label{sec:two-factor-solution}
+
+
+
+<<bam2afact2, echo=FALSE, results=tex>>=
+bam2a.fact2 <- fa(na.omit(bamall2a), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact2, names=c("BAM1", "BAM2"), label="tab:bam2afact2"))
+@ 
+Again, the communalities in this factor solution are very low (see Table \ref{tab:bam2afact2}, and the amount of variance explained is 23\%, which is again quite poor. In addition, six items have no loadings above 0.3 on either of the factors. 
+
+PA1: "BAM1",  "BAM6",  "BAM7",  "BAM9",  "BAM12", "BAM13", "BAM14", "BAM17" "BAM18".  All of these items appear to relate to the avoidance of medicines (the items which are positive towards medicines have negative loadings), so this factor can be termed Medicine Avoidance. 
+
+PA2: "BAM2",  "BAM7",  "BAM10", "BAM11". These items all appear to relate to natural remedies in constrast to medicines and so this factor can be termed Natural Remedies.
+
+Although there appears to be an interpretable factor structure emerging from this solution, it should be noted that the large number of items not loading on any solution and the low proportion of variance explained caution against over-interpretation of this solution. 
+
+
+<<bam2afact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact2,label="tab:bam2afact2cor"))
+@ 
+
+As can be seen from Table \ref{tab:bam2afact2cor}, the two factors are moderately correlated, supporting the decision to use oblimin rotation. 
+
+
+\paragraph{Three Factor Solution}
+\label{sec:three-fact-solut}
+
+
+
+<<bam2afact3, echo=FALSE, results=tex>>=
+bam2a.fact3 <- fa(na.omit(bamall2a),  3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact3, names=c("BAM1", "BAM2", "BAM3"), label="bam2afact3"))
+@ 
+The three factor solution also has very low communalities, with almost all of them (16) below 0.5. This solution explained 29\% of the variance. The factors are described below. 
+
+PA1: "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM12", "BAM13", "BAM14", "BAM17", "BAM18". This factor again relates to less use of medicines, and as above can be termed medicine avoidance. 
+
+PA3: "BAM1",  "BAM3",  "BAM4",  "BAM10". All of these items appear to relate to cutting down or taking a break from medicine (with the exception of Question 1 which has a negative loading). Therefore, this factor will be termed safer use of medicines. 
+
+PA2: "BAM1",  "BAM2",  "BAM7",  "BAM10", "BAM11". These items relate to the  responsible use of medicines, and this is what the factor will be termed. 
+
+
+
+<<bam2afact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact3,label="tab:bam2afact3cor"))
+@ 
+
+Again, Table \ref{tab:bam2afact3cor} shows that the factors are somewhat correlated, although the correlations of factor 3 with the other factors are quite small. 
+
+
+<<bam2afact4, echo=FALSE, results=tex>>=
+bam2a.fact4 <- fa(na.omit(bamall2a), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2a.fact4, names=c("BAM1", "BAM2", "BAM3", "BAM4"), label="tab:bam2afact4"))
+@ 
+
+The four factor solution (shown in Table \ref{tab:bam2afact4} explained 33\% of the variance, but again only 3 of the 18 items had communalities which were greater than 0.5, indicating that there is a large amount of unexplained variance in this item set. 
+
+PA1: "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM12", "BAM13", "BAM14", "BAM17", "BAM18". Again, this factor has emerged from the rotations, and again it can be termed medicine avoidance. 
+
+PA3: "BAM1",  "BAM3",  "BAM4",  "BAM10". All of these items appear to relate to the effectiveness of medicines, and this factor can then be termed Medicine effectiveness. 
+
+PA2: "BAM1",  "BAM2",  "BAM7",  "BAM10", "BAM11", "BAM16", "BAM18". These items all appear to relate to differences between different forms of medicine, and so this factor will be termed Differences Between Medicines.
+
+PA4: "BAM5". This factor is almost certainly spurious, given that it only has one item on it. This item relates to regular taking of medicines, and so it can be termed Regular Taking of Medicines. 
+
+
+<<bam2afact4cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2a.fact4,label="tab:bam2afact4cor"))
+@ 
+
+As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors 1 and 2, but quite small correlations between factors 3 and 4. 
+
+@ 
+
+\begin{figure}
+	\centering
+<<tcq2aparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+tcq2b.para <- fa.parallel(na.omit(tcqall2b))
+tcq2b.vss <- VSS(na.omit(tcqall2b))
+sink(NULL)
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split B)}
+	\label{fig:tcq2bparallel}
+\end{figure}
+
+Below can be seen the correlations between factors, in  Table\ref{tab:tcq2bfactorcor5}. 
+
+<<tcq2bfactorcor5, echo=FALSE, results=tex>>=
+print(FactorCor(tcq2b.fact.5,label="tab:tcq2bfactorcor5"))
+@ 
+
+\subsubsection{Beliefs About Medicine Questionnaire, Split B}
+\label{sec:beli-about-medic}
+
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+The first step is to examine the criteria for the retention of factors. As above, parallel analysis and the minimum average partial criterion were used for this purpose. 
+\begin{figure}
+<<bamparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+bam.para <- fa.parallel(na.omit(bamall2b))
+bam.vss <- VSS(na.omit(bamall2b))
+sink(NULL)
+@   
+  \caption{Parallel Analysis and VSS Criteria for Beliefs About Medicine Scale, Split B}
+  \label{fig:bam2bparallel}
+\end{figure}
+
+
+The parallel analysis suggests that there are five factors, while the MAP criterion suggests that only one is useful. In line with previous practice, all five factor solutions will be examined for interpretability and fit indices before being tested on another of the data splits. 
+
+\paragraph{One Factor Solution}
+\label{sec:one-factor-solution}
+
+
+
+<<bam2bfact1, echo=FALSE, results=tex>>=
+bam2b.fact1 <- fa(na.omit(bamall2b), 1, fm="pa")
+print(FactorXtab(bam2b.fact1, names=c("BAM1"), label="tab:bam2bfact1", caption="One factor Solution, Beliefs About Medicine Questionnaire, Split 2B"))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact1}, the one factor solution is extremely poor. That being said, it performs somewhat better than did the one factor solution on Split A. The loadings are higher across the board, but the communalities are still extremely low.It does explain 22\% of the variance, which is again higher than Split A.  
+
+\paragraph{Two Factor Solution}
+\label{sec:two-factor-solution}
+
+
+
+<<bam2bfact2, echo=FALSE, results=tex>>=
+bam2b.fact2 <- fa(na.omit(bamall2b), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact2, names=c("BAM1", "BAM2"), label="tab:bam2bfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
+@ 
+The results of the two factor solution are shown in Table \ref{tab:bam2bfact2}. Again, the communalities in this factor solution are very low, and the amount of variance explained is 30\%, which is again quite poor. In addition, two items have no loadings above 0.3 on either of the factors. It is however, a much better fit than the two factor solution was on Split A. 
+
+PA1: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM11", "BAM12", "BAM13", "BAM14", "BAM17", "BAM18". This factor, which consists of most of the scale, can be termed Medicine Avoidance.
+
+PA2: "BAM1",  "BAM2",  "BAM11", "BAM16", "BAM18". These items relate to the responsible use of medicines, and thus this factor gets that name. 
+
+
+<<bam2bfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact2,label="tab:bam2bfact2cor", caption="Factor Correlations for Two Factor Solution, Beliefs About Medicine Questionnaire, Split B"))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact2cor}, the two factors are almost entirely uncorrelated, which is quite different from what is shown in Table \ref{tab:bam2afact2cor}. 
+
+\paragraph{Three Factor Solution}
+\label{sec:three-fact-solut}
+
+
+
+<<bam2bfact3, echo=FALSE, results=tex>>=
+bam2b.fact3 <- fa(na.omit(bamall2b), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact3, names=c("BAM1", "BAM2", "BAM3"), label="tab:bam2bfact3", caption="Three factor solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
+@ 
+
+
+The three factor  solution (shown in Table \ref{tab:bam2bfact3} explained 34\% of the variance in the data. The factors broke down as follows:
+
+PA1: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM11", "BAM13", "BAM18". This factor was apparent in the two factor solution earlier, and again can be termed Medicine Avoidance. 
+
+PA3: "BAM13", "BAM14", "BAM17". This factor can perhaps best be termed Medicine Trust. 
+
+PA2: "BAM1",  "BAM2",  "BAM11", "BAM16", "BAM18". Again, this factor can best be termed responsible use of medicines. 
+
+
+<<bam2bfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact3,label="tab:bam2bfact3cor", caption="Factor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split B"))
+@ 
+
+Again, Table \ref{tab:bam2bfact3cor} shows that two of the factors are somewhat correlated, but the third is not.
+
+\paragraph{Four Factor Solution}
+\label{sec:four-factor-solution}
+
+
+
+<<bam2bfact4, echo=FALSE, results=tex>>=
+bam2b.fact4 <- fa(na.omit(bamall2b), 4, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact4, names=c("BAM1", "BAM2", "BAM3", "BAM4"), label="tab:bam2bfact4", caption="Four Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
+@ 
+
+The four factor structure is shown in Table \ref{tab:bam2bfact4}. 
+
+
+PA3: "BAM12", "BAM13", "BAM14", "BAM17". These items almost all relate to doctors and medicine, and so this factor is termed Doctors and Medicine. 
+
+PA4: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM10", "BAM11", "BAM15". These items have clustered together in almost all the solutions, and again are termed  Avoidance of Medicines.
+
+PA2: "BAM1",  "BAM2",  "BAM5",  "BAM16", "BAM18". Again, these items have tended to cluster together, and can best be termed as Responsible Use of Medicines. 
+
+PA1: "BAM6",  "BAM8",  "BAM9",  "BAM18". These items all relate to safety or danger of medicines, and thus this factor will be termed Medicine Safety.
+
+
+
+<<bam2bfact4cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact4,label="tab:bam2bfact4cor", caption="Factor Correlations, Beliefs About Medicine Questionnaire Four Factor Solution, TCQ 2, Split B"))
+@ 
+
+As before, Table \ref{tab:bam2afact4cor} shows large correlations between factors all of the factors save 3, which appears to be relatively uncorrelated with all of the other factors. 
+
+\paragraph{Five Factor Solution}
+\label{sec:five-factor-solution}
+
+
+
+<<bam2bfact5, echo=FALSE, results=tex>>=
+bam2b.fact5 <- fa(na.omit(bamall2b), 5, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2b.fact5, names=c("BAM1", "BAM2", "BAM3", "BAM4", "BAM5"), label="tab:bam2bfact5", caption="Five Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2, Split B"))
+@ 
+
+Table \ref{tab:bam2bfact5} shows the five factor solution for the Beliefs About Medicine Questionnaire. 
+
+PA3: "BAM13", "BAM14", "BAM17". Again, these items can best be subsumed as a factor called Doctors and Medicines. 
+
+PA4: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM10", "BAM11", "BAM15". Again, this factor can best be termed Medicine Avoidance. 
+
+PA2:"BAM2", "BAM5". These items relate to the best way in which to take medicines, and can thus be termed Effective Medicine Usage.
+
+PA1: "BAM6",  "BAM11", "BAM18". These items all relate to the safety of medicines and thus this factor can be termed Safety and Medicines. 
+
+PA5: "BAM8",  "BAM9",  "BAM15". These items relate to the dangers associated with medicines, and thus the factor can best be termed Danger and Medicines. 
+
+<<bam2bfact5cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2b.fact5,label="tab:bam2bfact5cor", caption="Factor Correlations, Beliefs About Medicine Five Factor Solution, TCQ 2, Split B"))
+@ 
+
+As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
+
+
