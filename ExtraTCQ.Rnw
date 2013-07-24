@@ -1775,3 +1775,131 @@ print(p2)
 \end{figure}
 
 Following on from the graphical exploration of the relationships between the variables, the next step was to fit a linear model on this data, eliminate variables based on the decrease in AIC, and test the model on the held out data. 
+
+%% \subsubsection{Final Regression Models}
+%% \label{sec:final-regr-models}
+
+%% The next step in the data analysis procedure was to determine which of the models developed on each of the splits were the best fit to the data. As all of the data has been used in previous test and validation splits, the following approach was taken. Firstly, a random sample of 75 observations was drawn from each of the four splits, and then these samples were combined. The chosen models from each of the splits were then fitted to this new data set, and were compared using AIC and likelihood ratio tests. This approaches balances the advantages of cross-validation and avoids the problems of multiple comparison endemic to stepwise variable selection and repeated model fitting. 
+
+%% <<tcq2new, echo=FALSE, results=hide>>=
+%% set.seed(23)
+%% ptcq2a.finalsamp <- tcq2nota.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2b.finalsamp <- tcq2notb.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2c.finalsamp <- tcq2notc.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2d.finalsamp <- tcq2notd.complete[sample(1:nrow(tcq2nota.complete), 75),]
+%% tcq2final <- as.data.frame(rbind(tcq2a.finalsamp,tcq2b.finalsamp,tcq2c.finalsamp,tcq2d.finalsamp))
+%% @ 
+
+%% <<pillfinalfits, echo=FALSE, results=hide>>=
+%% pilltotlm.nota <- lm(Pilltot~Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+%% pilltotnotb <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+%% pilltotnotc <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv, data=tcq2final)
+%% pilltotnotd <- lm(Pilltot~Creamtot+Injtot+Acutot+Expconv+Gender, data=tcq2final)
+%% pillaandbtest <- jtest(pilltotlm.nota, pilltotnotb)
+%% pillcanddtest <- jtest(pilltotnotc, pilltotnotd)
+%% pillaandctest <- jtest(pilltotlm.nota, pilltotnotc)
+%% pillaanddtest <- jtest(pilltotlm.nota, pilltotnotd)
+%% @ 
+
+%% <<ABcompprint, echo=FALSE, results=tex>>=
+%% print(xtable(pillaandbtest, label="tab:pillAandBtest", caption="Model Comparison between Pill Credibility Models, Splits A and B"))
+%% @ 
+
+%% <<ABcompprint, echo=FALSE, results=tex>>=
+%% print(xtable(pillcanddtest, label="tab:pillCandDtest",caption="Model Comparison between Pill Credibility Models, Splits C and D"))
+%% @ 
+
+%% As shown in Tables \ref{tab:pillAandBtest} and \ref{tab:pillCandDtest}, the model developed on Split A appears to preovide the best fit on this resampled data. The model tested on split A was also significantly better than C and D, therefore we can regard this model as the best for the Pill credibility scores. The model was significant: $F(4,283)=68.81$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4859. 
+
+%% Next, the models for cream credibility scores were assessed. 
+
+%% <<creamfinal, echo=FALSE, results=hide>>=
+%% creamtotlm.nota <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender+Health, data=tcq2final)
+%% creamtotlm.notb <- lm(Creamtot~Pilltot+Injtot+Acutot+Gender, data=tcq2final)
+%% creamtotlm.notc <- lm(Creamtot~Injtot+Acutot+Expalt+Health, data=tcq2final)
+%% creamtotlm.notd <- lm(Creamtot~Pilltot+Injtot+Acutot+Expconv+Expalt+Gender, data=tcq2final)
+%% creamaandbtest <- jtest(creamtotlm.nota, creamtotlm.notb)
+%% creamcanddtest <- jtest(creamtotlm.notc, creamtotlm.notd)
+%% creamdanbctest <- jtest(creamtotlm.notd, creamtotlm.notc)
+%% creamaanddtest <- jtest(creamtotlm.nota, creamtotlm.notd)
+%% @ 
+
+%% The results for this split were a little more ambiguous, as Models A and B were equivalent in terms of model testing. Model D was better than Model C, but Model A was better than Model D. Therefore we can regard Model D as the best fitting model for the Cream credibility scores. The model was significant: F(5,282)=43.51, $p\le 0.0001$, with an adjusted $R^2$ of 0.4255, which is acceptable. 
+
+%% Next, the same procedure was repeated for the Injection credibility scores. 
+
+%% <<injfinal, echo=FALSE, results=hide>>=
+%% injtotnota.final <- lm(Injtot~Creamtot+Pilltot+Expconv+Health, data=tcq2final)
+%% injtotnotb.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Reitot+Expconv, data=tcq2final)
+%% injtotnotc.final <- lm(Injtot~Creamtot+Pilltot+Expconv, data=tcq2final)
+%% injtotnotd.final <- lm(Injtot~Pilltot+Creamtot+Acutot+Expconv+Reitot, data=tcq2final)
+%% inj.aandb.test <- jtest(injtotnota.final, injtotnotb.final)
+%% inj.candd.test <- jtest(injtotnotc.final, injtotnotd.final)
+%% inj.bandd.test <- jtest(injtotnotb.final, injtotnotd.final)
+%% @ 
+
+%% <<modeldshow, echo=FALSE, results=tex>>=
+%% print(xtable(summary(injtotnotd.final), label="tab:injnotdfinal", caption="Final Model for Injection Credibility Scores"))
+%% @ 
+
+%% Following repeated tests of the fit of the models, Model D appears to be the best fitting on this data. The model was significant: $F(5,282)=48.56$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.3955. The coefficients for the model are shown in Table \ref{tab:injnotdfinal}. 
+
+%% Next, this procedure was repeated for the Acupuncture models. 
+
+%% <<acufinaltest, echo=FALSE, results=hide>>=
+%% acutotnota.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+%% acutotnotb.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Reitot+Homtot, data=tcq2final)
+%% acutotnotc.final <- lm(Acutot~Creamtot+Homtot+Reitot, data=tcq2final)
+%% acutotnotd.final <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot, data=tcq2final)
+%% acu.aandb.test <- jtest(acutotnota.final, acutotnotb.final)
+%% acu.candd.test <- jtest(acutotnotc.final, acutotnotd.final)
+%% acu.aandc.test <- jtest(acutotnota.final, acutotnotc.final)
+%% @ 
+%% Following fitting of each of the four models to the final dataset, Models A and C emerged as the best fit to the data. This equivalence between them was not surprising, as they were exactly the same model. 
+
+%% <<acutotfinalprint, echo=FALSE, results=tex>>=
+%% print(xtable(summary(acutotnotc.final), label="tab:acutotfinal", caption="Final Model for Acupuncture Credibility Scores"))
+%% @ 
+
+%% The coefficients and p values for the individual terms in the model can be seen in Table \ref{tab:acutotfinal}. The model was significant: $F(3,284)=79.31$, $p\le 0.0001$, and had an adjusted $R^2$ of 0.4501. 
+
+%% Next, this procedure was applied to the homeopathy models developed on each of the splits. 
+
+%% <<hommodfinal, echo=FALSE, results=tex>>=
+%% homtotnota.final <- lm(Homtot~Creamtot+Pilltot+Acutot+Reitot, data=tcq2final)
+%% homtotnotb.final <- lm(Homtot~Pilltot+Creamtot++Reitot+Acutot, data=tcq2final)
+%% homtotnotc.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+%% homtotnotd.final <- lm(Homtot~Acutot+Reitot+Expalt, data=tcq2final)
+%% hom.aandb.test <- jtest(homtotnota.final, homtotnotb.final)
+%% hom.candd.test <- jtest(homtotnotc.final, homtotnotb.final)
+%% hom.bandc.test <- jtest(homtotnotb.final, homtotnotc.final)
+%% @ 
+
+%% Following assessment of all four models, Model C was determined to be marginally the best.
+
+%% <<homfinalshow, echo=FALSE, results=tex>>=
+%% print(xtable(summary(homtotnotc.final), label="tab:homtotfinal", caption="Final Model for Homeopathy Credibility Scores"))
+%% @ 
+
+%% Table \ref{tab:homtotfinal} shows the estimated coefficients and p values for each of the predictors on the final dataset. The model was significant: $F(3,284)=177.7$, $p\le 0.0001$ and the adjusted $R^2$ for the model was equal to 0.6487. 
+
+%% Next, the same procedure was applied to the Reiki credibility models. 
+
+%% <<reikimodfinal, echo=FALSE, results=hide>>=
+%% reitotnota.final <- lm(Reitot~Injtot+Expalt+Acutot, data=tcq2final)
+%% reitotnotb.final <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2final)
+%% reitotnotc.final <- lm(Reitot~Acutot+Injtot+Homtot, data=tcq2final)
+%% reitotnotd.final <- lm(Reitot~Acutot+Homtot+Injtot, data=tcq2final)
+%% rei.aandb.test <- jtest(reitotnota.final, reitotnotb.final)
+%% rei.candd.test <- jtest(reitotnotc.final, reitotnotd.final)
+%% rei.bandd.test <- jtest(reitotnotb.final, reitotnotd.final)
+%% @ 
+
+%% Following fitting and testing of the four models, Model D was determined to be the best fit to this new data. 
+
+%% <<reifinalshow, echo=FALSE, results=tex>>=
+%% print(xtable(summary(reitotnotd.final), label="tab:reitotfinal", caption="Final Model for Reiki Credibility Scores"))
+%% @ 
+
+%% Table \ref{tab:reitotfinal} shows the estimated coefficients for the Reiki credibility scores regression on the resampled data. The model was significant: $F(3,284)=167.7$, $p\le 0.0001$, with an adjusted $R^2$ of 0.6354, which is excellent. 
+
