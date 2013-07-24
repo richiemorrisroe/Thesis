@@ -3491,7 +3491,7 @@ cream2b.lasso <- penalisedRegression(predcream2b, cream2b, testdata=predcream2b.
 print(xtable(as.matrix(cream2b.lasso), label="tab:tcq2bcreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable, Split B"))
 @ 
 
-Table \ref{tab:tcq2bcreamlasso} shows the estimated coefficients for the lasso regression on the cream data in this split. It can be seen that not many variables got removed from the model, suggesting that none of them are particularly important to the response. 
+Table \ref{tab:tcq2bcreamlasso} shows the estimated coefficients for the lasso regression on the cream data in this split. It can be seen that not many variables got removed from the model, suggesting that all of them are associated with the response. 
 
 Next, a ridge regression model was fit to this dataset. 
 
@@ -3583,7 +3583,7 @@ acu2b.ridge <- penalisedRegression(predacu2b, acu2b, predacu2b.test, alpha=0, ne
 print(xtable(as.matrix(acu2b.ridge), label="tab:tcq2bacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split B"))
 @ 
 
-It can be seen from Table \ref{tab:tcq2bacuridge} that the ridge regression is quite similar to the lasso fit. Interestingly enough, pilltotal did not get shrunk as much in this model and shows a negative correlation with Acupuncture credibility (as would be expected). The strange positive correlation with Cream credibility remains.
+It can be seen from Table \ref{tab:tcq2bacuridge} that the ridge regression is quite similar to the lasso fit. Interestingly enough, Pilltotal did not get shrunk as much in this model and shows a negative correlation with Acupuncture credibility (as would be expected). The strange positive correlation with Cream credibility remains.
 
 Next, the Homeopathy total was regressed on the other predictors using stepwise selection and tested against the held out data.
 
@@ -3644,7 +3644,7 @@ reitot.pred <- predict(reitotlm1.notb, newdata=tcq2b)
 print(xtable(summary(reitot.step.notb), label="tab:reitotnotbsteplm", caption="Coefficients for Reiki Credibility Scores, stepwise selection method"))
 @ 
 
-Table \ref{tab:reitotnotbsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then applied to the training set. 
+Table \ref{tab:reitotnotbsteplm} shows the estimated best model from the training set. The model is smaller than usual, but all the coefficients have the expected sign. The performance of this model was then tested on heldout data. 
 
 <<reitotnotbheldout, echo=FALSE, results=tex>>=
 reitotnotb.heldout.lm <- lm(Reitot~Injtot+Acutot+Homtot, data=tcq2b)
@@ -3845,7 +3845,7 @@ acu2c.test <- with(na.omit(tcq2c), Acutot)
 acu2c.lasso <- penalisedRegression(predacu2c, acu2c, testdata=predacu2c.test, newy=acu2c.test, alpha=1, type="coefficients")
 print(xtable(as.matrix(acu2c.lasso), label="tab:tcq2caculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable, Split C"))
 @ 
-Table \ref{tcq2caculasso} shows the coefficient estimates for the lasso regression on Acupuncture credibility. Again, in common with previous splits, the cream credibility total has a positive correlation with the response variable. This coefficient is similar in magnitude to those of the alternative treatments, so it suggests that there is a pattern of similarity to how these treatments are perceived by participants. Again, like in previous splits, there is a negative coefficient for pill credibility on this outcome measure. 
+Table \ref{tab:tcq2caculasso} shows the coefficient estimates for the lasso regression on Acupuncture credibility. Again, in common with previous splits, the cream credibility total has a positive correlation with the response variable. This coefficient is similar in magnitude to those of the alternative treatments, so it suggests that there is a pattern of similarity to how these treatments are perceived by participants. Again, like in previous splits, there is a negative coefficient for pill credibility on this outcome measure. 
 
 Next a ridge regression model was applied to this split. 
 
