@@ -510,3 +510,557 @@ print(FactorCor(bam2b.fact5,label="tab:bam2bfact5cor", caption="Factor Correlati
 As can be seen from Table \ref{tab:bam2bfact5cor}, all of the factors are moderately correlated with one another. 
 
 
+\begin{figure}
+	\centering
+<<tcq2cparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+tcq2c.para <- fa.parallel(na.omit(tcqall2c))
+tcq2c.vss <- VSS(na.omit(tcqall2c))
+sink(NULL)
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split C)}
+	\label{fig:tcq2cparallel}
+\end{figure}
+
+Figure \ref{fig:tcq2cparallel} shows the results of parallel analysis on Split C for the Treatment Credibility Questionnaire. 
+
+The below were the results of a varimax rotation on Split C. 
+% PA2:"Pill1"  "Pill2"  "Pill3"  "Pill4"  "Pill5"  "Pill6"  "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6" "Inj1"   "Inj2"   "Inj3"   "Inj4"   "Inj5"   "Inj6". This factor consists of extremely high loadings on the Pill and Injection items, and moderate ($0.3-0.4$) loadings on the Cream items. It can therefore best be referred to as the Conventional treatments factors.
+
+% PA1: "Hom1" "Hom2" "Hom3" "Hom4" "Hom5" "Hom6" "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". This factor appears to have small loadings on all of the alternative items, pointing towards this factor representing variance all these items had in common. This factor is therefore termed Alternative Treatments. 
+
+% PA5: "Hom1" "Hom3" "Hom4" "Hom5" "Hom6" "Rei1" "Rei2" "Rei3" "Rei4" "Rei5" "Rei6". This factor consists of moderate loadings on Homeopathy and large loadings on Reiki. This factor can probably best be termed Reiki and Alterntative Treatments. 
+
+% PA3: "Acu1" "Acu2" "Acu3" "Acu4" "Acu5" "Acu6". This factor maps exactly to the Acupuncture items and so retains that name. 
+
+% PA4: "Cream1" "Cream2" "Cream3" "Cream4" "Cream5" "Cream6". This factor again maps exactly to the Creams items, and is therefore termed Cream. This factor solution was from a varimax rotation, note the interesting differences between it and the others. 
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+
+\subsubsection{Beliefs About Medicine Questionnaire}
+\label{sec:beli-about-medic}
+
+
+\begin{figure}
+<<bam2cparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+bam2c.para <- fa.parallel(na.omit(bamall2c))
+bam2c.vss <- VSS(na.omit(bamall2c))
+sink(NULL)
+@   
+  \caption{Parallel Analysis and VSS Criteria for Beliefs About Medicine Scale, Split C}
+  \label{fig:bam2cparallel}
+\end{figure}
+
+
+The parallel analysis criterion suggests three factors here, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+\paragraph{One Factor Solution}
+\label{sec:one-factor-solution}
+
+
+
+<<bam2cfact1, echo=FALSE, results=tex>>=
+bam2c.fact1 <- fa(na.omit(bamall2c), 1, fm="pa")
+print(FactorXtab(bam2c.fact1, names=c("BAM1"),label="tab:bam2cfact1", caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
+@ 
+
+The loadings and communalities are uniformly low (shown in Table \ref{tab:bam2cfact1} for this solution, and ther proportion of variance explained was 20\%. 
+
+\paragraph{Two Factor Solution}
+\label{sec:two-factor-solution}
+
+
+<<bam2cfact2, echo=FALSE, results=tex>>=
+bam2c.fact2 <- fa(na.omit(bamall2c), 2, rotate="oblimin", fm="pa")
+                                                  print(FactorXtab(bam2c.fact2,names=c("BAM1", "BAM2"), label="tab:bam2cfact2", caption="Two factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
+@ 
+As can be seen from Table \ref{tab:bam2cfact2} the listings of items which loaded on factors below, some of the items did not load on any factor, which is normally an indicator of a poor factor solution. 
+
+
+PA1: "BAM2",  "BAM6",  "BAM8",  "BAM9",  "BAM10", "BAM13", "BAM14", "BAM17", "BAM18". All of these items appear to relate to the problems with medications, suggesting that this factor should be termed Medication Avoidance. 
+
+PA2: "BAM2",  "BAM3",  "BAM7",  "BAM10", "BAM11", "BAM16". These items all appear to relate to the safe use of medicines, and so this factor is termed Safe Use of Medicines. 
+
+<<bam2cfact2cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact2,label="tab:bam2cfact2cor", caption="Factor Correlations, Two Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
+@ 
+
+As can be seen from Table \ref{tab:bam2cfact2cor}, the two factors are moderately correlated, in contrast to Split B ( Table \ref{tab:bam2bfact2cor}), but like Split A (Table \ref{tab:bam2afact2cor}). 
+
+<<bam2cfact3, echo=FALSE, results=tex>>=
+bam2c.fact3 <- fa(na.omit(bamall2c), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2c.fact3, names=c("BAM1", "BAM2", "BAM3"), label="tab:bam2cfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, TCQ2, Split C"))
+@ 
+
+Table \ref{tab:bam2cfact3} shows the structure of the three factor solution in this split. 
+
+
+PA1: "BAM13", "BAM14", "BAM17". All of these items relate to doctors and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM3",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM18". All these items appear to relate to the safety of medicines, and so this factor is named thusly. 
+
+PA2: "BAM2",  "BAM3",  "BAM11", "BAM16". These items refer to different types of medicines, and so this factor is termed Specific Use of Medicines. 
+
+<<bam2cfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2c.fact3,label="tab:bam2cfact3cor", caption="Factor Correlations, Three Factor Solution, Beliefs About Medicine Questionnaire, Split C"))
+@ 
+
+The correlations shown in Table \ref{tab:bam2cfact3cor} are quite similiar to those found in the other three factor solutions, with two of the factors having moderate correlations while a third is not really correlated with this pair. 
+
+\begin{figure}
+	\centering
+<<tcq2dparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+par(mfrow=c(1,2))
+tcq2d.para <- fa.parallel(na.omit(tcqall2d))
+tcq2d.vss <- VSS(na.omit(tcqall2d))
+sink(NULL)
+@ 
+	\caption{Parallel Analysis and Scree Plot TCQ 2 (Split D)}
+	\label{fig:tcq2dparallel}
+\end{figure}
+
+\subsubsection{Beliefs About Medicine Questionnaire, Split D}
+\label{sec:beli-about-medic}
+
+
+
+Next, the beliefs about medicine questionnaire will be examined in terms of factor analysis. 
+
+\begin{figure}
+<<bam2dparallel, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+sink("tmp.txt")
+bam2d.para <- fa.parallel(na.omit(bamall2d))
+bam2d.vss <- VSS(na.omit(bamall2d))
+sink(NULL)
+@   
+  \caption{Parallel Analysis Scree Plot for Beliefs About Medicine Questionnaire, Split D}
+  \label{fig:bam2dparallel}
+\end{figure}
+
+
+The parallel analysis criterion suggests three factors here (shown in Figure \ref{fig:bam2dparallel}, while the MAP criterion suggests one, previous practice will be followed and the solutions with one, two and three factors will be extracted and examined. 
+
+\paragraph{One Factor Solution}
+\label{sec:one-factor-solution}
+
+
+
+<<bam2dfact1, echo=FALSE, results=tex>>=
+bam2d.fact1 <- fa(na.omit(bamall2d), 1, fm="pa")
+print(FactorXtab(bam2d.fact1, names=c("BAM1"), label="tab:bam2dfact1",caption="One Factor Solution, Beliefs About Medicine Questionnaire, TCQ 2 Split D"))
+@ 
+
+As can be seen from Table \ref{tab:bam2dfact1}, the factor solution has a number of items (5, 11, 12, 15 \& 16) which do not load on it. This solution explained about 21\% of the variance which is quite poor, though in line with what we have seen in other splits for a one factor solution.  
+
+\paragraph{Two Factor Solution}
+\label{sec:two-factor-solution}
+
+
+
+<<bam2dfact2, echo=FALSE, results=tex>>=
+bam2d.fact2 <- fa(na.omit(bamall2d), 2, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact2,names=c("BAM1", "BAM2"), label="tab:bam2dfact2", caption="Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
+@ 
+
+Table \ref{tab:bam2dfact2} shows the coefficients for the two factor solution in Split D. 
+
+PA2: "BAM3",  "BAM4",  "BAM6",  "BAM7",  "BAM8",  "BAM9",  "BAM10", "BAM11", "BAM18". These items all relate to the dangers surrounding medicines, and reasons to avoid using them, and so this factor can best be termed Safe use of Medicines. 
+
+PA1: "BAM2",  "BAM6",  "BAM13", "BAM14", "BAM17". Most of these items relate to doctors and their use of medicines, and so this factor can best be termed Doctors and Medicines. 
+
+<<bam2dfact2dcor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact2, label="tab:bam2dfact2dcor", caption="Factor Correlations Two Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
+@ 
+
+It can be seen from Table \ref{tab:bam2dfact2dcor} that the two factors are moderately correlated, similarly to the previous splits. 
+
+
+\paragraph{Three Factor Solution}
+\label{sec:three-fact-solut}
+
+
+
+
+
+<<bam2dfact3, echo=FALSE, results=tex>>=
+bam2d.fact3 <- fa(na.omit(bamall2d), 3, rotate="oblimin", fm="pa")
+print(FactorXtab(bam2d.fact3, names=c("BAM1", "BAM2", "BAM3"), label="tab:bam2dfact3", caption="Three Factor Solution, Beliefs About Medicine Questionnaire, Split D"))
+@ 
+
+Table \ref{tab:bam2dfact3} shows the structure of the three factor solution in Split D. 
+
+PA1: "BAM2",  "BAM13", "BAM14", "BAM17". Most of these items relate to doctors, and so this factor can best be termed Doctors and Medicines. 
+
+PA3: "BAM1",  "BAM3",  "BAM6",  "BAM8",  "BAM18". These items all relate to the dangers surrounding medicines, and so this factor can best be termed Dangers of Medicines. 
+
+PA2: "BAM7",  "BAM9",  "BAM10", "BAM11". These items all appear to relate to the dangers and avoidance of medicines, and so this factor can best be termed avoidance of medicines. 
+
+
+<<bam2dfact3cor, echo=FALSE, results=tex>>=
+print(FactorCor(bam2d.fact3, label="tab:bam2dfact3cor", caption="Factor Correlations, Three factor solution, Beliefs About Medicine, Questionnaire, Split D"))
+@ 
+
+It can be seen from Table \ref{tab:bam2dfact3cor} that all of the factors correlate moderately with one another, supporting the use of oblique rotations for this split. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split A will be tested on the out of sample data. 
+
+<<bam1notAsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,9,10,12,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,2,5,8,11,15,16, 18), sep="")
+Bam1modelnotA<- mxModel(name="Bam1notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam1fitnotA <- mxRun(Bam1modelnotA)
+Bam2asumm1 <- summary(Bam1fitnotA)
+@ 
+
+<<bam2notAsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Natural Remedies" )
+medavoid <- paste(Bam, c(1,6,7,9,12,13,14,17,18), sep="")
+natrem <- paste(Bam, c(2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(3,4,5,8,15,16), sep="")
+Bam2modelnotA<- mxModel(name="Bam2notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Natural Remedies", to=natrem),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam2fitnotA <- mxRun(Bam2modelnotA)
+Bam2asummnotA <- summary(Bam2fitnotA)
+@ 
+
+
+<<bam3notAsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotA<- mxModel(name="Bam3notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam3fitnotA <- mxRun(Bam3modelnotA)
+Bam3asummnotA <- summary(Bam3fitnotA)
+@ 
+
+
+<<bam4notAsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotA<- mxModel(name="Bam4notA", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotA)), type="cov", numObs=524))
+Bam4fitnotA <- mxRun(Bam4modelnotA)
+Bam4asummnotA <- summary(Bam4fitnotA)
+@ 
+
+<<bamnotAsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notA <- mxCompare(Bam1fitnotA, c(Bam2fitnotA, Bam3fitnotA, Bam4fitnotA))
+print(xtable(bamsemcompare.notA, label="tab:bamnotAsemcompare", captio="Comparison of Beliefs About Medicine Factor Solutions from Split A Tested on Splits B, C and D"))
+@ 
+
+As can be seen from Table \ref{tab:bamnotAsemcompare}, the four factor solution appears to replicate best on the out of sample data. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notBsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotB<- mxModel(name="Bam1notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam1fitnotB <- mxRun(Bam1modelnotB)
+Bam1asumm.notB <- summary(Bam1fitnotB)
+@ 
+
+<<bam2notBsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
+medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
+respmed <- paste(Bam, c(1,2,11,16,18), sep="")
+bamnoload <- paste(Bam, c(5,15), sep="")
+Bam2modelnotB <- mxModel(name="Bam2notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=512))
+Bam2fitnotB <- mxRun(Bam2modelnotB)
+Bam2asummnotB <- summary(Bam2fitnotB)
+@ 
+
+
+<<bam3notBsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safer Medicines","Responsible Use of Medicines"  )
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+safemed <- paste(Bam, c(1,3,4,10), sep="")
+respmed <- paste(Bam, c(1,2,7,10,11), sep="")
+bamnoload <- paste(Bam, c(5,15,16), sep="")
+Bam3modelnotB<- mxModel(name="Bam3notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Responsible Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam3fitnotB <- mxRun(Bam3modelnotB)
+Bam3asummnotB <- summary(Bam3fitnotB)
+@ 
+
+
+<<bam4notBsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
+medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
+medeffect <- paste(Bam, c(1,3,4,10), sep="")
+diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
+regmed <- paste(Bam, 5, sep="")
+bamnoload <- paste(Bam, 15, sep="")
+Bam4modelnotB<- mxModel(name="Bam4notB", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Medicine Effectiveness", to=medeffect),
+                        mxPath(from="Differences between Medicines", to=diffmed),
+                        mxPath(from="Regular Taking of Medicines", to=regmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotB)), type="cov", numObs=524))
+Bam4fitnotB <- mxRun(Bam4modelnotB)
+Bam4asummnotB <- summary(Bam4fitnotB)
+@ 
+
+<<bamnotBsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notB <- mxCompare(Bam1fitnotB, c(Bam2fitnotB, Bam3fitnotB, Bam4fitnotB))
+print(xtable(bamsemcompare.notB, label="tab:bamnotBsemcompare", caption="Beliefs About Medicine Questionnaire Split B Models Tested Against Splits A, C and D"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotBsemcompare} that the two factor model provided the best fit to the out-of-sample data in  this case. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split B will be tested on the out of sample data (that is, Splits A, C and D). 
+
+<<bam1notCsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
+Bam1modelnotC<- mxModel(name="Bam1notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam1fitnotC <- mxRun(Bam1modelnotC)
+Bam1asumm.notC <- summary(Bam1fitnotC)
+@ 
+
+<<bam2notCsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Medicine Avoidance", "NoLoad", "Safe Use of Medicines")
+medavoid <- paste(Bam, c(2,6,8,9,10,13,14,17,18), sep="")
+safemed <- paste(Bam, c(2,3,7,10,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam2modelnotC <- mxModel(name="Bam2notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Medicine Avoidance", to=medavoid),
+                      mxPath(from="Safe Use of Medicines", to=safemed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=512))
+Bam2fitnotC <- mxRun(Bam2modelnotC)
+Bam2asummnotC <- summary(Bam2fitnotC)
+@ 
+
+
+<<bam3notCsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safer Medicines","Specific Use of Medicines")
+docmed <- paste(Bam, c(13,14,17), sep="")
+safemed <- paste(Bam, c(3,6,7,8,9,10,18), sep="")
+specmed <- paste(Bam, c(2,3,11,16), sep="")
+bamnoload <- paste(Bam, c(1,4,5,12,15), sep="")
+Bam3modelnotC<- mxModel(name="Bam3notC", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Safer Medicines", to=safemed),
+                        mxPath(from="Specific Use of Medicines", to=specmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotC)), type="cov", numObs=524))
+Bam3fitnotC <- mxRun(Bam3modelnotC)
+Bam3asummnotC <- summary(Bam3fitnotC)
+@ 
+
+
+<<bamnotCsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notC <- mxCompare(Bam1fitnotC, c(Bam2fitnotC, Bam3fitnotC))
+print(xtable(bamsemcompare.notC, label="tab:bamnotCsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split C tested against Splits A, B and D"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotCsemcompare} that the one factor solution fits the out of sample data best in this case. 
+
+Next, the fits of the Beliefs about Medicine Questionnaire from Split D will be tested on the out of sample data (that is, Splits A, B and C). 
+
+<<bam1notDsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- c(bamitems.cols)
+latents <- c("Beliefs About Medicine", "NoLoad")
+Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
+bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
+Bam1modelnotD<- mxModel(name="Bam1notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Beliefs About Medicine", to=Bamq),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam1fitnotD <- mxRun(Bam1modelnotD)
+Bam1asumm.notD <- summary(Bam1fitnotD)
+@ 
+
+<<bam2notDsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Safe Use of Medicines")
+safemed <- paste(Bam, c(3,4,6,8,9,10,11), sep="")
+docmed <- paste(Bam, c(2,6,13,14,17), sep="")
+bamnoload <- paste(Bam, c(1,5,7,12,15,16), sep="")
+Bam2modelnotD <- mxModel(name="Bam2notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=medavoid),
+                      mxPath(from="Safe Use of Medicines", to=respmed),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=512))
+Bam2fitnotD <- mxRun(Bam2modelnotD)
+Bam2asummnotD <- summary(Bam2fitnotD)
+@ 
+
+
+<<bam3notDsem, echo=FALSE, results=hide, cache=TRUE>>=
+Bam <- "BAM"
+bamitems.cols <- paste(Bam, 1:18, sep="")
+manifests <- bamitems.cols
+latents <- c("Doctors and Medicines", "NoLoad", "Dangers of Medicines","Avoidance of Medicines")
+docmed <- paste(Bam, c(2,13,14,17), sep="")
+dangermed <- paste(Bam, c(1,3,6,8,18), sep="")
+medavoid <- paste(Bam, c(7,9,10,11), sep="")
+bamnoload <- paste(Bam, c(4,5,7,12,15,16), sep="")
+Bam3modelnotD<- mxModel(name="Bam3notD", 
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Doctors and Medicines", to=docmed),
+                      mxPath(from="Dangers of Medicines", to=dangermed),
+                        mxPath(from="Avoidance of Medicines", to=medavoid),
+                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
+mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=524))
+Bam3fitnotD <- mxRun(Bam3modelnotD)
+Bam3asummnotD <- summary(Bam3fitnotD)
+@ 
+
+
+<<bamnotDsemcompare, echo=FALSE, results=tex>>=
+bamsemcompare.notD <- mxCompare(Bam1fitnotD, c(Bam2fitnotD, Bam3fitnotD))
+print(xtable(bamsemcompare.notD, label="tab:bamnotDsemcompare", caption="Beliefs About Medicine Questionnaire Models from Split D, tested against Splits A, B and C"))
+@ 
+
+It can be seen from Table \ref{tab:bamnotDsemcompare} that the one factor solution fits the out of sample data best in the case of the Split D models tested on the out of sample data. 
