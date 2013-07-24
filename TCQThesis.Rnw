@@ -1781,13 +1781,13 @@ The next stage in  our analysis is to take the best of these models from each sp
 
 The best fitting models on the out of sample data were as follows:
 \begin{itemize}
-\item  Split A: Bam4, TCQ7
+\item  Split A:  TCQ7
 
-\item Split B: Bam2, TCQ7
+\item Split B:  TCQ7
 
-\item Split C: Bam1, TCQ7
+\item Split C:  TCQ7
 
-\item Split D: Bam1, TCQ7
+\item Split D: TCQ7
 \end{itemize}
 
 Each of these models will be run on the full dataset, and the results assessed. The model which fits best on this sample will be used to predict factor scores for the experimental data. 
@@ -1837,31 +1837,6 @@ tcq7fit.notA.all <- mxRun(Tcq7modelnotA.all)
 tcq7summ.notA.all <- summary(tcq7fit.notA.all)
 @ 
 
-<<bam4notAsemAll, echo=FALSE, results=hide, cache=TRUE>>=
-Bam <- "BAM"
-bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- bamitems.cols
-latents <- c("Medicine Avoidance", "NoLoad", "Medicine Effectiveness","Differences between Medicines", "Regular Taking of Medicines")
-medavoid <- paste(Bam, c(6,7,8,9,12,13,14,17,18), sep="")
-medeffect <- paste(Bam, c(1,3,4,10), sep="")
-diffmed <- paste(Bam, c(1,2,7,10,11,16, 18), sep="")
-regmed <- paste(Bam, 5, sep="")
-bamnoload <- paste(Bam, 15, sep="")
-Bam4modelnotA.all<- mxModel(name="Bam4notAAll", 
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Medicine Avoidance", to=medavoid),
-                      mxPath(from="Medicine Effectiveness", to=medeffect),
-                        mxPath(from="Differences between Medicines", to=diffmed),
-                        mxPath(from="Regular Taking of Medicines", to=regmed),
-                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
-Bam4fitnotA.all <- mxRun(Bam4modelnotA.all)
-Bam4asummnotA.all <- summary(Bam4fitnotA.all)
-@ 
 
 
 <<tcq7notBsemAll, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1904,27 +1879,8 @@ tcq7fit.notB.all <- mxRun(Tcq7modelnotB.all)
 tcq7summ.notB.all <- summary(tcq7fit.notB.all)
 @ 
 
-<<bam2notBsemAll, echo=FALSE, results=hide, cache=TRUE>>=
-Bam <- "BAM"
-bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- bamitems.cols
-latents <- c("Medicine Avoidance", "NoLoad", "Responsible Use of Medicines")
-medavoid <- paste(Bam, c(3,4,6,7,8,9,10,11,12,13,14,17,18), sep="")
-respmed <- paste(Bam, c(1,2,11,16,18), sep="")
-bamnoload <- paste(Bam, c(5,15), sep="")
-Bam2modelnotB.all <- mxModel(name="Bam2notBAll", 
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Medicine Avoidance", to=medavoid),
-                      mxPath(from="Responsible Use of Medicines", to=respmed),
-                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
-Bam2fitnotB.all <- mxRun(Bam2modelnotB.all)
-Bam2asummnotB.all <- summary(Bam2fitnotB.all)
-@ 
+
+
 
 <<tcq7notCsemAll, echo=FALSE, results=hide, cache=TRUE>>=
 Pill <- "Pill"
@@ -1966,25 +1922,7 @@ tcq7fit.notC.all <- mxRun(Tcq7modelnotC.all)
 tcq7summ.notC.all <- summary(tcq7fit.notC.all)
 @ 
 
-<<bam1notCsemAll, echo=FALSE, results=hide, cache=TRUE>>=
-Bam <- "BAM"
-bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- c(bamitems.cols)
-latents <- c("Beliefs About Medicine", "NoLoad")
-Bamq <- paste(Bam, c(3,4,6,7,8,9,10,12,13,14,17, 18), sep="")
-bamnoload <- paste(Bam, c(1,2,5,11,15,16), sep="")
-Bam1modelnotC.all<- mxModel(name="Bam1notCAll", 
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Beliefs About Medicine", to=Bamq),
-                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamall2)), type="cov", numObs=671))
-Bam1fitnotC.all <- mxRun(Bam1modelnotC.all)
-Bam1asumm.notC.all <- summary(Bam1fitnotC.all)
-@ 
+
 
 <<tcq7notDAllsemAll, echo=FALSE, results=hide, cache=TRUE>>=
 Pill <- "Pill"
@@ -2026,32 +1964,9 @@ tcq7fit.notD.all <- mxRun(Tcq7modelnotD.all)
 tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 @ 
 
-<<bam1notDsemAll, echo=FALSE, results=hide, cache=TRUE>>=
-Bam <- "BAM"
-bamitems.cols <- paste(Bam, 1:18, sep="")
-manifests <- c(bamitems.cols)
-latents <- c("Beliefs About Medicine", "NoLoad")
-Bamq <- paste(Bam, c(1,2,3,4,6,7,8,9,10,13,14,17, 18), sep="")
-bamnoload <- paste(Bam, c(5,11,12,15,16), sep="")
-Bam1modelnotD.all<- mxModel(name="Bam1notDAll", 
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Beliefs About Medicine", to=Bamq),
-                      mxPath(from="NoLoad", to=bamnoload, free=FALSE, values=0.0),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.4),
-mxData(observed=cov(na.omit(bamnotD)), type="cov", numObs=671))
-Bam1fitnotD.all <- mxRun(Bam1modelnotD.all)
-Bam1asumm.notD.all <- summary(Bam1fitnotD.all)
-@
 
-<<bamallsemcompare, echo=FALSE, results=tex>>=
-bamall.semcompare <- mxCompare(Bam4fitnotA.all, c(Bam2fitnotB.all, Bam1fitnotC.all, Bam1fitnotD.all))
-print(xtable(bamall.semcompare, label="tab:bamallsemcompare", caption="Best Model from Each Split tested against one another on the full dataset, Beliefs About Medicine Questionnaire"))
-@ 
 
-As can be seen from Table \ref{tab:bamallsemcompare}, the two factor model from Split B provided the best fit to all of the data, striking a balance between the complexity of the four factor model and the over simplicity of the one factor model. 
+
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
@@ -2063,9 +1978,6 @@ As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were id
 \subsection{IRT Analyses}
 \label{sec:irt-analyses}
 
-\subsubsection{Treatment Credibility Questionnaire}
-\label{sec:treatm-cred-quest}
-
 
 The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
 
@@ -2074,47 +1986,47 @@ The next step in the analysis procedure was to examine the treatment credibility
 
 
 
-<<tcq2aitemselection, echo=FALSE, results=tex>>=
+<<tcq2aitemselection, echo=FALSE, results=hide>>=
 tcq.aisp <- aisp(na.omit(tcqall2a))
 print(xtable(tcq.aisp, label="tab:tcq2aitemselection", caption="Item selection procedure, TCQ 2 Split A"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2aitemselection}, the TCQ divides neatly into two scales, one for the conventional items and another for the alternative items. 
+The TCQ divides neatly into two scales, one for the conventional items and another for the alternative items. 
 
-The next assumption to check was that of invariant item ordering, and the results are shown below.
+The next assumption to check was that of invariant item ordering. Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
 
 <<tcq2asplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2a.conv <- tcqall2a[,1:18]
 tcq2a.alt <- tcqall2a[,19:36]
 @ 
 
-<<tcq2aconvcheckiio, echo=FALSE, results=tex>>=
+<<tcq2aconvcheckiio, echo=FALSE, results=hide>>=
 tcq2aconv.iio <- check.iio(na.omit(tcq2a.conv))
 print(xtable(tcq2aconv.iio$violations, label="tab:tcq2aconvcheckiio", caption="Check of Item Ordering Assumptions, TCQ 2 Conventional Split A"))
 @ 
 
-It can be seen from Table \ref{tab:tcq2aconvcheckiio} that Pill4 and Pill6 violated the assumption of invariant item ordering. However, invariant item ordering is only necessary for restricted versions of the rating scale model and the graded response model, so this assumption is not as important in our case. That being said, the assumption was also investigated for the alternative items to allow for a minimal subset of items to be retained if restrictive models are to be fit later in the process. 
 
-<<tcq2aaltitemord, echo=FALSE, results=tex>>=
+
+<<tcq2aaltitemord, echo=FALSE, results=hide>>=
 tcq2aalt.iio <- check.iio(na.omit(tcq2a.alt))
 print(xtable(tcq2aalt.iio$violations, label="tab:tcq2aaltcheckiio", caption="Item Ordering Assumption Check for TCQ Alternative, Split A"))
 @ 
-Table \ref{tab:tcq2aaltcheckiio} shows that in contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
+In contrast to the conventional items, there were no violations of the IIO assumption for the alternative items. 
 
 Next, the assumption of monotonicity was assesed for both scales. 
 
-<<tcq2aconvmonotonicity, echo=FALSE, results=tex>>=
+<<tcq2aconvmonotonicity, echo=FALSE, results=hide>>=
 tcq2aconv.mono <- check.monotonicity(na.omit(tcq2a.conv))
 print(xtable(summary(tcq2aconv.mono), label="tab:tcq2aconvmonotonicity", caption="Monotonicity Check Results for TCQ 2 Conventional, Split A"))
 @ 
-As can be seen from Table \ref{tab:tcq2aconvmonotonicity}, there were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
+There were no violations of monotonicity for the conventional items in this split (the vi column is the most important here). 
 
 <<tcq2aaltmonotonicity, echo=FALSE, results=tex>>=
 tcq2aalt.mono <- check.monotonicity(na.omit(tcq2a.alt))
 print(xtable(summary(tcq2aalt.mono), label="tab:tcq2aaltmonotonicity"))
 @ 
 
-As shown in Table \ref{tab:tcq2aaltmonotonicity}, there were no violations of the monotonicity assumption for the alternative items in this split either. 
+There were no violations of the monotonicity assumption for the alternative items in this split either. 
 
 <<tcq2aguttmanerrors, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2a.conv.errors <- check.errors(na.omit(tcq2a.conv))
@@ -2147,7 +2059,9 @@ The major assumptions of parametric IRT are satisfied for this split, and so the
 tcq2a.conv.gpcm.rasch <- gpcm(na.omit(tcq2a.conv), constraint="rasch")
 tcq2a.conv.gpcm.1pl <- gpcm(na.omit(tcq2a.conv), constraint="1PL")
 tcq2a.conv.gpcm.gpcm <- gpcm(na.omit(tcq2a.conv), constraint="gpcm")
-@ 
+@
+
+
 <<tcq2aconvsum, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2a.conv.rasch.sum <- summary(tcq2a.conv.gpcm.rasch)
 tcq2a.conv.1pl.sum <- summary(tcq2a.conv.gpcm.1pl)
@@ -2249,7 +2163,6 @@ tcq2a.grm.1pl.done <- testIRTModels(tcq2a.conv.grm.1pl, tcq2nota.conv, gpcmconst
 tcq2a.grm.2pl.done <- testIRTModels(tcq2a.conv.grm.2pl, tcq2nota.conv,gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2a.grm.done <- rbind(tcq2a.grm.1pl.done, tcq2a.grm.2pl.done)
 rownames(tcq2a.grm.done) <- c("One Parameter GRM", "Two Parameter GRM")
-
 @ 
 <<tcq2agrmdone, echo=FALSE, results=tex>>=
 tcq2a.grm.done.xtab <- xtable(tcq2a.grm.done, caption="Comparison of Split A Graded Response Models on Splits B, C and D", label="tab:grmdone2a")
@@ -2323,121 +2236,6 @@ print(xtable(tcq2a.grm.modcomp, caption="Performance of Split A Graded Response 
 @ 
 As can be seen from Table \ref{tab:tcq2aaltgrmmodcomp}, the one parameter model performed significantly better on the unseen data. 
 
-Next, the beliefs about medicine questionnaire was examined in terms of item response theory.
-
-<<bam2ascales, echo=FALSE, results=tex>>=
-bam2a.scales <- aisp(na.omit(bamall2a))
-print(xtable(bam2a.scales, label="tab:bam2ascales", caption=" Item Scale Analysis  for Beliefs About Medicine Questionnaire, IRT scale, Split A"))
-@ 
-
-It can be seen from Table ~\ref{tab:bam2ascales} that many items on the beliefs about medicine questionnaire do not appear to be part of any scale (indicated by the zeros next to the item number). The algorithm suggests that there are two scales.
-
-The first is made up of BAM6, BAM7, BAM9, BAM13, BAM14 and BAM17.
-The second is made up of BAM4 and BAM10. This second scale appears to be less than useful, as some of the other tests of assumptions require at least three items per scale. The approach taken here will be to eliminate all but the first scale and conduct our analyses on that set of six items.
-
-<<bam2areduce, echo=FALSE, results=hide, cache=TRUE>>=
-bam2ascale <- bamall2a[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
-## bam2ascale.other <- bamall2a[,!c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
-@ 
-
-The next step is to check the assumption of invariant item ordering. This is less important here, but is checked for the sake of completeness. 
-
-<<bam2aiio, echo=FALSE, results=tex>>=
-bam2a.iio <- check.iio(na.omit(bam2ascale))
-print(xtable(bam2a.iio$violations, label="tab:bam2aiio", caption="Item Ordering Assumption Check for Reduced Beliefs About Medicine Questionnaire, Split A"))
-@ 
-
-As can be seen from Table ~\ref{tab:bam2aiio}, no items violated the invariant item ordering assumption, and so are are retained until the next stage. The next step is to check the assumption of monotonicity.
-
-<<bam2acheckmono, echo=FALSE, results=tex>>=
-bam2a.mono <- check.monotonicity(na.omit(bam2ascale))
-print(xtable(summary(bam2a.mono), label="tab:bam2amono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split A"))
-@ 
-
-Table \ref{tab:bam2amono} shows that there were no violations of monotonicity in this split for the reduced set of items. 
-
-The next step in our analysis plan is to fit a rasch model to the beliefs about medicine scale. 
-
-<<bam2agpcm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2a.gpcm.rasch <- gpcm(bam2ascale, constraint="rasch")
-bam2a.gpcm.1PL <- gpcm(bam2ascale, constraint="1PL")
-bam2a.gpcm.gpcm <- gpcm(bam2ascale, constraint="gpcm")
-@ 
-
-<<bam2arasch, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2a.gpcm.rasch)), label="tab:bam2arasch", caption="Coefficients for Beliefs About Medicine Questionnaire, Rasch partial credit model"))
-@ 
-
-As can be seen from Table ~\ref{tab:bam2arasch}, this model shows problems typical to the PCM of the middle category having a lower estimated ability threshold than do the categories to either side. Nonetheless, it can be seen that BAM9, ``It is better to do without medicines'' has the highest thresholds, followed by 17, ``Doctors use too many medicines'', which makes sense as these questions are more absolutist than many of the others. 
-
-We next examine the fit of a one paramater generalised partial credit model with a discrimination parameter estimated from the data. 
-
-<<bam2a1PL, echo=FALSE, results=tex>>=
-
-print(xtable(coef2mat(coef(bam2a.gpcm.1PL)), label="tab:bam2a1PL", caption="Coefficients for Beliefs About Medicine Questionnaire, One parameter Generalised Partial Credit Model"))
-@ 
-
-Again, Table \ref{tab:bam2a1PL} makes it very clear that the one parameter GPCM provides little advantage over the Rasch model, in that the estimated difficulties are very similar and the discrimination parameter has not moved very much. 
-
-Next, the fit of a two parameter GPCM to this scale was examined. 
-
-<<bam2agpcm, echo=FALSE, results=tex>>=
-
-print(xtable(coef2mat(coef(bam2a.gpcm.gpcm)), label="tab:bam2agpcm", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, Two Parameter Generalised Partial Credit Model"))
-@ 
-It can be clearly seen from Table ~\ref{tab:bam2agpcm} that the two parameter GPCM provides a more interesting picture. Again, 7 is the most difficult, but has a very low discrimination parameter, suggesting that it is relatively poor at clustering high and low scorers on the scale. However, 17 has lowered its difficulties, but shows much better discrimination. 
-
-In line with previous practice, the next models fit were the one and two parameter graded response models. 
-
-<<bam2agrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2a.grm.1pl <- grm(na.omit(bam2ascale), constrained=TRUE)
-bam2a.grm.2pl <- grm(na.omit(bam2ascale), constrained=FALSE, Hessian=TRUE)
-@ 
-
-<<bam2agrm1pl, echo=FALSE, results=tex>>=
-
-bam2acoef.mat <- coef2mat(coef(bam2a.grm.1pl))
-print(xtable(bam2acoef.mat, label="tab:bam2agrm1pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, One parameter Graded Response Model"))
-@ 
-
-It can be seen from Table \ref{tab:bam2agrm1pl} that the fit of this model is much better that the fit of any of the partial credit models. 
-
-The next step is to fit a two parameter GRM, and examine the differences in fit between the two models. 
-
-<<bam2agrm2pl, echo=FALSE, results=tex>>=
-
-bam2acoef.mat <- coef2mat(coef(bam2a.grm.2pl))
-print(xtable(bam2acoef.mat, label="tab:bam2agrm2pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split A, Two parameter Graded Response Model"))
-@ 
-
-It can be seen from Table \ref{tab:bam2agrm2pl} that this model reveals some interesting features of the items. BAM13 and BAM17 have the highest discrimination parameters, but the ability estimates of their extremities have moved down to compensate. 
-
-A likelihood ratio test carried out between the two models suggested that the two parameter model was significantly better than the one parameter model, ($p\le 0.001$). Again, this is a tentative result until the performance of the model on new data is examined. In any case, while both the AIC and the LR test favoured the two parameter model, the BIC was lower for the one parameter model indicating that according to this criterion, the one parameter model was superior. 
-
-Next, the performance of all the Beliefs About Medicine Models was assessed on unseen data (Splits B, C and D). 
-
-<<bampcmtest, echo=FALSE, results=tex, cache=TRUE>>=
-bamnota.irt <-  tcq2nota[,c("BAM6","BAM7","BAM9","BAM13","BAM14","BAM17")]
-bam2a.pcm.rasch.done <- testIRTModels(bam2a.gpcm.rasch, bamnota.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-bam2a.pcm.1pl.done <- testIRTModels(bam2a.gpcm.1PL, bamnota.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-bam2a.pcm.gpcm.done <- testIRTModels(bam2a.gpcm.gpcm, bamnota.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-bam2a.pcm.modcomp <- rbind(bam2a.pcm.rasch.done, bam2a.pcm.1pl.done, bam2a.pcm.gpcm.done)
-rownames(bam2a.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
-
-@ 
-<<bam2apcmmodcompprint, echo=FALSE, results=tex>>=
-bam2a.pcm.modcomp.xtab <- xtable(bam2a.pcm.modcomp, caption="Partial Credit Models for BAM Scale from Split A Performance on Heldout Data", label="tab:bam2apcmmodcomp")
-print(bam2a.pcm.modcomp.xtab)
-@ 
-From Table \ref{tab:bam2apcmmodcomp} it can be seen that the rasch model provided the best performance on unseen data. 
-
-Next, the performance of the graded response models on unseen  data was assessed. 
-
-<<bam2agrmtest, echo=FALSE, results=tex, cache=TRUE>>=
-## bam2a.test <- bamnota.irt[,2:length(bamnota.irt)]
-## bam2a.grm.1pl.done <- testIRTModels(bam2a.grm.1pl, bam2a.test)
-@ 
-%fix split A levels problem
 
 \subsubsection{Split B}
 \label{sec:split-b}
@@ -2446,12 +2244,12 @@ The next task was to repeat the analyses on Split B. The TCQ was the instrument 
 
 Again, the first step is to examine whether or not the TCQ should be split into seperate scales, examine the monotonicity, the invariant item ordering assumption and examine a plot of Guttman errors. 
 
-<<tcq2baisp, echo=FALSE, results=tex>>=
+<<tcq2baisp, echo=FALSE, results=hide>>=
 tcq2b.aisp <- aisp(na.omit(tcqall2b))
 print(xtable(tcq2b.aisp, label="tab:tcq2baisp", caption="Item Selection Procedure for TCQ 2, Split B"))
 @ 
 
-As can be seen from Table ~\ref{tab:tcq2baisp}, the scales split along alternative and conventional lines, as in Split A. All further analyses will be carried out on the seperate scales. 
+The scales split along alternative and conventional lines, as in Split A. All further analyses will be carried out on the seperate scales. 
 
 <<tcq2bsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2b.conv <- tcqall2b[,1:18]
@@ -2460,37 +2258,34 @@ tcq2b.alt <- tcqall2b[,19:36]
 
 The first step in the examination of the tcq conventional in split B is to check the IIO assumption. 
 
-<<tcq2bcheckiio, echo=FALSE, results=tex>>=
+<<tcq2bcheckiio, echo=FALSE, results=hide>>=
 tcq2b.conv.iio <- check.iio(na.omit(tcq2b.conv))
 print(xtable(tcq2b.conv.iio$violations, label="tab:tcq2bcheckiio", caption="Item Ordering Assumption Check, TCQ 2 Conventional, Split B"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2bcheckiio}, there were no violations of this assumption. 
+There were no violations of either the monotonicity or item ordering assumptions for the conventional items in this split. 
 
-Next the assumption of montonicity was checked. 
 
-<<tcq2bconvcheckmono, echo=FALSE, results=tex>>=
+<<tcq2bconvcheckmono, echo=FALSE, results=hide>>=
 tcq2b.conv.mono <- check.monotonicity(na.omit(tcq2b.conv))
 print(xtable(summary(tcq2b.conv.mono), label="tab:tcq2bconvcheckmono", caption="Monotonicity Check, TCQ2 Conventional (Split B)"))
 @ 
 
-As shown in Table \ref{tab:tcq2bconvcheckmono}, there were no violations of the monotonicity assumption in this split.
 
-This process of repeating assumptions is then repeated for the alternative question TCQ for Split B.
 
-<<tcq2baltcheckiio, echo=FALSE, results=tex>>=
+This process of repeating assumptions is then repeated for the alternative question TCQ for Split B. There were no violations of the invariant item ordering assumption in this split, or violations of the monotonicity assumption. 
+
+<<tcq2baltcheckiio, echo=FALSE, results=hide>>=
 tcq2b.alt.iio <- check.iio(na.omit(tcq2b.alt))
 print(xtable(tcq2b.alt.iio[["violations"]], label="tab:tcq2baltcheckiio", caption="Item Ordering Check TCQ2 Alternative (Split B)"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2baltcheckiio}, there were no violations of the invariant item ordering assumption in this split. Next, the monotonicity assumption was assessed. 
-
-<<tcq2baltcheckmono, echo=FALSE, results=tex>>=
+<<tcq2baltcheckmono, echo=FALSE, results=hide>>=
 tcq2b.alt.mono <- check.monotonicity(na.omit(tcq2b.alt))
 print(xtable(summary(tcq2b.alt.mono), label="tab:tcq2baltcheckmono", caption="Monotonicity Check for TCQ 2, Alternative (Split B)"))
 @ 
 
-As shown from Table \ref{tab:tcq2baltcheckmono}, there were no violations of the montonicity assumption in this sample. 
+
 
 Next, a series of partial credit models were fit and checked for violations of the assumptions. 
 
@@ -2713,141 +2508,6 @@ print(xtable(tcq2b.alt.grm.modcomp, caption="Performance of Split B TCQ Alternat
 @ 
 As shown in Table \ref{tab:tcq2baltgrmmodcomp}, the two parameter model provided a better approximation to the unseen data. 
 
-The same model fitting procedure will now be repeated for the Beliefs About Medicine Questionnaire in this split. 
-
-<<bam2baisp, echo=FALSE, results=tex>>=
-bam2b.aisp <- aisp(na.omit(bamall2b))
-print(xtable(bam2b.aisp, label="tab:bam2baisp", caption="Item Selection Procedure for Beliefs About Medicine Questionnaire, Split B"))
-@ 
-
-As shown in Table \ref{tab:bam2baisp}, some items do not load on any scales, and there is one two item scale (BAM1 and BAM2), along with one larger scale. As two items are not enough to form a useful scale, the larger scale will be the only one which is analysed. 
-
-The scale that will be analysed consists of BAM3, BAM4, BAM6, BAM9, BAM10, BAM11, BAM13, BAM14 and BAM17. This is a larger scale than was observed with Split A. 
-
-<<bamscale2b,echo=FALSE, results=hide>>=
-bamscale2b <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
-@ 
-
-The first step is to examine the invariant item ordering assumption.
-
-<<bam2checkiio, echo=FALSE, results=tex>>=
-bam2b.iio <- check.iio(na.omit(bamscale2b))
-print(xtable(bam2b.iio$violations, label="tab:bam2checkiio", caption="Item Ordering Assumption Check for Beliefs About Medicine Scale, Split B"))
-@ 
-
-In line with the results of Split A, no items were in violation of this assumption. 
-
-The next assumption which needs to be checked is the monotonicity assumption. 
-
-<<bam2bcheckmono, echo=FALSE, results=tex>>=
-bam2b.mono <- check.monotonicity(na.omit(bamscale2b))
-print(xtable(summary(bam2b.mono), label="tab:bam2bcheckmono", caption="Monotonicity Check, Beliefs About Medicine Scale, Split B"))
-@ 
-
-Table \ref{tab:bam2bcheckmono} shows clearly that there were no violations of the monotonicity assumption in this sample. 
-
-The final preliminary model check consists of a plot displaying the number of Guttman errors for each participant.
-\begin{figure}
-<<bam2bguttman, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-bam2b.guttman <- check.errors(na.omit(bamscale2b))
-bam2b.guttplot <- ggplot(as.data.frame(bam2b.guttman), aes(x=bam2b.guttman))+geom_histogram(binwidth=2)
-print(bam2b.guttplot)
-@   
-  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split B}
-  \label{fig:bam2bguttmanplot}
-\end{figure}
-
-As can be seen from Figure \ref{fig:bam2bguttmanplot}, the number of guttman errors was much higher for this scale than was observed in the previous split. This suggests that some of the respondents were not answering the questions in a consistent fashion, and will be investigated further when the person fit statistics are examined on a per model basis. 
-
-The first step in modelling the Beliefs about Medicines questionnaire is to attempt to fit a Rasch partial credit model.
-
-<<bam2bgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2b.gpcm.rasch <- gpcm(bamscale2b, constraint="rasch")
-bam2b.gpcm.1PL <- gpcm(bamscale2b, constraint="1PL")
-bam2b.gpcm.gpcm <- gpcm(bamscale2b, constraint="gpcm")
-@ 
-
-
-
-
-
-The estimated parameters for the Rasch model are shown  in Table \ref{tab:bam2bgpcmrasch}. 
-
-
-<<bam2bgpcmrasch, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2b.gpcm.rasch)), label="tab:bam2bgpcmrasch", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, Rasch generalised Partial Credit Model"))
-@ 
-
-It can be seen from Table \ref{tab:bam2bgpcmrasch} that the Rasch PCM has thresholds in line with those of the conventional item TCQ, and that Q6 is regarded as the most difficult, which is not surprising given the content of the item ``Medicines often do more harm than good''. 
-
-Next, the coefficients are examined for a one parameter PCM on this scale. 
-
-
-<<bam2bgpcm1pl, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2b.gpcm.1PL)), label="tab:bam2bgpcm1pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, One Parameter Generalised Partial Credit Model"))
-@ 
-
-Table \ref{tab:bam2bgpcm1pl} shows the estimated coefficients for this model. It can be seen that there are no major changes from the Rasch model, the discrimination parameter has lowered, but the ability thresholds have risen slightly, most noticeably in the case of BAM6. 
-
-
-Finally, the fit of a two parameter PCM was examined.
-
-<<bam2bgpcmgpcm, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2b.gpcm.gpcm)), label="tab:bam2bgpcm2pl", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, Two Parameter Generalised Partial Credit Model"))
-@ 
-
-Table \re{tab:bam2bgpcm2pl} shows the results of this fit. It can be seen that the discrimination parameters of items 6, 13,14 and 17 have markedly increased, while those of the other items have lowered slightly. 
-
-The next step in the process of modelling was to fit one and two parameter Graded Response Models. 
-
-<<bam2bgrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2b.grm.1pl <- grm(bamscale2b, constrained=TRUE)
-bam2b.grm.2pl <- grm(bamscale2b, constrained=FALSE)
-@ 
-
-<<bam2bgrm1sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2b.grm.1pl)), label="tab:bam2bgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Split B, One Parameter Graded Response Model"))
-@ 
-
-Table \ref{tab:bam2bgrm1sum} shows no signs of problems with monotonicity, and the fit appears acceptable. Next, the two parameter GRM was examined.
-
-<<bam2bgrm2sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2b.grm.2pl)), label="tab:bam2bgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Two parameter Graded Response Model"))
-@ 
-
-Table \ref{tab:bam2bgrm2sum} shows that the fit of the two parameter model is equally unproblematic. 
-
-<<bam2banovagrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2bgrm.anova <- anova(bam2b.grm.1pl, bam2b.grm.2pl)
-@ 
-
-A likelihood ratio test suggests that the two parameter model provides a significantly better fit ($p \le 0.001$) than does the one parameter model. 
-
-
-Finally, the performance of each of the different types of IRT models on unseen data was assessed. 
-
-<<bam2bpcmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
-bamnotb.irt <- tcq2notb[,c("BAM3", "BAM4", "BAM6", "BAM9", "BAM10", "BAM11", "BAM13", "BAM14", "BAM17")]
-bam2b.gpcm.rasch.done <- testIRTModels(bam2b.gpcm.rasch,  bamnotb.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-bam2b.gpcm.1PL.done <- testIRTModels(bam2b.gpcm.1PL, bamnotb.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-bam2b.gpcm.gpcm.done <- testIRTModels(bam2b.gpcm.gpcm, bamnotb.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-bam2b.gpcm.modcomp <- rbind(bam2b.gpcm.rasch.done, bam2b.gpcm.1PL.done, bam2b.gpcm.gpcm.done)
-
-@ 
-<<bam2bgpcmmodcompprint, echo=FALSE, results=tex>>=
-bam2b.gpcm.modcomp.xtab <- xtable(bam2b.gpcm.modcomp, caption="Performance of Beliefs About Medicine IRT Scale from Split B on Splits A, C and D", label="tab:bam2bpcmmodcomp")
-print(bam2b.gpcm.modcomp.xtab)
-@ 
-As can be seen from Table \ref{tab:bam2bpcmmodcomp}, the Rasch PCM provided the best performance on unseen data.
-
-Next, the same procedure was applied to the Graded Response Models. 
-
-<<bam2bgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
-#bam2b.grm.1pl.done <- testIRTModels(bam2b.grm.1pl, bamnotb.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-@
-
-
-% figure out what to do with the different response patterns in grade response models 
 
 
 \subsubsection{Split C}
@@ -2855,12 +2515,12 @@ Next, the same procedure was applied to the Graded Response Models.
 
 
 
-<<tcq2caisp, echo=FALSE, results=tex>>=
+<<tcq2caisp, echo=FALSE, results=hide>>=
 tcq2c.aisp <- aisp(na.omit(tcqall2c))
 print(xtable(tcq2c.aisp, label="tab:tcq2caisp", caption="Item Selection Procedure Results, TCQ 2, Split C"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2caisp}, the algorithm suggests that there are two scales, one for conventional items and another for alternative items, as was seen in the previous two splits. The assumption checking will therefore be carried out on each scale seperately. 
+The item-splitting procedure suggests that there are two scales, one for conventional items and another for alternative items, as was seen in the previous two splits. The assumption checking will therefore be carried out on each scale seperately. 
 
 <<tcq2csplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2c.conv <- tcqall2c[,1:18]
@@ -2869,20 +2529,20 @@ tcq2c.alt <- tcqall2c[,19:36]
 
 
 
-<<tcq2ccheckiio, echo=FALSE, results=tex>>=
+<<tcq2ccheckiio, echo=FALSE, results=hide>>=
 tcq2c.conv.iio <- check.iio(na.omit(tcq2c.conv))
 print(xtable(tcq2c.conv.iio$violations, label="tab:tcq2ccheckiio", caption="Item Ordering Assumption Check, TCQ2 Conventional, Split C"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2ccheckiio}, there were no violations of the item ordering assumption in this sample. 
+There were no violations of the item ordering or monotonicity assumptions in this split. 
 
 
-<<tcq2cconvcheckmono, echo=FALSE, results=tex>>=
+<<tcq2cconvcheckmono, echo=FALSE, results=hide>>=
 tcq2c.conv.mono <- check.monotonicity(na.omit(tcq2c.conv))
 print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono", caption="Monotonicity Check, TCQ 2 Conventional, Split C"))
 @ 
 
-Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmono} shows that there were no violations of monotonicity in this sample. 
+%% Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmono} shows that there were no violations of monotonicity in this sample. 
 
 Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
 
@@ -2900,12 +2560,12 @@ The plot shown in Figure \ref{fig:tcq2cconvguttplot} is interesting. It can be s
 
 Next, the assumptions of IRT were checked for the TCQ alternative items in this split. 
 
-<<tcq2caltcheckiio, echo=FALSE, results=tex>>=
+<<tcq2caltcheckiio, echo=FALSE, results=hide>>=
 tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
 print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="Item Ordering Assumption Check, TCQ2 Alternative, Split C"))
 @ 
 
-Table \ref{tab:tcq2caltcheckiio} shows that there were no violations of the invariant item ordering assumption in this split for the alternative items. 
+There were no violations of the invariant item ordering or monotonicity assumptions in this split for the alternative items. 
 
 
 <<tcq2caltcheckmono, echo=FALSE, results=tex>>=
@@ -2913,7 +2573,7 @@ tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
 print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono", caption="Monotonicity Check, TCQ2 Alternative, Split C"))
 @ 
 
-Next, the monotonicity assumption was examined. Table \ref{tab:tcq2caltcheckmono} shows that there were no violations of the monotonicity assumption for the alternative items in this split. 
+%% Next, the monotonicity assumption was examined. Table \ref{tab:tcq2caltcheckmono} shows that there were no violations of the monotonicity assumption for the alternative items in this split. 
 
 The next step in the analysis procedure was to fit a series of generalised partial credit models to the data (Rasch, one parameter and two parameter). The results are shown below. 
 
@@ -3140,143 +2800,19 @@ print(xtable(tcq2c.alt.grm.modcomp, caption="Performance of Split C TCQ Alternat
 As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the two parameter model provides a better fit to the unseen data. 
 
 
-Next, the beliefs about medicine questionnaire was examined in this split. 
 
-<<bam2caisp, echo=FALSE, results=tex>>=
-bam2c.aisp <- aisp(na.omit(bamall2b))
-print(xtable(bam2c.aisp, label="tab:bam2caisp", caption="Item Selection Procedure, Beliefs About Medicine Questionnaire, Split C"))
-@ 
-
-As seen in previous splits, BAM1 and BAM2 were partitioned into their own scale, and many items did not fit any scale. As a two item scale is too small to examine effectively, all further analyses were carried out on the reduced scale (1). Table \ref{tab:bam2caisp} shows these results. In contrast to Split A, the scale had 9 items, and these were the same items as were selected by the scale splitting algorithm in Split B. 
-
-<<bamscale2c,echo=FALSE, results=hide, cache=TRUE>>=
-bamscale2c <- bamall2b[,c("BAM3","BAM4","BAM6","BAM9","BAM10","BAM11","BAM13","BAM14", "BAM17")]
-@ 
-
-The first assumption to be checked was the invariant item ordering assumption, and the results are shown in Table \ref{tab:bam2checkiio}. 
-
-<<bam2ccheckiio, echo=FALSE, results=tex>>=
-bam2c.iio <- check.iio(na.omit(bamscale2c))
-print(xtable(bam2c.iio$violations, label="tab:bam2checkiio", caption="Item Ordering Assumption Check, Beliefs About Medicine Questionnaire, Split C"))
-@ 
-
-As can be seen from Table \ref{tab:bam2checkiio}, no items violated this assumption and therefore all of them were retained. 
-
-
-<<bam2ccheckmono, echo=FALSE, results=tex>>=
-bam2c.mono <- check.monotonicity(na.omit(bamscale2c))
-print(xtable(summary(bam2c.mono), label="tab:bam2ccheckmono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split C"))
-@ 
-
-Following the check of the IIO assumption, the next step in assumption checking was a monotonicity check. The results of this check are shown in Table \ref{tab:bam2ccheckmono}. This shows that no items violated this assumption (though the ItemH coefficients are close to the cutoff of 0.3). 
-
-\begin{figure}
-<<bam2cguttman, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-bam2c.guttman <- check.errors(na.omit(bamscale2c))
-bam2c.guttplot <- ggplot(as.data.frame(bam2c.guttman), aes(x=bam2c.guttman))+geom_histogram(binwidth=2)
-print(bam2c.guttplot)
-@   
-  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split C}
-  \label{fig:bam2cguttmanplot}
-\end{figure}
-
-Next, the guttman errors in the split were examined and checked across this sample of items. Similiarly to the TCQ items in this split, the level of guttman errors was much higher, with a mode at approximately 10. This is worrying, and needs to be investigated further. 
-
-
-<<bam2cgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2c.gpcm.rasch <- gpcm(bamscale2c, constraint="rasch")
-bam2c.gpcm.1PL <- gpcm(bamscale2c, constraint="1PL")
-bam2c.gpcm.gpcm <- gpcm(bamscale2c, constraint="gpcm")
-@ 
-
-Firstly, three generalised partial credit models were fit (Rasch, one parameter and two parameter). The results are shown below. 
-
-
-<<bam2cgpcmrasch, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Beliefs About Medicine Questionnaire Split C, Rasch generalised partial credit model"))
-@ 
-
-Table \ref{tab:bam2cgpcmrasch} shows the coefficient estimates for the Rasch model fitted to the BAM scale. It can be seen that the estimated thresholds are in line with the ranges from the conventional items, while it might have been expected that they would be more along the lines of the alternative items (given the overlap between negativity towards conventional medicines and positivity towards alternative treatments). 
-% % . Although the problems of non-monotonic coefficient estimates are less severe than in previous splits, they are still there (BAM9,11, 13, 14, 17). This indicates that the model does not do a good job on this scale. The same problems occurred for both the one parameter and two parameter models, and so these coefficient estimates are not reported.
-
-Next, the fit of a one parameter PCM was examined on this scale.
-
-<<bam2cpcm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.gpcm.rasch)), label="tab:bam2cgpcmrasch", caption="Coefficient Estimates for BAM Scale, One Parameter PCM, Split C"))
-@ 
-
-Table \ref{tab:bam2cgpcmrasch} shows the estimated coefficients for this model. Interestingly enough, the discrimination parameter has lowered for all of the items. This suggests that these items are less good than would be expected at discriminating between high and low ability participants. 
-
-Finally, the fit of the two parameter PCM was examined on this scale.
-
-<<bam2cgpcmgpcmprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.gpcm.gpcm)), label="tab:bam2cgpcmgpcm", caption="Coefficient Estimates, BAM Scale, Two Parameter PCM, Split C"))
-@ 
-
-Table \ref{tab:bam2cgpcmgpcm} shows the estimated coefficients for the two parameter PCM. It can be seen that Q6, 14 and 17 are the most discrimination question, and that 3,4, 9 and 10 appear to have been the drivers of the discrimination parameter being below 1 in the one parameter model. 
-
-Next, the fit of one and two parameter graded response models were examined. 
-
-<<bam2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2c.grm.1pl <- grm(bamscale2c, constrained=TRUE)
-bam2c.grm.2pl <- grm(bamscale2c, constrained=FALSE)
-@ 
-
-<<bam2cgrm1sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.grm.1pl)), label="tab:bam2cgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire, One Parameter Graded Response Model (Split C)"))
-@ 
-
-Table \ref{tab:bam2cgrm1sum} shows that there are no monotonicity problems with the one parameter GRM. The estimated discrimination parameter is 1.523, and BAM6 appears to be the most difficult item in the scale (as no participants gave the highest response category to it, across all of the splits).
-
-
-
-
-<<bam2cgrm2sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2c.grm.2pl)), label="tab:bam2cgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, Split C, Two parameter Graded Response Model"))
-@ 
-
-Next, the fit of the two parameter  GRM was examined, and is displayed in Table \ref{tab:bam2cgrm2sum}. Note that BAM13 appears to be the most discriminating item, and that BAM3 is the most difficult item (with the exception of BAM6, as noted above). 
-
-<<bam2canovagrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2cgrm.anova <- anova(bam2c.grm.1pl, bam2c.grm.2pl)
-@ 
-
-An anova was carried out between the two graded response models, and the LR test showed that the two parameter model was significanly ($p \le 0.001$) better fit than the one parameter model. However, this was contradicted by both the BIC and AIC, which indicated that the one parameter model provided a better fit to the data. 
-
-Next the performance of the IRT models developed was assessed on unseen data. 
-
-<<bam2cpcmtest, echo=FALSE, results=tex, cache=TRUE>>=
-bamnotc.irt <- tcq2notc[,c("BAM3", "BAM4", "BAM6",  "BAM9",  "BAM10", "BAM11", "BAM13",  "BAM14", "BAM17")]
-bam2c.gpcm.rasch.done <- testIRTModels(bam2c.gpcm.rasch, bamnotc.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-bam2c.gpcm.1pl.done <- testIRTModels(bam2c.gpcm.1PL, bamnotc.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-bam2c.gpcm.gpcm.done <- testIRTModels(bam2c.gpcm.gpcm, bamnotc.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-bam2c.pcm.modcomp <- rbind(bam2c.gpcm.rasch.done, bam2c.gpcm.1pl.done, bam2c.gpcm.gpcm.done)
-rownames(bam2c.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
-
-@ 
-<<bam2cpcmmodcompprint, echo=FALSE, results=tex>>=
-bam2c.gpcm.modcomp.xtab <- xtable(bam2c.pcm.modcomp, caption="Results of BAM Split C Partial Credit Models on Splits A, B and D", label="tab:bam2cpcmmodcomp")
-print(bam2c.gpcm.modcomp.xtab)
-@ 
-As can be seen from Table \ref{tab:bam2cpcmmodcomp}, the Rasch model for the Beliefs About Medicine Questionnaire provided the best fit to unseen data. 
-
-%% Next, we examine the performance of the Graded Response Models on unseen data. 
-
-<<bam2cgrmtest, echo=FALSE, results=tex, eval=FALSE, cache=TRUE>>=
-bam2c.grm.1pl.done <- testIRTModels(bam2c.grm.1pl, bamnotc.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-@ 
 
 \subsubsection{Split D}
 \label{sec:split-d}
 
 Next, the fourth and final split was examined. Again, the first step is to examine the Treatment Credibility Questionnaire and assess how many scales the items break down into.
 
-<<tcq2daisp, echo=FALSE, results=tex>>=
+<<tcq2daisp, echo=FALSE, results=hide>>=
 tcq2d.aisp <- aisp(na.omit(tcqall2d))
 print(xtable(tcq2d.aisp, label="tab:tcq2daisp", caption="Item Selection Procedure Results, TCQ 2 Split D"))
 @ 
 
-Table \ref{tab:tcq2daisp} shows that, similarly to the first three splits, the TCQ splits along the conventional/alternative distinction. Therefore, the items will be split into conventional and alternative scales and all analyses carried out seperately. 
+Similarly to the first three splits, the TCQ splits along the conventional/alternative distinction. Therefore, the items will be split into conventional and alternative scales and all analyses carried out seperately. 
 
 <<tcq2dsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.conv <- tcqall2d[,1:18]
@@ -3285,12 +2821,12 @@ tcq2d.alt <- tcqall2d[,19:36]
 
 The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. The first assumption to be checked is the invariant item ordering assumption. 
 
-<<tcq2dcheckiio, echo=FALSE, results=tex>>=
+<<tcq2dcheckiio, echo=FALSE, results=hide>>=
 tcq2d.conv.iio <- check.iio(na.omit(tcq2d.conv))
 print(xtable(tcq2d.conv.iio$violations, label="tab:tcq2dcheckiio", caption="Item Ordering Assumption Check, TCQ2 Conventional, Split D"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2dcheckiio}, all of the items in the TCQ conventional scale met the IIO assumption. Next, the monotonicity assumption was examined for the conventional scale. 
+All of the items in the TCQ conventional scale met the IIO and monotonicity assumptions.
 
 
 <<tcq2dconvcheckmono, echo=FALSE, results=tex>>=
@@ -3298,7 +2834,8 @@ tcq2d.conv.mono <- check.monotonicity(na.omit(tcq2d.conv))
 print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono", caption="Monotonicity Check, TCQ 2 Conventional Split D"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2dconvcheckmono}, all of the items in the conventional scale met this assumption. Next, the scale was checked for guttman scaling errors, and these were plotted. 
+%% As can be seen from Table \ref{tab:tcq2dconvcheckmono}, all of the items in the conventional scale met this assumption. 
+Next, the scale was checked for guttman scaling errors, and these were plotted. 
 
 \begin{figure}
 <<tcq2dconvguttman, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
@@ -3313,24 +2850,24 @@ print(tcq2d.conv.gutt.plot)
 As shown in Figure \ref{fig:tcq2dconvguttplot}, the majority of participants had no guttman errors, but there were some participants who made an extremely large number of scaling errors. This worrying feature of this split will be examined further when person and item fit indices are assessed in the context of parametric IRT modelling.
 
 
-Next, the assumptions were checked for the alternative items. 
+Next, the assumptions were checked for the alternative items, and there were no volations for either the IIO or monotonicity assumptions. 
 
-<<tcq2daltcheckiio, echo=FALSE, results=tex>>=
+<<tcq2daltcheckiio, echo=FALSE, results=hide>>=
 tcq2d.alt.iio <- check.iio(na.omit(tcq2d.alt))
 print(xtable(tcq2d.alt.iio$violations, label="tab:tcq2daltcheckiio", caption="Item Ordering Assumption Check, TCQ 2 Alternative, Split D"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2daltcheckiio}, there were no violations of the IIO assumption for the alternative items. 
+%% As can be seen from Table \ref{tab:tcq2daltcheckiio}, there were no violations of the IIO assumption for the alternative items. 
 
-Next, the monotonicity assumption was examined for the alternative scale.
+%% Next, the monotonicity assumption was examined for the alternative scale.
 
 
-<<tcq2daltcheckmono, echo=FALSE, results=tex>>=
+<<tcq2daltcheckmono, echo=FALSE, results=hide>>=
 tcq2d.alt.mono <- check.monotonicity(na.omit(tcq2d.alt))
 print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Monotonicity Check, TCQ 2 Alternative, Split D"))
 @ 
 
-As shown in Table \ref{tab:tcq2daltcheckmono}, there were no violations of the monotonicity assumption, and the itemH coefficients are quite high, which suggests that this is a well-devised scale. 
+%% As shown in Table \ref{tab:tcq2daltcheckmono}, there were no violations of the monotonicity assumption, and the itemH coefficients are quite high, which suggests that this is a well-devised scale. 
 
 
 <<tcq2dconvgpcm, echo=FALSE, results=hide>>=
@@ -3557,135 +3094,7 @@ print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternat
 
 As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
 
-Next, the assumptions underlying the use of IRT modelling were applied to the Beliefs About Medicine Questionnaire. 
 
-<<bam2daisp, echo=FALSE, results=tex>>=
-bam2d.aisp <- aisp(na.omit(bamall2d))
-print(xtable(bam2d.aisp, label="tab:bam2daisp", caption="Item Selection Procedure, Beliefs About Medicine Questionnaire, Split D"))
-@ 
-
-It can be seen from Table \ref{tab:bam2daisp} that again BAM1 and BAM2 form their own scale, while some of the other items do not appear on any scale. In line with previous practice, the small scale was not analysed, and so all analyses from this point on were carried out on the reduced scale (consisting of the items on scale 1 in Table \ref{tab:bam2daisp}).
-
-
-<<bamscale2d,echo=FALSE, results=hide, cache=TRUE>>=
-bamscale2d <- bamall2d[,c("BAM3","BAM6","BAM7","BAM9","BAM10","BAM13","BAM14", "BAM17")]
-@ 
-
-
-
-<<bam2dcheckiio, echo=FALSE, results=tex>>=
-bam2d.iio <- check.iio(na.omit(bamscale2d))
-print(xtable(bam2d.iio$violations, label="tab:bam2dheckiio", caption="Item Ordering Assumption Check, Beliefs About Medicine Questionnaire, Split D"))
-@ 
-
-Firstly, the invariant item ordering assumption was checked, and the results are shown in Table \ref{tab:bam2dheckiio}. As can be seen from this Table, there were no violations or issues with the IIO assumption.
-
-
-
-<<bam2dcheckmono, echo=FALSE, results=tex>>=
-bam2d.mono <- check.monotonicity(na.omit(bamscale2d))
-print(xtable(summary(bam2d.mono), label="tab:bam2dcheckmono", caption="Monotonicity Check, Beliefs About Medicine Questionnaire, Split D"))
-@ 
-
-Next, the assumption of monotonicity was tested. The results of this test are shown in Table \ref{tab:bam2dcheckmono}, and it can be seen that there were no violations of this assumption, but the ItemH coefficients are quite low, suggesting that this scale is not entirely unproblematic. 
-
-
-\begin{figure}
-<<bam2dguttman, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-bam2d.guttman <- check.errors(na.omit(bamscale2d))
-bam2d.guttplot <- ggplot(as.data.frame(bam2d.guttman), aes(x=bam2d.guttman))+geom_histogram(binwidth=2)
-print(bam2d.guttplot)
-@   
-  \caption{Plot of Guttman errors for Beliefs about Medicine Scale, Split D}
-  \label{fig:bam2dguttmanplot}
-\end{figure}
-
-Next, the scales were checked for guttman errors, and these were plotted in a histogram, shown in Figure \ref{fig:bam2dguttmanplot}. It can be seen from this plot that there were some participants who had quite a few guttman errors, as the distribution has a mode of approximately 10. However, the maximum number of Guttman errors was much lower than in Split C, where one participant had over 200 scaling errors. Again, this feature of the dataset needs to be investigated, and this will be carried out when person and item fit are assessed below.  
-
-<<bam2dgpcm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2d.gpcm.rasch <- gpcm(bamscale2d, constraint="rasch")
-bam2d.gpcm.1PL <- gpcm(bamscale2d, constraint="1PL")
-bam2d.gpcm.gpcm <- gpcm(bamscale2d, constraint="gpcm")
-@ 
-
-Next, three generalised partial credit models were fitted to the scale, and the results of the Rasch fit are shown below. 
-
-
-<<bam2dgpcmrasch, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2d.gpcm.rasch)), label="tab:bam2dgpcmrasch", caption="Coefficients for Beliefs About Medicine Questionnaire (Split D), Rasch Generalised Partial Credit Model"))
-@ 
-
-As can be seen from Table \ref{tab:bam2dgpcmrasch}, it can be seen that the majority of the categories have relatively low thresholds, with the exception of category 4. 
-
-Next, a one parameter PCM was fitted to this scale. 
-
-<<bam2dpcm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(bam2d.gpcm.1PL), label="tab:bam2dpcm1pl", caption="Coefficient Estimates for BAM Scale, One Parameter PCM, Split D"))
-@ 
-
-Table \ref{tab:bam2dpcm1pl} shows the estimated coefficients for the one parameter model. It can be seen that similarly to the Split C scale, the discrimination parameters have lowered in this model, while the estimated thresholds have risen slightly. 
-
-Finally, a two parameter PCM was fitted to this scale.
-
-<<bam2dpcm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2d.gpcm.gpcm)), label="tab:bam2dpcm2pl", caption="Coefficient Estimates for BAM Scale, Two Parameter PCM, Split D"))
-@ 
-
-As can be seen from Table \ref{tab:bam2dpcm2pl}, the same pattern as was seen in Split C gas emerged, with some of the questions having quite high discrimination parameters, while others have rather low discriminations. Note in particular Q3, which has the huighest estimated threshold along with very low discrimination. 
-
-<<bam2dgrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2d.grm.1pl <- grm(bamscale2d, constrained=TRUE)
-bam2d.grm.2pl <- grm(bamscale2d, constrained=FALSE)
-@ 
-
-Next, two graded response models (one and two parameter) were fit to the data. 
-<<bam2dgrm1sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2d.grm.1pl)), label="tab:bam2dgrm1sum", caption="Coefficients for Beliefs About Medicine Questionnaire (Split D), One Parameter Graded Response Model"))
-@ 
-
-Table \ref{tab:bam2dgrm1sum} shows the estimated coefficients and (averaged) discrimination parameter for the one parameter graded response model. This model appears to not have any problems with non-monotonicity, and the estimated discrimination parameter and thresholds are quite similar to those in previous splits. Again, BAM3 has the highest estimated threshold (with the exception of BAM6, where no participant picked the highest response alternative). 
-
-Next, the two parameter GRM was fit to the Beliefs About Medicine Questionnaire. The results are shown in Table \ref{tab:bam2dgrm2sum}. The two parameter model is quite similiar to the one parameter model, the tradeoff between the discrimination parameter and the difficulty estimates can clearly be seen, as BAM3 has a lower discrimination parameter in this fit, but a much higher threshold. Most of the items appear to have made the opposite trade-off, with lower threshold values but a much higher discrimination parameter. 
-
-<<bam2dgrm2sum, echo=FALSE, results=tex>>=
-print(xtable(coef2mat(coef(bam2d.grm.2pl)), label="tab:bam2dgrm2sum", caption="Coefficients for Beliefs About Medicine Questionnaire, (Split D), Two Parameter Graded Response Model"))
-@ 
-
-After this process, an ANOVA was fit to the two graded response models, to determine which of them fit the data better. The LR test indicated that the two parameter model fit the data significanly better ($p\le0.001$), but the AIC indicated that the one parameter model was a better fit. This will be examined by looking at each of the models\' performance on unseen data. 
-
-<<bam2danovagrm, echo=FALSE, results=hide, cache=TRUE>>=
-bam2dgrm.anova <- anova(bam2d.grm.1pl, bam2d.grm.2pl)
-@
-
-Next, the performance of each of these models on unseen data was assessed. 
-
-<<bam2dpcmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
-bamnotd.irt <- tcq2notd[,c("BAM3","BAM6","BAM7","BAM9","BAM10","BAM13","BAM14", "BAM17")]
-bam2d.gpcm.rasch.done <- testIRTModels(bam2d.gpcm.rasch, bamnotd.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-bam2d.gpcm.1PL.done <- testIRTModels(bam2d.gpcm.1PL, bamnotd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-bam2d.gpcm.gpcm.done <- testIRTModels(bam2d.gpcm.gpcm, bamnotd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-bam2d.pcm.modcomp <- rbind(bam2d.gpcm.rasch.done, bam2d.gpcm.1PL.done, bam2d.gpcm.gpcm.done)
-
-@ 
-<<bam2dpcmmodcompprint, echo=FALSE, results=tex>>=
-print(xtable(bam2d.pcm.modcomp, caption="Performance of Split D Beliefs About Medicine Scale on Splits A, B and C", label="tab:bam2dpcmmodcomp"))
-
-@ 
-As can be seen from Table \ref{tab:bam2dpcmmodcomp}, the one parameter Partial Credit Model performed best on the unseen data. 
-
-Next, the perfomance of the graded response models on unseen data was assessed. 
-
-<<bam2dgrmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
-bam2d.grm.1pl.done <- testIRTModels(bam2d.grm.1pl, bamnotd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-bam2d.grm.2pl.done <- testIRTModels(bam2d.grm.2pl, bamnotd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-bam2d.grm.modcomp <- rbind(bam2d.grm.1pl.done, bam2d.grm.2pl.done)
-
-@ 
-<<bam2dgrmmodcomp, echo=FALSE, results=tex>>=
-print(xtable(bam2d.grm.modcomp, captio="Performance of Split D Beliefs About Medicine Scale (Graded Response Model) on Splits A, B and C", label="tab:bam2dgrmmodcomp"))
-@ 
-
-As can be seen from Table \ref{tab:bam2dgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
 
 \subsubsection{Regression Analyses}
 \label{sec:regression-analyses}
@@ -3695,115 +3104,9 @@ The next part of the analysis to be carried out was regression analysis. There w
 \subsubsection{Split A}
 \label{sec:split}
 
-The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
-
-\begin{figure}
-<<splitApairs, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-tcq2.nota.tot <- tcq2nota[,71:77]
-tcq2.nota.pairs <- pairs.panels(na.omit(tcq2.nota.tot))
-@   
-  \caption{Scatterplot Matrix for TCQ not A split. The upper diagonal has the correlations between the variables, the diagonal has a histogram of the values with density lines overlaid, and the lower diagonal has scatterplots for each pair of variables, with an overlaid locally weighted smoother regression line}
-  \label{fig:splitApairs}
-\end{figure}
-
-Figure \ref{fig:splitApairs} shows the scatterplot matrix for the totals in Split A. It can clearly be seen that the conventional variables correlate well with one another, as do the alternative variables. Some evidence of convergent validity is also seen, as the Beliefs About Medicine Questionnaire correlates negatively with the conventional forms of treatment, and positively with the alternative forms of treatment, as predicted. 
-
-Next, the relationships of the demographic variables with the totals were examined. 
-
-<<tcq2notAdemo, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2.nota.demo <- tcq2nota[,2:16]
-@ 
-
-One examination of the data which was of interest was the relationship between the conventional and alternative scores and demographic variables. A mean was calculated for both the conventional and alternative items, and this was plotted against gender. The results are shown in Figure \ref{fig:convaltmeangender}. As can be seen, the patterns differ for men and women, though the effect is small and the error bars are quite large. For men, higher scores on the conventional forms of treatment tend to be associated with higher scores on the alternative forms of treatment, while for women, the opposite is true. 
-
-\begin{figure}
-<<convaltmeans, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE, eps=TRUE, pdf=TRUE, png=TRUE>>=
-p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean, group=Gender))
-p2 <- p+geom_smooth(method="lm")+facet_grid(.~Gender)
-## p3 <- p2+facet_grid(.~Gender)
-print(p2)
-@   
-  \caption{Regression line of Conventional treatment mean scores against Alternative treatment mean scores, stratified by Gender (regression line is a least squares fit)}
-  \label{fig:convaltmeangender}
-\end{figure}
+The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. %% The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
 
 
-
-\begin{figure}
-<<ggplotconvaltcollege, echo=FALSE,fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
-p2 <- p+geom_smooth(method="lm")
-p3 <- p2+facet_grid(.~College)
-print(p3)
-@   
-  \caption{Conventional Means Regressed against Alternative treatment means, stratified based on College of study or work}
-  \label{fig:convaltmeancollege}
-\end{figure}
-
-
-Figure \ref{fig:convaltmeancollege} shows a regression of alternative  treatment mean scores against conventional treatment mean scores, stratified based on college. It can be seen that for Arts, Science and Business and Law, increased scores on the alternative treatments were associated with increased scores on the conventional treatments, while for medicine and health, the reverse was true - which suggests that either these participants had a different relationship to these forms of treatment, or that their course of study had altered their perceptions. As can be seen from Figure \ref{fig:medhealthyear}, the second alternative appears to be the case, given that the relationship is positive in Year 1, but then turns sharply negative. 
-
-\begin{figure}
-<<medhealthyear, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-medhealth <- tcq2[with(tcq2, College=="Medicine and Health"),]
-medyearplot <- ggplot(na.omit(medhealth), aes(x=ConvMean, y=AltMean))+geom_smooth(method="lm")+facet_grid(.~Year)
-print(medyearplot)
-@ 
-  
-  \caption{Relationship between Conventional and Alternative Treatment Scores in Medicine and Health Students}
-  \label{fig:medhealthyear}
-\end{figure}
-
-\begin{figure}
-<<ggplotpillincome, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-p <- ggplot(na.omit(tcq2nota), aes(x=ConvMean, y=AltMean))
-p2 <- p+layer(geom="smooth", method="lm")
-p3 <- p2+facet_grid(.~Health)
-print(p3)
-@   
-  \caption{Regression of Alternative Treatment means against conventional treatment means, stratified by health status (where 1 is worst health and 5 is best health)}
-  \label{fig:convaltmeanhealth}
-\end{figure}
-
-Figure \ref{fig:convaltmeanhealth} shows the regression of conventional treatment mean scores against alternative  treatment mean scores, stratified by Health status. It can be seen that for moderate levels of self rated health (2-4), higher scores on the conventional treatments were associated with higher scores on the alternative treatment. However, for participants who rated their health as ``Excellent'', the opposite pattern emerged. 
-
-
-
-Next, summary scores for experience with conventional treatments and alternative treatments were calculated, and the relationships of these two variables to demographic variables were examined.
-
-\begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
-p2 <- p+geom_smooth(method="lm")+facet_grid(.~Gender)
-print(p2)
-@   
-  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by Gender}
-  \label{fig:expconvaltgender}
-\end{figure}
-
-\begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
-p2 <- p+layer(geom="smooth", method="lm")
-p3 <- p2+facet_grid(.~College)
-print(p3)
-@ 
-  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
-  \label{fig:expconvaltgender}
-\end{figure}
-
-
-\begin{figure}
-<<expconvaltgender, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-p <- ggplot(tcq2nota, aes(x=Expconv, y=Expalt))
-p2 <- p+geom_smooth(method="lm")+facet_grid(.~Health)
-print(p2)
-@ 
-  \caption{Experience with Alternative Treatments Regressed against Experience with Conventional Treatments, Stratified by College}
-  \label{fig:expconvaltgender}
-\end{figure}
-
-Following on from the graphical exploration of the relationships between the variables, the next step was to fit a linear model on this data, eliminate variables based on the decrease in AIC, and test the model on the held out data. 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2nota.full <- complete.cases(tcq2nota)
