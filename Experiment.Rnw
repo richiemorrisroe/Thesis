@@ -1,46 +1,68 @@
 
 \section{Introduction}
-\subsection{Placebos, self reports and pain}
 
-The focus of this section is on the definition of placebo, but the definition of placebo effects is without consequence if it is impossible to establish that a placebo effect has or has not occurred in a controlled setting. One of the largest problems with establishing this is when the outcome is a subjective one, such as pain (which is the domain where the placebo was examined in this thesis). Pain is a subjective experience, and equivalent stimulus levels may cause entirely different reactions  in two different people \cite{Kirsch1997}. 
+This chapter describes the experimental portion of the research, which involved the assessment of treatment expectancies using implicit and explicit measures. This section further involved the testing of a number of proposed theoretical models around the relationship of explicit, implicit and physiological measures to the placebo response. The justification behind these theoretical models are reported in Chapter \ref{cha:methology}. 
+
+This chapter proceeds with the following sections:
+
+\begin{enumerate}
+\item A look at some of the difficulties with measurement of placebo responses via self-report
+
+
+\item A look at some broader measurement issues within placebo research more generally
+
+\item A description of the methodology employed in this chapter to test the major hypotheses and mitigate some of the issues described above
+
+\item A description of the major preliminary checks and tests to ensure that the data was as useful as it could be
+
+\item A testing of the major hypotheses around the placebo and its relationship to implicit and explicit treatment expectancies. 
+
+\item  A discussion outlining the major issues raised by this chapter.
+\end{enumerate}
+
+\subsection{Detecting the existence of placebo effects}
+
+The definition of placebo effects is without consequence if it is impossible to establish that a placebo effect has or has not occurred in a controlled setting. One of the largest problems with establishing this is when the outcome is a subjective one, such as pain (which is the domain in which the placebo was examined in this thesis). Pain is a subjective experience, and equivalent stimulus levels may cause entirely different reactions  in two different people \cite{Kirsch1997}. 
 
 This issue is often controlled for by calibration of the stimulus levels to the individual participant in an experiment. This allows the researcher to assess to what extent these pain levels are altered by the placebo treatment. Normally, pain intensity and unpleasantness levels are assessed on an eleven point Visual Analogue Scale (VAS)  and these ratings are used as the input data for statistical analysis of different groups. 
 
 However, the use of these self report instruments carries with it a number of problems. Firstly, the issue of demand characteristics arises as a consequence of this. Demand characteristics refer to the subtle pressures faced by participants in experiments to live up to the expectations of the researcher \cite{weber1972subject} and were discussed in Section \ref{sec:plac-rand-trials}. The idea is that if a researcher really wants to demonstrate something, then he or she will communicate this subtly to the participants in the study, and they will (theoretically) respond in the manner in which the researcher prefers. This factor is one of the major reasons why tests of new drugs must blind the experimenter as well as the participants. 
 
-Another large factor which affects placebo analgesia research is the issue of response biases. The problem is that if participants receive a treatment which they believe to be effective, then their thresholds of perception may be altered without any actual biochemical changes. This is the theory put forward by Allan \& Siegel's \cite{Allan2002} analysis of the placebo phenomenon in terms of signal detection theory. These two factors were proposed to account for the entirety of the placebo effect in pain by Hrobjarrstsson \& Goetzche \cite{hrobjartsson2001}. This interpretation of placebo seems less likely given that placebo effects have been observed on biochemical parameters, and also  given that placebo analgesia can be removed by the administration of naloxone \cite{Levine1979,benedetti2003a}. 
+Another large factor which affects placebo analgesia research is the issue of response biases. The problem is that if participants receive a treatment which they believe to be effective, then their thresholds of perception may be altered without any actual biochemical changes.
+
+This is the theory put forward by Allan \& Siegel's \cite{Allan2002} analysis of the placebo phenomenon in terms of signal detection theory. These two factors were proposed to account for the entirety of the placebo effect in pain by Hrobjarrstsson \& Goetzche \cite{hrobjartsson2001}.
+
+This interpretation of placebo seems less likely given that placebo effects have been observed on biochemical parameters, and also  given that placebo analgesia can be removed by the administration of naloxone~\cite{Levine1979,benedetti2003a} (c.f. Chapter \ref{cha:literature-review}, especially the section on physiological effecs of placebo.
 
 \subsection{Measurement Issues}
 \label{sec:measurement-issues}
 
 The measurement of placebo has improved greatly over the past fifty years since Beecher started examining the phenomenon. However, it still suffers from a number of problems.
 
-The first problem is the consistent use of ANOVA and regression methods to examine differences between groups \cite{Colloca2008b,Pollo2001}. While there is nothing intrinsically wrong with this method (as long as it is not within person differences which are examined), it is a waste of statistical power. The issue here is that in placebo analgesia research (which this thesis made use of) typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$ (cf Chapter \ref{cha:methodology}). This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information. One study which did use more appropriate methods was \cite{Bausell2005} who examined the effects of expectancies and acupuncture using survival analysis. 
+The first problem is the consistent use of ANOVA and regression methods to examine differences between groups \cite{Colloca2008b,Pollo2001}. While there is nothing intrinsically wrong with this method (as long as it is not within person differences which are examined), it is a waste of statistical power. The issue here is that  much placebo analgesia research typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$. This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information. One study which did use more appropriate methods was \cite{Bausell2005} who examined the effects of expectancies and acupuncture using survival analysis. 
 
-More appropriate methods for these analyses are time series analyses and survival analysis, both of which are discussed in Chapter \ref{cha:methodology}. Additionally, in trials of functional bowel disorders, placebo effects correlate with the size of the trial, which suggests that regression to the mean effects are having an impact \cite{Enck2005a}. 
+More appropriate methods for these analyses are time series analyses and survival analysis, both of which are discussed below. Additionally, in trials of functional bowel disorders, placebo effects correlate with the size of the trial, which suggests that regression to the mean effects are having an impact \cite{Enck2005a}. 
 
 The next major problem with the current analytic strategies taken towards placebo is that most of the techniques used (ANOVA, linear models etc) assume that the mean is an appropriate measure of central tendency. However, given that placebo response can be modelled as binary (it either occurs or it does not) then the distribution would be expected to be bi-modal, in which case the mean can be very misleading. In reference to this point, a re-analysis of a number of placebo trials showed vast differences between the mean and median placebo responses \cite{McQuay1996}. 
 
-Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions will be discussed further in Chapter \ref{cha:notes-towards-theory}. 
+Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions was discussed further in Chapter \ref{cha:methodology}. 
 
 
-One final issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assummed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. In the next section, the rationale behind this approach is explained. 
+One final issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assummed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. The limitations of this approach have been addressed earlier, and will not be revisited here. 
 
 
 
-\subsection{Modeling Placebo}
-\label{sec:modeling-placebo}
 
-\section{Modelling Placebo by Multiple Methods}
+\subsection{Modelling Placebo by Multiple Methods}
 \label{sec:modell-plac-mult}
 
 Finally, this section will present the overall approach and rationale for the work carried out in the course of this thesis.
 
 The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure of expectancies and treatment credibility was developed (Chapter \ref{cha:tcq-thesis}). 
 
-Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:development-of-iats} for details). 
+Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
 
-The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. 
+The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. The rationale behind this choice of measure was explained in Chapters \ref{cha:literature-review} and \ref{cha:health-for-thesis}.
 
 In order to make use of psychometric modelling, large samples of the self report instruments were collected in the same population from which the experimental participants were drawn. This allowed for factor score and IRT models to be built for each of the measures. 
 
@@ -288,20 +310,10 @@ optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
 
 % As can be seen from the Table \ref{tab:optmeanconfprint}, the mean score on the Optimism IAT is relatively unstable, even with quite a large sample. However, as shown in Figure \ref{fig:optbootplot}, the normal approximation used in the bootstrap seems appropriate. 
 
-<<optbootplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-## print(plot(optboot))
-@ 
 
 
-<<optstimboot, echo=FALSE, results=hide>>=
-## optmeanboot <- function (data, indices=rep(0.00885, 113)) {
-##   d <- data[sample(indices, replace=TRUE),]
-##   optmeans <- apply(d[,5:18], 2, mean, na.rm=TRUE)
-## }
-## optstimboot <- boot(optiatsorted, statistic=optmeanboot, R=1000)
-## optstimbootci <- boot.ci(optstimboot)
-## optstimbootplot <- plot(optstimboot)
-@ 
+
+
 
 <<tcqtestblocks, echo=FALSE, results=hide>>=
 tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
@@ -1039,7 +1051,7 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 \label{sec:vari-impact-plac}
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
-<<tsimport, echo=FALSE, results=hide>>=
+<<tsimport, echo=FALSE, results=hide, eval=FALSE>>=
 physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
 gsr.mat <- listToDf(physfiles, 1)
 
@@ -1059,7 +1071,7 @@ ecg.mat.t <- t(ecg.mat)
 gsr.df <- as.data.frame(gsr.mat.t)
 
 gsr.df[,"Participant"] <- gsrnames2
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+## Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
 @
 
 
@@ -1213,7 +1225,7 @@ Given the confusing results obtained from linear statistical modelling of the pl
 
 <<randomforestCV, echo=FALSE, results=hide, cache=TRUE>>=
 train.ind <- sample(1:54, 40, replace=FALSE)
-iatandexpfull <- Iatandexpmeasures.phys[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv", "gsr.mean")]
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
@@ -1287,11 +1299,11 @@ print(plot(evtree.train$finalModel))
 
 
 
-<<gsrcollate, echo=FALSE, results=hide>>=
+<<gsrcollate, echo=FALSE, results=hide, eval=FALSE>>=
 gsrwithpred <- merge(gsr.df, Iatandexpmeasures, by="Participant")
 @ 
 
-<<gsrbycond, echo=FALSE, results=hide>>=
+<<gsrbycond, echo=FALSE, results=hide, eval=FALSE>>=
 gsrdeceptive <- gsrwithpred[with(gsrwithpred,Condition=="Treatment"), ]
 gsropen <- gsrwithpred[with(gsrwithpred,Condition=="Placebo"), ]
 gsrnotreat <- gsrwithpred[with(gsrwithpred,Condition=="No Treatment"), ]
@@ -1302,7 +1314,7 @@ gsrplacno <- gsrwithpred[with(gsrwithpred,PlacResp=="No"),]
 Before the analysis of GSR data was conducted, the mean and median GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
 
-<<gsrmeans, echo=FALSE, results=hide>>=
+<<gsrmeans, echo=FALSE, results=hide, eval=FALSE>>=
 deceptivemeangsr <- lapply(gsrdeceptive[,2:31151], mean, na.rm=TRUE)
 openmeangsr <- lapply(gsropen[,2:31151], mean, na.rm=TRUE)
 notreatmeangsr <- lapply(gsrnotreat[,2:31151], mean, na.rm=TRUE)
@@ -1312,7 +1324,7 @@ meangsr <- as.data.frame(lapply(meangsr, scale))
 meangsr[,"Time"] <- 1:nrow(meangsr)
 @ 
 \begin{figure}
-<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 par(mfrow=c(1,3))
 plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
 @   
@@ -1323,14 +1335,14 @@ plot(as.ts(na.omit(meangsr[,1:3])), main="Mean GSR over time")
 
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
-<<placmodgsr, echo=FALSE, results=tex>>=
+<<placmodgsr, echo=FALSE, results=tex, eval=FALSE>>=
 placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
 @ 
 
 As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was significantly associated with the response to placebo. 
 
-<<gsrmedians, echo=FALSE, results=hide>>=
+<<gsrmedians, echo=FALSE, results=hide, eval=FALSE>>=
 deceptivemediangsr <- lapply(gsrdeceptive[,2:35151], median, na.rm=TRUE)
 openmediangsr <- lapply(gsropen[,2:35151], median, na.rm=TRUE)
 notreatmediangsr <- lapply(gsrnotreat[,2:35151], median, na.rm=TRUE)
@@ -1341,7 +1353,7 @@ medgsr <- as.data.frame(medgsr)
 medgsr <- as.data.frame(lapply(medgsr, scale))
 @ 
 \begin{figure}
-<<gsrmedianplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<gsrmedianplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
 @   
   \caption{Median GSR by Condition Over Time}
@@ -1351,7 +1363,7 @@ plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
 
 Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
 
-<<ggplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<ggplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 meangsr.melt <- melt(meangsr, id="Time")
 meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value))+geom_line()+facet_grid(variable~.)
 print(meangsrplot)
@@ -1411,6 +1423,153 @@ Another sanity check was then performed on the datasets to ensure that all data 
 physpaindiff.pl <- ggplot (len.test, aes (x=Diff))+geom_density ()
 print (physpaindiff.pl)
 @ 
+
+\subsection{Machine Learning and the Placebo Response}
+\label{sec:mach-learn-plac}
+
+Firstly, the data was split into two random sections, with 80\% of the data utilised to train the models, and 20\% held aside for a final validation of any model's predictive power. Additionally, the training set was split into ten sections, of which nine were used to train the model and one was used to test the model. This allowed for the accuracy of each model to be ranked in a preliminary fashion, though the ultimate arbiter was performance on the training set. 
+
+<<testandtrain, echo=FALSE, results=hide>>=
+require(doMC)
+registerDoMC(2)
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
+iatandexpfull <- na.omit(iatandexpfull)
+iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
+iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
+iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
+mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
+@ 
+
+
+<<rftrain, echo=FALSE, results=hide>>=
+randf.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
+randf.pred <- predict(randf.train, iatandexpfull.test)
+@ 
+
+<<nbtrain, echo=FALSE, results=hide>>=
+## nb.train <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale"))
+nb.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="nb", trControl=mytrain, tuneGrid=data.frame(.usekernel=c(TRUE, FALSE), .fL=0:1), preProcess=c("center", "scale", "pca"))
+@
+
+<<knntrain, echo=FALSE, results=hide>>=
+knn.train.pc <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
+                   preProcess=c("center", "scale", "pca"))
+knn.train <- train(PlacResp~. , data=iatandexpfull.train, method="knn", trControl=mytrain, tuneGrid=data.frame(.k=1:10), 
+                   preProcess=c("center", "scale"))
+@ 
+
+<<svmtrain, echo=FALSE, results=hide>>=
+## svm.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale", "pca"))
+## svm.train <- train(PlacResp~., data=iatandexpfull.train, method="svmLinear", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preprocess=c("center", "scale"))
+@ 
+
+<<svmradialtrain, echo=FALSE, results=hide>>=
+#svmradial.train <- train(PlacResp~., data=iatandexpfull.train, method="lssvmRadial", trControl=mytrain, preProcess=c("center", "scale", "pca"))
+@ 
+
+<<gbmtrain, echo=FALSE, results=hide, eval=FALSE>>=
+gbm.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+LOTR+meanconv, data=iatandexpfull.train, method="gbm", trControl=mytrain, tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=3))
+@ 
+
+<<gamboost, echo=FALSE, results=hide>>=
+gamboost.train <- train(PlacResp~., data=iatandexpfull.train, method="gamboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+@ 
+
+<<glmboost, echo=FALSE, results=hide>>=
+glmboost.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+@ 
+
+% <<logitboost, echo=FALSE, results=hide>>=
+% logitboost.train <-  train(PlacResp~., data=iatandexpfull.train, method="logitBoost", trControl=mytrain, tuneGrid=data.frame(.nIter=seq(10,500, by=10)))
+@ 
+
+<<glmnettrain, echo=FALSE, results=hide>>=
+glmnet.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
+@ 
+
+<<blackboost, echo=FALSE, results=hide>>=
+blackboost.train <- train(PlacResp~., data=iatandexpfull.train, method="blackboost", trControl=mytrain, tuneGrid=data.frame(.mstop=c(50,100,150), .maxdepth=1:3))
+@ 
+
+<<glmstep, echo=FALSE, results=hide>>=
+glmstep.train <- train(PlacResp~., data=iatandexpfull.train, method="glmStepAIC", trControl=mytrain)
+@ 
+
+<<rpart, echo=FALSE, results=hide>>=
+rpart.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
+@ 
+
+<<rpart2, echo=FALSE, results=hide>>=
+rpart2.train <- train(PlacResp~., data=iatandexpfull.train, method="rpart2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<svmRadialCost, echo=FALSE, results=hide>>=
+## svmradialcost.train.pc <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale", "pca"))
+## svmradialcost.train <- train(PlacResp~., data=iatandexpfull.train, method="svmRadialCost", trControl=mytrain, tuneGrid=data.frame(.C=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<ctree, echo=FALSE, results=hide>>=
+ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
+@ 
+
+<<evtree, echo=FALSE, results=hide>>=
+evtree.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
+@ 
+
+<<cforest, echo=FALSE, results=hide>>=
+cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
+@ 
+
+<<rferns, echo=FALSE, results=hide>>=
+## rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
+@ 
+
+<<pred, echo=FALSE, results=hide>>=
+## nb.pc.pred <- predict(nb.train.pc, iatandexpfull.test)
+## nb.pred <- predict(nb.train, iatandexpfull.test)
+## knn.pc.pred <- predict(knn.train.pc, iatandexpfull.test)
+## knn.pred <- predict(knn.train, iatandexpfull.test)
+## svm.pc.pred <- predict(svm.train.pc, iatandexpfull.test)
+## svm.pred <- predict(svm.train, iatandexpfull.test)
+## gamboost.pred <- predict(gamboost.train, iatandexpfull.test)
+glmboost.pred <- predict(glmboost.train, iatandexpfull.test)
+## logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
+glmnet.pred <- predict(glmnet.train, iatandexpfull.test)
+## blackboost.pred <- predict(blackboost.train, iatandexpfull.test)
+## glmstep.pred <- predict(glmstep.train, iatandexpfull.test)
+rpart.pred <- predict(rpart.train, iatandexpfull.test)
+## rpart2.pred <- predict(rpart2.train, iatandexpfull.test)
+## svmradialcost.pred <- predict(svmradialcost.train, iatandexpfull.test)
+ctree.pred <- predict(ctree2.train, iatandexpfull.test)
+## evtree.pred <- predict(evtree.train, iatandexpfull.test)
+cforest.pred <- predict(cforest.train, iatandexpfull.test)
+## rferns.pred <- predict(rferns.train, iatandexpfull.test)
+@ 
+
+<<confusionmats, echo=FALSE, results=hide>>=
+randf.acc <-confusionMatrix(randf.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## nb.acc <-confusionMatrix(nb.pc.pred, iatandexpfull.test[,"PlacResp"])
+## knn.pc.acc <- confusionMatrix(knn.pc.pred, iatandexpfull.test[,"PlacResp"])
+## knn.acc <- confusionMatrix(knn.pred, iatandexpfull.test[,"PlacResp"])
+## svm.pc.acc <-confusionMatrix(svm.pc.pred, iatandexpfull.test[,"PlacResp"])
+## svm.acc <- confusionMatrix(svm.pred, iatandexpfull.test[,"PlacResp"])
+## gamboost.acc <- confusionMatrix(gamboost.pred, iatandexpfull.test[,"PlacResp"])
+glmboost.acc <- confusionMatrix(glmboost.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+glmnet.acc <- confusionMatrix(glmnet.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
+## glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
+rpart.acc <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
+## svmradial.acc <- confusionMatrix(svmradialcost.pred, iatandexpfull.test[,"PlacResp"])
+ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## evtree.acc <- confusionMatrix(evtree.pred, iatandexpfull.test[,"PlacResp"])
+cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
+@ 
+
+
+After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.75 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4281 -- 0.9421$), with a sensitivity of 0.875 and a specificity of 0.5. Again, note that the negative examples of placebo response are harder to predict than are the positive ones. The probability of correctly classifying a positive placebo response was 0.7778, while the probability of classifying a lack of placebo response was 0.6667. 
+
 
 \section{Discussion} 
 
