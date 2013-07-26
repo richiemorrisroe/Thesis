@@ -1,7 +1,7 @@
 
 \section{Introduction}
 
-This chapter describes the experimental portion of the research, which involved the assessment of treatment expectancies using implicit and explicit measures. This section further involved the testing of a number of proposed theoretical models around the relationship of explicit, implicit and physiological measures to the placebo response. The justification behind these theoretical models are reported in Chapter \ref{cha:methology}. 
+This chapter describes the experimental portion of the research, which involved the assessment of treatment expectancies using implicit and explicit measures. This section further involved the testing of a number of proposed theoretical models around the relationship of explicit, implicit and physiological measures to the placebo response. The justification behind these theoretical models are reported in Chapter \ref{cha:methodology}. 
 
 This chapter proceeds with the following sections:
 
@@ -68,7 +68,7 @@ In order to make use of psychometric modelling, large samples of the self report
 
 In the experiment itself, (see Chapter \ref{cha:primary-research}) physiological (ECG and GSR) was collected in order to examine the physiological characteristics of placebo and to allow for another form of measurement to be included in the final model.
 
-The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor type. In essence, this thesis seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descrptions of the major models applied are given in Chapter \ref{cha:notes-towards-theory}. 
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor type. In essence, this thesis seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descrptions of the major models applied are given in Chapter \ref{cha:methodology}. 
 
 
 \section{Methodology}
@@ -84,24 +84,24 @@ load("credtotals.rda")
 
 \subsection{Recruitment for the Experimental Procedure}
 
-Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw carried out after the experimental procedure was carried out for all participants.  After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive.
+Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research.  After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive.
 
 \subsection{Measures used in the Experiment}
 \label{sec:meas-used-exper}
 
-The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:preliminary-research}, Section \ref{cha:preliminary-research-2}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as follows:
+The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{find-something-to-put-here}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as follows:
 \textup{Treatment Credibility IAT:}
-Conventional: creams, pills, surgery, injections
-Alternative: homeopathy, acupuncture, reiki, flower essence
-Real: Real, accurate, true
-Fake: Fake, inaccurate, false
+Conventional: Creams, Pills, Surgery, Injections
+Alternative: Homeopathy, Acupuncture, Reiki, Flower Essence
+Real: Real, Accurate, True
+Fake: Fake, inaccurate, False
 Optimism IAT
-Optimism: Optimism, happy, improving, succeeding
-Pessimism: Pessimism, unhappy, disimproving, failing
-Self: Me, mine, myself
-Other: You, yours, yourselves. 
+Optimism: Optimism, Happy, Improving, Succeeding
+Pessimism: Pessimism, Unhappy, Disimproving, Failing
+Self: Me, Mine, Myself
+Other: You, Yours, Yourselves. 
 
-Further details of the development and piloting of each IAT are in Chapter \ref{cha:preliminary-research-5}. 
+Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
 In addition, participants gave verbal reports of their pain levels to the experimenter at one minute intervals, and these were recorded (along with condition and exact time of application of bandage and when the squeezing stopped) on a sheet of paper, along with the participants identification number. 
 
 
@@ -122,13 +122,13 @@ The first step in the analysis of experimental data was to examine the comparabi
 \paragraph{Analysis of IAT data}
 
 Firstly,  an ex-Gaussian distribution was fit to the data. This distribution is a mixture distribution of a normal and an exponential, and can be used to account for the extremely long tails present in such data. If this distribution proved a reasonable fit to the data, then estimation of confidence intervals and predictions could be made more easily from the data.
-In addition, as described previously, quantiles were determined for each participant in each Block, and these individual level quantiles were used to derive the group level distributions for each block and condition. 
+%% In addition, as described previously, quantiles were determined for each participant in each Block, and these individual level quantiles were used to derive the group level distributions for each block and condition. 
 Another approach was taken to the data in tandem with this. This approach involves ordinal test theory \cite{schulman1975test}. All of the reaction time data occurs on a common scale. The differences between the responses to a word ,$w$ in condition 1 and condition 2 are on the same scale, and a distance matrix can be constructed from this data. This distance matrix can either be ranked (which makes fewer assumptions and is less affected by outliers) or the Euclidean distance can be used in analysis. The advantage of the distance approach is that it discards less information, though at the cost of making more assumptions. A clustering approach was then used, to assess whether or not the stimuli fell into the same categories. This clustering approach was repeated 10 times with different seeds and the results averaged in order to reduce random variability inherent to the k-means approach. $k$ was also varied from 1 to 10, and the results averaged also.
 
 The ordinal/euclidean matrix was then factor analysed and examined using item response theory to assess its psychometric structure, and assess fit or lack thereof.
 
-Another approach which was applied to this data was to fit Samejina's continuous response model, which is a generalisation of the Graded Response Model % (described above in Section \ref{sec:polyt-item-resp})
-to the reaction time data. This procedure aimed to produce ability estimates which were then applied to the prediction of placebo response data. 
+%% Another approach which was applied to this data was to fit Samejina's continuous response model, which is a generalisation of the Graded Response Model % (described above in Section \ref{sec:polyt-item-resp})
+%% to the reaction time data. This procedure aimed to produce ability estimates which were then applied to the prediction of placebo response data. 
 
 \paragraph{Analysis of Pain Rating Data}
 \label{sec:analysis-pain-rating}
@@ -157,7 +157,7 @@ Because of the autocorrelation inherent in the pain ratings, general linear mode
 \paragraph{Analysis of Physiological Data}
 \label{sec:analys-phys-data}
 
-The physiological data was collected (as described above) from  two different sources. The first was skin conductance, and the second was electro-cardiogram data. Both of these sources provided recordings every 1000th of one second for the entire procedure (and normally a few seconds after the blood pressure gauge). The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals. In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
+The physiological data was collected (as described above) from  two different sources. The first was skin conductance, and the second was electro-cardiogram data. Both of these sources provided recordings at 1000Hz for the entire procedure (and normally a few seconds after the blood pressure gauge). The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals. In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
 
 Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in the appropriate Chapter (\ref{cha:primary-research-2}).
 
