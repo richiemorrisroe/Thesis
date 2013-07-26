@@ -66,3 +66,6 @@ vas.imp3 <- merge(vas.imp2, lengthmat, by="PPNo.")
 meanmat <- lazymean( path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
 
 @
+<<downsample, echo=FALSE, results=hide>>=
+ds <- lazydownsample(path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+@ 

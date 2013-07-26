@@ -781,4 +781,26 @@ lazymean <- function( path, pattern, ...) {
 }
     meanmat
 }
-    
+
+lazydownsample <- function(path, pattern, ...) {
+    lsfiles <- list.files(path, pattern, ...)
+    pp <- getPPNo(lsfiles)
+    mymat <- matrix(NA, 3200, ncol=length(lsfiles))
+    for(i in 1:length(lsfiles)) {
+        temp <- read.table(lsfiles[i])
+        dim <- dim(temp)[1]
+        dimsec <- ceiling(dim/1000)
+        myrep <- sort(rep(1:dimsec, length.out=dim))
+                temp[,"myrep"] <- as.factor(myrep)
+
+        ds <- as.data.frame(with(temp, tapply(x, myrep, mean, na.rm=TRUE)))
+        print(i)
+        dimds <- dim(ds)[1]
+        mymat[1:dimds,i] <- ds[,1]
+    }
+    colnames(mymat) <- pp
+    mymat
+}
+        
+        
+        
