@@ -3,6 +3,7 @@
 require (ggplot2)
 require (plyr)
 require(reshape2)
+source("func.R")
 @ 
 
 
@@ -29,4 +30,37 @@ gsr.df <- as.data.frame(gsr.mat.t)
 
 gsr.df[,"Participant"] <- gsrnames2
 Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
+@
+<<datafiles, echo=FALSE, results=hide, eval=FALSE>>=
+physfiles <- list.files("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="Richi.*..txt$", full.names=TRUE)
+lazyload(physfiles)
+@
+
+<<readvasscores, echo=FALSE, results=hide>>=
+vas <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv")
+vas.imp <- vas[,c("PPNo.", "BandageOn", "SqueezStop")]
+vas.plac <- apply(vas[,9:53], 1, function(x) which(x>=7))
+vas.plac2 <- lapply(vas.plac, "[", 1)
+vas.plac3 <- lapply(vas.plac2, names)
+vas.plac4 <- unlist(vas.plac3)
+vas.plac5 <- gsub("X", "", x=vas.plac4)
+vas.imp[,"PlacTime"] <- as.numeric(vas.plac5)
+
+vas.imp[,"PlacTime"] <- with(vas.imp, PlacTime*60)
+vas.imp[,"PlacTimeReal"] <- with(vas.imp, PlacTime+SqueezStop)
+vas.imp2 <- vas.imp[,c("PPNo.", "BandageOn", "SqueezStop", "PlacTimeReal")]
+vas.imp2[,2:4] <- apply(vas.imp2[,2:4], c(1,2), function(x) x*1000)
+vas.imp2[,"PPNo."] <- with(vas.imp2, ifelse(nchar(PPNo.)==3, sprintf("%04d", PPNo.), PPNo.))
+@
+
+<<lazylength, echo=FALSE, results=hide>>=
+gsrfiles <- list.files("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+lengthmat <- lazylength(gsrfiles)
+lengthmat <- as.data.frame(lengthmat)
+names(lengthmat) <- c("PPNo.", "EndTime")
+lengthmat[,"EndTime"] <- with(lengthmat, as.numeric(as.character(EndTime)))
+vas.imp3 <- merge(vas.imp2, lengthmat, by="PPNo.")
+@
+
+<<>>=
 @
