@@ -1,0 +1,16 @@
+<<optiatboot, echo=FALSE, results=hide, cache=TRUE>>=
+optcritblocks <- merge(optstimblock3, optstimblock5, by="part.opt")
+Iatcalcopt <- function (data, indices=rep(0.00885, 113)) {
+  d <- data[sample(indices, replace=TRUE),]
+  b3mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b3sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
+  b5mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b5sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
+  ovsd <- (b3sd+b5sd)/2
+  Iatscore <- (b5mean-b3mean)/ovsd
+}
+optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
+## optci <- boot.ci(optboot)
+## optmeanconf <- as.data.frame(optci[["normal"]])
+## names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
+@ 
