@@ -7,7 +7,7 @@ source("func.R")
 @ 
 
 
-<<tsimport, echo=FALSE, results=hide>>=
+<<tsimport, echo=FALSE, results=hide, eval=FALSE>>=
 
 
 physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
@@ -62,5 +62,7 @@ lengthmat[,"EndTime"] <- with(lengthmat, as.numeric(as.character(EndTime)))
 vas.imp3 <- merge(vas.imp2, lengthmat, by="PPNo.")
 @
 
-<<>>=
+<<meanmat, echo=FALSE, results=hide>>=
+meanmat <- lazymean( path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+
 @

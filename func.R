@@ -11,13 +11,19 @@ FactorXtab <-  function (x, names=NULL, ...) {
 x.comm<-x$communality
 x.names <- colnames(x.load)
 len <- length(colnames(x.load))
-x.names[len+1] <- "Communalities"
-x.comm.load<-cbind(x.load, x.comm)
-  names2 <- c(names, "Communalites")
-x.mat.df<-as.matrix.data.frame(x.comm.load)
-  colnames(x.mat.df) <- names2
 
-#colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
+x.comm.load<-cbind(x.load, x.comm)
+
+x.mat.df<-as.matrix.data.frame(x.comm.load)
+  if(!is.null(names)) {
+        names2 <- c(names, "Communalites")
+        colnames(x.mat.df) <- names2
+    }
+  else {
+      x.names[len+1] <- "Communalities"
+      colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
+  }
+
 fact.xtab <- xtable(x.mat.df, ...)
 fact.xtab
 }
@@ -744,11 +750,15 @@ lazyload <- function (files) {
     write.table(gsr, file=outfilenames[i])
   }
 }
-lazylength <- function(files) {
+getPPNo <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
     pp <- lapply(tp.split, "[", 3)
     pp <- gsub(".txt", "", x=pp)
+    pp
+}
+lazylength <- function(files) {
+    pp <- getPPNo(files)
     ## browser()
     lengthmat <- matrix(NA, 114, ncol=2)
     for (i in 1:length(files)) {
@@ -760,4 +770,15 @@ lazylength <- function(files) {
     }
     lengthmat
 }
-
+lazymean <- function( path, pattern, ...) {
+    lsfiles <- list.files(path, pattern, ...)
+    pp <- getPPNo(lsfiles)
+    meanmat <- matrix(NA, length(lsfiles), ncol=2)
+    for(i in 1:length(lsfiles)) {
+        temp <- read.table(lsfiles[i])
+        mu <- mean(temp[,1])
+        meanmat[i,] <- c(pp[i], mu)
+}
+    meanmat
+}
+    
