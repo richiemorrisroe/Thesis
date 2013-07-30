@@ -152,8 +152,8 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   Scores <- c("regression", "Thurstone", "Anderson", "Bartlett", "tenBerge")
   fno <- factors
   rotlist <- list()
+        seed <- set.seed(as.integer(runif(1, 0, 10)))
   for (i in seq_along(along.with=allrot)) {
-      seed <- set.seed(as.integer(runif(1, 0, 10)))
       meth <- sample(meth, 1)
       if(length(fno)>1) {
           fno <- sample(fno, 1)
