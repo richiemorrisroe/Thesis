@@ -153,13 +153,14 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   fno <- factors
   rotlist <- list()
   for (i in seq_along(along.with=allrot)) {
+      seed <- set.seed(as.integer(runif(1, 0, 10)))
       meth <- sample(meth, 1)
       if(length(fno)>1) {
           fno <- sample(fno, 1)
       }
    x <- fa(na.omit(data), nfactors=fno, rotate=allrot[i], fm=meth)
+      x$Seed <- seed
   assign(paste("rot", i, sep=""), value=x)
-
    rotlist[[i]] <- get(paste("rot", i, sep=""))
 
 }
