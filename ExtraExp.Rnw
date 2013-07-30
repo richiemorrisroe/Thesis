@@ -14,3 +14,13 @@ optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
 ## optmeanconf <- as.data.frame(optci[["normal"]])
 ## names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
 @ 
+
+\begin{figure}
+<<tcqstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+tcqstimblock3.m <- melt(tcqstimblock3, id.vars="part.tcq")
+tcqstimblock3.m[,"part.tcq"] <- with(tcqstimblock3.m, as.factor(part.tcq))
+print(ggplot(tcqstimblock3.m, aes(x=log(value), colour=as.factor(part.tcq)))+geom_density()+theme(legend.position="none"))
+@  
+  \caption{TCQ IAT Stimuli Response Times in Block 3. Each density plot represents the distribution of each participants' response times. Plot is on log scale }
+  \label{fig:tcqstimblock3}
+\end{figure}

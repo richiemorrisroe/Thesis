@@ -1207,7 +1207,7 @@ print(plot(evtree.train$finalModel))
 
 
 
-Before the analysis of GSR data was conducted, the mean and median GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
+Before the analysis of GSR data was conducted, the mean GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
 
 <<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1227,32 +1227,7 @@ print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regre
 
 As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was significantly associated with the response to placebo. 
 
-<<gsrmedians, echo=FALSE, results=hide, eval=FALSE>>=
-deceptivemediangsr <- lapply(gsrdeceptive[,2:35151], median, na.rm=TRUE)
-openmediangsr <- lapply(gsropen[,2:35151], median, na.rm=TRUE)
-notreatmediangsr <- lapply(gsrnotreat[,2:35151], median, na.rm=TRUE)
-medgsr <- as.data.frame(cbind(deceptivemediangsr, openmediangsr, notreatmediangsr))
 
-medgsr <- lapply(medgsr, as.numeric)
-medgsr <- as.data.frame(medgsr)
-medgsr <- as.data.frame(lapply(medgsr, scale))
-@ 
-\begin{figure}
-<<gsrmedianplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
-plot(as.ts(na.omit(medgsr)), main="Median GSR Over Time", ylab="Time")
-@   
-  \caption{Median GSR by Condition Over Time}
-  \label{fig:mediangsr}
-\end{figure}
-
-
-Again, the same pattern in GSR is seen in Figure \ref{fig:mediangsr} which suggests that the mean results shown in Figure \ref{fig:meangsr} are not the result of a small number of anomalous observations. 
-
-<<ggplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
-meangsr.melt <- melt(meangsr, id="Time")
-meangsrplot <- ggplot(meangsr.melt, aes(x=Time, y=value))+geom_line()+facet_grid(variable~.)
-print(meangsrplot)
-@ 
 
 
 \subsection{Examining the Effect of Pain on GSR}

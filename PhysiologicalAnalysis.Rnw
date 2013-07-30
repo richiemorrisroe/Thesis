@@ -68,4 +68,5 @@ meanmat <- lazymean( path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutpu
 @
 <<downsample, echo=FALSE, results=hide>>=
 ds <- lazydownsample(path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+write.csv(ds, file="GSRdataDownSample.csv", row.names=FALSE)
 @ 
