@@ -148,12 +148,17 @@ MultFactorAnalysis <- function (data, factors, meth, rotation, scores) {
   allrot <- c(orthrotations, obliquerotations)
 
   meth <- c("minres", "wls", "gls", "pa", "ml")
+  
   Scores <- c("regression", "Thurstone", "Anderson", "Bartlett", "tenBerge")
   fno <- factors
   rotlist <- list()
   for (i in seq_along(along.with=allrot)) {
-   x <- fa(na.omit(data), nfactors=fno, rotate=allrot[i], fm="ml")
-  assign(paste("rot", i,sep=""), value=x)
+      meth <- sample(meth, 1)
+      if(length(fno)>1) {
+          fno <- sample(fno, 1)
+      }
+   x <- fa(na.omit(data), nfactors=fno, rotate=allrot[i], fm=meth)
+  assign(paste("rot", i, sep=""), value=x)
 
    rotlist[[i]] <- get(paste("rot", i, sep=""))
 
@@ -803,4 +808,11 @@ lazydownsample <- function(path, pattern, ...) {
 }
         
         
-        
+plotMany <- function(data, geom) {
+    plotlist <- vector(mode="list", length=ncol(data)-1)
+    realgeom <- paste0("+geom_", geom)
+    for(i in seq_along(data)) {
+         ggplot(data, aes(x=index, y=data[,i]))+geom_line()
+    }
+    plotlist
+}
