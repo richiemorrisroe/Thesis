@@ -2579,7 +2579,7 @@ print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="It
 There were no violations of the invariant item ordering or monotonicity assumptions in this split for the alternative items. 
 
 
-<<tcq2caltcheckmono, echo=FALSE, results=tex>>=
+<<tcq2caltcheckmono, echo=FALSE, results=hide>>=
 tcq2c.alt.mono <- check.monotonicity(na.omit(tcq2c.alt))
 print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono", caption="Monotonicity Check, TCQ2 Alternative, Split C"))
 @ 
@@ -3105,6 +3105,25 @@ print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternat
 
 As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
 
+\section{Reducing the size of the TCQ}
+\label{sec:reducing-size-tcq}
+
+The TCQ Version 2 discussed in this chapter consisted of 36 questions. Following piloting of the experimental design (see Chapter~\ref{cha:devel-impl-meas}) it was decided to reduce the number of items in the questionnaire in order to reduce the burden on participants, and to reduce the time needed to complete the experiment to less than one hour (in almost every case). Therefore, it was decided to reduce the TCQ to 18 questions, three for each methodology. Additionally, given that the measures across different forms of treatments needed to be comparable, this meant removing the same three questions across all treatment options. 
+
+This procedure was carried out using the IRT and Factor Analytic models built up in this chapter. 
+
+One interesting part of the factor analytical results reported above was that a seven factor solution was consistently a better performer on unseen data using SEM. This factor tended to consist of the pill and injection items 1 and 3. This would seem to suggest that these two items loaded on both the relevant treatment factor(s), and another overall factor that tended to be termed confidence in (conventional) treatment. Additionally, these two items tended to have lower factor loadings on their respective treatment factors. Therefore, it was decided to remove items 1 and 3 for each of the six sections of the TCQ before administering it to the experimental sample. 
+
+\begin{figure}
+<<inffig1and3, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(2, 3))
+plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15))
+@   
+  \caption{Information Curves for Items One and Three for TCQ-Conventional, Split A}
+  \label{fig:infcurveoneandthree}
+\end{figure}
+
+Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistenly has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
 
 
 \section{Regression Analyses}
