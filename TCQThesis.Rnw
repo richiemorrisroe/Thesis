@@ -3103,7 +3103,7 @@ rownames(tcq2d.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2daltgrmmodcomp"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
+As can be seen from Table \ref{tab:tcq2daltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
 
 \section{Reducing the size of the TCQ}
 \label{sec:reducing-size-tcq}
@@ -3124,6 +3124,8 @@ plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15))
 \end{figure}
 
 Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistenly has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
+
+With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). %% Indeed, comparing the Item 2, 4, 6 split against the 1, 3, 5 split over the ranges (-2, 2) and (-3, 3) shows that in all cases, the the 2, 4, 6 split had a greater amount of test information (assuming constant models). The models used to measure the information were the one parameter graded response models which had been shown to perform the best 
 
 
 \section{Regression Analyses}
