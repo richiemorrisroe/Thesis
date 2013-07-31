@@ -199,6 +199,8 @@ The ordinal/euclidean matrix was then factor analysed and examined using item re
 <<importdata, echo=FALSE, results=hide>>=
 setwd("./ExperimentDataforR/FullStudy/")
 expmeasures <- read.csv("explicitmeasuresfixed.csv")
+expmeasures[,"PpNo"] <- with(expmeasures, sprintf("%04d", PpNo))
+expfull <- read.csv("explicitmeasuresfull.csv")
 expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 vasscores <- read.csv("VASscores.csv"       )
 optiat <- read.csv("optiatres.csv" )
@@ -206,6 +208,17 @@ tcqiat <- read.csv("tcqiatres.csv")
 setwd("../..")
 @ 
 
+
+
+<<removeduplicates, echo=FALSE, results=hide>>=
+dup.exp.small <- expmeasures[with(expmeasures, which(duplicated(PpNo))),]
+dup.exp.full <- expfull[with(expfull, which(duplicated(Participant))),]
+dup.all <- unique(c(dup.exp.small$PpNo, dup.exp.full$Participant))
+dup.exp.vasscores <- vasscores[with(vasscores, which(duplicated(PPNo.))),]
+vasscores2 <- vasscores[!(with(vasscores, PPNo.) %in% dup.all),]
+expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
+
+@ 
 
 
 <<loadpackages, echo=FALSE, results=hide>>=
@@ -475,11 +488,11 @@ As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations betw
 
 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
-names(vasscores)[1] <-  "Participant"
-names(expmeasures)[1] <- "Participant"
-vasscores.test <- vasscores[,1:8]
-expmeasurescomp <- merge(vasscores.test, expmeasures)
-Iatandexpmeasures <- merge(expmeasurescomp, IATscores, by="Participant")
+names(vasscores2)[1] <-  "Participant"
+names(expmeasures2)[1] <- "Participant"
+vasscores2.test <- vasscores2[,1:8]
+expmeasures2comp <- merge(vasscores2.test, expmeasures2)
+Iatandexpmeasures <- merge(expmeasures2comp, IATscores, by="Participant")
 iatexp <- Iatandexpmeasures[,14:23]
 Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
 Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
@@ -490,14 +503,14 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
 Next, the relationship between overall response time in each block (total time to complete the block, including interstimulus intervals) was examined in terms of the demographic variables. 
 
 <<optiatdemo, echo=FALSE, results=tex>>=
-optiatdemographics <- merge(expmeasures, optiatsorted, by="Participant")
+optiatdemographics <- merge(expmeasures2, optiatsorted, by="Participant")
 opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), label="tab:optblocktimedemo", caption="Summary of Linear Regression of Block Time by Block, Age and Gender")
 print(opt.demo)
 @  
 As can be seen from Table \ref{tab:optblocktimedemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with males tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). Additionally, there was a significant effect of Age on the results, but this was in the typical direction, with greater Age being associated with greater block time. 
 
 <<tcqiatdemo, echo=FALSE, results=tex>>=
-tcqiatdemographics <- merge(expmeasures, tcqiatsorted, by="Participant")
+tcqiatdemographics <- merge(expmeasures2, tcqiatsorted, by="Participant")
 tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), caption="Summary of Linear Regression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo" )
 print(tcq.demo)
 @ 
@@ -630,7 +643,7 @@ Given the focus of this thesis on the integration of survey and experimental res
 \begin{figure}
 <<surveyoptimism, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 survey.opt.pl <- ggplot(hom.data, aes(x=optimism))+geom_density()
-exp.opt.pl <- ggplot(expmeasures, aes(x=LOTR))+geom_density()
+exp.opt.pl <- ggplot(expmeasures2, aes(x=LOTR))+geom_density()
 
 print(arrangeGrob ( survey.opt.pl, exp.opt.pl))
 @   
@@ -826,20 +839,21 @@ In Figure \ref{fig:pairsplotimpexp} the relationships between the self report an
 \label{sec:pain-ratings}
 
 <<survivaldata, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(9:53)]
+painratings <- vasscores2[,c(9:53)]
 napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
-lengthsurv <- 46-napainratings
-Iatandexpmeasures[,"lengthsurv"] <- lengthsurv
+napainratings2 <- data.frame(Participant=vasscores2$Participant, napainratings)
+napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
+Iatandexpmeasures.surv <- merge(Iatandexpmeasures, napainratings2, by="Participant")
 censor <- Iatandexpmeasures[,"Censored"]
 censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
-Surv.data <- Surv(lengthsurv,censor2)
+## Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
 
 
 
 <<paints, echo=FALSE, results=hide>>=
-painratings <- vasscores[,c(1,2,8:53)]
+painratings <- vasscores2[,c(1,2,8:53)]
 painratings.temp <- painratings[,2:length(painratings)]
 painratings.trans <- t(painratings.temp)
 colnames(painratings.trans) <- as.character(t(painratings[,1]))
