@@ -1040,25 +1040,25 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
 <<tsimport, echo=FALSE, results=hide>>=
-physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
-gsr.mat <- listToDf(physfiles, 1)
+## physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
+## gsr.mat <- listToDf(physfiles, 1)
 
-ecg.mat <- listToDf(physfiles, 2)
-gsrnames <- colnames(gsr.mat)
-ecgnames <- colnames(ecg.mat)
-names(gsr.mat) <- NULL
-gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
-gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
-gsr.mean2 <- as.data.frame(gsr.mean)
-gsrnames2 <- gsub("GSR", "", gsrnames)
-gsr.mean2[,"Participant"] <- gsrnames2
-gsr.mat.t <- t(gsr.mat)
+## ecg.mat <- listToDf(physfiles, 2)
+## gsrnames <- colnames(gsr.mat)
+## ecgnames <- colnames(ecg.mat)
+## names(gsr.mat) <- NULL
+## gsr.mat.df <- as.data.frame(gsr.mat) #plot these, look at mean gsr scores as a predictor of placebo use variances also
+## gsr.mean <- colSums(gsr.mat.df, na.rm=TRUE)
+## gsr.mean2 <- as.data.frame(gsr.mean)
+## gsrnames2 <- gsub("GSR", "", gsrnames)
+## gsr.mean2[,"Participant"] <- gsrnames2
+## gsr.mat.t <- t(gsr.mat)
 
-names(ecg.mat) <- NULL
-ecg.mat.t <- t(ecg.mat)
-gsr.df <- as.data.frame(gsr.mat.t)
+## names(ecg.mat) <- NULL
+## ecg.mat.t <- t(ecg.mat)
+## gsr.df <- as.data.frame(gsr.mat.t)
 
-gsr.df[,"Participant"] <- gsrnames2
+## gsr.df[,"Participant"] <- gsrnames2
 Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
 @
 
