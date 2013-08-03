@@ -959,7 +959,7 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 \label{sec:vari-impact-plac}
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
-<<tsimport, echo=FALSE, results=hide, eval=FALSE>>=
+<<tsimport, echo=FALSE, results=hide>>=
 gsr <- read.csv("GSRdataDownSample.csv")
 gsr[,"index"] <- 1:nrow(gsr)
 gsr.melt <- melt(gsr, id.vars="index")
@@ -974,7 +974,7 @@ gsr.rs <- dcast(gsr.melt, variable~index+...)
 <<gsrcond, echo=FALSE, results=hide>>=
 gsrcond <- merge(gsr.rs, Iatandexpmeasures, by.x="variable", by.y="Participant")
 gsrcond2 <- gsrcond[,c(1:3202)]
-gsrcond.done <- with(gsrcond2, tapply(gsrcond[,2:3201], Condition, function (x) apply(x, 2, mean, na.rm=TRUE)))
+## gsrcond.done <- with(gsrcond2, tapply(gsrcond[,2:3201], Condition, function (x) apply(x, 2, mean, na.rm=TRUE)))
 gsr.decept <- gsrcond2[with(gsrcond2, Condition=="Treatment"),]
 gsr.plac <- gsrcond2[with(gsrcond2, Condition=="Placebo"),]
 gsr.nt <- gsrcond2[with(gsrcond2, Condition=="No Treatment"),]
@@ -1145,7 +1145,7 @@ Given the confusing results obtained from linear statistical modelling of the pl
 
 <<randomforestCV, echo=FALSE, results=hide, cache=TRUE>>=
 train.ind <- sample(1:54, 40, replace=FALSE)
-iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp", "lengthsurv")]
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
@@ -1280,7 +1280,7 @@ print (squeeez.pl)
 
 As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
 
-<<physlen, echo=FALSE, results=hide>>=
+<<physlen, echo=FALSE, results=hide, eval=FALSE>>=
 physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
 names (physlen) <- c ("Time", "Participant")
 physlen [,"Participant"] <- with (physlen, as.factor (Participant))
