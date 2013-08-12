@@ -1581,17 +1581,35 @@ print (physpaindiff.pl)
 %% \label{sec:mach-learn-plac}-
 
 
+\subsection{Testing the Theoretical Models}
+\label{sec:test-theor-models}
 
+The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies. The models  outlined in Chapter \ref{cha:methodology} are briefly recapped below:
+\begin{itemize}
+\item The direct expectancy model of Kirsch, in which the effects of all other variables are mediated through expectancies (both implicit and explicit)
+
+\item The conscious expectancy model of Stewart-Williams \textit{et al} whereby implicit measures have no effect
+
+\item A model whereby optimism mediates the effects of all other variables on placebo response
+
+\item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
+\end{itemize}
 
 
 
 \section{Discussion} 
 
+This study has revealed a number of findings. Firstly, and most unexpectedly, the group who were administered an Open Placebo showed greater reductions of pain than did a group who were told that they would receive a real treatment. This is a partial replication of Kaptchuk et al 2010. Additionally, some evidence did suggest that the IAT measures were related to placebo response, especially a tree model which showed an accuracy of 0.75. Indeed, all of the machine learning methods were able to predict the absence of placebo response, while only one (the recursive partitioning algorithm) was able to learn positive examples of placebo. Additionally the logistic regressions showed a three way interaction between the two IAT's and Optimism. 
+
 A number of caveats are in order here. Firstly, neither the optimism IAT or the treatment credibility IAT were independently predictive of placebo response. However, when the model included an interaction between them, all three of these variables were significant (as in the model shown above). This may indicate that there may be some irrelevant (from the conventional scoring perspective) feature of the IAT measures which was predictive of placebo response in this sample. This is a matter which can be teased out by future research. 
 
 Secondly, given the number of models fitted, some were almost certain to come up as significant, and the three way interaction between the two IAT measures and the Life Orientation Test was not a hypothesis of the research. 
 
-It might be questioned why the Condition variable was not included in the model - it was, but it was dropped as its presence caused errors in the model fit. A little thought explains why this is so - placebo response was only possible in 2 of 3 conditions, and Condition acted as a proxy for these, thus causing issues with the model fit (in essence, Condition was collinear with placebo response). The final model shown above was superior to the other models considered, in terms of AIC and other model fit indices. 
+A secondary aim of this study was to examine if IRT scoring methods might prove better when compared to sum-scores in the experiment. This prediction was not borne out by the data, although there were some indicators that it might have some merit. Nonetheless, the methodology applied in this research might prove more useful in other research domains. 
+
+Finally, it was determined that neither implicit or explicit expectancies alone could mediate the effects of placebo, but the two of them together showed some promise as a method to predict the placebo response. It really needs to be clarified that given the amount of leeway taken with the modeling process in this research that these findings must be regarded as tentative until borne out by future research. 
+
+%% It might be questioned why the Condition variable was not included in the model - it was, but it was dropped as its presence caused errors in the model fit. A little thought explains why this is so - placebo response was only possible in 2 of 3 conditions, and Condition acted as a proxy for these, thus causing issues with the model fit (in essence, Condition was collinear with placebo response). The final model shown above was superior to the other models considered, in terms of AIC and other model fit indices. 
 
 
 %%% Local Variables:
