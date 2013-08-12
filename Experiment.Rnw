@@ -780,6 +780,36 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 
 Figure \ref{fig:comprei} shows the credibility totals for Reiki in the survey and experimental samples. While credibility totals were quite low in both samples, they were a little lower in the survey sample. 
 
+\subsection{Using Psychometric Models from Survey Samples on the Experimental Participants}
+\label{sec:using-psych-models}
+
+
+\subsubsection{Treatment Credibility Questionnaire}
+\label{sec:treatm-cred-quest}
+
+<<grm1pltcqsmall, echo=FALSE, results=hide, eval=FALSE>>=
+exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
+exp.tcq.conv <- exp.tcq[,with(exp.tcq, grep("Pill|Cream|Inj", x=names(exp.tcq)))]
+exp.tcq.alt <- exp.tcq[,with(exp.tcq, grep("Acu|Hom|Rei", x=names(exp.tcq)))]
+tcq2a.scale <- tcq2a[,17:52]
+tcq2a.s <- tcq2a.scale[,with(tcq2a.scale, grep("[246]$", x=names(tcq2a.scale)))]
+tcq2a.s.conv <- tcq2a.s[,with(tcq2a.s, grep("Pill|Cream|Inj", x=names(tcq2a.s)))]
+tcq2a.s.alt <- tcq2a.s[,with(tcq2a.s, grep("Acu|Hom|Rei", x=names(tcq2a.s)))]
+tcq2a.grm1pl.conv.s <- grm(tcq2a.s.conv, constrained=TRUE)
+tcq2a.grm1pl.alt.s <- grm(tcq2a.s.alt, constrained=TRUE)
+fscore.exp.grm1pl.tcq.conv <- factor.scores(tcq2a.grm1pl.conv.s, resp.patterns=exp.tcq.conv)
+fscore.exp.grm1pl.tcq.alt <- factor.scores(tcq2a.grm1pl.alt.s, resp.patterns=exp.tcq.alt)
+fscores.part <- data.frame(Participant=expfull$Participant, AbilityConv=fscore.exp.grm1pl.tcq.conv$score.dat[["z1"]],AbilityAlt=fscore.exp.grm1pl.tcq.alt$score.dat[["z1"]])
+Iatandexpmeasures.grmtcq <- merge(Iatandexpmeasures, fscores.part, by="Participant")
+@ 
+
+<<grm1pllotr, echo=FALSE, results=hide>>=
+lotr.exp <- expfull[,with(expfull, grep("LOTR.*[34790]$", x=names(expfull)))]
+lotr.fscores <- factor.scores(lotr.grm.1pl, resp.patterns=lotr.exp)
+fscores.part.lotr <- data.frame(Participant=expfull[["Participant"]], AbilityLOTR=lotr.fscores[["score.dat"]][["z1"]])
+Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.part.lotr, by="Participant")
+@ 
+
 
 \subsection{Randomisation Checks}
 \label{sec:randomisation-checks}
@@ -1026,7 +1056,32 @@ print(placmod.lotr.xtab)
 
 In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{tab:placebolotr}.
 
-However, when these three variables are placed into the model together, the result is significant.
+<<placmodlotrirt, echo=FALSE, results=tex>>=
+placmod.lotr.irt <- glm(PlacResp~AbilityLOTR, data=Iatandexpmeasures.abest, family=binomial(link="logit"))
+print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"))
+@ 
+
+Even when the IRT estimated Optimism scores are included in place of the sum-scores, the result does still not achieve the conventional (or indeed any) threshold of significance. These results are shown in Table \ref{tab:placmodlotrirt}. 
+
+
+The next variable to be tested in terms of univariate regressions are the treatment credibility scores. These were tested in both their raw forms and as estimates from the successful IRT models described in Chapter \ref{cha:tcq-thesis}. 
+
+<<placmodconv, echo=FALSE, results=tex>>=
+print(xtable(summary(glm(PlacResp~Pill+Cream+Inj, data=Iatandexpmeasures, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodconvsumm"))
+@ 
+
+Table \ref{tab:placmodconvsumm} shows the estimated coefficients for the logistic regression of all three conventional sum scores on Placebo Response. As can be seen, the results were not significant. 
+
+Next, the ability estimates generated through the best fitting IRT model were used as predictor variables in a regression on the placebo response. 
+
+<<placmodirtabsest, echo=FALSE, results=tex>>=
+print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
+@ 
+
+Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
+
+
+Next, the three major variables (IAT's and Optimism) were placed into one model and allowed to interact. When these three variables are placed into the model together, the result is significant.
 
 <<placeboglm, echo=FALSE, results=tex>>=
 placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
@@ -1034,7 +1089,7 @@ placmod.xtab <- xtable(summary(placmod6), label="tab:placmodinter", caption="Reg
 print(placmod.xtab)
 @ 
 
-As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variables interactions were also significant. 
+As can be seen from Table \ref{tab:placmodinter} when interactions were allowed and the Life Orientation Test was added to the model, both IAT measures were significantly associated with placebo response, and all of the three variables interactions were also significant.  The same relationship occurred when using the IRT estimated Optimism scores. Interestingly enough, this relationship only held with the three way interaction, which suggests that it is not particularly robut, and may be an artifact of multi-collinearity. 
 
 In addition, this model explains approximately 27\% of the variance in placebo response (using a pseudo R-square of 1-(residual deviance/null deviance)).
 
