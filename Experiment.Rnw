@@ -1336,7 +1336,7 @@ svm.acc <- confusionMatrix(svm.pred, iatandexpfull.test[,"PlacResp"])
 gamboost.acc <- confusionMatrix(gamboost.pred, iatandexpfull.test[,"PlacResp"])
 glmboost.acc <- confusionMatrix(glmboost.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 glmnet.acc <- confusionMatrix(glmnet.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
-blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
+## blackboost.acc <- confusionMatrix(blackboost.pred, iatandexpfull.test[,"PlacResp"])
 glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
 rpart.acc <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
@@ -1595,7 +1595,42 @@ The final step in the analysis was to test the theoretical models which were pro
 \item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
 \end{itemize}
 
+<<mod1sem, echo=FALSE, results=hide>>=
+Iatandexpmeasures2 <- Iatandexpmeasures
+names(Iatandexpmeasures2)[c(21,23)] <- c("OptIATMean", "TCQIATMean")
+exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "convaltcomp")]
+pred <- c("Gender", "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp")
+resp <- "PlacResp"
+variables <- c(pred, resp)
+plac.mod.direct <- mxModel(name="PlacModDirect",
+                           type="RAM",
+                           mxData(observed=na.omit(exp.sem),
+                                  type="raw",
+                                  means=NA,
+                                  numObs=NA),
+                           manifestVars=variables,
+                           mxPath(from=variables, arrows=2, free=FALSE, values=1),
+          
+                           mxPath(from="Gender", to=c( "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="LOTR", to=c( "Gender", "OptIATMean", "TCQIATMean", "convaltcomp" ), connect="unique.pairs", arrows=2),
+                           mxPath(from="OptIATMean", to=c("Gender", "LOTR", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="TCQIATMean", to=c( "Gender", "LOTR", "OptIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="convaltcomp", to=c( "Gender", "LOTR", "OptIATMean"), connect="unique.pairs", arrows=2),
+                           mxPath(from="one", to=variables, arrows=1, free=FALSE, values=1),
+                           ## mxPath(from="Age", to="PlacResp", arrows=1),
+                           mxPath(from="Gender", to="PlacResp", arrows=1),
+                           mxPath(from="LOTR", to="PlacResp", arrows=1),
+                           mxPath(from="OptIATMean", to="PlacResp", arrows=1),
+                           mxPath(from="TCQIATMean", to="PlacResp", arrows=1),
 
+                           mxPath(from="convaltcomp", to="PlacResp", arrows=1)
+                           )
+                                  
+@ 
+
+<<placmod1semrun, echo=FALSE, results=hide>>=
+placmod1.fit <- mxRun(plac.mod.direct)
+@ 
 
 \section{Discussion} 
 
