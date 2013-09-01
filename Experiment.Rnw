@@ -32,7 +32,7 @@ Another large factor which affects placebo analgesia research is the issue of re
 
 This is the theory put forward by Allan \& Siegel's \cite{Allan2002} analysis of the placebo phenomenon in terms of signal detection theory. These two factors were proposed to account for the entirety of the placebo effect in pain by Hrobjarrstsson \& Goetzche \cite{hrobjartsson2001}.
 
-This interpretation of placebo seems less likely given that placebo effects have been observed on biochemical parameters, and also  given that placebo analgesia can be removed by the administration of naloxone~\cite{Levine1979,benedetti2003a} (c.f. Chapter \ref{cha:literature-review}, especially the section on physiological effecs of placebo).
+This interpretation of placebo seems less likely given that placebo effects have been observed on biochemical parameters, and also  given that placebo analgesia can be removed by the administration of naloxone~\cite{Levine1979,benedetti2003a} (c.f. Chapter \ref{cha:literature-review}, especially the section on physiological effects of placebo).
 
 \subsection{Measurement Issues}
 \label{sec:measurement-issues}
@@ -56,7 +56,7 @@ One final issue with current placebo research relates to expectancies. The first
 \subsection{Modeling Placebo by Multiple Methods}
 \label{sec:modell-plac-mult}
 
-Finally, this section will present the overall approach and rationale for the work carried out in the course of this thesis.
+Finally, this section will present the overall approach and rationale for the work carried out in the course of this chapter.
 
 The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure of expectancies and treatment credibility was developed (Chapter \ref{cha:tcq-thesis}). 
 
@@ -149,16 +149,16 @@ The first step in the analysis of experimental data was to examine the comparabi
 The pain ratings were modelled as time series, and individual and gender, condition and group level ARIMA models were fitted to the data. In addition, their cross-correlations were examined with the physiological time series collected as part of the placebo analgesia experiment. The model fitting procedure was as follows:
 
 
-\paragraph{Practical Model Building Strategy}
+%% \paragraph{Practical Model Building Strategy}
 
-The following are general steps towards building an ARIMA model.
+%% The following are general steps towards building an ARIMA model.
 
-\begin{itemize}
-\item Inspect the plots both of the series and the autocorrelations
-\item Examine autocorrelations, differencing if necessary
-\item Estimate parameters, ensuring that they are significantly different from zero, and within the bounds of invertibility
-\item Examine residuals, if they are not white noise, repeat steps 1-4 until they are.
-\end{itemize}
+%% \begin{itemize}
+%% \item Inspect the plots both of the series and the autocorrelations
+%% \item Examine autocorrelations, differencing if necessary
+%% \item Estimate parameters, ensuring that they are significantly different from zero, and within the bounds of invertibility
+%% \item Examine residuals, if they are not white noise, repeat steps 1-4 until they are.
+%% \end{itemize}
 
 \paragraph{Event History Analysis}
 \label{sec:event-hist-analys}
@@ -266,6 +266,8 @@ require(plyr)
 require(caret)
 require(survival)
 require(partykit)
+require(OpenMx)
+require(lavaan)
 source("func.R")
 @ 
 
@@ -295,19 +297,6 @@ optstimblock5 <- as.data.frame(cbind(part.opt, optstimblock5))
 \label{sec:analysis-iat-data}
 The first step in the analysis of IAT data is to examine the differential impact of using the mean versus the median as the measure of central tendency for the calculation of IAT scores (the $D$ measure). The results for the two IAT's are shown in Figure \ref{fig:meanmediat}. As can be seen from this figure, there were no major changes attributable to this difference (the correlation between the two scores was $r=0.91$). 
 
-\begin{figure}
-<<meanmedtcqiat, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-meanmedoptiatplot <- ggplot(optiatscore, aes(x=OptIAT.Mean, y=OptIAT.Median))+geom_point()+geom_smooth(method="lm")
-meanmedtcqpl <- ggplot(tcqiatscore, aes(x=TCQIAT.Median, y=TCQIAT.Mean))+geom_point()+geom_smooth(method="lm")
-print(arrangeGrob(meanmedoptiatplot,meanmedtcqpl))
-@   
-  \caption{Scatterplot of TCQIAT Median Scores against TCQ IAT mean scores (bottom) and Optimism IAT Mean vs Median (top) with a linear regression smooth line}
-  \label{fig:meanmediat}
-\end{figure}
-
-
-
-
 <<tcqtestblocks, echo=FALSE, results=hide>>=
 tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
 tcqwords <- c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki")
@@ -324,7 +313,22 @@ part.tcq <- unique(tcqiat[,"Participant"])
 tcqstimblock3 <- as.data.frame(cbind(part.tcq, tcqstimblock3))
 tcqstimblock5 <- as.data.frame(cbind(part.tcq, tcqstimblock5))
 IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
-@
+@ 
+
+\begin{figure}
+<<meanmedtcqiat, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+meanmedoptiatplot <- ggplot(optiatscore, aes(x=OptIAT.Mean, y=OptIAT.Median))+geom_point()+geom_smooth(method="lm")
+meanmedtcqpl <- ggplot(tcqiatscore, aes(x=TCQIAT.Median, y=TCQIAT.Mean))+geom_point()+geom_smooth(method="lm")
+print(arrangeGrob(meanmedoptiatplot,meanmedtcqpl))
+@   
+  \caption{Scatterplot of TCQIAT Median Scores against TCQ IAT mean scores (bottom) and Optimism IAT Mean vs Median (top) with a linear regression smooth line}
+  \label{fig:meanmediat}
+\end{figure}
+
+
+
+
+
 
 Next, we examine the difference between the mean and median scores for the TCQ IAT. As can be seen from Figure \ref{fig:meanmediat}, there is little difference between the two measures of central tendency ($r=0.89$). 
 
@@ -417,7 +421,7 @@ print(arrangeGrob(stimreal3.pl, stimreal5.pl))
 As can be seen from Figure \ref{fig:optstimmeyou}, the same pattern emerged for the optimism IAT in that the Block 5 scores were much more variable and overall participants responded slower to this block. 
 
 
-
+\begin{figure}
 <<optiatplotself, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optstimblock3.posneg <- optstimblock3[,9:15]
 optstimpos3.m <- melt(optstimblock3.posneg)
@@ -466,7 +470,7 @@ print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the bl
  
 
 Next, the same process is repeated for the Optimism IAT. 
-
+\begin{figure}
 <<tcqmeanresp, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 ## optmeanresp.pl <- ggplot(optiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
@@ -484,7 +488,7 @@ As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are m
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
-print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls $\tau$. All correlations are significant at the p<  0.001 level"))
+print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls tau. All correlations are significant at the p<  0.001 level"))
 @ 
 
 The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
@@ -613,18 +617,15 @@ tcqrasch.df <- with(tcqiat.rasch, as.data.frame(cbind(etapar, se.eta, betapar, s
 print(xtable(tcqrasch.df, label="tab:tcqiatrasch", caption="Ability Estimates for Rasch Model of Treatment Credibility IAT"))
 @ 
 
-\begin{figure}
-<<tcqiatpiplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<tcqiatpiplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 sink("tmp.txt")
 plotPImap(tcqiat.rasch)
 sink(NULL)
 ## print(tcqiat.piplot)
 @   
-  \caption{Person Item Difficulty Map, Treatment Credibility IAT}
-  \label{fig:tcqpimap}
-\end{figure}
 
-Table \ref{tab:tcqiatrasch}  shows the estimated abilities and their associated standard errors for the Treatment Credibility IAT. Figure \ref{fig:tcqpimap} the estimates of person and item abilities can be seen in graphical form. Again, it can be seen from Figure \ref{fig:tcqpimap} that a majority of the sample had latent traits of less than zero, but that the item estimates of difficulty were approximately equal.
+
+Table \ref{tab:tcqiatrasch}  shows the estimated abilities and their associated standard errors for the Treatment Credibility IAT. %% Figure \ref{fig:tcqpimap} the estimates of person and item abilities can be seen in graphical form. 
 
 
 \subsection{Implicit-Explicit Relationships}
@@ -780,14 +781,16 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 
 Figure \ref{fig:comprei} shows the credibility totals for Reiki in the survey and experimental samples. While credibility totals were quite low in both samples, they were a little lower in the survey sample. 
 
-\subsection{Using Psychometric Models from Survey Samples on the Experimental Participants}
-\label{sec:using-psych-models}
+%% \section{Using Psychometric Models from Survey Samples on the Experimental Participants}
+%% \label{sec:using-psych-models}
 
 
-\subsubsection{Treatment Credibility Questionnaire}
-\label{sec:treatm-cred-quest}
+%% \subsection{Treatment Credibility Questionnaire}
+%% \label{sec:treatm-cred-quest}
 
-<<grm1pltcqsmall, echo=FALSE, results=hide, eval=FALSE>>=
+<<grm1pltcqsmall, echo=FALSE, results=hide>>=
+load("tcqexp110813.rda")
+load("healthdata170813.rda")
 exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
 exp.tcq.conv <- exp.tcq[,with(exp.tcq, grep("Pill|Cream|Inj", x=names(exp.tcq)))]
 exp.tcq.alt <- exp.tcq[,with(exp.tcq, grep("Acu|Hom|Rei", x=names(exp.tcq)))]
@@ -835,7 +838,7 @@ print(opt.xtab)
 
 As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} the scores on the treatment credibility IAT or the optimism IAT did not differ by Condition. 
 
-The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{round ( chisq.gend[["p.value"]], 3)}.
+The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{round ( chisq.gend[["p.value"]], 3)}).
 In addition, the priming manipulation was not significantly different across groups.
 
 
@@ -916,6 +919,168 @@ pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painr
 pain.cond.m <- melt(pain.cond, id.vars="Condition")
 @ 
 
+\subsection{Analysis of Pain Ratings}
+ 
+<<meanpaingroup, echo=FALSE, results=hide>>=
+deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
+placebopain <- painratings[with(painratings,Condition=="Placebo"),]
+notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
+meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
+meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
+meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
+meangrouppainratings <- cbind(meandeceptivepain, meanplacebopain, meannotreatpain)
+meangrouppainratings <- as.data.frame(meangrouppainratings)
+meangrouppainratings[,"Time"] <- 1:45
+meddeceptivepain <- apply(deceptivepain[,4:48], 2, median, na.rm=TRUE)
+medplacebopain <- apply(placebopain[,4:48], 2, median, na.rm=TRUE)
+mednotreatpain <- apply(notreatpain[,4:48], 2, median, na.rm=TRUE)
+medpainratings <- as.data.frame(cbind(meddeceptivepain, medplacebopain, mednotreatpain))
+medpainratings[,"Time"] <- 1:45
+dec.pain.mean <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
+open.pain.mean <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
+notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
+
+painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
+painbycond[,"Time"] <- 1:45
+painbycond.m <- melt(painbycond, id.vars="Time")
+@ 
+
+\begin{figure}
+<<tsmeanpainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+meanpain.melt <- melt(meangrouppainratings, id="Time")
+tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))+geom_smooth(span=0.2)
+print(tspainplot)
+@   
+  \caption{Plot of Pain Responses by Condition Over Time}
+  \label{fig:tsmeanpainplot}
+\end{figure}
+
+
+
+As can be seen from Figure \ref{fig:tsmeanpainplot}, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to lessen the effects that outliers could be having on the results. The curves shown above used a locally weighted smoother (loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
+
+\begin{figure}
+<<medtspainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+medpain.melt <- melt(medpainratings, id="Time")
+medtspainplot <- ggplot(medpain.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_smooth(span=0.5)
+print(medtspainplot)
+@   
+  \caption{Median Pain Ratings Over Time by Condition}
+  \label{fig:medpainplot}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess, span=0.5) was used to fit the curves. 
+
+
+\begin{figure}
+<<medianpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+par(mfrow=c(2,2))
+print(acf(na.omit(with(medpainratings,meddeceptivepain))))
+print(acf(na.omit(with(medpainratings,medplacebopain))))
+print(acf(na.omit(with(medpainratings,mednotreatpain))), main="Autocorrelation No Treatment Group")
+@   
+  \caption{Autocorrelation Plots for Median Pain Responses over Time by Condition}
+  \label{fig:autocorrpainplot}
+\end{figure}
+
+
+As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
+
+\begin{figure}
+<<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+plot.new()
+par (mfrow=c (2,2))
+sink ("tmp.txt")
+print(acf(na.omit(with(meangrouppainratings, meannotreatpain))))
+print(acf(na.omit(with(meangrouppainratings,  meandeceptivepain))))
+print(acf(na.omit(with(meangrouppainratings,meanplacebopain))))
+sink (NULL)
+@   
+  \caption{Mean Autocorrelation plots for pain ratings over time}
+  \label{fig:meanautocorrplot}
+\end{figure}
+
+
+The mean pain ratings were also examined for autocorrelations, and as shown in Figure \ref{fig:meanautocorrplot}, the results were exactly the same as for the median pain ratings, indicating an ARIMA(1,3,1) model was the best fit for the data.
+
+
+
+\subsection{Analysis of Physiological Data}
+
+
+Before the analysis of GSR data was conducted, the mean GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
+
+<<gsrgend, echo=FALSE, results=hide>>=
+gsr.male <- gsrcond[with(gsrcond, Gender=="male"),]
+gsr.female <- gsrcond[with(gsrcond, Gender=="female"),]
+gsr.male2 <- gsr.male[,with(gsr.male, grep("^[0-9]+$", x=names(gsr.male) ))]
+gsr.male.mean <- apply(gsr.male2, 2, mean, na.rm=TRUE)
+gsr.female2 <- gsr.female[,with(gsr.female, grep("^[0-9]+$", x=names(gsr.female) ))]
+gsr.female.mean <- apply(gsr.female2, 2, mean, na.rm=TRUE)
+gsr.gend <- data.frame(index=1:3200, Males=gsr.male.mean, Females=gsr.female.mean)
+gsr.gend.m <- melt(gsr.gend, id.vars="index")
+@ 
+\begin{figure}
+<<gsrgendplot, echo=FALSE, fig=TRUE>>=
+print(ggplot(na.omit(gsr.gend.m), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
+@   
+  \caption{Scaled GSR by Gender over time (in seconds)}
+  \label{fig:gendgsrplot}
+\end{figure}
+
+Figure \ref{fig:gendgsrplot} shows that the pattern of GSR responses was quite different for males and females. Males showed somewhat decreasing GSR over time (but note that the number of participants in each group fell off as time progressed, so the pattern is less than certain), but an overall higher GSR throughout the entire experiment, while females showed the opposite pattern.  
+
+<<gsrplacresp, echo=FALSE, results=hide>>=
+gsr.placyes <- gsrcond[with(gsrcond, PlacResp=="Yes"),]
+gsr.placno <- gsrcond[with(gsrcond, PlacResp=="No"),]
+gsr.placyes.mean <- apply(gsr.placyes[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.placno.mean <- apply(gsr.placno[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.placresp <- data.frame(index=1:3200,PlaceboResp=gsr.placyes.mean, NoPlaceboResp=gsr.placno.mean)
+gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
+@ 
+\begin{figure}
+<<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+print(ggplot(gsr.placresp.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
+@   
+  \caption{GSR over Time by Response to Placebo}
+  \label{fig:gsrplacresplot}
+\end{figure}
+
+As can be seen from Figure \ref{fig:gsrplacresplot}, the GSR levels of those participants who responded to placebo increased over time, while the GSR levels of those who did not decreased over time. 
+
+This seems intuitively odd, one would have expected the placebo effect to have lowered skin conductance in the group which responded to placebo. 
+
+<<gsrcond2, echo=FALSE, results=hide>>=
+gsr.decept <- gsrcond[with(gsrcond, Condition=="Treatment"),]
+gsr.open <- gsrcond[with(gsrcond, Condition=="Placebo"),]
+gsr.notreat <- gsrcond[with(gsrcond, Condition=="No Treatment"),]
+gsr.decept.mean <- apply(gsr.decept[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.open.mean <- apply(gsr.open[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.notreat.mean <- apply(gsr.notreat[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.conditions <- data.frame(index=1:3200, Deceptive=gsr.decept.mean, Open=gsr.open.mean, NoTreatment=gsr.notreat.mean)
+gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
+@ 
+\begin{figure}
+<<gsrplotcond, echo=FALSE, results=hide>>=
+print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
+@   
+  \caption{GSR by Condition over Time}
+  \label{fig:gsrcondplot}
+\end{figure}
+
+Figure \ref{fig:gsrcondplot} shows the GSR levels by condition over time. It can be seen that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
+
+\begin{figure}
+<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
+@   
+  \caption{Mean GSR Levels by Condition over Time}
+  \label{fig:meangsr}
+\end{figure}
+
+
+The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 
 
@@ -924,7 +1089,10 @@ pain.cond.m <- melt(pain.cond, id.vars="Condition")
 
 
 
-\subsection{Variables impacting the placebo response}
+
+
+
+\section{Variables impacting the placebo response}
 \label{sec:vari-impact-plac}
 In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
 
@@ -935,7 +1103,7 @@ gsr.melt <- melt(gsr, id.vars="index")
 gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
 gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
 names(gsr.mean)[1] <- "Participant"
-Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04d", Participant))
+Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
 Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
@@ -1080,6 +1248,13 @@ print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures
 
 Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
+<<placmodgsr, echo=FALSE, results=tex>>=
+placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
+print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
+@ 
+
+As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
+
 
 Next, the three major variables (IAT's and Optimism) were placed into one model and allowed to interact. When these three variables are placed into the model together, the result is significant.
 
@@ -1180,10 +1355,8 @@ Other models which were fit to the data included a naive bayes classifier ($Acc=
 
 \begin{figure}
 <<varImpPlot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-sink ("tmp.txt")
 par(mfrow=c (1,1))
 print(varImpPlot(rf.train[["finalModel"]]))
-sink (NULL)
 @   
   \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
   \label{fig:varimprf}
@@ -1199,6 +1372,8 @@ evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 @ 
 
 To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, the Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
+
+This model was so accurate, that it made the researcher suspicious that it was an artefact of the particular random sub-sample chosen as a test set. In fact, when the entire model-fitting procedure was repeated ten times with a different random test set each time, the accuracy of the model dropped dramatically ($Acc=\bar 0.5$). Next, the model fitting process was repeated using this same process. 
 
 \begin{figure}
 <<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1341,184 +1516,16 @@ glmstep.acc <- confusionMatrix(glmstep.pred, iatandexpfull.test[,"PlacResp"])
 rpart.acc <- confusionMatrix(rpart.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 rpart2.acc <- confusionMatrix(rpart2.pred, iatandexpfull.test[,"PlacResp"])
 ## svmradial.acc <- confusionMatrix(svmradialcost.pred, iatandexpfull.test[,"PlacResp"])
-ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
+## ctree.acc <- confusionMatrix(ctree.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 evtree.acc <- confusionMatrix(evtree.pred, iatandexpfull.test[,"PlacResp"])
 cforest.acc <- confusionMatrix(cforest.pred, iatandexpfull.test[,"PlacResp"], positive="Yes")
 rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
 @ 
 
 
-After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.73 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4281 -- 0.9421$), with a sensitivity of 0.875 and a specificity of 0.5. Again, note that the negative examples of placebo response are harder to predict than are the positive ones. The probability of correctly classifying a positive placebo response was 0.7778, while the probability of classifying a lack of placebo response was 0.6667. Note that these results should be regarded as tentative at best, given the extremely small sample size (in machine learning terms) of the dataset. 
+After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.73 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. 
 
-\subsection{Analysis of Pain Ratings}
- 
-<<meanpaingroup, echo=FALSE, results=hide>>=
-deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
-placebopain <- painratings[with(painratings,Condition=="Placebo"),]
-notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
-meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
-meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
-meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
-meangrouppainratings <- cbind(meandeceptivepain, meanplacebopain, meannotreatpain)
-meangrouppainratings <- as.data.frame(meangrouppainratings)
-meangrouppainratings[,"Time"] <- 1:45
-meddeceptivepain <- apply(deceptivepain[,4:48], 2, median, na.rm=TRUE)
-medplacebopain <- apply(placebopain[,4:48], 2, median, na.rm=TRUE)
-mednotreatpain <- apply(notreatpain[,4:48], 2, median, na.rm=TRUE)
-medpainratings <- as.data.frame(cbind(meddeceptivepain, medplacebopain, mednotreatpain))
-medpainratings[,"Time"] <- 1:45
-dec.pain.mean <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
-open.pain.mean <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
-notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
-
-painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
-painbycond[,"Time"] <- 1:45
-painbycond.m <- melt(painbycond, id.vars="Time")
-@ 
-
-\begin{figure}
-<<tsmeanpainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-meanpain.melt <- melt(meangrouppainratings, id="Time")
-tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))+geom_smooth(span=0.2)
-print(tspainplot)
-@   
-  \caption{Plot of Pain Responses by Condition Over Time}
-  \label{fig:tsmeanpainplot}
-\end{figure}
-
-
-
-As can be seen from Figure \ref{fig:tsmeanpainplot}, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to lessen the effects that outliers could be having on the results. The curves shown above used a locally weighted smoother (loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
-
-\begin{figure}
-<<medtspainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-medpain.melt <- melt(medpainratings, id="Time")
-medtspainplot <- ggplot(medpain.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_smooth(span=0.5)
-print(medtspainplot)
-@   
-  \caption{Median Pain Ratings Over Time by Condition}
-  \label{fig:medpainplot}
-\end{figure}
-
-
-As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess, span=0.5) was used to fit the curves. 
-
-
-\begin{figure}
-<<medianpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-par(mfrow=c(2,2))
-print(acf(na.omit(with(medpainratings,meddeceptivepain))))
-print(acf(na.omit(with(medpainratings,medplacebopain))))
-print(acf(na.omit(with(medpainratings,mednotreatpain))), main="Autocorrelation No Treatment Group")
-@   
-  \caption{Autocorrelation Plots for Median Pain Responses over Time by Condition}
-  \label{fig:autocorrpainplot}
-\end{figure}
-
-
-As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
-
-\begin{figure}
-<<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-plot.new()
-par (mfrow=c (2,2))
-sink ("tmp.txt")
-print(acf(na.omit(with(meangrouppainratings, meannotreatpain))))
-print(acf(na.omit(with(meangrouppainratings,  meandeceptivepain))))
-print(acf(na.omit(with(meangrouppainratings,meanplacebopain))))
-sink (NULL)
-@   
-  \caption{Mean Autocorrelation plots for pain ratings over time}
-  \label{fig:meanautocorrplot}
-\end{figure}
-
-
-The mean pain ratings were also examined for autocorrelations, and as shown in Figure \ref{fig:meanautocorrplot}, the results were exactly the same as for the median pain ratings, indicating an ARIMA(1,3,1) model was the best fit for the data.
-
-
-
-\subsection{Analysis of Physiological Data}
-
-
-Before the analysis of GSR data was conducted, the mean GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
-
-<<gsrgend, echo=FALSE, results=hide>>=
-gsr.male <- gsrcond[with(gsrcond, Gender=="male"),]
-gsr.female <- gsrcond[with(gsrcond, Gender=="female"),]
-gsr.male2 <- gsr.male[,with(gsr.male, grep("^[0-9]+$", x=names(gsr.male) ))]
-gsr.male.mean <- apply(gsr.male2, 2, mean, na.rm=TRUE)
-gsr.female2 <- gsr.female[,with(gsr.female, grep("^[0-9]+$", x=names(gsr.female) ))]
-gsr.female.mean <- apply(gsr.female2, 2, mean, na.rm=TRUE)
-gsr.gend <- data.frame(index=1:3200, Males=gsr.male.mean, Females=gsr.female.mean)
-gsr.gend.m <- melt(gsr.gend, id.vars="index")
-@ 
-\begin{figure}
-<<gsrgendplot, echo=FALSE, fig=TRUE>>=
-print(ggplot(na.omit(gsr.gend.m), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
-@   
-  \caption{Scaled GSR by Gender over time (in seconds)}
-  \label{fig:gendgsrplot}
-\end{figure}
-
-Figure \ref{fig:gendgsrplot} shows that the pattern of GSR responses was quite different for males and females. Males showed somewhat decreasing GSR over time (but note that the number of participants in each group fell off as time progressed, so the pattern is less than certain), but an overall higher GSR throughout the entire experiment, while females showed the opposite pattern.  
-
-<<gsrplacresp, echo=FALSE, results=hide>>=
-gsr.placyes <- gsrcond[with(gsrcond, PlacResp=="Yes"),]
-gsr.placno <- gsrcond[with(gsrcond, PlacResp=="No"),]
-gsr.placyes.mean <- apply(gsr.placyes[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.placno.mean <- apply(gsr.placno[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.placresp <- data.frame(index=1:3200,PlaceboResp=gsr.placyes.mean, NoPlaceboResp=gsr.placno.mean)
-gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
-@ 
-\begin{figure}
-<<gsrplacresplot, echo=FALSE, fig=TRUE>>=
-print(ggplot(gsr.placresp.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
-@   
-  \caption{GSR over Time by Response to Placebo}
-  \label{fig:gsrplacresplot}
-\end{figure}
-
-As can be seen from Figure \ref{fig:gsrplacresplot}, the GSR levels of those participants who responded to placebo increased over time, while the GSR levels of those who did not decreased over time. 
-
-This seems intuitively odd, one would have expected the placebo effect to have lowered skin conductance in the group which responded to placebo. 
-
-<<gsrcond2, echo=FALSE, results=hide>>=
-gsr.decept <- gsrcond[with(gsrcond, Condition=="Treatment"),]
-gsr.open <- gsrcond[with(gsrcond, Condition=="Placebo"),]
-gsr.notreat <- gsrcond[with(gsrcond, Condition=="No Treatment"),]
-gsr.decept.mean <- apply(gsr.decept[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.open.mean <- apply(gsr.open[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.notreat.mean <- apply(gsr.notreat[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.conditions <- data.frame(index=1:3200, Deceptive=gsr.decept.mean, Open=gsr.open.mean, NoTreatment=gsr.notreat.mean)
-gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
-@ 
-\begin{figure}
-<<gsrplotcond, echo=FALSE, results=hide>>=
-print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
-@   
-  \caption{GSR by Condition over Time}
-  \label{fig:gsrcondplot}
-\end{figure}
-
-Figure \ref{fig:gsrcondplot} shows the GSR levels by condition over time. It can be seen that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
-
-
-<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
-@   
-  \caption{Mean GSR Levels by Condition over Time}
-  \label{fig:meangsr}
-\end{figure}
-
-
-The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
-
-<<placmodgsr, echo=FALSE, results=tex>>=
-placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
-print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
-@ 
-
-As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was significantly associated with the response to placebo. 
+This would suggest that while the model was excellent at predicting those who would respond to placebo, it was much worse (chance level) at predicting those who would not. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4281 -- 0.9421$), with a sensitivity of 0.875 and a specificity of 0.5. Again, note that the negative examples of placebo response are harder to predict than are the positive ones. The probability of correctly classifying a positive placebo response was 0.7778, while the probability of classifying a lack of placebo response was 0.6667. Note that these results should be regarded as tentative at best, given the extremely small sample size of the dataset. 
 
 
 
@@ -1595,10 +1602,14 @@ The final step in the analysis was to test the theoretical models which were pro
 \item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
 \end{itemize}
 
-<<mod1sem, echo=FALSE, results=hide>>=
+<<semdata, echo=FALSE, results=hide>>=
 Iatandexpmeasures2 <- Iatandexpmeasures
 names(Iatandexpmeasures2)[c(21,23)] <- c("OptIATMean", "TCQIATMean")
-exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "convaltcomp")]
+exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp")]
+@ 
+
+
+<<mod1sem, echo=FALSE, results=hide, eval=FALSE>>=
 pred <- c("Gender", "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp")
 resp <- "PlacResp"
 variables <- c(pred, resp)
@@ -1628,10 +1639,78 @@ plac.mod.direct <- mxModel(name="PlacModDirect",
                                   
 @ 
 
-<<placmod1semrun, echo=FALSE, results=hide>>=
+<<placmod1semrun, echo=FALSE, results=hide, eval=FALSE>>=
 placmod1.fit <- mxRun(plac.mod.direct)
+@
+
+<<modimpexp, echo=FALSE, results=hide, eval=FALSE>>=
+impexpdata <- Iatandexpmeasures2[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt")]
+latents <- "Expectancies"
+observed <- c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt")
+imp.exp.direct <- mxModel(name="ImpExpDirect",
+                          type="RAM",
+                          manifestVars=observed,
+                          latentVars=latents,
+                          mxPath(from=observed, connect="unique.pairs"),
+                          mxPath(from=observed, to=latents, connect="unique.pairs", values=0.5),
+ ##                          mxPath(from="TCQIATMean", to=c("OptIATMean", "MAAS", "meanconv", "meanalt", "MAAS"), connect="unique.pairs", arrows=2),
+ ##                          mxPath(from="OptIATMean", to=c("MAAS", "TCQIATMean",  "meanconv", "meanalt", "MAAS"), connect="unique.pairs", arrows=2),
+ ##                          mxPath(from="MAAS", to=c("TCQIATMean", "OptIATMean", "meanconv", "meanalt"), connect="unique.pairs", arrows=2),
+ ##                          mxPath(from="meanconv", to=c("TCQIATMean", "OptIATMean", "MAAS", "meanalt"), arrows=2, connect="unique.pairs"),
+ ##                          mxPath(from="meanalt", to=c("TCQIATMean",
+ ## "OptIATMean", "MAAS", "meanconv"), connect="unique.pairs", arrows=2),
+                          mxPath(from="one", to=c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt"), arrows=1, values=0.5),
+                          mxData(observed=na.omit(impexpdata), type="raw"))
+                                 
+@ 
+<<impexpmediated, echo=FALSE, results=hide, eval=FALSE>>=
+latents2 <- c("ImplicitExp", "ExplicitExp")
+imp.exp.mediated1 <- mxModel(imp.exp.direct, mxPath(from=observed, to=latents, arrows=1), remove=TRUE) 
+imp.exp.mediated2 <- mxModel(
+                             name="TwoFacMod",
+    type="RAM",
+                             latentVars=latents2,
+    manifestVars=observed,
+    
+                             mxPath(from=c("TCQIATMean", "OptIATMean"), to="ImplicitExp", connect="unique.pairs", arrows=1),
+                             mxPath(from="ImplicitExp",  arrows=1, free=FALSE, values=0.5),
+                             mxPath(from="ExplicitExp", arrows=1, free=FALSE, values=0.5),
+                             mxPath(from=c("meanconv", "meanalt", "MAAS"), to="ExplicitExp", connect="unique.pairs", arrows=1, values=0.5),
+    mxPath(from="TCQIATMean", to=c("OptIATMean", "MAAS", "meanconv", "meanalt", "MAAS"), connect="unique.pairs", arrows=2, values=0.5),
+                          mxPath(from="OptIATMean", to=c("MAAS", "TCQIATMean",  "meanconv", "meanalt", "MAAS"), connect="unique.pairs", arrows=2, values=0.5),
+                          mxPath(from="MAAS", to=c("TCQIATMean", "OptIATMean", "meanconv", "meanalt"), connect="unique.pairs", arrows=2, values=0.5),
+                          mxPath(from="meanconv", to=c("TCQIATMean", "OptIATMean", "MAAS", "meanalt"), arrows=2, connect="unique.pairs", values=0.5),
+                          mxPath(from="meanalt", to=c("TCQIATMean",
+ "OptIATMean", "MAAS", "meanconv"), connect="unique.pairs", arrows=2, values=0.5),
+    mxPath(from="one", to=observed, free=FALSE, values=0.5),
+    mxData(observed=cov(na.omit(impexpdata)), type="cov", numObs=95, means=sapply(impexpdata, mean, na.rm=TRUE))
+    )
 @ 
 
+<<runimpexpmod, echo=FALSE, results=hide, eval=FALSE>>=
+imp.exp.direct.fit <- mxRun(imp.exp.direct)
+imp.exp.twofac.fit <- mxRun(imp.exp.mediated2)
+@ 
+
+<<testimpexpmod, echo=FALSE, results=hide, eval=FALSE>>=
+imp.exp.comp <- mxCompare(base=imp.exp.direct, comp=c(imp.exp.mediated2))
+@ 
+
+<<placsemlavaan, echo=FALSE, results=hide>>=
+readLines("lavaanPlac.R")
+placmod.first.mod <- lavaanify(placmod.first, fixed.x=FALSE, std.lv=TRUE)
+placmod.kirsch.mod <- lavaanify(placmod.kirsch, fixed.x=FALSE)
+placmod.cred.opt.mod <- lavaanify(placmod.cred.opt, std.lv=TRUE)
+placmod.opt.mod <- lavaanify(placmod.opt)
+
+@ 
+
+
+<<placsemlavaanfit, echo=FALSE, results=hide, eval=FALSE>>=
+placmod.first.fit <- sem(placmod.first.mod, data=na.omit(exp.sem), orthogonal=TRUE)
+placmod.kirsch.fit <- sem(placmod.kirsch.mod, data=na.omit(exp.sem))
+placmod.cred.opt.fit <- sem(placmod.cred.opt.mod, data=na.omit(exp.sem))
+@ 
 \section{Discussion} 
 
 This study has revealed a number of findings. Firstly, and most unexpectedly, the group who were administered an Open Placebo showed greater reductions of pain than did a group who were told that they would receive a real treatment. This is a partial replication of Kaptchuk et al 2010. Additionally, some evidence did suggest that the IAT measures were related to placebo response, especially a tree model which showed an accuracy of 0.75. Indeed, all of the machine learning methods were able to predict the absence of placebo response, while only one (the recursive partitioning algorithm) was able to learn positive examples of placebo. Additionally the logistic regressions showed a three way interaction between the two IAT's and Optimism. 
