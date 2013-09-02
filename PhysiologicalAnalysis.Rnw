@@ -60,6 +60,7 @@ lengthmat <- as.data.frame(lengthmat)
 names(lengthmat) <- c("PPNo.", "EndTime")
 lengthmat[,"EndTime"] <- with(lengthmat, as.numeric(as.character(EndTime)))
 vas.imp3 <- merge(vas.imp2, lengthmat, by="PPNo.")
+write.csv(vas.imp3, file="PainScoresMetaData.csv")
 @
 
 <<meanmat, echo=FALSE, results=hide>>=
