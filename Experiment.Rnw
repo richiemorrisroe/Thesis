@@ -896,6 +896,8 @@ In Figure \ref{fig:pairsplotimpexp} the relationships between the self report an
 
 <<survivaldata, echo=FALSE, results=hide>>=
 painratings <- vasscores2[,c(9:53)]
+painratings2 <- vasscores[,c(1,9:53)]
+names(painratings2) <- gsub("X", "T", x=names(painratings2))
 napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
 napainratings2 <- data.frame(Participant=vasscores2$Participant, napainratings)
 napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
@@ -917,7 +919,11 @@ painratings.trans <- as.data.frame(painratings.trans)
 painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
 pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
 pain.cond.m <- melt(pain.cond, id.vars="Condition")
+pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
+pain.cond.rs <- dcast(pain.cond.m2, ...~Condition)
 @ 
+
+
 
 \subsection{Analysis of Pain Ratings}
  
@@ -943,6 +949,17 @@ notreat.pain.mean <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
 painbycond <- data.frame(Deceptive=dec.pain.mean, Open=open.pain.mean, NoTreat=notreat.pain.mean)
 painbycond[,"Time"] <- 1:45
 painbycond.m <- melt(painbycond, id.vars="Time")
+painbycond2 <- painbycond[,1:3]
+painbycond2 <- zoo(painbycond, order.by=as.integer(seq(1, length.out=nrow(painbycond), by=60)))
+@ 
+
+<<arimapaincond, echo=FALSE, results=hide>>=
+arima.decept <- with(painbycond, auto.arima(Deceptive))
+arima.open <- with(painbycond, auto.arima(Open))
+arima.notreat <- with(painbycond, auto.arima(NoTreat))
+ets.decept <- with(painbycond, ets(na.omit(Deceptive)))
+ets.open <- with(painbycond, ets(na.omit(Open)))
+ets.notreat <- with(painbycond, ets(na.omit(NoTreat))
 @ 
 
 \begin{figure}
@@ -1130,7 +1147,18 @@ gsr.mean.cond <- Reduce(function(x, y) merge(x, y, by="index"), list(decept.m, p
 names(gsr.mean.cond)[2:4] <- c("Deceptive", "Placebo", "NoTreat")
 cond.m <- melt(gsr.mean.cond, id.vars="index")
 ## gsrcond.m <- melt(gsrcond, id.vars=c("variable", names(gsrcond)[1:3200]))
-
+gsr.mean.cond2 <- zoo(gsr.mean.cond, order.by=gsr.mean.cond$index)
+gsr.pain.merge <- na.locf(merge(painbycond2, gsr.mean.cond2))
+names(gsr.pain.merge) <- c("DeceptivePain", "OpenPain", "NoTreatPain", "Time", "index", "DeceptiveGSR", "OpenGSR", "NoTreatGSR")
+gsr.pain.merge.gg <- fortify(gsr.pain.merge)
+gsr.pain.merge.gg2 <- gsr.pain.merge.gg[,c(1:4, 7:9)]
+gsr.pain.merge.gg2[,2:6] <- scale(gsr.pain.merge.gg2[,2:6])
+gsr.decept.merge <- gsr.pain.merge.gg2[,c("Index", "DeceptivePain", "DeceptiveGSR")]
+gsr.open.merge <- gsr.pain.merge.gg2[,c("Index", "OpenPain", "OpenGSR")]
+gsr.decept.merge.m <- melt(gsr.decept.merge, id.vars="Index")
+gsr.open.merge.m <- melt(gsr.open.merge, id.vars="Index")
+gsr.notreat.merge <- gsr.pain.merge.gg2[,c("Index", "NoTreatPain", "NoTreatGSR")]
+gsr.notreat.merge.m <- melt(gsr.notreat.merge, id.vars="Index")
 @ 
 
 
@@ -1565,6 +1593,12 @@ print (squeeez.pl)
 
 
 As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+
+<<painmetadata, echo=FALSE, results=hide>>=
+pain.metadata <- read.csv("PainScoresMetaData.csv")
+pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%04d", PPNo.))
+pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
+@ 
 
 <<physlen, echo=FALSE, results=hide, eval=FALSE>>=
 physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
