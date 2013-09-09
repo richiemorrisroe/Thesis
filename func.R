@@ -676,12 +676,12 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
 }
 
 
-penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), ...) {
+penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), family="gaussian") {
   x.mat <- as.matrix(x)
   testdata.mat <- as.matrix(testdata)
   ## browser()
-  cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds)
-  mod <- glmnet(x=x.mat, y=y, alpha=alpha)
+  cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds, family=family)
+  mod <- glmnet(x=x.mat, y=y, alpha=alpha, family=family)
   pred.coef <- predict(mod, testdata.mat, s=cvres$lambda.min, type=type)
   if(type=="response") {
   pred <- data.frame(pred=as.vector(pred.coef), obs=newy)
@@ -804,3 +804,33 @@ lazydownsample <- function(path, pattern, ...) {
         
         
         
+interpolate.pain <- function(pain, padding) {
+    max.padding <- with(padding, max(FirstPainRating, na.rm=TRUE))
+    pain.sec <- 45*60 #hack, as the experiment was 45 mins max following pain induction
+    max.len <- pain.sec+max.padding+1 #for participant column
+    row.nums <- with(pain, length(unique(PPNo.)))
+    res.mat <- matrix(NA, nrow=row.nums, ncol=max.len)
+    pain.merge <- merge(pain, padding, by="PPNo.")
+    partno <- with(padding, PPNo.)
+    part.pain.sec <- apply(pain[,with(pain, grep("^X", x=names(pain)))], c(1,2), function (x) rep(x, times=60))
+    
+    for(i in seq_along(partno)) {
+        print(i)
+        len.part <- padding[with(padding, PPNo.==partno[i]), 3]
+        padding <- vector(mode="numeric", length=len.part)
+        full.dat <- c(padding, part.pain.sec[,i,])
+        ## browser()
+        res.mat[i,1:length(full.dat)+1] <- full.dat
+        res.mat
+    
+    }
+}
+
+
+
+
+
+
+
+
+
