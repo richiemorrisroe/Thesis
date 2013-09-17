@@ -56,9 +56,9 @@ One final issue with current placebo research relates to expectancies. The first
 \subsection{Modeling Placebo by Multiple Methods}
 \label{sec:modell-plac-mult}
 
-Finally, this section will present the overall approach and rationale for the work carried out in the course of this chapter.
+This section will present the overall approach and rationale for the work carried out in the course of this chapter.
 
-The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure of expectancies and treatment credibility was developed (Chapter \ref{cha:tcq-thesis}). 
+The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
 
 Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
 
@@ -269,6 +269,7 @@ require(partykit)
 require(OpenMx)
 require(lavaan)
 source("func.R")
+require(zoo)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -920,7 +921,7 @@ painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
 pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
 pain.cond.m <- melt(pain.cond, id.vars="Condition")
 pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
-pain.cond.rs <- dcast(pain.cond.m2, ...~Condition)
+## pain.cond.rs <- dcast(pain.cond.m2, ...~Condition)
 @ 
 
 
@@ -959,7 +960,7 @@ arima.open <- with(painbycond, auto.arima(Open))
 arima.notreat <- with(painbycond, auto.arima(NoTreat))
 ets.decept <- with(painbycond, ets(na.omit(Deceptive)))
 ets.open <- with(painbycond, ets(na.omit(Open)))
-ets.notreat <- with(painbycond, ets(na.omit(NoTreat))
+ets.notreat <- with(painbycond, ets(na.omit(NoTreat)))
 @ 
 
 \begin{figure}
@@ -1159,6 +1160,10 @@ gsr.decept.merge.m <- melt(gsr.decept.merge, id.vars="Index")
 gsr.open.merge.m <- melt(gsr.open.merge, id.vars="Index")
 gsr.notreat.merge <- gsr.pain.merge.gg2[,c("Index", "NoTreatPain", "NoTreatGSR")]
 gsr.notreat.merge.m <- melt(gsr.notreat.merge, id.vars="Index")
+gsr.decept.pl <- ggplot(gsr.decept.merge.m, aes(x=Index, y=value, color=variable))+geom_line()
+gsr.open.pl <- ggplot(gsr.open.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
+gsr.notreat.pl <- ggplot(gsr.notreat.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
+print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
 
 
@@ -1598,6 +1603,8 @@ As can be seen from Figure \ref{fig:squeezplot}, the majority of participants sp
 pain.metadata <- read.csv("PainScoresMetaData.csv")
 pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%04d", PPNo.))
 pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
+pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
+pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
 @ 
 
 <<physlen, echo=FALSE, results=hide, eval=FALSE>>=
@@ -1730,7 +1737,7 @@ imp.exp.twofac.fit <- mxRun(imp.exp.mediated2)
 imp.exp.comp <- mxCompare(base=imp.exp.direct, comp=c(imp.exp.mediated2))
 @ 
 
-<<placsemlavaan, echo=FALSE, results=hide>>=
+<<placsemlavaan, echo=FALSE, results=hide, eval=FALSE>>=
 readLines("lavaanPlac.R")
 placmod.first.mod <- lavaanify(placmod.first, fixed.x=FALSE, std.lv=TRUE)
 placmod.kirsch.mod <- lavaanify(placmod.kirsch, fixed.x=FALSE)
