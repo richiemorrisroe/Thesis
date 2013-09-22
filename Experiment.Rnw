@@ -1798,6 +1798,8 @@ imp.exp.comp <- mxCompare(base=imp.exp.direct, comp=c(imp.exp.mediated2))
 
 <<placsemlavaan, echo=FALSE, results=hide, eval=FALSE>>=
 readLines("lavaanPlac.R")
+exp.sem[,"PlacResp"] <- with(exp.sem, ordered(PlacResp))
+exp.sem2 <- na.omit(exp.sem)
 placmod.first.mod <- lavaanify(placmod.first, fixed.x=FALSE, std.lv=TRUE)
 placmod.kirsch.mod <- lavaanify(placmod.kirsch, fixed.x=FALSE)
 placmod.cred.opt.mod <- lavaanify(placmod.cred.opt, std.lv=TRUE, fixed.x=FALSE)
@@ -1807,9 +1809,10 @@ placmod.opt.mod <- lavaanify(placmod.opt)
 
 
 <<placsemlavaanfit, echo=FALSE, results=hide, eval=FALSE>>=
-placmod.first.fit <- sem(placmod.first.mod, data=na.omit(exp.sem), start="Mplus")
-placmod.kirsch.fit <- sem(placmod.kirsch.mod, data=na.omit(exp.sem))
-placmod.cred.opt.fit <- sem(placmod.cred.opt.mod, data=na.omit(exp.sem))
+placmod.first.fit <- sem(placmod.first, data=exp.sem2)
+placmod.kirsch.fit <- sem(placmod.kirsch, data=exp.sem2)
+placmod.cred.opt.fit <- sem(placmod.cred.opt, data=exp.sem2)
+placmod.opt.fit <- sem(placmod.opt, data=exp.sem2)
 @ 
 
 <<impexpmod, echo=FALSE, results=hide>>=
