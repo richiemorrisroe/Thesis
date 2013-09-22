@@ -920,7 +920,7 @@ napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
 Iatandexpmeasures.surv <- merge(Iatandexpmeasures, napainratings2, by="Participant")
 censor <- Iatandexpmeasures[,"Censored"]
 censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
-## Surv.data <- Surv(lengthsurv,censor2)
+Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
 
@@ -944,9 +944,16 @@ pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
 \subsection{Analysis of Pain Ratings}
  
 <<meanpaingroup, echo=FALSE, results=hide>>=
-deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
-placebopain <- painratings[with(painratings,Condition=="Placebo"),]
-notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
+pain.metadata.uniq <- pain.metadata[with(pain.metadata, !duplicated(PPNo.)),]
+
+painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(Participant)))
+pain.ip2 <- interpolate2(painratings, pain.metadata.uniq)
+pain.ip2 <- as.data.frame(pain.ip2)
+pain.ip2[,"Participant"] <- with(pain.metadata.uniq, PPNo.)
+pain.ip.cond <- merge(pain.ip2, painratings[,1:3], by="Participant")
+deceptivepain <- pain.ip.cond[with(pain.ip.cond,Condition=="Treatment"),]
+placebopain <- pain.ip.cond[with(pain.ip.cond,Condition=="Placebo"),]
+notreatpain <- pain.ip.cond[with(pain.ip.cond,Condition=="No Treatment"),]
 meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
 meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
 meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
@@ -1141,6 +1148,16 @@ Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
+<<painmetadata, echo=FALSE, results=hide>>=
+pain.metadata <- read.csv("PainScoresMetaData.csv")
+pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%04d", PPNo.))
+pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
+pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
+pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
+pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
+pain.ip <- interpolate.pain(vasscores, padding=pain.pad)
+@ 
+
 <<gsrcond, echo=FALSE, results=hide>>=
 gsrcond <- merge(gsr.rs, Iatandexpmeasures, by.x="variable", by.y="Participant")
 gsrcond.scale.ind <- with(gsrcond, grep("^[0-9]+$", x=names(gsrcond)))
@@ -1178,9 +1195,42 @@ gsr.notreat.merge.m <- melt(gsr.notreat.merge, id.vars="Index")
 gsr.decept.pl <- ggplot(gsr.decept.merge.m, aes(x=Index, y=value, color=variable))+geom_line()
 gsr.open.pl <- ggplot(gsr.open.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
 gsr.notreat.pl <- ggplot(gsr.notreat.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
+
+
+@ 
+\begin{figure}
+<<gsrpainplt, echo=FALSE, fig=TRUE>>=
 print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
+\caption{GSR versus Pain Ratings over Time by Condition}
+\label{fig:gsrpainplot}
+\end{figure}
 
+
+Figure \ref{fig:gsrpainplot} shows the interpolated pain rating data against the GSR data in seconds. It can be seen that there appears to be a sizeable difference by condition. This suspicion is further born out when the cross-correlation function is examined between the pain ratings and GSR. For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Deceptive Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
+
+<<gsrmodel, echo=FALSE, results=hide>>=
+gsr.cond <- lm(gsr.mean~Condition, data=Iatandexpmeasures.phys)
+print(xtable(summary(gsr.cond), caption="Regression of Condition on Mean GSR", label="tab:gsrcondreg"))
+@ 
+
+
+A regression which is shown in Table \ref{tab:gsrcondreg} showed that there was a significant effect of the Deceptive Placebo Condition on mean GSR scores, suggesting that the mean GSR scores tended to be higher in this condition as compared to the others. This would seem to match the descriptions of the cross-correlation functions above. 
+
+<<ccfgsr, echo=FALSE, results=hide>>=
+ccf.decept <- with(gsr.pain.merge, ccf(DeceptivePain, DeceptiveGSR, lag.max=600))
+ccf.open <- with(gsr.pain.merge, ccf(OpenPain, OpenGSR, lag.max=600))
+ccf.notreat <- with(gsr.pain.merge, ccf(NoTreatPain, NoTreatGSR, lag.max=600))
+@ 
+
+<<gsrts, echo=FALSE, results=hide>>=
+gsr.mean.cond[,"decept60"] <- with(gsr.mean.cond, ts(Deceptive, deltat=1/60))
+gsr.mean.cond["decept360"] <- with(gsr.mean.cond, ts(Deceptive, deltat=1/360))
+gsr.mean.cond[,"open60"] <- with(gsr.mean.cond, ts(Placebo, deltat=1/60))
+gsr.mean.cond[,"open360"] <- with(gsr.mean.cond, ts(Placebo, deltat=1/360))
+gsr.mean.cond[,"notreat60"] <- with(gsr.mean.cond, ts(NoTreat, deltat=1/60))
+gsr.mean.cond[,"notreat360"] <- with(gsr.mean.cond, ts(NoTreat, deltat=1/360))
+@ 
 
 
 \begin{figure}
@@ -1614,13 +1664,7 @@ print (squeeez.pl)
 
 As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
 
-<<painmetadata, echo=FALSE, results=hide>>=
-pain.metadata <- read.csv("PainScoresMetaData.csv")
-pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%04d", PPNo.))
-pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
-pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
-pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
-@ 
+
 
 <<physlen, echo=FALSE, results=hide, eval=FALSE>>=
 physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
@@ -1756,17 +1800,27 @@ imp.exp.comp <- mxCompare(base=imp.exp.direct, comp=c(imp.exp.mediated2))
 readLines("lavaanPlac.R")
 placmod.first.mod <- lavaanify(placmod.first, fixed.x=FALSE, std.lv=TRUE)
 placmod.kirsch.mod <- lavaanify(placmod.kirsch, fixed.x=FALSE)
-placmod.cred.opt.mod <- lavaanify(placmod.cred.opt, std.lv=TRUE)
+placmod.cred.opt.mod <- lavaanify(placmod.cred.opt, std.lv=TRUE, fixed.x=FALSE)
 placmod.opt.mod <- lavaanify(placmod.opt)
 
 @ 
 
 
 <<placsemlavaanfit, echo=FALSE, results=hide, eval=FALSE>>=
-placmod.first.fit <- sem(placmod.first.mod, data=na.omit(exp.sem), orthogonal=TRUE)
+placmod.first.fit <- sem(placmod.first.mod, data=na.omit(exp.sem), start="Mplus")
 placmod.kirsch.fit <- sem(placmod.kirsch.mod, data=na.omit(exp.sem))
 placmod.cred.opt.fit <- sem(placmod.cred.opt.mod, data=na.omit(exp.sem))
 @ 
+
+<<impexpmod, echo=FALSE, results=hide>>=
+expimp1.mod <- lavaanify(expimpdirect)
+twofac.impexp.mod <- lavaanify(expimptwofac)
+expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
+twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
+@ 
+
+The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
+
 \section{Discussion} 
 
 \subsection{Open Placebos}

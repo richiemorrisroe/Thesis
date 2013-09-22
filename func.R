@@ -815,22 +815,46 @@ interpolate.pain <- function(pain, padding) {
     part.pain.sec <- apply(pain[,with(pain, grep("^X", x=names(pain)))], c(1,2), function (x) rep(x, times=60))
     
     for(i in seq_along(partno)) {
-        print(i)
-        len.part <- padding[with(padding, PPNo.==partno[i]), 3]
-        padding <- vector(mode="numeric", length=len.part)
-        full.dat <- c(padding, part.pain.sec[,i,])
+        print(partno[i])
+        nowpart <- partno[i]
+        ## browser()
+        len.part <- padding[with(padding, PPNo.==nowpart),]
+        start.time <- len.part[,3]
+        if(is.na(start.time)) {
+            next}
+        mypadding <- vector(mode="numeric", length=start.time)
+        full.dat <- c(mypadding, part.pain.sec[,i,])
         ## browser()
         res.mat[i,1:length(full.dat)+1] <- full.dat
         res.mat
+        browser()
+    }
+        res.mat
     
     }
+
+interpolate2 <- function(painscores, painmetadata) {
+    pain.ratings.min <- with(painmetadata, floor((SqueezStop+60)/60))
+    pain.ratings.min <- as.data.frame(pain.ratings.min)
+    pain.ratings.min[,"Participant"] <- painmetadata$PPNo.
+    names(pain.ratings.min)[1] <- "padding"
+    resmat <- matrix(0, nrow=nrow(pain.ratings.min), ncol=45+with(pain.ratings.min, max(padding, na.rm=TRUE)))
+    partno <- pain.ratings.min$Participant
+    painscores.real <- grep("^X", x=names(painscores))
+    for (i in seq_along(partno)) {
+        print(i)
+        partpad <- pain.ratings.min[with(pain.ratings.min,Participant==partno[i]),1]
+        if(is.na(partpad)) {
+            next}
+        
+        painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
+        if(i==27) {
+        browser()
+        }
+        padding <- rep(0, times=partpad)
+        padpluspain <- c(padding, painratings)
+        
+        resmat[i,1:length(padpluspain)] <- padpluspain
+        resmat}
+    resmat
 }
-
-
-
-
-
-
-
-
-
