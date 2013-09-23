@@ -1815,6 +1815,70 @@ placmod.cred.opt.fit <- sem(placmod.cred.opt, data=exp.sem2)
 placmod.opt.fit <- sem(placmod.opt, data=exp.sem2)
 @ 
 
+
+\begin{figure}
+<<firstfitplot, echo=FALSE, fig=TRUE>>=
+print(semPaths(placmod.first.fit))
+@ 
+  \caption{Direct Placebo Response Model (Model 1)}
+  \label{fig:placsem1}
+\end{figure}
+
+
+Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and explicit expectancy factors have direct effects on the placebo response. 
+
+
+The next model fit is the model of Kirsch, where all other parameters are mediated by (explicit) expectancies and implicit expectancies have no impact. 
+
+\begin{figure}
+<<kirschfitplot, echo=FALSE, fig=TRUE>>=
+print(semPaths(placmod.kirsch.fit))
+@ 
+  \caption{SEM Model of Kirsch (all variables mediated by explicit expectancies)}
+  \label{fig:placsemkirsch}
+\end{figure}
+
+This model is shown in Figure \ref{fig:placsemkirsch}. 
+
+Next, a model where expectancies and optimism are jointly responsible for the observed placebo response, and implicit expectancies play no role. 
+
+
+This model is shown in Figure \ref{fig:placsemcredopt}
+  
+\begin{figure}
+<<credoptplot, echo=FALSE, fig=TRUE>>=
+print(semPaths(placmod.cred.opt.fit))
+@   
+  \caption{Placebo Response SEM mediated by Explicit Credibility and Optimism}
+  \label{fig:placsemcredopt}
+\end{figure}
+
+
+Finally, a model where optimism was the sole mediator of the placebo response was fitted, and this model is shown in Figure \ref{}
+
+
+\begin{figure}
+<<optsemplot, echo=FALSE, fig=TRUE>>=
+print(semPaths(placmod.opt.fit))
+@   
+  \caption{Placebo SEM mediated by Optimism}
+  \label{fig:placsemopt}
+\end{figure}
+
+
+<<placmodfitall, echo=FALSE, results=tex>>=
+## placmod.first.fit.measures <- fitMeasures(placmod.first.fit, c("chisq", "df", "pvalue", "cfi", "rmsea"))
+placmod.kirsch.fit.measures <- fitMeasures(placmod.kirsch.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+placmod.cred.opt.fit.measures <- fitMeasures(placmod.cred.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfa",  "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+placmod.fit.all <- rbind( placmod.kirsch.fit.measures, placmod.cred.opt.fit.measures, placmod.opt.fit.measures)
+rownames(placmod.fit.all) <- c("Kirsch", "Optimism", "Credibility")
+print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"))
+@ 
+
+From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that which mediates all other variables through explicit Optimism (the LOT-R). Implications of this are elaborated upon in the Discussion. 
+
 <<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
