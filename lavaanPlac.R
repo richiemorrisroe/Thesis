@@ -1,39 +1,79 @@
-placmod1 <- '
-PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR+Age
+placmod.cov <- '
+PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR
+PlacResp~~PlacResp
+TCQIATMean~~TCQIATMean
+OptIATMean~~OptIATMean
+
+LOTR~~LOTR'
+
+placmod.direct <- '
+PlacResp~Predisposition
+Predisposition=~TCQIATMean+OptIATMean+LOTR+convaltcomp'
 ## PlacResp~~PlacResp
 ## TCQIATMean~~TCQIATMean
 ## OptIATMean~~OptIATMean
-## ## Gender~~Gender
 ## convaltcomp~~convaltcomp
-## LOTR~~LOTR
-## Age~~Age
-## TCQIATMean~~OptIATMean+Gender+convaltcomp+LOTR+Age
-'
+## LOTR~~LOTR'
+
 placmod.first <- '
-PlacResp~ImpExp+ExplExp+Age
+PlacResp~ImpExp+ExplExp
 ImpExp=~TCQIATMean+OptIATMean
-ExplExp=~LOTR+meanalt+meanconv'
-## Age~~Age
-## TCQIATMean~~TCQIATMean
-## OptIATMean~~OptIATMean
-## LOTR~~LOTR
-## meanalt~~meanalt
-## meanconv~~meanconv'
+ExplExp=~LOTR+meanalt+meanconv
+TCQIATMean~~TCQIATMean
+OptIATMean~~OptIATMean
+meanconv~~meanconv
+meanalt~~meanalt
+LOTR~~LOTR
+LOTR~~meanalt+meanconv
+TCQIATMean~~OptIATMean'
 placmod.kirsch <- '
-PlacResp~Expectancies
-Expectancies=~LOTR+meanalt+meanconv+TCQIATMean+OptIATMean'
+PlacResp~Exp
+Exp=~LOTR+meanalt+meanconv
+Exp~~Exp
+LOTR~~LOTR
+meanalt~~meanalt
+meanconv~~meanconv
+PlacResp~~PlacResp
+'
+## Expectancies=~LOTR+meanalt+meanconv+TCQIATMean+OptIATMean'-
 placmod.cred.opt <- '
-PlacResp~Optimism+Credibility+Demo
-Optimism=~LOTR+OptIATMean
-Credibility=~meanconv+meanalt+TCQIATMean
-Demo=~Age+Gender'
+PlacResp~LOTR+convaltcomp
+LOTR~OptIATMean
+convaltcomp~TCQIATMean
+PlacResp~~PlacResp
+LOTR~~LOTR
+## TCQIATMean~~TCQIATMean
+convaltcomp~~convaltcomp
+'
+placmod.cred.opt.twofac <- '
+PlacResp~Optimism+Credibility
+Optimism=~OptIATMean+LOTR
+Credibility=~convaltcomp+TCQIATMean
+PlacResp~~PlacResp
+LOTR~~LOTR
+TCQIATMean~~TCQIATMean
+convaltcomp~~convaltcomp
+'
 placmod.opt <- '
-PlacResp~Optimism
-Optimism=~LOTR+OptIATMean+meanconv+meanalt+meanconv+TCQIATMean'
+PlacResp~LOTR
+LOTR~OptIATMean+meanconv+meanalt+TCQIATMean'
 placmod.phys <- '
-PlacResp~ImpExp+ExplExp+gsr'
-
-
+PlacResp~Exp+gsrmean
+Exp=~TCQIATMean+OptIATMean+convaltcomp+LOTR
+## PlacResp~~PlacResp
+LOTR~~LOTR
+TCQIATMean~~TCQIATMean
+convaltcomp~~convaltcomp
+OptIATMean~~OptIATMean
+'
+placmod.kirsch.twofac <- '
+PlacResp~Expectancies
+Expectancies=~TCQIATMean+OptIATMean+meanconv+meanalt
+TCQIATMean~~TCQIATMean
+OptIATMean~~OptIATMean
+meanconv~~meanconv
+meanalt~~meanalt
+'
 
 placmod2 <- '
 PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR+Age'
@@ -46,6 +86,8 @@ meanconv~~meanconv
 meanalt~~meanalt
 ## TCQIATMean~~OptIATMean+MAAS+meanconv+meanalt
 '
+
+
 expimptwofac <- '
 ImpExp=~TCQIATMean+OptIATMean
 ExpExp=~meanconv+meanalt+MAAS
