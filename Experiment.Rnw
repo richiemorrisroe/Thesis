@@ -275,6 +275,7 @@ require(lavaan)
 source("func.R")
 require(zoo)
 require(forecast)
+require(semPlot)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -483,7 +484,7 @@ optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correl
 ## print(optmeanresp.pl)
 optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
 opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
-opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")+axis.text.x(element_text(angle=-45))
+opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
 print(opt.block.corr.pl)
 @    
    \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
@@ -516,7 +517,7 @@ iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
 
 \begin{figure}
 <<corriattcqopt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")+axis.text.x(element_text(angle=-45))
+corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
 print(corr.iat.tcq.opt.pl)
 @   
   \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
@@ -1144,7 +1145,7 @@ gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
 gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
 names(gsr.mean)[1] <- "Participant"
 Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures2, gsr.mean, by="Participant")
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
@@ -1703,9 +1704,9 @@ The final step in the analysis was to test the theoretical models which were pro
 \end{itemize}
 
 <<semdata, echo=FALSE, results=hide>>=
-Iatandexpmeasures2 <- Iatandexpmeasures
-names(Iatandexpmeasures2)[c(21,23)] <- c("OptIATMean", "TCQIATMean")
-exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp")]
+Iatandexpmeasures2 <- Iatandexpmeasures.phys
+names(Iatandexpmeasures2)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
+exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
 @ 
 
 
@@ -1809,10 +1810,16 @@ placmod.opt.mod <- lavaanify(placmod.opt)
 
 
 <<placsemlavaanfit, echo=FALSE, results=hide, eval=FALSE>>=
-placmod.first.fit <- sem(placmod.first, data=exp.sem2)
+placmod.direct.fit <- sem(placmod.direct, data=exp.sem2)
+placmod.first.fit <- sem(placmod.first, data=exp.sem2,  orthogonal=TRUE)
 placmod.kirsch.fit <- sem(placmod.kirsch, data=exp.sem2)
 placmod.cred.opt.fit <- sem(placmod.cred.opt, data=exp.sem2)
 placmod.opt.fit <- sem(placmod.opt, data=exp.sem2)
+placmod.cred.opt.twofac.fit <- sem(placmod.cred.opt.twofac, data=exp.sem2, std.lv=TRUE,orthogonal=TRUE)
+## placmod.phys.fit <- sem(placmod.phys, data=exp.sem, std.lv=TRUE, estimator="GLS")
+
+
+placmod.kirsch.twofac.fit <- sem(placmod.kirsch.twofac, data=exp.sem)
 @ 
 
 
@@ -1825,7 +1832,7 @@ print(semPaths(placmod.first.fit))
 \end{figure}
 
 
-Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and explicit expectancy factors have direct effects on the placebo response. 
+Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and explicit expectancy factors have direct effects on the placebo response. Unfortunately, this model did not converge, rendering the likelihood of its truth open to debate \footnote{given a small data set such as this, the possibility exists that even the true model could be rejected}. Nonetheless, this model will not be discussed further. 
 
 
 The next model fit is the model of Kirsch, where all other parameters are mediated by (explicit) expectancies and implicit expectancies have no impact. 
@@ -1838,7 +1845,7 @@ print(semPaths(placmod.kirsch.fit))
   \label{fig:placsemkirsch}
 \end{figure}
 
-This model is shown in Figure \ref{fig:placsemkirsch}. 
+This model is shown in Figure \ref{fig:placsemkirsch}. This model fits, but it has only two degrees of freedom remaining, so is almost certainly overfitting the data. 
 
 Next, a model where expectancies and optimism are jointly responsible for the observed placebo response, and implicit expectancies play no role. 
 
@@ -1854,7 +1861,7 @@ print(semPaths(placmod.cred.opt.fit))
 \end{figure}
 
 
-Finally, a model where optimism was the sole mediator of the placebo response was fitted, and this model is shown in Figure \ref{}
+Next,  a model where optimism was the sole mediator of the placebo response was fitted, and this model is shown in Figure \ref{fig:placsemopt}. 
 
 
 \begin{figure}
@@ -1866,18 +1873,31 @@ print(semPaths(placmod.opt.fit))
 \end{figure}
 
 
+\begin{figure}
+<<kirschtwofacplot, echo=FALSE, fig=TRUE>>=
+print(semPaths(placmod.kirsch.twofac.fit, what="par"))
+@   
+  \caption{Placebo SEM Kirsch with implicit measures}
+  \label{fig:placsemkirschtwofac}
+\end{figure}
+
+Finally, a model like that of Kirsch, but including the implicit measures was fitted. This model is shown in Figure \ref{fig:placsemkirschtwofac}. 
+
+Another model was fitted with an independent effect of GSR on the placebo response, and all other variables mediated through a general expectancy factor. Unfortunately, this model did not converge, and so is not discussed further. 
+
 <<placmodfitall, echo=FALSE, results=tex>>=
-## placmod.first.fit.measures <- fitMeasures(placmod.first.fit, c("chisq", "df", "pvalue", "cfi", "rmsea"))
+## placmod.direct.fit.measures <- fitMeasures(placmod.direct.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 placmod.kirsch.fit.measures <- fitMeasures(placmod.kirsch.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 placmod.cred.opt.fit.measures <- fitMeasures(placmod.cred.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfa",  "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-placmod.fit.all <- rbind( placmod.kirsch.fit.measures, placmod.cred.opt.fit.measures, placmod.opt.fit.measures)
-rownames(placmod.fit.all) <- c("Kirsch", "Optimism", "Credibility")
+placmod.kirsch.twofac.fit.measures <- fitMeasures(placmod.kirsch.twofac.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+placmod.fit.all <- rbind( placmod.kirsch.fit.measures, placmod.cred.opt.fit.measures, placmod.opt.fit.measures, placmod.kirsch.twofac.fit.measures)
+rownames(placmod.fit.all) <- c( "Kirsch", "Optimism", "Credibility", "Kirsch Two Factor")
 print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"))
 @ 
 
-From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that which mediates all other variables through explicit Optimism (the LOT-R). Implications of this are elaborated upon in the Discussion. 
+From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that of Kirsch when implicit expectancies are included in the model. Implications are elaborated upon in the discussion. 
 
 <<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
@@ -1916,6 +1936,11 @@ A secondary aim of this study was to examine if IRT scoring methods might prove 
 
 The relationship between LOT-R and MAAS scores was also of some interest, as it was in the opposite direction from that observed in the previous studies. The notion that the previous results were an artefact of the online scoring method does not hold up to scrutiny, given that the same results were observed in the paper-based scoring method from Study 1 (see Chapter \ref{cha:health-for-thesis}). However, one difference between the prior use of these measures with that in the current study was the order in which they were administered. In the previous work, the MAAS questions were answered before the LOT-R, while in this chapter, this order was reversed (as an artefact of the printing process). Given that the MAAS represents mindfulness as a lack of mindlessness, it seems somewhat plausible that answering these questions made the lack of their mindfulness salient to those participants who would typically have rated their optimism relatively highly, and thus moved their scores downwards, accounting for the observed results. 
 
+\subsection{Modelling the Placebo Response with SEM}
+\label{sec:modell-plac-resp}
+
+This section through up a number of interesting results, with the caveat that these results should be regarded as very preliminary. There were some difficulties with fitting these models in general, given the small sample size, and a number of models of theoretical interest did not converge. However, it does appear that based on the data collected here, that both implicit and explicit measures provide a useful fit to the data. Furthermore, these results would appear to support the theoretical model of Kirsch, whereby all other variables are mediated by expectancies, which exerts the change upon the placebo response. 
+
 
 \subsection{Conclusions}
 \label{sec:conclusions}
@@ -1930,14 +1955,21 @@ To recap, the following has been learned from this research.
 \item There may be an interaction effect between the placebo response and a combination of explicit and implicit measures
 
 \item There appears to be a noticeable effect of placebo adminstration/suggestion on electrodermal activity. 
+  
 
-\item 
+\item A model involving both implicit and explicit measures of Optimism and Expectancies mediated by a general expectancy factor appears to provide a much better fit to the data than do alternative models. 
 \end{enumerate}
 
-%% Finally, it was determined that neither implicit or explicit expectancies alone could mediate the effects of placebo, but the two of them together showed some promise as a method to predict the placebo response. 
+
 It really needs to be clarified that given the amount of leeway taken with the modeling process in this research that these findings must be regarded as tentative until borne out by future research. 
 
+The contributions of this research are as follows. Firstly, a relationship between priming and the placebo response was demonstrated in a placebo analgesia paradigm. This is important for both experimental and clinical reasons. From an experimental perspective, priming has the advantage that it does not require special equipment or a two or three administration design. This will allow for larger placebo responses to be demonstrated under experimental conditions, which will help the field to progress in its aims. From a clinical perspective, this finding also seems to suggest that simple priming of patients by word games (or potentially cues in their environment) could aid in the healing process. Such a practice would need to be squared with the need to achieve informed consent, but given that the risk of harm from priming seems quite low, this might be acceptable to the general medical community. 
 
+Next, the relationship between implicit and explicit expectancies was assessed. No real significant or robust relationship was found here, but given that the effect sizes were rather small, this does not entirely rule out the possibility of an impact, but it does suggest that any effect would not explain large portions of the variance. 
+
+The use of machine learning models to predict the placebo response threw up some interesting results. It appears from this sample that it is easier for a learning algorithm to predict the lack of placebo response relatively accurately, but predicting a positive response is much harder. This could have occurred in this sample either because either it represents a veridical fact regarding the response to placebo, or because there were more examples of negative placebo response in the sample, and thus with more data, the procedure predicted better. 
+
+Additionally, there was an interesting relationship noted between skin conductance and experimental condition, as well as Gender. While the groups were comparable at baseline, both the Deceptive and Open Placebo groups showed significant changes in GSR after administration of the treatment. Given that the treatment was the same in both cases, this would appear to suggest that skin conductance was affected by the suggestions given as part of the experiment. The fact that these changes were in opposite directions may indicate that either GSR was tracking pain responses, or the effect of certain and uncertain expectancies. This would seem to be a prime area for future research on the placebo. 
 
 
 
