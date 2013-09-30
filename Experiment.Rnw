@@ -28,7 +28,7 @@ This issue is often controlled for by calibration of the stimulus levels to the 
 
 However, the use of these self report instruments carries with it a number of problems. Firstly, the issue of demand characteristics arises as a consequence of this. Demand characteristics refer to the subtle pressures faced by participants in experiments to live up to the expectations of the researcher \cite{weber1972subject} and were discussed in Section \ref{sec:plac-rand-trials} in Chapter \ref{cha:literature-review}. The idea is that if a researcher really wants to demonstrate something, then he or she will communicate this subtly to the participants in the study, and they will (theoretically) respond in the manner in which the researcher prefers. This factor is one of the major reasons why tests of new drugs must blind the experimenter as well as the participants. 
 
-Another large factor which affects placebo analgesia research is the issue of response biases. The problem is that if participants receive a treatment which they believe to be effective, then their thresholds of perception may be altered without any actual biochemical changes.
+Response biases can often be an issue in controlled studies of placebo response. The problem is that if participants receive a treatment which they believe to be effective, then their thresholds of perception may be altered without any actual biochemical changes.
 
 This is the theory put forward by Allan \& Siegel's \cite{Allan2002} analysis of the placebo phenomenon in terms of signal detection theory. These two factors were proposed to account for the entirety of the placebo effect in pain by Hrobjarrstsson \& Goetzche \cite{hrobjartsson2001}.
 
@@ -39,13 +39,13 @@ This interpretation of placebo seems less likely given that placebo effects have
 
 The measurement of placebo has improved greatly over the past fifty years since Beecher started examining the phenomenon. However, it still suffers from a number of problems.
 
-The first problem is the consistent use of ANOVA and regression methods to examine differences between groups \cite{Colloca2008b,Pollo2001}. While there is nothing intrinsically wrong with this method (as long as it is not within person differences which are examined), it is a waste of statistical power. The issue here is that  much placebo analgesia research typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$. This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information. One study which did use more appropriate methods was \cite{Bausell2005} who examined the effects of expectancies and acupuncture using survival analysis. 
+The first problem is the consistent use of ANOVA and regression methods to examine differences between groups \cite{Colloca2008b,Pollo2001}. While there is nothing intrinsically wrong with this method, it is a waste of statistical power. The issue here is that  much placebo analgesia research typically only examines group differences in scores. The problem with this approach is that typically, pain scores are collected over time, and so the responses of one participant at time $t$ are not independent of the responses of this participant at $t+1$. This violates the assumptions of ANOVA (and of linear regression). While a simple binary responder/non responder classification is possible, this approach throws away large amounts of information. One study which did use more appropriate methods was \cite{Bausell2005} who examined the effects of expectancies and acupuncture using survival analysis. 
 
 More appropriate methods for these analyses are time series analyses and survival analysis, both of which are discussed below. Additionally, in trials of functional bowel disorders, placebo effects correlate with the size of the trial, which suggests that regression to the mean effects are having an impact \cite{Enck2005a}. 
 
 The next major problem with the current analytic strategies taken towards placebo is that most of the techniques used (ANOVA, linear models etc) assume that the mean is an appropriate measure of central tendency. However, given that placebo response can be modelled as binary (it either occurs or it does not) then the distribution would be expected to be bi-modal, in which case the mean can be very misleading. In reference to this point, a re-analysis of a number of placebo trials showed vast differences between the mean and median placebo responses \cite{McQuay1996}. 
 
-Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions was discussed further in Chapter \ref{cha:methodology}. 
+%% Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions was discussed further in Chapter \ref{cha:methodology}. 
 
 
 One final issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. The limitations of this approach have been addressed earlier, and will not be revisited here. 
@@ -58,7 +58,7 @@ One final issue with current placebo research relates to expectancies. The first
 
 This section will present the overall approach and rationale for the work carried out in the course of this chapter.
 
-The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
+The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure for treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
 
 Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
 
@@ -68,7 +68,7 @@ In order to make use of psychometric modelling, large samples of the self report
 
 In the experiment itself, physiological ( GSR or skin conductance) measures were collected in order to examine the physiological characteristics of placebo and to allow for another form of measurement to be included in the final model.
 
-The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor type. In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}. 
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor types. In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}. 
 
 
 \section{Methodology}
@@ -82,11 +82,11 @@ load("credtotals.rda")
 ## load("tcqthesis.rda")
 @ 
 
-\subsection{Recruitment for the Experimental Procedure}
+\subsubsection{Recruitment for the Experimental Procedure}
 
 Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research.  After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive.
 
-\subsection{Measures used in the Experiment}
+\subsubsection{Measures used in the Experiment}
 \label{sec:meas-used-exper}
 
 The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as follows:
@@ -127,7 +127,7 @@ Further details of the development and piloting of each IAT are in Chapter \ref{
 In addition, participants gave verbal reports of their pain levels to the experimenter at one minute intervals, and these were recorded (along with condition and exact time of application of bandage and when the squeezing stopped) on a sheet of paper, along with the participants identification number. 
 
 
-\subsection{Experimental Procedure}
+\subsubsection{Experimental Procedure}
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
 
@@ -160,16 +160,16 @@ The pain ratings were modelled as time series, and individual and gender, condit
 %% \item Examine residuals, if they are not white noise, repeat steps 1-4 until they are.
 %% \end{itemize}
 
-\paragraph{Event History Analysis}
-\label{sec:event-hist-analys}
-In this research, a particular form of time series analysis was used, which is known as event history analysis \cite{mccleary1980applied}. This type of analysis partitions the time series into two or more parts, based on whether or not a particular event has occurred. In the case of this research, there were either two or three parts to the analysis. In the Deceptive and Open Placebo groups (see Chapter \ref{cha:primary-research}), the first time series occcurred until the painful stimulus was applied, the second was the time from this point until the placebo was applied, and the third was this time point until the end. In the No Treatment group, there were two time series, one for the period before the pain was applied, and one after.
+%% \paragraph{Event History Analysis}
+%% \label{sec:event-hist-analys}
+%% In this research, a particular form of time series analysis was used, which is known as event history analysis \cite{mccleary1980applied}. This type of analysis partitions the time series into two or more parts, based on whether or not a particular event has occurred. In the case of this research, there were either two or three parts to the analysis. In the Deceptive and Open Placebo groups (see Chapter \ref{cha:primary-research}), the first time series occcurred until the painful stimulus was applied, the second was the time from this point until the placebo was applied, and the third was this time point until the end. In the No Treatment group, there were two time series, one for the period before the pain was applied, and one after.
 
-A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental procedure. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them.
+%% A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental procedure. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them.
 
 \paragraph{Analysis of Placebo Response Data}
 \label{sec:analys-plac-resp}
 
-The first step was to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
+The first step was to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. %% Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
 
 In addition, these models were compared against models using both factor scores and IRT ability estimates to determine the usefulness of this model based approach. 
 
@@ -179,8 +179,8 @@ In addition, these models were compared against models using both factor scores 
 \paragraph{Analysis of Physiological Data}
 \label{sec:analys-phys-data}
 
-The physiological data was collected (as described above)  skin conductance recordings. This source provided recordings at 1000Hz for the entire procedure (and normally a few seconds after the blood pressure gauge). %% The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals.
-In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
+Skin conductance recordings (GSR) were taken as part of this experiment. This source provided recordings at 1000Hz for the entire procedure (and normally a few seconds after the blood pressure gauge). %% The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals.
+%% In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
 
 Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in  Chapter \ref{cha:methodology}.
 
@@ -189,17 +189,17 @@ Finally, the relationships between physiological responses and the psychological
 
 Reaction time data has been studied by (mostly cognitive) psychologists for many years. The Implicit Association Test has been used in almost 300 published papers and reports (and doubtless many more times where the results were not published). However, with a few exceptions, there has been almost no overflow from one area of study to the other.
 
-Classic work in examining the distributions of reaction time data was carried out by Ratcliff\cite{ratcliff1979group,ratcliff1993methods}. In the 1979 paper he suggested that a quantile based approach should be used for individual reaction time scores. This involves ranking each of the latencies for each individual participant, and using certain percentages of these as quantiles, which can then be used to estimate group distributions. This approach will be utilised in this research, and four quantiles will be used, as given that some conditions (Blocks one, two and four) have only twelve observations, and quartiles divide each of the block sizes (12 and 36) equally. These quartiles were then used to estimate group, block and condition level distributions for the reaction time data. 
+%% Classic work in examining the distributions of reaction time data was carried out by Ratcliff\cite{ratcliff1979group,ratcliff1993methods}. In the 1979 paper he suggested that a quantile based approach should be used for individual reaction time scores. This involves ranking each of the latencies for each individual participant, and using certain percentages of these as quantiles, which can then be used to estimate group distributions. This approach will be utilised in this research, and four quantiles will be used, as given that some conditions (Blocks one, two and four) have only twelve observations, and quartiles divide each of the block sizes (12 and 36) equally. These quartiles were then used to estimate group, block and condition level distributions for the reaction time data. 
 
 The typical approach to analysis of IAT data goes as follows  \cite{Greenwald1998}: firstly, the data is checked for outliers. Outliers, in this case are defined as responses less than 300ms and greater than 3000ms. Any such outliers are recoded to 300 or 3000ms respectively. Following this procedure, a mean is taken of the items in each condition. These means along with standard deviations are reported. The response latencies are then log transformed (to reduce positive skew) and the IAT score is calculated as follows. 
 
-Given the participants mean latency in each condition, their IAT score is the mean for the incompatible condition (i.e. White + Unpleasant) less the mean from the compatible condition (i.e. White + pleasant) divided by the average of the two within group standard deviations. This measure is typically called $D$, and was developed after extensive analysis of an extremely large sample of IAT responses\cite{Greenwald2003a}. In addition to the change of scoring procedure in the 2003 revisions, the threshold for outliers was also substantially widened to 10000 ms. Given that the sample used for this re-analysis was over one hundred thousand, this widening of the threshold was presumably based on experience with a much broader population than was used in many early IAT experiments (typically college students). 
+Given the participants mean latency in each condition, their IAT score is the mean for the incompatible condition (i.e. White + Unpleasant) less the mean from the compatible condition (i.e. White + Pleasant) divided by the average of the two within group standard deviations. This measure is typically called $D$, and was developed after extensive analysis of an extremely large sample of IAT responses\cite{Greenwald2003a}. In addition to the change of scoring procedure in the 2003 revisions, the threshold for outliers was also substantially widened to 10000 ms. Given that the sample used for this re-analysis was over one hundred thousand, this widening of the threshold was presumably based on experience with a much broader population than was used in many early IAT experiments (typically college students). 
 
 There are a number of problems with this approach. Firstly, the approach throws away much information, more than once. In the first case, information regarding extreme responses is censored, in an unsystematic and theoretically unjustified manner. The breakpoints of 300 and 3000 milliseconds appear to have been chosen to allow for the use of the mean as a group value rather than for any principled reasons. 
 
 It is arguable as to whether or not this censoring represents a good strategy, but certainly it is something which should have been examined in a principled fashion, which does not appear to have happened. The second issue relates again to the calculation of a mean.
 
-While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. 
+While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric~\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. 
 
 The choice of log transform (while slightly more justifiable) is decidedly inferior to a more data driven approach. Again, the issue here is not that such choices in analysis were made, but rather that they have been made once and repeated many times in the later literature. Even those who have criticised the IAT \cite{Klauer2005,Mierke2003,Blanton2006} on methodological grounds appear to have ignored this issue. 
 
@@ -279,6 +279,7 @@ require(semPlot)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
+rotate.labels <- theme(axis.text.x=element_text(angle=-45, hjust=1))
 tcqiatsorted <- tcqiat[,c("Participant", "Date", "Time", "Block", "Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki", "Correct", "BlockTime")]
 optiatsorted <- optiat[, c("Participant", "Date", "Time", "Block", "Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse", "Correct", "BlockTime")]
 @ 
@@ -337,10 +338,11 @@ IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 
 
 
-Next, we examine the difference between the mean and median scores for the TCQ IAT. As can be seen from Figure \ref{fig:meanmediat}, there is little difference between the two measures of central tendency ($r=0.89$). 
+Next, we examine the difference between the mean and median scores for the TCQ IAT. %% As can be seen from Figure \ref{fig:meanmediat},
+There was little difference between the two measures of central tendency ($r=0.89$). 
 
 
-The next question is whether or not the IAT\'s have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
+The next question is whether or not the IATs have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was r=0.08, thus showing that method variance does not appear to have contaminated the results. 
 
 
 
@@ -389,8 +391,8 @@ print(arrangeGrob(tcqstimconv3pl, tcqstimconv5pl))
 
 As can be seen from Figure \ref{fig:stimblockconvalt} a similar pattern emerges from the conventional and alternative stimuli. Interestingly, it appears that response times were slower overall in Block 5, which may represent fatigue. However, the order of IAT's was counterbalanced, so one would expect to see the same pattern in the Optimism IAT's if this was the case. 
 
-\begin{figure}
-<<optstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<optstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 optstimblock3.m <- melt(optstimblock3, id.vars="part.opt")
 optstimblock3.m[,"part.opt"] <- with(optstimblock3.m, as.factor(part.opt))
 names (optstimblock3.m) [3] <- "ResponseTime"
@@ -401,11 +403,11 @@ names (optstimblock5.m) [3] <- "ResponseTime"
 partstim5opt <- ggplot(optstimblock5.m, aes(x=log(ResponseTime), colour=as.factor(part.opt)))+geom_density()+theme(legend.position="none")
 print (arrangeGrob (partstim3opt, partstim5opt))
 @   
-  \caption{Density Plots for Response Times of Each Participant, Block 3 (top) and Block 5 (bottom) All response times are plotted on a log scale}
-  \label{fig:optstimblock3part}
-\end{figure}
+%%   \caption{Density Plots for Response Times of Each Participant, Block 3 (top) and Block 5 (bottom) All response times are plotted on a log scale}
+%%   \label{fig:optstimblock3part}
+%% \end{figure}
 
-As can be seen from Figure \ref{fig:optstimblock3part}, the distributions for the optimism IAT were relatively similar, except that they were overall shifted towards the right, indicating that response times were generally slower to each of these words. Note that one participant has almost the entirety of their distribution beyond the tails of most of the other participants, which given that this is a log-scale plot, indicates that something is very wrong here. Note additionally that the Block 5 results are much more variable than those from Block 3, which again may represent fatigue. 
+%% As can be seen from Figure \ref{fig:optstimblock3part}, the distributions for the optimism IAT were relatively similar, except that they were overall shifted towards the right, indicating that response times were generally slower to each of these words. Note that one participant has almost the entirety of their distribution beyond the tails of most of the other participants, which given that this is a log-scale plot, indicates that something is very wrong here. Note additionally that the Block 5 results are much more variable than those from Block 3, which again may represent fatigue. 
 \begin{figure}
 <<optstimposneg, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optstimblock3.real <- optstimblock3[,2:8]
@@ -453,22 +455,23 @@ print(arrangeGrob(stimpos3.pl, stimpos5.pl))
  
  Next, the correlation between the different block times is assessed. As discussed in Chapter \ref{cha:literature-review}, some correlation would be expected given the nature of the IAT task, but the aim here is to quantify what effect, if any it would have had on the results. 
  
- \begin{figure}
-<<tcqmeanresp, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+ %% \begin{figure}
+<<tcqmeanresp, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 ## tcqmeanresp.pl <- ggplot(tcqiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
 ## print(tcqmeanresp.pl)
 tcqiat.mean.m <- melt(tcqiat.mean.resp, id.vars=c("Participant", "Block"))
 tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
 names(tcq.iat.c) <- c("Participant", "variable", "TCQBlock1", "TCQBlock2", "TCQBlock3", "TCQBlock4", "TCQBlock5")
-tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])+axis.text.x(element_text(angle=-45))
+tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])
 print(tcq.block.corr.pl)
 @    
-   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
-   \label{fig:tcqblockcorr}
- \end{figure}
+ %%   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
+ %%   \label{fig:tcqblockcorr}
+ %% \end{figure}
 
-As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. Table \ref{tab:tcqcormat} gives the exact Kendalls $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
+%% As can be seen from Figure \ref{fig:tcqblockcorr}, the correlations are relatively low between most of the blocks, though somewhat higher between blocks 3 and 5. 
+Table \ref{tab:tcqcormat} gives the exact Kendalls $\tau$ between each of the blocks. As can be seen the correlations hover between 0.3 and 0.4, which is in line with expectations prior to the experiment. 
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 cormat <- corr.test(tcq.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
@@ -477,8 +480,8 @@ print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the bl
  
 
 Next, the same process is repeated for the Optimism IAT. 
-\begin{figure}
-<<tcqmeanresp, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<tcqmeanresp, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 ## optmeanresp.pl <- ggplot(optiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
 ## print(optmeanresp.pl)
@@ -487,11 +490,12 @@ opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
 opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
 print(opt.block.corr.pl)
 @    
-   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
-   \label{fig:optblockcorr}
- \end{figure}
+ %%   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
+ %%   \label{fig:optblockcorr}
+ %% \end{figure}
 
-As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. Table \ref{tab:optcormat}. The correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
+%% As shown in Figure \ref{fig:optblockcorr}, the correlations between blocks are moderate, though highest in blocks 3 and 5, as was seen for the Treatment Credibility IAT. 
+Table \ref{tab:optcormat} shows that the correlations are a little higher than for the Treatment Credibility IAT, but still within an acceptable range. Its interesting to note that (with the exception of Block 5), the correlations are strongest between adjacent blocks, and drop off as the blocks move further apart, suggesting that the autocorrelation theory has some merit. 
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
@@ -515,16 +519,16 @@ iat.block.merge <- merge(tcq.iat.c, opt.iat.c, by="Participant")
 iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
 @ 
 
-\begin{figure}
-<<corriattcqopt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<corriattcqopt, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
 print(corr.iat.tcq.opt.pl)
 @   
-  \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
-  \label{fig:corriattcqopt}
-\end{figure}
+%%   \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
+%%   \label{fig:corriattcqopt}
+%% \end{figure}
 
-As can be seen from Figure \ref{fig:corriattcqopt}, there were correlations between the two IAT's. These correlations, while significant, were quite low ($r\bar =0.20$) which equates to about 4\% of the variance. Therefore the two implicit measures can be safely be regarded as not being contaminated by method variance . 
+There were correlations between the two IAT's. These correlations, while significant, were quite low ($r\bar =0.20$) which equates to about 4\% of the variance. Therefore the two implicit measures can be safely be regarded as not being contaminated by method variance . 
 
 
 
@@ -593,13 +597,13 @@ optiat.ppar <- person.parameter(optiat.rasch)
 optiat.elim <- stepwiseIt(optiat.rasch)
 @ 
 
-\begin{figure}
-<<optpimap, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<optpimap, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE, results=hide>>=
 plotPImap(optiat.rasch)
 @   
-  \caption{Person Item Map of Difficulty parameters for Optimism IAT}
-  \label{fig:optpimap}
-\end{figure}
+%%   \caption{Person Item Map of Difficulty parameters for Optimism IAT}
+%%   \label{fig:optpimap}
+%% \end{figure}
 
 
 <<optiatrachprint, echo=FALSE, results=hide>>=
@@ -610,7 +614,7 @@ print(xtable(optrasch.df, label="tab:optrasch", caption="Ability Estimates for R
 %% Table \ref{tab:optrasch} shows the estimated parameters for a Rasch model of the optimism IAT stimuli. Figure \ref{fig:optpimap} shows the Person Item Map for this model. This map shows that most of the stimuli were equivalent in difficulty, which indicates that this IAT is suitable for measuring implicit optimism in the general population, however, more discriminating stimuli would be necessary if the instrument was to be used in a clinical sample. Additionally, the map shows that the majority of participants showed latent traits of less than zero, suggesting that implicit optimism is rarer than explicit optimism. 
 
 
-A process of stepwise elimination was carried out to eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
+%% A process of stepwise elimination was carried out to eliminate items which did not fit the model. In this case, the stimulus ``Myself'' was the only one which had significant model misfit. 
 
 <<tcqiatirt, echo=FALSE, results=hide, cache=TRUE>>=
 tcqiat.rasch <- RM(tcqdiffs.dich)
@@ -619,7 +623,7 @@ tcqiat.elim <- stepwiseIt(tcqiat.rasch)
 tcqiat.ppar <- person.parameter(tcqiat.rasch)
 @ 
 
-<<tcqiatability, echo=FALSE, results=tex>>=
+<<tcqiatability, echo=FALSE, results=hide>>=
 tcqrasch.df <- with(tcqiat.rasch, as.data.frame(cbind(etapar, se.eta, betapar, se.beta)))
 print(xtable(tcqrasch.df, label="tab:tcqiatrasch", caption="Ability Estimates for Rasch Model of Treatment Credibility IAT"))
 @ 
@@ -719,7 +723,7 @@ print(arrangeGrob ( surv.pill.pl, exp.pill.pl))
 
 As can be seen from Figure \ref{fig:comppill}, the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
 
-Next, the difference between Cream Credibility scores were assessed. 
+Next, the difference between Cream Credibility scores was assessed. 
 
 \begin{figure}
 <<surveycream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -884,9 +888,9 @@ chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square 
 print(chisq1.xtab)
 @ 
 
-The results of the $\chi^2(11)=64.0, p\le 0.0001$ show that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
+The results of the Chi-Square test( $\chi^2(11)=64.0, p\le 0.0001$) show that priming appears to be the driver of this effect, as the Placebo Response by Condition is extremely significant given the priming manipulation. Most of this improvement occurred in the Open Placebo group, which is an extremely interesting finding, one not reported in the literature before.  
 
-This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that Participants were much more likely to respond to placebo following a priming intervention. Given that priming interventions typically take place outside conscious awareness, this suggests that there is at least some part of the placebo response which is amenable to non-conscious (or implicit) influences. 
+This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that participants were much more likely to respond to placebo following a priming intervention. Given that priming interventions typically take place outside conscious awareness, this suggests that there is at least some part of the placebo response which is amenable to non-conscious (or implicit) influences. 
 
 \begin{figure}
 <<placprimeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -921,7 +925,7 @@ napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
 Iatandexpmeasures.surv <- merge(Iatandexpmeasures, napainratings2, by="Participant")
 censor <- Iatandexpmeasures[,"Censored"]
 censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
-Surv.data <- Surv(lengthsurv,censor2)
+## Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
 
@@ -1050,6 +1054,63 @@ The mean pain ratings were also examined for autocorrelations, and as shown in F
 \subsection{Analysis of Physiological Data}
 
 
+\subsection{Examining the Effect of Pain on GSR}
+\label{sec:exam-effect-pain}
+
+The next step in the analysis was to examine the impact of the particular painful stimuli administered on skin conductance. Some preliminary research has suggested that this may be a useful predictor of painful stimuli, and this question will be covered in the following section. However, in this section, the impact of the painful stimuli on skin conductance will be assessed. Note that due to experimenter error, not all participants had the band to induce pain at 300s into the experiment. This time of administration was recorded, and additionally as participants squeezed either more slowly or more quickly, there was some variability in these times. 
+
+The first step in this analysis was to examine the size of these disparities. 
+
+<<bandagequeeze, echo=FALSE, results=hide>>=
+bandage.squeeze <- Iatandexpmeasures [,c ("Participant", "BandageOn", "SqueezStop")]
+bandage.squeeze [,"SqueezingTime"] <- with (bandage.squeeze, SqueezStop-BandageOn)
+@ 
+ 
+
+\begin{figure}
+<<bandonoff, echo=FALSE, fig=TRUE>>=
+band.m <- melt (bandage.squeeze [,1:3], id.vars="Participant")
+print (ggplot (band.m, aes (x=value, fill=variable))+geom_density (alpha=0.5))
+@ 
+  \caption{Density Plots for Time of Application of Bandage and Stopping Squeezing}
+  \label{fig:onoffplot}
+\end{figure}
+
+Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
+
+\begin{figure}
+<<squeezeplot, echo=FALSE, fig=TRUE>>=
+squeeez.pl <- ggplot (bandage.squeeze, aes (x=SqueezingTime))+geom_density ()
+print (squeeez.pl)
+@ 
+  \caption{Density Plot of Time Spent Squeezing the Hand Exerciser}
+  \label{fig:squeezplot}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+
+
+
+<<physlen, echo=FALSE, results=hide, eval=FALSE>>=
+physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
+names (physlen) <- c ("Time", "Participant")
+physlen [,"Participant"] <- with (physlen, as.factor (Participant))
+survlength.ratings <- Iatandexpmeasures [,c ("Participant","BandageOn", "lengthsurv")]
+len.test <- merge (physlen, survlength.ratings, by="Participant")
+len.test [,"Time"] <- with (len.test, Time/1000)
+len.test [,"Diff"] <- with (len.test, Time-lengthsurv)
+@ 
+
+Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. 
+
+
+<<physpaindiffplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
+physpaindiff.pl <- ggplot (len.test, aes (x=Diff))+geom_density ()
+print (physpaindiff.pl)
+@ 
+
+
 Before the analysis of GSR data was conducted, the mean GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
 <<gsrgend, echo=FALSE, results=hide>>=
@@ -1124,19 +1185,6 @@ ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
 The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 
-
-
-
-
-
-
-
-
-
-\section{Variables impacting the placebo response}
-\label{sec:vari-impact-plac}
-In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
-
 <<tsimport, echo=FALSE, results=hide>>=
 gsr <- read.csv("GSRdataDownSample.csv")
 gsr[,"index"] <- 1:nrow(gsr)
@@ -1146,6 +1194,8 @@ gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=T
 names(gsr.mean)[1] <- "Participant"
 Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
 Iatandexpmeasures.phys <- merge(Iatandexpmeasures2, gsr.mean, by="Participant")
+Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
+names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
@@ -1200,7 +1250,7 @@ gsr.notreat.pl <- ggplot(gsr.notreat.merge.m, aes(x=Index, y=value, colour=varia
 
 @ 
 \begin{figure}
-<<gsrpainplt, echo=FALSE, fig=TRUE>>=
+<<gsrpainplt, echo=FALSE, fig=TRUE, eps=TRUE, png=TRUE, pdf=TRUE, jpg=TRUE>>=
 print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
 \caption{GSR versus Pain Ratings over Time by Condition}
@@ -1210,10 +1260,23 @@ print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 
 Figure \ref{fig:gsrpainplot} shows the interpolated pain rating data against the GSR data in seconds. It can be seen that there appears to be a sizeable difference by condition. This suspicion is further born out when the cross-correlation function is examined between the pain ratings and GSR. For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Deceptive Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
-<<gsrmodel, echo=FALSE, results=hide>>=
+<<gsrmodel, echo=FALSE, results=tex>>=
 gsr.cond <- lm(gsr.mean~Condition, data=Iatandexpmeasures.phys)
 print(xtable(summary(gsr.cond), caption="Regression of Condition on Mean GSR", label="tab:gsrcondreg"))
 @ 
+
+
+
+
+
+
+
+
+\section{Variables impacting the placebo response}
+\label{sec:vari-impact-plac}
+In this section, the covariates associated with response to placebo in this sample are examined, first graphically and then through a process of formal model fitting. 
+
+
 
 
 A regression which is shown in Table \ref{tab:gsrcondreg} showed that there was a significant effect of the Deceptive Placebo Condition on mean GSR scores, suggesting that the mean GSR scores tended to be higher in this condition as compared to the others. This would seem to match the descriptions of the cross-correlation functions above. 
@@ -1422,6 +1485,7 @@ iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOT
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
+plac.resp.train <- iatandexpfull.tr\
 iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
 rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
 rf.pred <- predict(rf.train, iatandexpfull.test)
@@ -1470,12 +1534,13 @@ evtree.pred <- predict(evtree.train, iatandexpfull.test)
 evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 @ 
 
-To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, the Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
+%% To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, 
+The Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
 
 This model was so accurate that it made the researcher suspicious that it was an artefact of the particular random sub-sample chosen as a test set. In fact, when the entire model-fitting procedure was repeated ten times with a different random test set each time, the accuracy of the model dropped dramatically ($Acc=\bar 0.5$). Next, the model fitting process was repeated using this same process. 
 
-\begin{figure}
-<<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 print(plot(evtree.train$finalModel))
 @   
   \caption{Evolutionary Tree plot for Prediction of Placebo Response}
@@ -1629,61 +1694,6 @@ This would suggest that while the model was excellent at predicting those who wo
 
 
 
-\subsection{Examining the Effect of Pain on GSR}
-\label{sec:exam-effect-pain}
-
-The next step in the analysis was to examine the impact of the particular painful stimuli administered on skin conductance. Some preliminary research has suggested that this may be a useful predictor of painful stimuli, and this question will be covered in the following section. However, in this section, the impact of the painful stimuli on skin conductance will be assessed. Note that due to experimenter error, not all participants had the band to induce pain at 300s into the experiment. This time of administration was recorded, and additionally as participants squeezed either more slowly or more quickly, there was some variability in these times. 
-
-The first step in this analysis was to examine the size of these disparities. 
-
-<<bandagequeeze, echo=FALSE, results=hide>>=
-bandage.squeeze <- Iatandexpmeasures [,c ("Participant", "BandageOn", "SqueezStop")]
-bandage.squeeze [,"SqueezingTime"] <- with (bandage.squeeze, SqueezStop-BandageOn)
-@ 
- 
-
-\begin{figure}
-<<bandonoff, echo=FALSE, fig=TRUE>>=
-band.m <- melt (bandage.squeeze [,1:3], id.vars="Participant")
-print (ggplot (band.m, aes (x=value, fill=variable))+geom_density (alpha=0.5))
-@ 
-  \caption{Density Plots for Time of Application of Bandage and Stopping Squeezing}
-  \label{fig:onoffplot}
-\end{figure}
-
-Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
-
-\begin{figure}
-<<squeezeplot, echo=FALSE, fig=TRUE>>=
-squeeez.pl <- ggplot (bandage.squeeze, aes (x=SqueezingTime))+geom_density ()
-print (squeeez.pl)
-@ 
-  \caption{Density Plot of Time Spent Squeezing the Hand Exerciser}
-  \label{fig:squeezplot}
-\end{figure}
-
-
-As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
-
-
-
-<<physlen, echo=FALSE, results=hide, eval=FALSE>>=
-physlen <- read.table ("./ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput/FullTimePhys2.txt", header=FALSE)
-names (physlen) <- c ("Time", "Participant")
-physlen [,"Participant"] <- with (physlen, as.factor (Participant))
-survlength.ratings <- Iatandexpmeasures [,c ("Participant","BandageOn", "lengthsurv")]
-len.test <- merge (physlen, survlength.ratings, by="Participant")
-len.test [,"Time"] <- with (len.test, Time/1000)
-len.test [,"Diff"] <- with (len.test, Time-lengthsurv)
-@ 
-
-Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. 
-
-
-<<physpaindiffplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
-physpaindiff.pl <- ggplot (len.test, aes (x=Diff))+geom_density ()
-print (physpaindiff.pl)
-@ 
 
 %% \subsection{Machine Learning and the Placebo Response}
 %% \label{sec:mach-learn-plac}-
