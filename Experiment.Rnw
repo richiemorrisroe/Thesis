@@ -1019,11 +1019,12 @@ As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain
 
 
 \begin{figure}
-<<medianpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<medianpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide>>=
+dev.new()
 par(mfrow=c(2,2))
-print(acf(na.omit(with(medpainratings,meddeceptivepain))))
-print(acf(na.omit(with(medpainratings,medplacebopain))))
-print(acf(na.omit(with(medpainratings,mednotreatpain))), main="Autocorrelation No Treatment Group")
+plot(acf(na.omit(with(medpainratings,meddeceptivepain)), main="Deceptive Placebo Group"))
+plot(acf(na.omit(with(medpainratings,medplacebopain)), main="Open Placebo Group"))
+plot(acf(na.omit(with(medpainratings,mednotreatpain)), main="No Treatment Group"))
 @   
   \caption{Autocorrelation Plots for Median Pain Responses over Time by Condition}
   \label{fig:autocorrpainplot}
@@ -1033,13 +1034,13 @@ print(acf(na.omit(with(medpainratings,mednotreatpain))), main="Autocorrelation N
 As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
 
 \begin{figure}
-<<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide>>=
 plot.new()
 par (mfrow=c (2,2))
 sink ("tmp.txt")
-print(acf(na.omit(with(meangrouppainratings, meannotreatpain))))
-print(acf(na.omit(with(meangrouppainratings,  meandeceptivepain))))
-print(acf(na.omit(with(meangrouppainratings,meanplacebopain))))
+print(acf(na.omit(with(meangrouppainratings, meannotreatpain)), main="Deceptive Placebo Group"))
+print(acf(na.omit(with(meangrouppainratings,  meandeceptivepain)), main=" Open Placebo Group"))
+print(acf(na.omit(with(meangrouppainratings,meanplacebopain)), main="No Treatment Group"))
 sink (NULL)
 @   
   \caption{Mean Autocorrelation plots for pain ratings over time}
@@ -1165,7 +1166,7 @@ gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
 @ 
 \begin{figure}
 <<gsrplotcond, echo=FALSE, results=hide>>=
-print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
+print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
 @   
   \caption{GSR by Condition over Time}
   \label{fig:gsrcondplot}
@@ -1194,8 +1195,8 @@ gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=T
 names(gsr.mean)[1] <- "Participant"
 Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
 Iatandexpmeasures.phys <- merge(Iatandexpmeasures2, gsr.mean, by="Participant")
-Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
-names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
+## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
+## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
@@ -1331,7 +1332,7 @@ Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded
 cream.hist.cond <- ggplot(Iatandexpmeasures, aes(x=Cream))+geom_density()+facet_grid(.~PlacResp)
 print(cream.hist.cond)
 @   
-  \caption{Desnity Plot for Mean Cream Credibility Scores by Condition}
+  \caption{Density Plot for Mean Cream Credibility Scores by Condition}
   \label{fig:creamhistcond}
 \end{figure}
 
@@ -1485,7 +1486,6 @@ iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOT
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
-plac.resp.train <- iatandexpfull.tr\
 iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
 rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
 rf.pred <- predict(rf.train, iatandexpfull.test)
@@ -1516,16 +1516,16 @@ print(test.xtab)
 
 Models which were fit to the data included a naive bayes classifier ($Acc=0.5714$), a linear support vector machine ($Acc=0.6439$), an an evolutionary tree model ($Acc=0.7857$). Of these, only the evolutionary tree performed above chance when predicting positive placebo response (all models predicted no placebo response correctly). This may be, as the plots above in section \ref{sec:vari-impact-plac} showed, the relationship appeared to be nonlinear, in that moderate levels of the three predictor variables appeared to be more highly associated with positive response to placebo. Tree models allow the data to be split on particular levels of a predictor variable, and this flexibility allows placebos to be predicted more accurately. 
 
-\begin{figure}
-<<varImpPlot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<varImpPlot, echo=FALSE, pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 par(mfrow=c (1,1))
 print(varImpPlot(rf.train[["finalModel"]]))
 @   
-  \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
-  \label{fig:varimprf}
-\end{figure}
+%%   \caption{Variable Importance Plot for Random Forest Model on Placebo Response}
+%%   \label{fig:varimprf}
+%% \end{figure}
 
-As can be seen from Figure \ref{fig:varimprf}, all three variables were important to the fit, however the TCQ IAT appeared to be the most important, followed by the mean credibility score for conventional treatments, followed by the Optimism IAT, followed by scores on the LOT-R.
+%% As can be seen from Figure \ref{fig:varimprf}, all three variables were important to the fit, however the TCQ IAT appeared to be the most important, followed by the mean credibility score for conventional treatments, followed by the Optimism IAT, followed by scores on the LOT-R.
 
 
 <<evtree, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1754,8 +1754,12 @@ plac.mod.direct <- mxModel(name="PlacModDirect",
 placmod1.fit <- mxRun(plac.mod.direct)
 @
 
+
+
+
+
 <<modimpexp, echo=FALSE, results=hide, eval=FALSE>>=
-impexpdata <- Iatandexpmeasures2[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt")]
+impexpdata <- Iatandexpmeasures2[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt", "LOTR")]
 latents <- "Expectancies"
 observed <- c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt")
 imp.exp.direct <- mxModel(name="ImpExpDirect",
@@ -1909,11 +1913,46 @@ print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures f
 
 From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that of Kirsch when implicit expectancies are included in the model. Implications are elaborated upon in the discussion. 
 
+\subsection{Relationships between Explicit and Implicit Measures}
+\label{sec:relat-betw-expl}
+
+Next, three models were fit to examine the relationship between the implicit and explicit measures themselves. Of interest here was whether or not mindfulness (operationalised using the MAAS) would moderate the relationships between explicit and implicit measures. 
+
+The three models were as follows:
+
+\begin{enumerate}
+
+\item A one factor model for all implicit and explicit measures
+  
+\item A two factor correlated model between implicit and explicit measures
+
+\item A two factor uncorrelated model with implicit and explicit measures
+
+\item A two factor model where the covariances between implicit and explicit measures were moderated by mindfulness. 
+\end{enumerate}
+
 <<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
 expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
 twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
+@ 
+
+<<impexpmodels, echo=FALSE, results=hide>>=
+expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
+expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
+expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
+@ 
+
+<<expimpfit, echo=FALSE, results=tex>>=
+expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimpall <- rbind(expimp1.fit.meas, twofac.fit.meas, expimpsep.fit.meas, expimpmoderated.fit.meas, expimp.nocorr.fit.meas)
+rownames(expimpall) <- c("Direct", "Two Factor", "Moderated", "Credibility/Optimism", "Uncorrelated")
+print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"))
 @ 
 
 The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 

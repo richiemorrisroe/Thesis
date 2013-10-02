@@ -54,6 +54,7 @@ LOTR~~LOTR
 TCQIATMean~~TCQIATMean
 convaltcomp~~convaltcomp
 '
+
 placmod.opt <- '
 PlacResp~LOTR
 LOTR~OptIATMean+meanconv+meanalt+TCQIATMean'
@@ -76,7 +77,7 @@ meanalt~~meanalt
 '
 
 placmod2 <- '
-PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR+Age'
+PlacResp~TCQIATMean+OptIATMean+convaltcomp'
 expimpdirect <- '
 Expectancies=~TCQIATMean+OptIATMean+MAAS+meanconv+meanalt
 TCQIATMean~~TCQIATMean
@@ -99,3 +100,24 @@ MAAS~~MAAS
 meanconv~~meanconv
 meanalt~~meanalt'
 
+expimp.moderated <- '
+ImpExp=~TCQIATMean+OptIATMean
+ExpExp=~meanconv+meanalt
+ImpExp~~MAAS
+ExpExp~~MAAS
+ImpExp~~ImpExp
+ImpExp~~ExpExp
+TCQIATMean~~TCQIATMean
+OptIATMean~~OptIATMean
+MAAS~~MAAS
+meanconv~~meanconv
+meanalt~~meanalt'
+
+expimpsep <- '
+Optimism=~OptIATMean+LOTR
+Credibility=~TCQIATMean+meanconv+meanalt
+TCQIATMean~~TCQIATMean
+OptIATMean~~OptIATMean
+MAAS~~MAAS
+meanconv~~meanconv
+meanalt~~meanalt'
