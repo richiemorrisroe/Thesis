@@ -1486,8 +1486,27 @@ The eventual approach taken was to use forms of treatments for the stimuli, give
 
 The next step in this process was the piloting of the IAT and the examination of their associations with explicit measures of the construct, to ensure that they were measuring related areas. 
 
-<<fileimport, echo=FALSE, results=hide>>=
+\section{Piloting the IAT Measures}
+\label{sec:pilot-iat-meas}
+
+The IAT measures were piloted on 17 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
+
+<<readdata, echo=FALSE, results=hide>>=
+
 setwd("ExperimentDataforR/Pilot")
+source("../../func.R")
+optiat <-read.table("Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
+names(optiat)[c(3,9)] <- c("Them", "Disapproving")
+optiat.s <-optiat[,1:16]
+optscores.mean <-calcIatScores(optiat.s, Code="PP.No", method="mean", words=c("Them", "Theirs", "Themselves", "Me", "Myself", "Mine", "Disapproving", "Sad", "Failing", "Worse", "Succeeding", "Happy", "Improving", "Better"))
+@ 
+
+\section{Piloting the Experimental Procedure}
+\label{sec:pilot-exper-proc}
+
+
+
+<<fileimport, echo=FALSE, results=hide>>=
 iepilot<-read.csv("I and E for Pilot.csv")
 require(psych)
 require(xtable)
