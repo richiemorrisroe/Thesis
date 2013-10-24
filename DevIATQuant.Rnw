@@ -60,6 +60,11 @@ The next step in this process was the piloting of the IAT and the examination of
 
 The IAT measures were piloted on 17 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
 
+\subsection{Optimism IAT Pilot}
+\label{sec:optimism-iat-pilot}
+ 
+
+
 <<readdata, echo=FALSE, results=hide>>=
 
 setwd("ExperimentDataforR/Pilot")
@@ -67,12 +72,73 @@ source("../../func.R")
 optiat <-read.table("Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
 names(optiat)[c(3,9)] <- c("Them", "Disapproving")
 optiat.s <-optiat[,1:16]
+optiat.s[,"Block"] <- with(optiat.s, paste("Block", Block, sep=" "))
 optscores.mean <-calcIatScores(optiat.s, Code="PP.No", method="mean", words=c("Them", "Theirs", "Themselves", "Me", "Myself", "Mine", "Disapproving", "Sad", "Failing", "Worse", "Succeeding", "Happy", "Improving", "Better"))
+
 @ 
+
+<<optuniq, echo=FALSE, results=hide>>=
+optpp<- with(optiat, unique(PP.No))
+optuniq <- optiat[with(optiat, which(!duplicated(PP.No))),]
+optgend <- optiat[with(optiat, !is.na(Gender)),]
+optuniq <- optgend[with(optgend, !duplicated(PP.No)),]
+optgend.sum <- with(optuniq, summary(Gender))
+@ 
+
+The first step was to look at the composition of the sample. The sample was eleven students (N=11) of which ten (N=10) were female. 
+The ages of the sample ranged from 19 to 27, with a mean age of 21.27 and a median age of 20. In this respect, the sample was quite typical of students in the psychology department. 
+Students were asked had they heard of an IAT, to which all included in the sample replied no. 
+
+The mean Optimism IAT score was 0.5833, and the distribution can be seen in Figure \ref{fig:optiatpilot}. As can be seen the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
+
+\begin{figure}
+<<optiatpl, echo=FALSE, fig=TRUE>>=
+print(ggplot(optscores.mean, aes(x=IAT))+geom_density())
+@   
+  \caption{Distribution of Optimism IAT Scores}
+  \label{fig:optiatpilot}
+\end{figure}
+
+<<optiatcorr, echo=FALSE, results=hide>>=
+optiat.corr <- data.frame(Participant=optuniq$PP.No, Age=optuniq$Age, Gender=optuniq$Gender, LOTR=optuniq$LOTR.Total, OptIAT=optscores.mean$IAT) #$
+@ 
+
+\begin{figure}
+<<optiatcorrplot, echo=FALSE, fig=TRUE>>=
+print(ggplot(optiat.corr, aes(x=LOTR, y=OptIAT))+geom_point()+geom_smooth(method="lm"))
+@   
+  \caption{Scatterplot of Correlations between LOTR and Optimism IAT}
+  \label{fig:optiatcorrplot}
+\end{figure}
+
+
+As can be seen in Figure \ref{fig:optiatcorrplot}, the correlation was not particularly strong, but there was a relationship there. Statistical examination of the correlation suggested that the relationship was equal to 0.15. 
+
+\subsection{TCQ IAT}
+\label{sec:tcq-iat}
+
+Next, the Treatment Credibility Questionnaire was examined to assess its correlations with the self report measure, in preparation for the pilot. 
+
+<<readdata, echo=FALSE, results=hide, eval=FALSE>>=
+print(getwd())
+tcqiat <- read.csv("tcq prep data for IAT.csv")
+tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
+tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Truth", "Fake", "Lies", "Inaccurate", "Conventional", "Pills", "Cream", "Injections", "Nurse", "Doctor", "Pharmacist", "Medicine", "Alternative", "Acupuncture", "Reiki.Master", "Acupuncturist", "Reiki", "Flower.essence", "Homeopathy", "Homeopathist"))
+@ 
+
+\begin{figure}
+<<tcqplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
+print(ggplot(tcqscores, aes(x=IAT))+geom_density())
+@   
+  \caption{Density Plot, TCQ IAT Scores (Pilot)}
+  \label{fig:tcqpilotplot}
+\end{figure}
+
+As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the explicit expectancy scores are not available for this sample, nor are the demographics, and so this cannot be reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
+
 
 \section{Piloting the Experimental Procedure}
 \label{sec:pilot-exper-proc}
-
 
 
 <<fileimport, echo=FALSE, results=hide>>=
@@ -81,47 +147,167 @@ require(psych)
 require(xtable)
 @
 
-<<scalecreation, echo=FALSE, results=hide>>=
-scales<-cbind(iepilot$LOTR, iepilot$MAAS, iepilot$Pill, iepilot$Cream, iepilot$Inj, iepilot$Acu, iepilot$Hom, iepilot$Rei)
-optpesswords<-cbind(iepilot$Disimproving, iepilot$Worse, iepilot$Sad, iepilot$Failing, iepilot$Happy, iepilot$Succeeding, iepilot$Better, iepilot$Improving)
-@
-
-<<plotscales, echo=FALSE, fig=TRUE>>=
-pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"))
-@
-
-<<plotoptpess, echo=FALSE, fig=TRUE>>=
-pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
-
-@
-
 <<gender, echo=FALSE, results=tex>>=
-xtable(as.data.frame(with(iepilot, summary(Gender))))   
+print(xtable(as.data.frame(with(iepilot, summary(Gender))), label="tab:gendpilot", caption="Gender of Pilot Participants"))   
 @
+
+The participants in the pilot study (N=7), consisted of five men, one woman and one participant who did not report gender. 
 
 <<age, echo=FALSE, results=tex>>=
-xtable(as.data.frame(with(iepilot, table(Age))))
+age.xtab <-xtable(as.data.frame(with(iepilot, table(Age))))
 @
+The minimum age of the participants was 21, the max was 30, the mean was 25.33 while the median was 25.5. 
+
+<<tcqiat, echo=FALSE, results=hide>>=
+tcqiat<-read.csv("TCQ IAT pilot data for R2712.csv")
+@
+
+<<realfakewords, echo=FALSE, results=hide>>=
+realfakewords<-cbind(tcqiat$Real, tcqiat$Accurate, tcqiat$Truth, tcqiat$Actual, tcqiat$X.Inaccurate, tcqiat$Fake, tcqiat$Illusory, tcqiat$Lies)
+@
+
+<<realfakeplot, echo=FALSE, fig=TRUE>>=
+pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"))
+@
+
+<<convaltwords, echo=FALSE, results=hide>>=
+convaltwords<-cbind(tcqiat$Pills, tcqiat$Cream, tcqiat$Injections, tcqiat$Surgery, tcqiat$Homeopathy, tcqiat$X.Acupuncture, tcqiat$flower.essence, tcqiat$Reiki)
+@
+
+<<convaltplot, echo=FALSE, fig=TRUE>>=
+pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"))
+@
+
+
+<<scalecreation, echo=FALSE, results=hide>>=
+scales<-iepilot[,c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei")]
+optpesswords<-iepilot[,c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving")]
+@
+
+\begin{figure}
+<<plotscales, echo=FALSE, fig=TRUE>>=
+pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"))
+@  
+  \caption{Pairs Plot of Explicit Variables, Pilot Study}
+  \label{fig:pairspilot1}
+\end{figure}
+
+
+
+\begin{figure}
+<<plotoptpess, echo=FALSE, fig=TRUE>>=
+pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
+@  
+  \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
+  \label{fig:optpesswordsplot}
+\end{figure}
+
+
+
+
+As can be seen from Figure \ref{fig:optpesswordsplot}, the pessimism items correlate quite well, but this is not true for the optimism words. This is a little worrying, but given that the sample size was extremely small, this may not replicate in a larger sample. 
+
+A Kruskal test on the differences between blocks and total time gave a Chi Square of 23.59, with an associated p value of less than 0.0001 with degrees of freedom equal to 4. 
+This result is somewhat obvious, as blocks three and five are combined tasks, and would be expected to show a different pattern. However, 
+
+%%put in this plot!!!
+
+From Figure \ref{convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
 
 <<iatscores, echo=FALSE, results=tex>>=
 IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
-iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="spearman"))
+iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="kendall"))
 @
+
+The first step was examining the correlation between the two explicit measures. This was found to be 0.42, using Kendall's $\tau$. This is somewhat higher than would be hoped for, but still only represents 16\% of the variance in common between the two measures. 
 
 <<maascorr, echo=FALSE, results=tex>>=
 iatcorr.maas.tcq<-with(iepilot, cor.test(DIAT.Conv, MAAS, use="complete.obs", method="spearman"))
 iatcorr.maas.opt<-with(iepilot, cor.test(DIATOpt, MAAS, use="complete.obs", method="spearman"))
 @
 
+The correlations with the MAAS were 0.37 (for the Treatment Credibility IAT) and 0.08 (for the Optimism IAT). 
+
 <<srcorr, echo=FALSE, results=tex>>=
 impexp.corr.opt<-with(iepilot, cor.test(DIATOpt, LOTR, use="complete.obs", method="spearman"))
 @
 
+Surprisingly (based on the results of the pilot described above), the correlation between the optimism IAT and the LOT-R was negative, but was of the same magnitude as was seen above (-0.26). 
+
 <<corrtcq, echo=FALSE, results=hide>>=
 iepilot[,"meancred"]<-with(iepilot, mean(c(Pill, Cream, Inj, Acu, Hom, Rei), na.rm=TRUE))
-## impexp.corr.tcq <- with(iepilot, cor.test(DIAT.Conv, 
+
 
 @ 
+
+<<iatandsrcorr, echo=FALSE, results=hide>>=
+iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR", "ConvAltRatio")]
+@ 
+
+
+\begin{figure}
+<<iatsrplot, echo=FALSE, results=hide>>=
+pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR", "ConvAltRatio"))
+@  
+  \caption{Pairs Plot of Realtionship Between Explicit and Implicit Measures}
+  \label{fig:impexplot}
+\end{figure}
+
+
+As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
+
+<<physdata, echo=FALSE, results=hide>>=
+physmeasures<-read.csv("Physmeasures for Pilot.csv")
+@
+
+
+<<physbind, echo=FALSE, results=hide>>=
+BPdata<-physmeasures[,c("BP.1703", "BP.1980", "BP.2236", "BP.2346", "BP.8023", "BP.1032", "BP.5185")] #create data.frame for BP data analysis
+GSRdata<-physmeasures[, c("GSR.1703", "GSR.1980", "GSR.2236", "GSR.2346", "GSR.8023", "GSR.1032", "GSR.5185")]
+VASdata<-physmeasures[,c("VAS.1703", "VAS.1980", "VAS.2236", "VAS.2346", "VAS.8023", "VAS.1032", "VAS.5185")] # create data frame for VAS analysis.
+@
+
+<<vastrans,echo=FALSE, figure=TRUE>>=
+vastrans<-VASdata*-10
+vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
+vas.m <- melt(vastrans, id.vars="index")
+print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
+@
+
+
+<<physts,echo=FALSE, results=hide>>=
+BPdata.ts<-as.ts(BPdata) #create BP time series object
+GSRdata.ts<-as.ts(GSRdata) #create GSR time series object
+VASdata.ts<-as.ts(VASdata) #create time series object
+@
+
+
+
+
+<<bpplot, echo=FALSE, fig=TRUE>>=
+plot(BPdata.ts)
+@
+\begin{figure}
+<<gsrplot, echo=FALSE, fig=TRUE>>=
+plot(GSRdata.ts)
+@  
+  \caption{GSR Data by Participant Across Time}
+  \label{fig:gsrplot}
+\end{figure}
+
+
+
+\begin{figure}
+<<vasplot, echo=FALSE, fig=TRUE>>=
+plot(VASdata.ts)
+@  
+  \caption{BP Readings over Time}
+  \label{fig:vasplot}
+\end{figure}
+
+
+
+As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically below.
 
 %%% Local Variables: 
 %%% mode: latex
