@@ -1,0 +1,129 @@
+\section{Development of Repertory Grid}
+\label{sec:devel-repert-grid}
+
+The repertory grid approach was taken for the following reasons. Firstly, conventional methods of developing IAT measures use the published self-report scale as a base, but for placebo treatment expectancies, there is no real validated self report measure (the development of which was an aim of this study, reported in Chapter~\ref{cha:tcq-thesis}). 
+
+The first step was the development of stimuli for the repertory grid. This process was carried out along with the first administration of the TCQ, and utilised the same sample. Following the completion of the instrument, participants were asked the following:
+
+\begin{quotation}
+  Please rank, in order of importance, any people or qualities you believe are associated with health (use titles not names e.g. doctor, not doctor murphy)
+
+\end{quotation}
+
+<<packages, echo=FALSE, results=hide>>=
+
+require(ggplot2)
+require(reshape2)
+require(plyr)
+require(xtable)
+@ 
+
+<<data, echo=FALSE, results=hide>>=
+qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="")
+qual.m <- melt(qual, id.vars=NULL)
+qual.m[,"value"] <- with(qual.m, tolower(value))
+qual.tab <- as.data.frame(with(qual.m, table(value)))
+qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
+@ 
+
+\begin{figure}
+<<plotfreq, echo=FALSE, fig=TRUE>>=
+freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=value, y=Freq))+geom_bar(stat="identity")
+print(freq.pl)
+@   
+  \caption{Histogram of Frequency of People or Qualities}
+  \label{fig:freplot}
+\end{figure}
+
+<<freqtab, echo=FALSE, results=tex>>=
+print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"))
+@ 
+
+As can be seen from Figure \ref{fig:freplot}, and Table \ref{tab:freqrep} the most popular exemplar for health was (unsurprisingly) doctor, followed by nurse, pharmacist and dentist. Additionally, a rep grid requires adjectives describing the exemplars, and these were taken from the standard repertory grid developed by Kelly.
+
+\subsection{Piloting of the Repertory Grid}
+\label{sec:pilot-repert-grid}
+
+This repertory grid (see Appendix) was then piloted with a convenience sample. Unfortunately, it became clear that participants in this sample did not have enough examples of medical professionals in order to be able to accurately fill out the grid. The original pilot was carried out online (N=10) and not one respondent was able to complete the process. This was then followed with an attempt at card-sorting (N=3) where it again became clear that participants simply did not have enough experience with particular medical practitioners and environments, and so this attempt was abandoned. 
+
+\section{Development of IAT}
+\label{sec:development-iat}
+
+Therefore, the next step was to develop an IAT without the use of the repertory grid which had been part of the original plan. The approach taken here was two-fold, given the aims of the project. The first step was to use the interviews to establish a common set of themes, and then to match these to the explicit measure, in  order to assure comparability. In the case of the Optimism IAT, this process was simple enough as there existed a self-report measure. However, in the case of the TCQ-IAT this approach presented some problems, as noted previously in this thesis. 
+
+The eventual approach taken was to use forms of treatments for the stimuli, given that these were the closest to the explicit measure, and additionally because they had relatively high face-validity. The positive/negative stimuli were taken to be either words representing truth or falsity. This was done as it was believed that these words would be the most useful. 
+
+The next step in this process was the piloting of the IAT and the examination of their associations with explicit measures of the construct, to ensure that they were measuring related areas. 
+
+\section{Piloting the IAT Measures}
+\label{sec:pilot-iat-meas}
+
+The IAT measures were piloted on 17 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
+
+<<readdata, echo=FALSE, results=hide>>=
+
+setwd("ExperimentDataforR/Pilot")
+source("../../func.R")
+optiat <-read.table("Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
+names(optiat)[c(3,9)] <- c("Them", "Disapproving")
+optiat.s <-optiat[,1:16]
+optscores.mean <-calcIatScores(optiat.s, Code="PP.No", method="mean", words=c("Them", "Theirs", "Themselves", "Me", "Myself", "Mine", "Disapproving", "Sad", "Failing", "Worse", "Succeeding", "Happy", "Improving", "Better"))
+@ 
+
+\section{Piloting the Experimental Procedure}
+\label{sec:pilot-exper-proc}
+
+
+
+<<fileimport, echo=FALSE, results=hide>>=
+iepilot<-read.csv("I and E for Pilot.csv")
+require(psych)
+require(xtable)
+@
+
+<<scalecreation, echo=FALSE, results=hide>>=
+scales<-cbind(iepilot$LOTR, iepilot$MAAS, iepilot$Pill, iepilot$Cream, iepilot$Inj, iepilot$Acu, iepilot$Hom, iepilot$Rei)
+optpesswords<-cbind(iepilot$Disimproving, iepilot$Worse, iepilot$Sad, iepilot$Failing, iepilot$Happy, iepilot$Succeeding, iepilot$Better, iepilot$Improving)
+@
+
+<<plotscales, echo=FALSE, fig=TRUE>>=
+pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"))
+@
+
+<<plotoptpess, echo=FALSE, fig=TRUE>>=
+pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
+
+@
+
+<<gender, echo=FALSE, results=tex>>=
+xtable(as.data.frame(with(iepilot, summary(Gender))))   
+@
+
+<<age, echo=FALSE, results=tex>>=
+xtable(as.data.frame(with(iepilot, table(Age))))
+@
+
+<<iatscores, echo=FALSE, results=tex>>=
+IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
+iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="spearman"))
+@
+
+<<maascorr, echo=FALSE, results=tex>>=
+iatcorr.maas.tcq<-with(iepilot, cor.test(DIAT.Conv, MAAS, use="complete.obs", method="spearman"))
+iatcorr.maas.opt<-with(iepilot, cor.test(DIATOpt, MAAS, use="complete.obs", method="spearman"))
+@
+
+<<srcorr, echo=FALSE, results=tex>>=
+impexp.corr.opt<-with(iepilot, cor.test(DIATOpt, LOTR, use="complete.obs", method="spearman"))
+@
+
+<<corrtcq, echo=FALSE, results=hide>>=
+iepilot[,"meancred"]<-with(iepilot, mean(c(Pill, Cream, Inj, Acu, Hom, Rei), na.rm=TRUE))
+## impexp.corr.tcq <- with(iepilot, cor.test(DIAT.Conv, 
+
+@ 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "PlaceboMeasurementByMultipleMethods"
+%%% End: 
