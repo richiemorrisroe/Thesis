@@ -66,10 +66,8 @@ The IAT measures were piloted on 17 students from the psychology department. Eac
 
 
 <<readdata, echo=FALSE, results=hide>>=
-
-setwd("ExperimentDataforR/Pilot")
-source("../../func.R")
-optiat <-read.table("Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
+source("func.R")
+optiat <-read.table("ExperimentDataforR/Pilot/Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
 names(optiat)[c(3,9)] <- c("Them", "Disapproving")
 optiat.s <-optiat[,1:16]
 optiat.s[,"Block"] <- with(optiat.s, paste("Block", Block, sep=" "))
@@ -120,8 +118,8 @@ As can be seen in Figure \ref{fig:optiatcorrplot}, the correlation was not parti
 Next, the Treatment Credibility Questionnaire was examined to assess its correlations with the self report measure, in preparation for the pilot. 
 
 <<readdata, echo=FALSE, results=hide, eval=FALSE>>=
-print(getwd())
-tcqiat <- read.csv("tcq prep data for IAT.csv")
+
+tcqiat <- read.csv("ExperimentDataforR/Pilot/tcq prep data for IAT.csv")
 tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
 tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Truth", "Fake", "Lies", "Inaccurate", "Conventional", "Pills", "Cream", "Injections", "Nurse", "Doctor", "Pharmacist", "Medicine", "Alternative", "Acupuncture", "Reiki.Master", "Acupuncturist", "Reiki", "Flower.essence", "Homeopathy", "Homeopathist"))
 @ 
@@ -142,7 +140,7 @@ As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the 
 
 
 <<fileimport, echo=FALSE, results=hide>>=
-iepilot<-read.csv("I and E for Pilot.csv")
+iepilot<-read.csv("ExperimentDataforR/Pilot/I and E for Pilot.csv")
 require(psych)
 require(xtable)
 @
@@ -159,11 +157,11 @@ age.xtab <-xtable(as.data.frame(with(iepilot, table(Age))))
 The minimum age of the participants was 21, the max was 30, the mean was 25.33 while the median was 25.5. 
 
 <<tcqiat, echo=FALSE, results=hide>>=
-tcqiat<-read.csv("TCQ IAT pilot data for R2712.csv")
+tcqiat<-read.csv("ExperimentDataforR/Pilot/TCQ IAT pilot data for R2712.csv")
 @
 
 <<realfakewords, echo=FALSE, results=hide>>=
-realfakewords<-cbind(tcqiat$Real, tcqiat$Accurate, tcqiat$Truth, tcqiat$Actual, tcqiat$X.Inaccurate, tcqiat$Fake, tcqiat$Illusory, tcqiat$Lies)
+realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate", "Fake", "Illusory", "Lies")]
 @
 
 <<realfakeplot, echo=FALSE, fig=TRUE>>=
@@ -171,7 +169,7 @@ pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "
 @
 
 <<convaltwords, echo=FALSE, results=hide>>=
-convaltwords<-cbind(tcqiat$Pills, tcqiat$Cream, tcqiat$Injections, tcqiat$Surgery, tcqiat$Homeopathy, tcqiat$X.Acupuncture, tcqiat$flower.essence, tcqiat$Reiki)
+convaltwords<-tcqiat[, c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "X.Acupuncture", "flower.essence", "Reiki")]
 @
 
 <<convaltplot, echo=FALSE, fig=TRUE>>=
@@ -257,7 +255,7 @@ pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR", "ConvAl
 As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
 
 <<physdata, echo=FALSE, results=hide>>=
-physmeasures<-read.csv("Physmeasures for Pilot.csv")
+physmeasures<-read.csv("ExperimentDataforR/Pilot/Physmeasures for Pilot.csv")
 @
 
 
@@ -271,8 +269,41 @@ VASdata<-physmeasures[,c("VAS.1703", "VAS.1980", "VAS.2236", "VAS.2346", "VAS.80
 vastrans<-VASdata*-10
 vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
 vas.m <- melt(vastrans, id.vars="index")
+vas.c <- dcast(vas.m, formula=variable~...)
+names(vas.c)[1] <- "PP.No"
+names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
 print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
 @
+
+<<vaswithplacresp, echo=FALSE, results=hide>>=
+vas.with.plac <- read.csv("ExperimentDataforR/Pilot/vaspilot.csv", header=TRUE, sep="\t")
+vas.with.plac[,"PP.No"] <- with(vas.with.plac, gsub("VAS.", "", x=PP.No))
+surv <- read.csv("ExperimentDataforR/Pilot/Survdatapilot.csv")
+vas.s <- vas.with.plac[,c("PP.No", "PlacResp")]
+surv.merge <- merge(surv, vas.s, by.x="PpNo", by.y="PP.No")
+@ 
+
+<<placglm, echo=FALSE, results=tex>>=
+placglm.tcq <- glm(PlacResp~DIAT.Conv, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.tcq, label="tab:tcqiatglm", caption="Predicting Placebo Response from TCQ IAT Scores"))
+@ 
+
+<<placglmopt, echo=FALSE, results=tex>>=
+placglm.opt <- glm(PlacResp~DIATOpt, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.opt, label="tab:optiatglm", caption="Predicting Placebo Response from OPT IAT Scores"))
+@ 
+
+<<placglmconv, echo=FALSE, results=tex>>=
+placglm.conv <- glm(PlacResp~ConvAltRatio, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.conv, label="tab:convglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
+@ 
+
+<<placglmlotr, echo=FALSE, results=tex>>=
+placglm.lotr <- glm(PlacResp~LOTR, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
+@ 
+
+As can be seen from Table \ref{tab:tcqiatglm}, \ref{tab:optiatglm}, \ref{tab:convglm} and \ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Additionally, only 3 of the seven participants responded to placebo, suggesgting that an extremely large sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers, 2005. 
 
 
 <<physts,echo=FALSE, results=hide>>=
@@ -308,6 +339,17 @@ plot(VASdata.ts)
 
 
 As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically below.
+
+\section{Discussion}
+\label{sec:discussion}
+
+A number of issues have become clear in the piloting of the IAT measures and experimental setup. The first is that the effect sizes achieved from placebo suggestions were quite small. The solution to this in the larger study was to include a priming manipulation (the scrambled sentence task) for the majority of participants, a small group not being primed to ensure that the effect of this manipulation could be tested. 
+
+Most importantly, there appears to be a (small) relationship between the explicit and implicit measures, which would seem to indicate that these measures can be effectively used in the experimental setup. 
+
+Additionally, the use of the priming manipulation allows for the major hypotheses of the study (the relationship between placebo response, explicit and implicit measures) to be tested more effectively. 
+
+Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. 
 
 %%% Local Variables: 
 %%% mode: latex
