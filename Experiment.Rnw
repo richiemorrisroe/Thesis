@@ -6,23 +6,73 @@ This chapter describes the experimental portion of the research, which involved 
 This chapter proceeds with the following sections:
 
 \begin{enumerate}
+  
+
+\item A short rationale for this study
+
 \item A look at some of the difficulties with measurement of placebo responses via self-report
 
-
-\item A look at some broader measurement issues within placebo research more generally
+%% \item A look at some broader measurement issues within placebo research more generally
 
 \item A description of the methodology employed in this chapter to test the major hypotheses and mitigate some of the issues described above
 
-\item A description of the major preliminary checks and tests to ensure that the data was as useful as it could be
+%% \item A description of the major preliminary checks and tests to ensure that the data was as useful as it could be
 
 \item A testing of the major hypotheses around the placebo and its relationship to implicit and explicit treatment expectancies. 
 
 \item  A discussion outlining the major issues raised by this chapter.
 \end{enumerate}
 
+\subsection{Placebo Effects and Implicit Measures}
+\label{sec:plac-effects-impl}
+
+As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:sec:rese-base-comb} there are some reasons to believe that the placebo effect is impacted by implicit influences. These are the following:
+
+\begin{itemize}
+\item Research shows that priming can increase the size of placebo effects;
+\item The results of Kirsch (1998) where he showed that informed conditioning was less effective than uninformed condition would seem to argue that the effectiveness of placebos can be reduced by information;
+
+\item Some theorists have suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability) and it has also been argued that response to placebo is similar, thus suggesting that there may be a link;
+
+\item Research has shown that the awareness of priming manipulations can decrease the size of the effect, again suggesting that an implicit measure might prove useful in measuring this effect.
+\end{itemize}
+
+The implicit measure chosen for this purpose was the implicit association test. This choice was made both because it is the most widespread, and as such more of the best practices and problems with the measure are available in prior research. 
+
+These problems (discussed at length in Chapter \ref{cha:literature-review}, Part \ref{part:impl-assoc-test}), have included:
+
+\begin{itemize}
+\item Low test-retest reliability (approximately 0.49)
+
+\item method variance affecting the results
+
+\item Issues around the scoring and interpretation of the results
+\end{itemize}
+
+This chapter addresses these problems in the following manner. Firstly, the low test-retest reliability may be an advantage in that it represents state-based variance (and indeed the IAT has been shown to predict spontaneous behaviour better than explicit measures) and as such could be an (admittedly small) advantage in the prediction of placebo. The method variance problem was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high (r>=.3) then controlling for them by including both IAT's in each regression model. 
+
+\subsection{Placebo effects and deception}
+\label{sec:plac-effects-decept}
+
+The commonly accepted model of the placebo effect claims that deception is necessary for the effect to occur. The entire theory behind randomised controlled trials suggests that because participants respond to the mere administration of medicines, then a control (the placebo) is needed to allow the true effect of the drug to be established. A necessary part of this design is that the participants in the placebo group need to believe that there is a chance that they are getting the real treatment. 
+
+Some theorists have argued against this \cite{Deventer2008,Evans2002}, and a recent randomised controlled trial has shown that compared to no treatment, an open placebo can perform significantly better \cite{kaptchuk2010placebos}.
+
+The Kaptchuk \textit{et al} study, which was a three week randomised controlled trial using IBS patients showed that administration of an open-label placebo was associated with a significant improvement (d=0.79) at in the IBS Global Improvement Scale (the major outcome measure) the 21 day endpoint for the study. Similar trends were observed for other symptom severity ($d=0.53$) and quality of life ($d=0.40$)
+
+However, this study did not include a deceptive placebo condition, and so is not a true test of the theory that deception is unnecessary for the placebo response. One secondary aim of this study was to examine the theory that Open Placebo responses could be induced in a placebo analgesia paradigm. 
+
+\subsection{Explicit Measures and Placebo}
+\label{sec:expl-meas-plac}
+
+Another issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. 
+
+In brief, the measure adapted in Chapter \ref{cha:tcq-thesis} had six questions for each of the six different treatment modalities, which included conventional (Pills, Creams, Injections) and Alternative (Acupuncture, Homeopathy, Reiki) treatments. Three of the questions related to expectancy, while three related to credibility (factors found in the original development of the instrument). These 36 questions were reduced to 18 using factor analytic and IAT measures, to allow for easier administration. 
+
+
 \subsection{Detecting the existence of placebo effects}
 
-The definition of placebo effects is without consequence if it is impossible to establish that a placebo effect has or has not occurred in a controlled setting. One of the largest problems with establishing this is when the outcome is a subjective one, such as pain (which is the domain in which the placebo was examined in this research). Pain is a subjective experience, and equivalent stimulus levels may cause entirely different reactions  in two different people \cite{Kirsch1997}. 
+The study of placebo effects is without consequence if it is impossible to establish that a placebo effect has or has not occurred in a controlled setting. One of the largest problems with establishing this is when the outcome is a subjective one, such as pain (which is the domain in which the placebo was examined in this chapter). Pain is a subjective experience, and equivalent stimulus levels may cause entirely different reactions  in two different people \cite{Kirsch1997}. 
 
 This issue is often controlled for by calibration of the stimulus levels to the individual participant in an experiment. This allows the researcher to assess to what extent these pain levels are altered by the placebo treatment. Normally, pain intensity and unpleasantness levels are assessed on an eleven point Visual Analogue Scale (VAS)  and these ratings are used as the input data for statistical analysis of different groups. 
 
@@ -48,7 +98,7 @@ The next major problem with the current analytic strategies taken towards placeb
 %% Additionally, the additive model of drug and placebo interactions may be an issue. This is typically taken as true, which is a position which may have had validity before large scale computing resources were available, but this constraint does not apply any more \cite{Caspi2002}. The issue of additive placebo and drug interactions was discussed further in Chapter \ref{cha:methodology}. 
 
 
-One final issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the devlopment of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. The limitations of this approach have been addressed earlier, and will not be revisited here. 
+
 
 
 
@@ -75,6 +125,7 @@ The collection of these various forms of data, along with a behavioural criterio
 
 \subsection{Experimental Procedure}
 <<healthenv, echo=FALSE, results=hide>>=
+
 ## load("healthforthesis.rda")
 ## load("tcq2.rda")
 load("homdata.rda")
@@ -226,6 +277,7 @@ Finally, the models described in Chapter \ref{cha:methodology} were fit to the d
 
 \section{Results}
 \label{sec:results}
+
 
 
 
@@ -1543,9 +1595,9 @@ This model was so accurate that it made the researcher suspicious that it was an
 <<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 print(plot(evtree.train$finalModel))
 @   
-  \caption{Evolutionary Tree plot for Prediction of Placebo Response}
-  \label{fig:evtreeplot}
-\end{figure}
+%%   \caption{Evolutionary Tree plot for Prediction of Placebo Response}
+%%   \label{fig:evtreeplot}
+%% \end{figure}
 
 
 <<testandtrain, echo=FALSE, results=hide>>=
