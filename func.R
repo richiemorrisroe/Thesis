@@ -466,7 +466,7 @@ calcprob <- function (x) {
            p1 <- na.omit(length((y==y[j])))/ length(totscores)
            p2 <- length(y==y[j])/length(na.omit(totscores))
            p3 <- na.omit(length(y[j]))/length(na.omit(y))
-           browser()
+           ## browser()
            p4 <- p1*p2
            p5 <- p4/p3
            probcal[[i]] <- p5
@@ -534,11 +534,13 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
     warning("not all participants have complete responses")
 
   partlen <- with(data, tapply(Block, Code,length))
+    
   droppart <- partlen[partlen!=5]
   drop <- which(data$Code==names(droppart))
   data <- data[-(drop),]
   }
   if(method=="mean") {
+    
     func <- method[1]
   }
   else {
@@ -546,6 +548,7 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
   }
 
   data2 <- data[,c(Code, words)]
+  
   block3 <- data2[data$Block=="Block 3",]
   block5 <- data2[data$Block=="Block 5",]
   block1 <- data2[data$Block=="Block 1",]
@@ -827,7 +830,7 @@ interpolate.pain <- function(pain, padding) {
         ## browser()
         res.mat[i,1:length(full.dat)+1] <- full.dat
         res.mat
-        browser()
+        ## browser()
     }
         res.mat
     
@@ -849,7 +852,7 @@ interpolate2 <- function(painscores, painmetadata) {
         
         painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
         if(i==27) {
-        browser()
+        ## browser()
         }
         padding <- rep(0, times=partpad)
         padpluspain <- c(padding, painratings)
