@@ -271,6 +271,31 @@ The method is multiple imputation, and the process is as follows. Firstly, the m
 
 Throughout this research, multiple imputation was used where the amount of missing data was substantial. Typically, between five and fifteen simulated data sets were created, and models run seperately across all imputed datasets, with inferences combined at the end. The multiple imputations were then analysed and tested to ensure that the simulated data was an accurate reflection of the non-missing data, in line with best practice~\cite{abayomi2008diagnostics}.
 
+\subsection{Psychometric Analyses}
+\label{sec:psych-analys}
+
+%moved from TCQ chapter, expand this and make it make sense. 
+After this, factor solutions were extracted using principal axis methods primarily, and maximum likelihood methods where these did not converge.
+
+Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation used.
+
+After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. %% Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
+
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx package for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions.
+
+
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
+
+Following this, three successively more complicated IRT models were fitted to each sub-scale (Rasch, one parameter and two parameter). Both Partial Credit Models and Graded Response Models were used. 
+
+
+Linear regressions were run to examine the differential effects of each of the correlated variables. Stepwise selection on the training set was carried out, along with lasso, ridge and least angle regression methods. The performance of each of these methods was then assessed on held-out data (from Sample One, using ten fold cross-validation as previously described). 
+
+In the case of Sample One, some of Sample Two was used as a heldout data set. For Sample Two, the entire dataset was split into four splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately, and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures.
+
+
+
+
 \subsubsection{Structural Equation Modelling}
 \label{sec:struct-equat-model}
 
