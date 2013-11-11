@@ -1,9 +1,9 @@
 
 \section{Introduction}
 
-Expectancies are considered to be at the core of the placebo response \cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs \cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal \cite{Whalley2008}.  
+Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal~\cite{Whalley2008}.  
 
-This chaper describes an adaptation of the Credibility/Expectancy Questionnaire \cite{devilly2000psychometric}  to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
+This chaper describes an adaptation of the Credibility/Expectancy Questionnaire~\cite{Devilly2000} to measure pain expectancies in a student sample, and reports on its psychometric validation over two studies. 
 
 While expectancies are considered the prime factor in response to placebo, there is some evidence that they are not the best predictors in all situations, and that there may be components of expectancies which are not tapped by current measures \cite{Hyland2007,Geers2005,Geers2005a}. The CEQ is useful in that it taps both cognitive and affective components of the expectancy construct, and this should lead to better predictions \cite{Blasi2001}. This chapter describes the development of the CEQ for assessing treatment expectancies. 
 
@@ -34,7 +34,7 @@ Of these, the first three questions were found to cluster together (using princi
 
 \paragraph{Beliefs About Medicine Questionnaire}
 
-In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants in  Sample Two. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines~\cite{Horne1999}. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors. The eight items were those retained from a pool of 16 items which derived from interviews with chronic pain patients. All 16 items were administered to all participants, of which 8 are the items selected for the final questionnaire by the original authors, and the other 8 are items which were dropped due to poor loadings during the development of the instrument. 
+In addition to this, the Beliefs about Medicine Questionnaire (BAM) was administered to all participants in  Sample Two. This is an instrument developed to assess the beliefs of chronic pain patients regarding their medicines~\cite{Horne1999}. This instrument was included in order to validate the TCQ by means of correlations with this similar measure. The BAM is an eight item measure which purports to have two factors, and which was developed using principal components analysis~\cite{Horne1999}.
 
 \subsection{Sampling}
 
@@ -107,7 +107,7 @@ The next step was to look at the scores on the response variables regarding the 
 In Table \ref{tab:tcq1sumtotals} the summary statistics for the credibility scores for each of the four modalites are shown. 
 
 <<totalscreate, echo=FALSE, results=hide, cache=TRUE>>=
-totals <- tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")]
+totals <- na.omit(tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")])
 totals2 <- totals/6
 @
 
@@ -233,7 +233,7 @@ The Acupuncture factor does not correlate highly with the other three factors, b
 
 
 
-This four factor solution explains 74\% of the variance, which is extremely high for a psychological self report scale \footnote{though typically the proportion of variance explained is higher when a scale is developed, and falls on new samples}. 
+This four factor solution explains 74\% of the variance, which is extremely high for a psychological self report scale. %% \footnote{though typically the proportion of variance explained is higher when a scale is developed, and falls on new samples}. 
 
 
 
@@ -393,7 +393,7 @@ tcqcoef <- coef(tcqconv.pcm.rasch)
 
 
 
-The generalised partial credit model was not a good fit to the conventional items in this sample. The next step was to fit the graded response model, and examine if this model can be fit accurately to the dataset at hand. 
+The next step was to fit a series of graded response models. 
 
 <<tcqconvgrmconstrained, echo=FALSE, results=hide, cache=TRUE>>=
 tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
@@ -421,9 +421,9 @@ print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficient
 <<tcqgrmcomp, echo=FALSE, results=hide, cache=TRUE>>=
 grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
 @ 
-The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative TCQ (i.e. the acupuncture items) was examined under both the partial credit model and the graded response model.  
+The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative TCQ (i.e. the acupuncture items) using a series of graded response models.  
 
-<<tcqaltpcm, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqaltpcm, echo=FALSE, results=hide, cache=TRUE>>=
 tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
 tcqaltcoef <- coef(tcqalt.pcm.rasch)
 
@@ -432,36 +432,36 @@ tcqaltcoef <- coef(tcqalt.pcm.rasch)
 @ 
 
 
-<<tcqaltgpcmraschprint, echo=FALSE, results=tex>>=
+<<tcqaltgpcmraschprint, echo=FALSE, results=hide, >>=
 print(xtable(tcqaltcoef, label="tab:tcq1altgpcmrasch", caption="Coefficients for TCQ 1 Alternative Scale, Rasch Generalised Partial Credit Model"))
 @ 
-Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcq1altgpcmrasch}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
+%% Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcq1altgpcmrasch}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
 
-<<tcqaltpcm1pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqaltpcm1pl, echo=FALSE, results=hide,, eval=FALSE, cache=TRUE>>=
 tcqalt.pcm.1pl <- gpcm(tcqalt, constraint="1PL")
 tcqaltcoef.1pl <- coef(tcqalt.pcm.1pl)
 
 ## tcqalt.pcm.fscores <- factor.scores(tcqalt.pcm.1pl)
 ## tcqalt.pcm.absest <- getIRTestimates(tcqalt.pcm.fscores)
 @ 
-<<tcqaltgpcm1plprint, echo=FALSE, results=tex>>=
+<<tcqaltgpcm1plprint, echo=FALSE, results=hide, eval=FALSE>>=
 print(xtable(tcqaltcoef.1pl, label="tab:tcq1altgpcm1pl", caption="Coefficients for TCQ1 Alternative, One Parameter Generalised Partial Credit Model"))
 @ 
-The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcq1altgpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An ANOVA confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
+%% The examination of the more complex model with a discrimination parameter estimated from the data (Table \ref{tab:tcq1altgpcm1pl}) shows that the acupuncture items can perhaps be modelled best with a much higher discrimination rather than higher ability estimates. An ANOVA confirms that the 1 parameter model is a significantly better fit than the Rasch model fitted before ($p\le 0.001$). 
 
-Next, a two parameter model was fitted to this data. 
+%% Next, a two parameter model was fitted to this data. 
 
-<<tcqaltpcm2pl, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqaltpcm2pl, echo=FALSE, results=hide, cache=TRUE>>=
 tcqalt.pcm.2pl <- gpcm(tcqalt, constraint="gpcm")
 tcqaltcoef.2pl <- coef(tcqalt.pcm.2pl)
 
 @ 
-<<tcqaltgpcm2plprint, echo=FALSE, results=tex>>=
+<<tcqaltgpcm2plprint, echo=FALSE, results=hide>>=
 print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients for TCQ1 Alternative Scale, Two Parameter Graded Response Model"))
 @ 
 
 
-The two parameter model (shown in Table \ref{tab:tcq1altgpcm2pl}) has some interesting features compared to the one parameter model. Firstly, the discrimination parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has increased substantially. An ANOVA between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
+%% The two parameter model (shown in Table \ref{tab:tcq1altgpcm2pl}) has some interesting features compared to the one parameter model. Firstly, the discrimination parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has increased substantially. An ANOVA between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
 
 Next, two graded response models were fit to the the alternative TCQ questions.
 
@@ -472,7 +472,7 @@ tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
 @ 
-The model described in Table \ref{tab:tcq1altgrm1pl} is quite different from the one parameter model estimated under the partial credit model. Firstly, the discrimination parameter is estimated at a much lower level (3.88 as opposed to 5.20). In addition, the parameter estimates are much more closely distributed around zero, and the category 4 parameter estimates are much less extreme. 
+The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is quite low, and the parameter estimates are  closely distributed around zero.
 
 <<tcqaltgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.grm2 <- grm(tcqalt)
@@ -828,7 +828,7 @@ The hypotheses were as follows:
 \item The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
 \item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s).;
 
-\item Income will correlate postively with experience of CAM methodologies;
+%% \item Income will correlate postively with experience of CAM methodologies;
 
 \item Experience with a particular treatment will be correlated with higher ratings of its credibility. 
 \end{itemize}
@@ -1378,12 +1378,12 @@ Parallel analysis and the scree plot suggest that five factors seems most optima
 \paragraph{Five Factor Solution}
 \label{sec:five-factor-solution}
 
-<<tcq2afact5, echo=FALSE, results=tex>>=
+<<tcq2afact5, echo=FALSE, results=hide>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2b.fact.5, names=c("Pill&Inj", "Cream", "Rei", "Hom", "Acu"),  label="tab:tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
 @ 
 
-The five factor solution (shown in Table \ref{tab:tcq2afact5}) broke down as follows:
+The five factor solution (not shown) broke down as follows:
 It explained 81\% of the variance, and all the communalities were greater than 0.5. 
 
 PA2: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6", "Inj1",  "Inj2",  "Inj3",  "Inj4",  "Inj5",  "Inj6". This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
@@ -1402,13 +1402,14 @@ PA4: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This factor consisted solel
 
 
 
-<<tcq2bfact6, echo=FALSE, results=tex>>=
+<<tcq2bfact6, echo=FALSE, results=hide>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"),label="tab:tcq2bfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
 @ 
 
 
-As can be seen from Table \ref{tab:tcq2bfact6} , the six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
+%% As can be seen from Table \ref{tab:tcq2bfact6}
+The six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
 
 %% Below can be seen the correlations between factors, in Table \ref{tab:tcq2b6factorcor} . 
 
@@ -1592,7 +1593,7 @@ tcq7summ.notB <- summary(tcq7fit.notB)
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"))
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.8)
 @ 
 
 It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the six factor model. However, the difference in likelihood was not large (unlike in Sample One), and given that the seventh factor had only one factor loading on it, the six factor model should be preferred in this case. 
@@ -1888,13 +1889,13 @@ bamall2c <- tcq2c[,53:70]
 \label{sec:five-factor-solution}
 
 
-<<tcq2cfact5, echo=FALSE, results=tex>>=
+<<tcq2cfact5, echo=FALSE, results=hide>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"), label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
 @ 
 
 
-The five factor  solution (shown in Table \ref{tab:tcq2cfact5}) explained 79\% of the variance, and all of the communalities were extremely high. 
+The five factor  solution (not shown) explained 79\% of the variance, and all of the communalities were extremely high. 
 
 PA2: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6", "Inj1",  "Inj2",  "Inj3", "Inj4",  "Inj5",  "Inj6". This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
 
@@ -1920,13 +1921,14 @@ The Pills/Injections factor correlated highly with the Cream factor (as would be
 
 
 
-<<tcq2cfact6, echo=FALSE, results=tex>>=
+<<tcq2cfact6, echo=FALSE, results=hide>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
 @ 
 
 
-Again, as can be seen in Table \ref{tab:tcq2cfact6} the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
+Again, %% as can be seen in Table \ref{tab:tcq2cfact6}
+the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
 
 
 <<tcq2cfactorcor, echo=FALSE, results=hide>>=
@@ -2109,7 +2111,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"))
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.8)
 @ 
 
 It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
@@ -2150,17 +2152,17 @@ print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono", caption="
 
 Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
 
-\begin{figure}
+%% \begin{figure}
 <<tcq2cconvguttman, echo=FALSE, eval=FALSE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 tcq2c.conv.gutt <- check.errors(na.omit(tcq2c.conv))
 tcq2c.conv.gutt.plot <- ggplot(as.data.frame(tcq2c.conv.gutt), aes(x=tcq2c.conv.gutt))+geom_histogram(binwidth=5)
 print(tcq2c.conv.gutt.plot)
 @   
-  \caption{Histogram of Guttman errors for TCQ conventional items, Split C}
-  \label{fig:tcq2cconvguttplot}
-\end{figure}
+%%   \caption{Histogram of Guttman errors for TCQ conventional items, Split C}
+%%   \label{fig:tcq2cconvguttplot}
+%% \end{figure}
 
-The plot shown in Figure \ref{fig:tcq2cconvguttplot} is interesting. It can be seen that the majority of participants have very few guttman errors, but there are quite a few participants who have an extremely high level of scaling errors, suggesting that they were not engaging with the questions in a coherent manner. These participants may need to be removed in order to estimate accurate measures of person ability and item difficulty. 
+%% The plot shown in Figure \ref{fig:tcq2cconvguttplot} is interesting. It can be seen that the majority of participants have very few guttman errors, but there are quite a few participants who have an extremely high level of scaling errors, suggesting that they were not engaging with the questions in a coherent manner. These participants may need to be removed in order to estimate accurate measures of person ability and item difficulty. 
 
 Next, the assumptions of IRT were checked for the TCQ alternative items in this split. 
 
@@ -2179,7 +2181,7 @@ print(xtable(summary(tcq2c.alt.mono), label="tab:tcq2caltcheckmono", caption="Mo
 
 %% Next, the monotonicity assumption was examined. Table \ref{tab:tcq2caltcheckmono} shows that there were no violations of the monotonicity assumption for the alternative items in this split. 
 
-The next step in the analysis procedure was to fit a series of generalised partial credit models to the data (Rasch, one parameter and two parameter). The results are shown below. 
+%% The next step in the analysis procedure was to fit a series of generalised partial credit models to the data (Rasch, one parameter and two parameter). The results are shown below. 
 
 <<tcq2cconvgpcm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2c.conv.gpcm.rasch <- gpcm(tcq2c.conv, constraint="rasch")
@@ -2291,9 +2293,9 @@ Next, an ANOVA likelihood ratio test was carried out between the two models to d
 tcq2c.conv.anova <- anova(tcq2c.conv.grm.1pl, tcq2c.conv.grm.2pl)
 @ 
 
-The results of the anova showed that the two parameter model fit the data significantly better than the one parameter model ($p\le 0.001$). In addition, the AIC and BIC measures (which penalise for extra parameters) agreed with the LR test, unlike in previous splits. Therefore, provisionally, it appears that the two parameter model provides the best fit to the data. 
+The results of the ANOVA showed that the two parameter model fit the data significantly better than the one parameter model ($p\le 0.001$). In addition, the AIC and BIC measures (which penalise for extra parameters) agreed with the LR test, unlike in previous splits. Therefore, provisionally, it appears that the two parameter model provides the best fit to the data. 
 
-Next, the performance of the partial credit and graded response models was assessed on unseen data. 
+Next, the performance of the IRT models was assessed on unseen data. 
 
 <<tcq2cconvpcmtest, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2notc.conv <- tcq2notc[,17:34]
@@ -2426,13 +2428,14 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 
 
-<<tcq2dfact6, echo=FALSE, results=tex>>=
+<<tcq2dfact6, echo=FALSE, results=hide>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
 @ 
 
 
-As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors, as is clearly shown in Table \ref{tab:tcq2dfact6}. This solution explained 81\% of the variance. 
+As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors%% , as is clearly shown in Table \ref{tab:tcq2dfact6}
+. This solution explained 81\% of the variance. 
 
 
 <<tcq2dfactorcor, echo=FALSE, results=hide>>=
@@ -2575,7 +2578,7 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"))
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.8)
 @ 
 
 It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
@@ -2610,19 +2613,20 @@ print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono", caption="
 @ 
 
 %% As can be seen from Table \ref{tab:tcq2dconvcheckmono}, all of the items in the conventional scale met this assumption. 
-Next, the scale was checked for guttman scaling errors, and these were plotted. 
+%% Next, the scale was checked for guttman scaling errors, and these were plotted. 
 
-\begin{figure}
+%% \begin{figure}
 <<tcq2dconvguttman, echo=FALSE, eval=FALSE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 tcq2d.conv.gutt <- check.errors(na.omit(tcq2d.conv))
 tcq2d.conv.gutt.plot <- ggplot(as.data.frame(tcq2d.conv.gutt), aes(x=tcq2d.conv.gutt))+geom_histogram(binwidth=2)
 print(tcq2d.conv.gutt.plot)
 @   
-  \caption{Histogram of Guttman errors for TCQ conventional items, Split D}
-  \label{fig:tcq2dconvguttplot}
-\end{figure}
+%%   \caption{Histogram of Guttman errors for TCQ conventional items, Split D}
+%%   \label{fig:tcq2dconvguttplot}
+%% \end{figure}
 
-As shown in Figure \ref{fig:tcq2dconvguttplot}, the majority of participants had no guttman errors, but there were some participants who made an extremely large number of scaling errors. %% This worrying feature of this split will be examined further when person and item fit indices are assessed in the context of parametric IRT modelling.
+%% As shown in Figure \ref{fig:tcq2dconvguttplot}, the majority of participants had no guttman errors, but there were some participants who made an extremely large number of scaling errors. %% This worry
+%% ing feature of this split will be examined further when person and item fit indices are assessed in the context of parametric IRT modelling.
 
 
 Next, the assumptions were checked for the alternative items, and there were no volations for either the IIO or monotonicity assumptions. 
@@ -3070,16 +3074,16 @@ tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
-print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset Results"))
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset Results"), scalebox=0.8)
 @ 
 
 As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
 
-\subsection{IRT Analyses}
-\label{sec:irt-analyses}
+%% \subsection{IRT Analyses}
+%% \label{sec:irt-analyses}
 
 
-The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
+%% The next step in the analysis procedure was to examine the treatment credibility questionnaire in terms of item response theory. The same approach as taken for the factor analytic procedures was taken, such that seperate models were fitted on subsets of the data, and then tested against the out-of-sample data, before being finalised on the entire set of data. First, non-parametric IRT (or Mokken analysis) was applied to test the assumptions required for the parametric models. The analysis proper then began with the simplest of IRT models, the Rasch model, followed by a one parameter model with an estimated discrimination, followed by a two parameter model. 
 
 
 \section{Reducing the size of the TCQ}
@@ -3100,7 +3104,7 @@ plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
   \label{fig:infcurveoneandthree}
 \end{figure}
 
-Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistenly has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
+Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistently has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
 
 With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). %% Indeed, comparing the Item 2, 4, 6 split against the 1, 3, 5 split over the ranges (-2, 2) and (-3, 3) shows that in all cases, the the 2, 4, 6 split had a greater amount of test information (assuming constant models). The models used to measure the information were the one parameter graded response models which had been shown to perform the best 
 
@@ -3149,7 +3153,7 @@ print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="C
 @ 
 
 
-Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2apillholodout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
+Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholodout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
 
 Next, lasso and ridge regressions were performed on the Pill Total variable. 
 
@@ -3159,6 +3163,7 @@ pill2.lasso <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, t
 @
 
 <<pill2lassoprint, echo=FALSE, results=tex>>=
+colnames(pill2.lasso) <- "Coefficients"
 print(xtable(as.matrix(pill2.lasso), label="tab:tcq2apilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable"))
 @ 
 
@@ -3166,7 +3171,8 @@ print(xtable(as.matrix(pill2.lasso), label="tab:tcq2apilllasso", caption="Coeffi
 Table \ref{tab:tcq2apilllasso} shows the estimated coefficients for the lasso regression solution on held out data. As can be seen, there were strong positive coefficients for Creams and Inhjectons, some weak negative correlations for the alternative treatments and experience with alternative treatments variable, and surprisingly enough, a weak negative coefficient for Experience with painkilling creams. 
 
 <<pill2aridge, echo=FALSE, results=tex>>=
-    pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
+pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
+colnames(pill2.ridge) <- "Coefficients"
 print(xtable(as.matrix(pill2.ridge), label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
 @ 
 
@@ -3205,7 +3211,7 @@ print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption=
 
 
 
-The results for the held out data are shown in Table \ref{tab:creamlmholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.
+The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.
 
 
 Next, lasso and ridge regression models were fit to this variable. 
@@ -3216,19 +3222,21 @@ cream2.lasso <- penalisedRegression(tcq2.cream.pred.train, tcq2.cream.resp.train
 @
 
 <<cream2lassoprint, echo=FALSE, results=tex>>=
+colnames(cream2.lasso) <- "Coefficients"
 print(xtable(as.matrix(cream2.lasso), label="tab:tcq2acreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable"))
 @ 
 
 Tavle \ref{tab:tcq2acreamlasso} shows the estimated coefficients for the lasso fit. Pill and Injection totals have high coefficients while the coefficient for Acupuncture is moderate. Note that in this model, the coefficient for experience with cream treatments was negative, reinforcing the notion that something around experience with these two treatments is negatively related. 
 
 <<pill2aridge, echo=FALSE, results=tex>>=
-    pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
+pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
 print(xtable(as.matrix(pill2.ridge), label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
 @ 
 
 
 <<cream2aridge, echo=FALSE, results=tex>>=
 cream2.ridge <- penalisedRegression(tcq2.cream.pred.train, tcq2.cream.resp.train, tcq2.cream.pred.test, alpha=0, newy=tcq2.cream.resp.test, type="coefficients")
+colnames(cream2.ridge) <- "Coefficients"
 print(xtable(as.matrix(cream2.ridge), label="tab:tcq2acreamridge", caption="Coefficient Estimates on Held Out Data for Creamtotal, Ridge Regression, Split A"))
 @ 
 
@@ -3262,7 +3270,7 @@ print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coe
 @ 
 
 
-The model results shown in Table \ref{tab:tcq2injholodout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not signigicant on the unseen data, while experience with pills is. The model was independently significant: F(4,313)=16.42, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3912. 
+The model results shown in Table \ref{tab:tcq2injholdout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not significant on the unseen data, while experience with pills is. The model was independently significant: F(4,313)=16.42, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3912. 
 
 
 <<inj2lasso, echo=FALSE, results=tex, cache=TRUE>>=
@@ -3271,6 +3279,7 @@ inj2.lasso <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, test
 @
 
 <<inj2lassoprint, echo=FALSE, results=tex>>=
+colnames(inj2.lasso) <- "Coefficients"
 print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injtotal as a dependent variable"))
 @ 
 
@@ -3281,6 +3290,7 @@ As shown in Table~\ref{tab:tcq2ainjlasso}, the pattern was similar to the stepwi
 
 <<inj2aridge, echo=FALSE, results=tex>>=
 inj2.ridge <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, tcq2.inj.pred.test, alpha=0, newy=tcq2.inj.resp.test, type="coefficients")
+colnames(inj2.ridge) <- "Coefficients"
 print(xtable(as.matrix(inj2.ridge), label="tab:tcq2ainjridge", caption="Coefficient Estimates on Held Out Data for Injtotal, Ridge Regression, Split A"))
 @ 
 
@@ -3319,6 +3329,7 @@ acu2.lasso <- penalisedRegression(tcq2.acu.pred.train, tcq2.acu.resp.train, test
 @
 
 <<acu2lassoprint, echo=FALSE, results=tex>>=
+colnames(acu2.lasso) <- "Coefficients"
 print(xtable(as.matrix(acu2.lasso), label="tab:tcq2aaculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable"))
 @ 
 
@@ -3328,6 +3339,7 @@ Table \ref{tab:tcq2aaculasso} shows the estimated coefficients for the lasso fit
 
 <<acu2aridge, echo=FALSE, results=tex>>=
 acu2.ridge <- penalisedRegression(tcq2.acu.pred.train, tcq2.acu.resp.train, tcq2.acu.pred.test, alpha=0, newy=tcq2.acu.resp.test, type="coefficients")
+colnames(acu2.ridge) <- "Coefficients"
 print(xtable(as.matrix(acu2.ridge), label="tab:tcq2aacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split A"))
 @ 
 
@@ -3366,6 +3378,7 @@ hom2.lasso <- penalisedRegression(tcq2.hom.pred.train, tcq2.hom.resp.train, test
 @
 
 <<hom2lassoprint, echo=FALSE, results=tex>>=
+colnames(hom2.lasso) <- "Coefficients"
 print(xtable(as.matrix(hom2.lasso), label="tab:tcq2ahomlasso", caption="Coefficient Estimates for Lasso Regression using Homtotal as a dependent variable"))
 @ 
 
@@ -3374,6 +3387,7 @@ Table \ref{tab:tcq2ahomlasso} shows the estimated fit using the lasso method. It
 
 <<hom2aridge, echo=FALSE, results=tex>>=
 hom2.ridge <- penalisedRegression(tcq2.hom.pred.train, tcq2.hom.resp.train, tcq2.hom.pred.test, alpha=0, newy=tcq2.hom.resp.test, type="coefficients")
+colnames(hom2.ridge) <- "Coefficients"
 print(xtable(as.matrix(hom2.ridge), label="tab:tcq2ahomridge", caption="Coefficient Estimates on Held Out Data for Homtotal, Ridge Regression, Split A"))
 @ 
 
@@ -3414,6 +3428,7 @@ rei2.lasso <- penalisedRegression(tcq2.rei.pred.train, tcq2.rei.resp.train, test
 @
 
 <<rei2lassoprint, echo=FALSE, results=tex>>=
+colnames(rei2.lasso) <- "Coefficients"
 print(xtable(as.matrix(rei2.lasso), label="tab:tcq2areilasso", caption="Coefficient Estimates for Lasso Regression using Reitotal as a dependent variable"))
 @ 
 
@@ -3421,7 +3436,8 @@ Table \ref{tab:tcq2areilasso} shows that Homeopahty, Acupuncture and Experience 
 
 <<rei2aridge, echo=FALSE, results=tex>>=
 rei2.ridge <- penalisedRegression(tcq2.rei.pred.train, tcq2.rei.resp.train, tcq2.rei.pred.test, alpha=0, newy=tcq2.rei.resp.test, type="coefficients")
-print(xtable(as.matrix(rei2.ridge), label="tab:tcq2areiridge", caption="Coefficient Estimates on Held Out Data for Reitotal, Ridge Regression, Split A"))
+colnames(rei2.ridge) <- "Coefficients"
+print(xtable(as.matrix(rei2.ridge), label="tab:tcq2areiridge", caption="Coefficient Estimates on Held Out Datafor Reitotal, Ridge Regression, Split A"))
 @ 
 
 Table \ref{tab:tcq2areiridge} shows that the estimated coefficients for the ridge regression are very similar to those for the lasso regression.
