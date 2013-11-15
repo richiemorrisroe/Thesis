@@ -1314,7 +1314,8 @@ print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 Figure \ref{fig:gsrpainplot} shows the interpolated pain rating data against the GSR data in seconds. It can be seen that there appears to be a sizeable difference by condition. This suspicion is further born out when the cross-correlation function is examined between the pain ratings and GSR. For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Deceptive Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
-gsr.cond <- lm(gsr.mean~Condition, data=Iatandexpmeasures.phys)
+Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
+gsr.cond <- lm(gsrmean~Condition, data=Iatandexpmeasures.phys)
 print(xtable(summary(gsr.cond), caption="Regression of Condition on Mean GSR", label="tab:gsrcondreg"))
 @ 
 
@@ -1461,10 +1462,10 @@ Next, the ability estimates generated through the best fitting IRT model were us
 print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
 @ 
 
-Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
+Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Trpeatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
 <<placmodgsr, echo=FALSE, results=tex>>=
-placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
+placmod10 <- glm(PlacResp~gsrmean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
 @ 
 
