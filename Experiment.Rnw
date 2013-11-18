@@ -21,7 +21,7 @@ This chapter proceeds with the following sections:
 \item A testing of the major hypotheses around the placebo and its relationship to implicit and explicit treatment expectancies. 
 
 \item  A discussion outlining the major issues raised by this chapter.
-\end{enumerate}
+n\end{enumerate}
 
 \subsection{Placebo Effects and Implicit Measures}
 \label{sec:plac-effects-impl}
@@ -578,12 +578,23 @@ print(corr.iat.tcq.opt.pl)
 
 There were correlations between the two IAT's. These correlations, while significant, were quite low ($r=\bar0.20$) which equates to about 4\% of the variance. Therefore the two implicit measures can be safely be regarded as not being contaminated by method variance . 
 
-
+<<survivaldata, echo=FALSE, results=hide, eval=FALSE>>=
+painratings <- vasscores[,c(9:53)]
+painratings2 <- vasscores[,c(1,9:53)]
+names(painratings2) <- gsub("X", "T", x=names(painratings2))
+napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
+napainratings2 <- data.frame(Participant=vasscores$PPNo., napainratings)
+napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
+Iatandexpmeasures.surv <- merge(Iatandexpmeasures, napainratings2, by="Participant")
+censor <- Iatandexpmeasures[,"Censored"]
+censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
+## Surv.data <- Surv(lengthsurv,censor2)
+@ 
 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
-names(vasscores2)[1] <-  "Participant"
+names(vasscores)[1] <-  "Participant"
 names(expmeasures2)[1] <- "Participant"
-vasscores2.test <- vasscores2[,1:8]
+vasscores2.test <- vasscores[,1:8]
 expmeasures2comp <- merge(vasscores2.test, expmeasures2)
 Iatandexpmeasures <- merge(expmeasures2comp, IATscores, by="Participant")
 iatexp <- Iatandexpmeasures[,14:23]
@@ -595,21 +606,21 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
  
 %% Next, the relationship between overall response time in each block (total time to complete the block, including interstimulus intervals) was examined in terms of the demographic variables. 
 
-<<optiatdemo, echo=FALSE, results=hide>>=
+<<optiatdemo, echo=FALSE, results=hide, eval=FALSE>>=
 optiatdemographics <- merge(expmeasures2, optiatsorted, by="Participant")
 opt.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), label="tab:optblocktimedemo", caption="Summary of Linear Regression of Block Time by Block, Age and Gender")
 print(opt.demo)
 @  
 %% As can be seen from Table \ref{tab:optblocktimedemo}, the major influence on Block Time comes from Block, which is as expected given that Blocks 3 and 5 had three times as many trials as the other blocks. However, there is also an effect of gender, with males tending to respond somewhat quicker than females. This is interesting, as there are typically no gender based effects on IAT's (except for those which measure gender attitudes). Additionally, there was a significant effect of Age on the results, but this was in the typical direction, with greater Age being associated with greater block time. 
 
-<<tcqiatdemo, echo=FALSE, results=hide>>=
+<<tcqiatdemo, echo=FALSE, results=hide, eval=FALSE>>=
 tcqiatdemographics <- merge(expmeasures2, tcqiatsorted, by="Participant")
 tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographics)), caption="Summary of Linear Regression on Age, Gender and Individual Block Times.", label="tab:tcqblocktimedemo" )
 print(tcq.demo)
 @ 
 
 \begin{figure}
-<<tcqiatgender, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<tcqiatgender, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 tcqiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=TCQIAT.Mean))+geom_boxplot()
 optiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=OptIAT.Mean))+geom_boxplot()
 print(arrangeGrob(optiatgender,tcqiatgender))
@@ -706,7 +717,7 @@ It can be seen from Table \ref{tab:corrimpexp} that the LOTR was only really cor
 
 
 %% \begin{figure}[ht]
-<<lotrmaas, echo=FALSE,,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<lotrmaas, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrmaas <- ggplot(Iatandexpmeasures, aes(x=LOTR, y=MAAS))+geom_point()+geom_smooth(method="lm")+facet_grid(.~Condition)
 print(lotrmaas)
 @   
@@ -961,18 +972,7 @@ In Figure \ref{fig:pairsplotimpexp} the relationships between the self report an
 \subsection{Pain Ratings}
 \label{sec:pain-ratings}
 
-<<survivaldata, echo=FALSE, results=hide>>=
-painratings <- vasscores2[,c(9:53)]
-painratings2 <- vasscores[,c(1,9:53)]
-names(painratings2) <- gsub("X", "T", x=names(painratings2))
-napainratings <- apply(painratings,1, function (x)  sum(is.na(x)))
-napainratings2 <- data.frame(Participant=vasscores2$Participant, napainratings)
-napainratings2[,"length.surv"] <- with(napainratings2, 46-napainratings)
-Iatandexpmeasures.surv <- merge(Iatandexpmeasures, napainratings2, by="Participant")
-censor <- Iatandexpmeasures[,"Censored"]
-censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
-## Surv.data <- Surv(lengthsurv,censor2)
-@ 
+
 
 
 
@@ -992,6 +992,7 @@ pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
 
 
 
+
 \subsection{Analysis of Pain Ratings}
 
 <<painmetadata, echo=FALSE, results=hide>>=
@@ -1007,14 +1008,14 @@ pain.ip <- interpolate.pain(vasscores, padding=pain.pad)
 <<meanpaingroup, echo=FALSE, results=hide>>=
 pain.metadata.uniq <- pain.metadata[with(pain.metadata, !duplicated(PPNo.)),]
 
-painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(Participant)))
+painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(PPNo.)))
 pain.ip2 <- interpolate2(painratings, pain.metadata.uniq)
 pain.ip2 <- as.data.frame(pain.ip2)
 pain.ip2[,"Participant"] <- with(pain.metadata.uniq, PPNo.)
-pain.ip.cond <- merge(pain.ip2, painratings[,1:3], by="Participant")
-deceptivepain <- pain.ip.cond[with(pain.ip.cond,Condition=="Treatment"),]
-placebopain <- pain.ip.cond[with(pain.ip.cond,Condition=="Placebo"),]
-notreatpain <- pain.ip.cond[with(pain.ip.cond,Condition=="No Treatment"),]
+## pain.ip.cond <- merge(pain.ip2, painratings[,1:3], by="Participant")
+deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
+placebopain <- painratings[with(painratings,Condition=="Placebo"),]
+notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
 meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
 meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
 meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
@@ -1051,6 +1052,7 @@ ets.notreat <- with(painbycond, ets(na.omit(NoTreat)))
 meanpain.melt <- melt(meangrouppainratings, id="Time")
 tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))+geom_smooth(span=0.2)
 print(tspainplot)
+x <- 
 @   
   \caption{Plot of Pain Responses by Condition Over Time}
   \label{fig:tsmeanpainplot}
