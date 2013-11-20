@@ -769,7 +769,6 @@ First, the differences between the two samples in terms of Pill credibility were
 
 \begin{figure}
 <<surveypill, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.pill.pl <- ggplot(+geom_density()
 exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
 surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue")
 print(surv.exp.pill.pl)
@@ -786,7 +785,7 @@ Next, the difference between Cream Credibility scores was assessed.
 \begin{figure}
 <<surveycream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 
-surv.exp.cream.pl <- ggplot()+geom_density(data=credtotals, aes(x=Creamtot), fill="red")+geom_density(Iatandexpmeasures, aes(x=Cream), fill="blue")
+surv.exp.cream.pl <- ggplot()+geom_density(data=credtotals, aes(x=Creamtot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Cream), fill="blue")
 print(surv.exp.cream.pl)
 @   
   \caption{Density Plot for Distribution of Cream Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
@@ -951,7 +950,8 @@ This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, wh
 
 \begin{figure}
 <<placprimeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-plac.prime.pl <- ggplot(Iatandexpmeasures, aes(x=PlacResp))+geom_histogram()+facet_grid(.~Prime)
+primedata <- Iatandexpmeasures[with(Iatandexpmeasures, grep("^Placebo|^Treatment", x=Condition)),]
+plac.prime.pl <- ggplot(primedata, aes(x=PlacResp, fill=Prime))+geom_histogram()
 print(plac.prime.pl)
 @   
   \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
@@ -1008,14 +1008,14 @@ pain.ip <- interpolate.pain(vasscores, padding=pain.pad)
 <<meanpaingroup, echo=FALSE, results=hide>>=
 pain.metadata.uniq <- pain.metadata[with(pain.metadata, !duplicated(PPNo.)),]
 
-painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(PPNo.)))
+painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(Participant)))
 pain.ip2 <- interpolate2(painratings, pain.metadata.uniq)
 pain.ip2 <- as.data.frame(pain.ip2)
 pain.ip2[,"Participant"] <- with(pain.metadata.uniq, PPNo.)
-## pain.ip.cond <- merge(pain.ip2, painratings[,1:3], by="Participant")
-deceptivepain <- painratings[with(painratings,Condition=="Treatment"),]
-placebopain <- painratings[with(painratings,Condition=="Placebo"),]
-notreatpain <- painratings[with(painratings,Condition=="No Treatment"),]
+pain.ip.cond <- merge(pain.ip2, painratings[,c(1:3)], by="Participant")
+deceptivepain <- pain.ip.cond[with(pain.ip.cond,Condition=="Treatment"),]
+placebopain <- pain.ip.cond[with(pain.ip.cond,Condition=="Placebo"),]
+notreatpain <- pain.ip.cond[with(pain.ip.cond,Condition=="No Treatment"),]
 meandeceptivepain <- apply(deceptivepain[,4:48], 2, mean, na.rm=TRUE)
 meanplacebopain <- apply(placebopain[,4:48], 2, mean, na.rm=TRUE)
 meannotreatpain <- apply(notreatpain[,4:48], 2, mean, na.rm=TRUE)
@@ -1052,7 +1052,6 @@ ets.notreat <- with(painbycond, ets(na.omit(NoTreat)))
 meanpain.melt <- melt(meangrouppainratings, id="Time")
 tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))+geom_smooth(span=0.2)
 print(tspainplot)
-x <- 
 @   
   \caption{Plot of Pain Responses by Condition Over Time}
   \label{fig:tsmeanpainplot}
@@ -1060,7 +1059,7 @@ x <-
 
 
 
-As can be seen from Figure \ref{fig:tsmeanpainplot}, the placebo group tended to report lower mean pain ratings across time. This was an extremely unexpected finding, and therefore the pain ratings were reanalysed using medians, to lessen the effects that outliers could be having on the results. The curves shown in the figure used a locally weighted smoother (loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
+As can be seen from Figure \ref{fig:tsmeanpainplot}, the Open Placebo group tended to report lower pain ratings throughout the experiment, contrary to expectations before the experiment.  The curves shown in the figure used a locally weighted smoother (loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
 
 \begin{figure}
 <<medtspainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1073,10 +1072,11 @@ print(medtspainplot)
 \end{figure}
 
 
-As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. This suggests that there is a real difference here, one that warrants further explanation. Again, a locally weighted smoother (loess, span=0.5) was used to fit the curves. 
+As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show exactly the same pattern as the mean pain ratings. %% This suggests that there is a real difference here, one that warrants further explanation. 
+Again, a locally weighted smoother (loess, span=0.5) was used to fit the curves. 
 
 
-\begin{figure}
+%% \begin{figure}
 <<medianpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide>>=
 dev.new()
 par(mfrow=c(2,2))
@@ -1084,15 +1084,15 @@ plot(acf(na.omit(with(medpainratings,meddeceptivepain)), main="Deceptive Placebo
 plot(acf(na.omit(with(medpainratings,medplacebopain)), main="Open Placebo Group"))
 plot(acf(na.omit(with(medpainratings,mednotreatpain)), main="No Treatment Group"))
 @   
-  \caption{Autocorrelation Plots for Median Pain Responses over Time by Condition}
-  \label{fig:autocorrpainplot}
-\end{figure}
+%%   \caption{Autocorrelation Plots for Median Pain Responses over Time by Condition}
+%%   \label{fig:autocorrpainplot}
+%% \end{figure}
 
 
-As can be seen above, the autocorrelation plots for the three groups appear to be similiar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
+The autocorrelation plots for the three groups appeared to be similar, which means that a the same ARIMA model can be fit to them. The first three differences are significant, and a process of ARIMA model fitting indicates that an ARIMA(1,3,1) model has the best AIC and likelihood. This is information that needs to be incorportated into an overall model which will be fit to the data.
 
 \begin{figure}
-<<meanpaintscorrelationplots, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide>>=
+<<meanpaintscorrelationplots, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide, eval=FALSE>>=
 plot.new()
 par (mfrow=c (2,2))
 sink ("tmp.txt")
@@ -1126,28 +1126,28 @@ bandage.squeeze [,"SqueezingTime"] <- with (bandage.squeeze, SqueezStop-BandageO
 @ 
  
 
-\begin{figure}
-<<bandonoff, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<bandonoff, echo=FALSE, results=hide>>=
 band.m <- melt (bandage.squeeze [,1:3], id.vars="Participant")
 print (ggplot (band.m, aes (x=value, fill=variable))+geom_density (alpha=0.5))
 @ 
-  \caption{Density Plots for Time of Application of Bandage and Stopping Squeezing}
-  \label{fig:onoffplot}
-\end{figure}
+%%   \caption{Density Plots for Time of Application of Bandage and Stopping Squeezing}
+%%   \label{fig:onoffplot}
+%% \end{figure}
 
-Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
+%% Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
 
-\begin{figure}
+%% \begin{figure}
 <<squeezeplot, echo=FALSE, fig=TRUE>>=
 squeeez.pl <- ggplot (bandage.squeeze, aes (x=SqueezingTime))+geom_density ()
 print (squeeez.pl)
 @ 
-  \caption{Density Plot of Time Spent Squeezing the Hand Exerciser}
-  \label{fig:squeezplot}
-\end{figure}
+%%   \caption{Density Plot of Time Spent Squeezing the Hand Exerciser}
+%%   \label{fig:squeezplot}
+%% \end{figure}
 
 
-As can be seen from Figure \ref{fig:squeezplot}, the majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+The majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
 
 
 
@@ -1172,82 +1172,7 @@ print (physpaindiff.pl)
 
 Before the analysis of GSR data was conducted, the mean GSR per group were scaled to ensure that they were directly comparable. Scaling was performed using a z-score method, where each observations value was subtracted from the mean and divided by the standard deviation of all the observations. 
 
-<<gsrgend, echo=FALSE, results=hide>>=
-gsr.male <- gsrcond[with(gsrcond, Gender=="male"),]
-gsr.female <- gsrcond[with(gsrcond, Gender=="female"),]
-gsr.male2 <- gsr.male[,with(gsr.male, grep("^[0-9]+$", x=names(gsr.male) ))]
-gsr.male.mean <- apply(gsr.male2, 2, mean, na.rm=TRUE)
-gsr.female2 <- gsr.female[,with(gsr.female, grep("^[0-9]+$", x=names(gsr.female) ))]
-gsr.female.mean <- apply(gsr.female2, 2, mean, na.rm=TRUE)
-gsr.gend <- data.frame(index=1:3200, Males=gsr.male.mean, Females=gsr.female.mean)
-gsr.gend.m <- melt(gsr.gend, id.vars="index")
-@ 
-\begin{figure}
-<<gsrgendplot, echo=FALSE, fig=TRUE>>=
-print(ggplot(na.omit(gsr.gend.m), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
-@   
-  \caption{Scaled GSR by Gender over time (in seconds)}
-  \label{fig:gendgsrplot}
-\end{figure}
 
-Figure \ref{fig:gendgsrplot} shows that the pattern of GSR responses was quite different for males and females. Males showed somewhat decreasing GSR over time (but note that the number of participants in each group fell off as time progressed, so the pattern is less than certain), but an overall higher GSR throughout the entire experiment, while females showed the opposite pattern.  
-
-<<gsrplacresp, echo=FALSE, results=hide>>=
-gsr.placyes <- gsrcond[with(gsrcond, PlacResp=="Yes"),]
-gsr.placno <- gsrcond[with(gsrcond, PlacResp=="No"),]
-gsr.placyes.mean <- apply(gsr.placyes[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.placno.mean <- apply(gsr.placno[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.placresp <- data.frame(index=1:3200,PlaceboResp=gsr.placyes.mean, NoPlaceboResp=gsr.placno.mean)
-gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
-@ 
-\begin{figure}
-<<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-print(ggplot(gsr.placresp.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
-@   
-  \caption{GSR over Time by Response to Placebo}
-  \label{fig:gsrplacresplot}
-\end{figure}
-
-As can be seen from Figure \ref{fig:gsrplacresplot}, the GSR levels of those participants who responded to placebo increased over time, while the GSR levels of those who did not decreased over time. 
-
-This seems intuitively odd, as one might have expected the placebo effect to have lowered skin conductance in the group which responded to placebo. 
-
-<<gsrcond2, echo=FALSE, results=hide>>=
-gsr.decept <- gsrcond[with(gsrcond, Condition=="Treatment"),]
-gsr.open <- gsrcond[with(gsrcond, Condition=="Placebo"),]
-gsr.notreat <- gsrcond[with(gsrcond, Condition=="No Treatment"),]
-gsr.decept.mean <- apply(gsr.decept[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.open.mean <- apply(gsr.open[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.notreat.mean <- apply(gsr.notreat[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
-gsr.conditions <- data.frame(index=1:3200, Deceptive=gsr.decept.mean, Open=gsr.open.mean, NoTreatment=gsr.notreat.mean)
-gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
-@ 
-\begin{figure}
-<<gsrplotcond, echo=FALSE, results=hide>>=
-print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
-@   
-  \caption{GSR by Condition over Time}
-  \label{fig:gsrcondplot}
-\end{figure}
-
-Figure \ref{fig:gsrcondplot} shows the GSR levels by condition over time. It can be seen that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
-
-\begin{figure}
-<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
-@   
-  \caption{Mean GSR Levels by Condition over Time}
-  \label{fig:meangsr}
-\end{figure}
-
-
-The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
-
-<<semdata, echo=FALSE, results=hide>>=
-Iatandexpmeasures2 <- Iatandexpmeasures.phys
-names(Iatandexpmeasures2)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
-exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
-@ 
 
 <<tsimport, echo=FALSE, results=hide>>=
 gsr <- read.csv("GSRdataDownSample.csv")
@@ -1299,9 +1224,87 @@ gsr.decept.merge.m <- melt(gsr.decept.merge, id.vars="Index")
 gsr.open.merge.m <- melt(gsr.open.merge, id.vars="Index")
 gsr.notreat.merge <- gsr.pain.merge.gg2[,c("Index", "NoTreatPain", "NoTreatGSR")]
 gsr.notreat.merge.m <- melt(gsr.notreat.merge, id.vars="Index")
-gsr.decept.pl <- ggplot(gsr.decept.merge.m, aes(x=Index, y=value, color=variable))+geom_line()
+gsr.decept.pl <- ggplot(gsr.decept.merge.m, aes(x=Index, y=value, color=variable))+geom_line()+xlim(c=0,1700)
 gsr.open.pl <- ggplot(gsr.open.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
 gsr.notreat.pl <- ggplot(gsr.notreat.merge.m, aes(x=Index, y=value, colour=variable))+geom_line()
+@ 
+
+<<gsrgend, echo=FALSE, results=hide>>=
+gsr.male <- gsrcond[with(gsrcond, Gender=="male"),]
+gsr.female <- gsrcond[with(gsrcond, Gender=="female"),]
+gsr.male2 <- gsr.male[,with(gsr.male, grep("^[0-9]+$", x=names(gsr.male) ))]
+gsr.male.mean <- apply(gsr.male2, 2, mean, na.rm=TRUE)
+gsr.female2 <- gsr.female[,with(gsr.female, grep("^[0-9]+$", x=names(gsr.female) ))]
+gsr.female.mean <- apply(gsr.female2, 2, mean, na.rm=TRUE)
+gsr.gend <- data.frame(index=1:3200, Males=gsr.male.mean, Females=gsr.female.mean)
+gsr.gend.m <- melt(gsr.gend, id.vars="index")
+@ 
+\begin{figure}
+<<gsrgendplot, echo=FALSE, fig=TRUE>>=
+print(ggplot(na.omit(gsr.gend.m), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
+@   
+  \caption{Scaled GSR by Gender over time (in seconds)}
+  \label{fig:gendgsrplot}
+\end{figure}
+
+Figure \ref{fig:gendgsrplot} shows that the pattern of GSR responses was quite different for males and females. Males showed somewhat decreasing GSR over time (but note that the number of participants in each group fell off as time progressed, so the pattern is less than certain), but an overall higher GSR throughout the entire experiment, while females showed the opposite pattern.  
+
+<<gsrplacresp, echo=FALSE, results=hide>>=
+gsr.placyes <- gsrcond[with(gsrcond, PlacResp=="Yes"),]
+gsr.placno <- gsrcond[with(gsrcond, PlacResp=="No"),]
+gsr.placyes.mean <- apply(gsr.placyes[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.placno.mean <- apply(gsr.placno[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.placresp <- data.frame(index=1:3200,PlaceboResp=gsr.placyes.mean, NoPlaceboResp=gsr.placno.mean)
+gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
+@ 
+\begin{figure}
+<<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
+print(ggplot(gsr.placresp.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth())
+@   
+  \caption{GSR over Time by Response to Placebo}
+  \label{fig:gsrplacresplot}
+\end{figure}
+
+As can be seen from Figure \ref{fig:gsrplacresplot}, the GSR levels of those participants who responded to placebo increased over time, while the GSR levels of those who did not decreased over time. 
+
+This seems intuitively odd, as one might have expected the placebo effect to have lowered skin conductance in the group which responded to placebo. 
+
+<<gsrcond2, echo=FALSE, results=hide>>=
+gsr.decept <- gsrcond[with(gsrcond, Condition=="Treatment"),]
+gsr.open <- gsrcond[with(gsrcond, Condition=="Placebo"),]
+gsr.notreat <- gsrcond[with(gsrcond, Condition=="No Treatment"),]
+gsr.decept.mean <- apply(gsr.decept[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.open.mean <- apply(gsr.open[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.notreat.mean <- apply(gsr.notreat[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
+gsr.conditions <- data.frame(index=1:3200, Deceptive=gsr.decept.mean, Open=gsr.open.mean, NoTreatment=gsr.notreat.mean)
+gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
+@ 
+\begin{figure}
+<<gsrplotcond, echo=FALSE, results=hide>>=
+print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
+@   
+  \caption{GSR by Condition over Time}
+  \label{fig:gsrcondplot}
+\end{figure}
+
+Figure \ref{fig:gsrcondplot} shows the GSR levels by condition over time. It can be seen that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
+
+%% \begin{figure}
+<<meanplotgsr, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
+@   
+%%   \caption{Mean GSR Levels by Condition over Time}
+%%   \label{fig:meangsr}
+%% \end{figure}
+
+
+The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+
+<<semdata, echo=FALSE, results=hide>>=
+Iatandexpmeasures2 <- Iatandexpmeasures.phys
+names(Iatandexpmeasures2)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
+exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
+@ 
 
 
 @ 
@@ -1354,43 +1357,43 @@ gsr.mean.cond[,"notreat360"] <- with(gsr.mean.cond, ts(NoTreat, deltat=1/360))
 @ 
 
 
-\begin{figure}
-<<ggplothistcond, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<ggplothistcond, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(plac.resp.hist.pl)
 @   
-  \caption{TCQIAT.Mean against Pain Responses Over Time}
-  \label{fig:histresp}
-\end{figure}
+%%   \caption{TCQIAT.Mean against Pain Responses Over Time}
+%%   \label{fig:histresp}
+%% \end{figure}
 
 
-From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
-
-
-
+%% From Figure \ref{fig:histresp}, it can be seen that the participants who did respond to placebo had marginally higher Treatment Credibility IAT scores than those who did not. 
 
 
 
-\begin{figure}
-<<optiatcorrsurv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+
+
+
+%% \begin{figure}
+<<optiatcorrsurv, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
 print(optiat.histcond)
 @   
-  \caption{Density Plots of Optimism IAT Scores by Condition}
-  \label{fig:opthistcond}
-\end{figure}
+%%   \caption{Density Plots of Optimism IAT Scores by Condition}
+%%   \label{fig:opthistcond}
+%% \end{figure}
 
 
-Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
+%% Again, it can be seen from Figure \ref{fig:opthistcond} that those who responded to placebo had higher optimism IAT scores than  those who did not, suggesting that something about the IAT is predictive of placebo response. 
 
-\begin{figure}
-<<creamhistcond, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<creamhistcond, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 cream.hist.cond <- ggplot(Iatandexpmeasures, aes(x=Cream))+geom_density()+facet_grid(.~PlacResp)
 print(cream.hist.cond)
 @   
-  \caption{Density Plot for Mean Cream Credibility Scores by Condition}
-  \label{fig:creamhistcond}
-\end{figure}
+%%   \caption{Density Plot for Mean Cream Credibility Scores by Condition}
+%%   \label{fig:creamhistcond}
+%% \end{figure}
 
 
 Figure  \ref{fig:creamhistcond} shows that there was a difference in the mean cream credibiliuty scores by whether or not a participant responded to placebo, but the difference was not significant ($t=-0.9545, df=53.766, p=0.3441$). 
@@ -1416,7 +1419,7 @@ A number of findings are apparent from the plot above in Figure \ref{fig:placyes
 
 \subsection{Logistic Regressions on Placebo Response}
 \label{sec:logist-regr-plac}
-In order to examine whether or not the IAT scores were predictive of placebo response, a logistic regression model was used. Logistic regression was chosen for this as the response outcome was binary, and this method extends the linear regression model for binary outcomes. 
+In order to examine whether or not the IAT scores were predictive of placebo response, a logistic regression model was used. 
 
 
 <<placmod1, echo=FALSE, results=tex>>=
@@ -1475,7 +1478,7 @@ print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regre
 As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
 
 
-Next, the three major variables (IAT's and Optimism) were placed into one model and allowed to interact. When these three variables are placed into the model together, the result is significant.
+Next, the three major variables (IAT's and Optimism) were placed into one model and allowed to interact. 
 
 <<placeboglm, echo=FALSE, results=tex>>=
 placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
@@ -1505,17 +1508,17 @@ print(lotriatplot)
 \end{figure}
 
  The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
- \begin{figure}
-<<lotrtcqsmoothplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+ %% \begin{figure}
+<<lotrtcqsmoothplot, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))+geom_point()
 print(lotrtcqplot)
 @     
-   \caption{Scatterplot of LOT-R Scores against TCQ IAT Scores, Placebo Response is denoted using colour}
-   \label{fig:lotrtcqplot}
- \end{figure}
+%%    \caption{Scatterplot of LOT-R Scores against TCQ IAT Scores, Placebo Response is denoted using colour}
+%%    \label{fig:lotrtcqplot}
+%%  \end{figure}
 
 
-This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
+%% This is perhaps clearer in Figure \ref{fig:lotrtcqplot} where it can be seen that the majority of placebo response occurs at median levels of both self reported optimism and implicit treatment credibility. 
 
 \begin{figure}
 <<lotroptplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1591,12 +1594,12 @@ evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 @ 
 
 %% To have some kind of graphical representation of how the tree works, the evolutionary tree final model on the training set was plotted. As can be seen from Figure \ref{fig:evtreeplot}, 
-The Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
+%% The Treatment Credibility IAT was responsible for most of the predictive power of the model. As hypothesised earlier, it appears that a particular level of score on the TCQIAT was associated with a positive response to placebo. Note that the variables on the plot are scaled and centered, so this cannot be read off as the particular scores on the TCQ-IAT associated with placebo response. 
 
-This model was so accurate that it made the researcher suspicious that it was an artefact of the particular random sub-sample chosen as a test set. In fact, when the entire model-fitting procedure was repeated ten times with a different random test set each time, the accuracy of the model dropped dramatically ($Acc=\bar 0.5$). Next, the model fitting process was repeated using this same process. 
+%% This model was so accurate that it made the researcher suspicious that it was an artefact of the particular random sub-sample chosen as a test set. In fact, when the entire model-fitting procedure was repeated ten times with a different random test set each time, the accuracy of the model dropped dramatically ($Acc=\bar 0.5$). Next, the model fitting process was repeated using this same process. 
 
 %% \begin{figure}
-<<evtreeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
+<<evtreeplot, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 print(plot(evtree.train$finalModel))
 @   
 %%   \caption{Evolutionary Tree plot for Prediction of Placebo Response}
@@ -1893,7 +1896,7 @@ placmod.kirsch.twofac.fit <- sem(placmod.kirsch.twofac, data=exp.sem)
 
 \begin{figure}
 <<firstfitplot, echo=FALSE, fig=TRUE>>=
-print(semPaths(placmod.first.fit))
+semPaths(placmod.first.fit)
 @ 
   \caption{Direct Placebo Response Model (Model 1)}
   \label{fig:placsem1}
@@ -1907,7 +1910,7 @@ The next model fit is the model of Kirsch, where all other parameters are mediat
 
 \begin{figure}
 <<kirschfitplot, echo=FALSE, fig=TRUE>>=
-print(semPaths(placmod.kirsch.fit))
+semPaths(placmod.kirsch.fit)
 @ 
   \caption{SEM Model of Kirsch (all variables mediated by explicit expectancies)}
   \label{fig:placsemkirsch}
@@ -1922,7 +1925,7 @@ This model is shown in Figure \ref{fig:placsemcredopt}
   
 \begin{figure}
 <<credoptplot, echo=FALSE, fig=TRUE>>=
-print(semPaths(placmod.cred.opt.fit))
+semPaths(placmod.cred.opt.fit)
 @   
   \caption{Placebo Response SEM mediated by Explicit Credibility and Optimism}
   \label{fig:placsemcredopt}
@@ -1934,7 +1937,7 @@ Next,  a model where optimism was the sole mediator of the placebo response was 
 
 \begin{figure}
 <<optsemplot, echo=FALSE, fig=TRUE>>=
-print(semPaths(placmod.opt.fit))
+semPaths(placmod.opt.fit)
 @   
   \caption{Placebo SEM mediated by Optimism}
   \label{fig:placsemopt}
@@ -1943,7 +1946,7 @@ print(semPaths(placmod.opt.fit))
 
 \begin{figure}
 <<kirschtwofacplot, echo=FALSE, fig=TRUE>>=
-print(semPaths(placmod.kirsch.twofac.fit, what="par"))
+semPaths(placmod.kirsch.twofac.fit, what="par")
 @   
   \caption{Placebo SEM Kirsch with implicit measures}
   \label{fig:placsemkirschtwofac}
