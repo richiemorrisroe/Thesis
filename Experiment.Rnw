@@ -21,7 +21,7 @@ This chapter proceeds with the following sections:
 \item A testing of the major hypotheses around the placebo and its relationship to implicit and explicit treatment expectancies. 
 
 \item  A discussion outlining the major issues raised by this chapter.
-n\end{enumerate}
+\end{enumerate}
 
 \subsection{Placebo Effects and Implicit Measures}
 \label{sec:plac-effects-impl}
@@ -1746,9 +1746,11 @@ rferns.acc <- confusionMatrix(rferns.pred, iatandexpfull.test[,"PlacResp"])
 @ 
 
 
-After an extensive model fitting process, only three models reached acceptable levels of accuracy. The first of these was the penalised regression methods used in the glmnet package. This model achieved an overall accuracy of 0.667 ($95CI 0.3489 - 0.9008$). The next algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.73 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. 
+After an extensive model fitting process, only three models reached acceptable levels of accuracy. One algorithm which achieved acceptable accuracy was the conditional random forest model. These models form ensembles of trees to reduce variability and increase predictive power. This model achieved an accuracy of 0.73 ($95CI 0.4281 - 0.9451$), with a sensitivity of 0.8750 and a specificity of 0.5. 
 
-This would suggest that while the model was excellent at predicting those who would not respond to placebo, it was much worse (chance level) at predicting those who would. The final model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4281 -- 0.9421$), with a sensitivity of 0.875 and a specificity of 0.5. Again, note that the positive examples of placebo response are harder to predict than are the negative ones. The probability of correctly classifying a negative placebo response was 0.7778, while the probability of classifying a positive placebo response was 0.6667. Note that these results should be regarded as tentative at best, given the extremely small sample size of the dataset. 
+The other model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4822 -- 0.9772$), with a sensitivity of 1 and a specificity of 0.5. 
+
+This would suggest that while the model was excellent at predicting those who would not respond to placebo, it was much worse (chance level) at predicting those who would. Again, note that the positive examples of placebo response are harder to predict than are the negative ones. The probability of correctly classifying a negative placebo response was 0.7778, while the probability of classifying a positive placebo response was 0.6667. Note that these results should be regarded as tentative at best, given the extremely small sample size of the dataset. 
 
 
 
@@ -1998,7 +2000,7 @@ twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
 <<impexpmodels, echo=FALSE, results=hide>>=
 expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
 expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
-expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
+## expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
 @ 
 
 <<expimpfit, echo=FALSE, results=tex>>=
@@ -2006,7 +2008,7 @@ expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "
 twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 expimpall <- rbind(expimp1.fit.meas, twofac.fit.meas, expimpmoderated.fit.meas)
 rownames(expimpall) <- c("Direct", "Two Factor", "Moderated")
 print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"))
