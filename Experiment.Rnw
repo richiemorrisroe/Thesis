@@ -1750,7 +1750,7 @@ After an extensive model fitting process, only three models reached acceptable l
 
 The other model which was selected as being acceptably accurate was a glmboost algorithm which averages the results of many generalised linear models (logistic regression, in this case) and weights observations which were categorised incorrectly more highly in the next iteration of the algorithm. This model achieved an accuracy of 0.875, ($95CI 0.4822 -- 0.9772$), with a sensitivity of 1 and a specificity of 0.5. 
 
-This would suggest that while the model was excellent at predicting those who would not respond to placebo, it was much worse (chance level) at predicting those who would. Again, note that the positive examples of placebo response are harder to predict than are the negative ones. The probability of correctly classifying a negative placebo response was 0.7778, while the probability of classifying a positive placebo response was 0.6667. Note that these results should be regarded as tentative at best, given the extremely small sample size of the dataset. 
+This would suggest that while the model was excellent at predicting those who would not respond to placebo, it was much worse (chance level) at predicting those who would. Again, note that the positive examples of placebo response are harder to predict than are the negative ones. Note that these results should be regarded as tentative at best, given the extremely small sample size of the dataset. 
 
 
 
