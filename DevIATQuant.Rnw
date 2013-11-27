@@ -1,3 +1,4 @@
+
 \section{Development of Repertory Grid}
 \label{sec:devel-repert-grid}
 
@@ -22,13 +23,14 @@ require(xtable)
 qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="")
 qual.m <- melt(qual, id.vars=NULL)
 qual.m[,"value"] <- with(qual.m, tolower(value))
-qual.tab <- as.data.frame(with(qual.m, table(value)))
+qual.m2 <- qual.m[with(qual.m, gsub("s$", "", x=value)),]
+qual.tab <- as.data.frame(with(qual.m2, table(value)))
 qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
 @ 
 
 \begin{figure}
 <<plotfreq, echo=FALSE, fig=TRUE>>=
-freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=value, y=Freq))+geom_bar(stat="identity")
+freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))
 print(freq.pl)
 @   
   \caption{Histogram of Frequency of People or Qualities}
