@@ -437,7 +437,7 @@ print(xtable(tcqaltcoef, label="tab:tcq1altgpcmrasch", caption="Coefficients for
 @ 
 %% Unlike the partial credit model formed from the conventional items, the scale composed of the acupuncture items shows no clear violations of monotonicity (Table \ref{tab:tcq1altgpcmrasch}), even when a simple Rasch model is fitted. Next, more complex versions of the partial credit model are fitted to examine if they add useful predictive power to the model. 
 
-<<tcqaltpcm1pl, echo=FALSE, results=hide,, eval=FALSE, cache=TRUE>>=
+<<tcqaltpcm1pl, echo=FALSE, results=hide, eval=FALSE, cache=TRUE>>=
 tcqalt.pcm.1pl <- gpcm(tcqalt, constraint="1PL")
 tcqaltcoef.1pl <- coef(tcqalt.pcm.1pl)
 
