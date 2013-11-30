@@ -11,7 +11,7 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 
 
 
-\part{Introduction}
+\section{Introduction}
 \label{sec:introduction}
 
 
@@ -260,7 +260,7 @@ The testing was carried out using a few different methods.  Firstly, the predict
 A different procedure was  followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
 
 
-\part{Sample One - Results}
+\section{Sample One - Results}
 
 %% \section{Missing Data Analysis}
 
@@ -2063,7 +2063,7 @@ The aims for the second sample collected were as follows:
 \end{itemize}
 
 
-\part{Sample Two Results}
+\section{Sample Two Results}
 
 Sample Two was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
 
