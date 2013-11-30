@@ -10,11 +10,11 @@ This chapter proceeds with the following sections:
 
 \item A short rationale for this study
 
-\item A look at some of the difficulties with measurement of placebo responses via self-report
+%% \item A look at some of the difficulties with measurement of placebo responses via self-report
 
 %% \item A look at some broader measurement issues within placebo research more generally
 
-\item A description of the methodology employed in this chapter to test the major hypotheses and mitigate some of the issues described above
+\item A description of the methodology employed in this chapter to test the major hypotheses
 
 %% \item A description of the major preliminary checks and tests to ensure that the data was as useful as it could be
 
@@ -26,7 +26,7 @@ This chapter proceeds with the following sections:
 \subsection{Placebo Effects and Implicit Measures}
 \label{sec:plac-effects-impl}
 
-As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:sec:rese-base-comb} there are some reasons to believe that the placebo effect is impacted by implicit influences. These are the following:
+As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-comb} there are some reasons to believe that the placebo effect is impacted by implicit influences. These are the following:
 
 \begin{itemize}
 \item Research shows that priming can increase the size of placebo effects;
@@ -40,7 +40,7 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:sec:rese-b
 
 The implicit measure chosen for this purpose was the Implicit Association Test (IAT). This choice was made both because it is the most widespread, and as such more of the best practices and problems with the measure are available in prior research. 
 
-These problems (discussed at length in Chapter \ref{cha:literature-review}, Part \ref{part:impl-assoc-test}), have included:
+These problems (discussed at length in Chapter \ref{cha:literature-review}, Section \ref{part:impl-assoc-test}), have included:
 
 \begin{itemize}
 \item Low test-retest reliability (approximately 0.49)
@@ -119,7 +119,18 @@ In order to make use of psychometric modelling, large samples of the self report
 
 In the experiment itself, physiological (GSR or skin conductance) measures were collected in order to examine the physiological characteristics of placebo and to allow for another form of measurement to be included in the final model.
 
-The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor types. In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}. 
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor types. In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}, and recapped below.
+
+
+\begin{itemize}
+\item The direct expectancy model of Kirsch, in which the effects of all other variables are mediated through expectancies (both implicit and explicit)
+
+\item The conscious expectancy model of Stewart-Williams \textit{et al} whereby implicit measures have no effect
+
+\item A model whereby optimism mediates the effects of all other variables on placebo response
+
+\item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
+\end{itemize}
 
 
 \section{Methodology}
@@ -456,8 +467,8 @@ print (arrangeGrob (partstim3opt, partstim5opt))
 %% \end{figure}
 
 %% As can be seen from Figure \ref{fig:optstimblock3part}, the distributions for the optimism IAT were relatively similar, except that they were overall shifted towards the right, indicating that response times were generally slower to each of these words. Note that one participant has almost the entirety of their distribution beyond the tails of most of the other participants, which given that this is a log-scale plot, indicates that something is very wrong here. Note additionally that the Block 5 results are much more variable than those from Block 3, which again may represent fatigue. 
-\begin{figure}
-<<optstimposneg, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+%% \begin{figure}
+<<optstimposneg, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 optstimblock3.real <- optstimblock3[,2:8]
 optstimreal3.m <- melt(optstimblock3.real)
 optstimblock5.real <- optstimblock5[,2:8]
@@ -479,7 +490,7 @@ The same pattern emerged for the optimism IAT in that the Block 5 scores were mu
 
 
 %% \begin{figure}
-<<optiatplotself, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<optiatplotself, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optstimblock3.posneg <- optstimblock3[,9:15]
 optstimpos3.m <- melt(optstimblock3.posneg)
 optstimblock5.posneg <- optstimblock5[,9:15]
@@ -619,20 +630,20 @@ tcq.demo <- xtable(summary(lm(BlockTime~Block+Age+Gender, data=optiatdemographic
 print(tcq.demo)
 @ 
 
-\begin{figure}
+%% \begin{figure}
 <<tcqiatgender, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
 tcqiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=TCQIAT.Mean))+geom_boxplot()
 optiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=OptIAT.Mean))+geom_boxplot()
 print(arrangeGrob(optiatgender,tcqiatgender))
 @   
-  \caption{Optimism (top) and Treatment Credibility (bottom) IAT Scores by Gender}
-  \label{fig:tcqiatgend}
-\end{figure}
+%%   \caption{Optimism (top) and Treatment Credibility (bottom) IAT Scores by Gender}
+%%   \label{fig:tcqiatgend}
+%% \end{figure}
 
 
 
-As can be seen from Figure \ref{fig:tcqiatgend} above, there were no significant differences ($t=-0.4973, p=0.6211$) between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument described in Chapter \ref{cha:tcq-thesis}).
-The same pattern was repeated for thje Optimism IAT, in that there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between males and females in this sample. 
+There were no significant differences ($t=-0.4973, p=0.6211$) between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument described in Chapter \ref{cha:tcq-thesis}).
+The same pattern was repeated for the Optimism IAT, in that there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between males and females in this sample. 
 
 <<ordtestiatprep, echo=FALSE, results=hide>>=
 part.opt <- unique(optiat[,"Participant"])
@@ -732,18 +743,6 @@ Optimism and mindfulness were positively correlated with one another. Additional
 Given the focus of this thesis on the integration of survey and experimental research, the next step was to examine the differences and similarities between the samples collected from the general population via survey and the experimental sample.
 
 
-\begin{figure}
-<<surveyoptimism, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.exp.opt.pl <- ggplot()+geom_density(data=hom.data, aes(x=optimism), fill="red")+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue")
-print(surv.exp.opt.pl)
-@   
-  \caption{Density Plot of Optimism Scores in the Survey samples (red), and the experimental sample (blue) }
-  \label{fig:compoptimism}
-\end{figure}
-
-
-In Figure \ref{fig:compoptimism}  can be seen that the two distributions are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
-
 
 
 Next, the differences in mindfulness levels between the two samples were assessed. 
@@ -751,47 +750,42 @@ Next, the differences in mindfulness levels between the two samples were assesse
 \begin{figure} 
 <<surveymindfulness, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 surv.exp.mind.pl <- ggplot()+geom_density(data=hom.data, aes(x=mindfulness), fill="blue")+geom_density(data=Iatandexpmeasures, aes(x=MAAS), fill="red")
-print(surv.exp.mind.pl)
+surv.exp.opt.pl <- ggplot()+geom_density(data=hom.data, aes(x=optimism), fill="red")+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue")
+print(arrangeGrob(surv.exp.opt.pl,surv.exp.mind.pl))
 @  
-  \caption{Density Plot for Mindfulness Scores, Survey Sample (red), and Experimental Sample (blue)}
+  \caption{Density Plot for Optimism (top) and Mindfulness Scores (bottom), Survey Sample (red), and Experimental Sample (blue)}
   \label{fig:compmind}
 \end{figure}
 
-As can be seen from Figure \ref{fig:compmind}, the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study, while an online study might not have suffered from the same problem. 
+In Figure \ref{fig:compmind}  can be seen that the two distributions are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
+
+As can be seen from Figure \ref{fig:compmind} (bottom panel), the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study, while an online study might not have suffered from the same problem. 
 
 
 Finally, the treatment credibility questionnaire scores were examined to assess the differences between the survey and experimental samples. 
 
 First, the differences between the two samples in terms of Pill credibility were examined. 
 
-\begin{figure}
-<<surveypill, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
-surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue")
-print(surv.exp.pill.pl)
-@   
-  \caption{Pill Credibility Density Plot, Survey Sample (sample 2) (red), and Experimental Sample (blue)}
-  \label{fig:comppill}
-\end{figure}
 
 
-As can be seen from Figure \ref{fig:comppill}, the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
 
-Next, the difference between Cream Credibility scores was assessed. 
 
 \begin{figure}
 <<surveycream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 
 surv.exp.cream.pl <- ggplot()+geom_density(data=credtotals, aes(x=Creamtot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Cream), fill="blue")
-print(surv.exp.cream.pl)
+exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
+surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue")
+print(arrangeGrob(surv.exp.pill.pl, surv.exp.cream.pl))
 @   
-  \caption{Density Plot for Distribution of Cream Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
+  \caption{Density Plot for Distribution of Pill Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
   \label{fig:compcream}
 \end{figure}
 
+As can be seen from Figure \ref{fig:compcream} (top panel), the general population sample was higher peaked, with less variation around the peak than was the experimental sample. In fact, the experimental sample seemed to be more variable than the survey sample, which could either be due to a true difference in the distributions or due to a greater uncertainty in the experimental sample due to the smaller sample size. 
 
 
-As shown in Figure \ref{fig:compcream}, the survey group tended to have a more positive view of painkilling creams. While the survey group is strongly peaked at the right of the plot, the experimental group were more evenly distributed, with a peak at the centre of the plot. This is interesting, as one might expect the experimental group to be more positive towards painkilling treatments in general, given that they had agreed to take part in  a study which examined the effects of a new analgesic.
+As shown in Figure \ref{fig:compcream} (bottom panel), the survey group tended to have a more positive view of painkilling creams. While the survey group is strongly peaked at the right of the plot, the experimental group were more evenly distributed, with a peak at the centre of the plot. This is interesting, as one might expect the experimental group to be more positive towards painkilling treatments in general, given that they had agreed to take part in  a study which examined the effects of a new analgesic.
 
 Next, the credibility scores for injection painkilling treatments were examined between the survey and experimental groups. 
 
@@ -1109,7 +1103,7 @@ The mean pain ratings were also examined for autocorrelations and the results we
 
 
 
-\subsection{Analysis of Physiological Data}
+%% \subsection{Analysis of Physiological Data}
 
 
 \subsection{Examining the Effect of Pain on GSR}
@@ -1137,7 +1131,7 @@ print (ggplot (band.m, aes (x=value, fill=variable))+geom_density (alpha=0.5))
 %% Density Plots for the time of application of bandage and when the participants stopped squeezing are shown in Figure \ref{fig:onoffplot}. Note that the shape of the time of application is far more regular than that for the  stopping squeezing, suggesting that inter-participant variability was responsible for the majority of observed differences. 
 
 %% \begin{figure}
-<<squeezeplot, echo=FALSE, fig=TRUE>>=
+<<squeezeplot, echo=FALSE>>=
 squeeez.pl <- ggplot (bandage.squeeze, aes (x=SqueezingTime))+geom_density ()
 print (squeeez.pl)
 @ 
@@ -1147,6 +1141,8 @@ print (squeeez.pl)
 
 
 The majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+
+Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. This analysis discovered some inconsistencies in the length of pain ratings versus the length of the physiological recordings, which necessitated the recalculation of all the GSR data before continuing. 
 
 
 
@@ -1160,7 +1156,7 @@ len.test [,"Time"] <- with (len.test, Time/1000)
 len.test [,"Diff"] <- with (len.test, Time-lengthsurv)
 @ 
 
-Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. 
+
 
 
 <<physpaindiffplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
@@ -1278,26 +1274,26 @@ gsr.notreat.mean <- apply(gsr.notreat[,gsrcond.scale.ind], 2, mean, na.rm=TRUE)
 gsr.conditions <- data.frame(index=1:3200, Deceptive=gsr.decept.mean, Open=gsr.open.mean, NoTreatment=gsr.notreat.mean)
 gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
 @ 
-\begin{figure}
+%% \begin{figure}
 <<gsrplotcond, echo=FALSE, results=hide>>=
 print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
 @   
-  \caption{GSR by Condition over Time}
-  \label{fig:gsrcondplot}
-\end{figure}
+%%   \caption{GSR by Condition over Time}
+%%   \label{fig:gsrcondplot}
+%% \end{figure}
 
-Figure \ref{fig:gsrcondplot} shows the GSR levels by condition over time. It can be seen that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
+An examination the GSR levels by condition over time showed that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
 
-\begin{figure}
+%% \begin{figure}
 <<meanplotgsr, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
 @   
-  \caption{Mean GSR Levels by Condition over Time}
-  \label{fig:meangsr}
-\end{figure}
+%%   \caption{Mean GSR Levels by Condition over Time}
+%%   \label{fig:meangsr}
+%% \end{figure}
 
 
-The results shown above in Figure \ref{fig:meangsr} are quite unexpected, but fit with the strange pain ratings observed in this experiment. It can be seen that the Open Placebo group had the lowest GSR over time (middle plot), and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+The Open Placebo group had the lowest GSR over time, and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 <<semdata, echo=FALSE, results=hide>>=
 Iatandexpmeasures2 <- Iatandexpmeasures.phys
@@ -1317,7 +1313,7 @@ print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 
 
 There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined. 
-For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Deceptive Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
+For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
 Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
@@ -1507,7 +1503,7 @@ print(lotriatplot)
   \label{fig:3wayinter}
 \end{figure}
 
- The plot above in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+ The plot in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
  %% \begin{figure}
 <<lotrtcqsmoothplot, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))+geom_point()
@@ -1763,16 +1759,7 @@ This would suggest that while the model was excellent at predicting those who wo
 \subsection{Testing the Theoretical Models}
 \label{sec:test-theor-models}
 
-The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies. The models  outlined in Chapter \ref{cha:methodology} are briefly recapped below:
-\begin{itemize}
-\item The direct expectancy model of Kirsch, in which the effects of all other variables are mediated through expectancies (both implicit and explicit)
-
-\item The conscious expectancy model of Stewart-Williams \textit{et al} whereby implicit measures have no effect
-
-\item A model whereby optimism mediates the effects of all other variables on placebo response
-
-\item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
-\end{itemize}
+The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:modell-plac-mult}
 
 
 
@@ -1910,40 +1897,40 @@ Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and exp
 
 The next model fit is the model of Kirsch, where all other parameters are mediated by (explicit) expectancies and implicit expectancies have no impact. 
 
-\begin{figure}
-<<kirschfitplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<kirschfitplot, echo=FALSE>>=
 semPaths(placmod.kirsch.fit)
 @ 
-  \caption{SEM Model of Kirsch (all variables mediated by explicit expectancies)}
-  \label{fig:placsemkirsch}
-\end{figure}
+%%   \caption{SEM Model of Kirsch (all variables mediated by explicit expectancies)}
+%%   \label{fig:placsemkirsch}
+%% \end{figure}
 
-This model is shown in Figure \ref{fig:placsemkirsch}. This model fits, but it has only two degrees of freedom remaining, so is almost certainly overfitting the data. 
+%% This model is shown in Figure \ref{fig:placsemkirsch}. 
 
 Next, a model where expectancies and optimism are jointly responsible for the observed placebo response, and implicit expectancies play no role. 
 
 
-This model is shown in Figure \ref{fig:placsemcredopt}
+%% This model is shown in Figure \ref{fig:placsemcredopt}
   
-\begin{figure}
-<<credoptplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<credoptplot, echo=FALSE, eval=FALSE>>=
 semPaths(placmod.cred.opt.fit)
 @   
-  \caption{Placebo Response SEM mediated by Explicit Credibility and Optimism}
-  \label{fig:placsemcredopt}
-\end{figure}
+%%   \caption{Placebo Response SEM mediated by Explicit Credibility and Optimism}
+%%   \label{fig:placsemcredopt}
+%% \end{figure}
 
 
-Next,  a model where optimism was the sole mediator of the placebo response was fitted, and this model is shown in Figure \ref{fig:placsemopt}. 
+Next,  a model where optimism was the sole mediator of the placebo response was fitted.
 
 
-\begin{figure}
-<<optsemplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optsemplot, echo=FALSE>>=
 semPaths(placmod.opt.fit)
 @   
-  \caption{Placebo SEM mediated by Optimism}
-  \label{fig:placsemopt}
-\end{figure}
+%%   \caption{Placebo SEM mediated by Optimism}
+%%   \label{fig:placsemopt}
+%% \end{figure}
 
 
 \begin{figure}
@@ -1980,8 +1967,6 @@ Next, three models were fit to examine the relationship between the implicit and
 The three models were as follows:
 
 \begin{enumerate}
-
-\item A one factor model for all implicit and explicit measures
   
 \item A two factor correlated model between implicit and explicit measures
 
