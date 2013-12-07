@@ -449,77 +449,77 @@ was not supported.  Contrary to predictions, optimism was negatively
 correlated with health.
 Possible explanations are examined in the Discussion section.  In fact, optimism correlated negatively with all of the other totals, suggesting that something strange happened in the sample.
 
-\begin{figure}
-<<optplot1, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optplot1, echo=FALSE, eval=FALSE>>=
 optplot1 <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
 print(optplot1)
 @  
-  \caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
-  \label{fig:optplot1}
-\end{figure}
+%%   \caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
+%%   \label{fig:optplot1}
+%% \end{figure}
 
 
-Figure~\ref{fig:optplot1}, shows a linear regression of optimism against general health in the sample collected by paper.  It can be clearly seen that the relationship is negative, an unexpected and surprising occurence.  %a fact which is borne out in the examination of Figure \ref{fig:optplot2} below.
+Figure~\ref{fig:pairsplot}, shows a linear regression of optimism against general health in the sample collected by paper.  It can be clearly seen that the relationship is negative, an unexpected and surprising occurence.  %a fact which is borne out in the examination of Figure \ref{fig:optplot2} below.
 
 
 
 
-\begin{figure}
-<<optplotgend, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optplotgend, echo=FALSE, eval=FALSE>>=
 optplotgend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
 print(optplotgend)
 @  
-  \caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
-  \label{fig:optplotgend}
-\end{figure}
+%%   \caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
+%%   \label{fig:optplotgend}
+%% \end{figure}
 
 
-It can be seen from Figure \ref{fig:optplotgend} that participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism.  Below, the effect of college course is examined, in case this could be skewing results. Again, we see that the result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
+Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
 
 
 
-\begin{figure}
-<<healthmaassamp, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<healthmaassamp, echo=FALSE, eval=FALSE>>=
 healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
 print(healthmaas.samp)
 @  
-  \caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
-  \label{fig:healthmaasmethplot}
-\end{figure}
+%%   \caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
+%%   \label{fig:healthmaasmethplot}
+%% \end{figure}
 
 
-It can be seen from Figure \ref{fig:healthmaasmethplot} that the relationship between health and mindfulness was slightly stronger in the paper sample, but not significantly so.
-\begin{figure}
-<<healthmaasgend, echo=FALSE, fig=TRUE>>=
+It can be seen from Figure \ref{fig:pairsplot} that the relationship between health and mindfulness positive, and of the same magnitude at that observed between health and optimism. 
+%% \begin{figure}
+<<healthmaasgend, echo=FALSE, eval=FALSE>>=
 healthmaas.gend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=Gender))+layer(geom="smooth", method="lm")
 print(healthmaas.gend)
 @  
-  \caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
-  \label{fig:healthmaasgend}
-\end{figure}
+%%   \caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
+%%   \label{fig:healthmaasgend}
+%% \end{figure}
 
 
-Again, from Figure \ref{fig:healthmaasgend} it can be seen that Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
-\begin{figure}
-<<healthmaas, echo=FALSE, fig=TRUE>>=
+Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
+%% \begin{figure}
+<<healthmaas, echo=FALSE, eval=FALSE>>=
 healthmaas1 <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=College))+layer(geom="smooth", method="lm")
 print(healthmaas1)
 @  
-  \caption{General Health against Mindfulness stratified by College using a linear regression smooth}
-  \label{fig:healthmaascoll}
-\end{figure}
+%%   \caption{General Health against Mindfulness stratified by College using a linear regression smooth}
+%%   \label{fig:healthmaascoll}
+%% \end{figure}
 
 
-As can be seen from Figure \ref{fig:healthmaascoll} the relationship between general health and mindfulness levels is positive, and constant across the different groups of students.
+%% As can be seen from Figure \ref{fig:healthmaascoll} the relationship between general health and mindfulness levels is positive, and constant across the different groups of students.
 
-\begin{figure}
-<<maasage, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<maasage, echo=FALSE, eval=FALSE>>=
 maas.age <- ggplot(na.omit(hom1), aes(x=Age, y=mindfulness, ))+layer(geom="smooth", method="lm")
 print(maas.age)
 @  
-  \caption{Age against Mindfulness Scores using a linear regression smooth}
-  \label{fig:maasage}
-\end{figure}
+%%   \caption{Age against Mindfulness Scores using a linear regression smooth}
+%%   \label{fig:maasage}
+%% \end{figure}
 
 
 MAAS scores were associated with greater health as expected, as can be seen from Figure \ref{fig:pairsplot}. 
@@ -556,17 +556,18 @@ step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimis
 
 @ 
 
-<<optstepprint, echo=FALSE, results=tex>>=
+<<optstepprint, echo=FALSE, results=hide>>=
 print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
 @ 
 
-As Table \ref{tab:hom1optstep} shows, the stepwise selected models kept three predictors. General health and Age are retained, despite their lack of signifiance, suggesting that while they have an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
+%% As Table \ref{tab:hom1optstep} shows, 
 
 <<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+Age+emwellbeing, data=hom1.test.opt)
 print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:hom1stepopttest"))
 @ 
 
+In the training sample, the stepwise selected models kept three predictors. General health and Age are retained, despite their lack of signifiance, suggesting that while they have an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
 As shown in Table \ref{tab:hom1stepopttest} the model performs much more poorly on unseen data. 
 
 <<optridge, echo=FALSE, results=tex>>=
@@ -887,11 +888,11 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 \label{sec:rand-mos-1}
 Two, four and eight  factor solutions were extracted and interpreted from the RAND MOS items. 
 
-<<rand2fact, echo=FALSE, results=tex>>=
+<<rand2fact, echo=FALSE, results=hide>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
-
+The results of the two factor solution (not shown) were as follows:
 PA1: "RANDQ1",  "RANDQ14", "RANDQ16" ,"RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ21" ,"RANDQ22" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27"
 ,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32" ,"RANDQ33" ,"RANDQ34"
 ,"RANDQ35" ,"RANDQ36". Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
@@ -915,12 +916,12 @@ The factor correlations were quite low for this solution, at 0.17. This suggests
 
 \paragraph{Rand MOS 4 Factor Solution}
 
-<<rand4fact, echo=FALSE, results=tex>>=
+<<rand4fact, echo=FALSE, results=hide>>=
 rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
 print(FactorXtab(rand.fact.4, names=c("PhysFunc", "SocEmFunc", "PhysLim", "GenHealth"), label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
 @
 
-The loadings on the four factor solution broke down as follows. 
+The loadings on the four factor solution (not shown) broke down as follows. 
 PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This factor maps exactly to the Physical Functioning scale, and so retains that name. 
 
 PA1: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32". This factor maps to the emotional role limitations, social functioning and emotional well being scales, and so can probably best be termed as Social and Emotional Functioning. 
@@ -1077,8 +1078,8 @@ As can be seen from \ref{tab:randsemcompare}, the 8 factor solution appears to f
 
 For the MAAS, parallel analysis, MAP, VSS, Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
 
-\subsection{MAAS One Factor Solution}
-\label{sec:maas-one-factor}
+%% \subsection{MAAS One Factor Solution}
+%% \label{sec:maas-one-factor}
 
 <<maas1fact, echo=FALSE, results=tex>>=
 maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
@@ -1092,13 +1093,13 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-\subsection{MAAS Three Factor Solution}
-\label{sec:maas-seven-factor}
+%% \subsection{MAAS Three Factor Solution}
+%% \label{sec:maas-seven-factor}
 
-The next factor solution to be examined was the three factor solution. 
+The next factor solution to be examined was the three factor solution (loadings not shown). 
 
 
-<<maas7fact, echo=FALSE, results=tex>>=
+<<maas7fact, echo=FALSE, results=hide>>=
 maas.fact.3<-factor.pa(na.omit(maasitems), 3, rotate="oblimin")
 print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAttention"), label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"))
 @
@@ -1186,8 +1187,8 @@ in the sample, which is low.  Possible explanations for this are discussed below
 
 Parallel Analysis indicated that two factors should be extracted, while the MAP criterion suggested one.  Therefore, both one and two factor solutions were extracted from the matrix and their results examined for adequacy and interpretability.
 
-\subsection{LOTR One Factor Solution}
-\label{sec:lotr-one-factor}
+%% \subsection{LOTR One Factor Solution}
+%% \label{sec:lotr-one-factor}
 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
@@ -1204,17 +1205,17 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-\subsection{LOTR Two Factor Solution}
-\label{sec:lotr-two-factor}
+%% \subsection{LOTR Two Factor Solution}
+%% \label{sec:lotr-two-factor}
 
-<<lotr3fact, echo=FALSE, results=tex>>=
+<<lotr3fact, echo=FALSE, results=hide>>=
 lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
 print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
 @
+The two factor solution (not shown) broke down as follows:
+PA2: ''LOTRQ1'',  ``LOTRQ4'',  ``LOTRQ10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA2:"LOTRQ1",  "LOTRQ4",  "LOTRQ10". These items are all the positively framed items, and so this factor can best be termed as Optimism. 
-
-PA1:"LOTRQ3", "LOTRQ7", ``LOTRQ9'', ``LOTRQ10'' This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
+PA1: ``LOTRQ3'', ``LOTRQ7'', ``LOTRQ9'', ``LOTRQ10'' This factor, and the next, consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
 
 
 \subsection{CFA for LOTR}
@@ -1305,9 +1306,6 @@ maas.mono <- check.monotonicity(na.omit(maas.irt))
 print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
 @
 
-
-
-
 <<maasitemspcm, echo=FALSE, results=hide, cache=TRUE>>=
 maas.pcm.rasch <- gpcm(na.omit(maas.irt), constraint="rasch")
 maas.pcm.1pl <- gpcm(na.omit(maas.irt), constraint="1PL")
@@ -1339,16 +1337,16 @@ maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
 maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
 @
 
-\begin{figure}
-<<maasgrm1plplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<maasgrm1plplot, echo=FALSE, results=hide>>=
 maasp <- ggplotGRM(maas.grm.1pl)
 print(maasp)
 @   
-  \caption{MAAS Graded Response Model (One Parameter) Ability Thresholds}
-  \label{fig:maasgrm1plplot}
-\end{figure}
+%%   \caption{MAAS Graded Response Model (One Parameter) Ability Thresholds}
+%%   \label{fig:maasgrm1plplot}
+%% \end{figure}
 
-As shown in Figure \ref{fig:maasgrm1plplot}, there were no obvious scaling violations for this scale. 
+There were no obvious scaling violations for this scale. 
 
 <<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
 print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
@@ -2065,19 +2063,19 @@ The aims for the second sample collected were as follows:
 
 \section{Sample Two Results}
 
-Sample Two was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16. 
+Sample Two was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16, which was assumed to be MCAR (Missing Completely At Random). 
 
-\begin{figure}
-<<optplot2, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optplot2, echo=FALSE, results=hide>>=
 optplot2 <- ggplot(hom2, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
 print(optplot2)
 @  
-  \caption{Scatterplot with Linear Regression Smooth of Relationship between General Health and Optimism}
-  \label{fig:genhealthoptplot2}
-\end{figure}
+%%   \caption{Scatterplot with Linear Regression Smooth of Relationship between General Health and Optimism}
+%%   \label{fig:genhealthoptplot2}
+%% \end{figure}
 
 
-The relationship between optimism and health is even clearer in sample 2 (Figure \ref{fig:genhealthoptplot2}) (note the narrower confidence intervals and the steeper slope of the line).
+The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent. 
 
 \section{Regression Analyses}
 \label{sec:regression-analyses}
@@ -2164,11 +2162,11 @@ Table \ref{tab:maas2cfact1} shows the one factor loadings for split C. In this s
 
 
 
-<<maas2bfact5, echo=FALSE, results=tex>>=
+<<maas2bfact5, echo=FALSE, results=hide>>=
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8)
 @
-This five factor solution explained 54\% of the variance in the sample.
+This five factor solution (not shown) explained 54\% of the variance in the sample.
 
 PA1: "MAASQ5",  "MAASQ6",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
@@ -2180,11 +2178,11 @@ PA4: "MAASQ13", "MAASQ14".  This factor can best be termed as lack of attention.
 
 PA5: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ14", "MAASQ15".  This factor again can be termed distractability.
 
-<<maas2cfact5, echo=FALSE, results=tex>>=
+<<maas2cfact5, echo=FALSE, results=hide>>=
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8)
 @
-
+The five factor solution for split C (not shown) broke down as follows:
 PA1: "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
 PA2: "MAASQ9"  "MAASQ13"
@@ -2345,7 +2343,7 @@ For Split C, items 5 and 11 fail the item ordering check, and so is removed. The
 
 
 
-Three partial credit models were fit to Splits B and C, but were analysed further, as they provided a poor fit to the data. 
+Three partial credit models were fit to Splits B and C, but were not analysed further, as they provided a poor fit to the data. 
 
 Next, one and two parameter graded response models were fit to Split B. 
 
@@ -2366,7 +2364,7 @@ It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems wit
 print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
 @ 
 
-It can be seen from Table \ref{tab:maas2bgrm2pl} that there were no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
+The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
 
 Finally, we examine the performance of these models on unseen data.
 
@@ -2400,11 +2398,11 @@ As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appe
 
 Next, a two parameter model is fit to this data. 
 
-<<maas2cgrm2plprint, echo=FALSE, results=tex>>=
+<<maas2cgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coef(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"))
 @ 
 
-The two parameter model (shown in Table \ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+The two parameter model (not shown), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
 
 
 The final step in the analysis of the MAAS scale is to test the performance of the models on unseen  data. 
@@ -2586,10 +2584,6 @@ lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
 The LOT-R for Split B had no problems with either item ordering or monotonicity. 
 
 
-
-
-
-
 All of the partial credit models had non-monotonically increasing parameter estimates and so are not reported further here. 
 Next, one and two parameter Graded Response Models were fit to the data. 
 
@@ -2605,12 +2599,12 @@ print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Esitmates for One Parame
 
 Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
 
-<<lotr2bgrm2plprint, echo=FALSE, results=tex>>=
+<<lotr2bgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coef(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
 @ 
 
 
-It can be seen from Table \ref{tab:lotr2bgrm2pl} that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
+The two parameter GRM (not shown) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
 
 
 Finally, we assess the performance of each of these models on unseen data. 
@@ -2658,11 +2652,11 @@ print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Esitmates for LOT-R One 
 Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the one parameter Graded Response Model. It can be seen that the discrimination parameter is quite high, and that the most difficult question is Q10 which is ``Overall, I expect more good things to happen to me than bad''. The ``easiest'' question is Q7, which is one of the negatively phrased questions, suggesting that the two of these questions would be enough to garner a rough estimate of ability from participants. 
 
 
-<<lotr2cgrm2plprint, echo=FALSE, results=tex>>=
+<<lotr2cgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
 @ 
 
-Table \ref{tab:lotr2cgrm2pl} shows the estimates for the two parameter GRM. It can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
+When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
 
 Finally, the performance of these two models is tested against unseen data. 
 
