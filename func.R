@@ -706,8 +706,6 @@ lazyload <- function (files) {
     write.table(gsr, file=outfilenames[i])
   }
 }
-<<<<<<< HEAD
-    
 rmsea <- function(data) {
     erro <- with(data, pred-obs)
     err.sq <- erro^2
@@ -715,7 +713,6 @@ rmsea <- function(data) {
     return(root.err)
 }
         
-=======
 lazylength <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
