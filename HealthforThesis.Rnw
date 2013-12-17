@@ -787,7 +787,7 @@ sink(NULL)
 print(xtable(summary(rand.nscree), label="tab:randretain", caption="Comparison of Criteria to retain factors"))
 @ 
 
-The parallel analysis criterion and the kaiser criterion suggest eight factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
+The parallel analysis criterion and the kaiser criterion suggest eight factors. Another two measures suggested two factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
 %% Another approach which can be applied to select the number of factors is a cross-validation method.
 
@@ -810,7 +810,7 @@ print(Svdcv(rand.fact.gabriel, label="tab:randfactgabriel", caption="Estimate of
 
 %% It can be seen from Table \ref{tab:randfactgabriel} that the Gabriel method of cross-validation suggests that there are thirteen factors which underlie this scale. This seems relatively implausible, but it will be tested. 
 
-To summarise, two, four, eight  factor structures will be examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
+To summarise, two and eight  factor structures will be examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
 
 Next, the various metrics for determining the number of factors were applied to the Mindfulness scale. 
 
@@ -926,28 +926,28 @@ The factor correlations were quite low for this solution, at 0.17. This suggests
 
 
 
-\paragraph{Rand MOS 4 Factor Solution}
+%% \paragraph{Rand MOS 4 Factor Solution}
 
 <<rand4fact, echo=FALSE, results=hide>>=
 rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
 print(FactorXtab(rand.fact.4, names=c("PhysFunc", "SocEmFunc", "PhysLim", "GenHealth"), label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
 @
 
-The loadings on the four factor solution (not shown) broke down as follows. 
-PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This factor maps exactly to the Physical Functioning scale, and so retains that name. 
+%% The loadings on the four factor solution (not shown) broke down as follows. 
+%% PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". This factor maps exactly to the Physical Functioning scale, and so retains that name. 
 
-PA1: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32". This factor maps to the emotional role limitations, social functioning and emotional well being scales, and so can probably best be termed as Social and Emotional Functioning. 
+%% PA1: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32". This factor maps to the emotional role limitations, social functioning and emotional well being scales, and so can probably best be termed as Social and Emotional Functioning. 
 
-PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16" ,"RANDQ21" ,"RANDQ22". This factor maps to the role limitations and pain sub-scales, and so can probably best be termed as physical limitations. 
+%% PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16" ,"RANDQ21" ,"RANDQ22". This factor maps to the role limitations and pain sub-scales, and so can probably best be termed as physical limitations. 
 
-PA4: "RANDQ1" , "RANDQ3" , "RANDQ21" ,"RANDQ27" ,"RANDQ33" ,"RANDQ34" ,"RANDQ35" ,"RANDQ36". This scale maps to the General Health scale, with one item from the Physical Functioning and one item from Energy/Fatigue (27). However, both these items have higher loadings on other factors, and so this factor can probably best be termed as General Health. 
+%% PA4: "RANDQ1" , "RANDQ3" , "RANDQ21" ,"RANDQ27" ,"RANDQ33" ,"RANDQ34" ,"RANDQ35" ,"RANDQ36". This scale maps to the General Health scale, with one item from the Physical Functioning and one item from Energy/Fatigue (27). However, both these items have higher loadings on other factors, and so this factor can probably best be termed as General Health. 
 
 
 
-The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
-and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}.
+%% The non-normed fit index was equal to \Sexpr{round(rand.fact.4[["TLI"]], 3)}
+%% and the RMSEA was equal to \Sexpr{round(rand.fact.4[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.4[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.4[["RMSEA"]][3],3 )}.
 
-The fit indices are somewhat better for this solution than for the two factor solution, though the NNFI is still quite low. The RMSEA is somewhat too high for comfort, also. 
+%% The fit indices are somewhat better for this solution than for the two factor solution, though the NNFI is still quite low. The RMSEA is somewhat too high for comfort, also. 
 
 <<rand4corr, echo=FALSE, results=hide, eval=FALSE>>=
 print(xtable(rand.fact.4[["r.scores"]], label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Four Factor Solution, Sample One"))
@@ -1080,7 +1080,7 @@ rand8summ <- summary(rand8fit)
 
 
 <<randsemcompare, echo=FALSE, results=tex>>=
-randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand4fit, rand8fit), all=TRUE)
+randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand8fit), all=TRUE)
 print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8, table.placement="ht")
 @
 
@@ -1368,21 +1368,21 @@ Table \ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimina
 
 Next, a two parameter Graded Response Model was examined for the same scale. 
 
-\begin{figure}
-<<maasgrm2plot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<maasgrm2plot, echo=FALSE, results=hide>>=
 maas2plp <- ggplotGRM(maas.grm.1pl)
 print(maas2plp)
 @   
- ~\caption{MAAS Graded Response Model (Two parameter) Item Ability Thresholds}
-  \label{fig:maasgrm2plplot}
-\end{figure}
+%%  ~\caption{MAAS Graded Response Model (Two parameter) Item Ability Thresholds}
+%%   \label{fig:maasgrm2plplot}
+%% \end{figure}
 
 <<maasgrm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
 @ 
 
 
-Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. IT can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates sugegst that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. It can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates sugegst that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
 <<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1478,17 +1478,17 @@ print(lotr1plgrm)
 
 Figure \ref{fig:lotr1plgrm} shows the estimated threshold points for each of the categories for each item. It can be seen that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
 
-\begin{figure}
-<<lotr2plgrmplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<lotr2plgrmplot, echo=FALSE, results=hide>>=
 lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
 print(lotr2plgrm)
 @   
- ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
-  \label{fig:lotr2plgrm}
-\end{figure}
+%%  ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
+%%   \label{fig:lotr2plgrm}
+%% \end{figure}
 
 
-Again, Figure \ref{fig:lotr2plgrm} shows no violations of the modelling assumptions for the two parameter GRM. The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
+The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
 
 <<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
 anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
@@ -1522,7 +1522,7 @@ The models used in this section were as follows:
 
 \item A model where the effect of health on optimism is mediated through the other predictor variables;
 
-\item Each of these models was fit both to the summary scores and the latent factors.
+%% \item Each of these models was fit both to the summary scores and the latent factors.
 \end{itemize}
 
 The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
@@ -1572,11 +1572,11 @@ opt.direct.fit <- mxRun(model=lotr.rand.direct)
 omxGraphviz(opt.direct.fit, dotFilename="lotrdirect.dot")
 @ 
 
-\begin{figure}
-\includegraphics{lotrdirect}  
- ~\caption{Direct Model for Optimism and Health}
-  \label{fig:lotrdirect}
-\end{figure}
+%% \begin{figure}
+%% \includegraphics{lotrdirect}  
+%%  ~\caption{Direct Model for Optimism and Health}
+%%   \label{fig:lotrdirect}
+%% \end{figure}
 
 
 
@@ -1597,11 +1597,11 @@ rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
 omxGraphviz(rand.lotr.indirect.maas.fit, dotFilename="lotrindirectmaas.dot")
 @ 
 
-\begin{figure}
-\includegraphics{lotrindirectmass}  
- ~\caption{Optimism and Health Mediated by Mindfulness}
-  \label{fig:lotrhealthmind}
-\end{figure}
+%% \begin{figure}
+%% \includegraphics{lotrindirectmass}  
+%%  ~\caption{Optimism and Health Mediated by Mindfulness}
+%%   \label{fig:lotrhealthmind}
+%% \end{figure}
 
 
 <<randindirectemwelleing, echo=FALSE, results=hide>>=
@@ -1622,11 +1622,11 @@ omxGraphviz(lotr.indirect.emwellbeing, dotFilename="lotrindirectemwellbeing.dot"
 @ 
 
 
-\begin{figure}
-  \includegraphics{lotrindirectemwellbeing}
- ~\caption{Optimism and Health, Mediated by Emotional Well Being}
-  \label{fig:lotrhealthemwellbeing}
-\end{figure}
+%% \begin{figure}
+%%   \includegraphics{lotrindirectemwellbeing}
+%%  ~\caption{Optimism and Health, Mediated by Emotional Well Being}
+%%   \label{fig:lotrhealthemwellbeing}
+%% \end{figure}
 
 <<lotrindirectenergyfat, echo=FALSE, results=hide>>=
 lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
@@ -1645,11 +1645,11 @@ lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
 omxGraphviz(lotr.indirect.energyfat.fit, dotFilename="lotrindirectenergyfat.dot")
 @ 
 
-\begin{figure}
-  \includegraphics{lotrindirectenergyfat}
- ~\caption{Optimism and Health Mediated by Energy/Fatigue}
-  \label{fig:lotrhealthenergyfat}
-\end{figure}
+%% \begin{figure}
+%%   \includegraphics{lotrindirectenergyfat}
+%%  ~\caption{Optimism and Health Mediated by Energy/Fatigue}
+%%   \label{fig:lotrhealthenergyfat}
+%% \end{figure}
 
 <<lotrindirectgenhealth, echo=FALSE, results=hide>>=
 lotr.indirect.genhealth <- mxModel(lotr.indirect, 
@@ -1668,11 +1668,11 @@ omxGraphviz(lotr.indirect.genhealth.fit, dotFilename="lotrindirectgenhealth.dot"
 @ 
 
 
-\begin{figure}
-  \includegraphics{lotrindirectgenhealth}
- ~\caption{Optimism Directly Affected by Health}
-  \label{fig:optindirectgenhealth}
-\end{figure}
+%% \begin{figure}
+%%   \includegraphics{lotrindirectgenhealth}
+%%  ~\caption{Optimism Directly Affected by Health}
+%%   \label{fig:optindirectgenhealth}
+%% \end{figure}
 
 <<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
@@ -1684,23 +1684,23 @@ lotr.health.med.fit <- mxRun(lotr.health.med2)
 omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 @ 
 
-\begin{figure}
-  \includegraphics{lotrindirectmindfulness}
- ~\caption{Optimism and Health Mediated by Mindfulness}
-  \label{fig:lotrhealthmind2}
-\end{figure}
+%% \begin{figure}
+%%   \includegraphics{lotrindirectmindfulness}
+%%  ~\caption{Optimism and Health Mediated by Mindfulness}
+%%   \label{fig:lotrhealthmind2}
+%% \end{figure}
 
 <<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.8)
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.6)
 @ 
 
-The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this Table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
+The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
 
 \section{Predictions}
 \label{sec:predictions}
 
-As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. This problem was dealt with for this research by building the models on the first dataset, and then fitting them on a seperate sample~\footnote{a process conventionally known as replication}. 
+As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. This problem was dealt with for this research by building the models on the first dataset, and then fitting them on a seperate sample.
 
 This section covers the following assessments of models developed on Sample One
 
@@ -1811,7 +1811,7 @@ rand8summ2 <- summary(rand8fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
-print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.9)
+print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.6)
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
@@ -1893,7 +1893,7 @@ maas1summ2 <- summary(maas1fit2)
 <<maassemcompare2, echo=FALSE, results=tex>>=
 maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
 maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
-print(maascomp.xtab2)
+print(maascomp.xtab2, scalebox=0.7)
 @
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
@@ -2021,8 +2021,9 @@ rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
 @ 
 
 As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
+
 \begin{figure}
-<<optridgeplot2a, echo=FALSE, figure=TRUE>>=
+<<optridgeplot2a, echo=FALSE, fig=TRUE>>=
 print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth())
 @   
  ~\caption{Ridge Regression Predictions, Optimism, Split 2A}
@@ -2214,7 +2215,7 @@ Most of these items relate to lack of bodily attention, and this can probably be
 PA3: "MAASQ4" "MAASQ6" "MAASQ7" "MAASQ8"
 Note that MAASQ4 loads slightly on both PA3 and PA5, and is not considered in the interpretation here. These items can probably best be termed lack of awareness. 
 
-The factor solution for Split C (shown in Table \ref{tab:hom2cmaasfact5}) is somewhat different from the five factor solution for Split B. Note that PA3 is somewhat similar to PA1 (Distractability) from Split B. 
+The factor solution for Split C (not shown) is somewhat different from the five factor solution for Split B. Note that PA3 is somewhat similar to PA1 (Distractability) from Split B. 
 
 
 <<maas2bsemon2c, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2889,10 +2890,12 @@ the optimism health link was entirely mediated by negative affect.
 Nonetheless, the balance of the evidence suggests that optimism has
 beneficial consequences for health and healthy behaviours.
 
-An explanation for this finding might be that it was the result
-of high levels of negative affect in the population.  However, this
-variable was not measured, so such an explanation can be regarded
-as speculative at best. Given that the model mediating the optimism health link with   It is worth noting however, that the original
+%% An explanation for this finding might be that it was the result
+%% of high levels of negative affect in the population.  However, this
+%% variable was not measured, so such an explanation can be regarded
+%% as speculative at best. 
+
+It is worth noting however, that the original
 literature of the beneficial effects of optimism on health focused
 on cellular immunity, which is obviously quite different from self
 reported health.A problem with this explanation is that reports in the
@@ -2907,11 +2910,9 @@ report health problems and visits to medical professionals over the
 course of a year.  Such a study could allow the casual chains of this
 effect to be untangled.
 
-The Structual Equation Model reported for Sample One is a good place to start in this regard.
-The only models which converged were those which moderated the effect of health on optimism 
-through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being 
-model was marginally superior, there are good reasons to believe that mindfulness is more 
-important (c.f. the experimental portion of the research). 
+A more likely explanation (especially given the results reported in Chapter \ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindfulness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the questions) mediated this relationship. 
+
+The Structual Equation Model reported for Sample One is a good place to start in this regard. The only models which converged were those which moderated the effect of health on optimism through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being  model was marginally superior, there are good reasons to believe that mindfulness is more important (c.f. the experimental portion of the research). 
 
 
 \subsection{Mindfulness}
