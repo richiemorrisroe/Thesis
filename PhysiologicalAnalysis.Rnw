@@ -33,7 +33,8 @@ Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean2, by="Participant")
 @
 <<datafiles, echo=FALSE, results=hide, eval=FALSE>>=
 physfiles <- list.files("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="Richi.*..txt$", full.names=TRUE)
-lazyload(physfiles)
+lazyload(physfiles, names="GSR", cols=1)
+lazyload(physfiles, names="ECG", cols=2)
 @
 
 <<readvasscores, echo=FALSE, results=hide>>=

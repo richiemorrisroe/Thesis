@@ -1,7 +1,7 @@
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title
+##' @title 
 ##' @param x
 ##' @param ...
 ##' @return
@@ -708,13 +708,15 @@ tuneLoess <- function(formula, data, newdata, tuneLength, ...) {
           }
     fitlist
 }
-lazyload <- function (files) {
-  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
+lazyload <- function (files, names, cols) {
+  filetype <- paste(names, "-", sep="")
+  outfilenames <- gsub("Richi[e]?-",filetype, x=files)
   outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
   for (i in 1:length(files)) {
     temp <- read.table(files[i])
-    gsr <- temp[,1]
-    write.table(gsr, file=outfilenames[i])
+    browser()
+    gsr <- temp[,cols]
+    write.table(gsr, file=outfilenames2[i])
   }
 }
     
@@ -744,15 +746,7 @@ lazylength <- function(files) {
 }
 
 
-lazyload <- function (files) {
-  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
-  outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
-  for (i in 1:length(files)) {
-    temp <- read.table(files[i])
-    gsr <- temp[,1]
-    write.table(gsr, file=outfilenames[i])
-  }
-}
+
 getPPNo <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
@@ -795,7 +789,7 @@ lazydownsample <- function(path, pattern, ...) {
         dimsec <- ceiling(dim/1000)
         myrep <- sort(rep(1:dimsec, length.out=dim))
                 temp[,"myrep"] <- as.factor(myrep)
-
+        
         ds <- as.data.frame(with(temp, tapply(x, myrep, mean, na.rm=TRUE)))
         print(i)
         dimds <- dim(ds)[1]
@@ -815,7 +809,9 @@ interpolate.pain <- function(pain, padding) {
     res.mat <- matrix(NA, nrow=row.nums, ncol=max.len)
     pain.merge <- merge(pain, padding, by="PPNo.")
     partno <- with(padding, PPNo.)
-    part.pain.sec <- apply(pain[,with(pain, grep("^X", x=names(pain)))], c(1,2), function (x) rep(x, times=60))
+    part.pain.sec <- apply(pain[,with(pain,
+                                      grep("^X", x=names(pain)))],
+                           c(1,2), function (x) rep(x, times=60))
     
     for(i in seq_along(partno)) {
         print(partno[i])

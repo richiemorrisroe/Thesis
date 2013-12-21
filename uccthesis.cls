@@ -994,7 +994,7 @@
 %
 \RequirePackage{lmodern}
 \RequirePackage{makeidx,url,graphicx,array,fancyhdr,calc}
-\RequirePackage{soul,textcomp,ucc,setspace,parskip,float}
+\RequirePackage{soul,textcomp,setspace,parskip,float}
 \RequirePackage[normalem]{ulem}
 \RequirePackage[bottom,ragged]{footmisc}
 \RequirePackage{ccaption}
