@@ -1212,14 +1212,14 @@ bamnotD <- tcq2notd[,53:70]
 
 %% %% Table ~\ref{tab:tcq2aconvcoef1pl} shows that even with a discrimination parameter estimated individually for each item, the generalised partial credit model still exhibits this behaviour with regards to Category C. It is possible that participants who tended to use this particular response category were using it as a default when they did not know how to answer. Next,  One and Two parameter Graded Response Models were fit to the same items.
 
-%% <<tcq2convgrm, echo=FALSE, results=hide, cache=TRUE>>=
-%% tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
-%% tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
-%% @ 
+<<tcq2convgrm, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2a.conv.grm.1pl <- grm(na.omit(tcq2a.conv), constrained=TRUE)
+tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
+@ 
 
-%% <<tcq2aconvgrm1plsumm, echo=FALSE, results=tex>>=
-%% print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm", caption="Coefficients for TCQ 2 (Split A) Conventional Scale, One parameter Graded Response Model"))
-%% @ 
+<<tcq2aconvgrm1plsumm, echo=FALSE, results=hide>>=
+#print(xtable(coef(tcq2a.conv.grm.1pl), label="tab:tcq2aconvgrm1plsumm", caption="Coefficients for TCQ 2 (Split A) Conventional Scale, One parameter Graded Response Model"))
+@ 
 
 %% As can be seen from Table ~\ref{tab:tcq2aconvgrm1plsumm}, the graded response model provides a good fit to the data.  There are no obvious violations of the model assumptions, with an estimated discrimination parameter of 2.197. Note that the cream items are considered the most difficult, suggesting that this was the least credible form of conventional treatment.  The next model fit was a two parameter graded response model.  
 

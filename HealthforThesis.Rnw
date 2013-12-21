@@ -433,8 +433,8 @@ be addressed.
 
 
 \begin{figure}
-<<pairsplot, echo=FALSE, fig=TRUE>>=
-pairs.panels(na.omit(hom.tot))
+<<pairsplot, echo=FALSE, fig=TRUE, pdf=TRUE>>=
+print(pairs.panels(na.omit(hom.tot)))
 @
 \caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
 \label{fig:pairsplot}
