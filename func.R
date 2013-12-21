@@ -779,18 +779,19 @@ lazymean <- function( path, pattern, ...) {
     meanmat
 }
 
-lazydownsample <- function(path, pattern, ...) {
-    lsfiles <- list.files(path, pattern, ...)
+lazydownsample <- function(path, pattern, aggregate=1000, FUN=mean, ...) {
+  stopifnot(is.numeric(aggregate))
+    lsfiles <- list.files(path, pattern, full.names=TRUE)
     pp <- getPPNo(lsfiles)
     mymat <- matrix(NA, 3200, ncol=length(lsfiles))
     for(i in 1:length(lsfiles)) {
+
         temp <- read.table(lsfiles[i])
         dim <- dim(temp)[1]
-        dimsec <- ceiling(dim/1000)
+        dimsec <- ceiling(dim/aggregate)
         myrep <- sort(rep(1:dimsec, length.out=dim))
                 temp[,"myrep"] <- as.factor(myrep)
-        
-        ds <- as.data.frame(with(temp, tapply(x, myrep, mean, na.rm=TRUE)))
+        ds <- as.data.frame(with(temp, tapply(x, myrep, FUN, ...)))
         print(i)
         dimds <- dim(ds)[1]
         mymat[1:dimds,i] <- ds[,1]
@@ -799,8 +800,12 @@ lazydownsample <- function(path, pattern, ...) {
     mymat
 }
         
-        
-        
+difffunc <- function(data) {
+  max <- which.max(data)
+  min <- which.min(data)
+  time <- abs(max-min)
+  return(time)
+}
 interpolate.pain <- function(pain, padding) {
     max.padding <- with(padding, max(FirstPainRating, na.rm=TRUE))
     pain.sec <- 45*60 #hack, as the experiment was 45 mins max following pain induction

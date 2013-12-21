@@ -69,6 +69,11 @@ meanmat <- lazymean( path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutpu
 
 @
 <<downsample, echo=FALSE, results=hide>>=
-ds <- lazydownsample(path="ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+mypath <- "ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput"
+ds <- lazydownsample(path=mypath, pattern="^GSR-", aggregate=1000, FUN=mean, na.rm=TRUE)
+ecg <- lazydownsample(path=mypath, pattern="^ECG", aggregate=1000, FUN=mean, na.rm=TRUE)
+ibi <- lazydownsample(path=mypath, patter="^ECG", aggregate=1000, FUN=difffunc)
 write.csv(ds, file="GSRdataDownSample.csv", row.names=FALSE)
+write.csv(ecg, file="ECGdataDownSample.csv", row.names=FALSE)
+write.csv(ibi, file="InterBeatIntervals.csv", row.names=FALSE)
 @ 
