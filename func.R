@@ -810,9 +810,9 @@ interpolate.pain <- function(pain, padding) {
     max.padding <- with(padding, max(FirstPainRating, na.rm=TRUE))
     pain.sec <- 45*60 #hack, as the experiment was 45 mins max following pain induction
     max.len <- pain.sec+max.padding+1 #for participant column
-    row.nums <- with(pain, length(unique(PPNo.)))
+    row.nums <- with(pain, length(unique(Participant)))
     res.mat <- matrix(NA, nrow=row.nums, ncol=max.len)
-    pain.merge <- merge(pain, padding, by="PPNo.")
+    pain.merge <- merge(pain, padding, by.y="PPNo.", by.x="Participant")
     partno <- with(padding, PPNo.)
     part.pain.sec <- apply(pain[,with(pain,
                                       grep("^X", x=names(pain)))],
