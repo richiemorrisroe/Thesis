@@ -400,6 +400,41 @@ IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
 Next, we examine the difference between the mean and median scores for the TCQ IAT. %% As can be seen from Figure \ref{fig:meanmediat},
 There was little difference between the two measures of central tendency ($r=0.89$). 
 
+<<selfreportcleanup, echo=FALSE, results=hide>>=
+names(vasscores2)[1] <-  "Participant"
+names(expmeasures2)[1] <- "Participant"
+vasscores2.test <- vasscores2[,1:8]
+expmeasures2comp <- merge(vasscores2.test, expmeasures2)
+Iatandexpmeasures <- merge(expmeasures2comp, IATscores, by="Participant")
+iatexp <- Iatandexpmeasures[,c(14:22, 24)]
+Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
+Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
+Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
+## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
+@ 
+
+
+
+<<tsimport, echo=FALSE, results=hide>>=
+gsr <- read.csv("GSRdataDownSample.csv")
+gsr[,"index"] <- 1:nrow(gsr)
+gsr.melt <- melt(gsr, id.vars="index")
+gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
+gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
+names(gsr.mean)[1] <- "Participant"
+Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
+## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
+## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
+gsr.rs <- dcast(gsr.melt, variable~index+...)
+@ 
+
+<<semdata, echo=FALSE, results=hide>>=
+Iatandexpmeasures2 <- Iatandexpmeasures.phys
+names(Iatandexpmeasures2)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
+exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
+@ 
+
 
 The next question is whether or not the IATs have been contaminated by method variance. This can be assessed in a preliminary fashion by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was \Sepxr{round(with(Iatandexpmeasures2, cor(TCQIAT.Median, OptIAT.Median)), 3)}, thus showing that method variance does not appear to have contaminated the results. 
 
@@ -602,17 +637,6 @@ censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
 ## Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
-<<selfreportcleanup, echo=FALSE, results=hide>>=
-names(vasscores2)[1] <-  "Participant"
-names(expmeasures2)[1] <- "Participant"
-vasscores2.test <- vasscores2[,1:8]
-expmeasures2comp <- merge(vasscores2.test, expmeasures2)
-Iatandexpmeasures <- merge(expmeasures2comp, IATscores, by="Participant")
-iatexp <- Iatandexpmeasures[,c(14:22, 24)]
-Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
-Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
-Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
-## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
  
 %% Next, the relationship between overall response time in each block (total time to complete the block, including interstimulus intervals) was examined in terms of the demographic variables. 
@@ -1169,19 +1193,7 @@ Before the analysis of GSR data was conducted, the mean GSR per group were scale
 
 
 
-<<tsimport, echo=FALSE, results=hide>>=
-gsr <- read.csv("GSRdataDownSample.csv")
-gsr[,"index"] <- 1:nrow(gsr)
-gsr.melt <- melt(gsr, id.vars="index")
-gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
-gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
-names(gsr.mean)[1] <- "Participant"
-Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures2, gsr.mean, by="Participant")
-## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
-## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
-gsr.rs <- dcast(gsr.melt, variable~index+...)
-@
+
 
 
 
@@ -1295,11 +1307,7 @@ ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
 
 The Open Placebo group had the lowest GSR over time, and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
-<<semdata, echo=FALSE, results=hide>>=
-Iatandexpmeasures2 <- Iatandexpmeasures.phys
-names(Iatandexpmeasures2)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
-exp.sem <- Iatandexpmeasures2[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
-@ 
+
 
 
 @ 
@@ -1316,8 +1324,7 @@ There was a  sizeable difference by condition when the cross-correlations betwee
 For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
-Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
-gsr.cond <- lm(gsrmean~Condition, data=Iatandexpmeasures.phys)
+gsr.cond <- lm(gsr.mean~Condition, data=Iatandexpmeasures.phys)
 print(xtable(summary(gsr.cond), caption="Regression of Condition on Mean GSR", label="tab:gsrcondreg"))
 @ 
 
@@ -1467,7 +1474,7 @@ print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures
 Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Trpeatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
 <<placmodgsr, echo=FALSE, results=tex>>=
-placmod10 <- glm(PlacResp~gsrmean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
+placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
 @ 
 
@@ -1605,7 +1612,7 @@ print(plot(evtree.train$finalModel))
 
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
-registerDoMC(3)
+registerDoMC(2)
 iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
@@ -1759,7 +1766,7 @@ This would suggest that while the model was excellent at predicting those who wo
 \subsection{Testing the Theoretical Models}
 \label{sec:test-theor-models}
 
-The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:modell-plac-mult}
+The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:modell-plac-mult}. 
 
 
 

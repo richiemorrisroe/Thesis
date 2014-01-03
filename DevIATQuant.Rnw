@@ -20,17 +20,20 @@ require(xtable)
 @ 
 
 <<data, echo=FALSE, results=hide>>=
-qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="")
+qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="", header=FALSE)
 qual.m <- melt(qual, id.vars=NULL)
 qual.m[,"value"] <- with(qual.m, tolower(value))
 qual.m2 <- qual.m[with(qual.m, gsub("s$", "", x=value)),]
-qual.tab <- as.data.frame(with(qual.m2, table(value)))
+vals <- qual.m$value
+vals2 <- gsub("s$", "", x=vals)
+
+qual.tab <- as.data.frame(table(vals2))
 qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
 @ 
 
 \begin{figure}
 <<plotfreq, echo=FALSE, fig=TRUE>>=
-freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))
+freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=vals2, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))
 print(freq.pl)
 @   
   \caption{Histogram of Frequency of People or Qualities}
@@ -212,14 +215,14 @@ This result is somewhat obvious, as blocks three and five are combined tasks, an
 
 %%put in this plot!!!
 
-From Figure \ref{convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
+% From Figure \ref{convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
 
 <<iatscores, echo=FALSE, results=tex>>=
 IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
 iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="kendall"))
 @
 
-The first step was examining the correlation between the two explicit measures. This was found to be 0.42, using Kendall's $\tau$. This is somewhat higher than would be hoped for, but still only represents 16\% of the variance in common between the two measures. 
+The first step was examining the correlation between the two implicit measures. This was found to be 0.42, using Kendall's $\tau$. This is somewhat higher than would be hoped for, but still only represents 16\% of the variance in common between the two measures. 
 
 <<maascorr, echo=FALSE, results=tex>>=
 iatcorr.maas.tcq<-with(iepilot, cor.test(DIAT.Conv, MAAS, use="complete.obs", method="spearman"))
@@ -308,39 +311,39 @@ print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Resp
 As can be seen from Table \ref{tab:tcqiatglm}, \ref{tab:optiatglm}, \ref{tab:convglm} and \ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Additionally, only 3 of the seven participants responded to placebo, suggesgting that an extremely large sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers, 2005. 
 
 
-<<physts,echo=FALSE, results=hide>>=
-BPdata.ts<-as.ts(BPdata) #create BP time series object
-GSRdata.ts<-as.ts(GSRdata) #create GSR time series object
-VASdata.ts<-as.ts(VASdata) #create time series object
-@
+% <<physts,echo=FALSE, results=hide>>=
+# BPdata.ts<-as.ts(BPdata) #create BP time series object
+# GSRdata.ts<-as.ts(GSRdata) #create GSR time series object
+# VASdata.ts<-as.ts(VASdata) #create time series object
+% @
 
 
 
 
-<<bpplot, echo=FALSE, fig=TRUE>>=
-plot(BPdata.ts)
-@
-\begin{figure}
-<<gsrplot, echo=FALSE, fig=TRUE>>=
-plot(GSRdata.ts)
-@  
-  \caption{GSR Data by Participant Across Time}
-  \label{fig:gsrplot}
-\end{figure}
+% <<bpplot, echo=FALSE, fig=TRUE>>=
+% plot(BPdata.ts)
+% @
+% \begin{figure}
+% <<gsrplot, echo=FALSE, fig=TRUE>>=
+# plot(GSRdata.ts)
+% @  
+%   \caption{GSR Data by Participant Across Time}
+%   \label{fig:gsrplot}
+% \end{figure}
 
 
 
-\begin{figure}
-<<vasplot, echo=FALSE, fig=TRUE>>=
-plot(VASdata.ts)
-@  
-  \caption{BP Readings over Time}
-  \label{fig:vasplot}
-\end{figure}
+% \begin{figure}
+% <<vasplot, echo=FALSE, fig=TRUE>>=
+# plot(VASdata.ts)
+% @  
+%   \caption{BP Readings over Time}
+%   \label{fig:vasplot}
+% \end{figure}
 
 
 
-As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically below.
+% As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically below.
 
 \section{Discussion}
 \label{sec:discussion}

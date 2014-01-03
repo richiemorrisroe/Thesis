@@ -744,12 +744,12 @@ lazylength <- function(files) {
 }
 
 
-lazyload <- function (files) {
-  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
+lazyload <- function (files, name="GSR-", col=1) {
+      outfilenames <- gsub("Richi[e]?-", name, x=files)
   outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
   for (i in 1:length(files)) {
     temp <- read.table(files[i])
-    gsr <- temp[,1]
+     gsr <- temp[,col]
     write.table(gsr, file=outfilenames[i])
   }
 }
@@ -808,6 +808,7 @@ lazydownsample <- function(path, pattern, ...) {
         
         
 interpolate.pain <- function(pain, padding) {
+    names(pain)[1] <- "PPNo."
     max.padding <- with(padding, max(FirstPainRating, na.rm=TRUE))
     pain.sec <- 45*60 #hack, as the experiment was 45 mins max following pain induction
     max.len <- pain.sec+max.padding+1 #for participant column
@@ -845,7 +846,9 @@ interpolate2 <- function(painscores, painmetadata) {
     partno <- pain.ratings.min$Participant
     painscores.real <- grep("^X", x=names(painscores))
     for (i in seq_along(partno)) {
-        print(i)
+        if(is.na(pain.ratings.min$Participant[i])) {
+            next
+        }
         partpad <- pain.ratings.min[with(pain.ratings.min,Participant==partno[i]),1]
         if(is.na(partpad)) {
             next}
@@ -859,5 +862,6 @@ interpolate2 <- function(painscores, painmetadata) {
         
         resmat[i,1:length(padpluspain)] <- padpluspain
         resmat}
-    resmat
+    resmat2 <- as.data.frame(resmat)
+
 }
