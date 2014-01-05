@@ -255,11 +255,11 @@ The majority of the analytical procedures were as described in Chapter \ref{cha:
 
 %% The performance of all methods was then assessed on held-out data. In the case of Sample One, some of Sample Two was used as a heldout data set. For Sample Two, the entire dataset was split into three splits, and the cross validation procedure carried out for each. The splits were kept quite large (approximately 300 non missing observations) to allow for psychometric models to be fit to each split seperately. %% and to be able to compare the performance of simple mean/sum scores against the factor scores and ability estimates derived from the psychometric modelling procedures. 
 
-The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the B sample, it was tested on both the A and the C sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from Sample One. The model(s) chosen by this procedure was then used to predict these scores for the experimental portion of the research (and compared against the typical scoring methods). 
+%% The approach taken to the psychometric analysis of the second sample of data was as follows.  Firstly, factor models were built on the two remaining samples from this dataset (the first having been used to validate the results from Sample 1).  Next, a CFA was run on each of the other samples, such that if the model was developed on the B sample, it was tested on both the A and the C sample.  This provides a better measure of accuracy and replicability for each of the proposed factor structures.  Finally, the most successful model was back-tested on the data from Sample One. The model(s) chosen by this procedure was then used to predict these scores for the experimental portion of the research (and compared against the typical scoring methods). 
 
-The testing was carried out using a few different methods.  Firstly, CFA models were fitted to the new data, allowing for comparision of their effectiveness on unseen data. Factor scores were then calculated from these models. Additionally, the ability estimates from the best fitting IRT models were also calculated. These models were used to predict on the experimental data (c.f. Chapter \ref{cha:primary-research}).
+%% The testing was carried out using a few different methods.  Firstly, CFA models were fitted to the new data, allowing for comparision of their effectiveness on unseen data. Factor scores were then calculated from these models. Additionally, the ability estimates from the best fitting IRT models were also calculated. These models were used to predict on the experimental data (c.f. Chapter \ref{cha:primary-research}).
 
-A different procedure was  followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
+%% A different procedure was  followed for the IRT models, using  three fold cross validation used to build an IRT model on each of the ten segments, and then comparing the estimates ability scores from the model built on the 33\% of the data, and from the estimates built on the held-out data. The difference between these two measures will provide an estimate of error for each of the model\'s predictive capability. This will then provide a metric for the selection of the best model, which can then be applied to the experimental data. 
 
 %% \subsection{Crossvalidation Approaches}
 %% \label{sec:crossv-appr}
@@ -673,6 +673,16 @@ As has been shown above, all three kinds of regression models agreed that emotio
 A similiar procedure as described above for optimism was employed
 in the midfulness regressions.  The results are shown below.
 
+<<mindsetup, echo=FALSE, results=hide, cache=TRUE>>=
+mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
+hom1.mind.train <- hom1.full[mind.ind, ]
+hom1.mind.test <- hom1.full[-mind.ind,]
+mind.train <- with(hom1.mind.train, mindfulness)
+mind.pred.train <- hom1.mind.train[,c(4,67:73,75)]
+mind.test <- with(hom1.mind.test, mindfulness)
+mind.pred.test <- hom1.mind.test[,c(4,67:73,75)]
+@ 
+
 <<maasregfirst, echo=FALSE, results=hide, cache=TRUE>>=
 maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
 mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
@@ -688,15 +698,7 @@ print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selecte
 
 As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue. In contrast to the lasso and ridge fits, the model selected using this method did not include optimism. When the correlations between predicted and observed values were measured, all three model fits had correlations with the observed variables of approximately 0.44. However, in the case of the stepwise model, this correlation was negative. This unexpected result would seem to imply that this model is not particularly useful, and so either the lasso or ridge would appear to be the best model in terms of this data. 
 
-<<mindsetup, echo=FALSE, results=hide, cache=TRUE>>=
-mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
-hom1.mind.train <- hom1.full[mind.ind, ]
-hom1.mind.test <- hom1.full[-mind.ind,]
-mind.train <- with(hom1.mind.train, mindfulness)
-mind.pred.train <- hom1.mind.train[,c(4,67:73,75)]
-mind.test <- with(hom1.mind.test, mindfulness)
-mind.pred.test <- hom1.mind.test[,c(4,67:73,75)]
-@ 
+
 
 
 <<mindlasso, echo=FALSE, results=tex>>=
