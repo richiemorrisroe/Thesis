@@ -24,7 +24,7 @@ qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="")
 qual.m <- melt(qual, id.vars=NULL)
 qual.m[,"value"] <- with(qual.m, tolower(value))
 qual.m2 <- qual.m[with(qual.m, gsub("s$", "", x=value)),]
-qual.tab <- as.data.frame(with(qual.m2, table(value)))
+qual.tab <- as.data.frame(with(qual.m, table(value)))
 qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
 @ 
 
@@ -69,7 +69,7 @@ The IAT measures were piloted on 17 students from the psychology department. Eac
 
 <<readdata, echo=FALSE, results=hide>>=
 source("func.R")
-optiat <-read.table("ExperimentDataforR/Pilot/Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
+optiat <-read.table("ExperimentDataforR/PilotStudy/Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
 names(optiat)[c(3,9)] <- c("Them", "Disapproving")
 optiat.s <-optiat[,1:16]
 optiat.s[,"Block"] <- with(optiat.s, paste("Block", Block, sep=" "))
@@ -121,7 +121,7 @@ Next, the Treatment Credibility Questionnaire was examined to assess its correla
 
 <<readdata, echo=FALSE, results=hide, eval=FALSE>>=
 
-tcqiat <- read.csv("ExperimentDataforR/Pilot/tcq prep data for IAT.csv")
+tcqiat <- read.csv("ExperimentDataforR/PilotStudy/tcq prep data for IAT.csv")
 tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
 tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Truth", "Fake", "Lies", "Inaccurate", "Conventional", "Pills", "Cream", "Injections", "Nurse", "Doctor", "Pharmacist", "Medicine", "Alternative", "Acupuncture", "Reiki.Master", "Acupuncturist", "Reiki", "Flower.essence", "Homeopathy", "Homeopathist"))
 @ 
@@ -142,13 +142,15 @@ As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the 
 
 
 <<fileimport, echo=FALSE, results=hide>>=
-iepilot<-read.csv("ExperimentDataforR/Pilot/I and E for Pilot.csv")
+iepilot<-read.csv("ExperimentDataforR/PilotStudy/I and E for Pilot.csv")
 require(psych)
 require(xtable)
 @
 
 <<gender, echo=FALSE, results=tex>>=
-print(xtable(as.data.frame(with(iepilot, summary(Gender))), label="tab:gendpilot", caption="Gender of Pilot Participants"))   
+gend.sum <- as.data.frame(with(iepilot, summary(Gender)))
+names(gend.sum) <- "Gender"
+print(xtable(gend.sum, label="tab:gendpilot", caption="Gender of Pilot Participants"))   
 @
 
 The participants in the pilot study (N=7), consisted of five men, one woman and one participant who did not report gender. 
@@ -159,7 +161,7 @@ age.xtab <-xtable(as.data.frame(with(iepilot, table(Age))))
 The minimum age of the participants was 21, the max was 30, the mean was 25.33 while the median was 25.5. 
 
 <<tcqiat, echo=FALSE, results=hide>>=
-tcqiat<-read.csv("ExperimentDataforR/Pilot/TCQ IAT pilot data for R2712.csv")
+tcqiat<-read.csv("ExperimentDataforR/PilotStudy/TCQ IAT pilot data for R2712.csv")
 @
 
 <<realfakewords, echo=FALSE, results=hide>>=
@@ -257,7 +259,7 @@ pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR", "ConvAl
 As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
 
 <<physdata, echo=FALSE, results=hide>>=
-physmeasures<-read.csv("ExperimentDataforR/Pilot/Physmeasures for Pilot.csv")
+physmeasures<-read.csv("ExperimentDataforR/PilotStudy/Physmeasures for Pilot.csv")
 @
 
 
@@ -278,9 +280,9 @@ print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
 @
 
 <<vaswithplacresp, echo=FALSE, results=hide>>=
-vas.with.plac <- read.csv("ExperimentDataforR/Pilot/vaspilot.csv", header=TRUE, sep="\t")
+vas.with.plac <- read.csv("ExperimentDataforR/PilotStudy/vaspilot.csv", header=TRUE, sep="\t")
 vas.with.plac[,"PP.No"] <- with(vas.with.plac, gsub("VAS.", "", x=PP.No))
-surv <- read.csv("ExperimentDataforR/Pilot/Survdatapilot.csv")
+surv <- read.csv("ExperimentDataforR/PilotStudy/Survdatapilot.csv")
 vas.s <- vas.with.plac[,c("PP.No", "PlacResp")]
 surv.merge <- merge(surv, vas.s, by.x="PpNo", by.y="PP.No")
 @ 
@@ -354,6 +356,5 @@ Additionally, the use of the priming manipulation allows for the major hypothese
 Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. 
 
 %%% Local Variables: 
-%%% mode: latex
 %%% TeX-master: "PlaceboMeasurementByMultipleMethods"
 %%% End: 
