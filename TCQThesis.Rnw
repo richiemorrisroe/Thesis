@@ -1,7 +1,7 @@
 
 \section{Introduction}
 
-Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal~\cite{Whalley2008}.  
+Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. While these methods work, they typically explain only 10\% of the variance in response to placebo, which is clearly not optimal~\cite{Whalley2008}.This problem, and some potential resolutions, have been discussed in Chapter \ref{cha:literature-review}, especially Section \ref{sec:expectancies}. 
 
 Additionally, a review of expectancy studies showed that of 16 studies, only two shared a common expectancy question \cite{myers2008patient}. This would seem to suggest that there exists a need for a standardised measure of patient expectancies in the study of placebo effects and expectancy effects more generally. 
 
@@ -55,13 +55,13 @@ Following this, a correlation matrix for the data was calculated and analysed.
 
 Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Section \ref{sec:psych-analys-meth}. 
 
-\subsection{Crossvalidation Approach to Psychometric Data}
-\label{sec:crossv-appr-psych}
+%% \subsection{Crossvalidation Approach to Psychometric Data}
+%% \label{sec:crossv-appr-psych}
 
 
 
-Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. %% In essence, a boosting strategy was attempted\footnote{contrary to Richie's belief when he wrote this, this strategy is not a boosting strategy}. 
-This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
+%% Normally, cross-validation of particular models involves the setting aside of a small portion of the data for testing of the model. However, SEM and factor analytic requirements for relatively large sample sizes meant that this approach was not practicable. Therefore a different strategy was followed. %% In essence, a boosting strategy was attempted\footnote{contrary to Richie's belief when he wrote this, this strategy is not a boosting strategy}. 
+%% This is where many models are fit on smaller subsets of the data, and then they are tested on a larger subset of the data (all of the data save those that they were trained on. So, for Split A models, they will be tested on all the data that was not included in Split A. This approach was taken in order to take advantage of the random variability in the smaller samples while maintaining a rigorous test on a large sample to ensure that only the best models survive. 
 
 %%this beliefs about medicine stuff might make an OK paper, but it doesn't really contribute to the thesis 05/11/13.
 %% The Beliefs About Medicine Questionnaire was a special case in this analysis. As only eight items are included in the canonical version of the scale, the other eight were given to test the hypothesis that different items might load better in a general population sample, rather than a clinical sample. Given the small sample sizes in the original research, and the inappropriate use of principal components analysis, this was also used as an opportunity to examine the structure using better methods. Therefore, the eight items of the published scale were analysed first, and then all analyses reported in this section were carried out on the larger sixteen item set. Results of these analyses are in the appropriate section, and the implications are discussed both in the discussion in that section and in the General Discussion.
@@ -414,8 +414,6 @@ It can be seen from Table \ref{tab:tcq1convgrm1pl} that the fit is much better f
 tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
 tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
 
-## tcqconv.grm.fscores.2pl <- factor.scores(tcqconv.grm.2pl)
-## tcqconv.grm.absest <- getIRTestimates(tcqconv.grm.fscores.2pl)
 @ 
 <<tcqconvgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
@@ -423,7 +421,7 @@ print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficient
 <<tcqgrmcomp, echo=FALSE, results=hide, cache=TRUE>>=
 grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
 @ 
-The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative TCQ (i.e. the acupuncture items) using a series of graded response models.  
+The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$). Next, the fit of the alternative TCQ (i.e. the acupuncture items) was examined using a series of graded response models.  
 
 <<tcqaltpcm, echo=FALSE, results=hide, cache=TRUE>>=
 tcqalt.pcm.rasch <- gpcm(tcqalt, constraint="rasch")
@@ -700,7 +698,7 @@ tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq6fit2))
 print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion, below.
+As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion (Section \ref{sec:study-1})
 
 
 
@@ -828,7 +826,7 @@ The hypotheses were as follows:
 \item The BAM will have two factors;
 
 \item The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
-\item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s).;
+\item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s);
 
 %% \item Income will correlate postively with experience of CAM methodologies;
 
@@ -1146,14 +1144,7 @@ bamnotD <- tcq2notd[,53:70]
 
 %% %% There were no violations of the monotonicity assumption for the alternative items in this split either. 
 
-%% <<tcq2aguttmanerrors, echo=FALSE, results=hide, eval=FALSE, cache=TRUE>>=
- ## tcq2a.conv.errors <- check.errors(na.omit(tcq2a.conv))
- ## tcq2a.conv.full <- na.omit(tcq2a.conv)
- ## tcq2a.conv.full[,"guttman.conv"] <- tcq2a.conv.errors
- ## tcq2a.alt.full <- na.omit(tcq2a.alt)
- ## tcq2a.alt.errors <- check.errors(na.omit(tcq2a.alt))
- ## tcq2a.alt.full[,"guttman.alternative"] <- tcq2a.alt.errors
-@ 
+
 
 %% Guttman errors are interesting in that they can provide a quick measure of person fit. They have mostly been applied to dichotomous outcomes, but are examined in this work in order to check their adequacy as a measure of person fit. 
 
@@ -1388,15 +1379,15 @@ print(FactorXtab(tcq2b.fact.5, names=c("Pill&Inj", "Cream", "Rei", "Hom", "Acu")
 The five factor solution (not shown) broke down as follows:
 It explained 81\% of the variance, and all the communalities were greater than 0.5. 
 
-PA2: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6", "Inj1",  "Inj2",  "Inj3",  "Inj4",  "Inj5",  "Inj6". This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
+PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'',  ``Inj4'',  ``Inj5'',  ``Inj6''. This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
 
-PA3:"Cream1", "Cream2", "Cream3", "Cream4", "Cream5", "Cream6". This factor consists of the Cream questions and can thus be termed Creams. 
+PA3:''Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor consists of the Cream questions and can thus be termed Creams. 
 
-PA5: "Rei1",  "Rei2",  "Rei3",  "Rei4",  "Rei5",  "Rei6". There was a small negative loading on Pill1 for this factor, but given its strong loadings on other factors, this was ignored. This left this factor consisting solely of the Reiki items, and so this factor was termed Reiki. 
+PA5: ``Rei1'',  ``Rei2'',  ``Rei3'',  ``Rei4'',  ``Rei5'',  ``Rei6''. There was a small negative loading on Pill1 for this factor, but given its strong loadings on other factors, this was ignored. This left this factor consisting solely of the Reiki items, and so this factor was termed Reiki. 
 
-PA1: "Hom1", "Hom2", "Hom3", "Hom4", "Hom5", "Hom6". This factor consisted solely of the homeopathy items, and thus was termed Homeopathy.
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor consisted solely of the homeopathy items, and thus was termed Homeopathy.
 
-PA4: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This factor consisted solely of the Acupuncture items and thus was termed acupuncture. 
+PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor consisted solely of the Acupuncture items and thus was termed acupuncture. 
 
 
 \paragraph{Six Factor Solution, Split B}
@@ -1411,7 +1402,7 @@ print(FactorXtab(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pil
 
 
 %% As can be seen from Table \ref{tab:tcq2bfact6}
-The six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
+The six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded %% \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
 
 %% Below can be seen the correlations between factors, in Table \ref{tab:tcq2b6factorcor} . 
 
@@ -1441,19 +1432,19 @@ print(FactorXtab(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill
 
 The seven factor solution shown in Table \ref{tab:tcq2bfact7} explained 86\% of the variance in the sample, and the items were assigned to factors as follows.
 
-PA1: "Hom1", "Hom2", "Hom3", "Hom4", "Hom5", "Hom6". This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
 
-PA5: "Pill1", "Rei1",  "Rei2",  "Rei3",  "Rei4",  "Rei5",  "Rei6". Again, apart from a small loading of Pill1 on this factor, it maps exactly to the Reiki questions, and thus will be termed Reiki. 
+PA5: ``Pill1'', ``Rei1'',  ``Rei2'',  ``Rei3'',  ``Rei4'',  ``Rei5'',  ``Rei6''. Again, apart from a small loading of Pill1 on this factor, it maps exactly to the Reiki questions, and thus will be termed Reiki. 
 
-PA4: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This factor maps exactly to the Acupuncture questions, and will be termed thusly.
+PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor maps exactly to the Acupuncture questions, and will be termed thusly.
 
-PA3: "Cream1", "Cream2", "Cream3", "Cream4", "Cream5", "Cream6". Again, this factor is an exact map to the Cream questions and thus is termed Creams.
+PA3: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. Again, this factor is an exact map to the Cream questions and thus is termed Creams.
 
-PA2: "Inj1", "Inj2", "Inj3", "Inj4", "Inj5", "Inj6". These items are all Injection items, and so this factor gets that name. 
+PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. These items are all Injection items, and so this factor gets that name. 
 
-PA6: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6". This factor maps to all of the pill items, and is thus called Pills. 
+PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor maps to all of the pill items, and is thus called Pills. 
 
-PA7: "Pill3",  "Cream3", "Inj1",   "Inj3" . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
+PA7: ``Pill3'',  ``Cream3'', ``Inj1'',   ``Inj3'' . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
 
 
 %% The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
@@ -1754,11 +1745,11 @@ print(tcq2convgrm2plot)
 
 %% As can be seen from Figure \ref{fig:tcq2bconvgrm2plot}, there were no violations of monotonicity for the two parameter GRM. 
 
-<<tcq2bconv2plgrmsum, echo=FALSE, results=tex>>=
+<<tcq2bconv2plgrmsum, echo=FALSE, results=hide>>=
 print(xtable(coef(tcq2b.conv.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) Two Parameter Graded Response Model"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2bconv2plgrmsum}, the discrimination parameters have lowered for most of the items, with the exception of Pill4, Pill5 and Pill6, where they have significantly increased. This is surprising, as the Cream items have much higher difficulty, but lower discrimination between different ability levels. 
+In the two parameter model (not shown), the discrimination parameters have lowered for most of the items, with the exception of Pill4, Pill5 and Pill6, where they have significantly increased. This is surprising, as the Cream items have much higher difficulty, but lower discrimination between different ability levels. 
 
 Finally, the predictive power of each of the models was assessed. 
 
@@ -1782,10 +1773,11 @@ print(tcq2b.pcm.modcomp.xtab)
 tcq2b.grm.1pl.done <- testIRTModels(tcq2b.conv.grm.1pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2b.grm.2pl.done <- testIRTModels(tcq2b.conv.grm.2pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2b.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
+rownames(tcq2b.grm.modcomp) <- c("One Parameter", "Two Parameter")
 
 @ 
 <<tcq2bgrmmodcomp, echo=FALSE, results=tex>>=
-tcq2b.grm.modcomp.xtab <- xtable(tcq2b.pcm.modcomp, caption="Performance of TCQ Conventional Graded Response Models from Split B, tested on Splits A, C and D", label="tab:tcq2bgrmmodcomp")
+tcq2b.grm.modcomp.xtab <- xtable(tcq2b.grm.modcomp, caption="Performance of TCQ Conventional Graded Response Models from Split B, tested on Splits A, C and D", label="tab:tcq2bgrmmodcomp")
 print(tcq2b.grm.modcomp.xtab)
 @ 
 
@@ -1899,15 +1891,15 @@ print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"),
 
 The five factor  solution (not shown) explained 79\% of the variance, and all of the communalities were extremely high. 
 
-PA2: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6", "Inj1",  "Inj2",  "Inj3", "Inj4",  "Inj5",  "Inj6". This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
+PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'', ``Inj4'',  ``Inj5'',  ``Inj6''. This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
 
-PA1: "Hom1", "Hom2", "Hom3", "Hom4", "Hom5", "Hom6". This factor maps exactly to the Homeopathy items, and is therefore given that name.
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor maps exactly to the Homeopathy items, and is therefore given that name.
 
-PA5: "Rei1", "Rei2", "Rei3", "Rei4", "Rei5", "Rei6". Again, this factor maps exactly to the Reiki items and is named after them.
+PA5: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. Again, this factor maps exactly to the Reiki items and is named after them.
 
-PA4: "Cream1", "Cream2", "Cream3", "Cream4", "Cream5", "Cream6". PA4 maps to the Cream items and so retains that name. 
+PA4: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. PA4 maps to the Cream items and so retains that name. 
 
-PA3: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". PA3 maps to the acupuncture items and so is termed Acupuncture. 
+PA3: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. PA3 maps to the acupuncture items and so is termed Acupuncture. 
 
 
 
@@ -1951,19 +1943,19 @@ Table \ref{tab:tcq2cfact7} shows the seven factor solution structure for Split C
 
 Again, the factors mostly break down into the six forms of treatment.
 
-PA1: "Hom1", "Hom2", "Hom3", "Hom4", "Hom5", "Hom6". This factor represents the homeopathy items and retains that name. 
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor represents the homeopathy items and retains that name. 
 
-PA5: "Rei1", "Rei2", "Rei3", "Rei4", "Rei5", "Rei6". This is the Reiki items factor. 
+PA5: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. This is the Reiki items factor. 
 
-PA3: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This is the Acupuncture items factor. 
+PA3: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This is the Acupuncture items factor. 
 
-PA4: "Cream1", "Cream2", "Cream3", "Cream4", "Cream5", "Cream6". This is the Cream factor. 
+PA4: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This is the Cream factor. 
 
-PA2:"Inj1", "Inj2", "Inj3", "Inj4", "Inj5", "Inj6". This is the Injections factor. 
+PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This is the Injections factor. 
 
-PA6:"Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6". This is the Pills factor. 
+PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This is the Pills factor. 
 
-PA7: "Pill3", "Inj1",  "Inj3" . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
+PA7: ``Pill3'', ``Inj1'',  ``Inj3'' . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
 
 %% The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
 
@@ -2152,7 +2144,7 @@ print(xtable(summary(tcq2c.conv.mono), label="tab:tcq2cconvcheckmono", caption="
 
 %% Next, the monotonicity assumption was examined. Table \ref{tab:tcq2cconvcheckmono} shows that there were no violations of monotonicity in this sample. 
 
-Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
+%% Next, the number of guttman errors for the TCQ conventional items were calculated and plotted. 
 
 %% \begin{figure}
 <<tcq2cconvguttman, echo=FALSE, eval=FALSE, pdf=TRUE, png=TRUE, eps=TRUE>>=
@@ -2283,11 +2275,11 @@ print(tcq2convgrm2plot)
 %% Firstly, the fit of the two parameter graded response model was examined graphically, as shown in Figure \ref{fig:tcq2cconvgrm2plot}. This figure demonstrates that there are no obvious violations of monotonicity, and the coefficients are the next focus of attention.
 
 
-<<tcq2cconv2plgrmsum, echo=FALSE, results=tex>>=
+<<tcq2cconv2plgrmsum, echo=FALSE, results=hide>>=
 print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum", caption="Coefficients for TCQ 2 Split C Two Parameter Graded Response Model"))
 @ 
 
-Table \ref{tab:tcq2cconv2plgrmsum} shows the estimated coefficients and discrimation paramaters for the two parameter graded response model. Interestingly enough, Pill 5 and Pill6 appear to have been the questions with the most discriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
+The Two Parameter model for this split (not shown) shows that Pill 5 and Pill6 appear to have been the questions with the most discriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
 
 Next, an ANOVA likelihood ratio test was carried out between the two models to determine which one fitted the data better. 
 
@@ -2461,19 +2453,19 @@ The details of the seven factor solution for this split are shown in Table \ref{
 
 This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
 
-PA1: "Rei1", "Rei2", "Rei3", "Rei4", "Rei5", "Rei6". These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
+PA1: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
 
-PA5: "Hom1", "Hom2", "Hom3", "Hom4", "Hom5", "Hom6". This factor will be termed Homeopathy. 
+PA5: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor will be termed Homeopathy. 
 
-PA4: "Acu1", "Acu2", "Acu3", "Acu4", "Acu5", "Acu6". This factor will be termed Acupuncture. 
+PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor will be termed Acupuncture. 
 
-PA2: "Cream1", "Cream2", "Cream3", "Cream4", "Cream5", "Cream6". This factor will be termed Creams.
+PA2: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor will be termed Creams.
 
-PA3: "Inj1", "Inj2", "Inj3", "Inj4", "Inj5", "Inj6". This factor will be termed Injections.
+PA3: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This factor will be termed Injections.
 
-PA6: "Pill1", "Pill2", "Pill3", "Pill4", "Pill5", "Pill6". This factor will be termed Pills. 
+PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor will be termed Pills. 
 
-PA7: "Pill3",  "Cream3", "Inj3" This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
+PA7: ``Pill3'',  ``Cream3'', ``Inj3'' This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
 
 
 
@@ -2599,7 +2591,7 @@ tcq2d.conv <- tcqall2d[,1:18]
 tcq2d.alt <- tcqall2d[,19:36]
 @ 
 
-The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. All of the items in the TCQ conventional scale met the IIO and monotonicity assumptions.
+The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. All of the items in the TCQ conventional scale met the IIO (independently ordered observations) and monotonicity (non decreasing parameter estimates) assumptions.
 
 <<tcq2dcheckiio, echo=FALSE, results=hide>>=
 tcq2d.conv.iio <- check.iio(na.omit(tcq2d.conv))
@@ -2751,11 +2743,11 @@ print(tcq2donvgrm2plot)
 
 %% Figure \ref{fig:tcq2dconvgrm2plot} shows the estimated thresholds for the conventional items under the Graded Response Model. This plot shows that there are no non-monotonic thresholds, and suggests that this model is appropriately applied to this data. 
 
-<<tcq2dconv2plgrmsum, echo=FALSE, results=tex>>=
+<<tcq2dconv2plgrmsum, echo=FALSE, results=hide>>=
 print(xtable(coef(tcq2d.conv.grm.2pl), label="tab:tcq2dconv2plgrmsum", caption="Coefficients for TCQ2 Conventional Scale (Split D), Two Parameter Graded Response Model"))
 @ 
 
-Table \ref{tab:tcq2dconv2plgrmsum} shows the threshold estimates and the discrimination parameters for the two parameter graded response model. It can be seen that the Cream items have the highest discrimination parameters while the Injection items have the lowest. Item 3 has the highest ability threshold across all treatments, probably because this item asks about confidence that the treatment will completely eliminate the symptoms. 
+The two parameter model (not shown) indicated that the Cream items have the highest discrimination parameters while the Injection items have the lowest. Item 3 has the highest ability threshold across all treatments, probably because this item asks about confidence that the treatment will completely eliminate the symptoms. 
 
 <<tcq2dconvanova, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.conv.anova <- anova(tcq2d.conv.grm.1pl, tcq2d.conv.grm.2pl)
@@ -2763,7 +2755,7 @@ tcq2d.conv.anova <- anova(tcq2d.conv.grm.1pl, tcq2d.conv.grm.2pl)
 
 Finally, an ANOVA was carried out between the two graded response models, and this showed that there was no significant difference between the two models ($p=.593$), and the BIC and AIC were lower for the one parameter model, indicating better fit. 
 
-Next, the performance of the models on unseen data is assessed. First, the performance of the partial credit models was examined for the conventional treatment credibility scale. 
+%% Next, the performance of the models on unseen data is assessed. First, the performance of the partial credit models was examined for the conventional treatment credibility scale. 
 
 <<tcq2dconvpcmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2notd.irt <- tcq2notd[,17:34]
@@ -2781,7 +2773,7 @@ print(tcq2d.conv.gpcm.done.xtab)
 
 %% As can be seen from Table \ref{tab:tcq2dpcmmodcomp}, the best performing model on unseen data was the one parameter PCM.
 
-Following this, two graded response models were fit to the data, in line with previous splits. 
+Two graded response models were fit to the data, in line with previous splits. 
 
 <<tcq2dgrmmodcomp, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
@@ -2792,11 +2784,11 @@ rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 @ 
 <<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
 print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvgrmmodcomp"))
-@ 
+@
+
 As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Graded Response Model appears to provide the best fit to the unseen data. 
 
 
-Next, the same procedure is repeated for the TCQ Alternative scale in this split. 
 
 <<tca2daltpcm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.alt.pcm.rasch <- gpcm(tcq2d.alt, constraint="rasch")
@@ -2842,7 +2834,7 @@ print(tcq2d.alt.gpcm.done.xtab)
 @ 
 %% As can be seen from Table \ref{tab:tcq2daltpcmmodcomp}, the Rasch PCM provided the best performance on the unseen data. 
 
-Next, two graded response models were fit to the data. 
+Next, two graded response models were fit to the alternative scale in this split. 
 
 <<tcq2daltgrm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
@@ -2857,11 +2849,11 @@ As can be seen in Table \ref{tab:tcq2daltgrm1pl}, there are no obvious problems 
 
 
 
-<<tcq2daltgrm2pl, echo=FALSE, results=tex>>=
+<<tcq2daltgrm2pl, echo=FALSE, results=hide>>=
 print(xtable(coef(tcq2d.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2daltgrm2pl"))
 @ 
 
-Table \ref{tab:tcq2daltgrm2pl} shows that the pattern of other splits is confirmed in that the discrimination parameters of the acupuncture items lowers, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
+The two parameter alternative GRM (not shown) was similiar to  the pattern of other splits, in that the discrimination parameters of the acupuncture items lowered, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
 
 Finally for this model, we examine its performance on unseen data. 
 
@@ -3108,7 +3100,7 @@ plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 
 Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistently has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
 
-With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). %% Indeed, comparing the Item 2, 4, 6 split against the 1, 3, 5 split over the ranges (-2, 2) and (-3, 3) shows that in all cases, the the 2, 4, 6 split had a greater amount of test information (assuming constant models). The models used to measure the information were the one parameter graded response models which had been shown to perform the best 
+With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{Blasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). %% Indeed, comparing the Item 2, 4, 6 split against the 1, 3, 5 split over the ranges (-2, 2) and (-3, 3) shows that in all cases, the the 2, 4, 6 split had a greater amount of test information (assuming constant models). The models used to measure the information were the one parameter graded response models which had been shown to perform the best 
 
 
 \section{Regression Analyses}
@@ -3155,7 +3147,7 @@ print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="C
 @ 
 
 
-Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholodout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
+Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholdout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
 
 Next, lasso and ridge regressions were performed on the Pill Total variable. 
 
@@ -3239,7 +3231,7 @@ print(xtable(as.matrix(pill2.ridge), label="tab:tcq2apillridge", caption="Coeffi
 <<cream2aridge, echo=FALSE, results=tex>>=
 cream2.ridge <- penalisedRegression(tcq2.cream.pred.train, tcq2.cream.resp.train, tcq2.cream.pred.test, alpha=0, newy=tcq2.cream.resp.test, type="coefficients")
 colnames(cream2.ridge) <- "Coefficients"
-print(xtable(as.matrix(cream2.ridge), label="tab:tcq2acreamridge", caption="Coefficient Estimates on Held Out Data for Creamtotal, Ridge Regression, Split A"))
+print(xtable(as.matrix(cream2.ridge), label="tab:tcq2acreamridge", caption="Coefficient Estimates on Held Out Data for Cream Credibility Total, Ridge Regression, Split A"))
 @ 
 
 
@@ -3268,7 +3260,7 @@ injtot.step <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 injtotlm.holdout <- lm(Injtot~Pilltot+Acutot+Reitot+ExpInj, data=tcq2.inj.test)
-print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Inj credibility Regression on Held Out Data"))
+print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"))
 @ 
 
 
@@ -3282,7 +3274,7 @@ inj2.lasso <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, test
 
 <<inj2lassoprint, echo=FALSE, results=tex>>=
 colnames(inj2.lasso) <- "Coefficients"
-print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injtotal as a dependent variable"))
+print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injection Credibility Total as a dependent variable"))
 @ 
 
 As shown in Table~\ref{tab:tcq2ainjlasso}, the pattern was similar to the stepwise regression, with strong effects of the other conventional treatments. Again, the experience with pills has a larger coefficient than does experience with Injections, suggesting that the distinctions between painkilling treatments were not particularly salient to the participants. 
@@ -3444,7 +3436,7 @@ print(xtable(as.matrix(rei2.ridge), label="tab:tcq2areiridge", caption="Coeffici
 
 Table \ref{tab:tcq2areiridge} shows that the estimated coefficients for the ridge regression are very similar to those for the lasso regression.
 
-Interestingly, it appears that the experience with a particular form of treatment was only usefully predictive for the alternative treatments. Further comment on this are made in the Discussion. 
+Interestingly, it appears that the experience with a particular form of treatment was only usefully predictive for the alternative treatments. Further comments on this are made in the Discussion. 
 
 
 
@@ -3452,7 +3444,7 @@ Interestingly, it appears that the experience with a particular form of treatmen
 
 
 \subsection{Discussion}
-
+\label{sec:discussion}
 This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the Beliefs About Medicine Questionnaire. Interestingly enough, the hypothesis that experience with a particular treatment would correlate with experience of a particular treatment was only borne out for the alternative treatments. This data cannot be used to establish causality in this case, as both an experience to credibility and a credibility to experience causal chain are equally plausible. 
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
