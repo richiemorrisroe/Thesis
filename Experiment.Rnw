@@ -32,7 +32,7 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-
 \item Research shows that priming can increase the size of placebo effects;
 \item The results of Kirsch (1998) where he showed that informed conditioning was less effective than uninformed condition would seem to argue that the effectiveness of placebos can be reduced by conscious processing;
 
-\item Some theorists have suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability) and it has also been argued that response to placebo is similar, thus suggesting that there may be a link~\cite{Whalley2008}
+\item It has been suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability) \cite{Egloff2005} and it has also been argued that response to placebo is similar, thus suggesting that there may be a link~\cite{Whalley2008}
 
 \item Research has shown that the awareness of priming manipulations can decrease the size of the effect, again suggesting that an implicit measure might prove useful in measuring this effect.
 \end{itemize}
@@ -40,7 +40,7 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-
 
 The implicit measure chosen for this purpose was the Implicit Association Test (IAT). This choice was made both because it is the most widespread, and as such more of the best practices and problems with the measure are available in prior research. 
 
-These problems (discussed at length in Chapter \ref{cha:literature-review}, Section \ref{part:impl-assoc-test}), have included:
+These problems (discussed at length in Chapter \ref{cha:literature-review}, Section \ref{sec:impl-assoc-test}), have included:
 
 \begin{itemize}
 \item Low test-retest reliability (approximately 0.49)
@@ -50,7 +50,7 @@ These problems (discussed at length in Chapter \ref{cha:literature-review}, Sect
 \item Issues around the scoring and interpretation of the results
 \end{itemize}
 
-This chapter addresses these problems in the following manner. Firstly, the low test-retest reliability may be an advantage in that it represents state-based variance (and indeed the IAT has been shown to predict spontaneous behaviour better than explicit measures) and as such could be an (admittedly small) advantage in the prediction of placebo. The method variance problem was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high (r>=.3) then controlling for them by including both IAT's in each regression model. 
+This chapter addresses these problems in the following manner. Firstly, the low test-retest reliability may be an advantage in that it represents state-based variance (and indeed the IAT has been shown to predict spontaneous behaviour better than explicit measures) and as such could be an (admittedly small) advantage in the prediction of placebo. The method variance problem was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
 
 \subsection{Placebo effects and deception}
 \label{sec:plac-effects-decept}
@@ -61,7 +61,7 @@ Some theorists have argued against this~\cite{Deventer2008,Evans2002}, and a rec
 
 The Kaptchuk \textit{et al} study, which was a three week randomised controlled trial using IBS patients showed that administration of an open-label placebo was associated with a significant improvement (d=0.79) at in the IBS Global Improvement Scale (the major outcome measure) the 21 day endpoint for the study. Similar trends were observed for other symptom severity ($d=0.53$) and quality of life ($d=0.40$)
 
-However, this study did not include a deceptive placebo condition, and so is not a true test of the theory that deception is unnecessary for the placebo response. One secondary aim of this study was to examine the theory that placebo responses could be induced without deception.
+However, this study did not include a deceptive placebo condition, and so is not a true test of the theory that deception is unnecessary for the placebo response. One secondary aim of this study was to examine the theory that placebo responses can be induced without deception.
 
 \subsection{Explicit Measures and Placebo}
 \label{sec:expl-meas-plac}
@@ -152,36 +152,10 @@ Following piloting, a random subset of students were emailed to ask if they woul
 \subsubsection{Measures used in the Experiment}
 \label{sec:meas-used-exper}
 
-The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as follows:
-\paragraph{Treatment Credibility IAT:}
-\begin{itemize}
-\item Conventional: Creams, Pills, Surgery, Injections 
-
-\item Alternative: Homeopathy, Acupuncture, Reiki, Flower Essence
-
-\item Real: Real, Accurate, True
-
-\item Fake: Fake, Inaccurate, False
-\end{itemize}
+The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as described in Section \ref{sec:iat-stimuli}, Chapter \ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
 
 
-
-\paragraph{Optimism IAT}
-\begin{itemize}
-\item Optimism: Optimism, Happy, Improving, Succeeding
-
-\item Pessimism: Pessimism, Unhappy, Disimproving, Failing
-
-\item Self: Me, Mine, Myself
-
-\item Other: You, Yours, Yourselves. 
-\end{itemize}
-
-
-
-
-
-Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
+%% Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
 In addition, participants gave verbal reports of their pain levels to the experimenter at one minute intervals, and these were recorded (along with condition and exact time of application of bandage and when the squeezing stopped) on a sheet of paper, along with the participants identification number. 
 
 
@@ -561,7 +535,7 @@ opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]
 print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls tau. All correlations are significant at the p<  0.001 level"))
 @ 
 
-The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
+%% The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
 
 <<opttcqiatcorr, echo=FALSE, results=hide>>=
 curnames <- names(opt.iat.c)
@@ -1146,9 +1120,9 @@ print (squeeez.pl)
 %% \end{figure}
 
 
-The majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
+%% The majority of participants spent approximately between 30 and 50 seconds squeezing the hand exercisor, which seems reasonable given that they were asked to squeeze it for 40 seconds. 
 
-Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. This analysis discovered some inconsistencies in the length of pain ratings versus the length of the physiological recordings, which necessitated the recalculation of all the GSR data before continuing. 
+%% Another sanity check was then performed on the datasets to ensure that all data had been recorded correctly. This was the examination of the lengths of the physiological recordings versus the length of the recordings of pain ratings. While the physiological data should be more accurate here (as it was recorded automatically and at a high resolution) any major differences would be cause for elimination of the affected records. This analysis discovered some inconsistencies in the length of pain ratings versus the length of the physiological recordings, which necessitated the recalculation of all the GSR data before continuing. 
 
 
 
@@ -1296,13 +1270,13 @@ print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line
 
 An examination the GSR levels by condition over time showed that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
 
-%% \begin{figure}
-<<meanplotgsr, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+\begin{figure}
+<<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
 @   
-%%   \caption{Mean GSR Levels by Condition over Time}
-%%   \label{fig:meangsr}
-%% \end{figure}
+  \caption{Mean GSR Levels by Condition over Time}
+  \label{fig:meangsr}
+\end{figure}
 
 
 The Open Placebo group had the lowest GSR over time, and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
@@ -1500,9 +1474,9 @@ In addition, this model explains approximately 27\% of the variance in placebo r
 
 
 
-\begin{figure}
+%% \begin{figure}
   
-<<ggplot3wayinter, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<ggplot3wayinter, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 iatexpno <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="No"),]
 iatexpyes <- Iatandexpmeasures[with(Iatandexpmeasures,PlacResp=="Yes"),]
 iatexpno <- na.omit(iatexpno)
@@ -1511,11 +1485,12 @@ iatexpyesno <- rbind(iatexpyes, iatexpno)
 lotriatplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp, size=OptIAT.Mean))+geom_point()
 print(lotriatplot)
 @   
-  \caption{Scatterplot of Optimism IAT, Treatment Credibility and LOT-R scores against mean survival time by Condition}
-  \label{fig:3wayinter}
-\end{figure}
+%%   \caption{Scatterplot of Optimism IAT, Treatment Credibility and LOT-R scores against mean survival time by Condition}
+%%   \label{fig:3wayinter}
+%% \end{figure}
 
- The plot in Figure \ref{fig:3wayinter} indicates that there appears to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
+ %% The plot in Figure \ref{fig:3wayinter} indicates that 
+ There appeared to be a non linear interaction between the three variables included in our final model. It can be seen that extremely high scores on both the treatment credibility questionnaire and the Life Orientation test appear to be associated with not responding to placebo, while moderate levels of all three variables appear to provide the greatest likelihood of placebo response. 
  %% \begin{figure}
 <<lotrtcqsmoothplot, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 lotrtcqplot <- ggplot(iatexpyesno, aes(x=LOTR, y=TCQIAT.Mean , colour=PlacResp))+geom_point()
@@ -2029,7 +2004,8 @@ semPaths(placmod.first.fit)
 \end{figure}
 
 
-Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and explicit expectancy factors have direct effects on the placebo response. Unfortunately, this model did not converge, rendering the likelihood of its truth open to debate \footnote{given a small data set such as this, the possibility exists that even the true model could be rejected}. Nonetheless, this model will not be discussed further. 
+Figure \ref{fig:placsem1} shows the direct placebo model, where implicit and explicit expectancy factors have direct effects on the placebo response. Unfortunately, this model did not converge, rendering the likelihood of its truth open to debate. %% \footnote{given a small data set such as this, the possibility exists that even the true model could be rejected}
+ Nonetheless, this model will not be discussed further. 
 
 
 The next model fit is the model of Kirsch, where all other parameters are mediated by (explicit) expectancies and implicit expectancies have no impact. 
