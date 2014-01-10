@@ -1289,16 +1289,16 @@ exp.sem <- Iatandexpmeasures.t[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIA
 
 
 @ 
-%% \begin{figure}
+\begin{figure}
 <<gsrpainplt, echo=FALSE, eps=TRUE, png=TRUE, pdf=TRUE, jpg=TRUE>>=
 print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
-%% \caption{GSR versus Pain Ratings over Time by Condition}
-%% \label{fig:gsrpainplot}
-%% \end{figure}
+\caption{GSR versus Pain Ratings over Time by Condition}
+\label{fig:gsrpainplot}
+\end{figure}
 
 
-There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined. 
+There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined (in Figure \ref{fig:gsrpainplot}. 
 For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
