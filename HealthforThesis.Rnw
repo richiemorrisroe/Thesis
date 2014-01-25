@@ -2449,7 +2449,7 @@ maas.irt.notc <- maasitems.notc[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 maas2c.grm.1pl.test <- testIRTModels(maas2c.grm.1pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 maas2c.grm.2pl.test <- testIRTModels(maas2c.grm.2pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 maas2c.grm.test.all <- rbind(maas2c.grm.1pl.test, maas2c.grm.2pl.test)
-rownames(mass2c.grm.test.all) <- c("One Parameter", "Two Parameter")
+rownames(maas2c.grm.test.all) <- c("One Parameter", "Two Parameter")
 @ 
 
 <<maas2cgrmcompprint, echo=FALSE, results=tex>>=
