@@ -2354,7 +2354,7 @@ As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was a
 \subsubsection{IRT Analyses}
 \label{sec:irt-analyses}
 
-Next, we examine the Mindful Attention Awareness Scale, using the same methodologies. 
+
 
 First, the assumptions underlying item response theory modelling are checked. 
 
@@ -2379,13 +2379,6 @@ maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 For Split C, items 5 and 11 fail the item ordering check, and so is removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
 
 %% Firstly, three partial credit models are fit to Split B.
-
-
-
-
-
-
-
 Three partial credit models were fit to Splits B and C, but were not analysed further, as they provided a poor fit to the data. 
 
 Next, one and two parameter graded response models were fit to Split B. 
@@ -2416,6 +2409,7 @@ maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
 maas2b.grm.1pl.test <- testIRTModels(maas2b.grm.1pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 maas2b.grm.2pl.test <- testIRTModels(maas2b.grm.2pl, maas.irt.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
 maas2b.grm.test.all <- rbind(maas2b.grm.1pl.test, maas2b.grm.2pl.test)
+rownames(maas2b.grm.test.all) <- c("One Parameter", "Two Parameter")
 
 @ 
 
@@ -2437,7 +2431,7 @@ print(xtable(coef(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One P
 @ 
 
 
-As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.048, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindfulness. 
+As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.048, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindlessness. 
 
 Next, a two parameter model is fit to this data. 
 
@@ -2455,7 +2449,7 @@ maas.irt.notc <- maasitems.notc[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 maas2c.grm.1pl.test <- testIRTModels(maas2c.grm.1pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 maas2c.grm.2pl.test <- testIRTModels(maas2c.grm.2pl, maas.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 maas2c.grm.test.all <- rbind(maas2c.grm.1pl.test, maas2c.grm.2pl.test)
-
+rownames(mass2c.grm.test.all) <- c("One Parameter", "Two Parameter")
 @ 
 
 <<maas2cgrmcompprint, echo=FALSE, results=tex>>=
@@ -2656,7 +2650,7 @@ Finally, we assess the performance of each of these models on unseen data.
 lotr2b.grm.1pl.test <- testIRTModels(lotr2b.grm.1pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotr2b.grm.2pl.test <- testIRTModels(lotr2b.grm.2pl, lotritems.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotr2b.grm.test.all <- rbind(lotr2b.grm.1pl.test, lotr2b.grm.2pl.test)
-
+rownames(lotr2b.grm.test.all) <- c("One Parameter", "Two Parameter")
 @ 
 
 <<lotr2bgrmcompprint, echo=FALSE, results=tex>>=
@@ -2708,6 +2702,7 @@ lotr.irt.notc <- lotritems.notc[,paste(lotr, c(3,4,7,9,10), sep="")]
 lotr2c.grm.1pl.test <- testIRTModels(lotr2c.grm.1pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotr2c.grm.2pl.test <- testIRTModels(lotr2c.grm.2pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 lotr2c.grm.test.all <- rbind(lotr2c.grm.1pl.test, lotr2c.grm.2pl.test)
+rownames(lotr2c.grm.test.all) <- c("One Parameter", "Two Parameter")
 
 @ 
 
@@ -2738,7 +2733,7 @@ emwb.med.fitm <- fitMeasures(emwb.med.sem, c("chisq", "df", "pvalue", "cfi", "rm
 mind.med.fitm <- fitMeasures(mind.med.sem, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 health.lav.fits.all <- rbind(direct.fitm, emwb.med.fitm, mind.med.fitm)
 rownames(health.lav.fits.all) <- c("Direct", "EmWBMediated", "MindfulnessMediated")
-print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"))
+print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.9)
 @ 
 
 As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
@@ -2797,7 +2792,7 @@ Next, the fit of the different IRT models was examined using the same approaches
 lotrbacktest2b.grm.1pl <- testIRTModels(lotr2b.grm.1pl, lotritems, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotrbacktest2c.grm.1pl <- testIRTModels(lotr2c.grm.1pl, lotritems.s, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotrbt.test.all <- rbind(lotrbacktest2b.grm.1pl, lotrbacktest2c.grm.1pl)
-
+rownames(lotrbt.test.all) <- c("One Parameter Split B", "One Parameter Split C")
 
 @ 
 
@@ -2905,8 +2900,7 @@ Secondly, the factor structures for the RAND-MOS, the MAAS and the LOT-R were mo
 
 
 
-There are a number of interesting findings which have emerged from
-the study.  The most striking is the large negative correlation between
+The most striking is the large negative correlation between
 optimism and self reported health.  The sample in this study is quite
 large, so the result is unlikely to be a statistical fluke.  That being
 said, the result is problematic to explain, given the large amount
@@ -2957,7 +2951,7 @@ effect to be untangled.
 
 A more likely explanation (especially given the results reported in Chapter \ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindfulness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the questions) mediated this relationship. 
 
-The Structual Equation Model reported for Sample One is a good place to start in this regard. The only models which converged were those which moderated the effect of health on optimism through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being  model was marginally superior, there are good reasons to believe that mindfulness is more important (c.f. the experimental portion of the research). 
+%% The Structual Equation Model reported for Sample One is a good place to start in this regard. The only models which converged were those which moderated the effect of health on optimism through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being  model was marginally superior, there are good reasons to believe that mindfulness is more important (c.f. the experimental portion of the research). 
 
 
 \subsection{Mindfulness}
@@ -2973,7 +2967,7 @@ itself and its relations with mindfulness meditation practice need
 to be resolved before such strong conclusions can be drawn.
 
 Another fascinating finding in this research is the strong negative correlation
-between mindfulness and optimism.  Our study appears to have been the first to assess
+between mindfulness and optimism.  This study appears to have been the first to assess
 these constructs using self-report measures, and this finding was not expected to occur.
 MBSR programs have been found to increase optimism in a number of studies~\cite{Carson2004},
 but our results seem to show that mindfulness and optimism may be inversely related.
@@ -2993,7 +2987,7 @@ assessments of the future, and decrease optimism as measured by the Life Orienta
 
 This study also confirms the proposed one factor structure for the MAAS, in line with previous research.
 This sample also appears to show that the LOT-R can be modelled without loss of information with
-just one factor.  We also demonstrated a replicable and parsimonous 4 factor structure for the RAND MOS,
+just one factor.  We also demonstrated a replicable and parsimonous 8 factor structure for the RAND MOS,
 and our results cast further doubt on the notion that these factors are uncorrelated.
 
 It is worth noting that in all cases, parallel analysis did not provide a good measure of
