@@ -427,9 +427,8 @@ be seen in Table \ref{tab:sumstatscales}, below.
 <<sumstats, echo=FALSE,results=tex>>=
 hom.tot <- hom1[,66:75]
 hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
-tot.sum <- summary(hom.tot)
-tot.sum2 <- summary(hom.tot2)
-tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health, Mindfulness and Optimism")
+tot.sum2 <- apademotables(hom.tot)
+tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism")
 print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
 @
 
@@ -438,15 +437,14 @@ print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
 In Table \ref{tab:democollect} the breakdown of the demographics
 of the sample by Collection Method is shown.
 
-<<demostats, echo=FALSE, results=tex>>=
+<<demostats, echo=FALSE, results=hide>>=
 hom.demo <- hom1[,2:8]
 hom.demo.xtab <- xtable(summary(hom.demo), label="tab:democollect", caption="Demographic Statistics for Sample One (paper sample)")
 print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
 @
 
 
-Mindfulness levels were quite high, while optimism levels were
-at the half way point of the scale. Health levels were quite high for all of the subscales, which makes sense given the non-clinical sample involved in this research. 
+The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9).
 
 
 
@@ -459,7 +457,7 @@ be addressed.
 
 \begin{figure}
 <<pairsplot, echo=FALSE, fig=TRUE, pdf=TRUE>>=
-print(pairs.panels(na.omit(hom.tot)))
+pairs.panels(na.omit(hom.tot))
 @
 \caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
 \label{fig:pairsplot}
@@ -472,7 +470,7 @@ print(pairs.panels(na.omit(hom.tot)))
 As can be seen from Figure \ref{fig:pairsplot}, the optimism hypothesis
 was not supported.  Contrary to predictions, optimism was negatively
 correlated with health.
-Possible explanations are examined in the Discussion section.  In fact, optimism correlated negatively with all of the other totals, suggesting that something strange happened in the sample.
+In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter \ref{cha:primary-research} and Chapter \ref{cha:general-discussion}. 
 
 %% \begin{figure}
 <<optplot1, echo=FALSE, eval=FALSE>>=
@@ -482,10 +480,6 @@ print(optplot1)
 %%  ~\caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
 %%   \label{fig:optplot1}
 %% \end{figure}
-
-
-Figure~\ref{fig:pairsplot}, shows a the correlations between optimism and general health in the sample collected by paper.  It can be clearly seen that the relationship is negative, an unexpected and surprising occurence.  %a fact which is borne out in the examination of Figure \ref{fig:optplot2} below.
-
 
 
 
@@ -595,7 +589,7 @@ print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Mode
 In the training sample, the stepwise selected models kept three predictors. General health and Age are retained, despite their lack of signifiance, suggesting that while they have an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
 As shown in Table \ref{tab:hom1stepopttest} the model performs much more poorly on unseen data. For a further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}. 
 
-<<optridge, echo=FALSE, results=tex>>=
+<<optridge, echo=FALSE, results=hide>>=
 opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
 opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="response")
 ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
@@ -603,15 +597,15 @@ digits(ridge.xtab) <- 4
 print(ridge.xtab)
 @
 
-Next, a form of penalised regression known as ridge regression (or L2 regression) was used. Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+%% Next, a form of penalised regression known as ridge regression (or L2 regression) was used. Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
 
 
 
-The predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
+%% The predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
 
-Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
+%% Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
 
-<<optlasso, echo=FALSE, results=tex>>=
+<<optlasso, echo=FALSE, results=hide>>=
 opt.lasso <- penalisedRegression(x=trainpred, y=trainopt,  testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
 opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response")
 opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
@@ -620,7 +614,7 @@ print(opt.lasso.xtab)
 lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
 @ 
 
-Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection. Note that the coefficient of emotional well-being is larger in the lasso fit than in the model fitted with ridge regression. 
+%% Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection. Note that the coefficient of emotional well-being is larger in the lasso fit than in the model fitted with ridge regression. 
 
 
 
@@ -665,7 +659,7 @@ print(opt.fin.xtab , table.placement="ht")
 
 %% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
 
-As has been shown above, all three kinds of regression models agreed that emotional well being and Age were important, and general health tended not to be removed from any of the models, though it did not have a particularly large coefficient. Surprisingly enough, stepwise selection performed better on unseen data than either lasso or ridge regression, suggesting that overfitting did not occur in this case. 
+As has been shown above, the  model showed that emotional well being and Age were important, and general health tended not to be removed from any of the models, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as accurate. 
 
 
 
@@ -698,12 +692,12 @@ mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optim
 print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
 @ 
 
-As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue. In contrast to the lasso and ridge fits, the model selected using this method did not include optimism. When the correlations between predicted and observed values were measured, all three model fits had correlations with the observed variables of approximately 0.44. However, in the case of the stepwise model, this correlation was negative. This unexpected result would seem to imply that this model is not particularly useful, and so either the lasso or ridge would appear to be the best model in terms of this data. 
+As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue. 
 
 
 
 
-<<mindlasso, echo=FALSE, results=tex>>=
+<<mindlasso, echo=FALSE, results=hide>>=
 mind.lasso <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=1, type="coefficients")
 mind.lasso.xtab <- xtable(as.matrix(mind.lasso), caption="Coefficients on Unseen Data, Mindfulness Regression (lasso penalisation)", label="tab:hom1mindlasso")
 digits(mind.lasso.xtab) <- 4
@@ -711,11 +705,11 @@ print(mind.lasso.xtab)
 mind.lasso.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=1, type="response")
 @ 
 
-As shown in Table \ref{tab:hom1mindlasso}, the largest coefficient on mindfulness was optimism, and in line with the correlations seen above, it is negative. Energy Fatigue and Emotional Well being appear to be important in this particular model. 
+%% As shown in Table \ref{tab:hom1mindlasso}, the largest coefficient on mindfulness was optimism, and in line with the correlations seen above, it is negative. Energy Fatigue and Emotional Well being appear to be important in this particular model. 
 
-Next, a ridge regression model was fit to this data. 
+%% Next, a ridge regression model was fit to this data. 
 
-<<mindridge, echo=FALSE, results=tex>>=
+<<mindridge, echo=FALSE, results=hide>>=
 mind.ridge <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=0, type="coefficients")
 mind.ridge.xtab <- xtable(as.matrix(mind.ridge), caption="Coefficients on Unseen Data, Mindfulness Regression (ridge penalisation)", label="tab:hom1mindridge")
 digits(mind.ridge.xtab) <- 4
@@ -723,7 +717,7 @@ print(mind.ridge.xtab)
 mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=0, type="response")
 @ 
 
-Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Note that in both penalised regression models, the coefficient for optimism was much higher than that for any other variable, suggesting that optimism scores were the most influential variable included in the model (c.f. Section \ref{sec:model-relat-betw} and Chapters \ref{cha:primary-research}). Next, a stepwise selection model procedure was employed on the dataset. 
+%% Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Note that in both penalised regression models, the coefficient for optimism was much higher than that for any other variable, suggesting that optimism scores were the most influential variable included in the model (c.f. Section \ref{sec:model-relat-betw} and Chapters \ref{cha:primary-research}). Next, a stepwise selection model procedure was employed on the dataset. 
 
 
 
@@ -757,24 +751,24 @@ print(xtable(summary(health.step.test), caption="Coefficients for General Health
 @ 
 As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the relationships were significant, though the coefficient for the effect of optimism was in line with the correlations and previous analyses carried out above. 
 
-Next, a lasso regression model was fit to the same dataset. 
+%% Next, a lasso regression model was fit to the same dataset. 
 
 
-<<healthlasso, echo=FALSE, results=tex>>=
+<<healthlasso, echo=FALSE, results=hide>>=
 health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
 health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="response")
 print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
 @ 
 
-As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
+%% As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
 
-<<healthridge, echo=FALSE, results=tex>>=
+<<healthridge, echo=FALSE, results=hide>>=
 health.ridge <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="coefficients")
 health.ridge.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="response")
 print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression on General Health on unseen data", label="tab:hom1healthridge"))
 @ 
 
-As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. Note the small coefficient for emotional well-being, which would not appear to agree with the raw correlations (see \ref{fig:pairsplot}). This can be explained as a artefact of the procedures used in the penalised regression, as when two predictors are extremely correlated, the lasso and ridge procedure will tend to assign all of the weight to one of them \cite{friedman2009elements}. 
+%% As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. Note the small coefficient for emotional well-being, which would not appear to agree with the raw correlations (see \ref{fig:pairsplot}). This can be explained as a artefact of the procedures used in the penalised regression, as when two predictors are extremely correlated, the lasso and ridge procedure will tend to assign all of the weight to one of them \cite{friedman2009elements}. 
 
 
 
@@ -883,7 +877,7 @@ print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison o
 
 @ 
 
-All of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
+In the case of the LOT-R, all of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
 
 <<lotrfactorcv, echo=FALSE, results=hide, cache=TRUE>>=
 lotritems <- as.data.frame(lapply(lotritems, as.numeric))
