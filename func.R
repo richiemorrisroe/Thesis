@@ -862,3 +862,13 @@ interpolate2 <- function(painscores, painmetadata) {
         resmat}
     resmat
 }
+apademotables <- function(data, xtable=FALSE, ...) {
+    data.m <- melt(data)
+    data.tab <- ddply(data.m, .(variable), summarise, Mean=mean(value, na.rm=TRUE), SD=sd(value, na.rm=TRUE), Min=min(value, na.rm=TRUE), Max=max(value, na.rm=TRUE))
+    names(data.tab)[1] <- ""
+    if(xtable==TRUE) {
+        data.tab <- xtable(data.tab)
+    }
+    return(data.tab)
+}
+    
