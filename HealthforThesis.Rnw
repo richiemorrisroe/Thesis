@@ -1357,7 +1357,7 @@ print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial C
 @ 
 
 %% Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data.
-Three Partial Credit Models were fitted, but as they did not provide a good fit to the data, are not reported further here. 
+Three Partial Credit Models were fitted but are not reported as they did not provide a good fit to the data.  
 The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
 <<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1428,7 +1428,7 @@ print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
 @
 
 
-Q1 needs to be removed from the scale in order to meet the assumptions of the model. There were no violations of monotonicity in the sample.
+Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
 
 <<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.mono <- check.monotonicity(na.omit(lotritems))
@@ -1483,16 +1483,16 @@ The next stage in the analysis of the LOTR was the fitting of one and two parame
 lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
 lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
 @ 
-\begin{figure}
-<<lotrgrm1plplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<lotrgrm1plplot, echo=FALSE, results=hide>>=
 lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
 print(lotr1plgrm)
 @   
- ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
-  \label{fig:lotr1plgrm}
-\end{figure}
+%%  ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
+%%   \label{fig:lotr1plgrm}
+%% \end{figure}
 
-Figure \ref{fig:lotr1plgrm} shows the estimated threshold points for each of the categories for each item. It can be seen that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
+An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
 
 %% \begin{figure}
 <<lotr2plgrmplot, echo=FALSE, results=hide>>=
@@ -1510,7 +1510,7 @@ The next step was to assess which of the models provided the best fit to the dat
 anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 @ 
 
-The two parameter model was significantly better than the one parameter model ($p=0.001$), but the BIC suggested that the one parameter model provided a better overall fit to the data. 
+The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
 print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
@@ -1523,7 +1523,7 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 
 The next step in the analytic procedure was to examine the relationships between health, optimism and mindfulness somewhat more deeply, drawing on the work carried out so far with the data. 
 
-The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. The best model for each scale was used, and the relationships between the latent traits estimated. This model was then compared to a model fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the lasso, ridge and stepwise regressions (on unseen data). 
+The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. The best model for each scale was used, and the relationships between the latent traits estimated. This model was then compared to a model fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the stepwise regressions (on unseen data). 
 
 
 \subsection{Optimism and Health}
@@ -1827,7 +1827,7 @@ rand8summ2 <- summary(rand8fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
-print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.6)
+print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ))
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
@@ -1909,7 +1909,7 @@ maas1summ2 <- summary(maas1fit2)
 <<maassemcompare2, echo=FALSE, results=tex>>=
 maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
 maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
-print(maascomp.xtab2, scalebox=0.7)
+print(maascomp.xtab2)
 @
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
@@ -2006,50 +2006,50 @@ opt.pred.train2a <- scales2a.opt.train[,-11]
 opt.pred.test2a <- scales2a.opt.test[,-11]
 @ 
 
-<<optlassotest, echo=FALSE, results=tex>>=
+<<optlassotest, echo=FALSE, results=hide>>=
 opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
 opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
 print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
 opt.lasso.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
 @ 
 
-As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
+%% As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
 
-Next, the accuracy of the predictions was assessed using a RMSEA approach. For the optimism lasso data. The error in the estimation was equal to 0.755, suggesting that the predictions were approximately 25\% accurate. This can be seen more clearly in Figure \ref{fig:plotoptlassopred} below. As can be seen there is no real systematic error in the predictions, they are just inaccurate.
+%% Next, the accuracy of the predictions was assessed using a RMSEA approach. For the optimism lasso data. The error in the estimation was equal to 0.755, suggesting that the predictions were approximately 25\% accurate. This can be seen more clearly in Figure \ref{fig:plotoptlassopred} below. As can be seen there is no real systematic error in the predictions, they are just inaccurate.
 
 
-\begin{figure}
-<<plotlassopredobs, echo=FALSE, figure=TRUE>>=
+%% \begin{figure}
+<<plotlassopredobs, echo=FALSE, results=hide>>=
 print (ggplot (opt.lasso.test2a.resp, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
 @   
- ~\caption{Predicted versus observed values of Optimism in second sample, Split A, lasso regression}
-  \label{fig:plotoptlassopred}
-\end{figure}
+%%  ~\caption{Predicted versus observed values of Optimism in second sample, Split A, lasso regression}
+%%   \label{fig:plotoptlassopred}
+%% \end{figure}
 
 
-Next, the ridge regression model was applied to the new data. 
+%% Next, the ridge regression model was applied to the new data. 
 
-<<optridge2a, echo=FALSE, results=tex>>=
+<<optridge2a, echo=FALSE, results=hide>>=
 opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
 print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
 opt.ridge.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="response")
 rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
 @ 
 
-As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
+%% As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
 
-\begin{figure}
-<<optridgeplot2a, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optridgeplot2a, echo=FALSE, results=hide>>=
 print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth())
 @   
- ~\caption{Ridge Regression Predictions, Optimism, Split 2A}
-  \label{fig:ridgepredplot2a}
-\end{figure}
+%%  ~\caption{Ridge Regression Predictions, Optimism, Split 2A}
+%%   \label{fig:ridgepredplot2a}
+%% \end{figure}
 
 
-As can be seen from Figure~\ref{fig:ridgepredplot2a}, again the errors do not appear to be systematically biased, but rather spread both evenly above and below the line of perfect prediction. 
+%% As can be seen from Figure~\ref{fig:ridgepredplot2a}, again the errors do not appear to be systematically biased, but rather spread both evenly above and below the line of perfect prediction. 
 
-Finally, the model developed by stepwise selection was applied to the new data. 
+The model developed by stepwise selection was applied to the new data. 
 
 <<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
 opt.step.test2a <- lm(optimism~generalhealth+Age+emwellbeing, data=scales2a.full)
@@ -2070,7 +2070,7 @@ print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth
 \end{figure}
 
 
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one, and appear to match those from the other regressions. The RMSEA metric gave a value of 0.746, which is marginally better than either the lasso or ridge predictions. Figure \ref{fig:optstepredplot} shows this in more detail, and in fact is quite similar to the plots for the lasso and ridge solutions. This would seem to suggest that each of the three models are converging on a relatively common solution, increasing our confidence that we have explored the linear relationships between these variables. 
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a moderately significant coefficient for general health and age. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. Figure \ref{fig:optstepredplot} shows this in more detail. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
 
 
 
@@ -2092,14 +2092,15 @@ The aims for the second sample collected were as follows:
 \subsection{Demographic Statistics}
 \label{sec:demogr-stat}
 
-Firstly, the demographics of the sample were examined. 
+Firstly, the demographics of the sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
 
 <<hom2demo, echo=FALSE, results=tex>>=
-demo <- hom2[,3:7]
-sum.demo <- summary(demo)
-print(xtable(sum.demo, label="tab:sumdemo2", caption="Demographics of Sample Two"), scalbeox=0.8)
+hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
+hom2.sum <- apademotables(hom2.tot)
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two"))
 @ 
 
+The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that both general health and optimism levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
 
 
 The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
@@ -2139,12 +2140,12 @@ print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Optimism Reg
 opt.lasso.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
 @ 
 
-<<optlassoprint, echo=FALSE, results=tex>>=
+<<optlassoprint, echo=FALSE, results=hide>>=
 print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Lasso Regression, Split B", label="tab:optlasso2b"))
 @ 
 
 
-Table \ref{tab:optlasso2b} shows the estimated coefficients for the lasso regression model. It can be seen that the pattern is quite similar to that from Sample one, with Age, emotional well being, general health and mindfulness being retained by the model, with the same sign as in the previous sample. 
+%% Table \ref{tab:optlasso2b} shows the estimated coefficients for the lasso regression model. It can be seen that the pattern is quite similar to that from Sample one, with Age, emotional well being, general health and mindfulness being retained by the model, with the same sign as in the previous sample. 
 
 <<optridge2b, echo=FALSE, results=hide, cache=TRUE>>=
 opt.ridge.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
@@ -2153,11 +2154,11 @@ print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Optimism Reg
 opt.ridge.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
 @ 
 
-<<optridge2bprint, echo=FALSE, results=tex>>=
+<<optridge2bprint, echo=FALSE, results=hide>>=
 print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regression Model on Optimism, Split B", label="tab:optridge2b"))
 @ 
 
-Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
+%% Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
 
 
 
@@ -2220,14 +2221,19 @@ maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8)
 @
 The five factor solution for split C (not shown) broke down as follows:
+
 PA1: "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
+
 PA2: "MAASQ9"  "MAASQ13"
 Q9 loads on both PA1 and PA2, and as PA2 has really only Q13 loading to any major extent on it, no interpretation of this factor was performed. It was named lack of present awareness. 
+
 PA4: "MAASQ2"  "MAASQ3"  "MAASQ14"
 This factor can probably best be termed lack of attention. 
+
 PA5: "MAASQ1" "MAASQ4" "MAASQ5"
 Most of these items relate to lack of bodily attention, and this can probably best be termed lack of somatic awareness. 
+
 PA3: "MAASQ4" "MAASQ6" "MAASQ7" "MAASQ8"
 Note that MAASQ4 loads slightly on both PA3 and PA5, and is not considered in the interpretation here. These items can probably best be termed lack of awareness. 
 
