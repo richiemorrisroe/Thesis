@@ -3498,7 +3498,7 @@ all.cred <- list(pill.all, cream.all, inj.all, acu.all, hom.all, rei.all)
 all.cred <- lapply(all.cred, as.data.frame)
 names(all.cred) <- c("PillCredibility", "CreamCredibility", "InjectionCredibility", "AcupunctureCredibility", "HomeopathyCredibility", "ReikiCredibility")
 credtotals <- tcq2[,c("Pilltot", "Creamtot", "Injtot", "Acutot", "Homtot", "Reitot")]
-save.image("tcqthesis.rda")
+save.image("tcqthesislatest.rda")
 @   
 
 %%% Local Variables:

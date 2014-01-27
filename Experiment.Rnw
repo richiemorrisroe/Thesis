@@ -2191,7 +2191,9 @@ The use of machine learning models to predict the placebo response threw up some
 
 Additionally, there was an interesting relationship noted between skin conductance and experimental condition, as well as Gender. While the groups were comparable at baseline, both the Deceptive and Open Placebo groups showed significant changes in GSR after administration of the treatment. Given that the treatment was the same in both cases, this would appear to suggest that skin conductance was affected by the suggestions given as part of the experiment. The fact that these changes were in opposite directions may indicate that either GSR was tracking pain responses, or the effect of certain and uncertain expectancies. This would seem to be a prime area for future research on the placebo. 
 
-
+<<save, echo=FALSE, results=hide>>=
+save.image("experimentlatest.rda")
+@ 
 
 %%% Local Variables:
 %%% TeX-master: "PlaceboMeasurementByMultipleMethods"
