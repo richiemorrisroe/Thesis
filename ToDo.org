@@ -11,3 +11,15 @@
 * Decide whether or not its worth including the qualitative research in as much detail.
 * Indent participant/interview comments appropriately, so it is easy to read.
 * Add survivial analysis using proper time lengths from phys data
+* fit ARIMA models to pain data, estimate their accuracy.
+* Account for differences in GSR at baseline
+* TODO fix GSR cross-correlations chart
+* DONE examine why Kirsch two factor model shows such weird fit indices
+  CLOSED: [2014-01-09 Thu 20:10]
+* Find N and more details of Kirsch & Wiexel coffee study
+#+BEGIN_SRC R
+pwr.t.test(n=33, d=0.7) ##power for experiment approx 0.8
+pwr.t.test(n=33, d=1.23) ##power for ischemic pain effects
+#+END_SRC
+* Add stepwise optimism models to HOM chapter
+* Add reduced LOTR and MAAS models to experimental chapter
