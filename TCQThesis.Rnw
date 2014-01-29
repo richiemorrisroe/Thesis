@@ -59,11 +59,28 @@ For these reasons, both conventional and alternative treatments were used in thi
 \section{Methodology}
 \label{sec:methodology}
 
+\section{Design}
+\label{sec:design}
+
+This portion of the research was designed in the following fashion. In the first sample (N=299), the measure was tested for reliability and to ensure that the factor structure from the previous research replicated in this new setting, and with some changes made. 
+
+The second sample (N=1329) was conducted to validate the factor structure from the first study, and to assess convergent validity through the use of the BMQ.  This study included two more forms of alternative treatment (Homeopathy and Reiki) to assess if a common factor structure could also be found for the alternative treatments. Additionally, the second sample collected demographic statistics around income, health and familiarity with all of the painkilling treatments used in the major instrument, to assess if these would have the impacts observed in previous research. 
+
+This design had the advantage of both providing evidence for reliability of the instrument across Studies One and Two, and also providing independent evidence for the validity of the predicted factor structure in Study Two. The second, larger study  provided links to important potential moderators of the treatment expectancies and assessed convergent validity using the BMQ. 
+
+
+\subsection{Participants}
+\label{sec:participant}
+
+The mean age of the participants in this sample was  22.61, the median Age was 21 and the range of reported ages was 10-56, which suggests some data entry errors on the part of the participants. The sample was 68.8\% female, and 83.4\% consisted of undergraduate students. 
+
+The sample size collected for Study Two was 1329, however, only 556 completed all questions. The analysis was carried out on those participants who had provided data for all questions. Of the participants who filled out all questions, 71.5\% were female (n=396), 82.4\% were undergraduates, and the mean age was 22.96 (SD=6.3). 
+
 
 \subsection{Measures}
 \label{sec:measures-1}
 
-The Treatment Credibility Questionnaire was adapated from Devilly and Borkovec's CEQ, as described above.This measure has six questions. The scale was developed to assess expectancies around psychological therapies. In the original form, the measure has four questions (Set I) and another set of two questions (Set II) \cite{Devilly2000}. Questions 4 and 6 were scored on an 11 point scale, while the other questions were scored on a nine point scale.    A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring and standardise it. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X (where X is one of the treatments listed above).
+The Treatment Credibility Questionnaire was adapated from Devilly and Borkovec's CEQ, as described above.This measure has six questions. The scale was developed to assess expectancies around psychological therapies. In the original form, the measure has four questions (Set I) and another set of two questions (Set II) \cite{Devilly2000}. Questions 4 and 6 were scored on an 11 point scale, while the other questions were scored on a nine point scale.    A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring and standardise it. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X;where X is one of Pills, Creams, Injections or Aucpuncture in Study One, or Pills, Creams, Injections, Acupuncture, Homeopathy and Reiki in Study Two.  
 
 The questions were as follows:
 
@@ -87,11 +104,11 @@ This instrument was included in order to validate the TCQ by means of correlatio
 
 \subsection{Sampling}
 
-The sampling for the Treatment Credibility Questionnaire was conducted in two rounds, as the instrument was developed using one sample, and then confirmed and revised with another. The first sample was sent to a random subset of students at the University in February 2010, to which 299 students responded. This data was analysed over the next two months, and following this, a revised version of the questionnaire was sent to both staff and students at the University.The Beliefs About Medicine Questionnaire was also administered, to assess the construct validity of the TCQ.
+The sampling for the Treatment Credibility Questionnaire was conducted in two rounds, as the instrument was developed using one sample, and then confirmed and revised with another. The first sample was sent to a random subset of students at the University in February 2010 (N=2500), to which 299 students responded (RR=12\%). This data was analysed over the next two months, and following this, a revised version of the questionnaire was sent to a random sample of both staff and students at the University (N=10000), to which 1329 people responded (RR=13.3\%). 
 
 \subsection{Analysis}
 
-Sample One was treated as an overall training set (most appropriate given that the measure was changed as a result of these methods), and the results tested on a subset of Sample Two. 
+Study One was treated as an overall training and development sample (most appropriate given that the measure was changed as a result of these methods), and the results tested on a subset of Study Two. 
 
 %% All data analysis was preceded by fitting a multiple imputation model where necessary, and was split into 4 parts as described above under the section Analysis for Health, Optimism and Mindfulness.
 
@@ -119,7 +136,7 @@ Simple reliability analyses were carried out on the scales themselves. Following
 
 \subsection{Demographic Statistics}
 
-The mean age of the participants in this sample was  22.61, the median Age was 21 and the range of reported ages was 10-56, which suggests some data entry errors on the part of the participants. The sample was 68.8\% female, and 83.4\% consisted of undergraduate students. 
+
 
 
 
@@ -862,7 +879,7 @@ Secondly, an item response theory analysis has suggested that while the Pills, C
 In addition, the General sub-scale of the Beliefs about Medicines Questionnaire was appended to V2 of the survey, in order to assess the extent to which the two instruments correlate (or fail to). This is a preliminary attempt to assess construct validity, which of course is but a prelude towards testing the instrument with clinical samples and in experimental settings.
 
 
-\section{Study Two}
+\section{Study Two - Results}
 
 Given the results of Study 1, this study added two more Complementary and Alternative Medicine (CAM) methodologies to the questionnaire, to determine if a higher order factor structure could be found which represented conventional and complementary methodologies.
 The hypotheses were as follows: 
@@ -885,10 +902,11 @@ The hypotheses were as follows:
 \subsection{Results}
 \subsubsection{Descriptive Statistics}
 
-The sample size collected was 1329, however, only 700 completed all questions. The analysis was carried out on those participants who had provided data for all questions. 
+
 
 <<tcq2demo, echo=FALSE, results=tex>>=
 tcq2.demo <- tcq2[,2:17]
+tcq2.demo.full <- na.omit(tcq2[,2:17])
 tcq2.demo1 <- tcq2.demo[,1:5]
 tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,11:16]
