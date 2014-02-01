@@ -936,6 +936,7 @@ The hypotheses were as follows:
 
 
 <<tcq2demo, echo=FALSE, results=tex>>=
+itemnames <- paste(rep(c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), each=6), rep(1:6, times=6), sep="")
 tcq2.demo <- tcq2[,2:17]
 tcq2.demo.full <- na.omit(tcq2[,2:17])
 tcq2.demo1 <- tcq2.demo[,1:5]
@@ -1075,7 +1076,7 @@ Parallel analysis and the scree plot suggest that five factors seems most optima
 \label{sec:five-factor-solution}
 
 
-
+The five factor  solution (not shown) explained 79\% of the variance in Split B and 81\% in Split C and all of the communalities were extremely high. It was not suggested by any of the factor prediction methods in Split D. 
 
 
 <<tcq2bscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1084,6 +1085,20 @@ bamall2b <- tcq2b[,53:70]
 @ 
 
 
+<<tcq2bsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2b.conv <- tcqall2b[,1:18]
+tcq2b.alt <- tcqall2b[,19:36]
+@ 
+
+<<tcq2cscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
+tcqall2c <- tcq2c[,17:52]
+bamall2c <- tcq2c[,53:70]
+@ 
+
+<<tcq2dsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2d.conv <- tcqall2d[,1:18]
+tcq2d.alt <- tcqall2d[,19:36]
+@ 
 
 <<tcq2afact5, echo=FALSE, results=hide>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
@@ -1096,8 +1111,16 @@ tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"), label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
 @ 
 
+<<average5factsolution, echo=FALSE, results=tex>>=
+tcq2b5.coeff <- FactorCoeff(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c5.coeff <- FactorCoeff(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+rownames(tcq2.fact5.av) <- itemnames
+tcq2.fact5.av <-  (tcq2b5.coeff+tcq2c5.coeff)/2
+print(xtable(tcq2.fact5.av, label="tab:tcq2fact5average", caption="Averaged Five Factor Solution over Splits B and C"))
 
-The five factor  solution (not shown) explained 79\% of the variance in Split B and 81\% in Split C and all of the communalities were extremely high. It was not suggested by any of the factor prediction methods in Split D. 
+@ 
+
+
 
 Typically, the five factor solution merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. 
 
@@ -1443,10 +1466,7 @@ print(xtable(tcq2b.aisp, label="tab:tcq2baisp", caption="Item Selection Procedur
 
 The scales split along alternative and conventional lines, as in Split A. All further analyses will be carried out on the seperate scales. 
 
-<<tcq2bsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2b.conv <- tcqall2b[,1:18]
-tcq2b.alt <- tcqall2b[,19:36]
-@ 
+
 
 %% The first step in the examination of the TCQ conventional in split B is to check the IIO assumption. 
 
@@ -1711,10 +1731,7 @@ As shown in Table \ref{tab:tcq2baltgrmmodcomp}, the two parameter model provided
 
 
 
-<<tcq2cscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
-tcqall2c <- tcq2c[,17:52]
-bamall2c <- tcq2c[,53:70]
-@ 
+
 
 
 \paragraph{Five Factor Solution}
@@ -2301,10 +2318,7 @@ print(xtable(tcq2d.aisp, label="tab:tcq2daisp", caption="Item Selection Procedur
 
 Similarly to the first three splits, the TCQ splits along the conventional/alternative distinction. Therefore, the items will be split into conventional and alternative scales and all analyses carried out seperately. 
 
-<<tcq2dsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv <- tcqall2d[,1:18]
-tcq2d.alt <- tcqall2d[,19:36]
-@ 
+
 
 The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. All of the items in the TCQ conventional scale met the IIO (independently ordered observations) and monotonicity (non decreasing parameter estimates) assumptions.
 
