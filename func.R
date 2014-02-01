@@ -7,25 +7,28 @@
 ##' @return
 ##' @author Richard Morrisroe
 FactorXtab <-  function (x, names=NULL, ...) {
-  x.load<-x$loadings
-x.comm<-x$communality
-x.names <- colnames(x.load)
-len <- length(colnames(x.load))
-
-x.comm.load<-cbind(x.load, x.comm)
-
-x.mat.df<-as.matrix.data.frame(x.comm.load)
-  if(!is.null(names)) {
-        names2 <- c(names, "Communalites")
-        colnames(x.mat.df) <- names2
-    }
-  else {
-      x.names[len+1] <- "Communalities"
-      colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
-  }
-
+    x.mat.df <- FactorCoeff(x, names=names)
 fact.xtab <- xtable(x.mat.df, ...)
 fact.xtab
+}
+FactorCoeff <- function (x, names=NULL) {
+   x.load<-x$loadings
+    x.comm<-x$communality
+    x.names <- colnames(x.load)
+    len <- length(colnames(x.load))
+
+    x.comm.load<-cbind(x.load, x.comm)
+
+   x.mat.df<-as.matrix.data.frame(x.comm.load)
+   if(!is.null(names)) {
+       names2 <- c(names, "Communalites")
+       colnames(x.mat.df) <- names2
+   }
+   else {
+       x.names[len+1] <- "Communalities"
+       colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
+   }
+   return(x.mat.df)
 }
 ##' .. content for \description{} (no empty lines) ..
 ##'
