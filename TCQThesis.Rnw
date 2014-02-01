@@ -60,7 +60,7 @@ For these reasons, both conventional and alternative treatments were used in thi
 The overall aim of this study was to develop and test a measure of treatment expectancies in a pain context which could then be used in the experimental study. To this end, the following was done:
 
 \begin{itemize}
-\item The reliability (Study 1) of the adapted questionnaire was tested
+\item The reliability \& general psychometric structure (Study 1) of the adapted questionnaire was tested using factor analysis and IRT;
 
 \item The validity of the original factor structure was assessed (Study 1);
 
@@ -141,17 +141,18 @@ Simple reliability analyses were carried out on the scales themselves. Following
 
 
 
-\section{Sample One - Results}
+\section{Study One - Results}
+
+As descibred above, the aim of this Study was to ensure that the altered measure was valid and that instruments correlated with each other in the expected fashion. 
+
 
 \subsection{Demographic Statistics}
-
-
-
 
 
 <<packagesanddata, echo=FALSE, results=hide>>=
 require(cacheSweave)
 require(ggplot2)
+require(plyr)
 require(reshape2)
 require(lmtest)
 require(psych)
@@ -179,7 +180,7 @@ tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 
 The first step was to look at the scores on the response variables regarding the different forms of treatment. 
 
-In Table \ref{tab:tcq1sumtotals} the summary statistics for the credibility scores for each of the four modalites are shown. 
+In Table \ref{tab:tcq1sumtotals} the summary statistics for the mean credibility scores for each of the four treatment options are shown. It can be seen that credibility of analgesic creams was lowest, even lower than that of acupuncture. Note that the minimum score of zero was from participants who only completed some of the questions. 
 
 <<totalscreate, echo=FALSE, results=hide, cache=TRUE>>=
 totals <- na.omit(tcq1[,c("PillTot", "CreamTot", "InjTot", "AcuTot")])
@@ -188,9 +189,8 @@ totals2 <- totals/6
 
 
 <<totalsummary, echo=FALSE, results=tex>>=
-sum.totals<-summary(totals2)
-mat.totals<-as.matrix(sum.totals)
-xtab.totals<-xtable(mat.totals, caption="Summary Statistics, Total Credibility Scores", label="tab:tcq1sumtotals")
+sum.totals<-apademotables(totals2)
+xtab.totals<-xtable(sum.totals, caption="Summary Statistics, Total Credibility Scores", label="tab:tcq1sumtotals")
 print(xtab.totals)
 @ 
 
@@ -250,7 +250,7 @@ There were differences in the crediblity scores of various treatments across the
 %Reliability is an extremely important part of any measurement instrument, given that if we cannot rely on the instrument giving us similar answers on different equations, it is of no use in our studies.
 The reliability of this scale was assessed. The method used was Cronbachs $\alpha$ which is the most commonly used measure of reliability in psychological research. %% Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
 
-This analysis was performed on the sample, and the mean alpha was equal to .9, which is well above the threshold used for survey research (.7) and would, on the basis of this sample, qualify as a clinical instrument, for which the threshold is 0.9. This reliability analysis did not suggest that any of the items should be removed from the scale. 
+This analysis was performed on the sample, and the mean alpha was equal to 0.9, which is well above the threshold used for survey research (0.7) and would, on the basis of this sample, qualify as a clinical instrument, for which the threshold is 0.9. This reliability analysis did not suggest that any of the items should be removed from the scale. 
 
 <<scalemake, echo=FALSE, results=hide, cache=TRUE>>=
 Pill.g <- grep("Pill[1-6]", x=names(tcq1))
@@ -279,8 +279,20 @@ print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for t
 \section{Factor Analysis}
 
 
+There were two aims of this factor analysis on Study One. The first was to examine if the predicted factor structure from the development of the scale held. This was that there would be three expectancy and three credibility questions. This analysis was carried out on all four methods of treatment individually. The next step, following this analysis, was to examine the intra-treatment factor structure. 
 
-The first analysis carried out on the data was an assessment of the number of factors suggested by both the parallel analysis and MAP criterion. The results of the parallel analysis and scree plot suggested four factors. The MAP criterion suggested that six factors should be extracted. Both of these factor solutions will be created and examined based on fit indices and interpretability below. 
+<<faindividual, echo=FALSE, results=hide>>=
+pill.fa <- fa(r=na.omit(Pillall), nfactors=2, rotate="oblimin")
+cream.fa <- fa(r=na.omit(Creamall), nfactors=2, rotate="oblimin")
+inj.fa <- fa(r=na.omit(Injall), nfactors=2, rotate="oblimin")
+acu.fa <- fa(r=na.omit(Acuall), nfactors=2, rotate="oblimin")
+@ 
+
+Interestingly enough, the proposed factor structure from earlier work replicated for the Pill credibility items, but not for the others. There was a two factor structure for the Injection credibility items, but the first factor carried all of the items except for item 3. For Cream credibility scores and Injection credibility scores only one factor was found from both a parallel analysis and from fitting a two factor model.  All of these models had excellent fit indices, with high NNFI (approximately 0.95), and so can be regarded as fitting the data relatively well. Possible explanations for this finding are examined in the Discussion. 
+
+
+
+The next step in the analysis  was an assessment of the number of factors suggested by both the parallel analysis and MAP criterion for the entire scale. The results of the parallel analysis and scree plot suggested four factors. The MAP criterion suggested that six factors should be extracted. Both of these factor solutions will be created and examined based on fit indices and interpretability below. 
 
 
 
@@ -481,7 +493,7 @@ tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 <<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(tcqconv.grm1.coef, label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
 @ 
-It can be seen from Table \ref{tab:tcq1convgrm1pl} that the fit is much better for this model, with no violations of monotonicity. The next step taken is to examine the fit of a more flexible model (with a discrimination parameter for each item), and assess whether or not this represents a significant enough improvement over the model above.
+Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, coefficients not shown), and assess whether or not this represents a useful improvement over the model above.
 
 <<tcqconvgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
@@ -536,7 +548,7 @@ print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients f
 
 %% The two parameter model (shown in Table \ref{tab:tcq1altgpcm2pl}) has some interesting features compared to the one parameter model. Firstly, the discrimination parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has increased substantially. An ANOVA between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
 
-Next, two graded response models were fit to the the alternative TCQ questions.
+Two graded response models were fit to the the alternative TCQ questions.
 
 <<tcqaltgrm1, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
@@ -557,7 +569,7 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
 print(xtable(tcqalt.grm2.coef, label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
 @ 
-Again, the model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
+The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
 
 
 %% \section{Regression Analyses}
@@ -871,19 +883,29 @@ rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
 print(grm.modcomp.xtab)
 @ 
-As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model in each case, despite the use of a penalisation parameter). 
+As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). 
 
 
-\section{Study One - Discussion}
+\section{Conclusions \& Next Steps}
 \label{sec:study-1}
 
 
-A number of issues have become clear from this first sample taken to validate the Treatment Credibility Questionnaire. Firstly, the measure appears to show a strong pattern of one factor per treatment modality, but a six factor model fitted the training and test data better, suggesting that there are some higher-order correlations between some of the factors, which could probably be better accounted for using a hierarchical factor model.  
+A number of issues have become clear from this first study validating the Treatment Credibility Questionnaire. 
+
+Firstly, the measure appeared to be quite reliable, and ther were some interesting findings with respect to the measure. All of the treatments showed average levels of credibility, ranked from injections, pills, acupuncture and cream credibility scores. There was a pattern of greater variability in the responses of men to the questionnaire. This could be the result of less experience or from a wider range of beliefs in the population. If it is due to less experience, then it would be expected to see less variability in the responses of those individuals with more experience of these treatments. This theory was tested in Study Two. 
+
+
+With respect to the factor structure, the results of Horne \cite{Horne1999} have not been confirmed in this adaptation, except for one of the measures. Pill credibility score showed the same two factor structure as did the CEQ in earlier work, but none of the other three treatment forms did. Indeed, the other three treatments showed a relatively clear one factor structure, though the results of a parallel analysis suggested that a two factor structure might be more appropriate for the Injection credibility scores. 
+
+It is important to consider what may be the reasons for the difference. One potential explanation is that this factor structure was obtained because of greater experience with painkilling treatments in pill form. If this is the case, then greater levels of experience with a painkilling treatment should correlate with the presence of this factor structure. Another possibility is that this simply due to chance, in which case this finding should not replicate in the next study. 
+
+
+With regards to the overall psychometric structure ,the measure appears to show a strong pattern of one factor per treatment modality, but a six factor model fitted the training and test data better, suggesting that there are some higher-order correlations between some of the factors, which could probably be better accounted for using a hierarchical factor model.  
 
 Secondly, an item response theory analysis has suggested that while the Pills, Cream and Injection questions can be conceptualised with one latent trait, this does not appear to work for acupuncture. This would seem to suggest that ratings of complementary and western medicine are somewhat independent. The second version of this survey added two more sections on complementary therapies, Homeopathy and Reiki, in order to both balance the kinds of treatments, and to examine whether the assumption of bi-dimensionality would hold in another student and UCC staff sample. 
 
- Very few demographic variables were collected in this survey. This limited what could be done with the ability estimates, and their relation to other factors. Therefore, for the second sample, more demographics were added.  A question on experience with each of the treatments involved would seem like a useful check on what percentage of the respondents have experiential knowledge of these methods would prove useful. Given the cost of CAM and its unavailability to those of lower incomes, a question on income would also be useful.
-% Both of these changes were made to the survey, which has since been emailed to all staff and students for further validation. 
+ Very few demographic variables were collected in this survey. This limited what could be done with the ability estimates, and their relation to other factors. Therefore, for the second sample, more demographics were added.  A question on experience with each of the treatments involved would seem like a useful check on what percentage of the respondents have experiential knowledge of these methods would prove useful. Given the cost of CAM and its unavailability to those of lower incomes, a question on income would also be useful, and also the results of prior research noted in the Introduction. 
+
 
 In addition, the General sub-scale of the Beliefs about Medicines Questionnaire was appended to V2 of the survey, in order to assess the extent to which the two instruments correlate (or fail to). This is a preliminary attempt to assess construct validity, which of course is but a prelude towards testing the instrument with clinical samples and in experimental settings.
 
@@ -933,7 +955,7 @@ The mean level of experience with a particular treatment was highest for pills a
 
 The sample was 69.17\% female, with 45 respondents not specifying their gender. 
 
-The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen. 
+The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen. Notable are the high correlations between each of the conventional and alternative treatment methodologies, and their moderate correlations (in opposite directions) with the BMQ. Given the sample size, all correlations were significant at the $p \le 0.001$ level. 
 @ 
 
 \begin{figure}
@@ -949,7 +971,7 @@ sink(NULL)
 
 
 
-As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships. 
+%% As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships. 
 
 
 Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. It may be (for example) that those involved with medicine tend to rate them very low, while those involved in the liberal arts tend to rate them quite highly. These kinds of differences will be teased apart in analyses below. 
@@ -989,6 +1011,37 @@ print(arrangeGrob(collpill, collCream, collInj, collAcu, collHom, collRei ))
 
 As can be seen from Figure~\ref{fig:tcq2collcred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. %% The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
 
+Next the range of experience scores with each of the treatment was examined. 
+
+<<expdf, echo=FALSE, results=tex>>=
+expdf <- tcq2[,c("Age", "Gender", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpHom", "ExpRei")]
+expdf.gend <- ddply(na.omit(expdf), .(Gender), summarise, Pill=mean(ExpPill, na.rm=TRUE),Cream=mean(ExpCream, na.rm=TRUE),Inj=mean(ExpInj, na.rm=TRUE),Acu=mean(ExpAcu, na.rm=TRUE),Hom=mean(ExpHom, na.rm=TRUE),Rei=mean(ExpRei, na.rm=TRUE))
+gend.m <- melt(expdf.gend)
+expdf.gend[,"Gender"] <- with(expdf.gend, as.factor(gsub("^$", "Not Reported", x=Gender)))
+print(xtable(expdf.gend, label="tab:experiencegend", caption="Experience with painkilling treatments by Gender"))
+@
+
+As can be seen from Table \ref{tab:experiencegend} females reported a higher level of pill credibility, along with lower levels of cream and injection credibility, and slightly higher levels of Homeopathy and Reiki credibility. 
+
+Next, the response to the Income and Health questions were assessed. 
+
+<<inc, echo=FALSE, results=tex>>=
+inctab <- with(tcq2, table(Income))
+dimnames(inctab) <- list(c("Less than 20K", "20K to 40K", "40K to 60K", "60 to 80K", "80K+"))
+print(xtable(inctab, label="tab:incomelevels", caption="Income Levels for Study two"))
+@ 
+
+As can be seen from Table \ref{tab:incomelevels}, the majority of participants reported earning less than 20,000 euros per year. This is unsurprising, as the majority of respondents were students. 
+
+Finally, the levels of General Health reported were investigated. 
+
+<<healthtab, echo=FALSE, results=tex>>=
+healthtab <- with(tcq2, table(Health))
+dimnames(healthtab) <- list(c("Very Poor", "Somewhat Poor", "Average", "Somewhat Good", "Very Good"))
+print(xtable(healthtab, label="tab:healthlevels", caption="Self Report Health levels, Study Two"))
+@ 
+
+As can be seen from Table \ref{tab:healthlevels}, the majority of participants tended to report their health as either Somewhat Good or Very Good, which is not particularly surprising, given the non-clinical nature of the sample. 
 
 Following these investigations of the descriptive qualities of the data, the next stage of the analysis is to examine the inter-correlations and latent structure behind the data through the use of factor analysis. 
 
