@@ -1188,7 +1188,7 @@ print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlat
 
 Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. 
 
-\paragraph{Seven Factor Solution}
+\paragraph{Seven Factor Solutions}
 \label{sec:seven-fact-solut}
 
 
@@ -1220,6 +1220,75 @@ PA7: ``Pill3'',  ``Cream3'', ``Inj1'',   ``Inj3'' . This factor is a little stra
 
 <<tcq2b7factorcorr, echo=FALSE, results=hide>>=
 print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr", caption="Factor Correlations, TCQ2B, Seven factor Solution"))
+@ 
+
+<<tcq2cfact7, echo=FALSE, results=tex>>=
+tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
+@ 
+
+Table \ref{tab:tcq2cfact7} shows the seven factor solution structure for Split C. 
+
+
+Again, the factors mostly break down into the six forms of treatment.
+
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor represents the homeopathy items and retains that name. 
+
+PA5: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. This is the Reiki items factor. 
+
+PA3: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This is the Acupuncture items factor. 
+
+PA4: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This is the Cream factor. 
+
+PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This is the Injections factor. 
+
+PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This is the Pills factor. 
+
+PA7: ``Pill3'', ``Inj1'',  ``Inj3'' . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
+
+%% The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
+
+<<tcq2c7factorcorr, echo=FALSE, results=hide>>=
+print(FactorCor(tcq2c.fact.7,label="tab:tcq2c7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split C"))
+@ 
+
+The seven factor solution %% (Table \ref{tab:tcq2c7factorcorr}
+shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
+
+
+
+\subsection{Seven Factor Solutions}
+\label{sec:seven-fact-solut}
+
+
+
+<<tcq2dfact7, echo=FALSE, results=tex>>=
+tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
+@ 
+
+The details of the seven factor solution for this split are shown in Table \ref{tab:tcq2dfact7}. 
+
+This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
+
+PA1: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
+
+PA5: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor will be termed Homeopathy. 
+
+PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor will be termed Acupuncture. 
+
+PA2: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor will be termed Creams.
+
+PA3: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This factor will be termed Injections.
+
+PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor will be termed Pills. 
+
+PA7: ``Pill3'',  ``Cream3'', ``Inj3'' This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
+
+
+
+<<tcq2d7factorcorr, echo=FALSE, results=hide>>=
+print(FactorCor(tcq2d.fact.7,label="tab:tcq2d7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split D"))
 @ 
 
 <<tcq2bfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
@@ -1663,38 +1732,7 @@ bamall2c <- tcq2c[,53:70]
 
 
 
-<<tcq2cfact7, echo=FALSE, results=tex>>=
-tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
-@ 
 
-Table \ref{tab:tcq2cfact7} shows the seven factor solution structure for Split C. 
-
-
-Again, the factors mostly break down into the six forms of treatment.
-
-PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor represents the homeopathy items and retains that name. 
-
-PA5: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. This is the Reiki items factor. 
-
-PA3: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This is the Acupuncture items factor. 
-
-PA4: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This is the Cream factor. 
-
-PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This is the Injections factor. 
-
-PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This is the Pills factor. 
-
-PA7: ``Pill3'', ``Inj1'',  ``Inj3'' . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
-
-%% The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
-
-<<tcq2c7factorcorr, echo=FALSE, results=hide>>=
-print(FactorCor(tcq2c.fact.7,label="tab:tcq2c7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split C"))
-@ 
-
-The seven factor solution %% (Table \ref{tab:tcq2c7factorcorr}
-shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
 
 <<tcq2cfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
 tcq2cFit5 <- FitIndices(tcq2c.fact.5)
@@ -2149,39 +2187,6 @@ In this Split, the parallel analysis criterion suggested six factors while the M
 
 
 
-\paragraph{Seven Factor Solution}
-\label{sec:seven-fact-solut}
-
-
-
-<<tcq2dfact7, echo=FALSE, results=tex>>=
-tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
-@ 
-
-The details of the seven factor solution for this split are shown in Table \ref{tab:tcq2dfact7}. 
-
-This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
-
-PA1: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
-
-PA5: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor will be termed Homeopathy. 
-
-PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor will be termed Acupuncture. 
-
-PA2: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor will be termed Creams.
-
-PA3: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This factor will be termed Injections.
-
-PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor will be termed Pills. 
-
-PA7: ``Pill3'',  ``Cream3'', ``Inj3'' This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
-
-
-
-<<tcq2d7factorcorr, echo=FALSE, results=hide>>=
-print(FactorCor(tcq2d.fact.7,label="tab:tcq2d7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split D"))
-@ 
 
 
 <<tcq2dfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
