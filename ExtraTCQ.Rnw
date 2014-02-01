@@ -3372,3 +3372,15 @@ tcq2a.conv.grm.2pl <- grm(na.omit(tcq2a.conv), constrained=FALSE)
 %% @ 
 %% As can be seen from Table \ref{tab:tcq2aaltgrmmodcomp}, the one parameter model performed significantly better on the unseen data. 
 
+The five factor solution (not shown) broke down as follows:
+It explained 81\% of the variance, and all the communalities were greater than 0.5. 
+
+PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'',  ``Inj4'',  ``Inj5'',  ``Inj6''. This factor appears to consist of the Pill and Injection questions, and so can be termed Pills \& Injections.
+
+PA3:''Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor consists of the Cream questions and can thus be termed Creams. 
+
+PA5: ``Rei1'',  ``Rei2'',  ``Rei3'',  ``Rei4'',  ``Rei5'',  ``Rei6''. There was a small negative loading on Pill1 for this factor, but given its strong loadings on other factors, this was ignored. This left this factor consisting solely of the Reiki items, and so this factor was termed Reiki. 
+
+PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor consisted solely of the homeopathy items, and thus was termed Homeopathy.
+
+PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor consisted solely of the Acupuncture items and thus was termed acupuncture. 
