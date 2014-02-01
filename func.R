@@ -8,15 +8,15 @@
 ##' @author Richard Morrisroe
 FactorXtab <-  function (x, names=NULL, ...) {
     x.mat.df <- FactorCoeff(x, names=names)
-fact.xtab <- xtable(x.mat.df, ...)
-fact.xtab
+    fact.xtab <- xtable(x.mat.df, ...)
+    return(fact.xtab)
 }
 FactorCoeff <- function (x, names=NULL) {
    x.load<-x$loadings
     x.comm<-x$communality
     x.names <- colnames(x.load)
     len <- length(colnames(x.load))
-
+   
     x.comm.load<-cbind(x.load, x.comm)
 
    x.mat.df<-as.matrix.data.frame(x.comm.load)
@@ -26,7 +26,7 @@ FactorCoeff <- function (x, names=NULL) {
    }
    else {
        x.names[len+1] <- "Communalities"
-       colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
+       colnames(x.mat.df) <- x.names
    }
    return(x.mat.df)
 }
@@ -874,4 +874,21 @@ apademotables <- function(data, xtable=FALSE, ...) {
     }
     return(data.tab)
 }
+FactorAverage <- function (sols=list()) {
+    ##this just returns the coefficients now, the names are going to be the issue, possibly assign these outside the func
+    sols.coeff.list <- list()
+    for(i in 1:length(sols)) {
+        sols.coeff.list[[i]] <- FactorCoeff(sols[[i]])
+    }
+    sols.coeff.list
+}
+FactorNames <- function(fac, names=NULL) {
+    if(is.null(names)) {
+        stop("Calling a function based on factor names with no names seems like a bad idea, don't you think?")
+    }
+    names2 <- c(names, "Communalities")
+    colnames(fac$loadings) <- names2
+    return(fac)
+}
     
+            
