@@ -1117,14 +1117,12 @@ tcq2c5.coeff <- FactorCoeff(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Crea
 rownames(tcq2.fact5.av) <- itemnames
 tcq2.fact5.av <-  (tcq2b5.coeff+tcq2c5.coeff)/2
 print(xtable(tcq2.fact5.av, label="tab:tcq2fact5average", caption="Averaged Five Factor Solution over Splits B and C"))
-
 @ 
 
 
 
-Typically, the five factor solution merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. 
+Typically, the five factor solution merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. The results of the averaged factor solutions from Splits B and C is shown in Table \ref{tab:tcq2fact5average}. 
 
-The factor structure for Split B is given below, and the results for Split C were very similar. 
 
 PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'', ``Inj4'',  ``Inj5'  ``Inj6''. This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
 
@@ -1155,6 +1153,28 @@ print(FactorXtab(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pil
 @ 
 
 
+<<tcq2cfact6, echo=FALSE, results=hide>>=
+tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
+@ 
+
+<<tcq2dfact6, echo=FALSE, results=hide>>=
+tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
+@ 
+
+<<tcq2fact6average, echo=FALSE, results=tex>>=
+tcq2b6.coeff <- FactorCoeff(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
+
+tcq2c6.coeff <- FactorCoeff(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
+tcq2d6.coeff <- FactorCoeff(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"))
+tcq2.fact6.av <- (tcq2b6.coeff+tcq2c6.coeff+tcq2d6.coeff)/3
+rownames(tcq2.fact6.av) <- itemnames
+print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average", caption="Average of Six Factor Solutions over Splits B, C and D"))
+@ 
+
+
+
 %% As can be seen from Table \ref{tab:tcq2bfact6}
 The six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded %% \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
 
@@ -1173,10 +1193,7 @@ The proportion of variance explained by the six factor solution is equal to 84\%
 
 The correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
 
-<<tcq2cfact6, echo=FALSE, results=hide>>=
-tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
-@ 
+
 
 
 Again, %% as can be seen in Table \ref{tab:tcq2cfact6}
@@ -1194,10 +1211,7 @@ Acupuncture again shows correlations with the conventional factors, but homeopat
 
 
 
-<<tcq2dfact6, echo=FALSE, results=hide>>=
-tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
-@ 
+
 
 
 As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors%% , as is clearly shown in Table \ref{tab:tcq2dfact6}
