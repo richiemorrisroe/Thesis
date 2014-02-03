@@ -1119,7 +1119,7 @@ tcq2.fact5.av <-  (tcq2b5.coeff+tcq2c5.coeff)/2
 print(xtable(tcq2.fact5.av, label="tab:tcq2fact5average", caption="Averaged Five Factor Solution over Splits B and C"))
 tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
-tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), names=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
 @ 
 
 
