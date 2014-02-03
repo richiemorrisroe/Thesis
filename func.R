@@ -874,20 +874,29 @@ apademotables <- function(data, xtable=FALSE, ...) {
     }
     return(data.tab)
 }
-FactorAverage <- function (sols=list()) {
-    ##this just returns the coefficients now, the names are going to be the issue, possibly assign these outside the func
+FactorAverage <- function (sols=list(), names=NULL) {
+
     sols.coeff.list <- list()
+    
     for(i in 1:length(sols)) {
-        sols.coeff.list[[i]] <- FactorCoeff(sols[[i]])
+        coeff <- as.data.frame(FactorCoeff(sols[[i]]))
+        coeff.ord <- coeff[,names]
+        sols.coeff.list[[i]] <- coeff.ord
     }
     sols.coeff.list
+    dimmat <- dim(sols.coeff.list[[1]])
+    resmat <- matrix(0, nrow=dimmat[1], ncol=dimmat[2])
+    for (i in 1:length(sols.coeff.list)) {
+        resmat <- (resmat+sols.coeff.list[[i]])/i
+    }
+    return(resmat)
 }
 FactorNames <- function(fac, names=NULL) {
     if(is.null(names)) {
         stop("Calling a function based on factor names with no names seems like a bad idea, don't you think?")
     }
-    names2 <- c(names, "Communalities")
-    colnames(fac$loadings) <- names2
+    
+    colnames(fac$loadings) <- names
     return(fac)
 }
     
