@@ -1120,14 +1120,15 @@ print(xtable(tcq2.fact5.av, label="tab:tcq2fact5average", caption="Averaged Five
 tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), names=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
+print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor Solutions over Splits B and C"))
 @ 
 
 
 
-Typically, the five factor solution merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. The results of the averaged factor solutions from Splits B and C is shown in Table \ref{tab:tcq2fact5average}. 
+The average of the two five factor solutions (shown in Table \ref{tab:tcq2bfact5av} merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
 
 
-PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'', ``Inj4'',  ``Inj5'  ``Inj6''. This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
+PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'', ``Inj4'',  ``Inj5''  ``Inj6''. This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
 
 PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor maps exactly to the Homeopathy items, and is therefore given that name.
 
@@ -1174,6 +1175,11 @@ tcq2d6.coeff <- FactorCoeff(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream"
 tcq2.fact6.av <- (tcq2b6.coeff+tcq2c6.coeff+tcq2d6.coeff)/3
 rownames(tcq2.fact6.av) <- itemnames
 print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average", caption="Average of Six Factor Solutions over Splits B, C and D"))
+tcq2b.fact6.n <- FactorNames(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
+tcq2c.fact6.n <- FactorNames(tcq2c.fact.6, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
+tcq2d.fact6.n <- FactorNames(tcq2d.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
+
+tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ))
 @ 
 
 
