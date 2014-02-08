@@ -1149,6 +1149,7 @@ print(FactorCor(tcq2c.fact.5,label="tab:tcq2cfactorcor5", caption="Factor Correl
 \subsection{Six Factor Solutions}
 \label{sec:six-factor-solution}
 
+The next step was to fit six factor solutions over Splits B, C and D and comparing them to the five and seven factor solutions above and below respectively. Each factor solution was tested on unseen data. 
 
 
 <<tcq2bfact6, echo=FALSE, results=hide>>=
@@ -1168,26 +1169,16 @@ print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "P
 @ 
 
 <<tcq2fact6average, echo=FALSE, results=tex>>=
-tcq2b6.coeff <- FactorCoeff(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
-
-tcq2c6.coeff <- FactorCoeff(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
-tcq2d6.coeff <- FactorCoeff(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"))
-tcq2.fact6.av <- (tcq2b6.coeff+tcq2c6.coeff+tcq2d6.coeff)/3
-rownames(tcq2.fact6.av) <- itemnames
-print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average", caption="Average of Six Factor Solutions over Splits B, C and D"))
 tcq2b.fact6.n <- FactorNames(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
 tcq2c.fact6.n <- FactorNames(tcq2c.fact.6, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
-tcq2d.fact6.n <- FactorNames(tcq2d.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
+tcq2d.fact6.n <- FactorNames(tcq2d.fact.6,names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
 
-tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ))
+tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ))
+rownames(tcq2.fact6.av) <- itemnames
+print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Six Factor Solutions over Splits B, C and D")
 @ 
 
-
-
-%% As can be seen from Table \ref{tab:tcq2bfact6}
-The six factor structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. PA5 equates to Reiki, PA1 to Homeopathy, PA4 to Acupuncture, PA3 to Cream, PA2 to Injections and PA6 equates to Pills. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded %% \footnote{it is perhaps interesting that this strange loading also occurred in other factor solutions}.  
-
-%% Below can be seen the correlations between factors, in Table \ref{tab:tcq2b6factorcor} . 
+As can be seen from Table \ref{tab:tcq2fact6average}, the six factor solution is relatively clean when averaged across all splits.  The structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded. The only two items for which the communalities are low are for Pill1 and Inj3, which may suggest some residual variance (see the seven factor solutions below). The three solutions explained from 79\% to 84\% of the variance. 
 
 
 <<tcq2bfactorcor, echo=FALSE, results=hide>>=
@@ -1195,36 +1186,11 @@ print(FactorCor(tcq2b.fact.6,label="tab:tcq2b6factorcor",caption="Factor Correla
 @ 
 
 
-
-
-
-The proportion of variance explained by the six factor solution is equal to 84\% which is an extremely high amount, arguing for the usefulness of this solution. 
-
-The correlations between factors are very similar to those between the total scores, which is perhaps unsurprising as both are linear combinations of the scores on each questions. Nonetheless, this gives supporting evidence in favour of the utility of this solution. 
-
-
-
-
-Again, %% as can be seen in Table \ref{tab:tcq2cfact6}
-the six factors map exactly to the six forms of treatment, rendering an interpretation of the resulting factor solution rather superflous. 
-
-
 <<tcq2cfactorcor, echo=FALSE, results=hide>>=
 print(FactorCor(tcq2c.fact.6,label="tab:tcq2c6factorcorr",caption="Factor Correlations, Six Factor Solution TCQ 2, Split C"))
 @ 
 
-Acupuncture again shows correlations with the conventional factors, but homeopathy does also in this particular solution. This solution explained 83\% of the variance, which is consistent with the other splits and factor solutions examined so far. 
 
-\paragraph{Six Factor Solution}
-\label{sec:six-factor-solution}
-
-
-
-
-
-
-As per all previous splits, the six factor solution mapped all six treatment modalities to the six factors%% , as is clearly shown in Table \ref{tab:tcq2dfact6}
-. This solution explained 81\% of the variance. 
 
 
 <<tcq2dfactorcor, echo=FALSE, results=hide>>=
@@ -1245,21 +1211,40 @@ print(FactorXtab(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill
 @ 
 
 
-The seven factor solution shown in Table \ref{tab:tcq2bfact7} explained 86\% of the variance in the sample, and the items were assigned to factors as follows.
+<<tcq2cfact7, echo=FALSE, results=tex>>=
+tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
+@
 
-PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
+<<tcq2dfact7, echo=FALSE, results=tex>>=
+tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
+print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
+@ 
 
-PA5: ``Pill1'', ``Rei1'',  ``Rei2'',  ``Rei3'',  ``Rei4'',  ``Rei5'',  ``Rei6''. Again, apart from a small loading of Pill1 on this factor, it maps exactly to the Reiki questions, and thus will be termed Reiki. 
+<<tcq2fact7average, echo=FALSE, results=hide>>=
+tcq2b.fact7.n <- FactorNames(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
+tcq2c.fact7.n <- FactorNames(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
+tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream","Inj", "Pill", "Cred"))
+tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
+rownames(tcq2.fact7.av) <- itemnames
+print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"))
+@ 
 
-PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor maps exactly to the Acupuncture questions, and will be termed thusly.
+The seven factor solution shown in Table \ref{tab:tcq2fact7average} explained 86\% of the variance in the sample, and the items were assigned to factors as described in the Table above. In essence, this solution was extremely similar to the six factor solution above, except that some of the Pill and Injection items loaded on the Credibility factor. The loadings tended to be highest for Q1 and Q3, and this factor would seem to account for the shared variance between these items not captured in the six factor solution (as noted above when discussing the low communalities for these items.)
 
-PA3: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. Again, this factor is an exact map to the Cream questions and thus is termed Creams.
+%% PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
 
-PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. These items are all Injection items, and so this factor gets that name. 
+%% PA5: ``Pill1'', ``Rei1'',  ``Rei2'',  ``Rei3'',  ``Rei4'',  ``Rei5'',  ``Rei6''. Again, apart from a small loading of Pill1 on this factor, it maps exactly to the Reiki questions, and thus will be termed Reiki. 
 
-PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor maps to all of the pill items, and is thus called Pills. 
+%% PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor maps exactly to the Acupuncture questions, and will be termed thusly.
 
-PA7: ``Pill3'',  ``Cream3'', ``Inj1'',   ``Inj3'' . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
+%% PA3: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. Again, this factor is an exact map to the Cream questions and thus is termed Creams.
+
+%% PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. These items are all Injection items, and so this factor gets that name. 
+
+%% PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor maps to all of the pill items, and is thus called Pills. 
+
+Cred: ``Pill3'',  ``Cream3'', ``Inj1'',   ``Inj3'' . This factor is a little strange, as it only takes some of the questions from the conventional factors. It does take the confidence question from all three conventional methodologies, and thus can be termed confidence in conventional treatments. 
 
 
 %% The correlations between the factors are reported in Table \ref{tab:tcq2b7factorcorr}.
@@ -1268,77 +1253,11 @@ PA7: ``Pill3'',  ``Cream3'', ``Inj1'',   ``Inj3'' . This factor is a little stra
 print(FactorCor(tcq2b.fact.7,label="tab:tcq2b7factorcorr", caption="Factor Correlations, TCQ2B, Seven factor Solution"))
 @ 
 
-<<tcq2cfact7, echo=FALSE, results=tex>>=
-tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
-@ 
-
-Table \ref{tab:tcq2cfact7} shows the seven factor solution structure for Split C. 
 
 
-Again, the factors mostly break down into the six forms of treatment.
-
-PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor represents the homeopathy items and retains that name. 
-
-PA5: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. This is the Reiki items factor. 
-
-PA3: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This is the Acupuncture items factor. 
-
-PA4: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This is the Cream factor. 
-
-PA2: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This is the Injections factor. 
-
-PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This is the Pills factor. 
-
-PA7: ``Pill3'', ``Inj1'',  ``Inj3'' . This factor has supplementary loadings for some of the Pill and Injection items, most notably the confidence in the treatment items, so this can best be termed Confidence in Treatment Factor. 
-
-%% The correlations between the factors are reported in Table \ref{tab:tcq2c7factorcorr}.
-
-<<tcq2c7factorcorr, echo=FALSE, results=hide>>=
-print(FactorCor(tcq2c.fact.7,label="tab:tcq2c7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split C"))
-@ 
-
-The seven factor solution %% (Table \ref{tab:tcq2c7factorcorr}
-shows high intercorrelations between each of the conventional forms of treatment and each of the alternative forms of treatment but does not show any real correlations between them (except for Acupuncture). 
-
-
-
-\subsection{Seven Factor Solutions}
-\label{sec:seven-fact-solut}
-
-
-
-<<tcq2dfact7, echo=FALSE, results=tex>>=
-tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
-@ 
-
-The details of the seven factor solution for this split are shown in Table \ref{tab:tcq2dfact7}. 
-
-This solution explained 84\% of the variance, an amount which was in line with that observed in other splits. 
-
-PA1: ``Rei1'', ``Rei2'', ``Rei3'', ``Rei4'', ``Rei5'', ``Rei6''. These items map exactly to the Reiki questions, and so this factor will be termed Reiki. 
-
-PA5: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor will be termed Homeopathy. 
-
-PA4: ``Acu1'', ``Acu2'', ``Acu3'', ``Acu4'', ``Acu5'', ``Acu6''. This factor will be termed Acupuncture. 
-
-PA2: ``Cream1'', ``Cream2'', ``Cream3'', ``Cream4'', ``Cream5'', ``Cream6''. This factor will be termed Creams.
-
-PA3: ``Inj1'', ``Inj2'', ``Inj3'', ``Inj4'', ``Inj5'', ``Inj6''. This factor will be termed Injections.
-
-PA6: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6''. This factor will be termed Pills. 
-
-PA7: ``Pill3'',  ``Cream3'', ``Inj3'' This factor has emerged in the other splits also, and again will be termed Confidence in Conventional Treatment.
-
-
-
-<<tcq2d7factorcorr, echo=FALSE, results=hide>>=
-print(FactorCor(tcq2d.fact.7,label="tab:tcq2d7factorcorr", caption="Factor Correlations, Seven Factor Solution, TCQ 2, Split D"))
-@ 
 
 <<tcq2bfitindices, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
-tcq2bFit5 <- FitIndices(tcq2b.fact.5)
+tcq2bFit5 <- FitIndices(tcq2b.fact.5, labels="tcq2b")
 tcq2bFit6 <- FitIndices(tcq2b.fact.6)
 tcq2bFit7 <- FitIndices(tcq2b.fact.7)
 tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
@@ -1347,8 +1266,8 @@ names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
 @ 
 
-\subsection{Split B CFA}
-\label{sec:split-b-cfa}
+\subsection{Confirmatory Factor Analyses}
+\label{sec:cfa}
 
 <<tcq5notbSem, echo=FALSE, results=hide>>=
 Pill <- "Pill"
@@ -1466,14 +1385,233 @@ Tcq7modelnotB <- mxModel(name="TCQ7notB",
                          mxData(observed=cov(na.omit(tcqall2notb)), type="cov", numObs=460))
 tcq7fit.notB <- mxRun(Tcq7modelnotB)
 tcq7summ.notB <- summary(tcq7fit.notB)
+@
+
+<<tcq5notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+pillinj.cols <- c(pillitems.cols, Injitems.cols)
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+pillinj <- c(pills, inj)
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq5modelnotC <- mxModel(name="TCQ5notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills & Injections", to=pillinj), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=452))
+tcq5fit.notC <- mxRun(Tcq5modelnotC)
+tcq5summ.notC <- summary(tcq5fit.notC)
 @ 
+
+
+<<tcq6notcSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotC <- mxModel(name="TCQ6notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq6fit.notC <- mxRun(Tcq6modelnotC)
+tcq6summ.notC <- summary(tcq6fit.notC)
+@ 
+
+<<tcq7notCsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Inj1", "Inj3")
+Tcq7modelnotC <- mxModel(name="TCQ7notC", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
+tcq7fit.notC <- mxRun(Tcq7modelnotC)
+tcq7summ.notC <- summary(tcq7fit.notC)
+@ 
+
+<<tcq2notCsemcompare, echo=FALSE, results=tex>>=
+tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.8)
+@ 
+
+It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
+
+
+<<tcq6notdSem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+Tcq6modelnotD <- mxModel(name="TCQ6notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq6fit.notD <- mxRun(Tcq6modelnotD)
+tcq6summ.notD <- summary(tcq6fit.notD)
+@ 
+
+<<tcq7notDsem, echo=FALSE, results=hide>>=
+Pill <- "Pill"
+Cream <- "Cream"
+Inj <- "Inj"
+Acu <- "Acu"
+Hom <- "Hom"
+Rei <- "Rei"
+creamitems.cols <- paste(Cream, 1:6, sep="")
+pillitems.cols <- paste(Pill, 1:6, sep="")
+Injitems.cols <- paste(Inj, 1:6, sep="")
+Acuitems.cols <- paste(Acu, 1:6, sep="")
+Homitems.cols <- paste(Hom, 1:6, sep="")
+Reiitems.cols <- paste(Rei, 1:6, sep="")
+manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
+latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
+pills <- paste(Pill, 1:6, sep="")
+creams <- paste(Cream, 1:6, sep="")
+inj <- paste(Inj, 1:6, sep="")
+Acu <- paste(Acu, 1:6, sep="")
+hom <- paste(Hom, 1:6, sep="")
+rei <- paste(Rei, 1:6, sep="")
+confconv <- c("Pill3", "Cream3", "Inj3")
+Tcq7modelnotD <- mxModel(name="TCQ7notD", 
+                         type="RAM",
+                         manifestVars=manifests,
+                         latentVars=latents,
+                         mxPath(from="Pills", to=pills), 
+                         mxPath(from="Creams", to=creams),
+                         mxPath(from="Injections", to=inj),
+                         mxPath(from="Acupuncture", to=Acu),
+                         mxPath(from="Homeopathy", to=hom),
+                         mxPath(from="Reiki", to=rei),
+                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
+                         mxPath(from=manifests, arrows=2),
+                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
+tcq7fit.notD <- mxRun(Tcq7modelnotD)
+tcq7summ.notD <- summary(tcq7fit.notD)
+@ 
+
+<<tcq2notDsemcompare, echo=FALSE, results=tex>>=
+tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.8)
+@ 
+
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
 print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.8)
 @ 
 
-It can be seen from Table \ref{tab:tcq2notBsemcompare} that the seven factor model from Split B provided a better fit to the out of sample data than did the six factor model. However, the difference in likelihood was not large (unlike in Sample One), and given that the seventh factor had only one factor loading on it, the six factor model should be preferred in this case. 
+<<fivefactorsem, echo=FALSE, results=tex>>=
+tcq2fact5.notB.fitind <- getMxFitFunctions(tcq5fit.notB, label="TCQ Five Not B")
+tcq2fact6.notB.fitind <- getMxFitFunctions(tcq6fit.notB, label="TCQ Six Not B")
+tcq2fact7.notB.fitind <- getMxFitFunctions(tcq7fit.notB, label="TCQ Seven Not B")
+tcq2notBfits <- rbind(tcq2fact5.notB.fitind, tcq2fact5.notB.fitind, tcq2fact7.notB.fitind)
+@ 
+
+
+
+In all cases, the seven factor model showed better fit to the data than did either the five or six factor model. There was typically not a large amount of difference between the six and seven factor models, and the six factor structure would be certainly preferred in terms of clarity and interpretation.
 
 \subsection{IRT Analyses, Split B}
 \label{sec:irt-analyses}
@@ -1793,130 +1931,7 @@ print(xtable(tcq2cfit.m,caption="Fit Indices, TCQ 2 (Split C)", label="tab:tcq2c
 
 Next, the fit of the models developed on Split C will be tested on Splits A, B and D. 
 
-<<tcq5notcSem, echo=FALSE, results=hide>>=
-Pill <- "Pill"
-Cream <- "Cream"
-Inj <- "Inj"
-Acu <- "Acu"
-Hom <- "Hom"
-Rei <- "Rei"
-creamitems.cols <- paste(Cream, 1:6, sep="")
-pillitems.cols <- paste(Pill, 1:6, sep="")
-Injitems.cols <- paste(Inj, 1:6, sep="")
-pillinj.cols <- c(pillitems.cols, Injitems.cols)
-Acuitems.cols <- paste(Acu, 1:6, sep="")
-Homitems.cols <- paste(Hom, 1:6, sep="")
-Reiitems.cols <- paste(Rei, 1:6, sep="")
-manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
-latents <- c("Pills & Injections", "Creams", "Acupuncture", "Homeopathy", "Reiki")
-pills <- paste(Pill, 1:6, sep="")
-creams <- paste(Cream, 1:6, sep="")
-inj <- paste(Inj, 1:6, sep="")
-pillinj <- c(pills, inj)
-Acu <- paste(Acu, 1:6, sep="")
-hom <- paste(Hom, 1:6, sep="")
-rei <- paste(Rei, 1:6, sep="")
-Tcq5modelnotC <- mxModel(name="TCQ5notC", 
-                         type="RAM",
-                         manifestVars=manifests,
-                         latentVars=latents,
-                         mxPath(from="Pills & Injections", to=pillinj), 
-                         mxPath(from="Creams", to=creams),
-                         mxPath(from="Acupuncture", to=Acu),
-                         mxPath(from="Homeopathy", to=hom),
-                         mxPath(from="Reiki", to=rei),
-                         mxPath(from=manifests, arrows=2),
-                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=452))
-tcq5fit.notC <- mxRun(Tcq5modelnotC)
-tcq5summ.notC <- summary(tcq5fit.notC)
-@ 
 
-
-<<tcq6notcSem, echo=FALSE, results=hide>>=
-Pill <- "Pill"
-Cream <- "Cream"
-Inj <- "Inj"
-Acu <- "Acu"
-Hom <- "Hom"
-Rei <- "Rei"
-creamitems.cols <- paste(Cream, 1:6, sep="")
-pillitems.cols <- paste(Pill, 1:6, sep="")
-Injitems.cols <- paste(Inj, 1:6, sep="")
-Acuitems.cols <- paste(Acu, 1:6, sep="")
-Homitems.cols <- paste(Hom, 1:6, sep="")
-Reiitems.cols <- paste(Rei, 1:6, sep="")
-manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
-latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
-pills <- paste(Pill, 1:6, sep="")
-creams <- paste(Cream, 1:6, sep="")
-inj <- paste(Inj, 1:6, sep="")
-Acu <- paste(Acu, 1:6, sep="")
-hom <- paste(Hom, 1:6, sep="")
-rei <- paste(Rei, 1:6, sep="")
-Tcq6modelnotC <- mxModel(name="TCQ6notC", 
-                         type="RAM",
-                         manifestVars=manifests,
-                         latentVars=latents,
-                         mxPath(from="Pills", to=pills), 
-                         mxPath(from="Creams", to=creams),
-                         mxPath(from="Injections", to=inj),
-                         mxPath(from="Acupuncture", to=Acu),
-                         mxPath(from="Homeopathy", to=hom),
-                         mxPath(from="Reiki", to=rei),
-                         mxPath(from=manifests, arrows=2),
-                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
-tcq6fit.notC <- mxRun(Tcq6modelnotC)
-tcq6summ.notC <- summary(tcq6fit.notC)
-@ 
-
-<<tcq7notCsem, echo=FALSE, results=hide>>=
-Pill <- "Pill"
-Cream <- "Cream"
-Inj <- "Inj"
-Acu <- "Acu"
-Hom <- "Hom"
-Rei <- "Rei"
-creamitems.cols <- paste(Cream, 1:6, sep="")
-pillitems.cols <- paste(Pill, 1:6, sep="")
-Injitems.cols <- paste(Inj, 1:6, sep="")
-Acuitems.cols <- paste(Acu, 1:6, sep="")
-Homitems.cols <- paste(Hom, 1:6, sep="")
-Reiitems.cols <- paste(Rei, 1:6, sep="")
-manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
-latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
-pills <- paste(Pill, 1:6, sep="")
-creams <- paste(Cream, 1:6, sep="")
-inj <- paste(Inj, 1:6, sep="")
-Acu <- paste(Acu, 1:6, sep="")
-hom <- paste(Hom, 1:6, sep="")
-rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3", "Inj1", "Inj3")
-Tcq7modelnotC <- mxModel(name="TCQ7notC", 
-                         type="RAM",
-                         manifestVars=manifests,
-                         latentVars=latents,
-                         mxPath(from="Pills", to=pills), 
-                         mxPath(from="Creams", to=creams),
-                         mxPath(from="Injections", to=inj),
-                         mxPath(from="Acupuncture", to=Acu),
-                         mxPath(from="Homeopathy", to=hom),
-                         mxPath(from="Reiki", to=rei),
-                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
-                         mxPath(from=manifests, arrows=2),
-                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notc)), type="cov", numObs=460))
-tcq7fit.notC <- mxRun(Tcq7modelnotC)
-tcq7summ.notC <- summary(tcq7fit.notC)
-@ 
-
-<<tcq2notCsemcompare, echo=FALSE, results=tex>>=
-tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.8)
-@ 
-
-It can be seen from Table \ref{tab:tcq2notCsemcompare} that the seven factor model from Split C provided a better fit to the out of sample data than did the 5 or 6 factor model. 
 
 \subsection{IRT Analyses, Split C}
 \label{sec:irt-analyses-split}
@@ -2247,88 +2262,6 @@ print(xtable(tcq2dfit.m,caption="Fit Indices, TCQ 2 (Split D)",label="tab:tcq2df
 
 Next, the fit of the models developed on Split C will be tested on Splits A, B and D. Firstly, the TCQ factor structures will be compared. 
 
-<<tcq6notdSem, echo=FALSE, results=hide>>=
-Pill <- "Pill"
-Cream <- "Cream"
-Inj <- "Inj"
-Acu <- "Acu"
-Hom <- "Hom"
-Rei <- "Rei"
-creamitems.cols <- paste(Cream, 1:6, sep="")
-pillitems.cols <- paste(Pill, 1:6, sep="")
-Injitems.cols <- paste(Inj, 1:6, sep="")
-Acuitems.cols <- paste(Acu, 1:6, sep="")
-Homitems.cols <- paste(Hom, 1:6, sep="")
-Reiitems.cols <- paste(Rei, 1:6, sep="")
-manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
-latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki")
-pills <- paste(Pill, 1:6, sep="")
-creams <- paste(Cream, 1:6, sep="")
-inj <- paste(Inj, 1:6, sep="")
-Acu <- paste(Acu, 1:6, sep="")
-hom <- paste(Hom, 1:6, sep="")
-rei <- paste(Rei, 1:6, sep="")
-Tcq6modelnotD <- mxModel(name="TCQ6notD", 
-                         type="RAM",
-                         manifestVars=manifests,
-                         latentVars=latents,
-                         mxPath(from="Pills", to=pills), 
-                         mxPath(from="Creams", to=creams),
-                         mxPath(from="Injections", to=inj),
-                         mxPath(from="Acupuncture", to=Acu),
-                         mxPath(from="Homeopathy", to=hom),
-                         mxPath(from="Reiki", to=rei),
-                         mxPath(from=manifests, arrows=2),
-                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
-tcq6fit.notD <- mxRun(Tcq6modelnotD)
-tcq6summ.notD <- summary(tcq6fit.notD)
-@ 
-
-<<tcq7notDsem, echo=FALSE, results=hide>>=
-Pill <- "Pill"
-Cream <- "Cream"
-Inj <- "Inj"
-Acu <- "Acu"
-Hom <- "Hom"
-Rei <- "Rei"
-creamitems.cols <- paste(Cream, 1:6, sep="")
-pillitems.cols <- paste(Pill, 1:6, sep="")
-Injitems.cols <- paste(Inj, 1:6, sep="")
-Acuitems.cols <- paste(Acu, 1:6, sep="")
-Homitems.cols <- paste(Hom, 1:6, sep="")
-Reiitems.cols <- paste(Rei, 1:6, sep="")
-manifests <- c(pillitems.cols, creamitems.cols, Injitems.cols, Acuitems.cols, Homitems.cols, Reiitems.cols)
-latents <- c("Pills", "Creams", "Injections", "Acupuncture", "Homeopathy", "Reiki", "Confidence in Conventional Treatments")
-pills <- paste(Pill, 1:6, sep="")
-creams <- paste(Cream, 1:6, sep="")
-inj <- paste(Inj, 1:6, sep="")
-Acu <- paste(Acu, 1:6, sep="")
-hom <- paste(Hom, 1:6, sep="")
-rei <- paste(Rei, 1:6, sep="")
-confconv <- c("Pill3", "Cream3", "Inj3")
-Tcq7modelnotD <- mxModel(name="TCQ7notD", 
-                         type="RAM",
-                         manifestVars=manifests,
-                         latentVars=latents,
-                         mxPath(from="Pills", to=pills), 
-                         mxPath(from="Creams", to=creams),
-                         mxPath(from="Injections", to=inj),
-                         mxPath(from="Acupuncture", to=Acu),
-                         mxPath(from="Homeopathy", to=hom),
-                         mxPath(from="Reiki", to=rei),
-                         mxPath(from="Confidence in Conventional Treatments", to=confconv),
-                         mxPath(from=manifests, arrows=2),
-                         mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                         mxData(observed=cov(na.omit(tcqall2notd)), type="cov", numObs=460))
-tcq7fit.notD <- mxRun(Tcq7modelnotD)
-tcq7summ.notD <- summary(tcq7fit.notD)
-@ 
-
-<<tcq2notDsemcompare, echo=FALSE, results=tex>>=
-tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.8)
-@ 
 
 It can be seen from Table \ref{tab:tcq2notDsemcompare} that the seven factor model from Split D provided a better fit to the out of sample data than did the 6 factor model. 
 
