@@ -2101,23 +2101,20 @@ tcq2.pill.resp.test <- with(tcq2.pill.test, Pilltot)
 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
-pilltotlm1 <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei, data=tcq2.pill.train)
+pilltotlm1 <- lm(Pilltot~Creamtot+Injtot+Acutot+Homtot+Reitot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei+Gender+Age+Health+Income, data=tcq2.pill.train)
 pilltot.step <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction="both", k=3)
 
 @
 
-<<steppilla, echo=FALSE, results=hide>>=
-print(xtable(summary(pilltot.step), label="tab:tcq2steppill", caption="Results of Stepwise Regression for Pill Total on Training Data"))
-pilltot.pred <- predict(pilltotlm1, newdata=tcq2.pill.test)
-@ 
+
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Acutot+ExpPill+ExpCream, data=tcq2.pill.test)
+pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Acutot+ExpPill+ExpCream+Age, data=tcq2.pill.test)
 print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Coefficients for Pill credibility Regression on Held Out Data"))
 @ 
 
 
-Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholdout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
+Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholdout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.51, which equates to approximately 25\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
 
 
 
@@ -2157,17 +2154,14 @@ tcq2.cream.resp.test <- with(tcq2.cream.test, Creamtot)
 @ 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
-creamtotlm1 <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei, data=tcq2.cream.train)
+creamtotlm1 <- lm(Creamtot~Pilltot+Injtot+Acutot+Homtot+Reitot+ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei+Gender+Income+Health+Age, data=tcq2.cream.train)
 creamtot.step <- stepAIC(object=creamtotlm1, upper=creamtotlm1,lower=~1, direction="both", k=3)
 @
 
-<<steppilla, echo=FALSE, results=hide>>=
-print(xtable(summary(creamtot.step), label="tab:tcq2stepcream", caption="Results of Stepwise Regression for Cream Total on Training Data"))
-creamtot.pred <- predict(creamtotlm1, newdata=tcq2.cream.test)
-@ 
+
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+ExpPill+ExpCream, data=tcq2.cream.test)
+creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+ExpPill+ExpCream+Health, data=tcq2.cream.test)
 print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="Coefficients for Cream credibility Regression on Held Out Data"))
 @ 
 
@@ -2175,7 +2169,7 @@ print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption=
 
 
 
-The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.
+The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.Pill credibilty, experience with Pill and cream treatments remained significant, but none of the other variables remained significant on new data. 
 
 
 %% Next, lasso and ridge regression models were fit to this variable. 
@@ -2223,18 +2217,18 @@ tcq2.inj.resp.test <- with(tcq2.inj.test, Injtot)
 @ 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
-injtotlm1 <- lm(Injtot~Pilltot+Injtot+Acutot+Homtot+Reitot+ ExpPill+ExpInj+ExpInj+ExpAcu+ExpHom+ExpRei, data=tcq2.inj.train)
+injtotlm1 <- lm(Injtot~Pilltot+Acutot+Homtot+Reitot+ ExpPill+ExpInj+ExpInj+ExpAcu+ExpHom+ExpRei+Income+Health+Gender+Age, data=tcq2.inj.train)
 injtot.step <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="both", k=3)
 @
 
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-injtotlm.holdout <- lm(Injtot~Pilltot+Acutot+Reitot+ExpInj, data=tcq2.inj.test)
+injtotlm.holdout <- lm(Injtot~Pilltot+Acutot+Reitot+ExpPill, data=tcq2.inj.test)
 print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"))
 @ 
 
 
-The model results shown in Table \ref{tab:tcq2injholdout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not significant on the unseen data, while experience with pills is. The model was independently significant: F(4,313)=16.42, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3912. 
+The model results shown in Table \ref{tab:tcq2injholdout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not significant on the unseen data, while experience with pills is. The model was independently significant: F(4,116)=29.93, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.49. 
 
 
 <<inj2lasso, echo=FALSE, results=hide>>=
@@ -2275,17 +2269,17 @@ tcq2.acu.resp.test <- with(tcq2.acu.test, Acutot)
 @ 
 
 <<stepwiselm, echo=FALSE, results=hide>>=
-acutotlm1 <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+ ExpPill+ExpAcu+ExpAcu+ExpAcu+ExpHom+ExpRei, data=tcq2.acu.train)
+acutotlm1 <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+ ExpPill+ExpAcu+ExpAcu+ExpAcu+ExpHom+ExpRei+Income+Health+Gender+Age, data=tcq2.acu.train)
 acutot.step <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="both", k=3)
 @
 
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-acutotlm.holdout <- lm(Acutot~Creamtot+Homtot+Reitot+ExpAcu+ExpHom, data=tcq2.acu.test)
+acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=tcq2.acu.test)
 print(xtable(summary(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acu credibility Regression on Held Out Data"))
 @ 
 
-As shown in Table \ref{tab:tcq2acuholdout}, only Creams and Homeopathy, along with experience with Acupuncture remained significant on the holdout sample. 
+As shown in Table \ref{tab:tcq2acuholdout}, only Creams and Homeopathy, along with experience with Acupuncture and Homeopathy remained significant in the unseen data.  
 
 <<acu2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 acu.test <- with(na.omit(tcq2a), Acutot)
@@ -2324,17 +2318,17 @@ tcq2.hom.resp.test <- with(tcq2.hom.test, Homtot)
 @ 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
-homtotlm1 <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei, data=tcq2.hom.train)
+homtotlm1 <- lm(Homtot~Pilltot+Creamtot+Injtot+Acutot+Reitot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpHom+ExpRei+Income+Health+Gender+Age, data=tcq2.hom.train)
 homtot.step <- stepAIC(object=homtotlm1, upper=homtotlm1,lower=~1, direction="both", k=3)
 @
 
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom, data=tcq2.hom.test)
+homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.hom.test)
 print(xtable(summary(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Hom credibility Regression on Held Out Data"))
 @ 
 
-Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Homeopathy credibility remain significant, as does the experience with homeopathy variable. 
+Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Homeopathy credibility remain significant, but the rest do not. The model has an $R^2$ of 0.69, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
@@ -2373,17 +2367,17 @@ tcq2.rei.resp.test <- with(tcq2.rei.test, Reitot)
 @ 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
-reitotlm1 <- lm(Reitot~Pilltot+Creamtot+Injtot+Acutot+Homtot+ ExpPill+ExpCream+ExpInj+ExpAcu+ExpRei+ExpRei, data=tcq2.rei.train)
+reitotlm1 <- lm(Reitot~Pilltot+Creamtot+Injtot+Acutot+Homtot+ExpPill+ExpCream+ExpInj+ExpAcu+ExpRei+ExpRei+Income+Health+Gender+Age, data=tcq2.rei.train)
 reitot.step <- stepAIC(object=reitotlm1, upper=reitotlm1,lower=~1, direction="both", k=3)
 @
 
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
-reitotlm.holdout <- lm(Reitot~Pilltot+Acutot+Homtot, data=tcq2.rei.test)
+reitotlm.holdout <- lm(Reitot~Pilltot+Creamtot+Acutot+Homtot+ExpPill+ExpRei+Health, data=tcq2.rei.test)
 print(xtable(summary(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coefficients for Rei credibility Regression on Held Out Data"))
 @ 
 
-Table \ref{tab:tcq2reiholdout} shows the performance of the stepwise selected coefficients on unseen data. It can be seen that the only coefficient which maintained signifiance was that for Homeopathy credibility. 
+Table \ref{tab:tcq2reiholdout} shows the performance of the stepwise selected coefficients on unseen data. It can be seen that the only coefficients which maintained signifiance were those for Homeopathy and Acupuncture credibility, while the $R^2$ was quite low, at approximately 0.4. 
 
 
 <<rei2lasso, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2413,7 +2407,11 @@ Interestingly, it appears that the experience with a particular form of treatmen
 \label{sec:discussion}
 This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
 
-Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the BMQ General sub-scale. 
+Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maxiumum use to be made of the limited data collected, and is an approach which is not often employed within the field. 
+
+Secondly, this factor structure has been replicated over two independent samples. This is important as one sample may have been biased in some random direction, but two samples are much less likely to have been.  
+
+Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the BMQ General sub-scale. These findings would seem to suggest that this measure should prove useful in the assessment of treatment related expectancies in the experimental sample. 
 
 
 Interestingly enough, the hypothesis that experience with a particular treatment would correlate with experience of a particular treatment was only borne out for the alternative treatments. This data cannot be used to establish causality in this case, as both an experience to credibility and a credibility to experience causal chain are equally plausible. 
