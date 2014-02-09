@@ -27,6 +27,7 @@ FactorCoeff <- function (x, names=NULL) {
    else {
        x.names[len+1] <- "Communalities"
        colnames(x.mat.df) <- x.names
+
    }
    return(x.mat.df)
 }
@@ -120,10 +121,11 @@ coefreshape <-  function (x) {
 ##' @param x
 ##' @return
 ##' @author Richard Morrisroe
-FitIndices <- function (x) {
+FitIndices <- function (x, labels=NULL) {
   tli <- x$TLI
   bic <- x$BIC
   rmsea <- x$RMSEA
+  labels <-
   rmsnames <- attr(x$RMSEA, "names")
   res <- as.data.frame(cbind(tli, bic, rmsea[1], rmsea[2], rmsea[3]))
   print(length(res))
@@ -874,21 +876,29 @@ apademotables <- function(data, xtable=FALSE, ...) {
     }
     return(data.tab)
 }
-FactorAverage <- function (sols=list(), names=NULL) {
+FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, ....) {
 
     sols.coeff.list <- list()
     
     for(i in 1:length(sols)) {
         coeff <- as.data.frame(FactorCoeff(sols[[i]]))
-        coeff.ord <- coeff[,names]
+        coeff.ord <- coeff[,mynames]
         sols.coeff.list[[i]] <- coeff.ord
+        ## browser()
     }
     sols.coeff.list
-    dimmat <- dim(sols.coeff.list[[1]])
-    resmat <- matrix(0, nrow=dimmat[1], ncol=dimmat[2])
-    for (i in 1:length(sols.coeff.list)) {
-        resmat <- (resmat+sols.coeff.list[[i]])/i
-    }
+    sols.list <- lapply(sols.coeff.list, as.matrix)
+
+    resmat <- apply(simplify2array(sols.list), c(1,2), FUN)
+    ## resmat <- Reduce(`+`, sols.coeff.list)/length(sols.coeff.list)
+    ## dimmat <- dim(sols.coeff.list[[1]])
+    ## resmat <- matrix(0, nrow=dimmat[1], ncol=dimmat[2])
+    ## colnames(resmat) <- names
+    ## for (i in 1:length(sols.coeff.list)) {
+    ##     ## if(i==3)        browser()
+    
+    ##     resmat <- (resmat+sols.coeff.list[[i]])/2
+    ## }
     return(resmat)
 }
 FactorNames <- function(fac, names=NULL) {
@@ -899,5 +909,43 @@ FactorNames <- function(fac, names=NULL) {
     colnames(fac$loadings) <- names
     return(fac)
 }
-    
+getMxFitFunctions <- function(mx, label=NULL) {
+    summ <- summary(mx)
+    bic <- summ$BIC.Mx
+    aic <- summ$AIC.Mx
+    obs <- summ$numObs
+    param <- summ$estimatedParameters
+
+    res <- data.frame( bic, aic, obs, param)
+    if(!is.null(label)) {
+        rownames(res) <- label
+    }
+    return(res)
+}
+irtAverage <- function(sols=list()) {
+    coef <- lapply(sols, coef)
+    res <- Reduce(`+`, x=coef)/length(coef)
+    return(res)
+}
             
+smoothAIC <- function(model) {
+    if(class(model) %in% c("MxRAMModel", "MxModel")) {
+        res <- summary(model)$AIC.Mx
+    }
+    else {
+        res <- AIC(model)
+    }
+    return(res)
+}
+smoothedAIC <- function (models) {
+    information <- lapply(models, smoothAIC)
+    exp.info <- lapply(information, function(x) exp(-0.5*x))
+    info <- Reduce(`+`, exp.info)
+    weights <- vector(mode="numeric", length=length(information))
+    for (i in 1:length(information)) {
+        weights[i] <- exp(-0.5*information[[i]])/info
+        ## browser()
+    }
+    return(weights)
+}
+        
