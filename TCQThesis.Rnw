@@ -1095,10 +1095,7 @@ tcqall2c <- tcq2c[,17:52]
 bamall2c <- tcq2c[,53:70]
 @ 
 
-<<tcq2csplitscales, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.conv <- tcqall2c[,1:18]
-tcq2c.alt <- tcqall2c[,19:36]
-@ 
+
 
 <<tcq2dsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.conv <- tcqall2d[,1:18]
@@ -1718,6 +1715,10 @@ tcq2d.alt.mono <- check.monotonicity(na.omit(tcq2d.alt))
 print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Monotonicity Check, TCQ 2 Alternative, Split D"))
 @ 
 
+<<tcq2dscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
+tcqall2d <- tcq2d[,17:52]
+bamall2d <- tcq2d[,53:70]
+@ 
 
 
 <<tcq2bconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1758,26 +1759,39 @@ Table \ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters 
 \subsection{Alternative Items}
 \label{sec:alternative-items}
 
-
+Next, two graded response models were fit to all three Alternative splits of the data. 
 
 <<tcq2baltgrm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
 tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE)
 @ 
-<<tcq2baltgrm1pl, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2b.alt.grm.1pl), label="tab:tcq2bconv1plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) One Parameter Graded Response Model"))
-@
 
+<<tcq2caltgrm, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
+tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
+@ 
 
-In Table \ref{tab:tcq2bconv1plgrmsum} are shown the coefficient estimates for the one parameter alternative scale graded response model for split B.
+<<tcq2daltgrm, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
+tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
+@ 
 
-It can be seen that the ability estimates are extremely low, while the discrimination parameter is far higher than was seen in Split A. 
+<<tcq2altgrm1plaverage, echo=FALSE, results=tex>>=
+tcq2.alt.grm.1pl.av <- irtAverage(sols=list(tcq2b.alt.grm.1pl, tcq2c.alt.grm.1pl, tcq2d.alt.grm.1pl))
+print(xtable(tcq2.alt.grm.1pl.av, label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
+@ 
 
-<<tcq2baltgrm2pl, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2b.alt.grm.2pl), label="tab:tcq2bconv2plgrmsum", caption="Coefficients for TCQ 2 Conventional (Split B) Two Parameter Graded Response Model"))
-@
+Table \ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
 
-Table \ref{tab:tcq2bconv2plgrmsum} shows the corresponding coefficient estimates for the two parameter GRM. It can be seen that the discrimination parameter has lowered significantly, while the ability estimates have risen to counter balance this.
+<<tcq2altgrm2plaverage, echo=FALSE, results=tex>>=
+tcq2.alt.grm.2pl.av <- irtAverage(sols=list(tcq2b.alt.grm.2pl, tcq2c.alt.grm.2pl, tcq2d.alt.grm.2pl))
+print(xtable(tcq2.alt.grm.2pl.av, label="tab:tcq2altgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
+@ 
+
+As can be seen from Table \ref{tab:tcq2altgrm2plaverage}, the difficulty parameters for the averaged two parameter models have increased across all items while the difficulty parameters have reduced significantly for most of the items. The Reiki items appear to be the most discriminating, while the Acupuncture items, while difficult appear to change less as the participant ability thresholds increase. 
+
+\subsection{Testing the Models}
+\label{sec:testing-models}
 
 
 
@@ -1838,28 +1852,6 @@ The item-splitting procedure suggests that there are two scales, one for convent
 Next, the fit of one and two parameter graded response models (GRM) was examined. 
 
 
-<<tcq2cconvgrm1plsumm, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2c.conv.grm.1pl), label="tab:tcq2cconvgrm1plsumm", caption="Coefficients for TCQ 2 Conventional (Split C), One Parameter Graded Response Model"))
-@ 
-
-In Table \ref{tab:tcq2cconvgrm1plsumm} the estimated thresholds for the one parameter graded response model are shown. It can be seen that the Cream items are perceived as the most difficult, and that the discrimination parameter (the slope) is estimated at 2.083. This is an average parameter estimated for the whole scale, and based on the results of the previous splits, we would expect to see the discrimination parameters increase for the Cream items and decrease for the Pill and Injection items. 
-
-
-
-<<tcq2cconv2plgrmsum, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2c.conv.grm.2pl), label="tab:tcq2cconv2plgrmsum", caption="Coefficients for TCQ 2 Split C Two Parameter Graded Response Model"))
-@ 
-
-The Two Parameter model for this split (not shown) shows that Pill 5 and Pill6 appear to have been the questions with the most discriminative power. The estimated thresholds have not changed that much, the Cream items still have the highest threshold estimates. 
-
-Next, an ANOVA likelihood ratio test was carried out between the two models to determine which one fitted the data better. 
-
-<<tcq2cconvanova, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.conv.anova <- anova(tcq2c.conv.grm.1pl, tcq2c.conv.grm.2pl)
-@ 
-
-The results of the ANOVA showed that the two parameter model fit the data significantly better than the one parameter model ($p\le 0.001$). In addition, the AIC and BIC measures (which penalise for extra parameters) agreed with the LR test, unlike in previous splits. Therefore, provisionally, it appears that the two parameter model provides the best fit to the data. 
-
 Next, the performance of the IRT models was assessed on unseen data. 
 
 
@@ -1879,26 +1871,7 @@ print(tcq2c.conv.grm.modcomp.xtab)
 As can be seen from Table \ref{tab:tcq2convgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
 
 
-Next, two graded response models were fit to the data. 
 
-<<tcq2caltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
-tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
-@ 
-
-<<tcq2caltgrm1pl, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2c.alt.grm.1pl), caption="Coefficients of TCQ Alternative (Split C) One Parameter Graded Response Model", label="tab:tcq2caltgrm1pl"))
-@ 
-
-As can be seen in Table \ref{tab:tcq2caltgrm1pl}, there are no obvious problems with this solution, as before the homeopathy and reiki questions tend to have higher ability estimates.
-
-
-
-<<tcq2caltgrm2pl, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2c.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2caltgrm2pl"))
-@ 
-
-Table \ref{tab:tcq2caltgrm2pl} shows that the pattern of other splits is confirmed in that the discrimination parameters of the acupuncture items lowers, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
 
 Finally for this model, we examine its performance on unseen data. 
 
@@ -1914,10 +1887,7 @@ print(xtable(tcq2c.alt.grm.modcomp, caption="Performance of Split C TCQ Alternat
 @ 
 As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the two parameter model provides a better fit to the unseen data. 
 
-<<tcq2dscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
-tcqall2d <- tcq2d[,17:52]
-bamall2d <- tcq2d[,53:70]
-@ 
+
 
 
 
@@ -1973,70 +1943,9 @@ As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Grade
 
 
 
-<<tca2daltpcm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.alt.pcm.rasch <- gpcm(tcq2d.alt, constraint="rasch")
-tcq2d.alt.pcm.1PL <- gpcm(tcq2d.alt, constraint="1PL")
-tcq2d.alt.pcm.gpcm <- gpcm(tcq2d.alt, constraint="gpcm")
-@ 
-
-<<tcq2daltpcmraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2d.alt.pcm.rasch), label="tab:tcq2daltpcmrasch", caption="Coefficient Estimates for TCQ Alternative, Rasch PCM, Split D"))
-@ 
-
-%% Table \ref{tab:tcq2daltpcmrasch} shows the estimated coefficients for the TCQ Alternative Rasch Partial Credit Model. It can be seen that the alternative items have much higher estimated thresholds than do the conventional items, with Acupuncture items being slightly easier to endorse than either Homeopathy or Reiki items. 
-
-%% Next, a one parameter model was fit to this scale.
-
-<<tcq2daltpcm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2d.alt.pcm.1PL), label="tab:tcq2daltpcm1pl", caption="Coefficient Estimates, TCQ Alternative, One Parameter PCM, Split D"))
-@ 
-
-%% Table \ref{tab:tcq2daltpcm1pl} shows the estimated coefficients for this model. It can be seen that the discrimination parameter has risen quite signigicantly, while leave the relative ordering of the item sets much the same as it was in the Rasch model. 
-
-%% Finally, a two parameter PCM was fit to this scale.
-
-<<tcq2daltpcmgpcmprint, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2d.alt.pcm.gpcm), label="tab:tcq2daltpcm2pl", caption="Coefficient Estimates, TCQ Alternative, Two Parameter PCM, Split D"))
-@ 
-
-%% Table~\ref{tab:tcq2daltpcm2pl} shows the estimated coefficients for the two parameter PCM. It can be seen that the Homeopathy and Reiki items have extremelty high discrimination parameters, while those for the Acupuncture items have lowered. Note that the Reiki items have much higher discrimination parameters in this split, unlike Split C. 
-
-<<tcq2daltpcmmodcomp, echo=FALSE, results=tex, cache=TRUE>>=
-tcq2notd.irt <- tcq2notd[,35:52]
-tcq2d.alt.gpcm.rasch.done <- testIRTModels(tcq2d.alt.pcm.rasch, tcq2notd.irt, gpcmconstraint="rasch", grmconstraint=NULL)
-tcq2d.alt.gpcm.1PL.done <- testIRTModels(tcq2d.alt.pcm.1PL, tcq2notd.irt, gpcmconstraint="1PL", grmconstraint=NULL)
-tcq2d.alt.gpcm.gpcm.done <- testIRTModels(tcq2d.alt.pcm.gpcm, tcq2notd.irt, gpcmconstraint="gpcm", grmconstraint=NULL)
-tcq2d.alt.pcm.modcomp <- rbind(tcq2d.alt.gpcm.rasch.done, tcq2d.alt.gpcm.1PL.done, tcq2d.alt.gpcm.gpcm.done)
-rownames(tcq2d.alt.pcm.modcomp) <- c("Rasch PCM", "One Parameter PCM", "Two Parameter PCM")
-
-@ 
-
-<<tcq2daltpcmmocompprint, echo=FALSE, results=hide>>=
-tcq2d.alt.gpcm.done.xtab <- xtable(tcq2d.alt.pcm.modcomp, caption="Performance of Split D Alternative TCQ Scale on Splits A, B and C", label="tab:tcq2daltpcmmodcomp")
-print(tcq2d.alt.gpcm.done.xtab)
-@ 
-%% As can be seen from Table \ref{tab:tcq2daltpcmmodcomp}, the Rasch PCM provided the best performance on the unseen data. 
-
-Next, two graded response models were fit to the alternative scale in this split. 
-
-<<tcq2daltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
-tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
-@ 
-
-<<tcq2daltgrm1pl, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2d.alt.grm.1pl), caption="Coefficients of TCQ Alternative (Split D) One Parameter Graded Response Model", label="tab:tcq2daltgrm1pl"))
-@ 
-
-As can be seen in Table \ref{tab:tcq2daltgrm1pl}, there are no obvious problems with this solution, as before the homeopathy and reiki questions tend to have higher ability estimates.
 
 
 
-<<tcq2daltgrm2pl, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2d.alt.grm.2pl), caption="Coefficients of TCQ Alternative (Split C) Two Parameter Graded Response Model", label="tab:tcq2daltgrm2pl"))
-@ 
-
-The two parameter alternative GRM (not shown) was similiar to  the pattern of other splits, in that the discrimination parameters of the acupuncture items lowered, while that of the other sets of items rises, with a corresponding tradeoff in estimated difficulty parameters. 
 
 Finally for this model, we examine its performance on unseen data. 
 
