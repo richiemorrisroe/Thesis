@@ -1,7 +1,7 @@
 
 \section{Introduction}
 
-Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. The most typical method of measuring treatment-related expectancies involves a one item measure ``How much better do you expect to feel after this treatment'', which is answered typically on an eleven point scale~\cite{morton2009reproducibility,martin2011implicit}.  These expectancy measures normally have a correlation with placebo response of approximately 0.3,  which equates to only 10\% of the variance in response to placebo~\cite{Whalley2008}.
+Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. The most typical method of measuring treatment-related expectancies involves a one item measure ``How much better do you expect to feel after this treatment'', which is answered on an eleven point scale~\cite{morton2009reproducibility,martin2011implicit}.  These expectancy measures normally have a correlation with placebo response of approximately 0.3,  which equates to only 10\% of the variance in response to placebo~\cite{Whalley2008}.
 
 \subsection{Current Expectancy Measurement}
 \label{sec:curr-expect-meas}
@@ -17,7 +17,7 @@ Additionally, the CEQ was found to have both cognitive and emotional factors by 
 
 The CEQ was altered for this study, as this cross-sectional study did not administer any treatments to the sample of participants. Instead, participants were asked to imagine that they had been suffering from pain, and that a doctor had recommended a particular treatment and were then asked to rate the credibility of a number of different methods for reducing their pain (described further in Section \ref{sec:measures-1}). 
 
-In this sense, what was measured were the self-reported treatment expectancies of the sample(s). These expectancies are relevant both because they may relate to the placebo response to treatments of this kind, and additionally because they may shape the choice of treatment and the likelihood of responding to a particular treatment~\cite{Bausell2005,Benedetti2005}. 
+In this sense, what was measured were the self-reported treatment expectancies of the sample(s). These expectancies are relevant both because they may relate to the placebo response to treatments of this kind, and additionally because they may shape the choice of treatment~\cite{Bausell2005,Benedetti2005}. 
 
 Finally, as this thesis aimed to develop and test an implicit measure to assist in the prediction of placebo, the use of a good self-report scale was important in that it allows for the incremental validity of any implicit measure to be assessed. The CEQ was used as a base as this set of questions has been shown to have validity in related areas, and this meant that it was a less risky process to follow when testing a new measure. 
 
@@ -248,7 +248,7 @@ There were differences in the crediblity scores of various treatments across the
 \subsection{Reliability Analysis}
 
 %Reliability is an extremely important part of any measurement instrument, given that if we cannot rely on the instrument giving us similar answers on different equations, it is of no use in our studies.
-The reliability of this scale was assessed. The method used was Cronbachs $\alpha$ which is the most commonly used measure of reliability in psychological research. %% Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
+The reliability of this scale was assessed using Cronbachs $\alpha$ which is the most commonly used measure of reliability in psychological research. %% Of course, the extent to which people give the same responses at different time points also needs to be assessed, but that will be examined after the factor structure and other methodological issues have been assessed. 
 
 This analysis was performed on the sample, and the mean alpha was equal to 0.9, which is well above the threshold used for survey research (0.7) and would, on the basis of this sample, qualify as a clinical instrument, for which the threshold is 0.9. This reliability analysis did not suggest that any of the items should be removed from the scale. 
 
@@ -783,7 +783,7 @@ tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq6fit2))
 print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Discussion (Section \ref{sec:study-1})
+As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section \ref{sec:study-1})
 
 
 
@@ -892,7 +892,7 @@ As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better
 
 A number of issues have become clear from this first study validating the Treatment Credibility Questionnaire. 
 
-Firstly, the measure appeared to be quite reliable, and ther were some interesting findings with respect to the measure. All of the treatments showed average levels of credibility, ranked from injections, pills, acupuncture and cream credibility scores. There was a pattern of greater variability in the responses of men to the questionnaire. This could be the result of less experience or from a wider range of beliefs in the population. If it is due to less experience, then it would be expected to see less variability in the responses of those individuals with more experience of these treatments. This theory was tested in Study Two. 
+Firstly, the measure appeared to be quite reliable, and there were some interesting findings with respect to the measure. All of the treatments showed average levels of credibility, ranked from injections, pills, acupuncture and cream credibility scores. There was a pattern of greater variability in the responses of men to the questionnaire. This could be the result of less experience or from a wider range of beliefs in the population. If it is due to less experience, then it would be expected to see less variability in the responses of those individuals with more experience of these treatments. This theory was tested in Study Two. 
 
 
 With respect to the factor structure, the results of Horne \cite{Horne1999} have not been confirmed in this adaptation, except for one of the measures. Pill credibility score showed the same two factor structure as did the CEQ in earlier work, but none of the other three treatment forms did. Indeed, the other three treatments showed a relatively clear one factor structure, though the results of a parallel analysis suggested that a two factor structure might be more appropriate for the Injection credibility scores. 
@@ -918,9 +918,7 @@ The hypotheses were as follows:
 \begin{itemize}
 \item The TCQ V2.0 will have six factors, one for each treatment modality, along with two higher level factors, one for each of Conventional and Alternative treatments;
 
-\item The BAM will have two factors;
-
-\item The BAM will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
+\item The BMQ will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
 \item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s);
 
 %% \item Income will correlate postively with experience of CAM methodologies;
@@ -944,19 +942,19 @@ tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,10:15]
 tcq2.sum1 <- summary(tcq2.demo1)
 
-stargazer(tcq2.demo1, tcq2.demo3, summary=TRUE, title="TCQ2 Summary Statistics", label="tab:tcq2sumstats")
+stargazer(tcq2.demo3, summary=TRUE, title="TCQ2 Summary Statistics", label="tab:tcq2sumstats")
 @ 
 
 
 
-Many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 27, which shows that most of the sample was made up of students.
+Many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22, which shows that most of the sample was made up of students.
 
 The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
 The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
 
 The sample was 69.17\% female, with 45 respondents not specifying their gender. 
 
-The next step in the analysis is visualisation of data using scatterplot matrices and conditioning plots. Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen. Notable are the high correlations between each of the conventional and alternative treatment methodologies, and their moderate correlations (in opposite directions) with the BMQ. Given the sample size, all correlations were significant at the $p \le 0.001$ level. 
+The next step in the analysis was visualisation of data using scatterplot matrices and conditioning plots. Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen. Notable are the high correlations between each of the conventional and alternative treatment methodologies, and their moderate correlations (in opposite directions) with the BMQ. Given the sample size, all correlations were significant at the $p \le 0.001$ level. 
 @ 
 
 \begin{figure}
@@ -975,7 +973,7 @@ sink(NULL)
 %% As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships. 
 
 
-Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. It may be (for example) that those involved with medicine tend to rate them very low, while those involved in the liberal arts tend to rate them quite highly. These kinds of differences will be teased apart in analyses below. 
+Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. 
 
 The sample scores showed some significant differences attributable to Gender. The cream, acupuncture, homeopathy and reiki totals were significantly different in the sample, as was the Beliefs About Medicine scale total. 
 
@@ -1022,7 +1020,7 @@ expdf.gend[,"Gender"] <- with(expdf.gend, as.factor(gsub("^$", "Not Reported", x
 print(xtable(expdf.gend, label="tab:experiencegend", caption="Experience with painkilling treatments by Gender"))
 @
 
-As can be seen from Table \ref{tab:experiencegend} females reported a higher level of pill credibility, along with lower levels of cream and injection credibility, and slightly higher levels of Homeopathy and Reiki credibility. 
+As can be seen from Table \ref{tab:experiencegend} females reported a higher level of pill experience, along with lower levels of cream and injection experience, and slightly higher levels of Homeopathy and Reiki experience.
 
 Next, the response to the Income and Health questions were assessed. 
 
@@ -1113,7 +1111,7 @@ tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"), label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
 @ 
 
-<<average5factsolution, echo=FALSE, results=tex>>=
+<<average5factsolution, echo=FALSE, results=hide>>=
 tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), mynames=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
@@ -1122,7 +1120,7 @@ print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor
 
 
 
-The average of the two five factor solutions (shown in Table \ref{tab:tcq2bfact5av} merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
+The average of the two five factor solutions (not shown) merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
 
 
 PA2: ``Pill1'', ``Pill2'', ``Pill3'', ``Pill4'', ``Pill5'', ``Pill6'', ``Inj1'',  ``Inj2'',  ``Inj3'', ``Inj4'',  ``Inj5''  ``Inj6''. This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
@@ -1197,7 +1195,7 @@ print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlat
 
 Similiarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. 
 
-\paragraph{Seven Factor Solutions}
+\subsection{Seven Factor Solutions}
 \label{sec:seven-fact-solut}
 
 
@@ -1609,8 +1607,6 @@ tcq2notBfits <- rbind(tcq2fact5.notB.fitind, tcq2fact5.notB.fitind, tcq2fact7.no
 
 
 
-In all cases, the seven factor model showed better fit to the data than did either the five or six factor model. There was typically not a large amount of difference between the six and seven factor models, and the six factor structure would be certainly preferred in terms of clarity and interpretation.
-
 \subsection{IRT Analyses}
 \label{sec:irt-analyses}
 
@@ -1742,7 +1738,7 @@ tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(tcq2.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds averaged over Splits B, C and D"))
+print(xtable(tcq2.conv.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds averaged over Splits B, C and D"))
 @ 
 
 
@@ -1820,7 +1816,7 @@ rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 <<irterrorapproxconv, echo=FALSE, results=tex>>=
 tcq2.conv.averror <- (tcq2b.conv.grm.modcomp[,1]+tcq2c.conv.grm.modcomp[,1]+tcq2d.conv.grm.modcomp[,1])/3
 names(tcq2.conv.averror) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(as.data.frame(tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+print(xtable(data.frame(AverageError=tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
 @ 
 
 Table \ref{tab:tcq2grmaverrorconv} shows the average error across the three splits for one and two parameter GRM's for the conventional items. It can be seen that the one parameter model is clearly superior to the two parameter model, a pattern which which was found across each individual split also. 
@@ -1852,7 +1848,7 @@ rownames(tcq2d.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 <<irterrorapproxconv, echo=FALSE, results=tex>>=
 tcq2.alt.averror <- (tcq2b.alt.grm.modcomp[,1]+tcq2c.alt.grm.modcomp[,1]+tcq2d.alt.grm.modcomp[,1])/3
 names(tcq2.alt.averror) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(as.data.frame(tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+print(xtable(data.frame(AverageError=tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
 @ 
 
 Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
@@ -1861,11 +1857,7 @@ Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for 
 \subsection{Backtesting}
 \label{sec:backtesting}
 
-
-
-
-
-The next stage in  our analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample~\footnote{due to the changes in the scale in Sample Two, a backtesting strategy was not possible in this case}. 
+The next stage in the analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample~\footnote{due to the changes in the scale in Sample Two, a backtesting strategy was not possible in this case}. 
 
 The best fitting models on the out of sample data were as follows:
 \begin{itemize}
@@ -2075,7 +2067,7 @@ One interesting part of the factor analytical results reported above was that a 
 
 \begin{figure}
 <<inffig1and3, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(3, 3))
+par(mfrow=c(2, 3))
 plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 @   
   \caption{Information Curves for Items One and Three for TCQ-Conventional, Split A}
@@ -2084,13 +2076,13 @@ plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 
 Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistently has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
 
-With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{Blasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). %% Indeed, comparing the Item 2, 4, 6 split against the 1, 3, 5 split over the ranges (-2, 2) and (-3, 3) shows that in all cases, the the 2, 4, 6 split had a greater amount of test information (assuming constant models). The models used to measure the information were the one parameter graded response models which had been shown to perform the best 
+With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{Blasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). 
 
 
 \section{Regression Analyses}
 \label{sec:regression-analyses}
 
-The next part of the analysis to be carried out was regression analysis. There were a number of demographic variables collected in the second sample, to allow for examination of their effects on the outcome variables (the treatment credibility scores). Gender, education, college of study or work, health, income and experience with the six forms of treatment were collected. %% The approach taken to the analysis was the following. Using the four splits that were used for the psychometric analysis. In this case, models were fit on 3 of the four splits, and the results of these analyses were predicted using the held out data. This allows for the use of step methods of regression while ensuring unbiased p values and standard errors. 
+The next part of the analysis to be carried out was regression analysis. There were a number of demographic variables collected in the second sample, to allow for examination of their effects on the outcome variables (the treatment credibility scores). Gender, education, college of study or work, health, income and experience with the six forms of treatment were collected. 
 
 The method used was the following. Firstly, the sample was divided into training (70\%) and test (30\%) splits. Ten-fold cross-validation was performed on all training sets, and the best model(s) were then tested on the test set, which allowed for accurate p-values and standard errors (for stepwise approaches) to be calculated. 
 
@@ -2099,19 +2091,13 @@ The method used was the following. Firstly, the sample was divided into training
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.pill.ind <- with(tcq2.full, createDataPartition(Pilltot, times=1, p=0.7, list=FALSE))
 tcq2.pill.train <- tcq2.full[tcq2.pill.ind,]
-tcq2.pill.pred.train <- tcq2.pill.train[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.pill.pred.train <- tcq2.pill.train[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei", "Gender", "Age", "Health", "Income")]
 ## tcq2.pill.pred.train.mm <- model.matrix(tcq2.pill.pred.train)
 tcq2.pill.test <- tcq2.full[-tcq2.pill.ind,]
-tcq2.pill.pred.test <- tcq2.pill.test[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.pill.pred.test <- tcq2.pill.test[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei","Gender", "Age", "Health", "Income")]
 tcq2.pill.resp.train <- with(tcq2.pill.train, Pilltot)
 tcq2.pill.resp.test <- with(tcq2.pill.test, Pilltot)
 @ 
-
-%% \subsubsection{Split A}
-%% \label{sec:split}
-
-%% The Split A sample consisted of Splits B, C and D, with Split A being used as held out data for testing. %% The first step was to examine the inter-relationships of the variables graphically, to give insights into which variables were the most important. 
-
 
 
 <<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2133,28 +2119,28 @@ print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="C
 
 Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholdout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.689914, which equates to approximately 70\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
 
-Next, lasso and ridge regressions were performed on the Pill Total variable. 
 
-<<pill2lasso, echo=FALSE, results=tex, cache=TRUE>>=
+
+<<pill2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 pill.test <- with(na.omit(tcq2a), Pilltot)
 pill2.lasso <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, testdata=tcq2.pill.pred.test, newy=tcq2.pill.resp.test, alpha=1, type="coefficients")
 @
 
-<<pill2lassoprint, echo=FALSE, results=tex>>=
+<<pill2lassoprint, echo=FALSE, results=hide>>=
 colnames(pill2.lasso) <- "Coefficients"
 print(xtable(as.matrix(pill2.lasso), label="tab:tcq2apilllasso", caption="Coefficient Estimates for Lasso Regression using Pilltotal as a dependent variable"))
 @ 
 
 
-Table \ref{tab:tcq2apilllasso} shows the estimated coefficients for the lasso regression solution on held out data. As can be seen, there were strong positive coefficients for Creams and Inhjectons, some weak negative correlations for the alternative treatments and experience with alternative treatments variable, and surprisingly enough, a weak negative coefficient for Experience with painkilling creams. 
+%% Table \ref{tab:tcq2apilllasso} shows the estimated coefficients for the lasso regression solution on held out data. As can be seen, there were strong positive coefficients for Creams and Inhjectons, some weak negative correlations for the alternative treatments and experience with alternative treatments variable, and surprisingly enough, a weak negative coefficient for Experience with painkilling creams. 
 
-<<pill2aridge, echo=FALSE, results=tex>>=
+<<pill2aridge, echo=FALSE, results=hide>>=
 pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
 colnames(pill2.ridge) <- "Coefficients"
 print(xtable(as.matrix(pill2.ridge), label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
 @ 
 
-Table \ref{tab:tcq2apillridge} shows the estimated coefficients for the ridge regression solution. It can be seen that the results are broadly in line with those from the lasso regression, with the exception that Experience with Reiki now has a positive coefficient. 
+%% Table \ref{tab:tcq2apillridge} shows the estimated coefficients for the ridge regression solution. It can be seen that the results are broadly in line with those from the lasso regression, with the exception that Experience with Reiki now has a positive coefficient. 
 
 The next step was to repeat this process using Cream total as a dependent variable.
 
@@ -2162,10 +2148,10 @@ The next step was to repeat this process using Cream total as a dependent variab
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.cream.ind <- with(tcq2.full, createDataPartition(Creamtot, times=1, p=0.7, list=FALSE))
 tcq2.cream.train <- tcq2.full[tcq2.cream.ind,]
-tcq2.cream.pred.train <- tcq2.cream.train[,c("Pilltot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.cream.pred.train <- tcq2.cream.train[,c("Pilltot", "Injtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei","Gender", "Age", "Health", "Income")]
 ## tcq2.cream.pred.train.mm <- model.matrix(tcq2.cream.pred.train)
 tcq2.cream.test <- tcq2.full[-tcq2.cream.ind,]
-tcq2.cream.pred.test <- tcq2.cream.test[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpCream", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.cream.pred.test <- tcq2.cream.test[,c("Creamtot", "Injtot", "Acutot", "Homtot", "ExpCream", "ExpCream", "ExpInj", "ExpAcu", "ExpRei","Gender", "Age", "Health", "Income")]
 tcq2.cream.resp.train <- with(tcq2.cream.train, Creamtot)
 tcq2.cream.resp.test <- with(tcq2.cream.test, Creamtot)
 @ 
@@ -2192,7 +2178,7 @@ print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption=
 The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.
 
 
-Next, lasso and ridge regression models were fit to this variable. 
+%% Next, lasso and ridge regression models were fit to this variable. 
 
 <<cream2lasso, echo=FALSE, results=tex, cache=TRUE>>=
 cream.test <- with(na.omit(tcq2a), Creamtot)
@@ -2204,15 +2190,15 @@ colnames(cream2.lasso) <- "Coefficients"
 print(xtable(as.matrix(cream2.lasso), label="tab:tcq2acreamlasso", caption="Coefficient Estimates for Lasso Regression using Creamtotal as a dependent variable"))
 @ 
 
-Tavle \ref{tab:tcq2acreamlasso} shows the estimated coefficients for the lasso fit. Pill and Injection totals have high coefficients while the coefficient for Acupuncture is moderate. Note that in this model, the coefficient for experience with cream treatments was negative, reinforcing the notion that something around experience with these two treatments is negatively related. 
+%% Tavle \ref{tab:tcq2acreamlasso} shows the estimated coefficients for the lasso fit. Pill and Injection totals have high coefficients while the coefficient for Acupuncture is moderate. Note that in this model, the coefficient for experience with cream treatments was negative, reinforcing the notion that something around experience with these two treatments is negatively related. 
 
-<<pill2aridge, echo=FALSE, results=tex>>=
+<<pill2aridge, echo=FALSE, results=hide>>=
 pill2.ridge <- penalisedRegression(tcq2.pill.pred.train, tcq2.pill.resp.train, tcq2.pill.pred.test, alpha=0, newy=tcq2.pill.resp.test, type="coefficients")
 print(xtable(as.matrix(pill2.ridge), label="tab:tcq2apillridge", caption="Coefficient Estimates on Held Out Data for Pilltotal, Ridge Regression, Split A"))
 @ 
 
 
-<<cream2aridge, echo=FALSE, results=tex>>=
+<<cream2aridge, echo=FALSE, results=hide>>=
 cream2.ridge <- penalisedRegression(tcq2.cream.pred.train, tcq2.cream.resp.train, tcq2.cream.pred.test, alpha=0, newy=tcq2.cream.resp.test, type="coefficients")
 colnames(cream2.ridge) <- "Coefficients"
 print(xtable(as.matrix(cream2.ridge), label="tab:tcq2acreamridge", caption="Coefficient Estimates on Held Out Data for Cream Credibility Total, Ridge Regression, Split A"))
@@ -2220,7 +2206,7 @@ print(xtable(as.matrix(cream2.ridge), label="tab:tcq2acreamridge", caption="Coef
 
 
 
-Table \ref{tab:tcq2acreamridge} shows a similar enough pattern to the results of the lasso regression, including the strong negative coefficient of experience with pill painkillers on cream credibility.  
+%% Table \ref{tab:tcq2acreamridge} shows a similar enough pattern to the results of the lasso regression, including the strong negative coefficient of experience with pill painkillers on cream credibility.  
 
 Next, the same modelling procedure was applied to the Injection credibility scores. 
 
@@ -2228,10 +2214,10 @@ Next, the same modelling procedure was applied to the Injection credibility scor
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.inj.ind <- with(tcq2.full, createDataPartition(Injtot, times=1, p=0.7, list=FALSE))
 tcq2.inj.train <- tcq2.full[tcq2.inj.ind,]
-tcq2.inj.pred.train <- tcq2.inj.train[,c("Pilltot", "Creamtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.inj.pred.train <- tcq2.inj.train[,c("Pilltot", "Creamtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei","Gender", "Age", "Health", "Income")]
 ## tcq2.inj.pred.train.mm <- model.matrix(tcq2.inj.pred.train)
 tcq2.inj.test <- tcq2.full[-tcq2.inj.ind,]
-tcq2.inj.pred.test <- tcq2.inj.test[,c("Pilltot", "Creamtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei")]
+tcq2.inj.pred.test <- tcq2.inj.test[,c("Pilltot", "Creamtot", "Acutot", "Homtot", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "ExpRei","Gender", "Age", "Health", "Income")]
 tcq2.inj.resp.train <- with(tcq2.inj.train, Injtot)
 tcq2.inj.resp.test <- with(tcq2.inj.test, Injtot)
 @ 
@@ -2251,12 +2237,12 @@ print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coe
 The model results shown in Table \ref{tab:tcq2injholdout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not significant on the unseen data, while experience with pills is. The model was independently significant: F(4,313)=16.42, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.3912. 
 
 
-<<inj2lasso, echo=FALSE, results=tex, cache=TRUE>>=
+<<inj2lasso, echo=FALSE, results=hide>>=
 inj.test <- with(na.omit(tcq2a), Injtot)
 inj2.lasso <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, testdata=tcq2.inj.pred.test, newy=tcq2.inj.resp.test, alpha=1, type="coefficients")
 @
 
-<<inj2lassoprint, echo=FALSE, results=tex>>=
+<<inj2lassoprint, echo=FALSE, results=hide>>=
 colnames(inj2.lasso) <- "Coefficients"
 print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injection Credibility Total as a dependent variable"))
 @ 
@@ -2266,13 +2252,13 @@ As shown in Table~\ref{tab:tcq2ainjlasso}, the pattern was similar to the stepwi
 
 
 
-<<inj2aridge, echo=FALSE, results=tex>>=
+<<inj2aridge, echo=FALSE, results=hide>>=
 inj2.ridge <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, tcq2.inj.pred.test, alpha=0, newy=tcq2.inj.resp.test, type="coefficients")
 colnames(inj2.ridge) <- "Coefficients"
 print(xtable(as.matrix(inj2.ridge), label="tab:tcq2ainjridge", caption="Coefficient Estimates on Held Out Data for Injtotal, Ridge Regression, Split A"))
 @ 
 
-Table~\ref{tab:tcq2ainjridge} shows the corresponding coefficients for the ridge regression. The general pattern remains the same, with the experience with pills coefficient being larger than that for injections. 
+%% Table~\ref{tab:tcq2ainjridge} shows the corresponding coefficients for the ridge regression. The general pattern remains the same, with the experience with pills coefficient being larger than that for injections. 
 
 Next, the same procedure was applied to the Acupuncture credibility scores. 
 
@@ -2280,15 +2266,15 @@ Next, the same procedure was applied to the Acupuncture credibility scores.
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.acu.ind <- with(tcq2.full, createDataPartition(Acutot, times=1, p=0.7, list=FALSE))
 tcq2.acu.train <- tcq2.full[tcq2.acu.ind,]
-tcq2.acu.pred.train <- tcq2.acu.train[,c("Pilltot", "Creamtot", "Injtot", "Homtot","Reitot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.acu.pred.train <- tcq2.acu.train[,c("Pilltot", "Creamtot", "Injtot", "Homtot","Reitot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 ## tcq2.acu.pred.train.mm <- model.matrix(tcq2.acu.pred.train)
 tcq2.acu.test <- tcq2.full[-tcq2.acu.ind,]
-tcq2.acu.pred.test <- tcq2.acu.test[,c("Pilltot", "Creamtot", "Injtot", "Reitot","Homtot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.acu.pred.test <- tcq2.acu.test[,c("Pilltot", "Creamtot", "Injtot", "Reitot","Homtot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 tcq2.acu.resp.train <- with(tcq2.acu.train, Acutot)
 tcq2.acu.resp.test <- with(tcq2.acu.test, Acutot)
 @ 
 
-<<stepwiselm, echo=FALSE, results=hide, cache=TRUE>>=
+<<stepwiselm, echo=FALSE, results=hide>>=
 acutotlm1 <- lm(Acutot~Pilltot+Creamtot+Injtot+Homtot+Reitot+ ExpPill+ExpAcu+ExpAcu+ExpAcu+ExpHom+ExpRei, data=tcq2.acu.train)
 acutot.step <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="both", k=3)
 @
@@ -2301,27 +2287,27 @@ print(xtable(summary(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coe
 
 As shown in Table \ref{tab:tcq2acuholdout}, only Creams and Homeopathy, along with experience with Acupuncture remained significant on the holdout sample. 
 
-<<acu2lasso, echo=FALSE, results=tex, cache=TRUE>>=
+<<acu2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 acu.test <- with(na.omit(tcq2a), Acutot)
 acu2.lasso <- penalisedRegression(tcq2.acu.pred.train, tcq2.acu.resp.train, testdata=tcq2.acu.pred.test, newy=tcq2.acu.resp.test, alpha=1, type="coefficients")
 @
 
-<<acu2lassoprint, echo=FALSE, results=tex>>=
+<<acu2lassoprint, echo=FALSE, results=hide>>=
 colnames(acu2.lasso) <- "Coefficients"
 print(xtable(as.matrix(acu2.lasso), label="tab:tcq2aaculasso", caption="Coefficient Estimates for Lasso Regression using Acutotal as a dependent variable"))
 @ 
 
 
 
-Table \ref{tab:tcq2aaculasso} shows the estimated coefficients for the lasso fit on Acupuncture credibility totals. It shows that the major contributors were Homeopathy and Reiki credibility totals. Experience with Acupuncture appeared to exert a strong positive effect, while experience with injections had a large negative coefficient. 
+%% Table \ref{tab:tcq2aaculasso} shows the estimated coefficients for the lasso fit on Acupuncture credibility totals. It shows that the major contributors were Homeopathy and Reiki credibility totals. Experience with Acupuncture appeared to exert a strong positive effect, while experience with injections had a large negative coefficient. 
 
-<<acu2aridge, echo=FALSE, results=tex>>=
+<<acu2aridge, echo=FALSE, results=hide>>=
 acu2.ridge <- penalisedRegression(tcq2.acu.pred.train, tcq2.acu.resp.train, tcq2.acu.pred.test, alpha=0, newy=tcq2.acu.resp.test, type="coefficients")
 colnames(acu2.ridge) <- "Coefficients"
 print(xtable(as.matrix(acu2.ridge), label="tab:tcq2aacuridge", caption="Coefficient Estimates on Held Out Data for Acutotal, Ridge Regression, Split A"))
 @ 
 
-Table \ref{tab:tcq2aacuridge} shows the estimated coefficients for the holdout sample. It can be seen that the major loadings are quite similar to those from the lasso fit, and no coefficients have changed sign. 
+%% Table \ref{tab:tcq2aacuridge} shows the estimated coefficients for the holdout sample. It can be seen that the major loadings are quite similar to those from the lasso fit, and no coefficients have changed sign. 
 
 Next, the same procedure was applied to the Homeopathy credibility totals. 
 
@@ -2329,10 +2315,10 @@ Next, the same procedure was applied to the Homeopathy credibility totals.
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.hom.ind <- with(tcq2.full, createDataPartition(Homtot, times=1, p=0.7, list=FALSE))
 tcq2.hom.train <- tcq2.full[tcq2.hom.ind,]
-tcq2.hom.pred.train <- tcq2.hom.train[,c("Pilltot", "Creamtot", "Injtot", "Acutot","Reitot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.hom.pred.train <- tcq2.hom.train[,c("Pilltot", "Creamtot", "Injtot", "Acutot","Reitot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 ## tcq2.hom.pred.train.mm <- model.matrix(tcq2.hom.pred.train)
 tcq2.hom.test <- tcq2.full[-tcq2.hom.ind,]
-tcq2.hom.pred.test <- tcq2.hom.test[,c("Pilltot", "Creamtot", "Injtot", "Reitot","Acutot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.hom.pred.test <- tcq2.hom.test[,c("Pilltot", "Creamtot", "Injtot", "Reitot","Acutot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 tcq2.hom.resp.train <- with(tcq2.hom.train, Homtot)
 tcq2.hom.resp.test <- with(tcq2.hom.test, Homtot)
 @ 
@@ -2350,26 +2336,26 @@ print(xtable(summary(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coe
 
 Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Homeopathy credibility remain significant, as does the experience with homeopathy variable. 
 
-<<hom2lasso, echo=FALSE, results=tex, cache=TRUE>>=
+<<hom2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
 hom2.lasso <- penalisedRegression(tcq2.hom.pred.train, tcq2.hom.resp.train, testdata=tcq2.hom.pred.test, newy=tcq2.hom.resp.test, alpha=1, type="coefficients")
 @
 
-<<hom2lassoprint, echo=FALSE, results=tex>>=
+<<hom2lassoprint, echo=FALSE, results=hide>>=
 colnames(hom2.lasso) <- "Coefficients"
 print(xtable(as.matrix(hom2.lasso), label="tab:tcq2ahomlasso", caption="Coefficient Estimates for Lasso Regression using Homtotal as a dependent variable"))
 @ 
 
 
-Table \ref{tab:tcq2ahomlasso} shows the estimated fit using the lasso method. It can be seen that Acupuncture and Homeopathy were the major contributors, while experience wih Homeopathy also contributed to the model. 
+%% Table \ref{tab:tcq2ahomlasso} shows the estimated fit using the lasso method. It can be seen that Acupuncture and Homeopathy were the major contributors, while experience wih Homeopathy also contributed to the model. 
 
-<<hom2aridge, echo=FALSE, results=tex>>=
+<<hom2aridge, echo=FALSE, results=hide>>=
 hom2.ridge <- penalisedRegression(tcq2.hom.pred.train, tcq2.hom.resp.train, tcq2.hom.pred.test, alpha=0, newy=tcq2.hom.resp.test, type="coefficients")
 colnames(hom2.ridge) <- "Coefficients"
 print(xtable(as.matrix(hom2.ridge), label="tab:tcq2ahomridge", caption="Coefficient Estimates on Held Out Data for Homtotal, Ridge Regression, Split A"))
 @ 
 
-Table \ref{tab:tcq2ahomridge} shows a similar pattern to the lasso fit described earlier. 
+%% Table \ref{tab:tcq2ahomridge} shows a similar pattern to the lasso fit described earlier. 
 
 Next, the selection and testing procedure was applied to the Reiki totals. 
 
@@ -2378,10 +2364,10 @@ Next, the selection and testing procedure was applied to the Reiki totals.
 tcq2.full <- tcq2[complete.cases(tcq2),]
 tcq2.rei.ind <- with(tcq2.full, createDataPartition(Reitot, times=1, p=0.7, list=FALSE))
 tcq2.rei.train <- tcq2.full[tcq2.rei.ind,]
-tcq2.rei.pred.train <- tcq2.rei.train[,c("Pilltot", "Creamtot", "Injtot", "Acutot","Homtot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.rei.pred.train <- tcq2.rei.train[,c("Pilltot", "Creamtot", "Injtot", "Acutot","Homtot",  "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 ## tcq2.rei.pred.train.mm <- model.matrix(tcq2.rei.pred.train)
 tcq2.rei.test <- tcq2.full[-tcq2.rei.ind,]
-tcq2.rei.pred.test <- tcq2.rei.test[,c("Pilltot", "Creamtot", "Injtot", "Homtot","Acutot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom")]
+tcq2.rei.pred.test <- tcq2.rei.test[,c("Pilltot", "Creamtot", "Injtot", "Homtot","Acutot", "ExpPill", "ExpCream", "ExpAcu", "ExpInj", "ExpRei", "ExpHom","Gender", "Age", "Health", "Income")]
 tcq2.rei.resp.train <- with(tcq2.rei.train, Reitot)
 tcq2.rei.resp.test <- with(tcq2.rei.test, Reitot)
 @ 
@@ -2400,36 +2386,37 @@ print(xtable(summary(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coe
 Table \ref{tab:tcq2reiholdout} shows the performance of the stepwise selected coefficients on unseen data. It can be seen that the only coefficient which maintained signifiance was that for Homeopathy credibility. 
 
 
-<<rei2lasso, echo=FALSE, results=tex, cache=TRUE>>=
+<<rei2lasso, echo=FALSE, results=hide, cache=TRUE>>=
 rei.test <- with(na.omit(tcq2a), Reitot)
 rei2.lasso <- penalisedRegression(tcq2.rei.pred.train, tcq2.rei.resp.train, testdata=tcq2.rei.pred.test, newy=tcq2.rei.resp.test, alpha=1, type="coefficients")
 @
 
-<<rei2lassoprint, echo=FALSE, results=tex>>=
+<<rei2lassoprint, echo=FALSE, results=hide>>=
 colnames(rei2.lasso) <- "Coefficients"
 print(xtable(as.matrix(rei2.lasso), label="tab:tcq2areilasso", caption="Coefficient Estimates for Lasso Regression using Reitotal as a dependent variable"))
 @ 
 
-Table \ref{tab:tcq2areilasso} shows that Homeopahty, Acupuncture and Experience with Reiki all contribute to the model, whjile there are tiny negative loadings on the conventional treatments. 
+%% Table \ref{tab:tcq2areilasso} shows that Homeopahty, Acupuncture and Experience with Reiki all contribute to the model, whjile there are tiny negative loadings on the conventional treatments. 
 
-<<rei2aridge, echo=FALSE, results=tex>>=
+<<rei2aridge, echo=FALSE, results=hide>>=
 rei2.ridge <- penalisedRegression(tcq2.rei.pred.train, tcq2.rei.resp.train, tcq2.rei.pred.test, alpha=0, newy=tcq2.rei.resp.test, type="coefficients")
 colnames(rei2.ridge) <- "Coefficients"
 print(xtable(as.matrix(rei2.ridge), label="tab:tcq2areiridge", caption="Coefficient Estimates on Held Out Datafor Reitotal, Ridge Regression, Split A"))
 @ 
 
-Table \ref{tab:tcq2areiridge} shows that the estimated coefficients for the ridge regression are very similar to those for the lasso regression.
+%% Table \ref{tab:tcq2areiridge} shows that the estimated coefficients for the ridge regression are very similar to those for the lasso regression.
 
 Interestingly, it appears that the experience with a particular form of treatment was only usefully predictive for the alternative treatments. Further comments on this are made in the Discussion. 
 
 
-
-
-
-
 \subsection{Discussion}
 \label{sec:discussion}
-This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the Beliefs About Medicine Questionnaire. Interestingly enough, the hypothesis that experience with a particular treatment would correlate with experience of a particular treatment was only borne out for the alternative treatments. This data cannot be used to establish causality in this case, as both an experience to credibility and a credibility to experience causal chain are equally plausible. 
+This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
+
+Secondly, this factor structure has been replicated over two samples. Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measure appears to be stable, possesses good reliability, and seems to correlate in the expected ways with the BMQ General sub-scale. 
+
+
+Interestingly enough, the hypothesis that experience with a particular treatment would correlate with experience of a particular treatment was only borne out for the alternative treatments. This data cannot be used to establish causality in this case, as both an experience to credibility and a credibility to experience causal chain are equally plausible. 
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
 
