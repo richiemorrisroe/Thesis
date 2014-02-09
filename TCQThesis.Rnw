@@ -1798,26 +1798,32 @@ As can be seen from Table \ref{tab:tcq2altgrm2plaverage}, the difficulty paramet
 <<tcq2bgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2b.grm.1pl.done <- testIRTModels(tcq2b.conv.grm.1pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2b.grm.2pl.done <- testIRTModels(tcq2b.conv.grm.2pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
-tcq2b.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
+tcq2b.conv.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
 rownames(tcq2b.grm.modcomp) <- c("One Parameter", "Two Parameter")
 
 @ 
-<<tcq2bgrmmodcomp, echo=FALSE, results=tex>>=
-tcq2b.grm.modcomp.xtab <- xtable(tcq2b.grm.modcomp, caption="Performance of TCQ Conventional Graded Response Models from Split B, tested on Splits A, C and D", label="tab:tcq2bgrmmodcomp")
-print(tcq2b.grm.modcomp.xtab)
+<<tcq2cconvgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
+tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2c.conv.grm.modcomp <- rbind(tcq2c.conv.grm.1pl.done, tcq2c.conv.grm.2pl.done)
+rownames(tcq2c.conv.grm.modcomp) <- c("One Paramter GRM", "Two Parameter GRM")
 @ 
 
-As shown in Table \ref{tab:tcq2bgrmmodcomp}, the one parameter Graded Response Model provided the best performance on unseen data. 
+<<tcq2dgrmmodcomp, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
+rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 
-Next, the same model fitting and testing procedure was applied to the Alternative Scale for Split B. 
+@ 
 
+<<irterrorapproxconv, echo=FALSE, results=tex>>=
+tcq2.conv.averror <- (tcq2b.conv.grm.modcomp[,1]+tcq2c.conv.grm.modcomp[,1]+tcq2d.conv.grm.modcomp[,1])/3
+names(tcq2.conv.averror) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(as.data.frame(tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+@ 
 
-
-
-To do this, two graded response models were fit to the data. 
-
-
-Next, each of these models performance was assessed on unseen data. 
+Table \ref{tab:tcq2grmaverrorconv} shows the average error across the three splits for one and two parameter GRM's for the conventional items. It can be seen that the one parameter model is clearly superior to the two parameter model, a pattern which which was found across each individual split also. 
 
 <<tcq2baltgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2notb.alt.irt <- tcq2notb[,35:52]
@@ -1827,138 +1833,30 @@ tcq2b.alt.grm.modcomp <- rbind(tcq2b.alt.grm.1pl.done, tcq2b.alt.grm.2pl.done)
 rownames(tcq2b.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 
 @ 
-<<tcq2baltgrmmodcomp, echo=FALSE, results=tex>>=
-print(xtable(tcq2b.alt.grm.modcomp, caption="Performance of Split B TCQ Alternative Graded Response Model on Splits B, C and D", label="tab:tcq2baltgrmmodcomp"))
-@ 
-As shown in Table \ref{tab:tcq2baltgrmmodcomp}, the two parameter model provided a better approximation to the unseen data. 
 
-
-
-
-
-
-
-The item-splitting procedure suggests that there are two scales, one for conventional items and another for alternative items, as was seen in the previous two splits. The assumption checking will therefore be carried out on each scale seperately. There were no violations of the item ordering or monotonicity assumptions in this split. 
-
-
-
-
-
-
-
-
-
-
-Next, the fit of one and two parameter graded response models (GRM) was examined. 
-
-
-Next, the performance of the IRT models was assessed on unseen data. 
-
-
-The same procedure was repeated for the graded response models for the TCQ conventional scale developed in this split. 
-
-<<tcq2cconvgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
-tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
-tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=FALSE)
-tcq2c.conv.grm.modcomp <- rbind(tcq2c.conv.grm.1pl.done, tcq2c.conv.grm.2pl.done)
-rownames(tcq2c.conv.grm.modcomp) <- c("One Paramter GRM", "Two Parameter GRM")
-
-@ 
-<<tcq2cconvgrmmodcomp, echo=FALSE, results=tex>>=
-tcq2c.conv.grm.modcomp.xtab <- xtable(tcq2c.conv.grm.modcomp, caption="Performance of TCQ Conventional Graded Response Models (Split C) on Splits A, B and D", label="tab:tcq2convgrmmodcomp")
-print(tcq2c.conv.grm.modcomp.xtab)
-@ 
-As can be seen from Table \ref{tab:tcq2convgrmmodcomp}, the one parameter Graded Response Model performed best on the unseen data. 
-
-
-
-
-Finally for this model, we examine its performance on unseen data. 
-
-<<tcq2cgrmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcq2caltgrmmodtest, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2notc.alt.irt <- tcq2notc[,35:52]
 tcq2c.alt.grm.1pl.done <- testIRTModels(tcq2c.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2c.alt.grm.2pl.done <- testIRTModels(tcq2c.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2c.alt.grm.modcomp <- rbind(tcq2c.alt.grm.1pl.done, tcq2c.alt.grm.2pl.done)
-
-@ 
-<<tcq2caltgrmmodcomprint, echo=FALSE, results=tex>>=
-print(xtable(tcq2c.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2caltgrmmodcomp"))
-@ 
-As can be seen from Table \ref{tab:tcq2caltgrmmodcomp}, the two parameter model provides a better fit to the unseen data. 
-
-
-
-
-
-
-Similarly to the first three splits, the TCQ splits along the conventional/alternative distinction. Therefore, the items will be split into conventional and alternative scales and all analyses carried out seperately. 
-
-
-
-The first task to examine the TCQ conventional items and assess whether or not they meet the assumptions required for IRT modelling. All of the items in the TCQ conventional scale met the IIO (independently ordered observations) and monotonicity (non decreasing parameter estimates) assumptions.
-
-
-
-
-
-
-
-
-<<tcq2dconvgrm1plsumm, echo=FALSE, results=tex>>=
-print(xtable(coef(tcq2d.conv.grm.1pl), label="tab:tcq2dconvgrm1plsumm", caption="Coefficients for TCQ Conventional, Split D, One Parameter Graded Response Model"))
 @ 
 
-Table \ref{tab:tcq2dconvgrm1plsumm} shows the coefficient estimates for the one parameter GRM. It can be seen that there are no violations of monotonicity, and that the discrimination parameter is estimated as being 2.064. The Cream items appear to be the least endorsed at higher levels (reflected in their higher thresholds at Category 4), while the Injection items appear to be the easiest to endorse, which fits with their higher credibility as an analgesic treatment. 
-
-
-
-<<tcq2dconv2plgrmsum, echo=FALSE, results=hide>>=
-print(xtable(coef(tcq2d.conv.grm.2pl), label="tab:tcq2dconv2plgrmsum", caption="Coefficients for TCQ2 Conventional Scale (Split D), Two Parameter Graded Response Model"))
-@ 
-
-The two parameter model (not shown) indicated that the Cream items have the highest discrimination parameters while the Injection items have the lowest. Item 3 has the highest ability threshold across all treatments, probably because this item asks about confidence that the treatment will completely eliminate the symptoms. 
-
-<<tcq2dconvanova, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv.anova <- anova(tcq2d.conv.grm.1pl, tcq2d.conv.grm.2pl)
-@ 
-
-Finally, an ANOVA was carried out between the two graded response models, and this showed that there was no significant difference between the two models ($p=.593$), and the BIC and AIC were lower for the one parameter model, indicating better fit. 
-
-
-Two graded response models were fit to the data, in line with previous splits. 
-
-<<tcq2dgrmmodcomp, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
-tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
-rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
-
-@ 
-<<tcq2dgrmmodcomp, echo=FALSE, results=tex>>=
-print(xtable(tcq2d.conv.grm.modcomp, caption="Performance of Split D TCQ Conventional Graded Response Models on Splits A, B and C", label="tab:tcq2dconvgrmmodcomp"))
-@
-
-As can be seen from Table \ref{tab:tcq2dconvgrmmodcomp}, the one parameter Graded Response Model appears to provide the best fit to the unseen data. 
-
-
-
-
-
-
-
-Finally for this model, we examine its performance on unseen data. 
-
-<<tcq2cgrmmodtest, echo=FALSE, results=tex>>=
+<<tcq2daltgrmmodtest, echo=FALSE, results=hide>>=
 tcq2notc.alt.irt <- tcq2notc[,35:52]
 tcq2d.alt.grm.1pl.done <- testIRTModels(tcq2d.alt.grm.1pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2d.alt.grm.2pl.done <- testIRTModels(tcq2d.alt.grm.2pl, tcq2notc.alt.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2d.alt.grm.modcomp <- rbind(tcq2d.alt.grm.1pl.done, tcq2d.alt.grm.2pl.done)
 rownames(tcq2d.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(tcq2d.alt.grm.modcomp, caption="Performance of Split C TCQ Alternative Graded Response Models, tested on Splits A, B and D", label="tab:tcq2daltgrmmodcomp"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2daltgrmmodcomp}, the one parameter model provides a better fit to the unseen data. 
+<<irterrorapproxconv, echo=FALSE, results=tex>>=
+tcq2.alt.averror <- (tcq2b.alt.grm.modcomp[,1]+tcq2c.alt.grm.modcomp[,1]+tcq2d.alt.grm.modcomp[,1])/3
+names(tcq2.alt.averror) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(as.data.frame(tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+@ 
+
+Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
+
 
 \subsection{Backtesting}
 \label{sec:backtesting}
