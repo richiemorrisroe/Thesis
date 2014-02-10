@@ -1,7 +1,39 @@
 
 \section{Introduction}
-
+\label{sec:introduction-1}
 This chapter describes the experimental portion of the research, which involved the assessment of treatment expectancies using implicit and explicit measures. This section further involved the testing of a number of proposed theoretical models around the relationship of explicit, implicit and physiological measures to the placebo response. The justification behind these theoretical models is described in Chapter~\ref{cha:methodology}. 
+
+%% \subsection{Modeling Placebo by Multiple Methods}
+%% \label{sec:modell-plac-mult}
+
+%% this section will present the overall approach and rationale for the work carried out in the course of this chapter.
+
+The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches~\cite{Kirsch1997,Pollo2009,Whalley2008,Geers2005}. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure for treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
+
+Additionally, these variables only explain a small proportion of the variance in the observed placebo response (given a correlation of 0.3 with the response, this equates to less than 10\% of the variance). It is the contention of this thesis that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
+
+The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. The rationale behind this choice of measure was explained in Chapters \ref{cha:literature-review} and \ref{cha:health-for-thesis}, but briefly, this measure has been shown both to correlate with a cluster of other variables around cognition and implicit attitudes \cite{Levesque2007,Conner2007}. Additionally, this variable is also related to self-reported health (see Chapter \ref{cha:health-for-thesis} for further details, and as such is a potential moderator of the placebo response itself. 
+
+In order to make use of psychometric modelling, large samples of the self report instruments were collected in the same population from which the experimental participants were drawn. This allowed for factor score and IRT models to be built for each of the measures. This work was reported in Chapters \ref{cha:health-for-thesis} and \ref{cha:tcq-thesis}. 
+
+Physiological (GSR or skin conductance) recordings were also collected in order to examine the physiological characteristics of placebo and to increase the validity of the study in the minds of the participants.
+
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor types. 
+
+In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}, and recapped below.
+
+
+\begin{itemize}
+\item The direct expectancy model of Kirsch, in which the effects of all other variables are mediated through expectancies (both implicit and explicit)
+
+\item The conscious expectancy model of Stewart-Williams \textit{et al} whereby implicit measures have no effect
+
+\item A model whereby optimism mediates the effects of all other variables on placebo response
+
+\item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
+\end{itemize}
+
+
 
 This chapter proceeds with the following sections:
 
@@ -30,11 +62,11 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-
 
 \begin{itemize}
 \item Research shows that priming can increase the size of placebo effects;
-\item The results of Kirsch (1998) where he showed that informed conditioning was less effective than uninformed condition would seem to argue that the effectiveness of placebos can be reduced by conscious processing;
+\item The results of Kirsch (1998) showed that informed conditioning was less effective than uninformed conditioning would suggest that the effectiveness of placebos can be reduced by conscious processing;
 
-\item It has been suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability) \cite{Egloff2005} and it has also been argued that response to placebo is similar, thus suggesting that there may be a link~\cite{Whalley2008}
+\item It has been suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability)~\cite{Egloff2005} and it has also been argued that response to placebo is similar~\cite{Whalley2008}, thus suggesting that there may be a link;
 
-\item Research has shown that the awareness of priming manipulations can decrease the size of the effect, again suggesting that an implicit measure might prove useful in measuring this effect.
+\item Semantic priming has been shown to exert changes without becoming apparent to consciousness  again suggesting that an implicit measure might prove useful in measuring this effect.
 \end{itemize}
 
 
@@ -50,9 +82,15 @@ These problems (discussed at length in Chapter \ref{cha:literature-review}, Sect
 \item Issues around the scoring and interpretation of the results
 \end{itemize}
 
-This chapter addresses these problems in the following manner. Firstly, the low test-retest reliability may be an advantage in that it represents state-based variance (and indeed the IAT has been shown to predict spontaneous behaviour better than explicit measures) and as such could be an (admittedly small) advantage in the prediction of placebo. The method variance problem was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
+This research addresses these problems in the following manner. Firstly, the low test-retest reliability is an issue, and it is also possible that any effect would be contaminated by attitude-behaviour consistency. 
 
-\subsection{Placebo effects and deception}
+However, the one counterpoint may be that IATs are more useful in predicting over short time scales, as could be argued from the findings that they predict spontaneous behaviour better than explicit measures \cite{Richetin2007,Steffens2006,Steffens2008}) 
+
+The method variance problem was moderated by the use of the D measure from Greenwald \cite{Greenwald2003}, as demonstrated by Mierke \cite{Klauer2005}. The impact of these potential confounders was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
+
+The issues around the scoring of the results (connected to the use of the mean with non-symmetrical distributions~\cite{venables2002modern}) were examined by scoring the IATs using both the mean and median as measures of central tendency. 
+
+\subsection{Placebo effects and Deception}
 \label{sec:plac-effects-decept}
 
 The commonly accepted model of the placebo effect claims that deception is necessary for the effect to occur. The entire theory behind randomised controlled trials suggests that because participants respond to the mere administration of medicines, then a control (the placebo) is needed to allow the true effect of the drug to be established. A necessary part of this design is that the participants in the placebo group need to believe that there is a chance that they are getting the real treatment. 
@@ -104,34 +142,6 @@ In brief, the measure adapted in Chapter \ref{cha:tcq-thesis} had six questions 
 
 
 
-\subsection{Modeling Placebo by Multiple Methods}
-\label{sec:modell-plac-mult}
-
-This section will present the overall approach and rationale for the work carried out in the course of this chapter.
-
-The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure for treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
-
-Additionally, these variables only explain a small proportion of the variance in the observed placebo response. It is the contention of this researcher that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
-
-The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. The rationale behind this choice of measure was explained in Chapters \ref{cha:literature-review} and \ref{cha:health-for-thesis}.
-
-In order to make use of psychometric modelling, large samples of the self report instruments were collected in the same population from which the experimental participants were drawn. This allowed for factor score and IRT models to be built for each of the measures. This work was reported in Chapters \ref{cha:health-for-thesis} and \ref{cha:tcq-thesis}. 
-
-In the experiment itself, physiological (GSR or skin conductance) measures were collected in order to examine the physiological characteristics of placebo and to allow for another form of measurement to be included in the final model.
-
-The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to seperate out the effects of the various predictor types. In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. Much more detailed descriptions of the major models applied are given in Chapter \ref{cha:methodology}, and recapped below.
-
-
-\begin{itemize}
-\item The direct expectancy model of Kirsch, in which the effects of all other variables are mediated through expectancies (both implicit and explicit)
-
-\item The conscious expectancy model of Stewart-Williams \textit{et al} whereby implicit measures have no effect
-
-\item A model whereby optimism mediates the effects of all other variables on placebo response
-
-\item Two models which allow only implicit or explicit expectancy measures to be the mediators of the placebo response. 
-\end{itemize}
-
 
 \section{Methodology}
 
@@ -147,12 +157,14 @@ load("tcqthesis.rda")
 
 \subsubsection{Recruitment for the Experimental Procedure}
 
-Following piloting, a random subset of students were emailed to ask if they would like to participate in the experiment. Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research.  After this email was sent and participants recruited, another email was sent to Zoology, Ecology and Plant Science students, along with Psychology students, as all of these students had lectures in the Psychology building. In addition to this, an email was sent to all of the researchers acquaintances on popular social networking sites. Three more emails were sent to random samples from the all students mailing list, and the experiment ran from January 17th until April 14th inclusive.
+
+Recruitment for participants primarily took place via email and social networking sites. In total, six emails were sent to random sub-sets of the student mailing list from the period January 2nd until April 11th. 
+Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research. The experiment ran from January 17th until April 14th inclusive.
 
 \subsubsection{Measures used in the Experiment}
 \label{sec:meas-used-exper}
 
-The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as described in Section \ref{sec:iat-stimuli}, Chapter \ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
+The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as described in Section~\ref{sec:iat-stimuli}, Chapter~\ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
 
 
 %% Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
@@ -163,7 +175,7 @@ In addition, participants gave verbal reports of their pain levels to the experi
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
 
-Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 1 to 10.
+Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. This method is known as the sub-maximal torniquet method   One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 0 to 10.
 
 If the participant was in the Deceptive or Open Placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. EDA recordings were taken one thousand times per second second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of moisturiser in a pharmacuetical container, and was unlabelled.
 
@@ -171,7 +183,7 @@ Participants in the treatment group were told that \textit{the cream was a poten
 
 \subsubsection{Analysis of Experimental Data}
 
-The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests (for numerical data) and ANOVA's (for categorical data). There were no differences in pre-treatment levels for any of the variables, and so analytical techniques did not need to include any variables to ensure comparability. This finding demonstrated that the randomisation was successful. 
+The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests (for numerical data) and ANOVA's (for categorical data). There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
 
 
 
@@ -181,22 +193,7 @@ The first step in the analysis of experimental data was to examine the comparabi
 The pain ratings were modelled as time series, and individual and gender, condition and group level ARIMA models were fitted to the data. In addition, their cross-correlations were examined with the physiological time series collected as part of the placebo analgesia experiment. 
 
 
-%% \paragraph{Practical Model Building Strategy}
 
-%% The following are general steps towards building an ARIMA model.
-
-%% \begin{itemize}
-%% \item Inspect the plots both of the series and the autocorrelations
-%% \item Examine autocorrelations, differencing if necessary
-%% \item Estimate parameters, ensuring that they are significantly different from zero, and within the bounds of invertibility
-%% \item Examine residuals, if they are not white noise, repeat steps 1-4 until they are.
-%% \end{itemize}
-
-%% \paragraph{Event History Analysis}
-%% \label{sec:event-hist-analys}
-%% In this research, a particular form of time series analysis was used, which is known as event history analysis \cite{mccleary1980applied}. This type of analysis partitions the time series into two or more parts, based on whether or not a particular event has occurred. In the case of this research, there were either two or three parts to the analysis. In the Deceptive and Open Placebo groups (see Chapter \ref{cha:primary-research}), the first time series occcurred until the painful stimulus was applied, the second was the time from this point until the placebo was applied, and the third was this time point until the end. In the No Treatment group, there were two time series, one for the period before the pain was applied, and one after.
-
-%% A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental procedure. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them.
 
 \paragraph{Analysis of Placebo Response Data}
 \label{sec:analys-plac-resp}
@@ -205,7 +202,7 @@ The first step was to classify participants as either placebo responders or non-
 
 In addition, these models were compared against models using both factor scores and IRT ability estimates to determine the usefulness of this model based approach. 
 
-%% Because of the autocorrelation inherent in the pain ratings, general linear models were not entirely appropriate for this data. Therefore, the autocorrelation structure was determined for the pain ratings, and a generalised linear mixed model was fitted to the data using the IAT, explicit and physiological data as predictors. These models were carried out using stepwise, lasso, ridge and least angle regression methods, and validated using ten-fold cross validation. 
+
 
 
 \paragraph{Analysis of Physiological Data}
@@ -221,23 +218,19 @@ Finally, the relationships between physiological responses and the psychological
 
 Reaction time data has been studied by (mostly cognitive) psychologists for many years. The Implicit Association Test has been used in almost 300 published papers and reports. However, with a few exceptions, there has been almost no overflow from one area of study to the other.
 
-%% Classic work in examining the distributions of reaction time data was carried out by Ratcliff\cite{ratcliff1979group,ratcliff1993methods}. In the 1979 paper he suggested that a quantile based approach should be used for individual reaction time scores. This involves ranking each of the latencies for each individual participant, and using certain percentages of these as quantiles, which can then be used to estimate group distributions. This approach will be utilised in this research, and four quantiles will be used, as given that some conditions (Blocks one, two and four) have only twelve observations, and quartiles divide each of the block sizes (12 and 36) equally. These quartiles were then used to estimate group, block and condition level distributions for the reaction time data. 
-
 The typical approach to analysis of IAT data goes as follows  \cite{Greenwald1998}: firstly, the data is checked for outliers. Outliers, in this case are defined as responses less than 300ms and greater than 3000ms. Any such outliers are recoded to 300 or 3000ms respectively. Following this procedure, a mean is taken of the items in each condition. These means along with standard deviations are reported. The response latencies are then log transformed (to reduce positive skew) and the IAT score is calculated as follows. 
 
 Given the participants mean latency in each condition, their IAT score is the mean for the incompatible condition (i.e. White + Unpleasant) less the mean from the compatible condition (i.e. White + Pleasant) divided by the average of the two within group standard deviations. This measure is typically called $D$, and was developed after analysis of an extremely large sample of IAT responses~\cite{Greenwald2003a}. In addition to the change of scoring procedure in the 2003 revisions, the threshold for outliers was also substantially widened to 10000 ms. Given that the sample used for this re-analysis was over one hundred thousand, this widening of the threshold was presumably based on experience with a much broader population than was used in many early IAT experiments.
 
-%% There are a number of problems with this approach. Firstly, the approach throws away much information, more than once. In the first case, information regarding extreme responses is censored, in an unsystematic and theoretically unjustified manner. The breakpoints of 300 and 3000 milliseconds appear to have been chosen to allow for the use of the mean as a group value rather than for any principled reasons. 
 
-%% It is arguable as to whether or not this censoring represents a good strategy, but certainly it is something which should have been examined in a principled fashion, which does not appear to have happened. The second issue relates again to the calculation of a mean.
 
 While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric~\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. 
 
-%% The choice of log transform (while slightly more justifiable) is decidedly inferior to a more data driven approach. Again, the issue here is not that such choices in analysis were made, but rather that they have been made once and repeated many times in the later literature. Even those who have criticised the IAT \cite{Klauer2005,Mierke2003,Blanton2006} on methodological grounds appear to have ignored this issue. 
+
 
 Given the typical right skew observed in reaction time distributions, the median would seem to be a much better measure of central location than would the mean. This right skew typically occurs as there is a hard bound on how quickly a participant can respond, but no such bound (unless enforced by the procedure) in the maximum time taken to respond. Therefore, in this research, the efficacy of these different measures of central tendency will be reported.
 
-The differences between the mean and median based approaches will be examined and reported, to determine if it makes any difference. As it turned out, in terms of the overall IAT scores, the mean and median were highly correlated and the use of one measure versus the other made no difference to the results. 
+The differences between the mean and median based approaches were examined and reported, to determine if it makes any difference. In this experiment the mean and median IAT scores were highly correlated and the use of one measure versus the other made no difference to the results. 
 
 %% \paragraph{Analysis of IAT data}
 
@@ -253,7 +246,7 @@ The differences between the mean and median based approaches will be examined an
 \subsubsection{Structural Equation Models}
 \label{sec:struct-equat-models}
 
-Finally, the models described in Chapter \ref{cha:methodology} were fit to the data. These models allowed for the principled comparision of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
+Finally, the models described in Chapter \ref{cha:methodology} and in Section \ref{sec:introduction-1} were fit to the data. These models allowed for the principled comparision of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
 
 
 \section{Results}
@@ -1677,11 +1670,11 @@ ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpf
 evtree.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
 @ 
 
-<<cforest, echo=FALSE, results=hide, eval=FALSE>>=
+<<cforest, echo=FALSE, results=hide>>=
 cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
 @ 
 
-<<rferns, echo=FALSE, results=hide, eval=FALSE>>=
+<<rferns, echo=FALSE, results=hide>>=
 rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trControl=mytrain, tuneGrid=data.frame(.depth=1:10) )
 @ 
 
@@ -1694,7 +1687,7 @@ rferns.train <- train(PlacResp~., data=iatandexpfull.train, method="rFerns", trC
 ## svm.pred <- predict(svm.train, iatandexpfull.test)
 gamboost.pred <- predict(gamboost.train, iatandexpfull.test)
 glmboost.pred <- predict(glmboost.train, iatandexpfull.test)
-logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
+## logitboost.pred <- predict(logitboost.train, iatandexpfull.test)
 glmnet.pred <- predict(glmnet.train, iatandexpfull.test)
 ## blackboost.pred <- predict(blackboost.train, iatandexpfull.test)
 glmstep.pred <- predict(glmstep.train, iatandexpfull.test)
