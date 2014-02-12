@@ -198,20 +198,19 @@ The first step in the analysis of experimental data was to examine the comparabi
 
 
 
-\paragraph{Analysis of Pain Rating Data}
-\label{sec:analysis-pain-rating}
+%% \paragraph{Analysis of Pain Rating Data}
+%% \label{sec:analysis-pain-rating}
 
 The pain ratings were modelled as time series, and individual and gender, condition and group level ARIMA models were fitted to the data. In addition, their cross-correlations were examined with the physiological time series collected as part of the placebo analgesia experiment. 
 
+%% \paragraph{Analysis of Placebo Response Data}
+%% \label{sec:analys-plac-resp}
 
+The pain date was also used to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. %% Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
 
+The major hypotheses of this study were then tested using a ten-fold cross-validation procedure and stepwise logistic regression. Note that as discussed earlier, the use of a test-set to provide p-values allows for accurate inferences to be made. 
 
-\paragraph{Analysis of Placebo Response Data}
-\label{sec:analys-plac-resp}
-
-The first step was to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. %% Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
-
-In addition, these models were compared against models using both factor scores and IRT ability estimates to determine the usefulness of this model based approach. 
+In addition, these logistic regression models were compared against models using both factor scores and IRT ability estimates as predictors to determine the usefulness of this model based approach. 
 
 
 
@@ -237,22 +236,10 @@ Given the participants mean latency in each condition, their IAT score is the me
 
 While means are useful summary statistics, they are most optimal in situations where the distribution is unimodal and symmetric~\cite{venables2002modern}. Reaction latency data are neither, so the choice of mean seems to have been made from familiarity rather than principle. 
 
-
-
 Given the typical right skew observed in reaction time distributions, the median would seem to be a much better measure of central location than would the mean. This right skew typically occurs as there is a hard bound on how quickly a participant can respond, but no such bound (unless enforced by the procedure) in the maximum time taken to respond. Therefore, in this research, the efficacy of these different measures of central tendency will be reported.
 
 The differences between the mean and median based approaches were examined and reported, to determine if it makes any difference. In this experiment the mean and median IAT scores were highly correlated and the use of one measure versus the other made no difference to the results. 
 
-%% \paragraph{Analysis of IAT data}
-
-%% Firstly,  an ex-Gaussian distribution was fit to the data. This distribution is a mixture distribution of a normal and an exponential, and can be used to account for the extremely long tails present in such data. If this distribution proved a reasonable fit to the data, then estimation of confidence intervals and predictions could be made more easily from the data.
-%% In addition, as described previously, quantiles were determined for each participant in each Block, and these individual level quantiles were used to derive the group level distributions for each block and condition. 
-%% Another approach was taken to the data in tandem with this. This approach involves ordinal test theory \cite{schulman1975test}. All of the reaction time data occurs on a common scale. The differences between the responses to a word ,$w$ in condition 1 and condition 2 are on the same scale, and a distance matrix can be constructed from this data. This distance matrix can either be ranked (which makes fewer assumptions and is less affected by outliers) or the Euclidean distance can be used in analysis. The advantage of the distance approach is that it discards less information, though at the cost of making more assumptions. A clustering approach was then used, to assess whether or not the stimuli fell into the same categories. This clustering approach was repeated 10 times with different seeds and the results averaged in order to reduce random variability inherent to the k-means approach. $k$ was also varied from 1 to 10, and the results averaged also.
-
-%% The ordinal/euclidean matrix was then factor analysed and examined using item response theory to assess its psychometric structure, and assess fit or lack thereof.
-
-%% Another approach which was applied to this data was to fit Samejina's continuous response model, which is a generalisation of the Graded Response Model % (described above in Section \ref{sec:polyt-item-resp})
-%% to the reaction time data. This procedure aimed to produce ability estimates which were then applied to the prediction of placebo response data. 
 
 \subsubsection{Structural Equation Models}
 \label{sec:struct-equat-models}
