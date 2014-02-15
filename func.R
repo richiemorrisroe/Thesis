@@ -867,7 +867,9 @@ interpolate2 <- function(painscores, painmetadata) {
         resmat}
     resmat
 }
-apademotables <- function(data, xtable=FALSE, ...) {
+apademotables <- function(data, FUN=mean, xtable=FALSE, ...) {
+    fun <- match.call(FUN)
+    ## browser()
     data.m <- melt(data)
     data.tab <- ddply(data.m, .(variable), summarise, Mean=mean(value, na.rm=TRUE), SD=sd(value, na.rm=TRUE), Min=min(value, na.rm=TRUE), Max=max(value, na.rm=TRUE))
     names(data.tab)[1] <- ""
