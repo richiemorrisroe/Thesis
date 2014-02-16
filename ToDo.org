@@ -1,15 +1,21 @@
 * Refer back to Theory section in overall Discussion
 [[file:Methodology.tex::\begin{itemize}][Here are the predictions]]
-* Use predicted vs observed graphs and RMSEA to compare fitted regression models, rather than p-values (which are not available for lasso and ridge).
+* DONE Use predicted vs observed graphs and RMSEA to compare fitted regression models, rather than p-values (which are not available for lasso and ridge).
+  CLOSED: [2014-02-15 Sat 19:21]
+Didn't do this, instead I removed the lasso and ridge regressions
 * Do SEM for scales for sample two in HOM chapter, also use backtesting
 * Do backtesting/scales work in TCQ chapter
 * Put more scoring stuff into Experimental chapter
 * Add explanation of how IRT cross-validation was done
-* figure out how to reference stargazer tables
+* DONE figure out how to reference stargazer tables
+  CLOSED: [2014-02-15 Sat 19:21]
 * Add good descriptions of IIO and monotonicity assumptions to methodology section, under IRT part.
 * Note problems that arose because of reflexivity (DevelopmentOfIAT)
-* Decide whether or not its worth including the qualitative research in as much detail.
-* Indent participant/interview comments appropriately, so it is easy to read.
+* DONE Decide whether or not its worth including the qualitative research in as much detail.
+Decided to remove this section
+  CLOSED: [2014-02-15 Sat 19:21]
+* DONE Indent participant/interview comments appropriately, so it is easy to read.
+  CLOSED: [2014-02-15 Sat 19:22]
 * Add survivial analysis using proper time lengths from phys data
 * fit ARIMA models to pain data, estimate their accuracy.
 * Account for differences in GSR at baseline
@@ -21,9 +27,11 @@
 pwr.t.test(n=33, d=0.7) ##power for experiment approx 0.8
 pwr.t.test(n=33, d=1.23) ##power for ischemic pain effects
 #+END_SRC
-* Add stepwise optimism models to HOM chapter
+* DONE Add stepwise optimism models to HOM chapter
+  CLOSED: [2014-02-15 Sat 19:22]
 * Add reduced LOTR and MAAS models to experimental chapter
 * link physiological findings to embodied theory
 * Use BMQ factors from original research to assess convergent validity (this factor has been associated with adherence)
 * put in details of BMQ sub-scales in Methodology section
 * include abstract for all data chapters
+* talk about relationship between expectancies and optimism in experimental chapter and discussion
