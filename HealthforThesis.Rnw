@@ -2190,19 +2190,27 @@ vss.maas.2c <- VSS(na.omit(maasitems2c))
 
 
 
-<<maas2b1, echo=FALSE, results=tex>>=
+<<maas2b1, echo=FALSE, results=hide>>=
 maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact1, names=c("Mindfulness"),label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"))
 @
 
 The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
 
-<<maas2c1, echo=FALSE, results=tex>>=
+<<maas2c1, echo=FALSE, results=hide>>=
 maas2c.fact1 <- fa(maasitems2c, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact1, names=c("Mindfulness"), label="tab:maas2cfact1", caption="MAAS One Factor Solution, Sample 2C"))
 @
 
-Table \ref{tab:maas2cfact1} shows the one factor loadings for split C. In this split, the same solution only explained 36\% of the variance in the item loadings, which is in line with Split B, though much lower than the original published research in which the MAAS was developed. 
+<<maasfact1average, echo=FALSE, results=tex>>=
+maas2c.fact1.n <- FactorNames(maas2c.fact1, names=c("Mindfulness"))
+maas2b.fact1.n <- FactorNames(maas2b.fact1, names=c("Mindfulness"))
+maas.fact1.av <- FactorAverage(sols=list(maas2b.fact1.n, maas2c.fact1.n), mynames=c("Mindfulness", "Communalities"))
+print(xtable(maas.fact1.av, label="tab:maasfact1average", caption="One Factor Solution Averaged over Splits B and C, MAAS"))
+@ 
+
+
+Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Splits B and C. In this split, the same solution only explained 36\% of the variance in the item loadings, which is in line with Split B, though much lower than the original published research in which the MAAS was developed. 
 
 
 
@@ -2382,7 +2390,7 @@ maas2c.mono <- check.monotonicity(na.omit(maasitems2c))
 maas2c.s <- maasitems2c[,paste(maas, c(1:4, 7:10, 12:14), sep="")]
 @ 
 
-For Split C, items 5 and 11 fail the item ordering check, and so is removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
+For Split C, items 5 and 11 fail the item ordering check, and so are removed. The reduced scale had no failures of the monotonicity assumption, so modelling continues with the reduced scale. 
 
 %% Firstly, three partial credit models are fit to Split B.
 Three partial credit models were fit to Splits B and C, but were not analysed further, as they provided a poor fit to the data. 
@@ -2402,7 +2410,7 @@ print(xtable(coef(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One P
 
 It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
 
-<<maas2bgrm2plprint, echo=FALSE, results=tex>>=
+<<maas2bgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
 @ 
 
@@ -2504,7 +2512,14 @@ lotr2c.fact1 <- fa(lotritems2c, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", caption="One Factor Solution, LOT-R, Sample Two, Split C"))
 @
 
-Tables \ref{tab:hom2blotr1} and \ref{tab:hom2clotr1} show the estimated coefficients for the one factor solutions in both splits. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. 
+<<lotrfact1average, echo=FALSE, results=tex>>=
+lotr2b.fact1 <- FactorNames(lotr2b.fact1, names=c("Optimism"))
+lotr2c.fact1 <- FactorNames(lotr2c.fact1, names=c("Optimism"))
+lotr.fact1.av <- FactorAverage(sols=list(lotr2b.fact1, lotr2c.fact1), mynames=c("Optimism", "Communalities"))
+print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One Factor Solution for LOT-R Across Splits B and C"))
+@ 
+
+Table~\ref{tab:lotrfact1average} show the averaged coefficients across both splits. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. The averaging produces a solution which appears much more stable. 
 
 
 <<lotr2bfact2, echo=FALSE, results=tex>>=
@@ -2516,6 +2531,13 @@ print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2
 lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"))
 @
+
+<<lotrfact2average, echo=FALSE, results=tex>>=
+lotr2b.fact2 <- FactorNames(lotr2b.fact2, names=c("Optimism", "Pessimism"))
+lotr2c.fact2 <- FactorNames(lotr2c.fact2, names=c("Optimism", "Pessimism"))
+lotr.fact2.av <- FactorAverage(sols=list(lotr2b.fact2, lotr2c.fact2), mynames=c("Optimism", "Pessimism", "Communalities"))
+print(xtable(lotr.fact2.av, label="tab:lotrfact2average", caption="Average Two Factor Solution for LOT-R Across Splits B and C"))
+@ 
 
 Tables \ref{tab:hom2blotr2} and \ref{tab:hom2clotr2} show some differences. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
 
@@ -2739,7 +2761,7 @@ emwb.med.fitm <- fitMeasures(emwb.med.sem, c("chisq", "df", "pvalue", "cfi", "rm
 mind.med.fitm <- fitMeasures(mind.med.sem, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 health.lav.fits.all <- rbind(direct.fitm, emwb.med.fitm, mind.med.fitm)
 rownames(health.lav.fits.all) <- c("Direct", "EmWBMediated", "MindfulnessMediated")
-print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.9)
+print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.8)
 @ 
 
 As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
@@ -2885,6 +2907,7 @@ maas.bt.grm.1pl2c <- testIRTModels(maas2c.grm.1pl, maasitems.s2, gpcmconstraint=
 
 <<maasbacktestresprint, echo=FALSE, results=tex>>=
 maas.bt.grm.test.all <- rbind(maas.bt.grm.1pl2b, maas.bt.grm.1pl2c)
+rownames(maas.bt.grm.test.all) <- c("Split B", "Split C")
 print(xtable(maas.bt.grm.test.all, label="tab:maasbtgrmtest", caption="Backtesting of MAAS IRT Models on Sample One Data"))
 @ 
 
@@ -2947,15 +2970,15 @@ reported health.A problem with this explanation is that reports in the
 literature indicate that the optimism-health link is larger when self
 report methods are used~\cite{rasmussen2009optimism}.  
 
-Age may alsohave been a factor, as the regression weight for this vaiable was negative, which suggests that the relationship may have been different
-if this research had been carried out in a sample with a broader distribution of ages.  We do not have a good explanation for this finding.
+%% Age may alsohave been a factor, as the regression weight for this vaiable was negative, which suggests that the relationship may have been different
+%% if this research had been carried out in a sample with a broader distribution of ages.  We do not have a good explanation for this finding.
 This issue could be resolved with a prospective study
 measuring optimism and health at baseline, and having participants
 report health problems and visits to medical professionals over the
 course of a year.  Such a study could allow the casual chains of this
 effect to be untangled.
 
-A more likely explanation (especially given the results reported in Chapter \ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindfulness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the questions) mediated this relationship. 
+A more likely explanation (especially given the results reported in Chapter \ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindfulness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the similarity of the questions) mediated this relationship. 
 
 %% The Structual Equation Model reported for Sample One is a good place to start in this regard. The only models which converged were those which moderated the effect of health on optimism through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being  model was marginally superior, there are good reasons to believe that mindfulness is more important (c.f. the experimental portion of the research). 
 
@@ -2976,7 +2999,7 @@ Another fascinating finding in this research is the strong negative correlation
 between mindfulness and optimism.  This study appears to have been the first to assess
 these constructs using self-report measures, and this finding was not expected to occur.
 MBSR programs have been found to increase optimism in a number of studies~\cite{Carson2004},
-but our results seem to show that mindfulness and optimism may be inversely related.
+but our results seem to show that mindfulness and optimism may be inversely related - but see Discussion above. 
 
 
 There are a number of reasons why this could be so.  Optimism is defined as generalised positive outcome expectancies about the future,
