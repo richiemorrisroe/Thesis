@@ -739,7 +739,7 @@ print(lotrmaas)
 %% \end{figure}
 
 
-Optimism and mindfulness were positively correlated with one another. Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapters \ref{cha:health-thesis} and  \ref{cha:general-discussion}. 
+Optimism and mindfulness were positively correlated with one another (see Figure \ref{fig:pairsimpexp}).  Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapters \ref{cha:health-for-thesis} and  \ref{cha:general-discussion}. 
 
 
 
@@ -752,21 +752,21 @@ Given the focus of this thesis on the integration of survey and experimental res
 
 
 
-Firstly, the differences in mindfulness levels between the two samples were assessed. 
+
 
 \begin{figure} 
 <<surveymindfulness, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.exp.mind.pl <- ggplot()+geom_density(data=hom.data, aes(x=mindfulness), fill="blue")+geom_density(data=Iatandexpmeasures, aes(x=MAAS), fill="red")
-surv.exp.opt.pl <- ggplot()+geom_density(data=hom.data, aes(x=optimism), fill="red")+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue")
+surv.exp.mind.pl <- ggplot()+geom_density(data=hom.data, aes(x=mindfulness), fill="blue", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=MAAS), fill="red", alpha=0.5)
+surv.exp.opt.pl <- ggplot()+geom_density(data=hom.data, aes(x=optimism), fill="red", alpha=0.5)+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue", alpha=0.5)
 print(arrangeGrob(surv.exp.opt.pl,surv.exp.mind.pl))
 @  
   \caption{Density Plot for Optimism (top) and Mindfulness Scores (bottom), Survey Sample (red), and Experimental Sample (blue)}
   \label{fig:compmind}
 \end{figure}
 
-In Figure \ref{fig:compmind} (top panel) it  can be seen that the two distributions are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
+From Figure~\ref{fig:compmind} (top panel) it  can be seen that the two distributions are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
 
-As can be seen from Figure \ref{fig:compmind} (bottom panel), the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study, while an online study might not have suffered from the same problem. 
+As can be seen from Figure~\ref{fig:compmind} (bottom panel), the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study, while an online study might not have suffered from the same problem. 
 
 
 Finally, the treatment credibility questionnaire scores were examined to assess the differences between the survey and experimental samples. 
@@ -780,9 +780,9 @@ First, the differences between the two samples in terms of Pill credibility were
 \begin{figure}
 <<surveycream, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 
-surv.exp.cream.pl <- ggplot()+geom_density(data=credtotals, aes(x=Creamtot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Cream), fill="blue")
-exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density()
-surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red")+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue")
+surv.exp.cream.pl <- ggplot()+geom_density(data=credtotals, aes(x=Creamtot), fill="red", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=Cream), fill="blue", alpha=0.5)
+exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density(alpha=0.5)
+surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue", alpha=0.5)
 print(arrangeGrob(surv.exp.pill.pl, surv.exp.cream.pl))
 @   
   \caption{Density Plot for Distribution of Pill Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
@@ -798,7 +798,7 @@ Next, the credibility scores for injection painkilling treatments were examined 
 
 \begin{figure}
 <<surveyinj, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.exp.inj.pl <- ggplot()+geom_density(data=credtotals, aes(x=Injtot), fill="blue")+geom_density(data=Iatandexpmeasures, aes(x=Inj), fill="red")
+surv.exp.inj.pl <- ggplot()+geom_density(data=credtotals, aes(x=Injtot), fill="blue", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=Inj), fill="red", alpha=0.5)
 print(surv.exp.inj.pl)
 @   
   \caption{Injection Credibility Density Plot, Survey Sample (sample two) (blue), Experimental Sample (red)}
@@ -808,7 +808,7 @@ print(surv.exp.inj.pl)
 
 Figure~\ref{fig:compinj}  shows that the Injection credibility scores were almost identical in their distributions between the two samples. 
 
-Next, the Alternative treatment scores were examined between the two samples. Acupuncture levels in the experimental sample were a little lower than those in the survey sample. In contrast ,the credibility scores for Homeopathy were slightly higher in the experimental sample than in the survey sample.  While Reiki credibility totals were quite low in both samples, they were a little lower in the survey sample. 
+Next, the Alternative treatment scores were examined between the two samples. Acupuncture levels in the experimental sample were a little lower than those in the survey sample. In contrast, the credibility scores for Homeopathy were slightly higher in the experimental sample than in the survey sample.  While Reiki credibility totals were quite low in both samples, they were a little lower in the survey sample. 
 
 %% Figure \ref{fig:comphom} shows the levels of homeopathy credibility in both survey and experimental samples. It can be seen that
 %% Figure \ref{fig:comprei} shows the credibility totals for Reiki in the survey and experimental samples.
@@ -906,12 +906,12 @@ pairs.panels(Iatandexpmeasures[,14:25])
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
 @   
-%%   \caption{Scatterplot and Correlelagram for Implicit and Explicit Measures}
-%%   \label{fig:pairsimpexp}
-%% \end{figure}
+  \caption{Scatterplot and Correlelagram for Implicit and Explicit Measures}
+  \label{fig:pairsimpexp}
+\end{figure}
 
 
-It can be seen from Table \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
+It can be seen from Figure \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
 . Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion, and some theories were described in Chapter \ref{cha:health-for-thesis}. 
 
 
@@ -920,7 +920,7 @@ It can be seen from Table \ref{fig:pairsimpexp} that the LOTR was only really co
 \label{sec:primary-analyses}
 
 
-<<chisqcondition, echo=FALSE, results=tex>>=
+<<chisqcondition, echo=FALSE, results=hide>>=
 Subsetiatandexp <- Iatandexpmeasures[with(Iatandexpmeasures,Condition!="No Treatment"),]
 Subsetiatandexp <- droplevels(Subsetiatandexp)
 chisq2 <- with(Subsetiatandexp, chisq.test(table(PlacResp, Condition)))
@@ -932,7 +932,7 @@ chisq2.xtab <- xtable(chisqtest2, label="tab:placondtest", caption="Chi Square t
 print(chisq2.xtab)
 @ 
 
-As can be seen from Table \ref{tab:placondtest}, there was no significant effect of condition on placebo response, which would suggest that this experiment was not successful at inducing a response reliably. This is damaging, but not devestating to the main point of the research.  
+Using a chi-square test ($\Chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that this experiment was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
 
 <<chisqtestprimeplac, echo=FALSE, results=hide>>=
 chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
@@ -944,7 +944,7 @@ chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square 
 print(chisq1.xtab)
 @ 
 
-The results of the Chi-Square test( $\chi^2(11)=64.0, p\le 0.0001$) show that priming appears to have quite a large effect, as the Placebo Response by Condition is extremely significant given the priming manipulation.
+Another Chi-Square test( $\chi^2(11)=64.0, p\le 0.0001$) show that priming appears to have quite a large effect, as the Placebo Response by Condition is extremely significant given the priming manipulation.
 
 This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that participants were much more likely to respond to placebo following a priming intervention. Given that priming interventions typically take place outside conscious awareness, this suggests that there is at least some part of the placebo response which is amenable to non-conscious (or implicit) influences. 
 
@@ -989,7 +989,7 @@ print(placresplot)
 \end{figure}
 
 
-A number of findings are apparent from the plot above in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+A number of findings are apparent from the plot in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
 \subsection{Logistic Regressions on Placebo Response}
 \label{sec:logist-regr-plac}
@@ -1015,10 +1015,14 @@ randf.pred <- predict(randf.train, iatandexpfull.test)
 @ 
 
 
-<<placmod1, echo=FALSE, results=tex>>=
+<<placmod1, echo=FALSE, results=hide>>=
 placmod.full <- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR+Age+Gender+Prime+MAAS+Pill+Cream+Inj+Acu+Hom+Rei+convaltcomp, data=iatandexpfull.train, family=binomial(link="logit"))
 placmod.step <- stepAIC(placmod.full)
-print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"))
+
+@ 
+
+<<placmodstepprint, echo=FALSE, results=tex>>=
+print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"), table.placement="htp")
 @ 
 
 As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has a significant coefficient on the TCQ IAT, one for Age and significant coefficient for the interaction between the TCQIAT and the LOTR (while the individual coefficient for the LOT-R trended towards significance). 
@@ -1028,7 +1032,7 @@ iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "L
 iatandexpfull.test.small[,2:length(iatandexpfull.test.small)] <- scale(iatandexpfull.test.small[,2:length(iatandexpfull.test.small)])
 placmod.test <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
 
-print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"))
+print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"), floating=FALSE)
 
 @
 
@@ -1038,7 +1042,7 @@ Table \ref{tab:placmodsteptest} shows the results of the stepwise selected model
 
 <<placmodor, echo=FALSE, results=tex>>=
 odds.ratios <- cbind(exp(coef(placmod.test)), confint(placmod.test))
-print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for Coefficients in Test Data Model"))
+print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for Coefficients in Test Data Model"), floating=FALSE)
 @
 
 
@@ -1053,7 +1057,7 @@ placmod.pvalues <- as.data.frame(placmod.boot$t)
 names(placmod.pvalues) <- names(coef(placmod.test))
 ## placmod.boot.full <- boot(iatandexpfull, statistic=placglm, R=1000)
 pvalues.sum <- apademotables(placmod.pvalues)
-print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"))
+print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"), floating=FALSE)
 @ 
 
 To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table \ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response, with the exception of Age (the median p-value was approximately 0.1), which is unexpected and can probably be best explained by the clustering of the majority of participants in a small range of ages. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this process does not account for the search process, it is not reported further here. 
@@ -1065,7 +1069,7 @@ Individual regressions were run for each of the variables over the training and 
 <<placmod2, echo=FALSE, results=hide>>=
 placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod2.xtab <- xtable(summary(placmod2), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
-print(placmod2.xtab)
+print(placmod2.xtab,  floating=FALSE)
 @ 
 
 %% As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent significant predictor of placebo response either. 
@@ -1073,14 +1077,14 @@ print(placmod2.xtab)
 <<placebolotr, echo=FALSE, results=hide>>=
 placmod.lotr<- glm(PlacResp~LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.lotr.xtab <- xtable(summary(placmod.lotr), label="tab:placebolotr", caption="Regression of LOT-R Scores on Placebo Response")
-print(placmod.lotr.xtab)
+print(placmod.lotr.xtab, floating=FALSE)
 @ 
 
 %% In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{tab:placebolotr}.
 
 <<placmodlotrirt, echo=FALSE, results=tex>>=
 placmod.lotr.irt <- glm(PlacResp~AbilityLOTR, data=Iatandexpmeasures.abest, family=binomial(link="logit"))
-print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"))
+print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"), floating=FALSE)
 @ 
 
 Even when the IRT estimated Optimism scores are included in place of the sum-scores, the result does still not achieve the conventional (or indeed any) threshold of significance. These results are shown in Table \ref{tab:placmodlotrirt}. 
@@ -1555,8 +1559,8 @@ print(cream.hist.cond)
 %% \end{figure}
 
 
-\subsection{Secondary Analyses}
-\label{sec:secondary-analyses}
+%% \subsection{Secondary Analyses}
+%% \label{sec:secondary-analyses}
 
 
 
@@ -1812,8 +1816,8 @@ twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cf
 expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 expimpall <- rbind(expimp1.fit.meas, twofac.fit.meas, expimpmoderated.fit.meas)
-rownames(expimpall) <- c("Direct", "Two Factor", "Moderated")
-print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"))
+rownames(expimpall) <- c("One Factor", "Two Factor Correlated", "Moderated")
+print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
 @ 
 
 The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
