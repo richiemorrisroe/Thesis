@@ -1,4 +1,39 @@
 
+\section{Introduction}
+\label{sec:introduction-2}
+
+The next stage in the research was to develop two IAT measures, one for treatment credibility and the other for optimism. The original approach taken in this study was as follows. Firstly, a number of interviews with doctors, complementary health practitioners and the general public (students) were carried out to assess the constructs associated with health. Due to space limitations, the results of these analyses are not included in this thesis. 
+
+Following on from this, a repertory grid approach was employed to develop individualised stimuli for each IAT (described below in Section \ref{sec:repertory-grids}). This chapter describes that process, and then reports on the piloting of the IAT measures in a small sample, along with the piloting of the experimental research. 
+
+\section{Methodology}
+\label{sec:methodology-1}
+
+
+
+\subsection{Repertory Grids}
+\label{sec:repertory-grids}
+The use of repertory grids in this research was as a bridge between the qualitative analysis carried out and the quantitative side of the research. 
+
+Repertory grids were developed by George Kelly as an aid to therapy~\cite{kelly2003psychology} although they have been used in many diverse situations in the ensuing years. 
+Repertory grids were developed out of Kelly's theory of cognitive consistency, an active area of research which fell out of favour following the discovery of cognitive dissonance by Festinger in 1947~\cite{greenwald2002}.
+
+The premise of the technique is simple. Firstly, participants are supplied with a list of important people in their life, such as their mother, an older sibling and a teacher whom they liked or disliked. They write down the names they have chosen for each person, and then they compare the people in groups of 3. For each group (or sort), they are asked to describe how two of them are similar and also how one of them is different in a word or short phrase. These words or phrases can then be analysed both quantitively or qualitatively.
+
+
+The approach taken in this project was as follows. In one of the surveys carried out on the UCC population (TCQ version 1) participants were asked to rank the most important people in their life who were related to healthcare. 
+This data was then sorted and ranked, and a list of the most common people used was compiled into a health related repertory grid. 
+This was then administered to a small sample (N=17) to test the instrument. 
+ The results of this testing are described in  Section~\ref{sec:development-iat}.
+
+\subsection{Development of IAT}
+\label{sec:development-iat}
+
+The plan for the development of the IAT was to use the constructs obtained from the repertory grids to develop useful stimuli for the IAT.\
+Unfortunately, this portion of the research did not lead to a successful outcome, for reasons described below.
+
+Therefore the IAT was developed from both the important figures which arose from the repertory grid, the qualitative interviews, and to match the explicit measure of treatment credibility. The optimism IAT was developed along similar lines to most other Implicit Association tests, in that the survey for this measure was used as a base.
+
 \section{Development of Repertory Grid}
 \label{sec:devel-repert-grid}
 
@@ -199,17 +234,27 @@ tcqiat<-read.csv("ExperimentDataforR/PilotStudy/TCQ IAT pilot data for R2712.csv
 realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate", "Fake", "Illusory", "Lies")]
 @
 
+\begin{figure}
 <<realfakeplot, echo=FALSE, fig=TRUE>>=
 pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"))
-@
+@  
+  \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
+  \label{fig:realfakeplot}
+\end{figure}
+
 
 <<convaltwords, echo=FALSE, results=hide>>=
 convaltwords<-tcqiat[, c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "X.Acupuncture", "flower.essence", "Reiki")]
 @
 
+\begin{figure}
 <<convaltplot, echo=FALSE, fig=TRUE>>=
 pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"))
-@
+@  
+  \caption{Conventional and Alternative Treatment Words, Pilot Sample}
+  \label{fig:convaltplot}
+\end{figure}
+
 
 
 <<scalecreation, echo=FALSE, results=hide>>=
@@ -245,7 +290,7 @@ This result is somewhat obvious, as blocks three and five are combined tasks, an
 
 %%put in this plot!!!
 
-From Figure \ref{convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
+From Figure \ref{fig:convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
 
 <<iatscores, echo=FALSE, results=tex>>=
 IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
@@ -279,10 +324,10 @@ iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR", "ConvAltRatio")]
 
 
 \begin{figure}
-<<iatsrplot, echo=FALSE, results=hide>>=
+<<iatsrplot, echo=FALSE, fig=TRUE>>=
 pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR", "ConvAltRatio"))
 @  
-  \caption{Pairs Plot of Realtionship Between Explicit and Implicit Measures}
+  \caption{Pairs Plot of Relationship Between Explicit and Implicit Measures}
   \label{fig:impexplot}
 \end{figure}
 
@@ -338,7 +383,7 @@ placglm.lotr <- glm(PlacResp~LOTR, data=surv.merge, family=binomial(link="logit"
 print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
 @ 
 
-As can be seen from Table \ref{tab:tcqiatglm}, \ref{tab:optiatglm}, \ref{tab:convglm} and \ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Additionally, only 3 of the seven participants responded to placebo, suggesgting that an extremely large sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers, 2005. 
+As can be seen from Table \ref{tab:tcqiatglm}, \ref{tab:optiatglm}, \ref{tab:convglm} and \ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, hence the strange looking coefficients.  Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
 
 
 <<physts,echo=FALSE, results=hide>>=
@@ -350,11 +395,11 @@ VASdata.ts<-as.ts(VASdata) #create time series object
 
 
 
-<<bpplot, echo=FALSE, fig=TRUE>>=
+<<bpplot, echo=FALSE, results=hide>>=
 plot(BPdata.ts)
 @
 \begin{figure}
-<<gsrplot, echo=FALSE, fig=TRUE>>=
+<<gsrplot, echo=FALSE, results=hide>>=
 plot(GSRdata.ts)
 @  
   \caption{GSR Data by Participant Across Time}
@@ -363,8 +408,8 @@ plot(GSRdata.ts)
 
 
 
-\begin{figure}
-<<vasplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<vasplot, echo=FALSE, results=hide>>=
 plot(VASdata.ts)
 @  
   \caption{BP Readings over Time}
@@ -373,18 +418,24 @@ plot(VASdata.ts)
 
 
 
-As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically below.
+As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically in the preceding figure. 
 
 \section{Discussion}
 \label{sec:discussion}
 
-A number of issues have become clear in the piloting of the IAT measures and experimental setup. The first is that the effect sizes achieved from placebo suggestions were quite small. The solution to this in the larger study was to include a priming manipulation (the scrambled sentence task) for the majority of participants, a small group not being primed to ensure that the effect of this manipulation could be tested. 
+This chapter consisted of three smaller parts. Firstly, the results of the repertory grid approach to development of the IAT's was reported, and unfortunately this approach did not prove successful. It may be that this method may prove useful for different IAT's, but it did not prove useful here. 
+
+Secondly, the IAT measures were developed and piloted in small samples. This process found that each measure correlated moderately with the appropriate explicit measure, which is reassuring for the goal of the experiment. 
+
+Finally, the experimental procedure was piloted to assess what the appropriate sample size should be, and if further changes should be made to the setup.
+
+A number of issues became clear as a result of this process. The first is that the effect sizes achieved from placebo suggestions were quite small. The solution to this in the larger study was to include a priming manipulation (the scrambled sentence task) for the majority of participants, a small group not being primed to ensure that the effect of this manipulation could be tested. 
 
 Most importantly, there appears to be a (small) relationship between the explicit and implicit measures, which would seem to indicate that these measures can be effectively used in the experimental setup. 
 
 Additionally, the use of the priming manipulation allows for the major hypotheses of the study (the relationship between placebo response, explicit and implicit measures) to be tested more effectively. 
 
-Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. 
+Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. This also enabled the larger experimental study to assess the impact of both strong (Deceptive Administration) and weak (Placebo) suggestions, which is important if either of these types of suggestions are predicted by different sets of explicit and implicit measures. 
 
 %%% Local Variables: 
 %%% TeX-master: "PlaceboMeasurementByMultipleMethods"
