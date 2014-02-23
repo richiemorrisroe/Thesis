@@ -1748,7 +1748,7 @@ print(xtable(tcq2.conv.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item 
 @ 
 
 
-Table \ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream ones probably) dragging up the estimated discrimination parameter. 
+Table \ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
 print(xtable(tcq2.conv.grm.2pl.av, label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"))
@@ -1761,7 +1761,7 @@ Table \ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters 
 \subsection{Alternative Items}
 \label{sec:alternative-items}
 
-Next, two graded response models were fit to all three Alternative splits of the data. 
+Two graded response models were fit to all three Alternative splits of the data, and the averaged results over all three splits are reported here.  
 
 <<tcq2baltgrm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
@@ -1860,7 +1860,7 @@ print(xtable(data.frame(AverageError=tcq2.alt.averror), label="tab:tcq2grmaverro
 Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
 
 
-\subsection{Backtesting}
+\subsection{Final Tests}
 \label{sec:backtesting}
 
 The next stage in the analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample~\footnote{due to the changes in the scale in Sample Two, a backtesting strategy was not possible in this case}. 
@@ -2082,7 +2082,7 @@ plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 
 Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items one and three for conventional treatments. It can be seen that Item one consistently has extremely poor coverage over the range of abilities, given that only response thresholds 1, 4 and 5 cover any appreciable amount of the ability distribution. Perhaps surprisingly, items one and three for the alternative treatments did not have this problem, but overall they showed an extremely bimodal split, with respondents either endorsing them whole-heartedly or rejecting them outright. 
 
-With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{Blasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). 
+With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{DiBlasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). 
 
 
 \section{Regression Analyses}
@@ -2090,7 +2090,7 @@ With the decision taken to remove the potentially problematic items one and thre
 
 The next part of the analysis to be carried out was regression analysis. There were a number of demographic variables collected in the second sample, to allow for examination of their effects on the outcome variables (the treatment credibility scores). Gender, education, college of study or work, health, income and experience with the six forms of treatment were collected. 
 
-The method used was the following. Firstly, the sample was divided into training (70\%) and test (30\%) splits. Ten-fold cross-validation was performed on all training sets, and the best model(s) were then tested on the test set, which allowed for accurate p-values and standard errors (for stepwise approaches) to be calculated. 
+The method used was the following. Firstly, the sample was divided into training (70\%) and test (30\%) splits. Ten-fold cross-validation was performed on all training sets, and the best model(s) were then tested on the test set, which allowed accurate p-values and standard errors to be calculated on the test data. 
 
 <<splitdata, echo=FALSE, results=hide>>=
 
@@ -2120,7 +2120,7 @@ print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="C
 @ 
 
 
-Rerunning the model on the held out data, the model (Table~\ref{tab:tcq2pillholdout}) was highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.51, which equates to approximately 25\% of the variance in Pilltotal explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. 
+From  the model on the held out data, it can be seen that the results (Table~\ref{tab:tcq2pillholdout}) were highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.51, which equates to approximately 25\% of the variance in Pill Credibility explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. Age was significant with a negative coefficient, suggesting that credibility for these treatments were lower as age increased. 
 
 
 
@@ -2177,7 +2177,7 @@ print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption=
 
 
 
-The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497.Pill credibilty, experience with Pill and cream treatments remained significant, but none of the other variables remained significant on new data. 
+The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again signficiant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497. Pill credibility, experience  cream treatments and Acupuncture credibility remained significant, but none of the other variables remained significant on new data. 
 
 
 %% Next, lasso and ridge regression models were fit to this variable. 
@@ -2236,7 +2236,7 @@ print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coe
 @ 
 
 
-The model results shown in Table \ref{tab:tcq2injholdout} show that Cream and Pill credibility scores were excellent predictors, while Experience with Injections is not significant on the unseen data, while experience with pills is. The model was independently significant: F(4,116)=29.93, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.49. 
+The model results shown in Table \ref{tab:tcq2injholdout} show that  Pill credibility scores were excellent predictors, while none of the other selected predictors remained significant on new data. The model was independently significant: F(4,116)=29.93, $p\le 0.0001$, and the adjusted $R^2$ was equal to 0.49. 
 
 
 <<inj2lasso, echo=FALSE, results=hide, eval=FALSE>>=
@@ -2249,7 +2249,7 @@ colnames(inj2.lasso) <- "Coefficients"
 print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injection Credibility Total as a dependent variable"))
 @ 
 
-As shown in Table~\ref{tab:tcq2ainjlasso}, the pattern was similar to the stepwise regression, with strong effects of the other conventional treatments. Again, the experience with pills has a larger coefficient than does experience with Injections, suggesting that the distinctions between painkilling treatments were not particularly salient to the participants. 
+%% As shown in Table~\ref{tab:tcq2ainjlasso}, the pattern was similar to the stepwise regression, with strong effects of the other conventional treatments. Again, the experience with pills has a larger coefficient than does experience with Injections, suggesting that the distinctions between painkilling treatments were not particularly salient to the participants. 
 
 
 
@@ -2287,7 +2287,7 @@ acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=
 print(xtable(summary(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acu credibility Regression on Held Out Data"))
 @ 
 
-As shown in Table \ref{tab:tcq2acuholdout}, only Creams and Homeopathy, along with experience with Acupuncture and Homeopathy remained significant in the unseen data.  
+As shown in Table \ref{tab:tcq2acuholdout}, only Creams, Homeopathy and Reiki, remained significant on the unseen data. 
 
 <<acu2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 acu.test <- with(na.omit(tcq2a), Acutot)
@@ -2336,7 +2336,7 @@ homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.ho
 print(xtable(summary(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Hom credibility Regression on Held Out Data"))
 @ 
 
-Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Homeopathy credibility remain significant, but the rest do not. The model has an $R^2$ of 0.69, which is extremely high. 
+Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, but the rest do not. The model has an $R^2$ of 0.62, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
@@ -2415,7 +2415,7 @@ Interestingly, it appears that the experience with a particular form of treatmen
 \label{sec:discussion}
 This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
 
-Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maxiumum use to be made of the limited data collected, and is an approach which is not often employed within the field. 
+Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maxiumum use to be made of the limited data collected in the experimental research, and is an approach which is not often employed within the field. 
 
 Secondly, this factor structure has been replicated over two independent samples. This is important as one sample may have been biased in some random direction, but two samples are much less likely to have been.  
 
