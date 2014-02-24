@@ -178,6 +178,8 @@ The aims and objectives of this portion of the research were as follows:
 load("homdata.rda")
 load("credtotals.rda")
 load("tcqthesis.rda")
+load("healthlatest.rda")
+load("tcqthesislatest.rda")
 @ 
 
 \subsubsection{Recruitment for the Experimental Procedure}
@@ -441,7 +443,7 @@ Next, we examine the difference between the mean and median scores for the TCQ I
 There was little difference between the two measures of central tendency ($r=0.89$). 
 
 
-The next question is whether or not the IATs have been contaminated by method variance. This can be assessed by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was \Sepxr{round(with(Iatandexpmeasures, cor(TCQIAT.Median, OptIAT.Median)), 3)}, thus showing that method variance does not appear to have contaminated the results. 
+The next question is whether or not the IATs have been contaminated by method variance. This can be assessed by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was \Sepxr{round(with(Iatandexpmeasures,cor(TCQIAT.Median, OptIAT.Median)),3)}, thus showing that method variance does not appear to have contaminated the results. 
 
 
 
@@ -864,8 +866,7 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 %% \label{sec:treatm-cred-quest}
 
 <<grm1pltcqsmall, echo=FALSE, results=hide>>=
-load("tcqexp110813.rda")
-load("healthdata170813.rda")
+
 exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
 exp.tcq.conv <- exp.tcq[,with(exp.tcq, grep("Pill|Cream|Inj", x=names(exp.tcq)))]
 exp.tcq.alt <- exp.tcq[,with(exp.tcq, grep("Acu|Hom|Rei", x=names(exp.tcq)))]
@@ -900,7 +901,7 @@ fascores.lotr <- psych:::factor.scores(x=lotr.exp, f=lotr.fact.1)$scores
 Next, the relationships between the explicit and implicit measures were examined. 
 
 
-%% \begin{figure}
+\begin{figure}
 <<corrtestimplexpl, echo=FALSE, results=hide>>=
 pairs.panels(Iatandexpmeasures[,14:25])
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
@@ -932,7 +933,7 @@ chisq2.xtab <- xtable(chisqtest2, label="tab:placondtest", caption="Chi Square t
 print(chisq2.xtab)
 @ 
 
-Using a chi-square test ($\Chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that this experiment was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
+Using a chi-square test ($\chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that this experiment was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
 
 <<chisqtestprimeplac, echo=FALSE, results=hide>>=
 chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
