@@ -633,13 +633,14 @@ Acuall <- tcq2[,grep("Acu[1-6]", x=names(tcq2))]
 Homall <- tcq2[,grep("Hom[1-6]", x=names(tcq2))]
 Reiall <- tcq2[,grep("Rei[1-6]", x=names(tcq2))]
 Bamall <- tcq2[,grep("BAM[1-18]", x=names(tcq2))]
+Bamgeneral <- tcq2[,c("BAM3", "BAM4", "BAM6", "BAM8", "BAM10", "BAM13", "BAM14", "BAM17")]
 tcq2[,"Pilltot"] <- apply(Pillall, 1, mean, na.rm=TRUE)
 tcq2[,"Creamtot"] <- apply(Creamall, 1, mean, na.rm=TRUE)
 tcq2[,"Injtot"] <- apply(Injall, 1, mean, na.rm=TRUE)
 tcq2[,"Acutot"] <- apply(Acuall, 1, mean, na.rm=TRUE)
 tcq2[,"Homtot"] <- apply(Homall, 1, mean, na.rm=TRUE)
 tcq2[,"Reitot"] <- apply(Reiall, 1, mean, na.rm=TRUE)
-tcq2[,"Bamtot"] <- apply(Bamall, 1, mean, na.rm=TRUE)
+tcq2[,"Bamtot"] <- apply(Bamgeneral, 1, sum, na.rm=TRUE)
 tcqtotals <- with(tcq2, as.data.frame(cbind(Pilltot, Creamtot, Injtot, Acutot, Homtot, Reitot, Bamtot)))
 @ 
 
@@ -1099,7 +1100,14 @@ tcqall2c <- tcq2c[,17:52]
 bamall2c <- tcq2c[,53:70]
 @ 
 
-
+<<tcq2dscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
+tcqall2d <- tcq2d[,17:52]
+bamall2d <- tcq2d[,53:70]
+@ 
+<<tcq2csplitscales, echo=FALSE, results=hide, cache=TRUE>>=
+tcq2c.conv <- tcqall2c[,1:18]
+tcq2c.alt <- tcqall2c[,19:36]
+@ 
 
 <<tcq2dsplitscales, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2d.conv <- tcqall2d[,1:18]
@@ -1717,10 +1725,7 @@ tcq2d.alt.mono <- check.monotonicity(na.omit(tcq2d.alt))
 print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Monotonicity Check, TCQ 2 Alternative, Split D"))
 @ 
 
-<<tcq2dscalesplit, echo=FALSE, results=hide, cache=TRUE>>=
-tcqall2d <- tcq2d[,17:52]
-bamall2d <- tcq2d[,53:70]
-@ 
+
 
 
 <<tcq2bconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
