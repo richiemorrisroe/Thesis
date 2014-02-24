@@ -1,11 +1,15 @@
-* Refer back to Theory section in overall Discussion
+* TODO Refer back to Theory section in overall Discussion
 [[file:Methodology.tex::\begin{itemize}][Here are the predictions]]
 * DONE Use predicted vs observed graphs and RMSEA to compare fitted regression models, rather than p-values (which are not available for lasso and ridge).
   CLOSED: [2014-02-15 Sat 19:21]
 Didn't do this, instead I removed the lasso and ridge regressions
-* Do SEM for scales for sample two in HOM chapter, also use backtesting
-* Do backtesting/scales work in TCQ chapter
+* TODO Do SEM for scales for sample two in HOM chapter, also use backtesting
+This is SEM for the relationships between health, optimism, emwellbeing and mindfulness
+* DONE Do backtesting/scales work in TCQ chapter
+  CLOSED: [2014-02-24 Mon 15:46]
 * Put more scoring stuff into Experimental chapter
+Probably need to report the averaged factor score predictions.
+Ideally would weight them, but this is potentially too much work.
 * Add explanation of how IRT cross-validation was done
 * DONE figure out how to reference stargazer tables
   CLOSED: [2014-02-15 Sat 19:21]
@@ -30,8 +34,16 @@ pwr.t.test(n=33, d=1.23) ##power for ischemic pain effects
 * DONE Add stepwise optimism models to HOM chapter
   CLOSED: [2014-02-15 Sat 19:22]
 * Add reduced LOTR and MAAS models to experimental chapter
+Need to average the respective factor scores solutions. Other approaches would take more time and be a little dodgy. 
 * link physiological findings to embodied theory
 * Use BMQ factors from original research to assess convergent validity (this factor has been associated with adherence)
-* put in details of BMQ sub-scales in Methodology section
+Need to get surveymonkey data to match up all questions asked to what is in the completed general scale. 
+* DONE put in details of BMQ sub-scales in Methodology section
+  CLOSED: [2014-02-24 Mon 15:33]
 * include abstract for all data chapters
-* talk about relationship between expectancies and optimism in experimental chapter and discussion
+* TODO talk about relationship between expectancies and optimism in experimental chapter and discussion
+* TODO justify why the TCQ isn't a relative measure, in light of increasing correlation (hint, I've already written the answer)
+* TODO justify physiological expectancies theory in experimental chapter - explain how you have justified it
+* TODO Write conclusions and further research
+* TODO Write overall abstract
+* TODO Make sure figures and tables are in the best places in text
