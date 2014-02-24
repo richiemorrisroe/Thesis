@@ -2494,8 +2494,8 @@ sink(NULL)
 <<lotrparallelplot2b, echo=FALSE, results=hide>>=
 sink("tmp.txt")
 par(mfrow=c(1,2))
-print(lotr2b.parallel)
-print(lotr2b.vss)
+## print(lotr2b.parallel)
+## print(lotr2b.vss)
 sink(NULL)
 @ 
 
