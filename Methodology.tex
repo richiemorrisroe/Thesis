@@ -317,7 +317,7 @@ In conclusion, factor analysis is an extremely useful technique which has been w
 
 \subsubsection{Item Response Theory}
 \label{sec:item-response-theory}
-Item response theory (IRT) is often called model-based measurement\cite{fischer1995rasch}, (also referred to as Rasch modelling), is a newer approach to analysing self report data, developed both by the Danish mathematician Rasch in work for the Danish army, and also separately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's \cite{van1997handbook}.
+Item response theory (IRT) is often called model-based measurement~\cite{fischer1995rasch}, (also referred to as Rasch modelling), is a newer approach to analysing self report data, developed both by the Danish mathematician Rasch in work for the Danish army, and also separately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's \cite{van1997handbook}.
 The fundamental premise of IRT is that the properties and scores on a psychometric test can be modelled as functions of both the items on the test and the ability of the people taking the test.
 
 The IRT approach suggests that conditional on both the ability of the person and the difficulty of the test, the responses of each participant can be predicted probabilistically. As the latent ability of the participant rises, they tend to choose alternative responses which are more reflective of this latent ability. One example of this might be an item for extraversion ``I am always the life and soul of the party``, those respondents who had a higher latent score on the extraversion construct would tend to choose the agree or strongly agree options (on a typical five point scale). 
@@ -371,8 +371,6 @@ In this thesis, SEM was applied extensively to test the theorised relationships 
 \label{sec:gener-analyt-appr}
 
 
-
-
 Factor solutions were extracted using principal axis methods primarily, and maximum likelihood methods where these did not converge.
 
 Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied to ensure that the proposed structure was not overly sensitive to the methods of rotation used.
@@ -385,6 +383,8 @@ Following this procedure of extraction and interpretation, Structural Equation M
 Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
 
 Following this, three successively more complicated IRT models were fitted to each sub-scale (Rasch, one parameter and two parameter). Graded Response Models were used for IRT estimation as these are appropriate for ordinal data. Additionally, the most successful IRT models were used as the basis for other models analysed using SEM. 
+
+The IRT models were cross-validated using the following procedure. Firstly, the factor scores for an appropriate GRM (1 parameter or 2 parameter) were fit to the data. Then, the most successful model from the previous data was used to produce factor score predictions. The square root of this difference was then taken, and a penalisation parameter of ln K was added, where K was the number of parameters in the model. Additionally, the Pearson correlation coefficient was calculated between the two factor score outputs. The IRT models were then ranked using this number, where lower numbers represented a better fit to the unseen data. 
 
 
 Linear regressions were run to examine the differential effects of each of the correlated variables. Step wise selection on the training set was carried out, but the p-values are always reported from the test set. The performance of each of these methods was then assessed on held-out data (from Sample One, using ten fold cross-validation as previously described). 
