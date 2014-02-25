@@ -660,12 +660,6 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
      else {
        constraint <- grmconstraint
      }
-  richiecool <- FALSE
-  if(richiecool) {
-    funlist <- as.list(parse(oldmodel$call))
-    funlist2 <- substitute(newdata)
-    #more awesome metaprogramming stuff that I haven't figured out how to do yet....
-  }
 
   comp.para <- length(unique(as.vector(coef(oldmodel))))
   predscores <- getIRTestimates(factor.scores(oldmodel, resp.patterns=newdata))
