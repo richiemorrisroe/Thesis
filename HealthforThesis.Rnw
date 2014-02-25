@@ -2771,6 +2771,11 @@ As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is on
 
 The final step in the analysis was to take the most successful model for the LOT-R and MAAS from the Sample Two fits and test them on the data from Sample One. 
 
+\subsection{Backtesting - LOTR}
+\label{sec:backtesting-lotr}
+
+
+
 This process was begun with the CFA model for the LOT-R. Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the backtesting process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
 <<lotrbacktestsem1full, echo=FALSE, results=hide, cache=TRUE>>=
