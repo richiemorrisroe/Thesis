@@ -945,3 +945,9 @@ smoothedAIC <- function (models) {
     return(weights)
 }
         
+irtAverageFactorScores <- function (scores=list) {
+    abilities <- sapply(scores, `[`, 1)
+    ab.average <- Reduce(`+`, abilities)/length(abilities)
+    names(ab.average) <- "AbilityEst"
+    return(ab.average)
+}
