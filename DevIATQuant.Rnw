@@ -4,7 +4,7 @@
 
 The next stage in the research was to develop two IAT measures, one for treatment credibility and the other for optimism. The original approach taken in this study was as follows. Firstly, a number of interviews with doctors, complementary health practitioners and the general public (students) were carried out to assess the constructs associated with health. Due to space limitations, the results of these analyses are not included in this thesis. 
 
-Following on from this, a repertory grid approach was employed to develop individualised stimuli for each IAT (described below in Section \ref{sec:repertory-grids}). This chapter describes that process, and then reports on the piloting of the IAT measures in a small sample, along with the piloting of the experimental research. 
+Following on from this, a repertory grid approach was employed to develop individualised stimuli for each IAT (described below in Section~\ref{sec:repertory-grids}). This chapter describes that process, and then reports on the piloting of the IAT measures in a small sample, along with the piloting of the experimental research. 
 
 \section{Methodology}
 \label{sec:methodology-1}
@@ -29,7 +29,7 @@ This was then administered to a small sample (N=17) to test the instrument.
 \subsection{Development of IAT}
 \label{sec:development-iat}
 
-The plan for the development of the IAT was to use the constructs obtained from the repertory grids to develop useful stimuli for the IAT.\
+The plan for the development of the IAT was to use the constructs obtained from the repertory grids to develop useful stimuli for the IAT.
 Unfortunately, this portion of the research did not lead to a successful outcome, for reasons described below.
 
 Therefore the IAT was developed from both the important figures which arose from the repertory grid, the qualitative interviews, and to match the explicit measure of treatment credibility. The optimism IAT was developed along similar lines to most other Implicit Association tests, in that the survey for this measure was used as a base.
@@ -42,7 +42,7 @@ The repertory grid approach was taken for the following reasons. Firstly, conven
 The first step was the development of stimuli for the repertory grid. This process was carried out along with the first administration of the TCQ, and utilised the same sample. Following the completion of the instrument, participants were asked the following:
 
 \begin{quotation}
-  Please rank, in order of importance, any people or qualities you believe are associated with health (use titles not names e.g. doctor, not doctor murphy)
+  Please rank, in order of importance, any people or qualities you believe are associated with health (use titles not names e.g. doctor, not doctor Murphy)
 
 \end{quotation}
 
@@ -186,7 +186,6 @@ As can be seen in Figure \ref{fig:optiatcorrplot}, the correlation was not parti
 Next, the Treatment Credibility Questionnaire was examined to assess its correlations with the self report measure, in preparation for the pilot. 
 
 <<readdata, echo=FALSE, results=hide, eval=FALSE>>=
-
 tcqiat <- read.csv("ExperimentDataforR/PilotStudy/tcq prep data for IAT.csv")
 tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
 tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Truth", "Fake", "Lies", "Inaccurate", "Conventional", "Pills", "Cream", "Injections", "Nurse", "Doctor", "Pharmacist", "Medicine", "Alternative", "Acupuncture", "Reiki.Master", "Acupuncturist", "Reiki", "Flower.essence", "Homeopathy", "Homeopathist"))
@@ -200,7 +199,7 @@ print(ggplot(tcqscores, aes(x=IAT))+geom_density())
   \label{fig:tcqpilotplot}
 \end{figure}
 
-As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the explicit expectancy scores are not available for this sample, nor are the demographics, and so this cannot be reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
+As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the demographics were not available for this pilot, due to data loss, and so this is not reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
 
 
 \section{Piloting the Experimental Procedure}
@@ -219,12 +218,12 @@ names(gend.sum) <- "Gender"
 print(xtable(gend.sum, label="tab:gendpilot", caption="Gender of Pilot Participants"))   
 @
 
-The participants in the pilot study (N=7), consisted of five men, one woman and one participant who did not report gender. 
+The participants in the pilot study (N=7), consisted of five men, one woman and one participant who did not report gender. The mean age of the participants was 25.3 (SD=4.13). 
 
-<<age, echo=FALSE, results=tex>>=
+<<age, echo=FALSE, results=hide>>=
 age.xtab <-xtable(as.data.frame(with(iepilot, table(Age))))
 @
-The minimum age of the participants was 21, the max was 30, the mean was 25.33 while the median was 25.5. 
+
 
 <<tcqiat, echo=FALSE, results=hide>>=
 tcqiat<-read.csv("ExperimentDataforR/PilotStudy/TCQ IAT pilot data for R2712.csv")
@@ -234,26 +233,26 @@ tcqiat<-read.csv("ExperimentDataforR/PilotStudy/TCQ IAT pilot data for R2712.csv
 realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate", "Fake", "Illusory", "Lies")]
 @
 
-\begin{figure}
-<<realfakeplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<realfakeplot, echo=FALSE, results=hide>>=
 pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"))
 @  
-  \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
-  \label{fig:realfakeplot}
-\end{figure}
+%%   \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
+%%   \label{fig:realfakeplot}
+%% \end{figure}
 
 
 <<convaltwords, echo=FALSE, results=hide>>=
 convaltwords<-tcqiat[, c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "X.Acupuncture", "flower.essence", "Reiki")]
 @
 
-\begin{figure}
-<<convaltplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<convaltplot, echo=FALSE, results=hide>>=
 pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"))
 @  
-  \caption{Conventional and Alternative Treatment Words, Pilot Sample}
-  \label{fig:convaltplot}
-\end{figure}
+%%   \caption{Conventional and Alternative Treatment Words, Pilot Sample}
+%%   \label{fig:convaltplot}
+%% \end{figure}
 
 
 
@@ -270,69 +269,70 @@ pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Ho
   \label{fig:pairspilot1}
 \end{figure}
 
+Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit measures in this study. It can be seen that the negative correlation reported on between the LOT-R and the MAAS replicated in this sample, suggesting that it was not a statistical fluke. It can also be seen that the conventional and alternative treatment credibility items correlated with one another, but not really with one another (apart from the strong negative correlation between Injection and Acupuncture credibility, which also occurred in Study One with the TCQ (Chapter \ref{cha:tcq-thesis}). However, with such a small sample size, these results should be regarded as a little suspect. 
 
 
-\begin{figure}
+%% \begin{figure}
 <<plotoptpess, echo=FALSE, fig=TRUE>>=
 pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
 @  
-  \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
-  \label{fig:optpesswordsplot}
-\end{figure}
+%%   \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
+%%   \label{fig:optpesswordsplot}
+%% \end{figure}
 
 
 
 
-As can be seen from Figure \ref{fig:optpesswordsplot}, the pessimism items correlate quite well, but this is not true for the optimism words. This is a little worrying, but given that the sample size was extremely small, this may not replicate in a larger sample. 
+%% As can be seen from Figure \ref{fig:optpesswordsplot}, the pessimism items correlate quite well, but this is not true for the optimism words. This is a little worrying, but given that the sample size was extremely small, this may not replicate in a larger sample. 
 
 A Kruskal test on the differences between blocks and total time gave a Chi Square of 23.59, with an associated p value of less than 0.0001 with degrees of freedom equal to 4. 
-This result is somewhat obvious, as blocks three and five are combined tasks, and would be expected to show a different pattern. However, 
+This result is somewhat obvious, as blocks three and five are combined tasks, and would be expected to show a different pattern. This is in line with expectations before this experiment. 
 
 %%put in this plot!!!
 
-From Figure \ref{fig:convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
+%% From Figure \ref{fig:convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
 
 <<iatscores, echo=FALSE, results=tex>>=
 IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
-iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="kendall"))
+iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="spearman"))
 @
 
-The first step was examining the correlation between the two explicit measures. This was found to be 0.42, using Kendall's $\tau$. This is somewhat higher than would be hoped for, but still only represents 16\% of the variance in common between the two measures. 
+The first step was examining the correlation between the two explicit measures. This was found to be 0.62, using Spearman's $\rho$. This is somewhat higher than would be hoped for, but still only represents 36\% of the variance in common between the two measures. It is possible that this is due to the small sample, and as the previous piloting studies did not show this pattern, this explanation seems to be the most likely. 
 
 <<maascorr, echo=FALSE, results=tex>>=
 iatcorr.maas.tcq<-with(iepilot, cor.test(DIAT.Conv, MAAS, use="complete.obs", method="spearman"))
 iatcorr.maas.opt<-with(iepilot, cor.test(DIATOpt, MAAS, use="complete.obs", method="spearman"))
 @
 
-The correlations with the MAAS were 0.37 (for the Treatment Credibility IAT) and 0.08 (for the Optimism IAT). 
+The Spearman correlations with the MAAS were 0.37 (for the Treatment Credibility IAT) and 0.08 (for the Optimism IAT). 
 
 <<srcorr, echo=FALSE, results=tex>>=
 impexp.corr.opt<-with(iepilot, cor.test(DIATOpt, LOTR, use="complete.obs", method="spearman"))
 @
 
-Surprisingly (based on the results of the pilot described above), the correlation between the optimism IAT and the LOT-R was negative, but was of the same magnitude as was seen above (-0.26). 
+Surprisingly (based on the results of the pilot described above), the correlation between the optimism IAT and the LOT-R was negative, but was of the same magnitude as was seen in the previous study ($\rho=-0.26$). 
 
 <<corrtcq, echo=FALSE, results=hide>>=
 iepilot[,"meancred"]<-with(iepilot, mean(c(Pill, Cream, Inj, Acu, Hom, Rei), na.rm=TRUE))
 
-
 @ 
+
 
 <<iatandsrcorr, echo=FALSE, results=hide>>=
-iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR", "ConvAltRatio")]
+iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR")]
 @ 
 
 
-\begin{figure}
-<<iatsrplot, echo=FALSE, fig=TRUE>>=
-pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR", "ConvAltRatio"))
+%% \begin{figure}
+<<iatsrplot, echo=FALSE, results=hide>>=
+pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR"))
 @  
-  \caption{Pairs Plot of Relationship Between Explicit and Implicit Measures}
-  \label{fig:impexplot}
-\end{figure}
+%%   \caption{Pairs Plot of Relationship Between Explicit and Implicit Measures}
+%%   \label{fig:impexplot}
+%% \end{figure}
 
 
-As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
+%% As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
 
 <<physdata, echo=FALSE, results=hide>>=
 physmeasures<-read.csv("ExperimentDataforR/PilotStudy/Physmeasures for Pilot.csv")
@@ -345,7 +345,8 @@ GSRdata<-physmeasures[, c("GSR.1703", "GSR.1980", "GSR.2236", "GSR.2346", "GSR.8
 VASdata<-physmeasures[,c("VAS.1703", "VAS.1980", "VAS.2236", "VAS.2346", "VAS.8023", "VAS.1032", "VAS.5185")] # create data frame for VAS analysis.
 @
 
-<<vastrans,echo=FALSE, figure=TRUE>>=
+\begin{figure}
+<<vastrans,echo=FALSE, fig=TRUE>>=
 vastrans<-VASdata*-10
 vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
 vas.m <- melt(vastrans, id.vars="index")
@@ -353,7 +354,12 @@ vas.c <- dcast(vas.m, formula=variable~...)
 names(vas.c)[1] <- "PP.No"
 names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
 print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
-@
+@  
+  \caption{Particpant pain responses over time}
+  \label{fig:pppainplot}
+\end{figure}
+
+Figure \ref{fig:pppainplot} shows the pain ratings of all participants over time. There is definitely a upwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically in the preceding figure. 
 
 <<vaswithplacresp, echo=FALSE, results=hide>>=
 vas.with.plac <- read.csv("ExperimentDataforR/PilotStudy/vaspilot.csv", header=TRUE, sep="\t")
@@ -373,7 +379,7 @@ placglm.opt <- glm(PlacResp~DIATOpt, data=surv.merge, family=binomial(link="logi
 print(xtable(placglm.opt, label="tab:optiatglm", caption="Predicting Placebo Response from OPT IAT Scores"))
 @ 
 
-<<placglmconv, echo=FALSE, results=tex>>=
+<<placglmconv, echo=FALSE, results=hide>>=
 placglm.conv <- glm(PlacResp~ConvAltRatio, data=surv.merge, family=binomial(link="logit"))
 print(xtable(placglm.conv, label="tab:convglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
 @ 
@@ -383,7 +389,7 @@ placglm.lotr <- glm(PlacResp~LOTR, data=surv.merge, family=binomial(link="logit"
 print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
 @ 
 
-As can be seen from Table \ref{tab:tcqiatglm}, \ref{tab:optiatglm}, \ref{tab:convglm} and \ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, hence the strange looking coefficients.  Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
+As can be seen from Table~\ref{tab:tcqiatglm}, \ref{tab:optiatglm},  and~\ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, and the coefficients are not reported. Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
 
 
 <<physts,echo=FALSE, results=hide>>=
@@ -412,13 +418,13 @@ plot(GSRdata.ts)
 <<vasplot, echo=FALSE, results=hide>>=
 plot(VASdata.ts)
 @  
-  \caption{BP Readings over Time}
-  \label{fig:vasplot}
-\end{figure}
+%%   \caption{BP Readings over Time}
+%%   \label{fig:vasplot}
+%% \end{figure}
 
 
 
-As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. There is definitely a downwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically in the preceding figure. 
+As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. 
 
 \section{Discussion}
 \label{sec:discussion}
