@@ -2089,6 +2089,26 @@ Figure \ref{fig:infcurveoneandthree} shows the estimated parameters for items on
 
 With the decision taken to remove the potentially problematic items one and three, the choice was between items two, four, five and six. Of these, items 2, 4 and 6 are coherent and cover overall expectancies, cognitive expectancies and emotional expectancies. Previous research has outlined these as two important factors of care \cite{DiBlasi2001}, and the three questions span a relatively broad span of ability ranges, and cover approximately 50\% of the available test information between -3 and +3 (assuming that the ability scores are normally distributed). 
 
+<<tcqreducedirt, echo=FALSE, results=hide>>=
+tcq2b.s <- tcqall2b[,grep("[246]$", x=names(tcqall2b))]
+tcq2b.conv.s <- tcq2b.s[,grep("Pi|Cr|In", x=names(tcq2b.s))]
+tcq2b.alt.s <- tcq2b.s[,grep("Ac|Ho|Re", x=names(tcq2b.s))]
+tcq2c.s <- tcqall2c[,grep("[246]$", x=names(tcqall2c))]
+tcq2c.conv.s <- tcq2c.s[,grep("Pi|Cr|In", x=names(tcq2c.s))]
+tcq2c.alt.s <- tcq2c.s[,grep("Ac|Ho|Re", x=names(tcq2c.s))]
+tcq2d.s <- tcqall2d[,grep("[246]$", x=names(tcqall2d))]
+tcq2d.conv.s <- tcq2d.s[,grep("Pi|Cr|In", x=names(tcq2d.s))]
+tcq2d.alt.s <- tcq2d.s[,grep("Ac|Ho|Re", x=names(tcq2d.s))]
+tcq2b.conv.grm.1pl.s <- grm(tcq2b.conv.s, constrained=TRUE)
+tcq2c.conv.grm.1pl.s <- grm(tcq2c.conv.s, constrained=TRUE)
+tcq2d.conv.grm.1pl.s <- grm(tcq2d.conv.s, constrained=TRUE)
+tcq2b.alt.grm.1pl.s <- grm(tcq2b.alt.s, constrained=TRUE)
+tcq2c.alt.grm.1pl.s <- grm(tcq2c.alt.s, constrained=TRUE)
+tcq2d.alt.grm.1pl.s <- grm(tcq2d.alt.s, constrained=TRUE)
+tcq2.conv.av.s <- irtAverage(sols=list(tcq2b.conv.grm.1pl.s, tcq2c.conv.grm.1pl.s, tcq2d.conv.grm.1pl.s))
+tcq2.alt.av.s <- irtAverage(sols=list(tcq2b.alt.grm.1pl.s, tcq2c.alt.grm.1pl.s, tcq2d.alt.grm.1pl.s))
+@ 
+
 
 \section{Regression Analyses}
 \label{sec:regression-analyses}
