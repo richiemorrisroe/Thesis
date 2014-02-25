@@ -177,9 +177,9 @@ The aims and objectives of this portion of the research were as follows:
 
 ## load("healthforthesis.rda")
 ## load("tcq2.rda")
-load("homdata.rda")
-load("credtotals.rda")
-load("tcqthesis.rda")
+## load("homdata.rda")
+## load("credtotals.rda")
+## load("tcqthesis.rda")
 load("healthlatest.rda")
 load("tcqthesislatest.rda")
 @ 
@@ -1821,12 +1821,12 @@ expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
 
 <<expimpfit, echo=FALSE, results=tex>>=
 expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimpall <- rbind(expimp1.fit.meas, twofac.fit.meas, expimpmoderated.fit.meas)
-rownames(expimpall) <- c("One Factor", "Two Factor Correlated", "Moderated")
+expimpall <- rbind(expimp1.fit.meas, expimpmoderated.fit.meas)
+rownames(expimpall) <- c("One Factor", "Moderated")
 print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
 @ 
 
