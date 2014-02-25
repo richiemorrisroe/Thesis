@@ -866,7 +866,6 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 %% \label{sec:treatm-cred-quest}
 
 <<grm1pltcqsmall, echo=FALSE, results=hide>>=
-
 exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
 exp.tcq.conv <- exp.tcq[,with(exp.tcq, grep("Pill|Cream|Inj", x=names(exp.tcq)))]
 exp.tcq.alt <- exp.tcq[,with(exp.tcq, grep("Acu|Hom|Rei", x=names(exp.tcq)))]
