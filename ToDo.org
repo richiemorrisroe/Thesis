@@ -8,9 +8,11 @@ Didn't do this, instead I removed the lasso and ridge regressions
 This is SEM for the relationships between health, optimism, emwellbeing and mindfulness
 * DONE Do backtesting/scales work in TCQ chapter
   CLOSED: [2014-02-24 Mon 15:46]
-* Put more scoring stuff into Experimental chapter
+* DONE Put more scoring stuff into Experimental chapter
+  CLOSED: [2014-02-25 Tue 10:51]
 Probably need to report the averaged factor score predictions.
 Done for the TCQ measures
+Done for the LOTR & MAAS - need to include these in the regressions
 Ideally would weight them, but this is potentially too much work.
 * DONE Add explanation of how IRT cross-validation was done in Methodology
   CLOSED: [2014-02-24 Mon 16:56]
@@ -30,7 +32,8 @@ Decided to remove this section
 Is this really necessary?
 * fit ARIMA models to pain data, estimate their accuracy.
 Necessary?
-* TODO Account for differences in GSR at baseline
+* DONE Account for differences in GSR at baseline
+  CLOSED: [2014-02-25 Tue 11:20]
 * TODO fix GSR cross-correlations chart
 * DONE examine why Kirsch two factor model shows such weird fit indices
   CLOSED: [2014-01-09 Thu 20:10]
@@ -41,9 +44,12 @@ pwr.t.test(n=33, d=1.23) ##power for ischemic pain effects
 #+END_SRC
 * DONE Add stepwise optimism models to HOM chapter
   CLOSED: [2014-02-15 Sat 19:22]
-* TODO Add reduced LOTR and MAAS models to experimental chapter
+* DONE Add reduced LOTR and MAAS models to experimental chapter
+  CLOSED: [2014-02-25 Tue 12:11]
 Need to average the respective factor scores solutions. Other approaches would take more time and be a little dodgy. 
-* TODO link physiological findings to embodied theory
+
+* DONE justify physiological expectancies theory in experimental chapter - explain how you have justified it
+  CLOSED: [2014-02-25 Tue 12:10]
 * DONE Use BMQ factors from original research to assess convergent validity (this factor has been associated with adherence)
   CLOSED: [2014-02-24 Mon 18:11]
 Need to get surveymonkey data to match up all questions asked to what is in the completed general scale. 
@@ -61,11 +67,14 @@ BAM17
 * include abstract for all data chapters
 * TODO Fix up experimental and IAT Pilot chapter
 Add TCQIAT data, make it clearer, relate it to the experiment (include power calculations)
-* TODO talk about relationship between expectancies and optimism in experimental chapter and discussion
+* DONE talk about relationship between expectancies and optimism in experimental chapter and discussion
+  CLOSED: [2014-02-25 Tue 12:06]
 * TODO justify why the TCQ isn't a relative measure, in light of increasing correlation (hint, I've already written the answer)
-* TODO justify physiological expectancies theory in experimental chapter - explain how you have justified it
+
 * TODO Write conclusions and further research
 * TODO Write overall abstract
 * TODO Make sure figures and tables are in the best places in text
-* Match up backtesting with factor averaging in HOM chapter
+* TODO Match up backtesting with factor averaging in HOM chapter
 This doesn't match, solutions are averaged, but backtesting is not done on the averaged solutions
+* TODO Make sure that there is no lagged effect of the physiological variables in experimental chapter (or remove the prediction). 
+* TODO link physiological findings to embodied theory
