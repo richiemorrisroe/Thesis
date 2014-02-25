@@ -404,10 +404,10 @@ As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} 
 The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{round (chisq.gend[["p.value"]], 3)}).
 In addition, the priming manipulation was not significantly different across groups.
 
-However, there was a difference in the mean (and median) GSR scores at baseline. Baseline measurements were taken for the first one hundred seconds of the experiment, and can be seen in Table \ref{tab:gsrstartcond} broken down by condition. The reasons for this difference are unclear, given that no participant was informed of their condition allocation until after the bandage had been applied.  
+However, there was a difference in the mean (and median) GSR scores at baseline. Baseline measurements were taken for the first one hundred seconds of the experiment, and can be seen in Table \ref{tab:gsrstartcond} broken down by condition, though from an examination of the standard deviations, these differences do not appear to be significant.  The reasons for this difference are unclear, given that no participant was informed of their condition allocation until after the bandage had been applied.  
 
 <<gsrcondstart, echo=FALSE, results=tex>>=
-print(xtable(gsr.start.by.cond, label="tab:gsrstartcond", caption="Mean GSR by Condition at baseline (first 100 seconds)"))
+print(xtable(gsr.start.cond.sd, label="tab:gsrstartcond", caption="Mean and SD of GSR by Condition at baseline (first 100 seconds)"))
 @ 
 
 \subsection{Analysis of IAT data}
@@ -866,12 +866,6 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 %% \end{figure}
 
 
-%% \section{Using Psychometric Models from Survey Samples on the Experimental Participants}
-%% \label{sec:using-psych-models}
-
-
-%% \subsection{Treatment Credibility Questionnaire}
-%% \label{sec:treatm-cred-quest}
 
 <<grm1pltcqsmall, echo=FALSE, results=hide>>=
 exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
@@ -900,9 +894,7 @@ lotr.fscores <- factor.scores(lotr2c.grm.1pl, resp.patterns=lotr.exp)
 fscores.lotr.maas <- data.frame(Participant=expfull[["Participant"]], AbilityLOTR=getIRTestimates(lotr.fscores)[,1], AbilityMAAS=getIRTestimates(maas.fscores)[,1])
 Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.part.lotr, by="Participant")
 @ 
-<<fascoresmaaslotr, echo=FALSE, results=hide>>=
 
-@ 
 
 \subsection{Implicit-Explicit Relationships}
 \label{sec:impl-expl-relat}
@@ -1097,7 +1089,7 @@ placmod.lotr.irt <- glm(PlacResp~AbilityLOTR, data=Iatandexpmeasures.abest, fami
 print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"), floating=FALSE)
 @ 
 
-Even when the IRT estimated Optimism scores are included in place of the sum-scores, the result does still not achieve the conventional (or indeed any) threshold of significance. These results are shown in Table \ref{tab:placmodlotrirt}. 
+Next, IRT estimated abilities for the LOT-R were tested against the placebo response. Note that the ability estimates were calculated from the reduced five item scale described in Section~\ref{sec:backtesting-lotr} on page \pageref{sec:backtesting-lotr}. When these ability estimates  are included in place of the sum-scores, the result does still not achieve the conventional threshold of significance. These results are shown in Table~\ref{tab:placmodlotrirt}. 
 
 
 The next variable to be tested in terms of univariate regressions are the treatment credibility scores. These were tested in both their raw forms and as estimates from the successful IRT models described in Chapter~\ref{cha:tcq-thesis}. 
@@ -1114,17 +1106,16 @@ Next, the ability estimates generated through the best fitting IRT model were us
 print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
 @ 
 
-Table \ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Trpeatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
+Table~\ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
 <<placmodgsr, echo=FALSE, results=tex>>=
 placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
 @ 
 
-As can be seen from Table \ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
+As can be seen from Table~\ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
 
 
-%% Next, the three major variables (IAT's and Optimism) were placed into one model and allowed to interact. 
 
 <<placeboglm, echo=FALSE, results=hide>>=
 placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
@@ -1352,7 +1343,8 @@ gsr.top.av2 <- gsr.top.av
 gsr.top.av2[,"variable"] <- with(gsr.top.av, gsub("[A-Za-z.]", "", x=variable))
 names(gsr.top.av2)[1] <- "Participant"
 Iatandexpmeasures.top <- merge(Iatandexpmeasures, gsr.top.av2, by="Participant")
-
+gsr.start.by.cond <- ddply(Iatandexpmeasures.top, .(Condition), summarise, MeanGSR=mean(GSR, na.rm=TRUE))
+gsr.start.cond.sd <- ddply(Iatandexpmeasures.top, .(Condition), summarise, Mean=mean(GSR, na.rm=TRUE), SD=sd(GSR, na.rm=TRUE))
 gsr[,"index"] <- 1:nrow(gsr)
 gsr.melt <- melt(gsr, id.vars="index")
 gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
