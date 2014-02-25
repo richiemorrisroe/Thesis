@@ -869,22 +869,24 @@ print(arrangeGrob ( surv.rei.pl, exp.rei.pl))
 exp.tcq <- expfull[,with(expfull, grep("^Pi|^Cr|^I|^Ac|^Ho|^R", x=names(expfull)))]
 exp.tcq.conv <- exp.tcq[,with(exp.tcq, grep("Pill|Cream|Inj", x=names(exp.tcq)))]
 exp.tcq.alt <- exp.tcq[,with(exp.tcq, grep("Acu|Hom|Rei", x=names(exp.tcq)))]
-tcq2a.scale <- tcq2a[,17:52]
-tcq2a.s <- tcq2a.scale[,with(tcq2a.scale, grep("[246]$", x=names(tcq2a.scale)))]
-tcq2a.s.conv <- tcq2a.s[,with(tcq2a.s, grep("Pill|Cream|Inj", x=names(tcq2a.s)))]
-tcq2a.s.alt <- tcq2a.s[,with(tcq2a.s, grep("Acu|Hom|Rei", x=names(tcq2a.s)))]
-tcq2a.grm1pl.conv.s <- grm(tcq2a.s.conv, constrained=TRUE)
-tcq2a.grm1pl.alt.s <- grm(tcq2a.s.alt, constrained=TRUE)
-fscore.exp.grm1pl.tcq.conv <- factor.scores(tcq2a.grm1pl.conv.s, resp.patterns=exp.tcq.conv)
-fscore.exp.grm1pl.tcq.alt <- factor.scores(tcq2a.grm1pl.alt.s, resp.patterns=exp.tcq.alt)
-fscores.part <- data.frame(Participant=expfull$Participant, AbilityConv=fscore.exp.grm1pl.tcq.conv$score.dat[["z1"]],AbilityAlt=fscore.exp.grm1pl.tcq.alt$score.dat[["z1"]])
+fscores.tcq2b.conv <- getIRTestimates(factor.scores(tcq2b.conv.grm.1pl.s, exp.tcq.conv))
+fscores.tcq2c.conv <- getIRTestimates(factor.scores(tcq2c.conv.grm.1pl.s, exp.tcq.conv))
+fscores.tcq2d.conv <- getIRTestimates(factor.scores(tcq2d.conv.grm.1pl.s, exp.tcq.conv))
+fscores.tcq2b.alt <- getIRTestimates(factor.scores(tcq2b.alt.grm.1pl.s, exp.tcq.alt))
+fscores.tcq2c.alt <- getIRTestimates(factor.scores(tcq2c.alt.grm.1pl.s, exp.tcq.alt))
+fscores.tcq2d.alt <- getIRTestimates(factor.scores(tcq2d.alt.grm.1pl.s, exp.tcq.alt))
+fscores.tcq.conv <- irtAverageFactorScores(scores=list(fscores.tcq2b.conv, fscores.tcq2c.conv, fscores.tcq2d.conv))
+fscores.tcq.alt <- irtAverageFactorScores(scores=list(fscores.tcq2b.alt, fscores.tcq2c.alt, fscores.tcq2d.alt))
+fscores.part <- data.frame(Participant=expfull$Participant, AbilityConv=fscores.tcq.conv,AbilityAlt=fscores.tcq.alt)
 Iatandexpmeasures.grmtcq <- merge(Iatandexpmeasures, fscores.part, by="Participant")
 @ 
 
 <<grm1pllotr, echo=FALSE, results=hide>>=
-lotr.exp <- expfull[,with(expfull, grep("LOTR.*[34790]$", x=names(expfull)))]
-lotr.fscores <- factor.scores(lotr.grm.1pl, resp.patterns=lotr.exp)
-fscores.part.lotr <- data.frame(Participant=expfull[["Participant"]], AbilityLOTR=lotr.fscores[["score.dat"]][["z1"]])
+maas2c.grm.1pl ##maas model
+lotr2c.grm.1pl #lotr model
+lotr.exp <- expfull[,c("LOTR3", "LOTR4", "LOTR7", "LOTR9", "LOTR10")]
+lotr.fscores <- factor.scores(lotr2c.grm.1pl, resp.patterns=lotr.exp)
+fscores.part.lotr <- data.frame(Participant=expfull[["Participant"]], AbilityLOTR=getIRTestimates(lotr.fscores)[,1])
 Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.part.lotr, by="Participant")
 @ 
 <<fascoresmaaslotr, echo=FALSE, results=hide>>=
