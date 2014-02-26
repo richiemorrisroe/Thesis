@@ -81,7 +81,7 @@ As can be seen from Figure \ref{fig:freplot}, and Table \ref{tab:freqrep} the mo
 \subsection{Piloting of the Repertory Grid}
 \label{sec:pilot-repert-grid}
 
-This repertory grid (see Appendix) was then piloted with a convenience sample. Unfortunately, it became clear that participants in this sample did not have enough examples of medical professionals in order to be able to accurately fill out the grid. The original pilot was carried out online (N=10) and not one respondent was able to complete the process. This was then followed with an attempt at card-sorting (N=3) where it again became clear that participants simply did not have enough experience with particular medical practitioners and environments, and so this attempt was abandoned. 
+This repertory grid (see Appendix) was then piloted with a convenience sample. Unfortunately, it became clear that participants in this sample did not have enough examples of medical professionals in order to be able to accurately fill out the grid. The original pilot was carried out online (N=17) and not one respondent was able to complete the process. This was then followed with an attempt at card-sorting (N=3) where it again became clear that participants simply did not have enough experience with particular medical practitioners and environments, and so this attempt was abandoned. 
 
 \section{Development of IAT}
 \label{sec:development-iat}
@@ -126,7 +126,7 @@ The stimuli used for each IAT were as follows:
 \section{Piloting the IAT Measures}
 \label{sec:pilot-iat-meas}
 
-The IAT measures were piloted on 17 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
+The IAT measures were piloted on 11 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
 
 \subsection{Optimism IAT Pilot}
 \label{sec:optimism-iat-pilot}
@@ -234,7 +234,7 @@ realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate",
 @
 
 %% \begin{figure}
-<<realfakeplot, echo=FALSE, results=hide>>=
+<<realfakeplot, echo=FALSE, results=hide, eval=FALSE>>=
 pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"))
 @  
 %%   \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
@@ -273,7 +273,7 @@ Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit
 
 
 %% \begin{figure}
-<<plotoptpess, echo=FALSE, fig=TRUE>>=
+<<plotoptpess, echo=FALSE, eval=FALSE>>=
 pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
 @  
 %%   \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
@@ -389,7 +389,7 @@ placglm.lotr <- glm(PlacResp~LOTR, data=surv.merge, family=binomial(link="logit"
 print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
 @ 
 
-As can be seen from Table~\ref{tab:tcqiatglm}, \ref{tab:optiatglm},  and~\ref{tab:convglm}, the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, and the coefficients are not reported. Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
+As can be seen from Table~\ref{tab:tcqiatglm} and \ref{tab:optiatglm} the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, and the coefficients are not reported. Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
 
 
 <<physts,echo=FALSE, results=hide>>=
@@ -424,7 +424,7 @@ plot(VASdata.ts)
 
 
 
-As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. 
+%% As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. 
 
 \section{Discussion}
 \label{sec:discussion}
