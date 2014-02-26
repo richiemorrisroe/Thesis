@@ -2521,12 +2521,12 @@ print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One F
 Table~\ref{tab:lotrfact1average} show the averaged coefficients across both splits. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. The averaging produces a solution which appears much more stable. 
 
 
-<<lotr2bfact2, echo=FALSE, results=tex>>=
+<<lotr2bfact2, echo=FALSE, results=hide>>=
 lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2blotr2", caption="Two Factor Solution, LOT-R, Split B"))
 @
 
-<<lotr2cfact2, echo=FALSE, results=tex>>=
+<<lotr2cfact2, echo=FALSE, results=hide>>=
 lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"))
 @
@@ -2538,7 +2538,7 @@ lotr.fact2.av <- FactorAverage(sols=list(lotr2b.fact2, lotr2c.fact2), mynames=c(
 print(xtable(lotr.fact2.av, label="tab:lotrfact2average", caption="Average Two Factor Solution for LOT-R Across Splits B and C"))
 @ 
 
-Tables \ref{tab:hom2blotr2} and \ref{tab:hom2clotr2} show some differences. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
+Table~\ref{tab:lotrfact2average} shows the averaged solution across Splits B and C. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
 
 <<lotr1sem2b, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
