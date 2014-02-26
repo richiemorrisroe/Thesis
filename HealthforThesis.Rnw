@@ -97,7 +97,7 @@ Additionally, there appears to be a curvi-linear relationship between optimism a
 \subsection{Factorial Structure of the LOT-R}
 \label{sec:fact-struct-lot}
 
-The factor structure of the LOT-R (and indeed, the dimensionality of the optimism construct more generally), has been a subject of some debate. The originators argue for a one-factor structure~\cite{Carver2010,Scheier1994}, while other researchers have found that the scale is better modeled as having both optimism and pessimism components. The Geers work referenced above took a latter approach, dichotomising the scores on the scale to create groups of optimists and pessimists \footnote{this approach is not without its problems}. Therefore, both one and two factor models were applied to the scale to determine if a one or two factor structure fit better in the population of interest. 
+The factor structure of the LOT-R (and indeed, the dimensionality of the optimism construct more generally), has been a subject of some debate. The originators argue for a one-factor structure~\cite{Carver2010,Scheier1994}, while other researchers have found that the scale is better modeled as having both optimism and pessimism components. The Geers work referenced above took a latter approach, dichotomising the scores on the scale to create groups of optimists and pessimists\footnote{this approach is not without its problems}. Therefore, both one and two factor models were applied to the scale to determine if a one or two factor structure fit better in the population of interest. 
 
 
 \section{Mindfulness}
@@ -590,7 +590,7 @@ print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Mode
 
 In the training sample, the stepwise selected models kept three predictors.
 The results of the selected predictors on the test sample are shown in Table \ref{tab:hom1stepopttest}.
-General health is retained, despite its lack of significance, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
+General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
 For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section \ref{sec:discussion}. 
 
 <<optridge, echo=FALSE, results=hide>>=
@@ -663,7 +663,7 @@ print(opt.fin.xtab , table.placement="ht")
 
 %% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
 
-As has been shown above, the  model showed that emotional well being and general health were important, and general health was not removed from the model, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as accurate. 
+As has been shown above, the  model showed that emotional well being and general health were important, and general health was not removed from the model, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as unbiased by the search process. 
 
 
 
@@ -985,21 +985,21 @@ rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
 print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One"), scalebox=0.7)
 @
 
-PA2: "RANDQ3" , "RANDQ4" , "RANDQ5" , "RANDQ6" , "RANDQ7" , "RANDQ8" , "RANDQ9" , "RANDQ10" ,"RANDQ11" ,"RANDQ12". Again, the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
+PhysFun:  the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
-PA1: "RANDQ20" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27" ,"RANDQ28" ,"RANDQ30" ,"RANDQ32". This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the energy faitigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
+SocEmWB: This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the energy faitigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
 
-PA4: "RANDQ1" , "RANDQ33" ,"RANDQ34" ,"RANDQ36". These items map exactly to the General Health scale. Item 35 also loads on this scale, and as its loading was 0.29 while the cutoff was 0.30, it can be best characterised as part of that scale. Therefore, this factor can be best termed as General Health.
+GenHealth: These items map exactly to the General Health scale. Item 35 also loads on this scale, and as its loading was 0.29 while the cutoff was 0.30, it can be best characterised as part of that scale. Therefore, this factor can be best termed as General Health.
 
-PA7: "RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20". This scale maps to the Emotional Role Limitations and one item (20) from the Social Functioning scale (which asks about social events that have been missed due to health problems) and so this can probably best be termed as Emotional Role Limitations.
+EmRoleLim: This scale maps to the Emotional Role Limitations and one item (20) from the Social Functioning scale (which asks about social events that have been missed due to health problems) and so this can probably best be termed as Emotional Role Limitations.
 
-PA3: "RANDQ13" ,"RANDQ14" ,"RANDQ15" ,"RANDQ16". This scale maps exactly to the Role Limitations sub-scale, and so retains that name. 
+RoleLim:  This scale maps exactly to the Role Limitations sub-scale, and so retains that name. 
 
-PA5: "RANDQ29" ,"RANDQ31". These items are the negative items from the Energy/Fatigue scale, and so this factor can probably best be termed as Fatigue. 
+Fatigue: These items are the negative items from the Energy/Fatigue scale, and so this factor can probably best be termed as Fatigue. 
 
-PA6: "RANDQ21" ,"RANDQ22". These items map exactly to the Pain scale, and so retain that name. 
+Pain: These items map exactly to the Pain scale, and so retain that name. 
 
-PA8: "RANDQ2" , "RANDQ23" ,"RANDQ27". The loadings on this factor are all below .4, which argues against its unproblematic interpretation. In addition, Q2 loads on this factor, when it is not typically associated with any factor. The other two items are the positively worded items from the  Energy/Fatigue scales, and so this factor can best be termed Energy. 
+Energy: The loadings on this factor are all below .4, which argues against its unproblematic interpretation. In addition, Q2 loads on this factor, when it is not typically associated with any factor. The other two items are the positively worded items from the  Energy/Fatigue scales, and so this factor can best be termed Energy. 
 
 
 
@@ -1313,21 +1313,20 @@ As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provide
 
 
 
-The next instrument examined was the MAAS.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
+The first instrument examined was the MAAS.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
 <<maasassumptioncheck, echo=FALSE, results=hide>>=
 maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
+The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
 
 <<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
 maas.irt <- maasitems[,maas.irt]
 @
 
-Next, item ordering was examined for this scale.
 
 <<maasitemord, echo=FALSE, results=hide, cache=TRUE>>=
 maas.iio <- check.iio(na.omit(maas.irt))
@@ -1404,7 +1403,7 @@ print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Par
 @ 
 
 
-Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. It can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates sugegst that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. It can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
 <<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1529,7 +1528,7 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 
 The next step in the analytic procedure was to examine the relationships between health, optimism and mindfulness somewhat more deeply, drawing on the work carried out so far with the data. 
 
-The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. The best model for each scale was used, and the relationships between the latent traits estimated. This model was then compared to a model fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the stepwise regressions (on unseen data). 
+The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. This model was  fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the stepwise regressions (on unseen data). 
 
 
 \subsection{Optimism and Health}
@@ -1547,7 +1546,7 @@ The models used in this section were as follows:
 %% \item Each of these models was fit both to the summary scores and the latent factors.
 \end{itemize}
 
-The lasso model suggested that Age, EnergyFatigue, Emotional Well BEing, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
+The lasso model suggested that Age, Energy/Fatigue, Emotional Well Being, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
 
 <<lotrranddirect, echo=FALSE, results=hide>>=
 hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
@@ -2121,10 +2120,10 @@ pairs.panels(scales2)
 \end{figure}
 
 
-\section{Regression Analyses}
-\label{sec:regression-analyses}
+%% \section{Regression Analyses}
+%% \label{sec:regression-analyses}
 
-Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample, focusing mainly on the relationship of optimism to the other variables in the sample, as this was the major finding from Sample One. Similarly to the earlier work, stepwise linear regression models, were applied to the data using a training and test set design.
+%% Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample, focusing mainly on the relationship of optimism to the other variables in the sample, as this was the major finding from Sample One. Similarly to the earlier work, stepwise linear regression models, were applied to the data using a training and test set design.
 
 <<optsetup2b, echo=FALSE, results=hide, cache=TRUE>>=
 scales2b.full <- na.omit(scales2b)
@@ -2166,7 +2165,7 @@ print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regres
 
 %% Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
 
-INSERT REGRESSION ANALYSES HERE
+%% INSERT REGRESSION ANALYSES HERE
 
 \subsection{MAAS}
 \label{sec:maas-samp-two}
@@ -2195,7 +2194,7 @@ maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact1, names=c("Mindfulness"),label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"))
 @
 
-The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
+%% The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
 
 <<maas2c1, echo=FALSE, results=hide>>=
 maas2c.fact1 <- fa(maasitems2c, 1, rotate="oblimin", fm="pa")
@@ -2501,13 +2500,13 @@ sink(NULL)
 
 Again, the parallel analysis criterion suggests two factors, while the MAP criterion suggests one, so both solutions will be examined and interpreted for both splits, as the results were broadly similar. 
 
-<<lotr2bfact1, echo=FALSE, results=tex>>=
+<<lotr2bfact1, echo=FALSE, results=hide>>=
 lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2b.fact1, names=c("Optimism"),label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
 @
 
 
-<<lotr2cfact1, echo=FALSE, results=tex>>=
+<<lotr2cfact1, echo=FALSE, results=hide>>=
 lotr2c.fact1 <- fa(lotritems2c, 1, rotate="oblimin", fm="pa")
 print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", caption="One Factor Solution, LOT-R, Sample Two, Split C"))
 @
