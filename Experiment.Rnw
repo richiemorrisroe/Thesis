@@ -8,9 +8,9 @@ This chapter describes the experimental portion of the research, which involved 
 
 %% this section will present the overall approach and rationale for the work carried out in the course of this chapter.
 
-The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches~\cite{Kirsch1997,Pollo2009,Whalley2008,Geers2005}. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure for treatment credibility expectancies was developed in  Chapter \ref{cha:tcq-thesis}. 
+The placebo effect is a complex phenomenon. It has been established that it can be predicted by some variables which are typically measured using self report approaches~\cite{Kirsch1997,Pollo2009,Whalley2008,Geers2005}. These variables include expectancies and optimism. Optimism was measured using the Life Orientation Test, Revised (LOT-R - see Chapter \ref{cha:health-for-thesis} for details on this instrument), and a new measure for treatment credibility expectancies was developed in Chapter \ref{cha:tcq-thesis} (the Treatment Credibility Questionnaire) to assess treatment-related expectancies. 
 
-Additionally, these variables only explain a small proportion of the variance in the observed placebo response (given a correlation of 0.3 with the response, this equates to less than 10\% of the variance). It is the contention of this thesis that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
+Explicit measures only appear to explain a small proportion of the variance in the observed placebo response (given a correlation of 0.3 with the response, this equates to less than 10\% of the variance). It is the contention of this thesis that some of the residual variance can be predicted by the use of implicit measures (specifically the IAT). Therefore, two implicit measures, one of Treatment Credibility and the other of Optimism were developed (see Chapter \ref{cha:devel-impl-meas} for details). 
 
 The relationship between the observed placebo response, and these explicit and implicit measures was of primary importance to this research, and so a measure of Mindfulness (Mindful Attention Awareness Scale) was also used. The rationale behind this choice of measure was explained in Chapters \ref{cha:literature-review} and \ref{cha:health-for-thesis}, but briefly, this measure has been shown both to correlate with a cluster of other variables around cognition and implicit attitudes \cite{Levesque2007,Conner2007}. Additionally, this variable is also related to self-reported health (see Chapter \ref{cha:health-for-thesis} for further details), and as such is a potential moderator of the placebo response itself. 
 
@@ -64,7 +64,7 @@ This chapter proceeds with the following sections:
 \subsection{Placebo Effects and Implicit Measures}
 \label{sec:plac-effects-impl}
 
-As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-comb} there are some reasons to believe that the placebo effect is impacted by implicit influences. These are the following:
+As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-comb}, there are some reasons to believe that the placebo effect is impacted by implicit influences. These are the following:
 
 \begin{itemize}
 \item Research shows that priming can increase the size of placebo effects;
@@ -76,7 +76,7 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-
 \end{itemize}
 
 
-The implicit measure chosen for this purpose was the Implicit Association Test (IAT). This choice was made both because it is the most widespread, and as such more of the best practices and problems with the measure are available in prior research. 
+The implicit measure chosen for this purpose was the Implicit Association Test (IAT). This choice was made both because it is the most widespread, and as such more of the best practices and problems with the measure were available in prior research. 
 
 These problems (discussed at length in Chapter \ref{cha:literature-review}, Section \ref{sec:impl-assoc-test}), have included:
 
@@ -110,9 +110,10 @@ However, this study did not include a deceptive placebo condition, and so is not
 \subsection{Explicit Measures and Placebo}
 \label{sec:expl-meas-plac}
 
-Another issue with current placebo research relates to expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the development of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. 
+A number of issues are apparent in the current research around treatment-related expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the development of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. 
 
-In brief, the measure adapted in Chapter \ref{cha:tcq-thesis} had six questions for each of the six different treatment modalities, which included conventional (Pills, Creams, Injections) and Alternative (Acupuncture, Homeopathy, Reiki) treatments. Three of the questions related to expectancy, while three related to credibility (factors found in the original development of the instrument). These 36 questions were reduced to 18 using factor analytic and IAT measures, to allow for easier administration (c.f. Section \ref{sec:reducing-size-tcq}).
+The measure developed in Chapter~\ref{cha:tcq-thesis} attempts to address the first problem, while the IAT's developed in Chapter~\ref{devel-of-iat} address the second. 
+The measure adapted in Chapter~\ref{cha:tcq-thesis} had six questions for each of the six different treatment modalities, which included conventional (Pills, Creams, Injections) and Alternative (Acupuncture, Homeopathy, Reiki) treatments. Three of the questions related to expectancy, while three related to credibility (factors found in the original development of the instrument). These 36 questions were reduced to 18 using factor analytic and IAT measures, to allow for easier administration (c.f. Section \ref{sec:reducing-size-tcq}).
 
 Additionally, this experiment also investigates the relationship between expectancies and optimism, given that optimism is often defined as ``generalised outcome expectancies'' there would seem to be a relationship, but whether both of these constructs capture different facets of the response or merely co-vary with one another is not clear, and this was investigated using regression and structural equation models. The relationship between these two variables is discussed further in the section on theoretical models in Chapter \ref{cha:methodology}. 
 
@@ -187,13 +188,13 @@ load("tcqthesislatest.rda")
 \subsubsection{Recruitment for the Experimental Procedure}
 
 
-Recruitment for participants primarily took place via email and social networking sites. In total, six emails were sent to random sub-sets of the student mailing list from the period January 2nd until April 11th. 
+Recruitment for participants primarily took place via email. In total, six emails were sent to random sub-sets of the student mailing list from the period January 2nd until April 11th. 
 Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research. The experiment ran from January 17th until April 14th inclusive.
 
 \subsubsection{Measures used in the Experiment}
 \label{sec:meas-used-exper}
 
-The following measures were used in this experiment. Firstly, Age, Gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as described in Section~\ref{sec:iat-stimuli}, Chapter~\ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
+The following measures were used in this experiment. Firstly, age, gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as reported in Section~\ref{sec:iat-stimuli}, Chapter~\ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
 
 
 %% Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
@@ -749,7 +750,7 @@ print(lotrmaas)
 %% \end{figure}
 
 
-Optimism and mindfulness were positively correlated with one another (see Figure \ref{fig:pairsimpexp}).  Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapters \ref{cha:health-for-thesis} and  \ref{cha:general-discussion}. 
+Optimism and mindfulness were positively correlated with one another (see Figure \ref{fig:pairsimpexp}, on page \pageref{fig:pairsimpexp}).  Additionally this correlation appeared to be relatively stable across condition, though it appeared a little weaker in the Deceptive Placebo Group.  This is in contrast to the results found in a much larger scale study carried out earlier in the research. Note that one plausible explanation for this effect is that, in the experiment, the measures were administered in the opposite order - Optimism, followed by Mindfulness. It is possible that the completion of the mindfulness measure affected the way in which participants approached the Optimism measure. This theory is more fully discussed in Chapters \ref{cha:health-for-thesis} and  \ref{cha:general-discussion}. 
 
 
 
@@ -795,7 +796,7 @@ exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density(alpha=0.5)
 surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue", alpha=0.5)
 print(arrangeGrob(surv.exp.pill.pl, surv.exp.cream.pl))
 @   
-  \caption{Density Plot for Distribution of Pill Credibility Scores, Survey Sample (sample 2) (top) and Experimental Cream Credibility Totals (bottom)}
+  \caption{Density Plot for Distribution of Pill Credibility Scores, Survey Sample (sample 2) versus experimental sample (top) and Cream Credibility Totals (bottom) sample 2 survey}
   \label{fig:compcream}
 \end{figure}
 
@@ -903,7 +904,7 @@ Next, the relationships between the explicit and implicit measures were examined
 
 
 \begin{figure}
-<<corrtestimplexpl, echo=FALSE, results=hide>>=
+<<corrtestimplexpl, echo=FALSE, fig=TRUE>>=
 pairs.panels(Iatandexpmeasures[,14:25])
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
@@ -914,7 +915,7 @@ pairs.panels(Iatandexpmeasures[,14:25])
 
 
 It can be seen from Figure \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
-. Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion, and some theories were described in Chapter \ref{cha:health-for-thesis}. 
+. Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion, and some theories were discussed in Chapter~\ref{cha:health-for-thesis}. 
 
 
 
@@ -934,7 +935,7 @@ chisq2.xtab <- xtable(chisqtest2, label="tab:placondtest", caption="Chi Square t
 print(chisq2.xtab)
 @ 
 
-Using a chi-square test ($\chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that this experiment was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
+Using a chi-square test ($\chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that the suggestion in a each condition was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
 
 <<chisqtestprimeplac, echo=FALSE, results=hide>>=
 chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
@@ -960,17 +961,17 @@ print(plac.prime.pl)
   \label{fig:placprimeplot}
 \end{figure}
 
-\begin{figure}
-<<pairsplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}-
+<<pairsplot, echo=FALSE, eval=FALSE>>=
 iatexp2 <- iatexp
 names(iatexp2)[9:10] <- c("TCQIAT", "OptIAT")
 print(plotmatrix(iatexp2)+geom_smooth(method="lm")+geom_jitter())
 @   
-  \caption{Scatterplots and Density Plots for Self Report and Implicit Measures}
-  \label{fig:pairsplotimpexp}
-\end{figure}
+%%   \caption{Scatterplots and Density Plots for Self Report and Implicit Measures}
+%%   \label{fig:pairsplotimpexp}
+%% \end{figure}
 
-In Figure \ref{fig:pairsplotimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with themselves, as noted above).  
+In Figure \ref{fig:pairsimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with themselves, as noted above).  
 
 There was a difference in the mean cream credibility scores by whether or not a participant responded to placebo, but the difference was not significant ($t=-0.9545, df=53.766, p=0.3441$). 
 
@@ -991,7 +992,7 @@ print(placresplot)
 \end{figure}
 
 
-A number of findings are apparent from the plot in Figure \ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+A number of findings are apparent from the plot in Figure \ref{fig:placyesno} on page \pageref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
 \subsection{Logistic Regressions on Placebo Response}
 \label{sec:logist-regr-plac}
@@ -1024,7 +1025,7 @@ placmod.step <- stepAIC(placmod.full)
 @ 
 
 <<placmodstepprint, echo=FALSE, results=tex>>=
-print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"), table.placement="htp")
+print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"))
 @ 
 
 As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has a significant coefficient on the TCQ IAT, one for Age and significant coefficient for the interaction between the TCQIAT and the LOTR (while the individual coefficient for the LOT-R trended towards significance). 
@@ -1034,7 +1035,7 @@ iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "L
 iatandexpfull.test.small[,2:length(iatandexpfull.test.small)] <- scale(iatandexpfull.test.small[,2:length(iatandexpfull.test.small)])
 placmod.test <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
 
-print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"), floating=FALSE)
+print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"))
 
 @
 
@@ -1044,7 +1045,7 @@ Table \ref{tab:placmodsteptest} shows the results of the stepwise selected model
 
 <<placmodor, echo=FALSE, results=tex>>=
 odds.ratios <- cbind(exp(coef(placmod.test)), confint(placmod.test))
-print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for Coefficients in Test Data Model"), floating=FALSE)
+print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for Coefficients in Test Data Model"))
 @
 
 
@@ -1059,7 +1060,7 @@ placmod.pvalues <- as.data.frame(placmod.boot$t)
 names(placmod.pvalues) <- names(coef(placmod.test))
 ## placmod.boot.full <- boot(iatandexpfull, statistic=placglm, R=1000)
 pvalues.sum <- apademotables(placmod.pvalues)
-print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"), floating=FALSE)
+print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"))
 @ 
 
 To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table \ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response, with the exception of Age (the median p-value was approximately 0.1), which is unexpected and can probably be best explained by the clustering of the majority of participants in a small range of ages. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this process does not account for the search process, it is not reported further here. 
@@ -1071,7 +1072,7 @@ Individual regressions were run for each of the variables over the training and 
 <<placmod2, echo=FALSE, results=hide>>=
 placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod2.xtab <- xtable(summary(placmod2), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
-print(placmod2.xtab,  floating=FALSE)
+print(placmod2.xtab)
 @ 
 
 %% As shown in Table \ref{tab:placmod2} the Optimism IAT is not an independent significant predictor of placebo response either. 
@@ -1079,14 +1080,14 @@ print(placmod2.xtab,  floating=FALSE)
 <<placebolotr, echo=FALSE, results=hide>>=
 placmod.lotr<- glm(PlacResp~LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.lotr.xtab <- xtable(summary(placmod.lotr), label="tab:placebolotr", caption="Regression of LOT-R Scores on Placebo Response")
-print(placmod.lotr.xtab, floating=FALSE)
+print(placmod.lotr.xtab)
 @ 
 
 %% In addition, the Life Orientation scores are not a significant predictor of placebo response either, as shown in Table \ref{tab:placebolotr}.
 
 <<placmodlotrirt, echo=FALSE, results=tex>>=
 placmod.lotr.irt <- glm(PlacResp~AbilityLOTR, data=Iatandexpmeasures.abest, family=binomial(link="logit"))
-print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"), floating=FALSE)
+print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"))
 @ 
 
 Next, IRT estimated abilities for the LOT-R were tested against the placebo response. Note that the ability estimates were calculated from the reduced five item scale described in Section~\ref{sec:backtesting-lotr} on page \pageref{sec:backtesting-lotr}. When these ability estimates  are included in place of the sum-scores, the result does still not achieve the conventional threshold of significance. These results are shown in Table~\ref{tab:placmodlotrirt}. 
@@ -1124,7 +1125,7 @@ print(placmod.xtab)
 @ 
 
 
-Scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response, but this difference was not significant. 
+%% Scores of 0 or above on the optimism IAT (reflecting no to small difference in favour of positive stimuli) and high self reported optimism are associated with a greater likelihood of placebo response, but this difference was not significant. 
 
 
 \subsection{Pain Ratings}
@@ -1480,16 +1481,16 @@ exp.sem <- Iatandexpmeasures.t[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIA
 
 
 @ 
-\begin{figure}
+%% \begin{figure}
 <<gsrpainplt, echo=FALSE, eps=TRUE, png=TRUE, pdf=TRUE, jpg=TRUE, fig=TRUE>>=
 print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
-\caption{GSR versus Pain Ratings over Time by Condition}
-\label{fig:gsrpainplot}
-\end{figure}
+%% \caption{GSR versus Pain Ratings over Time by Condition}
+%% \label{fig:gsrpainplot}
+%% \end{figure}
 
 
-There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined (in Figure \ref{fig:gsrpainplot}).
+%% There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined (in Figure \ref{fig:gsrpainplot}).
 For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
@@ -2199,7 +2200,7 @@ However, one difference here is that a model with implicit and explicit measures
 \subsection{Physiological Analyses}
 \label{sec:phys-analys}
 
-This section was perhaps the most interesting, in that some observations were made that do not appear to have been reported previously in the literature. 
+This section was perhaps the most interesting, in that some observations were made that do not appear to have been reported frequently in the literature, with the exception of some older research of Kirsch~\cite{kirsch1988double}.
 
 Firstly, the GSR responses appeared to vary systematically as a result of Condition, more specifically as a result of the suggestions given for the Deceptive and Open Placebo conditions. This can be seen by examining the cross-correlations between pain ratings and GSR responses. These were systematically correlated in the two ``active'' conditions, where suggestions were given, while not correlated at all in the No Treatment condition. 
 
@@ -2237,7 +2238,7 @@ To recap, the following has been learned from this research.
 \item There appears to be a noticeable effect of placebo adminstration/suggestion on electrodermal activity. 
   
 
-\item A model involving both implicit and explicit measures of Optimism and Expectancies mediated by a general expectancy factor appears to provide a much better fit to the data than do alternative models. 
+\item A model involving both implicit and explicit measures of optimism and expectancies mediated by a general expectancy factor appears to provide a much better fit to the data than do alternative models. 
 \end{enumerate}
 
 
