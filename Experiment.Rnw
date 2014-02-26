@@ -1028,7 +1028,7 @@ placmod.step <- stepAIC(placmod.full)
 print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"))
 @ 
 
-As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has a significant coefficient on the TCQ IAT, one for Age and significant coefficient for the interaction between the TCQIAT and the LOTR (while the individual coefficient for the LOT-R trended towards significance). 
+As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has an almost significant coefficient on the TCQ IAT, one for the LOT-R,  and the two two-way interactions trended towards significance. 
 
 <<placmodsteptest, echo=FALSE, results=tex>>=
 iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "LOTR", "Age", "OptIAT.Mean", "Rei")]
