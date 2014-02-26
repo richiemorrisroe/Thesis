@@ -122,7 +122,7 @@ The questions were as follows:
 
 Of these, the first three questions were found to cluster together (using principal components analysis) in a credibility factor, while the second three questions were found to make up an expectancy factor \cite{Devilly2000}.  Note that this was despite their arbitrary division into Set I and II, and was replicated across all three samples (where $N \approx 100$ for each of the samples).  
 
-In light of evidence that the IAT correlates better with explicit measures when they are relative measures (i.e. a feeling thermometer) than when they are not, a non-relative measure was adapted for this research, to maximise the incremental validity of each measure. 
+In light of evidence that the IAT correlates better with explicit measures when they are relative measures (i.e. a feeling thermometer) than when they are not, a non-relative measure was adapted for this research, to maximise the incremental variance explained by each measure. 
 
 \paragraph{Beliefs About Medicine Questionnaire}
 
@@ -554,7 +554,7 @@ print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients f
 %% The two parameter model (shown in Table \ref{tab:tcq1altgpcm2pl}) has some interesting features compared to the one parameter model. Firstly, the discrimination parameter of Items 1 and 3 have significantly decreased compared to the one parameter model. The discrimination parameter for Acu 2 has lowered slightly. The discrimination of the other three items has increased substantially. An ANOVA between the two models shows that the model is a significant improvement on the one parameter model ($p\le 0.001$). 
 
 
-<<tcqaltgrm1, echo=FALSE, results=tex, cache=TRUE>>=
+<<tcqaltgrm1, echo=FALSE, results=tex>>=
 tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 @ 
@@ -844,7 +844,7 @@ As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit
 
 The first step in examining the predictive power of the IRT models is to score the current subsample of the Study Two data (Split A) using the prior models. Then, the same model can be fit on this data alone, and the error of estimation between the two processes can be calculated. Essentially, the root mean square error of approximation (RMSEA) was used to assess the usefulness of each of the models. 
 
-Firstly, the Conventional TCQ was assessed. 
+The Conventional TCQ was assessed, first.
 
 <<tcqconvpcmraschtest, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2a.conv <- tcq2.1[,c(1,3:18)]
@@ -888,7 +888,16 @@ rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
 print(grm.modcomp.xtab)
 @ 
-As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). 
+As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). The same pattern was apparent when the alternative scale was examined. 
+
+<<grmtest, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
+grm1plalt.done <- testIRTModels(tcqalt.grm.1pl, tcq2a.alt, grmconstraint=TRUE)g
+rm2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
+grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
+rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
+
+@ 
+
 
 
 \section{Conclusions \& Next Steps}
@@ -921,7 +930,7 @@ Given the results of Study 1, this study added two more Complementary and Altern
 The hypotheses were as follows: 
 
 \begin{itemize}
-\item The TCQ V2.0 will have six factors, one for each treatment modality, along with two higher level factors, one for each of Conventional and Alternative treatments;
+\item The TCQ V2.0 will have six factors, one for each treatment modality;
 
 \item The BMQ will correlate negatively with the Pills, Cream and Injection totals, and positively with the Acupuncture, Homeopathy and Reiki totals;
 \item   The TCQ will not fit an item response theory model well, and will need to be divided into TCQ Conventional (Pills, Creams, Injections) and a TCQ Alternative (Acupuncture, Homeopathy and Reiki) in order to meet the assumptions of the model(s);
@@ -981,7 +990,8 @@ sink(NULL)
 %% As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships. 
 
 
-Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989) (and also discussion in Section \ref{sec:regress-models}). The histograms for the alternative treatments are also quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. 
+%% Interestingly enough, it can be seen from Figure \ref{fig:tcq2pairs} that the Beliefs About Medicine Questionnaire totals seem normally distributed, which is unexpected  (Micceri et al, 1989) (and also discussion in Section \ref{sec:regress-models}). 
+The histograms for the alternative treatments are  quite interesting, given that they appear to have a number of peaks with very little in between. This may reflect the polarised nature of the attitudes towards these treatments. 
 
 The sample scores showed some significant differences attributable to Gender. The cream, acupuncture, homeopathy and reiki totals were significantly different in the sample, as was the Beliefs About Medicine scale total. 
 
@@ -1751,7 +1761,7 @@ tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(tcq2.conv.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds averaged over Splits B, C and D"))
+print(xtable(tcq2.conv.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"))
 @ 
 
 
@@ -1792,12 +1802,12 @@ print(xtable(tcq2.alt.grm.1pl.av, label="tab:tcq2altgrm1plaverage", caption="Ite
 
 Table \ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
 
-<<tcq2altgrm2plaverage, echo=FALSE, results=tex>>=
+<<tcq2altgrm2plaverage, echo=FALSE, results=hide>>=
 tcq2.alt.grm.2pl.av <- irtAverage(sols=list(tcq2b.alt.grm.2pl, tcq2c.alt.grm.2pl, tcq2d.alt.grm.2pl))
 print(xtable(tcq2.alt.grm.2pl.av, label="tab:tcq2altgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
 @ 
 
-As can be seen from Table \ref{tab:tcq2altgrm2plaverage}, the difficulty parameters for the averaged two parameter models have increased across all items while the difficulty parameters have reduced significantly for most of the items. The Reiki items appear to be the most discriminating, while the Acupuncture items, while difficult appear to change less as the participant ability thresholds increase. 
+The difficulty parameters for the averaged two parameter models  increased across all items while the difficulty parameters have reduced significantly for most of the items. The Reiki items appear to be the most discriminating, while the Acupuncture items, while difficult appear to change less as the participant ability thresholds increase. 
 
 \subsection{Testing the Models}
 \label{sec:testing-models}
@@ -2063,7 +2073,7 @@ tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
-print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset Results"), scalebox=0.8)
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset"), scalebox=0.8)
 @ 
 
 As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
