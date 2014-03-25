@@ -181,7 +181,7 @@ The aims and objectives of this portion of the research were as follows:
 ## load("homdata.rda")
 ## load("credtotals.rda")
 ## load("tcqthesis.rda")
-load("healthlatest.rda")
+load("healthforthesislatest.rda")
 load("tcqthesislatest.rda")
 @ 
 
@@ -369,6 +369,24 @@ censor2 <- ifelse(censor==c("No", "Left"), 1, 0)
 ## Surv.data <- Surv(lengthsurv,censor2)
 @ 
 
+<<tcqtestblocks, echo=FALSE, results=hide>>=
+tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
+tcqwords <- c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki")
+tcqiatscore.mean <- calcIatScores(tcqiatsorted, Code="Participant", method="mean", words=tcqwords)
+tcqstimblock3 <- tcqiatscore.mean[,grep("Block3.", x=names(tcqiatscore.mean))]
+tcqstimblock5 <- tcqiatscore.mean[,grep("Block5.", x=names(tcqiatscore.mean))]
+names(tcqiatscore.mean)[1] <- "Participant"
+names(tcqiatscore.mean)[6] <- "TCQIAT.Mean"
+tcqiatscore.median <- calcIatScores(tcqiatsorted, Code="Participant", method="median", words=tcqwords)
+names(tcqiatscore.median)[1] <- "Participant"
+names(tcqiatscore.median)[6] <- "TCQIAT.Median"
+tcqiatscore <- merge(tcqiatscore.mean[,c(1,6)], tcqiatscore.median[,c(1,6)], by="Participant")
+part.tcq <- unique(tcqiat[,"Participant"])
+tcqstimblock3 <- as.data.frame(cbind(part.tcq, tcqstimblock3))
+tcqstimblock5 <- as.data.frame(cbind(part.tcq, tcqstimblock5))
+IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
+@ 
+
 <<selfreportcleanup, echo=FALSE, results=hide>>=
 names(vasscores2)[1] <-  "Participant"
 names(expmeasures2)[1] <- "Participant"
@@ -407,6 +425,29 @@ In addition, the priming manipulation was not significantly different across gro
 
 However, there was a difference in the mean (and median) GSR scores at baseline. Baseline measurements were taken for the first one hundred seconds of the experiment, and can be seen in Table \ref{tab:gsrstartcond} broken down by condition, though from an examination of the standard deviations, these differences do not appear to be significant.  The reasons for this difference are unclear, given that no participant was informed of their condition allocation until after the bandage had been applied.  
 
+<<gsrimport, echo=FALSE, results=hide>>=
+gsr <- read.csv("GSRdataDownSample.csv")
+gsr.top <- head(gsr, n=100)
+gsr.top.m <- melt(gsr.top)
+gsr.top.av <- ddply(gsr.top.m, .(variable), summarise, GSR=mean(value, na.rm=TRUE))
+gsr.top.av2 <- gsr.top.av
+gsr.top.av2[,"variable"] <- with(gsr.top.av, gsub("[A-Za-z.]", "", x=variable))
+names(gsr.top.av2)[1] <- "Participant"
+Iatandexpmeasures.top <- merge(Iatandexpmeasures, gsr.top.av2, by="Participant")
+gsr.start.by.cond <- ddply(Iatandexpmeasures.top, .(Condition), summarise, MeanGSR=mean(GSR, na.rm=TRUE))
+gsr.start.cond.sd <- ddply(Iatandexpmeasures.top, .(Condition), summarise, Mean=mean(GSR, na.rm=TRUE), SD=sd(GSR, na.rm=TRUE))
+gsr[,"index"] <- 1:nrow(gsr)
+gsr.melt <- melt(gsr, id.vars="index")
+gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
+gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
+names(gsr.mean)[1] <- "Participant"
+Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
+Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
+## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
+## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
+gsr.rs <- dcast(gsr.melt, variable~index+...)
+@
+
 <<gsrcondstart, echo=FALSE, results=tex>>=
 print(xtable(gsr.start.cond.sd, label="tab:gsrstartcond", caption="Mean and SD of GSR by Condition at baseline (first 100 seconds)"))
 @ 
@@ -415,23 +456,7 @@ print(xtable(gsr.start.cond.sd, label="tab:gsrstartcond", caption="Mean and SD o
 \label{sec:analysis-iat-data}
 The first step in the analysis of IAT data is to examine the differential impact of using the mean versus the median as the measure of central tendency for the calculation of IAT scores (the $D$ measure). The results  showed that there were no major changes attributable to this difference (the correlation between the two scores was $r=0.91$). 
 
-<<tcqtestblocks, echo=FALSE, results=hide>>=
-tcqiatsorted[,"Block"] <- with(tcqiatsorted, gsub(":", "", x=Block))
-tcqwords <- c("Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki")
-tcqiatscore.mean <- calcIatScores(tcqiatsorted, Code="Participant", method="mean", words=tcqwords)
-tcqstimblock3 <- tcqiatscore.mean[,grep("Block3.", x=names(tcqiatscore.mean))]
-tcqstimblock5 <- tcqiatscore.mean[,grep("Block5.", x=names(tcqiatscore.mean))]
-names(tcqiatscore.mean)[1] <- "Participant"
-names(tcqiatscore.mean)[6] <- "TCQIAT.Mean"
-tcqiatscore.median <- calcIatScores(tcqiatsorted, Code="Participant", method="median", words=tcqwords)
-names(tcqiatscore.median)[1] <- "Participant"
-names(tcqiatscore.median)[6] <- "TCQIAT.Median"
-tcqiatscore <- merge(tcqiatscore.mean[,c(1,6)], tcqiatscore.median[,c(1,6)], by="Participant")
-part.tcq <- unique(tcqiat[,"Participant"])
-tcqstimblock3 <- as.data.frame(cbind(part.tcq, tcqstimblock3))
-tcqstimblock5 <- as.data.frame(cbind(part.tcq, tcqstimblock5))
-IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
-@ 
+
 
 %% \begin{figure}
 <<meanmedtcqiat, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE, results=hide>>=
@@ -767,8 +792,8 @@ Given the focus of this thesis on the integration of survey and experimental res
 
 \begin{figure} 
 <<surveymindfulness, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-surv.exp.mind.pl <- ggplot()+geom_density(data=hom.data, aes(x=mindfulness), fill="blue", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=MAAS), fill="red", alpha=0.5)
-surv.exp.opt.pl <- ggplot()+geom_density(data=hom.data, aes(x=optimism), fill="red", alpha=0.5)+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue", alpha=0.5)
+surv.exp.mind.pl <- ggplot()+geom_density(data=hom2, aes(x=mindfulness), fill="blue", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=MAAS), fill="red", alpha=0.5)
+surv.exp.opt.pl <- ggplot()+geom_density(data=hom2, aes(x=optimism), fill="red", alpha=0.5)+geom_density(data=expmeasures2, aes(x=LOTR), fill="blue", alpha=0.5)
 print(arrangeGrob(surv.exp.opt.pl,surv.exp.mind.pl))
 @  
   \caption{Density Plot for Optimism (top) and Mindfulness Scores (bottom), Survey Sample (red), and Experimental Sample (blue)}
@@ -893,7 +918,7 @@ maas.exp <- expfull[,maas.modnames]
 maas.fscores <- factor.scores(maas2c.grm.1pl, maas.exp)
 lotr.fscores <- factor.scores(lotr2c.grm.1pl, resp.patterns=lotr.exp)
 fscores.lotr.maas <- data.frame(Participant=expfull[["Participant"]], AbilityLOTR=getIRTestimates(lotr.fscores)[,1], AbilityMAAS=getIRTestimates(maas.fscores)[,1])
-Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.part.lotr, by="Participant")
+Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.lotr.maas, by="Participant")
 @ 
 
 
@@ -1335,28 +1360,7 @@ Before the analysis of GSR data was conducted, the mean GSR per group were scale
 
 
 
-<<gsrimport, echo=FALSE, results=hide>>=
-gsr <- read.csv("GSRdataDownSample.csv")
-gsr.top <- head(gsr, n=100)
-gsr.top.m <- melt(gsr.top)
-gsr.top.av <- ddply(gsr.top.m, .(variable), summarise, GSR=mean(value, na.rm=TRUE))
-gsr.top.av2 <- gsr.top.av
-gsr.top.av2[,"variable"] <- with(gsr.top.av, gsub("[A-Za-z.]", "", x=variable))
-names(gsr.top.av2)[1] <- "Participant"
-Iatandexpmeasures.top <- merge(Iatandexpmeasures, gsr.top.av2, by="Participant")
-gsr.start.by.cond <- ddply(Iatandexpmeasures.top, .(Condition), summarise, MeanGSR=mean(GSR, na.rm=TRUE))
-gsr.start.cond.sd <- ddply(Iatandexpmeasures.top, .(Condition), summarise, Mean=mean(GSR, na.rm=TRUE), SD=sd(GSR, na.rm=TRUE))
-gsr[,"index"] <- 1:nrow(gsr)
-gsr.melt <- melt(gsr, id.vars="index")
-gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
-gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
-names(gsr.mean)[1] <- "Participant"
-Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
-## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
-## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
-gsr.rs <- dcast(gsr.melt, variable~index+...)
-@
+
 
 <<ecgimport, echo=FALSE, results=hide>>=
 ecg <- read.csv("ECGdataDownSample.csv")

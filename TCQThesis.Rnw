@@ -891,7 +891,7 @@ print(grm.modcomp.xtab)
 As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). The same pattern was apparent when the alternative scale was examined. 
 
 <<grmtest, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
-grm1plalt.done <- testIRTModels(tcqalt.grm.1pl, tcq2a.alt, grmconstraint=TRUE)g
+grm1plalt.done <- testIRTModels(tcqalt.grm.1pl, tcq2a.alt, grmconstraint=TRUE)
 rm2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
 rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
@@ -1069,6 +1069,12 @@ tcq2notb <- tcq2[-tcq2.ind.b,]
 tcq2notc <- tcq2[-tcq2.ind.c,]
 tcq2notd <- tcq2[-tcq2.ind.d,]
 tcqall2nota <- tcq2nota[,17:52]
+tcqconv.notb <- tcqall2notb[,1:18]
+tcqalt.notb <- tcqall2notb[,1:18]
+tcqconv.notc <- tcqall2notc[,1:18]
+tcqalt.notc <- tcqall2notc[,1:18]
+tcqconv.notd <- tcqall2notd[,1:18]
+tcqalt.notd <- tcqall2notd[,1:18]
 tcqall2notb <- tcq2notb[,17:52]
 tcqall2notc <- tcq2notc[,17:52]
 tcqall2notd <- tcq2notd[,17:52]
@@ -1818,19 +1824,19 @@ The difficulty parameters for the averaged two parameter models  increased acros
 tcq2b.grm.1pl.done <- testIRTModels(tcq2b.conv.grm.1pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=TRUE)
 tcq2b.grm.2pl.done <- testIRTModels(tcq2b.conv.grm.2pl, tcqconv.notb, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2b.conv.grm.modcomp <- rbind(tcq2b.grm.1pl.done, tcq2b.grm.2pl.done)
-rownames(tcq2b.grm.modcomp) <- c("One Parameter", "Two Parameter")
+rownames(tcq2b.conv.grm.modcomp) <- c("One Parameter", "Two Parameter")
 
 @ 
 <<tcq2cconvgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
-tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=TRUE)
-tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcq2notc.conv, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2c.conv.grm.1pl.done <- testIRTModels(tcq2c.conv.grm.1pl, tcqconv.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2c.conv.grm.2pl.done <- testIRTModels(tcq2c.conv.grm.2pl, tcqconv.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2c.conv.grm.modcomp <- rbind(tcq2c.conv.grm.1pl.done, tcq2c.conv.grm.2pl.done)
 rownames(tcq2c.conv.grm.modcomp) <- c("One Paramter GRM", "Two Parameter GRM")
 @ 
 
 <<tcq2dgrmmodcomp, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=TRUE)
-tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcq2notd.irt, gpcmconstraint=NULL, grmconstraint=FALSE)
+tcq2d.conv.grm.1pl.done <- testIRTModels(tcq2d.conv.grm.1pl, tcqconv.notd, gpcmconstraint=NULL, grmconstraint=TRUE)
+tcq2d.conv.grm.2pl.done <- testIRTModels(tcq2d.conv.grm.2pl, tcqconv.notd, gpcmconstraint=NULL, grmconstraint=FALSE)
 tcq2d.conv.grm.modcomp <- rbind(tcq2d.conv.grm.1pl.done, tcq2d.conv.grm.2pl.done)
 rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 
@@ -2091,7 +2097,7 @@ One interesting part of the factor analytical results reported above was that a 
 \begin{figure}
 <<inffig1and3, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(2, 3))
-plot(tcq2a.conv.grm.2pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
+plot(tcq2b.conv.grm.1pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 @   
   \caption{Information Curves for Items One and Three for TCQ-Conventional, Split A}
   \label{fig:infcurveoneandthree}
@@ -2281,7 +2287,7 @@ inj.test <- with(na.omit(tcq2a), Injtot)
 inj2.lasso <- penalisedRegression(tcq2.inj.pred.train, tcq2.inj.resp.train, testdata=tcq2.inj.pred.test, newy=tcq2.inj.resp.test, alpha=1, type="coefficients")
 @
 
-<<inj2lassoprint, echo=FALSE, results=hide>>=
+<<inj2lassoprint, echo=FALSE, results=hide, eval=FALSE>>=
 colnames(inj2.lasso) <- "Coefficients"
 print(xtable(as.matrix(inj2.lasso), label="tab:tcq2ainjlasso", caption="Coefficient Estimates for Lasso Regression using Injection Credibility Total as a dependent variable"))
 @ 
