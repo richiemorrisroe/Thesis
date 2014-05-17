@@ -14,6 +14,8 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 \section{Introduction}
 \label{sec:introduction}
 
+This chapter reports an investigation of the psychometric properties of three measures, the RAND Medical Outcomes Survey (RAND-MOS), a measure of self reported health, the Mindful Attention Absorption Scale (MAAS), a measure of mindfulness and the Life Orientation Test, Revised (LOT-R), a measure of optimism. 
+
 
 The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was important to administer some instruments which have been shown to be associated with it in previous studies.
 
@@ -32,7 +34,7 @@ Health (in the form of the RAND-MOS) was included in this piece of research both
 
 Additionally, the relationship between these three variables (health, optimism and mindfulness) can give us some insight into health cognitions, which are linked to those cognitions around placebo. This follows as if the placebo effect is the result of expectancies, then there should be some shared variance between the response to placebo and other health-related cognitions. 
 
-However, the primary aim of this study was to investigate the relationships between optimism and mindfulness in the population under study, and to provide a basis for the building of psychometric models which could be used to predict the relationship of these variables to the placebo response in the experimental study. 
+The primary aim of this study was to investigate the relationships between optimism and mindfulness in the population under study, and to provide a basis for the building of psychometric models which could be used to predict the relationship of these variables to the placebo response in the experimental study. 
 
 The study formed an opportunity to collect background data for the population of interest, to assess if the participants in the experiment were systematically different from those who had responded to a survey invitation. This is critical if the results from the experimental portion of the research are to generalise to any further samples, given that inferences cannot be made about the experimental sample if it is not understood how they stand in relation to other samples from the overall population which was used throughout the research. This process should allow for more accurate predictions of participant responses, assuming that the models generalise to the new sample. 
 
@@ -60,7 +62,7 @@ A recent study~\cite{morton2009reproducibility} in a placebo analgesia paradigm 
 
 While in the first session there was no effect of optimism on the results, in the second study dispositional optimism was significantly correlated with placebo analgesia, explaining 55\% of the variance. This would suggest that while optimism may not produce a placebo response in itself, once a response has been produced it can be effective in maintaining it over time. 
 
-Hyland suggests that the optimism effects on placebo response are mediated through expectancies, and that when these are not a factor, neither is optimism. This sounds plausible, but the relationship could easily go the other way in that optimism could drive the observed effects of expectancies. This is not a question which can be answered without further empirical investigations, which were conducted as part of this research (see Chapter \ref{cha:primary-research}, especially Section \ref{sec:test-theor-models}). 
+Hyland suggests that the optimism effects on placebo response are mediated through expectancies, and that when these are not a factor, neither is optimism. This sounds plausible, but the relationship could easily go the other way in that optimism could drive the observed effects of expectancies. This is not a question which can be answered without further empirical investigations, some of which were conducted as part of this research (see Chapter \ref{cha:primary-research}, especially Section \ref{sec:test-theor-models}). 
 
 
 The relationship between optimism and health is well known. 
@@ -159,7 +161,9 @@ She found that mindfulness was strongly correlated with Neuroticism and negative
 \section{Aims of the Research}
 
 As discussed above, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
-The primary aim of this part of thesis was both to replicate the optimism-health link reported in previous studies, to examine the relationship between health and mindfulness and to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research, therefore both factor analytic and item response models were fit to the optimism and mindfulness scales. 
+The primary aim of this part of thesis was both to replicate the optimism-health link reported in previous studies and to examine the relationships between health, mindfulness and optimism.
+
+Another aim of the study was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research, therefore both factor analytic and item response models were fit to the optimism and mindfulness scales. 
 
 The major hypotheses of this part of the thesis were as follows:
 \begin{itemize}
@@ -176,14 +180,54 @@ The major hypotheses of this part of the thesis were as follows:
 
 The major types of analysis carried out are described below. 
 
-The response rate for Sample One (paper) was approximately
-90\% of those asked, while the response rate for Sample Two (Online)
+The response rate for Sample One (N=392) (paper) was approximately
+90\% of those asked, while the response rate for Sample Two (N=1501) (Online)
 was 10\%. Note that pseudo-random sampling was used for Sample One, while simple random sampling was used for Sample Two. 
 
 \section{Methods}
 \label{sec:methods}
 
 The methods used for this part of the thesis were primarily psychometric. Cross-validation approaches (described in Chapter \ref{cha:methodology}) were applied to both samples to increase generalisability of the models to the experimental portion of the research. This section describes the measures used for this part of the study, followed by a description of the sample, and concludes with a description of the methods of analysis used in this study. 
+
+\subsection{Participants}
+\label{sec:participants}
+
+<<demo, echo=FALSE, results=tex>>=
+hom.demo <- count(hom, vars=c("Gender", "CollectMeth"))
+hom.demo2 <- na.omit(hom.demo)
+print(xtable(hom.demo2, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"))
+@ 
+
+As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
+
+<<sumstats, echo=FALSE,results=tex>>=
+hom.tot <- hom1[,66:75]
+hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
+tot.sum2 <- apademotables(hom.tot)
+tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism")
+print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
+@
+
+To begin the analysis, frequencies, means and ranges were calculated
+for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
+be seen in Table \ref{tab:sumstatscales}, below.
+
+
+
+
+
+%% In Table \ref{tab:democollect} the breakdown of the demographics
+%% of the sample by Collection Method is shown.
+
+<<demostats, echo=FALSE, results=hide>>=
+hom.demo <- hom1[,2:8]
+hom.demo.xtab <- xtable(summary(hom.demo), label="tab:democollect", caption="Demographic Statistics for Sample One (paper sample)")
+print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
+@
+
+
+The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9).
+
 
 \subsection{Measures}
 \label{sec:measures}
@@ -218,7 +262,7 @@ and the mean of all items after items 3,7 and 9 are reverse coded are taken to p
 
 \subsection{Sampling for this research}
 \label{sec:sampl-this-rese}
-The first 392 participants completed the forms by hand between August and October 2009. The participants were sampled pseudo-randomly from all of the public areas (coffee shops, restaurants etc) of the campus.
+The participants in the paper collection method part completed the forms by hand between August and October 2009. The participants were sampled pseudo-randomly from all of the public areas (coffee shops, restaurants etc) of the campus.
 
 Following this pen and paper approach to sampling, the survey was sent to a random selection of students via email on December 12th 2009, and data was collected and analysed from this point until the 24th of December 2009. Differences between the samples and the possible effects of these on the results obtained are discussed below. %% In addition, due to the unexpected results of the analysis, a third sample was collected in Summer 2011. 
 
@@ -307,6 +351,8 @@ require(eRm)
 require(ltm)
 require(lavaan)
 require(semPlot)
+require(reshape2)
+require(plyr)
 @
 
 <<sourcefunc, echo=FALSE, results=hide>>=
@@ -422,31 +468,6 @@ homlist <- lapply(homfiles, read.csv)
 
 
 
-To begin the analysis, frequencies, means and ranges were calculated
-for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
-be seen in Table \ref{tab:sumstatscales}, below.
-
-<<sumstats, echo=FALSE,results=tex>>=
-hom.tot <- hom1[,66:75]
-hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
-tot.sum2 <- apademotables(hom.tot)
-tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism")
-print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
-@
-
-
-
-%% In Table \ref{tab:democollect} the breakdown of the demographics
-%% of the sample by Collection Method is shown.
-
-<<demostats, echo=FALSE, results=hide>>=
-hom.demo <- hom1[,2:8]
-hom.demo.xtab <- xtable(summary(hom.demo), label="tab:democollect", caption="Demographic Statistics for Sample One (paper sample)")
-print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
-@
-
-
-The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9).
 
 
 
@@ -585,7 +606,7 @@ print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regr
 
 <<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:hom1stepopttest"))
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
 @ 
 
 In the training sample, the stepwise selected models kept three predictors.
@@ -753,7 +774,7 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 <<healthregfirstprint, echo=FALSE, results=tex>>=
 print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
 @ 
-As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, however. 
+As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of optimism.
 
 %% Next, a lasso regression model was fit to the same dataset. 
 
@@ -925,18 +946,18 @@ rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 The results of the two factor solution (not shown) were as follows:
-PA1: "RANDQ1",  "RANDQ14", "RANDQ16" ,"RANDQ17" ,"RANDQ18" ,"RANDQ19" ,"RANDQ20" ,"RANDQ21" ,"RANDQ22" ,"RANDQ23" ,"RANDQ24" ,"RANDQ25" ,"RANDQ26" ,"RANDQ27","RANDQ28" ,"RANDQ29" ,"RANDQ30" ,"RANDQ31" ,"RANDQ32" ,"RANDQ33" ,"RANDQ34"
-,"RANDQ35" ,"RANDQ36". 
+PA1: "Q1",  "Q14", "Q16" ,"Q17" ,"Q18" ,"Q19" ,"Q20" ,"Q21" ,"Q22" ,"Q23" ,"Q24" ,"Q25" ,"Q26" ,"Q27","Q28" ,"Q29" ,"Q30" ,"Q31" ,"Q32" ,"Q33" ,"Q34"
+,"Q35" ,"Q36". 
 Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
 
-PA2:"RANDQ3"  "RANDQ4"  "RANDQ5"  "RANDQ6"  "RANDQ7"  "RANDQ8"  "RANDQ9"  "RANDQ10" "RANDQ11" "RANDQ12". This factor maps exactly to the Physical Functioning Scale, and so retains that name.
+PA2:"Q3"  "Q4"  "Q5"  "Q6"  "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12". This factor maps exactly to the Physical Functioning Scale, and so retains that name.
 
 
 
 The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(rand.fact.2[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.2[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.2[["RMSEA"]][3],3 )}.
 
-This factor solution does not appear to be useful, as it has extremely low fit indices (NNFI=0.69), and the breakdown of the factors is rather strange. If the factors had broken down in terms of Physical and Mental Health, then this would have made more sense. The factor loadings were invariant under a number of rotations (varimax, oblimin and promax), so it appears to be a real (if less than interpretable) factor structure. 
+This factor solution does not appear to be useful, as it has extremely low fit indices, and the breakdown of the factors is rather strange. If the factors had broken down in terms of Physical and Mental Health, then this would have made more sense. The factor loadings were invariant under a number of rotations (varimax, oblimin and promax), so it appears to be a real (if less than interpretable) factor structure. 
 
 <<rand2corr, echo=FALSE, results=hide, eval=FALSE>>=
 print(xtable(rand.fact.2$r.scores, label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Two Factor Solution, Sample One"))
@@ -1104,7 +1125,7 @@ randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand8fit), all=TRUE)
 print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8, table.placement="ht")
 @
 
-As can be seen from \ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
+As can be seen from Table~\ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
 
 \section{Mindfulness Attention Awareness Scale}
 
@@ -1137,13 +1158,13 @@ print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAtten
 @
 
 
-PA1: "MAASQ8"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ13" "MAASQ14" "MAASQ15"
+PA1: "Q8"  "Q10" "Q11" "Q12" "Q13" "Q14" "Q15"
 All of these questions relate to lack of awareness, and so this factor can best be termed this. 
 
-PA3: "MAASQ4" "MAASQ5" "MAASQ6" "MAASQ7" "MAASQ8" "MAASQ9"
+PA3: "Q4" "Q5" "Q6" "Q7" "Q8" "Q9"
 These mostly relate to sensations of physical unawareness, and so this factor can best be termed physical unawareness. 
 
-PA2: "MAASQ1"  "MAASQ2"  "MAASQ3"  "MAASQ14". This factor can perhaps best be termed as lack of present attention.
+PA2: "Q1"  "Q2"  "Q3"  "Q14". This factor can perhaps best be termed as lack of present attention.
 
 
 
@@ -2102,7 +2123,10 @@ Firstly, the demographics of the sample (N=1107) were examined. Again, the major
 <<hom2demo, echo=FALSE, results=tex>>=
 hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
 hom2.sum <- apademotables(hom2.tot)
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two"))
+names(hom2.sum)[1] <- "Scale"
+longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+hom2.sum$Scale <- longnames
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
 @ 
 
 The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
@@ -2110,14 +2134,20 @@ The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}.
 
 The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
 
-\begin{figure}
-<<pairsplot2, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<pairsplot2, echo=FALSE, results=hide>>=
 scales2 <- hom2[,66:75]
 pairs.panels(scales2)
 @   
-  \caption{Correlations between Scale Totals, Sample Two}
-  \label{fig:pairsplot2}
-\end{figure}
+%%   \caption{Correlations between Scale Totals, Sample Two}
+%%   \label{fig:pairsplot2}
+%% \end{figure}
+
+<<scalecorr, echo=FALSE, results=tex>>=
+scale.cor <- corr.test(scales2, use="complete", method="spearman")
+cors <- scale.cor$r
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ))
+@ 
 
 
 %% \section{Regression Analyses}
