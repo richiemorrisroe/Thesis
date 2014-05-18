@@ -1,4 +1,32 @@
 
+
+<<loadpackages, echo=FALSE, results=hide>>=
+require(ggplot2)
+require(psych)
+require(xtable)
+require(OpenMx)
+require(car)
+require(arm)
+require(caret)
+require(nFactors)
+require(bcv)
+require(glmnet)
+require(mokken)
+require(eRm)
+require(ltm)
+require(lavaan)
+require(semPlot)
+require(reshape2)
+require(plyr)
+@
+
+<<sourcefunc, echo=FALSE, results=hide>>=
+source("func.R")
+@
+
+
+
+
 <<importdata, echo=FALSE, results=hide>>=
 hom<-read.csv("HOM data for RFINAL.csv")
 hom <- hom[,1:65]
@@ -200,6 +228,39 @@ print(xtable(hom.demo2, label="tab:homdemo", caption="Gender Breakdown of Partic
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
 
+<<scorescalestransform, echo=FALSE, results=hide>>=
+grep.rand <- grep("^RANDQ", x=names(hom))
+randitems <- hom[,grep.rand]
+rand <- "RANDQ"
+randset1 <-paste(rand, c(1, 2, 20, 22, 34, 36), sep="")
+randset1 <- hom[,randset1]
+randrecode1 <- RecodeMany(randset1, vars=c("RANDQ1", "RANDQ2","RANDQ20", "RANDQ34","RANDQ36"), Recodings=("1=100;2=75;3=50;4=25;5=0"))
+randset2 <- paste(rand, c(3:12), sep="")
+randset2 <- hom[,randset2]
+randrecode2 <- RecodeMany(randset2, vars=c("RANDQ3", "RANDQ4","RANDQ5","RANDQ6","RANDQ7","RANDQ8","RANDQ9", "RANDQ10","RANDQ11","RANDQ12"),Recodings="1=0;2=50;3=100")
+randset3 <- paste(rand, c(13:19), sep="")
+randset3 <- hom[,randset3]
+randrecode3 <- RecodeMany(randset3, vars=c("RANDQ13", "RANDQ14", "RANDQ15", "RANDQ16","RANDQ17","RANDQ18", "RANDQ19"), Recodings="1=0;2=100")
+randset4 <- paste(rand, c(21,23,26,27,30), sep="")
+randset4 <- hom[,randset4]
+randrecode4 <- RecodeMany(randset4, vars=c("RANDQ21", "RANDQ23", "RANDQ26","RANDQ27","RANDQ30"), Recodings="1=100;2=80;3=60;4=40;5=20;6=0")
+randset5 <- paste(rand, c(24,25,28,29,31), sep="")
+randset5 <- hom[,randset5]
+randrecode5 <- RecodeMany(randset5, vars=c("RANDQ24", "RANDQ25", "RANDQ28", "RANDQ29", "RANDQ31"), Recodings="1=0;2=20;3=40;4=60;5=80;6=100")
+randset6 <- paste(rand, c(32,33,35), sep="")
+randset6 <- hom[,randset6]
+randrecode6 <- RecodeMany(randset6,vars=c("RANDQ32","RANDQ33","RANDQ35"), Recodings="1=0;2=25;3=50;4=75;5=100")
+randrecoding <- ls(pattern="randrecode")
+randrecoding.df <- as.data.frame(lapply(randrecoding, function (x) get(x)))
+randsortpaste <- paste(rand, c(1:36), sep="")
+randitems.unscored <- hom[,grep.rand]
+randitems.scored <- randrecoding.df[,randsortpaste]
+hom[,grep.rand] <- randitems.scored
+hom <- createSumScores(hom) 
+hom1 <- hom[hom$CollectMeth=="Paper",]
+hom2 <- hom[hom$CollectMeth=="Online",]
+@
+
 <<sumstats, echo=FALSE,results=tex>>=
 hom.tot <- hom1[,66:75]
 hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
@@ -226,8 +287,30 @@ print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
 @
 
 
-The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9).
+The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the first sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was female (N=798), while the mean age was 22.3 (SD=6.8). 
 
+<<scalesalpha, echo=FALSE, results=hide>>=
+physicalfunctioning <- hom[,physfun]
+
+rolelimitations <- hom[,rolelim]
+emotionalrolelimitations <- hom[,emrolelim]
+energyfatigue <- hom[,with(hom, grep("RANDQ[2][379]$|RANDQ31$", x=names(hom)))]
+emotionalwellbeing <- hom[,with(hom, grep("RANDQ[2][4568]$|RANDQ30$", x=names(hom)))]
+socialfunctioning <- hom[,with(hom, grep("RANDQ20|RANDQ32", x=names(hom)))]
+pain <- hom[,with(hom, grep("RANDQ[2][12]$", x=names(hom)))]
+generalhealth <- hom[,with(hom, grep("RANDQ1$|RANDQ[3][3456]$", x=names(hom)))]
+gh.alpha <- alpha(generalhealth)$total$std.alpha
+pf.alpha <- alpha(physicalfunctioning)$total$std.alpha
+rl.alpha <- alpha(rolelimitations)$total$std.alpha
+erl.alpha <- alpha(emotionalrolelimitations)$total$std.alpha
+emwb.alpha <- alpha(emotionalwellbeing)$total$std.alpha
+sf.alpha <- alpha(socialfunctioning)$total$std.alpha
+pain.alpha <- alpha(pain)$total$std.alpha
+ef.alpha <- alpha(energyfatigue)$total$std.alpha
+scalenames <- c("genhealth", "physfun", "rolelim", "rolelimem", "emwellbeing", "socialfunctioning", "pain", "energyfatigue")
+alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, emwb.alpha, sf.alpha, pain.alpha, ef.alpha)
+alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
+@ 
 
 \subsection{Measures}
 \label{sec:measures}
@@ -329,71 +412,10 @@ The majority of the analytical procedures were as described in Chapter \ref{cha:
 
 
 
-\section{Sample One - Results}
-
-%% \section{Missing Data Analysis}
-
-%% The first step in the analysis was the assessment of how much data was missing.
-
-<<loadpackages, echo=FALSE, results=hide>>=
-require(ggplot2)
-require(psych)
-require(xtable)
-require(OpenMx)
-require(car)
-require(arm)
-require(caret)
-require(nFactors)
-require(bcv)
-require(glmnet)
-require(mokken)
-require(eRm)
-require(ltm)
-require(lavaan)
-require(semPlot)
-require(reshape2)
-require(plyr)
-@
-
-<<sourcefunc, echo=FALSE, results=hide>>=
-source("func.R")
-@
 
 
 
 
-<<scorescalestransform, echo=FALSE, results=hide>>=
-grep.rand <- grep("^RANDQ", x=names(hom))
-randitems <- hom[,grep.rand]
-rand <- "RANDQ"
-randset1 <-paste(rand, c(1, 2, 20, 22, 34, 36), sep="")
-randset1 <- hom[,randset1]
-randrecode1 <- RecodeMany(randset1, vars=c("RANDQ1", "RANDQ2","RANDQ20", "RANDQ34","RANDQ36"), Recodings=("1=100;2=75;3=50;4=25;5=0"))
-randset2 <- paste(rand, c(3:12), sep="")
-randset2 <- hom[,randset2]
-randrecode2 <- RecodeMany(randset2, vars=c("RANDQ3", "RANDQ4","RANDQ5","RANDQ6","RANDQ7","RANDQ8","RANDQ9", "RANDQ10","RANDQ11","RANDQ12"),Recodings="1=0;2=50;3=100")
-randset3 <- paste(rand, c(13:19), sep="")
-randset3 <- hom[,randset3]
-randrecode3 <- RecodeMany(randset3, vars=c("RANDQ13", "RANDQ14", "RANDQ15", "RANDQ16","RANDQ17","RANDQ18", "RANDQ19"), Recodings="1=0;2=100")
-randset4 <- paste(rand, c(21,23,26,27,30), sep="")
-randset4 <- hom[,randset4]
-randrecode4 <- RecodeMany(randset4, vars=c("RANDQ21", "RANDQ23", "RANDQ26","RANDQ27","RANDQ30"), Recodings="1=100;2=80;3=60;4=40;5=20;6=0")
-randset5 <- paste(rand, c(24,25,28,29,31), sep="")
-randset5 <- hom[,randset5]
-randrecode5 <- RecodeMany(randset5, vars=c("RANDQ24", "RANDQ25", "RANDQ28", "RANDQ29", "RANDQ31"), Recodings="1=0;2=20;3=40;4=60;5=80;6=100")
-randset6 <- paste(rand, c(32,33,35), sep="")
-randset6 <- hom[,randset6]
-randrecode6 <- RecodeMany(randset6,vars=c("RANDQ32","RANDQ33","RANDQ35"), Recodings="1=0;2=25;3=50;4=75;5=100")
-randrecoding <- ls(pattern="randrecode")
-randrecoding.df <- as.data.frame(lapply(randrecoding, function (x) get(x)))
-randsortpaste <- paste(rand, c(1:36), sep="")
-randitems.unscored <- hom[,grep.rand]
-randitems.scored <- randrecoding.df[,randsortpaste]
-hom[,grep.rand] <- randitems.scored
-hom <- createSumScores(hom) 
-hom1 <- hom[hom$CollectMeth=="Paper",]
-hom2 <- hom[hom$CollectMeth=="Online",]
-@
 
 
 
@@ -464,107 +486,7 @@ homfiles <- list.files(pattern="homcomp")
 homlist <- lapply(homfiles, read.csv)
 @ 
 
-\section{Descriptive Statistics}
 
-
-
-
-
-
-\section{Inferential Statistics}
-
-Following these preliminary analyses, the main hypotheses can now
-be addressed.
-
-
-
-\begin{figure}
-<<pairsplot, echo=FALSE, fig=TRUE, pdf=TRUE>>=
-pairs.panels(na.omit(hom.tot))
-@
-\caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
-\label{fig:pairsplot}
-\end{figure}
-
-
-
-
-
-As can be seen from Figure \ref{fig:pairsplot}, the optimism hypothesis
-was not supported.  Contrary to predictions, optimism was negatively
-correlated with health.
-In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter \ref{cha:primary-research} and Chapter \ref{cha:general-discussion}. 
-
-%% \begin{figure}
-<<optplot1, echo=FALSE, eval=FALSE>>=
-optplot1 <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
-print(optplot1)
-@  
-%%  ~\caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
-%%   \label{fig:optplot1}
-%% \end{figure}
-
-
-
-%% \begin{figure}
-<<optplotgend, echo=FALSE, eval=FALSE>>=
-optplotgend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
-print(optplotgend)
-@  
-%%  ~\caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
-%%   \label{fig:optplotgend}
-%% \end{figure}
-
-
-Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
-
-
-
-%% \begin{figure}
-<<healthmaassamp, echo=FALSE, eval=FALSE>>=
-healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
-print(healthmaas.samp)
-@  
-%%  ~\caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
-%%   \label{fig:healthmaasmethplot}
-%% \end{figure}
-
-
-It can be seen from Figure \ref{fig:pairsplot} that the relationship between health and mindfulness was positive, and of the same magnitude at that observed between health and optimism. 
-%% \begin{figure}
-<<healthmaasgend, echo=FALSE, eval=FALSE>>=
-healthmaas.gend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=Gender))+layer(geom="smooth", method="lm")
-print(healthmaas.gend)
-@  
-%%  ~\caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
-%%   \label{fig:healthmaasgend}
-%% \end{figure}
-
-
-Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
-%% \begin{figure}
-<<healthmaas, echo=FALSE, eval=FALSE>>=
-healthmaas1 <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=College))+layer(geom="smooth", method="lm")
-print(healthmaas1)
-@  
-%%  ~\caption{General Health against Mindfulness stratified by College using a linear regression smooth}
-%%   \label{fig:healthmaascoll}
-%% \end{figure}
-
-
-%% As can be seen from Figure \ref{fig:healthmaascoll} the relationship between general health and mindfulness levels is positive, and constant across the different groups of students.
-
-%% \begin{figure}
-<<maasage, echo=FALSE, eval=FALSE>>=
-maas.age <- ggplot(na.omit(hom1), aes(x=Age, y=mindfulness, ))+layer(geom="smooth", method="lm")
-print(maas.age)
-@  
-%%  ~\caption{Age against Mindfulness Scores using a linear regression smooth}
-%%   \label{fig:maasage}
-%% \end{figure}
-
-
-MAAS scores were associated with greater health as expected, as can be seen from Figure \ref{fig:pairsplot}. 
 
 
 
@@ -2842,6 +2764,100 @@ mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdat
 %% Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Note that in both penalised regression models, the coefficient for optimism was much higher than that for any other variable, suggesting that optimism scores were the most influential variable included in the model (c.f. Section \ref{sec:model-relat-betw} and Chapters \ref{cha:primary-research}). Next, a stepwise selection model procedure was employed on the dataset. 
 
 
+\section{Inferential Statistics}
+
+Following these preliminary analyses, the main hypotheses can now
+be addressed.
+
+
+
+\begin{figure}
+<<pairsplot, echo=FALSE, fig=TRUE, pdf=TRUE>>=
+pairs.panels(na.omit(hom.tot))
+@
+\caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
+\label{fig:pairsplot}
+\end{figure}
+
+
+
+
+
+As can be seen from Figure \ref{fig:pairsplot}, the optimism hypothesis
+was not supported.  Contrary to predictions, optimism was negatively
+correlated with health.
+In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter \ref{cha:primary-research} and Chapter \ref{cha:general-discussion}. 
+
+%% \begin{figure}
+<<optplot1, echo=FALSE, eval=FALSE>>=
+optplot1 <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
+print(optplot1)
+@  
+%%  ~\caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
+%%   \label{fig:optplot1}
+%% \end{figure}
+
+
+
+%% \begin{figure}
+<<optplotgend, echo=FALSE, eval=FALSE>>=
+optplotgend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
+print(optplotgend)
+@  
+%%  ~\caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
+%%   \label{fig:optplotgend}
+%% \end{figure}
+
+
+Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
+
+
+
+%% \begin{figure}
+<<healthmaassamp, echo=FALSE, eval=FALSE>>=
+healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
+print(healthmaas.samp)
+@  
+%%  ~\caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
+%%   \label{fig:healthmaasmethplot}
+%% \end{figure}
+
+
+It can be seen from Figure \ref{fig:pairsplot} that the relationship between health and mindfulness was positive, and of the same magnitude at that observed between health and optimism. 
+%% \begin{figure}
+<<healthmaasgend, echo=FALSE, eval=FALSE>>=
+healthmaas.gend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=Gender))+layer(geom="smooth", method="lm")
+print(healthmaas.gend)
+@  
+%%  ~\caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
+%%   \label{fig:healthmaasgend}
+%% \end{figure}
+
+
+Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
+%% \begin{figure}
+<<healthmaas, echo=FALSE, eval=FALSE>>=
+healthmaas1 <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=College))+layer(geom="smooth", method="lm")
+print(healthmaas1)
+@  
+%%  ~\caption{General Health against Mindfulness stratified by College using a linear regression smooth}
+%%   \label{fig:healthmaascoll}
+%% \end{figure}
+
+
+%% As can be seen from Figure \ref{fig:healthmaascoll} the relationship between general health and mindfulness levels is positive, and constant across the different groups of students.
+
+%% \begin{figure}
+<<maasage, echo=FALSE, eval=FALSE>>=
+maas.age <- ggplot(na.omit(hom1), aes(x=Age, y=mindfulness, ))+layer(geom="smooth", method="lm")
+print(maas.age)
+@  
+%%  ~\caption{Age against Mindfulness Scores using a linear regression smooth}
+%%   \label{fig:maasage}
+%% \end{figure}
+
+
+MAAS scores were associated with greater health as expected, as can be seen from Figure \ref{fig:pairsplot}. 
 
 
 
