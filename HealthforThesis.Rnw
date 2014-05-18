@@ -566,235 +566,6 @@ print(maas.age)
 
 MAAS scores were associated with greater health as expected, as can be seen from Figure \ref{fig:pairsplot}. 
 
-\section{Regression Analyses}
-
-Given the correlation matrix reported shown above in Figure \ref{fig:pairsplot},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
-
-\subsection{Optimism}
-
-
-<<cvsetup, echo=FALSE, results=hide, cache=TRUE>>=
-hom1.full <- na.omit(hom1)
-hom1.partition <- with(hom1.full, createDataPartition(optimism, list=FALSE, p=0.8))
-hom1.train.opt <- hom1.full[hom1.partition,]
-hom1.test.opt <- hom1.full[-hom1.partition,]
-mytrain <- trainControl(method="cv")
-@ 
-
-<<opttrain, echo=FALSE, results=hide, cache=TRUE>>=
-testpred <- hom1.test.opt[,c("Age", "pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat", "generalhealth")]
-trainopt <- with(hom1.train.opt, optimism)
-trainpred <- hom1.train.opt[,c(4, 66:74)]
-testopt <- with(hom1.test.opt, optimism)
-@ 
-
-<<optstep, echo=FALSE, results=hide, cache=TRUE>>=
-opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
-opt.reg.simple <- lm(optimism~1, data=hom1.train.opt)
-opt.step <- stepAIC(opt.reg.first, direction="both", k=2)
-opt.step.pred.resp <- predict(opt.step, newdata=hom1.test.opt, type="response")
-opt.step.pred.coef <- predict(opt.step, newdata=hom1.test.opt, type="terms")
-step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimism"])
-
-@ 
-
-<<optstepprint, echo=FALSE, results=hide>>=
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
-@ 
-
-%% As Table \ref{tab:hom1optstep} shows, 
-
-<<optsteppred, echo=FALSE, results=tex>>=
-opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
-@ 
-
-In the training sample, the stepwise selected models kept three predictors.
-The results of the selected predictors on the test sample are shown in Table \ref{tab:hom1stepopttest}.
-General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
-For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section \ref{sec:discussion}. 
-
-<<optridge, echo=FALSE, results=hide>>=
-opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
-opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="response")
-ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
-digits(ridge.xtab) <- 4
-print(ridge.xtab)
-@
-
-%% Next, a form of penalised regression known as ridge regression (or L2 regression) was used. Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
-
-
-
-%% The predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
-
-%% Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
-
-<<optlasso, echo=FALSE, results=hide>>=
-opt.lasso <- penalisedRegression(x=trainpred, y=trainopt,  testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
-opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response")
-opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
-digits(opt.lasso.xtab) <- 4
-print(opt.lasso.xtab)
-lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
-@ 
-
-%% Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection. Note that the coefficient of emotional well-being is larger in the lasso fit than in the model fitted with ridge regression. 
-
-
-
-
-
-<<optloess, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
-opt.loess <- loess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt)
-## opt.loess.fit <- tuneLoess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, tuneLength=10, newdata=hom1.test.opt)
-opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
-## opt.loess.pred.obs <- data.frame(pred=opt.loess.pred, obs=hom1.test.opt)
-## train.gam.loess <- train(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, method="gamLoess", tuneLength=10)
-@ 
-
-<<optreglm, echo=FALSE, results=hide, cache=TRUE>>=
-opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
-opt.reg.sum <- summary(opt.reg.first)
-opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
-print(opt.reg.xtab, table.placement="ht")
-lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
-@
-
-
-%% In table \ref{tab:optregfirst} the summary of the regression results can be seen, the model is significant, with an $F$ value of \Sexpr{round(opt.reg.sum[["fstatistic"]],3)}  and an $R^2$ of \Sexpr{round(opt.reg.sum[["adj.r.squared"]],3)}.  
-
-
-%% Below, in Table \ref{tab:optregfinal} can be seen the final model,
-%% including all significant predictor variables.
-
-<<optregfinal, echo=FALSE, results=hide, cache=TRUE>>=
-opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
-optfolds <- TrainTestSets(opt.part, hom1)
-opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
-opt.reg.fin.stand <- standardize(opt.reg.final)
-opt.fin.sum <- summary(opt.reg.final)
-opt.fin.xtab <- xtable(opt.fin.sum, label="tab:optregfinal", caption="Final Regression Model for Optimism")
-print(opt.fin.xtab , table.placement="ht")
-@
-
-
-%% The model was significant, F(15, 528) = \Sexpr{round(opt.fin.sum[["fstatistic"]], 3)}, and the adjusted $R^2$ was equal to \Sexpr{round(opt.fin.sum[["adj.r.squared"]],3)}
-%% The model seems to show that the only important predictors of Optimism in the dataset are General Health, Mindfulness, Emotional Well Being and Age.  This corroborates the plots that were shown above for these variables. The strongest predictor was emotional well being, with age and general health being of similiar magnitude. 
-
-%% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
-
-As has been shown above, the  model showed that emotional well being and general health were important, and general health was not removed from the model, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as unbiased by the search process. 
-
-
-
-
-\subsection{Mindfulness Regressions}
-
-A similiar procedure as described above for optimism was employed
-in the midfulness regressions.  The results are shown below.
-
-<<mindsetup, echo=FALSE, results=hide, cache=TRUE>>=
-mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
-hom1.mind.train <- hom1.full[mind.ind, ]
-hom1.mind.test <- hom1.full[-mind.ind,]
-mind.train <- with(hom1.mind.train, mindfulness)
-mind.pred.train <- hom1.mind.train[,c(4,67:73,75)]
-mind.test <- with(hom1.mind.test, mindfulness)
-mind.pred.test <- hom1.mind.test[,c(4,67:73,75)]
-@ 
-
-<<maasregfirst, echo=FALSE, results=hide, cache=TRUE>>=
-maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
-mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
-mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
-
-mind.step.pred <- predict(mind.step, hom1.mind.test, type="response")
-mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optimism"]])
-@
-
-<<mindstepprint, echo=false, results=tex>>=
-print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
-@ 
-
-As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue, even though only emotional well-being remained significant. This model would seem to suggest that mindfulness is related to health through emotional well-being. This is interesting, in that in terms of face validity this would not be expected, although it is reported to be a relatively common outcome of MBSR. 
-
-
-
-
-<<mindlasso, echo=FALSE, results=hide>>=
-mind.lasso <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=1, type="coefficients")
-mind.lasso.xtab <- xtable(as.matrix(mind.lasso), caption="Coefficients on Unseen Data, Mindfulness Regression (lasso penalisation)", label="tab:hom1mindlasso")
-digits(mind.lasso.xtab) <- 4
-print(mind.lasso.xtab)
-mind.lasso.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=1, type="response")
-@ 
-
-%% As shown in Table \ref{tab:hom1mindlasso}, the largest coefficient on mindfulness was optimism, and in line with the correlations seen above, it is negative. Energy Fatigue and Emotional Well being appear to be important in this particular model. 
-
-%% Next, a ridge regression model was fit to this data. 
-
-<<mindridge, echo=FALSE, results=hide>>=
-mind.ridge <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=0, type="coefficients")
-mind.ridge.xtab <- xtable(as.matrix(mind.ridge), caption="Coefficients on Unseen Data, Mindfulness Regression (ridge penalisation)", label="tab:hom1mindridge")
-digits(mind.ridge.xtab) <- 4
-print(mind.ridge.xtab)
-mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=0, type="response")
-@ 
-
-%% Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Note that in both penalised regression models, the coefficient for optimism was much higher than that for any other variable, suggesting that optimism scores were the most influential variable included in the model (c.f. Section \ref{sec:model-relat-betw} and Chapters \ref{cha:primary-research}). Next, a stepwise selection model procedure was employed on the dataset. 
-
-
-
-
-
-
-
-
-\subsection{Health Regressions}
-
-<<healthsetup, echo=FALSE, results=hide, cache=TRUE>>=
-hom1.health.train.ind <- with(hom1.full, createDataPartition(generalhealth, p=0.75, list=FALSE))
-hom1.health.train <- hom1.full[hom1.health.train.ind,]
-hom1.health.test <- hom1.full[-hom1.health.train.ind,]
-healthpred.train <- hom1.health.train[,c(4, 66:72, 74:75)]
-health.train <- with(hom1.health.train, generalhealth)
-healthpred.test <- hom1.health.test[,c(4, 66:72, 74:75)]
-health.test <- with(hom1.health.test, generalhealth)
-@ 
-
-
-<<healthregfirst, echo=FALSE, results=hide, cache=TRUE>>=
-health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1.health.train)
-health.step <- stepAIC(health.mod1, direction="both", k=3)
-health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.health.test)
-
-@
-
-<<healthregfirstprint, echo=FALSE, results=tex>>=
-print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
-@ 
-As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of optimism.
-
-%% Next, a lasso regression model was fit to the same dataset. 
-
-
-<<healthlasso, echo=FALSE, results=hide>>=
-health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
-health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="response")
-print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
-@ 
-
-%% As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
-
-<<healthridge, echo=FALSE, results=hide>>=
-health.ridge <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="coefficients")
-health.ridge.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="response")
-print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression on General Health on unseen data", label="tab:hom1healthridge"))
-@ 
-
-%% As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. Note the small coefficient for emotional well-being, which would not appear to agree with the raw correlations (see \ref{fig:pairsplot}). This can be explained as a artefact of the procedures used in the penalised regression, as when two predictors are extremely correlated, the lasso and ridge procedure will tend to assign all of the weight to one of them \cite{friedman2009elements}. 
-
 
 
 \section{Psychometric Analyses}
@@ -815,7 +586,7 @@ lotr.alpha <- alpha(lotritems)
 
 Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
 
-\subsection{Number of Factors to retain}
+%% \subsection{Number of Factors to retain}
 
 
 <<retainfactors, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
@@ -851,9 +622,9 @@ print(Svdcv(rand.fact.gabriel, label="tab:randfactgabriel", caption="Estimate of
 
 %% It can be seen from Table \ref{tab:randfactgabriel} that the Gabriel method of cross-validation suggests that there are thirteen factors which underlie this scale. This seems relatively implausible, but it will be tested. 
 
-Two and eight  factor structures will be examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
+Two and eight  factor structures were examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
 
-Next, the various metrics for determining the number of factors were applied to the Mindfulness scale. 
+%% Next, the various metrics for determining the number of factors were applied to the Mindfulness scale. 
 
 <<retainmaas, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 sink("tmp.txt")
@@ -866,7 +637,7 @@ sink(NULL)
 print(xtable(summary(maas.nscree), label="tab:maasretain", caption="Comparison of Criteria to retain factors, MAAS"))
 @ 
 
-Looking at the eigenvalues, it is clear that one factor explains the majority of the variance. However, both the Kaiser criterion and parallel analysis suggest that three factors should be retained, while the VSS and the Minimum Average Partial criterion procedures suggest a one factor solution.
+%% Looking at the eigenvalues, it is clear that one factor explains the majority of the variance. However, both the Kaiser criterion and parallel analysis suggest that three factors should be retained, while the VSS and the Minimum Average Partial criterion procedures suggest a one factor solution.
 
 <<maasfactorcv, echo=FALSE, results=hide, eval=FALSE>>=
 maasitems <- as.data.frame(lapply(maasitems, as.numeric))
@@ -889,7 +660,7 @@ print(Svdcv(maas.fact.gabriel, label="tab:maasfactgabriel", caption="Estimate of
 %% It can be seen from Table \ref{tab:maasfactgabriel} that the Wold method of cross-validation suggests that there are seven factors which underlie this scale. This seems relatively implausible, but it will be tested. 
 
 
-One and three  factor solutions were examined and their performance assessed on unseen data. 
+%% One and three  factor solutions were examined and their performance assessed on unseen data. 
 
 
 <<retainlotr, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
@@ -902,7 +673,7 @@ print(xtable(summary(lotr.nscree), label="tab:lotrretain", caption="Comparison o
 
 @ 
 
-In the case of the LOT-R, all of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
+%% In the case of the LOT-R, all of the methods for determining the correct number of factors to retain suggest that a one factor solution fits the data matrix best. 
 
 <<lotrfactorcv, echo=FALSE, results=hide, cache=TRUE>>=
 lotritems <- as.data.frame(lapply(lotritems, as.numeric))
@@ -924,7 +695,7 @@ print(Svdcv(lotr.fact.gabriel, label="tab:lotrfactgabriel", caption="Estimate of
 
 %% It can be seen from Table \ref{tab:lotrfactgabriel} that the Gabriel method of cross-validation suggests that there are three factors which underlie this scale. This seems relatively implausible, but it will be tested. 
 
-Despite all of the selection criteria pointing towards a one factor solution, one and two factor solutions will be assessed for the LOT-R, and their performance evaluated on unseen data. 
+%% Despite all of the selection criteria pointing towards a one factor solution, one and two factor solutions will be assessed for the LOT-R, and their performance evaluated on unseen data. 
 
 <<mapall, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 MAP.rand<-VSS(na.omit(randitems.scored), n=12, rotate="oblimin", fm="ml", plot=FALSE )
@@ -939,7 +710,7 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 
 \subsection{RAND MOS}
 \label{sec:rand-mos-1}
-Two, four and eight  factor solutions were extracted and interpreted from the RAND MOS items. 
+Two and eight  factor solutions were extracted and interpreted from the RAND MOS items. 
 
 <<rand2fact, echo=FALSE, results=hide>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
@@ -1127,6 +898,104 @@ print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for
 
 As can be seen from Table~\ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
 
+
+\subsection{Predictions for RAND-MOS}
+\label{sec:predictions-rand-mos}
+
+
+\subsection{RAND MOS CFA on Sample Two (Split A)}
+\label{sec:rand-mos-cfa}
+
+
+
+<<rand2semhom2, echo=FALSE, results=hide>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning", "General and Emotional Health")
+physfun <- paste(rand, c(3:12), sep="")
+genemhealth <- paste(rand,c(1,14,17:36), sep="")
+Rand2model2 <- mxModel(name="RAND2Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                      mxPath(from="General and Emotional Health", to=genemhealth),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                       mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=281)
+                      )
+rand2fit2 <- mxRun(Rand2model2)
+rand2summ2 <- summary(rand2fit2)
+@
+
+<<rand4semhom2, echo=FALSE, results=hide, cache=TRUE>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning", "Social and Emotional Functioning", "General Health", "Physical Limitations")
+physfun <- paste(rand, c(3:12), sep="")
+genhealth <- paste(rand, c(1,33:36), sep="")
+physlim <- paste(rand, c(13:16,21:22), sep="")
+emsocfunc <- paste(rand, c(17:20, 23:32), sep="")
+Rand4model2 <- mxModel(name="RAND4Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                      mxPath(from="Social and Emotional Functioning", to=emsocfunc),
+                      mxPath(from="General Health", to=genhealth),
+                      mxPath(from="Physical Limitations", to=physlim),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
+                      )
+rand4fit2 <- mxRun(Rand4model2)
+rand4summ2 <- summary(rand4fit2)
+@ 
+
+
+<<rand8semhom2, echo=FALSE, results=hide, cache=TRUE>>=
+randitems.cols <- paste(rand, 1:36, sep="")
+manifests <- randitems.cols
+latents <- c("Physical Functioning", "Social and Emotional Wellbeing", "General Health", "Emotional Role Limitations", "Role Limitations", "Fatigue", "Pain", "Energy")
+physfun <- paste(rand, c(3:12), sep="")
+socemwellbeing <- paste(rand, c(20,23:28, 30, 32), sep="")
+genhealth <- paste(rand, c(1,33:36), sep="")
+emrolelim <- paste(rand, c(17:20), sep="")
+rolelim <- paste(rand, c(13:16), sep="")
+energy <- paste(rand, c(29, 31), sep="")
+pain <- paste(rand, c(21:22), sep="")
+fatigue <- paste(rand, c(2, 23, 27), sep="")
+Rand8model2 <- mxModel(name="RAND8Samp2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Physical Functioning", to=physfun),
+                      mxPath(from="Social and Emotional Wellbeing", to=socemwellbeing),
+                      mxPath(from="General Health", to=genhealth),
+                      mxPath(from="Emotional Role Limitations", to=emrolelim),
+                      mxPath(from="Role Limitations", to=rolelim),
+                      mxPath(from="Energy", to=energy),
+                      mxPath(from="Pain", to=pain),
+                      mxPath(from="Fatigue", to=fatigue),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281))
+                      
+rand8fit2 <- mxRun(Rand8model2)
+rand8summ2 <- summary(rand8fit2)
+@
+
+
+
+<<randsemcomparehom2, echo=FALSE, results=tex>>=
+randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
+print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
+@
+
+As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
+
+
+
 \section{Mindfulness Attention Awareness Scale}
 
 For the MAAS, parallel analysis, MAP, VSS, Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
@@ -1237,97 +1106,93 @@ From Table \ref{tab:maassemcomp} it can be seen that the best model is the one f
 The factor structure is not reported here as all factors loaded on the first factor.  This factor explained 35\% of the variance
 in the sample, which is low.  Possible explanations for this are discussed below. 
 
+\subsection{Predictions for MAAS}
+\label{sec:predictions-maas}
 
-\section{Life Orientation Test, Revised}
+\subsubsection{MAAS CFA on Sample Two (Split A)}
+\label{sec:maas-cfa-sample}
 
-Parallel Analysis indicated that two factors should be extracted, while the MAP criterion suggested one.  Therefore, both one and two factor solutions were extracted from the matrix and their results examined for adequacy and interpretability.
-
-%% \subsection{LOTR One Factor Solution}
-%% \label{sec:lotr-one-factor}
-
-
-<<lotr1fact, echo=FALSE, results=tex>>=
-lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
-print(FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One"))
+<<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
+set.seed(17)
+maassamp <- sample(1:1109, 1109)
+ms1 <- maassamp[1:370]
+ms2 <- maassamp[371:740]
+ms3 <- maassamp[741:length(maassamp)]
+maasitems2a <- maasitems2[ms1,]
+maasitems2b <- maasitems2[ms2,]
+maasitems2c <- maasitems2[ms3,]
+maasitems.nota <- maasitems2[c(ms2, ms3),]
+maasitems.notb <- maasitems2[c(ms1, ms3),]
+maasitems.notc <- maasitems2[c(ms1, ms2),]
+lotrsamp <- sample(1:1109, 1109)
+lr1 <- lotrsamp[1:370]
+lr2 <- lotrsamp[371:740]
+lr3 <- lotrsamp[741:length(lotrsamp)]
+lotritems2a <- lotritems2[lr1,]
+lotritems2b <- lotritems2[lr2,]
+lotritems2c <- lotritems2[lr3,]
+lotritems.nota <- lotritems2[c(lr2, lr3),]
+lotritems.notb <- lotritems2[c(lr1, lr3),]
+lotritems.notc <- lotritems2[c(lr1, lr2),]
+randsamp <- sample(1:1109, 1109)
+r1 <- randsamp[1:370]
+r2 <- randsamp[371:740]
+r3 <- randsamp[741:length(randsamp)]
+randitems2a <- randitems[r1,]
+randitems2b <- randitems[r2,]
+randitems2c <- randitems[r3,]
+randitems.nota <- randitems[c(r2, r3),]
+randitems.notb <- randitems[c(r1, r3),]
+randitems.notc <- randitems[c(r1, r2),]
+scales <- hom2[,c(4,66:75)]
+scales.samp <- sample(1:1109, 1109)
+s1.samp <- scales.samp[1:370]
+s2.samp <- scales.samp[371:740]
+s3.samp <- scales.samp[741:length(scales.samp)]
+scales2a <- scales[s1.samp,]
+scales2b <- scales[s2.samp,]
+scales2c <- scales[s3.samp,]
 @
 
-Table \ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. 
-
-
-The non-normed fit index was equal to \Sexpr{round(lotr.fact.1[["TLI"]], 3)}
-and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(lotr.fact.1[["RMSEA"]][2],3)} to \Sexpr{round(lotr.fact.1[["RMSEA"]][3],3 )}.  This solution does not seem optimal, as the RMSEA is well outside the recommended bounds, and the NNFI is quite low.  %% In addition, the communalities are not very high, with over half the variance being left out of the solution.
-
-
-
-
-%% \subsection{LOTR Two Factor Solution}
-%% \label{sec:lotr-two-factor}
-
-<<lotr3fact, echo=FALSE, results=tex>>=
-lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
-print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
+<<maas7sem2, echo=FALSE, results=hide, cache=TRUE>>=
+maas3model2 <- mxModel(Maas3model, name="MAAS3Fit2", mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313))
+maas3fit2 <- mxRun(maas3model2)
+maas3fitsum <- summary(maas3fit2)
 @
-The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
-PA2: ''LOTRQ1'',  ``LOTRQ4'',  ``LOTRQ10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
-
-PA1: ``LOTRQ3'', ``LOTRQ7'', ``LOTRQ9'', ``LOTRQ10'' This factor consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
 
 
-\subsection{CFA for LOTR}
-\label{sec:cfa-lotr}
-
-<<lotr1sem, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism")
-optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
-Lotr1model <- mxModel(name="LOTR1",
+<<maas1sem2, echo=FALSE, results=hide, cache=TRUE>>=
+maas <- "MAASQ"
+maasitems.cols <- paste(maas, 1:15, sep="")
+manifests <- maasitems.cols
+latents <- c("Unawareness")
+unawareness <- paste(maas, c(1:15), sep="")
+Maas1model2 <- mxModel(name="MAAS1Samp2",
                       type="RAM",
                       manifestVars=manifests,
                       latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from="Unawareness", to=unawareness),
                       mxPath(from=manifests, arrows=2),
                       mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=364)
+                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313)
                       )
-lotr1fit <- mxRun(Lotr1model)
-lotr1summ <- summary(lotr1fit)
+maas1fit2 <- mxRun(Maas1model2)
+maas1summ2 <- summary(maas1fit2)
 @
 
 
-<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism", "Pessimism")
-optimism <- paste(lotr, c(1,4,10), sep="")
-pessimism <- paste(lotr, c(3,7, 9, 10), sep="")
-Lotr2model <- mxModel(name="LOTR2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
-                      mxPath(from="Pessimism", to=pessimism),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=364)
-                      )
-lotr2fit <- mxRun(Lotr2model)
-lotr2summ <- summary(lotr2fit)
+
+
+<<maassemcompare2, echo=FALSE, results=tex>>=
+maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
+maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
+print(maascomp.xtab2, scalebox=0.8)
 @
 
-<<lotrcompare, echo=FALSE, results=tex>>=
-lotrcomp <- mxCompare(base=lotr1fit, comparison=lotr2fit)
-lotrcomp.xtab <- xtable(lotrcomp,label="tab:semlotrcomp", caption="Comparison of CFA for the LOT-R")
-print(lotrcomp.xtab)
-@
+Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
 
-As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provided the best fit to the data.  Therefore, this solution will be tested on the second sample.
-
- \section{Item Response Theory Analyses}
-\label{sec:item-response-theory}
-
+\subsection{IRT Analyses - MAAS}
+\label{sec:irt-analyses-maas}
 
 \subsection{MAAS}
 \label{sec:maas}
@@ -1434,560 +1299,9 @@ anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 
 The three models were subjected to ANOVA comparison and the 1 parameter model was significantly ($p\le0.001$) better than the Rasch model, and the two parameter model was significantly better than the one parameter model ($p\le0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
-\subsection{LOTR}
-\label{sec:lotr}
 
-The Life Orientation Test was the next instrument to be examined using the IRT approach.
-
-Firstly, the scale analysis was conducted to determine which items fit best together.
-
-<<lotrscales, echo=FALSE, results=hide>>=
-lotr.scales <- aisp(na.omit(lotritems))
-print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
-@
-
-All of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
-
-<<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.iio <- check.iio(na.omit(lotritems))
-print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
-@
-
-
-Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
-
-<<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.mono <- check.monotonicity(na.omit(lotritems))
-print(xtable(summary(lotr.mono),label="tab:lotrmono"))
-@
-
-
-<<lotrreduced, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
-lotr.irt <- lotritems[,lotr.paste]
-@
-
-After this process of model checking, a five item scale remains for further analysis. 
-
-<<lotrmodelsirt, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.pcm.rasch <- gpcm(na.omit(lotr.irt), constraint="rasch")
-lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
-lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
-@
-
-<<lotrpcmraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.rasch), label="tab:lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% As shown in Table \ref{tab:lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
-
-<<lotrpcm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.1pl), label="tab:lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% As can be seen in Table \ref{tab:lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
-
-<<lotrpcm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
-
-<<lotranovacomp, echo=FALSE, results=hide, cache=TRUE>>=
-anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
-anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
-anova.rasch.lotr.2pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.2pl)
-@
-
-%% The results of the model comparison showed that the rasch model was not significantly different from the one parameter model ($p=0.862$), but that the two parameter model provided a significantly better fit to the data ($p \le 0.001$), even with a penalty for the extra parameters.
-
-%% However, the difference in likelihoods was extremely small between the Rasch and two parameter models (20.15), and the BIC suggested that the Rasch model was a better fit.  One issue for the BIC is that it presumes that a true model exists amongst the candidate models, which is almost certainly not the case in this (or indeed any other psychological research) case.
-Again, the fit of three partial credit models was not acceptable, and so they are not reported further here. 
-The next stage in the analysis of the LOTR was the fitting of one and two parameter Graded Response Models. 
-
-<<lotrgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
-lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
-@ 
-%% \begin{figure}
-<<lotrgrm1plplot, echo=FALSE, results=hide>>=
-lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
-print(lotr1plgrm)
-@   
-%%  ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
-%%   \label{fig:lotr1plgrm}
-%% \end{figure}
-
-An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
-
-%% \begin{figure}
-<<lotr2plgrmplot, echo=FALSE, results=hide>>=
-lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
-print(lotr2plgrm)
-@   
-%%  ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
-%%   \label{fig:lotr2plgrm}
-%% \end{figure}
-
-
-The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
-
-<<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
-anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
-@ 
-
-The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
-
-<<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
-@
-
-The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
-
-\section{Modeling the relationship between health, optimism and mindfulness}
-\label{sec:model-relat-betw}
-
-The next step in the analytic procedure was to examine the relationships between health, optimism and mindfulness somewhat more deeply, drawing on the work carried out so far with the data. 
-
-The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. This model was  fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the stepwise regressions (on unseen data). 
-
-
-\subsection{Optimism and Health}
-\label{sec:optimism-health}
-
-The most unexpected finding of this piece of research was the direction of the relationship between the LOT-R and the RAND MOS General Health scale. This section examines a number of different models, to determine which of the solutions is more likely, given the data. 
-
-The models used in this section were as follows:
-
-\begin{itemize}
-\item A model where both health and mindfulness, along with the other regression predictors, directly affect optimism;
-
-\item A model where the effect of health on optimism is mediated through the other predictor variables;
-
-%% \item Each of these models was fit both to the summary scores and the latent factors.
-\end{itemize}
-
-The lasso model suggested that Age, Energy/Fatigue, Emotional Well Being, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
-
-<<lotrranddirect, echo=FALSE, results=hide>>=
-hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
-predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
-response <- "optimism"
-variables <- c(predictors, response)
-lotr.rand.direct <- mxModel(name="LOTRRandDirect",
-                            type="RAM",
-                            mxData(observed=na.omit(hom1.opt.sem),
-                                   type="raw" ,
-                                   means=NA,
-                                   numObs=NA),
-                            manifestVars=variables,
-                            mxPath(from=variables, arrows=2, free=FALSE, values=1),
-                       ##      mxPath(from="mindfulness", to="generalhealth", free=TRUE, values=1, arrows=2),
-                       ## mxPath(from="mindfulness", to="emwellbeing", free=TRUE, values=1, arrows=2),     
-                       ##      mxPath(from="mindfulness", to="energyfat", free=TRUE, values=1, arrows=2),
-                       ##      mxPath(from="mindfulness", to="Age", free=TRUE, values=1, arrows=2),
-                            mxPath(from="mindfulness", to=c("Age", "emwellbeing", "energyfat", "generalhealth", "optimism" ), connect="unique.pairs", arrows=2),
-                            mxPath(from="generalhealth", to=c("Age", "emwellbeing", "energyfat", "mindfulness", "optimism"), connect="unique.pairs", arrows=2),
-                            mxPath(from="Age", to=c("emwellbeing", "energyfat", "mindfulness", "optimism", "generalhealth"), connect="unique.pairs", arrows=2),
-                            mxPath(from="optimism", to=c("emwellbeing", "energyfat", "mindfulness", "generalhealth", "Age"), connect="unique.pairs", arrows=2),
-                            mxPath(from="emwellbeing", to=c("optimism", "generalhealth", "energyfat", "mindfulness", "Age"), connect="unique.pairs", arrows=2),
-                            mxPath(from="energyfat", to=c("optimism", "generalhealth", "mindfulness", "emwellbeing", "Age"), connect="unique.pairs", arrows=2),
-## mxPath(from="generalhealth", to="emwellbeing", free=TRUE, values=1, arrows=2),
-## mxPath(from="generalhealth", to="energyfat", free=TRUE, values=1, arrows=2),
-##                             mxPath(from="generalhealth", to="energyfat", free=TRUE, values=1, arrows=2),
-##                             mxPath(from="generalhealth", to="Age", free=TRUE, values=1, arrows=2),
-##                             mxPath(from="emwellbeing", to="energyfat", free=TRUE, values=1, arrows=2),
-##                             mxPath(from="emwellbeing", to="Age", free=TRUE, values=1, arrows=2),
-                            mxPath(from="one", to=variables, arrows=1, free=FALSE, values=1),
-                            mxPath(from="Age", to="optimism", arrows=1),
-                            mxPath(from="energyfat", to="optimism", arrows=1),
-                            mxPath(from="emwellbeing", to="optimism", arrows=1),
-                            mxPath(from="mindfulness", to="optimism", arrows=1),
-                            mxPath(from="generalhealth", to="optimism",arrows=1))
-                            
-## mxPath(from=predictors, to=respnse))
-
-@ 
-
-<<opthealthdirectfit, echo=FALSE, results=hide>>=
-opt.direct.fit <- mxRun(model=lotr.rand.direct)
-omxGraphviz(opt.direct.fit, dotFilename="lotrdirect.dot")
-@ 
-
-%% \begin{figure}
-%% \includegraphics{lotrdirect}  
-%%  ~\caption{Direct Model for Optimism and Health}
-%%   \label{fig:lotrdirect}
-%% \end{figure}
-
-
-
-<<opthealthmaaasmdediated, echo=FALSE, results=hide>>=
-opt.health.indirect.maas <- mxModel(lotr.rand.direct, mxPath(from=predictors, to=response), remove=TRUE)
-rand.lotr.indirect.done <- mxModel(opt.health.indirect.maas,
-                                   name="LOTRRandIndirectMAAS",
-                                   mxPath(from="generalhealth", to="mindfulness"),
-                                   mxPath(from="Age", to="mindfulness"),
-                                   mxPath(from="energyfat", to="mindfulness"),
-                                   mxPath(from="emwellbeing", to="mindfulness"),
-                                   mxPath(from="mindfulness", to="optimism"), independent=TRUE)
-
-@ 
-
-<<fitopthealthmediated1, echo=FALSE, results=hide>>=
-rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
-omxGraphviz(rand.lotr.indirect.maas.fit, dotFilename="lotrindirectmaas.dot")
-@ 
-
-%% \begin{figure}
-%% \includegraphics{lotrindirectmass}  
-%%  ~\caption{Optimism and Health Mediated by Mindfulness}
-%%   \label{fig:lotrhealthmind}
-%% \end{figure}
-
-
-<<randindirectemwelleing, echo=FALSE, results=hide>>=
-rand.indirect.emwellbeing <- mxModel(rand.lotr.indirect.done, remove=TRUE, mxPath(from=predictors, to=response))
-rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
-                                      name="RandIndirectEmWellBeing", 
-                                      mxPath(from="Age", to="emwellbeing", arrows=1),
-                                      mxPath(from="energyfat", to="emwellbeing"),
-                                      mxPath(from="generalhealth", to="emwellbeing"),
-                                      mxPath(from="mindfulness", to="emwellbeing"),
-                                      mxPath(from="emwellbeing", to="optimism"))
-
-@ 
-
-<<opthealthmediatedfit2, echo=FALSE, results=hide>>=
-lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
-omxGraphviz(lotr.indirect.emwellbeing, dotFilename="lotrindirectemwellbeing.dot")
-@ 
-
-
-%% \begin{figure}
-%%   \includegraphics{lotrindirectemwellbeing}
-%%  ~\caption{Optimism and Health, Mediated by Emotional Well Being}
-%%   \label{fig:lotrhealthemwellbeing}
-%% \end{figure}
-
-<<lotrindirectenergyfat, echo=FALSE, results=hide>>=
-lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
-lotr.indirect.energyfat <- mxModel(lotr.indirect,
-                                   name="LOTRIndirectEnergyFatigue",
-                                   mxPath(from="Age", to="energyfat"),
-                                   mxPath(from="emwellbeing", to="energyfat"),
-                                   mxPath(from="generalhealth", to="energyfat"),
-                                   mxPath(from="mindfulness", to="energyfat"),
-                                   mxPath(from="energyfat", to="optimism"))
-
-@ 
-
-<<opthealthmediatedfit3, echo=FALSE, results=hide>>=
-lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
-omxGraphviz(lotr.indirect.energyfat.fit, dotFilename="lotrindirectenergyfat.dot")
-@ 
-
-%% \begin{figure}
-%%   \includegraphics{lotrindirectenergyfat}
-%%  ~\caption{Optimism and Health Mediated by Energy/Fatigue}
-%%   \label{fig:lotrhealthenergyfat}
-%% \end{figure}
-
-<<lotrindirectgenhealth, echo=FALSE, results=hide>>=
-lotr.indirect.genhealth <- mxModel(lotr.indirect, 
-                                   name="LOTRIndirectGenHealth",
-                                   mxPath(from="Age", to="generalhealth"),
-                                   mxPath(from="energyfat", to="generalhealth"),
-                                   mxPath(from="emwellbeing", to="generalhealth"),
-                                   mxPath(from="mindfulness", to="generalhealth"),
-                                   mxPath(from="generalhealth", to="optimism"))
-
-@ 
-
-<<lotrindirectfit4, echo=FALSE, results=hide>>=
-lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
-omxGraphviz(lotr.indirect.genhealth.fit, dotFilename="lotrindirectgenhealth.dot")
-@ 
-
-
-%% \begin{figure}
-%%   \includegraphics{lotrindirectgenhealth}
-%%  ~\caption{Optimism Directly Affected by Health}
-%%   \label{fig:optindirectgenhealth}
-%% \end{figure}
-
-<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
-lotr.health.med2 <- mxModel(lotr.rand.direct, 
-                            name="LOTRHealthMediated",
-                            mxPath(from="generalhealth", to="mindfulness"),
-                            mxPath(from="mindfulness", to="optimism"))
-lotr.health.med.fit <- mxRun(lotr.health.med2)
-omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
-@ 
-
-%% \begin{figure}
-%%   \includegraphics{lotrindirectmindfulness}
-%%  ~\caption{Optimism and Health Mediated by Mindfulness}
-%%   \label{fig:lotrhealthmind2}
-%% \end{figure}
-
-<<lotrmodcomp, echo=FALSE, results=tex>>=
-lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.6)
-@ 
-
-The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
-
-\section{Predictions}
-\label{sec:predictions}
-
-As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. This problem was dealt with for this research by building the models on the first dataset, and then fitting them on a seperate sample.
-
-This section covers the following assessments of models developed on Sample One
-
-\begin{enumerate}
-\item Confirmatory Factor Analyses are carried out for the RAND MOS, the LOTR and the MAAS. 
-
-\item The IRT models are assessed using a process of prediction of factor scores using the old model and a new one developed on the second sample. 
-
-\item The regression models are refit to new data and the errors in prediction are examined. 
-
-\item The SEM models for the relationship between optimism and health were re-examined on the new data. 
-\end{enumerate}
-
-<<hom2scales, echo=FALSE, results=hide, cache=TRUE>>=
-randitems.paste <- paste(rand, c(1:36), sep="")
-randitems2 <- hom2[,randitems.paste]
-maasitems.paste <- paste(maas, c(1:15), sep="")
-maasitems2 <- hom2[,maasitems.paste]
-lotritems.paste <- paste(lotr, c(1,3,4,7,9,10), sep="")
-lotritems2 <- hom2[,lotritems.paste]
-@
-
-
-
-\subsection{RAND MOS CFA on Sample Two (Split A)}
-\label{sec:rand-mos-cfa}
-
-
-
-<<rand2semhom2, echo=FALSE, results=hide>>=
-randitems.cols <- paste(rand, 1:36, sep="")
-manifests <- randitems.cols
-latents <- c("Physical Functioning", "General and Emotional Health")
-physfun <- paste(rand, c(3:12), sep="")
-genemhealth <- paste(rand,c(1,14,17:36), sep="")
-Rand2model2 <- mxModel(name="RAND2Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Physical Functioning", to=physfun),
-                      mxPath(from="General and Emotional Health", to=genemhealth),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                       mxData(observed=cov(na.omit(randitems2)), type="cov", numObs=281)
-                      )
-rand2fit2 <- mxRun(Rand2model2)
-rand2summ2 <- summary(rand2fit2)
-@
-
-<<rand4semhom2, echo=FALSE, results=hide, cache=TRUE>>=
-randitems.cols <- paste(rand, 1:36, sep="")
-manifests <- randitems.cols
-latents <- c("Physical Functioning", "Social and Emotional Functioning", "General Health", "Physical Limitations")
-physfun <- paste(rand, c(3:12), sep="")
-genhealth <- paste(rand, c(1,33:36), sep="")
-physlim <- paste(rand, c(13:16,21:22), sep="")
-emsocfunc <- paste(rand, c(17:20, 23:32), sep="")
-Rand4model2 <- mxModel(name="RAND4Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Physical Functioning", to=physfun),
-                      mxPath(from="Social and Emotional Functioning", to=emsocfunc),
-                      mxPath(from="General Health", to=genhealth),
-                      mxPath(from="Physical Limitations", to=physlim),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281)
-                      )
-rand4fit2 <- mxRun(Rand4model2)
-rand4summ2 <- summary(rand4fit2)
-@ 
-
-
-<<rand8semhom2, echo=FALSE, results=hide, cache=TRUE>>=
-randitems.cols <- paste(rand, 1:36, sep="")
-manifests <- randitems.cols
-latents <- c("Physical Functioning", "Social and Emotional Wellbeing", "General Health", "Emotional Role Limitations", "Role Limitations", "Fatigue", "Pain", "Energy")
-physfun <- paste(rand, c(3:12), sep="")
-socemwellbeing <- paste(rand, c(20,23:28, 30, 32), sep="")
-genhealth <- paste(rand, c(1,33:36), sep="")
-emrolelim <- paste(rand, c(17:20), sep="")
-rolelim <- paste(rand, c(13:16), sep="")
-energy <- paste(rand, c(29, 31), sep="")
-pain <- paste(rand, c(21:22), sep="")
-fatigue <- paste(rand, c(2, 23, 27), sep="")
-Rand8model2 <- mxModel(name="RAND8Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Physical Functioning", to=physfun),
-                      mxPath(from="Social and Emotional Wellbeing", to=socemwellbeing),
-                      mxPath(from="General Health", to=genhealth),
-                      mxPath(from="Emotional Role Limitations", to=emrolelim),
-                      mxPath(from="Role Limitations", to=rolelim),
-                      mxPath(from="Energy", to=energy),
-                      mxPath(from="Pain", to=pain),
-                      mxPath(from="Fatigue", to=fatigue),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(randitems.scored)), type="cov", numObs=281))
-                      
-rand8fit2 <- mxRun(Rand8model2)
-rand8summ2 <- summary(rand8fit2)
-@
-
-
-
-<<randsemcomparehom2, echo=FALSE, results=tex>>=
-randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
-print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
-@
-
-As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
-
-\subsubsection{MAAS CFA on Sample Two (Split A)}
-\label{sec:maas-cfa-sample}
-
-<<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
-set.seed(17)
-maassamp <- sample(1:1109, 1109)
-ms1 <- maassamp[1:370]
-ms2 <- maassamp[371:740]
-ms3 <- maassamp[741:length(maassamp)]
-maasitems2a <- maasitems2[ms1,]
-maasitems2b <- maasitems2[ms2,]
-maasitems2c <- maasitems2[ms3,]
-maasitems.nota <- maasitems2[c(ms2, ms3),]
-maasitems.notb <- maasitems2[c(ms1, ms3),]
-maasitems.notc <- maasitems2[c(ms1, ms2),]
-lotrsamp <- sample(1:1109, 1109)
-lr1 <- lotrsamp[1:370]
-lr2 <- lotrsamp[371:740]
-lr3 <- lotrsamp[741:length(lotrsamp)]
-lotritems2a <- lotritems2[lr1,]
-lotritems2b <- lotritems2[lr2,]
-lotritems2c <- lotritems2[lr3,]
-lotritems.nota <- lotritems2[c(lr2, lr3),]
-lotritems.notb <- lotritems2[c(lr1, lr3),]
-lotritems.notc <- lotritems2[c(lr1, lr2),]
-randsamp <- sample(1:1109, 1109)
-r1 <- randsamp[1:370]
-r2 <- randsamp[371:740]
-r3 <- randsamp[741:length(randsamp)]
-randitems2a <- randitems[r1,]
-randitems2b <- randitems[r2,]
-randitems2c <- randitems[r3,]
-randitems.nota <- randitems[c(r2, r3),]
-randitems.notb <- randitems[c(r1, r3),]
-randitems.notc <- randitems[c(r1, r2),]
-scales <- hom2[,c(4,66:75)]
-scales.samp <- sample(1:1109, 1109)
-s1.samp <- scales.samp[1:370]
-s2.samp <- scales.samp[371:740]
-s3.samp <- scales.samp[741:length(scales.samp)]
-scales2a <- scales[s1.samp,]
-scales2b <- scales[s2.samp,]
-scales2c <- scales[s3.samp,]
-@
-
-<<maas7sem2, echo=FALSE, results=hide, cache=TRUE>>=
-maas3model2 <- mxModel(Maas3model, name="MAAS3Fit2", mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313))
-maas3fit2 <- mxRun(maas3model2)
-maas3fitsum <- summary(maas3fit2)
-@
-
-
-<<maas1sem2, echo=FALSE, results=hide, cache=TRUE>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Unawareness")
-unawareness <- paste(maas, c(1:15), sep="")
-Maas1model2 <- mxModel(name="MAAS1Samp2",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Unawareness", to=unawareness),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems2a)), type="cov", numObs=313)
-                      )
-maas1fit2 <- mxRun(Maas1model2)
-maas1summ2 <- summary(maas1fit2)
-@
-
-
-
-
-<<maassemcompare2, echo=FALSE, results=tex>>=
-maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
-maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
-print(maascomp.xtab2, scalebox=0.8)
-@
-
-Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
-
-\subsubsection{LOTR CFA on Sample Two (Split A)}
-\label{sec:lotr-cfa-sample}
-
-
-
-<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism")
-optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
-Lotr1model2 <- mxModel(name="LOTR1",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
-                      )
-lotr1fit2 <- mxRun(Lotr1model2)
-lotr1summ2 <- summary(lotr1fit2)
-@
-
-
-<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
-Lotr2model2 <- mxModel(Lotr2model, 
-                       name="LOTR2Model2",
-                      mxData(
-                          observed=cov(na.omit(lotritems2a)), 
-                          type="cov", numObs=313))
-lotr2fit2 <- mxRun(Lotr2model2)
-lotr2summ2 <- summary(lotr2fit2)
-@
-
-<<lotrcompare2, echo=FALSE, results=tex>>=
-lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
-lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
-print(lotrcomp.xtab2)
-@
-
-Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
-
-The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
-
-\subsection{Confirmatory IRT Analyses}
-\label{sec:conf-irt-analys}
-
+\subsection{MAAS Predictions - IRT}
+\label{sec:maas-predictions-irt}
 
 Firstly, the performance of the MAAS models are assessed on unseen data. 
 
@@ -2002,200 +1316,8 @@ print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Paramet
 
 As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data. 
 
-Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
-
-<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
-lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
-hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
-rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data. 
-
-\subsection{Regression Model Predictions}
-\label{sec:regr-model-pred}
-
-<<optsetup2a, echo=FALSE, results=hide, cache=TRUE>>=
-scales2a.full <- na.omit(scales2a)
-scales2a.full2 <- scales2a.full[,-11]
-opt.test2a <- with(scales2a.full, optimism)
-opt.train.ind <- with(scales2a.full, createDataPartition(optimism, p=0.75, list=FALSE))
-scales2a.opt.train <- scales2a.full[opt.train.ind,]
-scales2a.opt.test <- scales2a.full[-opt.train.ind,]
-opt.train2a <- with(scales2a.opt.train, optimism)
-opt.pred.train2a <- scales2a.opt.train[,-11]
-## opt.test2a <- with(scales2a.opt.test, optimism)
-opt.pred.test2a <- scales2a.opt.test[,-11]
-@ 
-
-<<optlassotest, echo=FALSE, results=hide>>=
-opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
-opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
-print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
-opt.lasso.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
-@ 
-
-%% As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
-
-%% Next, the accuracy of the predictions was assessed using a RMSEA approach. For the optimism lasso data. The error in the estimation was equal to 0.755, suggesting that the predictions were approximately 25\% accurate. This can be seen more clearly in Figure \ref{fig:plotoptlassopred} below. As can be seen there is no real systematic error in the predictions, they are just inaccurate.
-
-
-%% \begin{figure}
-<<plotlassopredobs, echo=FALSE, results=hide>>=
-print (ggplot (opt.lasso.test2a.resp, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
-@   
-%%  ~\caption{Predicted versus observed values of Optimism in second sample, Split A, lasso regression}
-%%   \label{fig:plotoptlassopred}
-%% \end{figure}
-
-
-%% Next, the ridge regression model was applied to the new data. 
-
-<<optridge2a, echo=FALSE, results=hide>>=
-opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
-print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
-opt.ridge.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="response")
-rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
-@ 
-
-%% As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
-
-%% \begin{figure}
-<<optridgeplot2a, echo=FALSE, results=hide>>=
-print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth())
-@   
-%%  ~\caption{Ridge Regression Predictions, Optimism, Split 2A}
-%%   \label{fig:ridgepredplot2a}
-%% \end{figure}
-
-
-%% As can be seen from Figure~\ref{fig:ridgepredplot2a}, again the errors do not appear to be systematically biased, but rather spread both evenly above and below the line of perfect prediction. 
-
-The model developed by stepwise selection was applied to the new data. 
-
-<<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
-opt.step.test2a <- lm(optimism~generalhealth+energyfat+emwellbeing, data=scales2a.full)
-opt.step.pred.resp <- predict (opt.step.test, newdata=scales2a.full, type="response")
-opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
-rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
-@ 
-<<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
-@ 
-
-\begin{figure}
-<<optsteppredplot, echo=FALSE, fig=TRUE>>=
-print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
-@   
- ~\caption{Stepwise Regression Predictions, Optimism Split 2A}
-  \label{fig:optstepredplot}
-\end{figure}
-
-
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a non significant coefficient for general health and energy fatigue. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. Figure \ref{fig:optstepredplot} shows this in more detail. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
-
-
-
-
-\section{Sample Two Results}
-
-Sample Two was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16, which was assumed to be MCAR (Missing Completely At Random). 
-
-The aims for the second sample collected were as follows:
-
-\begin{itemize}
-\item To replicate the finding of a negative relationship between optimism and health
-
-\item To determine if this relationship was still moderated by emotional well-being. 
-
-\item To improve the models for the MAAS and the LOT-R to aid in the prediction of placebo in the experimental portion of the research. 
-\end{itemize}
-
-\subsection{Demographic Statistics}
-\label{sec:demogr-stat}
-
-Firstly, the demographics of the sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
-
-<<hom2demo, echo=FALSE, results=tex>>=
-hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
-hom2.sum <- apademotables(hom2.tot)
-names(hom2.sum)[1] <- "Scale"
-longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
-hom2.sum$Scale <- longnames
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
-@ 
-
-The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
-
-
-The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
-
-%% \begin{figure}
-<<pairsplot2, echo=FALSE, results=hide>>=
-scales2 <- hom2[,66:75]
-pairs.panels(scales2)
-@   
-%%   \caption{Correlations between Scale Totals, Sample Two}
-%%   \label{fig:pairsplot2}
-%% \end{figure}
-
-<<scalecorr, echo=FALSE, results=tex>>=
-scale.cor <- corr.test(scales2, use="complete", method="spearman")
-cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ))
-@ 
-
-
-%% \section{Regression Analyses}
-%% \label{sec:regression-analyses}
-
-%% Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample, focusing mainly on the relationship of optimism to the other variables in the sample, as this was the major finding from Sample One. Similarly to the earlier work, stepwise linear regression models, were applied to the data using a training and test set design.
-
-<<optsetup2b, echo=FALSE, results=hide, cache=TRUE>>=
-scales2b.full <- na.omit(scales2b)
-scales2b.full2 <- scales2b.full[,-11]
-opt.test2b <- with(scales2b.full, optimism)
-opt.train.ind <- with(scales2b.full, createDataPartition(optimism, p=0.75, list=FALSE))
-scales2b.opt.train <- scales2b.full[opt.train.ind,]
-scales2b.opt.test <- scales2b.full[-opt.train.ind,]
-opt.train2b <- with(scales2b.opt.train, optimism)
-opt.pred.train2b <- scales2b.opt.train[,-11]
-opt.test2b <- with(scales2b.opt.test, optimism)
-opt.pred.test2b <- scales2b.opt.test[,-11]
-@ 
-
-<<optlasso2b, echo=FALSE, results=hide, cache=TRUE>>=
-opt.lasso.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
-opt.lasso.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
-print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2b"))
-opt.lasso.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
-@ 
-
-<<optlassoprint, echo=FALSE, results=hide>>=
-print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Lasso Regression, Split B", label="tab:optlasso2b"))
-@ 
-
-
-%% Table \ref{tab:optlasso2b} shows the estimated coefficients for the lasso regression model. It can be seen that the pattern is quite similar to that from Sample one, with Age, emotional well being, general health and mindfulness being retained by the model, with the same sign as in the previous sample. 
-
-<<optridge2b, echo=FALSE, results=hide, cache=TRUE>>=
-opt.ridge.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
-opt.ridge.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
-print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2b"))
-opt.ridge.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
-@ 
-
-<<optridge2bprint, echo=FALSE, results=hide>>=
-print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regression Model on Optimism, Split B", label="tab:optridge2b"))
-@ 
-
-%% Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
-
-%% INSERT REGRESSION ANALYSES HERE
+\subsection{Sample Two}
+\label{sec:sample-two}
 
 \subsection{MAAS}
 \label{sec:maas-samp-two}
@@ -2502,7 +1624,284 @@ print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Param
 As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). 
 
 
-\subsection{LOTR}
+
+\section{Life Orientation Test, Revised}
+
+Parallel Analysis indicated that two factors should be extracted, while the MAP criterion suggested one.  Therefore, both one and two factor solutions were extracted from the matrix and their results examined for adequacy and interpretability.
+
+%% \subsection{LOTR One Factor Solution}
+%% \label{sec:lotr-one-factor}
+
+
+<<lotr1fact, echo=FALSE, results=tex>>=
+lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
+print(FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One"))
+@
+
+Table \ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. 
+
+
+The non-normed fit index was equal to \Sexpr{round(lotr.fact.1[["TLI"]], 3)}
+and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(lotr.fact.1[["RMSEA"]][2],3)} to \Sexpr{round(lotr.fact.1[["RMSEA"]][3],3 )}.  This solution does not seem optimal, as the RMSEA is well outside the recommended bounds, and the NNFI is quite low.  %% In addition, the communalities are not very high, with over half the variance being left out of the solution.
+
+
+
+
+%% \subsection{LOTR Two Factor Solution}
+%% \label{sec:lotr-two-factor}
+
+<<lotr3fact, echo=FALSE, results=tex>>=
+lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
+print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
+@
+The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
+PA2: ''LOTRQ1'',  ``LOTRQ4'',  ``LOTRQ10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
+
+PA1: ``LOTRQ3'', ``LOTRQ7'', ``LOTRQ9'', ``LOTRQ10'' This factor consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
+
+
+\subsection{CFA for LOTR}
+\label{sec:cfa-lotr}
+
+<<lotr1sem, echo=FALSE, results=hide, cache=TRUE>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism")
+optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
+Lotr1model <- mxModel(name="LOTR1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=364)
+                      )
+lotr1fit <- mxRun(Lotr1model)
+lotr1summ <- summary(lotr1fit)
+@
+
+
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism", "Pessimism")
+optimism <- paste(lotr, c(1,4,10), sep="")
+pessimism <- paste(lotr, c(3,7, 9, 10), sep="")
+Lotr2model <- mxModel(name="LOTR2",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from="Pessimism", to=pessimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems)), type="cov", numObs=364)
+                      )
+lotr2fit <- mxRun(Lotr2model)
+lotr2summ <- summary(lotr2fit)
+@
+
+<<lotrcompare, echo=FALSE, results=tex>>=
+lotrcomp <- mxCompare(base=lotr1fit, comparison=lotr2fit)
+lotrcomp.xtab <- xtable(lotrcomp,label="tab:semlotrcomp", caption="Comparison of CFA for the LOT-R")
+print(lotrcomp.xtab)
+@
+
+As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provided the best fit to the data.  Therefore, this solution will be tested on the second sample.
+
+\subsection{IRT}
+\label{sec:lotr}
+
+The Life Orientation Test was the next instrument to be examined using the IRT approach.
+
+Firstly, the scale analysis was conducted to determine which items fit best together.
+
+<<lotrscales, echo=FALSE, results=hide>>=
+lotr.scales <- aisp(na.omit(lotritems))
+print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
+@
+
+All of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
+
+<<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.iio <- check.iio(na.omit(lotritems))
+print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
+@
+
+
+Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
+
+<<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.mono <- check.monotonicity(na.omit(lotritems))
+print(xtable(summary(lotr.mono),label="tab:lotrmono"))
+@
+
+
+<<lotrreduced, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
+lotr.irt <- lotritems[,lotr.paste]
+@
+
+After this process of model checking, a five item scale remains for further analysis. 
+
+<<lotrmodelsirt, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.pcm.rasch <- gpcm(na.omit(lotr.irt), constraint="rasch")
+lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
+lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
+@
+
+<<lotrpcmraschprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.rasch), label="tab:lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% As shown in Table \ref{tab:lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
+
+<<lotrpcm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.1pl), label="tab:lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% As can be seen in Table \ref{tab:lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
+
+<<lotrpcm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
+
+<<lotranovacomp, echo=FALSE, results=hide, cache=TRUE>>=
+anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
+anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
+anova.rasch.lotr.2pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.2pl)
+@
+
+%% The results of the model comparison showed that the rasch model was not significantly different from the one parameter model ($p=0.862$), but that the two parameter model provided a significantly better fit to the data ($p \le 0.001$), even with a penalty for the extra parameters.
+
+%% However, the difference in likelihoods was extremely small between the Rasch and two parameter models (20.15), and the BIC suggested that the Rasch model was a better fit.  One issue for the BIC is that it presumes that a true model exists amongst the candidate models, which is almost certainly not the case in this (or indeed any other psychological research) case.
+Again, the fit of three partial credit models was not acceptable, and so they are not reported further here. 
+The next stage in the analysis of the LOTR was the fitting of one and two parameter Graded Response Models. 
+
+<<lotrgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
+lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
+@ 
+%% \begin{figure}
+<<lotrgrm1plplot, echo=FALSE, results=hide>>=
+lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
+print(lotr1plgrm)
+@   
+%%  ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
+%%   \label{fig:lotr1plgrm}
+%% \end{figure}
+
+An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
+
+%% \begin{figure}
+<<lotr2plgrmplot, echo=FALSE, results=hide>>=
+lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
+print(lotr2plgrm)
+@   
+%%  ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
+%%   \label{fig:lotr2plgrm}
+%% \end{figure}
+
+
+The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
+
+<<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
+anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
+@ 
+
+The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
+
+<<lotr2plestimates, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
+@
+
+The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
+
+
+<<hom2scales, echo=FALSE, results=hide, cache=TRUE>>=
+randitems.paste <- paste(rand, c(1:36), sep="")
+randitems2 <- hom2[,randitems.paste]
+maasitems.paste <- paste(maas, c(1:15), sep="")
+maasitems2 <- hom2[,maasitems.paste]
+lotritems.paste <- paste(lotr, c(1,3,4,7,9,10), sep="")
+lotritems2 <- hom2[,lotritems.paste]
+@
+
+
+
+
+
+\subsubsection{LOTR CFA on Sample Two (Split A)}
+\label{sec:lotr-cfa-sample}
+
+
+
+<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism")
+optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
+Lotr1model2 <- mxModel(name="LOTR1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
+                      )
+lotr1fit2 <- mxRun(Lotr1model2)
+lotr1summ2 <- summary(lotr1fit2)
+@
+
+
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
+Lotr2model2 <- mxModel(Lotr2model, 
+                       name="LOTR2Model2",
+                      mxData(
+                          observed=cov(na.omit(lotritems2a)), 
+                          type="cov", numObs=313))
+lotr2fit2 <- mxRun(Lotr2model2)
+lotr2summ2 <- summary(lotr2fit2)
+@
+
+<<lotrcompare2, echo=FALSE, results=tex>>=
+lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
+lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
+print(lotrcomp.xtab2)
+@
+
+Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
+
+The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
+
+\subsection{Confirmatory IRT Analyses}
+\label{sec:conf-irt-analys}
+
+
+
+
+Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
+
+<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
+lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
+hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
+rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
+
+\section{Sample Two}
 \label{sec:lotr-1}
 
 
@@ -2769,6 +2168,322 @@ print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and 
 
 As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
 
+\section{Modeling the relationship between health, optimism and mindfulness}
+\label{sec:model-relat-betw}
+
+The next step in the analytic procedure was to examine the relationships between health, optimism and mindfulness somewhat more deeply, drawing on the work carried out so far with the data. 
+
+The first step was to assess the fit of the factor models and the regression models together, in a Structural Equation Model. This model was  fit using the summary scores. Additionally, each of the IRT Models were used as a base for the relationships between the scales (essentially treated as alternative factor solutions). The regression model was formed by using the predictors from the stepwise regressions (on unseen data). 
+
+
+\subsection{Optimism and Health}
+\label{sec:optimism-health}
+
+The most unexpected finding of this piece of research was the direction of the relationship between the LOT-R and the RAND MOS General Health scale. This section examines a number of different models, to determine which of the solutions is more likely, given the data. 
+
+The models used in this section were as follows:
+
+\begin{itemize}
+\item A model where both health and mindfulness, along with the other regression predictors, directly affect optimism;
+
+\item A model where the effect of health on optimism is mediated through the other predictor variables;
+
+%% \item Each of these models was fit both to the summary scores and the latent factors.
+\end{itemize}
+
+The lasso model suggested that Age, Energy/Fatigue, Emotional Well Being, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
+
+<<lotrranddirect, echo=FALSE, results=hide>>=
+hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
+predictors <- c("Age", "energyfat", "emwellbeing", "generalhealth", "mindfulness")
+response <- "optimism"
+variables <- c(predictors, response)
+lotr.rand.direct <- mxModel(name="LOTRRandDirect",
+                            type="RAM",
+                            mxData(observed=na.omit(hom1.opt.sem),
+                                   type="raw" ,
+                                   means=NA,
+                                   numObs=NA),
+                            manifestVars=variables,
+                            mxPath(from=variables, arrows=2, free=FALSE, values=1),
+                       ##      mxPath(from="mindfulness", to="generalhealth", free=TRUE, values=1, arrows=2),
+                       ## mxPath(from="mindfulness", to="emwellbeing", free=TRUE, values=1, arrows=2),     
+                       ##      mxPath(from="mindfulness", to="energyfat", free=TRUE, values=1, arrows=2),
+                       ##      mxPath(from="mindfulness", to="Age", free=TRUE, values=1, arrows=2),
+                            mxPath(from="mindfulness", to=c("Age", "emwellbeing", "energyfat", "generalhealth", "optimism" ), connect="unique.pairs", arrows=2),
+                            mxPath(from="generalhealth", to=c("Age", "emwellbeing", "energyfat", "mindfulness", "optimism"), connect="unique.pairs", arrows=2),
+                            mxPath(from="Age", to=c("emwellbeing", "energyfat", "mindfulness", "optimism", "generalhealth"), connect="unique.pairs", arrows=2),
+                            mxPath(from="optimism", to=c("emwellbeing", "energyfat", "mindfulness", "generalhealth", "Age"), connect="unique.pairs", arrows=2),
+                            mxPath(from="emwellbeing", to=c("optimism", "generalhealth", "energyfat", "mindfulness", "Age"), connect="unique.pairs", arrows=2),
+                            mxPath(from="energyfat", to=c("optimism", "generalhealth", "mindfulness", "emwellbeing", "Age"), connect="unique.pairs", arrows=2),
+## mxPath(from="generalhealth", to="emwellbeing", free=TRUE, values=1, arrows=2),
+## mxPath(from="generalhealth", to="energyfat", free=TRUE, values=1, arrows=2),
+##                             mxPath(from="generalhealth", to="energyfat", free=TRUE, values=1, arrows=2),
+##                             mxPath(from="generalhealth", to="Age", free=TRUE, values=1, arrows=2),
+##                             mxPath(from="emwellbeing", to="energyfat", free=TRUE, values=1, arrows=2),
+##                             mxPath(from="emwellbeing", to="Age", free=TRUE, values=1, arrows=2),
+                            mxPath(from="one", to=variables, arrows=1, free=FALSE, values=1),
+                            mxPath(from="Age", to="optimism", arrows=1),
+                            mxPath(from="energyfat", to="optimism", arrows=1),
+                            mxPath(from="emwellbeing", to="optimism", arrows=1),
+                            mxPath(from="mindfulness", to="optimism", arrows=1),
+                            mxPath(from="generalhealth", to="optimism",arrows=1))
+                            
+## mxPath(from=predictors, to=respnse))
+
+@ 
+
+<<opthealthdirectfit, echo=FALSE, results=hide>>=
+opt.direct.fit <- mxRun(model=lotr.rand.direct)
+omxGraphviz(opt.direct.fit, dotFilename="lotrdirect.dot")
+@ 
+
+%% \begin{figure}
+%% \includegraphics{lotrdirect}  
+%%  ~\caption{Direct Model for Optimism and Health}
+%%   \label{fig:lotrdirect}
+%% \end{figure}
+
+
+
+<<opthealthmaaasmdediated, echo=FALSE, results=hide>>=
+opt.health.indirect.maas <- mxModel(lotr.rand.direct, mxPath(from=predictors, to=response), remove=TRUE)
+rand.lotr.indirect.done <- mxModel(opt.health.indirect.maas,
+                                   name="LOTRRandIndirectMAAS",
+                                   mxPath(from="generalhealth", to="mindfulness"),
+                                   mxPath(from="Age", to="mindfulness"),
+                                   mxPath(from="energyfat", to="mindfulness"),
+                                   mxPath(from="emwellbeing", to="mindfulness"),
+                                   mxPath(from="mindfulness", to="optimism"), independent=TRUE)
+
+@ 
+
+<<fitopthealthmediated1, echo=FALSE, results=hide>>=
+rand.lotr.indirect.maas.fit <- mxRun(rand.lotr.indirect.done)
+omxGraphviz(rand.lotr.indirect.maas.fit, dotFilename="lotrindirectmaas.dot")
+@ 
+
+%% \begin{figure}
+%% \includegraphics{lotrindirectmass}  
+%%  ~\caption{Optimism and Health Mediated by Mindfulness}
+%%   \label{fig:lotrhealthmind}
+%% \end{figure}
+
+
+<<randindirectemwelleing, echo=FALSE, results=hide>>=
+rand.indirect.emwellbeing <- mxModel(rand.lotr.indirect.done, remove=TRUE, mxPath(from=predictors, to=response))
+rand.indirect.emwellbeing2 <- mxModel(rand.indirect.emwellbeing,
+                                      name="RandIndirectEmWellBeing", 
+                                      mxPath(from="Age", to="emwellbeing", arrows=1),
+                                      mxPath(from="energyfat", to="emwellbeing"),
+                                      mxPath(from="generalhealth", to="emwellbeing"),
+                                      mxPath(from="mindfulness", to="emwellbeing"),
+                                      mxPath(from="emwellbeing", to="optimism"))
+
+@ 
+
+<<opthealthmediatedfit2, echo=FALSE, results=hide>>=
+lotr.indirect.emwellbeing <- mxRun(rand.indirect.emwellbeing2)
+omxGraphviz(lotr.indirect.emwellbeing, dotFilename="lotrindirectemwellbeing.dot")
+@ 
+
+
+%% \begin{figure}
+%%   \includegraphics{lotrindirectemwellbeing}
+%%  ~\caption{Optimism and Health, Mediated by Emotional Well Being}
+%%   \label{fig:lotrhealthemwellbeing}
+%% \end{figure}
+
+<<lotrindirectenergyfat, echo=FALSE, results=hide>>=
+lotr.indirect <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from=predictors, to=response))
+lotr.indirect.energyfat <- mxModel(lotr.indirect,
+                                   name="LOTRIndirectEnergyFatigue",
+                                   mxPath(from="Age", to="energyfat"),
+                                   mxPath(from="emwellbeing", to="energyfat"),
+                                   mxPath(from="generalhealth", to="energyfat"),
+                                   mxPath(from="mindfulness", to="energyfat"),
+                                   mxPath(from="energyfat", to="optimism"))
+
+@ 
+
+<<opthealthmediatedfit3, echo=FALSE, results=hide>>=
+lotr.indirect.energyfat.fit <- mxRun(lotr.indirect.energyfat)
+omxGraphviz(lotr.indirect.energyfat.fit, dotFilename="lotrindirectenergyfat.dot")
+@ 
+
+%% \begin{figure}
+%%   \includegraphics{lotrindirectenergyfat}
+%%  ~\caption{Optimism and Health Mediated by Energy/Fatigue}
+%%   \label{fig:lotrhealthenergyfat}
+%% \end{figure}
+
+<<lotrindirectgenhealth, echo=FALSE, results=hide>>=
+lotr.indirect.genhealth <- mxModel(lotr.indirect, 
+                                   name="LOTRIndirectGenHealth",
+                                   mxPath(from="Age", to="generalhealth"),
+                                   mxPath(from="energyfat", to="generalhealth"),
+                                   mxPath(from="emwellbeing", to="generalhealth"),
+                                   mxPath(from="mindfulness", to="generalhealth"),
+                                   mxPath(from="generalhealth", to="optimism"))
+
+@ 
+
+<<lotrindirectfit4, echo=FALSE, results=hide>>=
+lotr.indirect.genhealth.fit <- mxRun(lotr.indirect.genhealth)
+omxGraphviz(lotr.indirect.genhealth.fit, dotFilename="lotrindirectgenhealth.dot")
+@ 
+
+
+%% \begin{figure}
+%%   \includegraphics{lotrindirectgenhealth}
+%%  ~\caption{Optimism Directly Affected by Health}
+%%   \label{fig:optindirectgenhealth}
+%% \end{figure}
+
+<<lotrmediatedhealth, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.health.med <- mxModel(lotr.rand.direct, remove=TRUE, mxPath(from="generalhealth", to="optimism"))
+lotr.health.med2 <- mxModel(lotr.rand.direct, 
+                            name="LOTRHealthMediated",
+                            mxPath(from="generalhealth", to="mindfulness"),
+                            mxPath(from="mindfulness", to="optimism"))
+lotr.health.med.fit <- mxRun(lotr.health.med2)
+omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
+@ 
+
+%% \begin{figure}
+%%   \includegraphics{lotrindirectmindfulness}
+%%  ~\caption{Optimism and Health Mediated by Mindfulness}
+%%   \label{fig:lotrhealthmind2}
+%% \end{figure}
+
+<<lotrmodcomp, echo=FALSE, results=tex>>=
+lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.6)
+@ 
+
+The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
+
+\section{Predictions}
+\label{sec:predictions}
+
+As discussed in the methodology , one of the problems with psychometric methods is the problem of overfitting. This problem was dealt with for this research by building the models on the first dataset, and then fitting them on a seperate sample.
+
+This section covers the following assessments of models developed on Sample One
+
+\begin{enumerate}
+\item Confirmatory Factor Analyses are carried out for the RAND MOS, the LOTR and the MAAS. 
+
+\item The IRT models are assessed using a process of prediction of factor scores using the old model and a new one developed on the second sample. 
+
+\item The regression models are refit to new data and the errors in prediction are examined. 
+
+\item The SEM models for the relationship between optimism and health were re-examined on the new data. 
+\end{enumerate}
+ 
+
+
+
+
+\section{Sample Two Results}
+
+Sample Two was collected through online methods, as described above and had large amounts of missing data concentrated in RAND Q13-16, which was assumed to be MCAR (Missing Completely At Random). 
+
+The aims for the second sample collected were as follows:
+
+\begin{itemize}
+\item To replicate the finding of a negative relationship between optimism and health
+
+\item To determine if this relationship was still moderated by emotional well-being. 
+
+\item To improve the models for the MAAS and the LOT-R to aid in the prediction of placebo in the experimental portion of the research. 
+\end{itemize}
+
+\subsection{Demographic Statistics}
+\label{sec:demogr-stat}
+
+Firstly, the demographics of the sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
+
+<<hom2demo, echo=FALSE, results=tex>>=
+hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
+hom2.sum <- apademotables(hom2.tot)
+names(hom2.sum)[1] <- "Scale"
+longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+hom2.sum$Scale <- longnames
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
+@ 
+
+The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
+
+
+The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
+
+%% \begin{figure}
+<<pairsplot2, echo=FALSE, results=hide>>=
+scales2 <- hom2[,66:75]
+pairs.panels(scales2)
+@   
+%%   \caption{Correlations between Scale Totals, Sample Two}
+%%   \label{fig:pairsplot2}
+%% \end{figure}
+
+<<scalecorr, echo=FALSE, results=tex>>=
+scale.cor <- corr.test(scales2, use="complete", method="spearman")
+cors <- scale.cor$r
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ))
+@ 
+
+
+%% \section{Regression Analyses}
+%% \label{sec:regression-analyses}
+
+%% Similiar regression analyses were carried out on the test sample from Study 2 as were carried out on the first sample, focusing mainly on the relationship of optimism to the other variables in the sample, as this was the major finding from Sample One. Similarly to the earlier work, stepwise linear regression models, were applied to the data using a training and test set design.
+
+<<optsetup2b, echo=FALSE, results=hide, cache=TRUE>>=
+scales2b.full <- na.omit(scales2b)
+scales2b.full2 <- scales2b.full[,-11]
+opt.test2b <- with(scales2b.full, optimism)
+opt.train.ind <- with(scales2b.full, createDataPartition(optimism, p=0.75, list=FALSE))
+scales2b.opt.train <- scales2b.full[opt.train.ind,]
+scales2b.opt.test <- scales2b.full[-opt.train.ind,]
+opt.train2b <- with(scales2b.opt.train, optimism)
+opt.pred.train2b <- scales2b.opt.train[,-11]
+opt.test2b <- with(scales2b.opt.test, optimism)
+opt.pred.test2b <- scales2b.opt.test[,-11]
+@ 
+
+<<optlasso2b, echo=FALSE, results=hide, cache=TRUE>>=
+opt.lasso.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2b"))
+opt.lasso.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+@ 
+
+<<optlassoprint, echo=FALSE, results=hide>>=
+print(xtable(as.matrix(opt.lasso.test2b), caption="Coefficients for Lasso Regression, Split B", label="tab:optlasso2b"))
+@ 
+
+
+%% Table \ref{tab:optlasso2b} shows the estimated coefficients for the lasso regression model. It can be seen that the pattern is quite similar to that from Sample one, with Age, emotional well being, general health and mindfulness being retained by the model, with the same sign as in the previous sample. 
+
+<<optridge2b, echo=FALSE, results=hide, cache=TRUE>>=
+opt.ridge.test2b <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="coefficients")
+opt.ridge.test2b.pred <- penalisedRegression(x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2b"))
+opt.ridge.test2b.resp <- penalisedRegression (x=opt.pred.train2b, y=opt.train2b,  testdata=opt.pred.test2b, newy=opt.test2b, alpha=1, nfolds=10, type="response")
+@ 
+
+<<optridge2bprint, echo=FALSE, results=hide>>=
+print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regression Model on Optimism, Split B", label="tab:optridge2b"))
+@ 
+
+%% Table \ref{tab:optridge2b} shows the estimated coefficients for the ridge regression model on Split B, and it can be seen that the coefficients are broadly in line with those from the lasso fit, and also with the coefficients from Sample One. The fit of the SEM models for this relationship are described below. 
+
+%% INSERT REGRESSION ANALYSES HERE
+
+
+
+\
+
 
 \section{Relationships between Health, Optimism and Mindfulness}
 \label{sec:relat-betw-health}
@@ -2947,6 +2662,319 @@ print(xtable(maas.bt.grm.test.all, label="tab:maasbtgrmtest", caption="Backtesti
 
 
 It can be seen that the model developed from Split C (without items 5,6 and 15) provides the best fit to the unseen data, and this model will be used to generate scores for the experimental participants.
+
+\section{Regression Analyses}
+
+Given the correlation matrix reported shown above in Figure \ref{fig:pairsplot},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
+
+\subsection{Optimism}
+
+
+<<cvsetup, echo=FALSE, results=hide, cache=TRUE>>=
+hom1.full <- na.omit(hom1)
+hom1.partition <- with(hom1.full, createDataPartition(optimism, list=FALSE, p=0.8))
+hom1.train.opt <- hom1.full[hom1.partition,]
+hom1.test.opt <- hom1.full[-hom1.partition,]
+mytrain <- trainControl(method="cv")
+@ 
+
+<<opttrain, echo=FALSE, results=hide, cache=TRUE>>=
+testpred <- hom1.test.opt[,c("Age", "pain", "mindfulness", "socialfunctioning", "rolelim", "rolelimem", "emwellbeing", "physfun", "energyfat", "generalhealth")]
+trainopt <- with(hom1.train.opt, optimism)
+trainpred <- hom1.train.opt[,c(4, 66:74)]
+testopt <- with(hom1.test.opt, optimism)
+@ 
+
+<<optstep, echo=FALSE, results=hide, cache=TRUE>>=
+opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
+opt.reg.simple <- lm(optimism~1, data=hom1.train.opt)
+opt.step <- stepAIC(opt.reg.first, direction="both", k=2)
+opt.step.pred.resp <- predict(opt.step, newdata=hom1.test.opt, type="response")
+opt.step.pred.coef <- predict(opt.step, newdata=hom1.test.opt, type="terms")
+step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimism"])
+
+@ 
+
+<<optstepprint, echo=FALSE, results=hide>>=
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
+@ 
+
+%% As Table \ref{tab:hom1optstep} shows, 
+
+<<optsteppred, echo=FALSE, results=tex>>=
+opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
+print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
+@ 
+
+In the training sample, the stepwise selected models kept three predictors.
+The results of the selected predictors on the test sample are shown in Table \ref{tab:hom1stepopttest}.
+General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
+For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section \ref{sec:discussion}. 
+
+<<optridge, echo=FALSE, results=hide>>=
+opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
+opt.ridge.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="response")
+ridge.xtab <- xtable(as.matrix(opt.ridge), caption="Coefficients for Ridge Regression of Optimism on other variables", label="tab:hom1optridge")
+digits(ridge.xtab) <- 4
+print(ridge.xtab)
+@
+
+%% Next, a form of penalised regression known as ridge regression (or L2 regression) was used. Ridge regression penalises the coefficients by pushing them towards zero in the process of searching for the best model. However, it will not remove variables from the model, regardless of how small their coefficients get. It can be seen from Table \ref{tab:hom1optridge} that all of the coefficients are quite small, and mostly negative (which is the same as was seen in the OLS fit). Note that the coefficients shown are from the test data set, not used in the construction of the model. From this model, it would appear that mindfulness and emotional well being are the only useful predictors of optimism. 
+
+
+
+%% The predictive ability of the ridge regression model was quite poor, as the model appeared to systematically underpredict the values for optimism. 
+
+%% Next, a lasso regression model was fitted to the data. The lasso includes a penalty on the coefficients, similarly to ridge, but in contrast to ridge regression, lasso will remove predictors from the model.
+
+<<optlasso, echo=FALSE, results=hide>>=
+opt.lasso <- penalisedRegression(x=trainpred, y=trainopt,  testdata=hom1.test.opt, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.pred <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="response")
+opt.lasso.xtab <- xtable(as.matrix(opt.lasso), caption="Coefficients for Lasso Regression on Optimism scores. Note that coefficients are for the fit of the chosen model on new data", label="tab:hom1optlasso")
+digits(opt.lasso.xtab) <- 4
+print(opt.lasso.xtab)
+lasso.opt.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=as.matrix(testpred), alpha=1, nfolds=10, type="link")
+@ 
+
+%% Table \ref{tab:hom1optlasso} shows that the lasso procedure has eliminated most of the predictors from the model. Only general health, energy fatigue and emotional well-being remain following the selection procedure. Note that mindfulness appears to be related to optimism under this model, but not when an OLS model is fitted with stepwise selection. Note that the coefficient of emotional well-being is larger in the lasso fit than in the model fitted with ridge regression. 
+
+
+
+
+
+<<optloess, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
+opt.loess <- loess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt)
+## opt.loess.fit <- tuneLoess(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, tuneLength=10, newdata=hom1.test.opt)
+opt.loess.pred <- predict(opt.loess, newdata=hom1.test.opt, type="response")
+## opt.loess.pred.obs <- data.frame(pred=opt.loess.pred, obs=hom1.test.opt)
+## train.gam.loess <- train(optimism~generalhealth*mindfulness*emwellbeing, data=hom1.train.opt, method="gamLoess", tuneLength=10)
+@ 
+
+<<optreglm, echo=FALSE, results=hide, cache=TRUE>>=
+opt.reg.first <- lm(optimism~(generalhealth+Age+College+pain+mindfulness+socialfunctioning+rolelim+rolelimem+emwellbeing+physfun+energyfat), data=hom1.train.opt)
+opt.reg.sum <- summary(opt.reg.first)
+opt.reg.xtab <- xtable(opt.reg.sum, label="tab:optregfirst", caption="Maximal Model for Regression on Optimism")
+print(opt.reg.xtab, table.placement="ht")
+lm.pred.opt <- predict(opt.reg.first, hom1.test.opt, type="response")
+@
+
+
+%% In table \ref{tab:optregfirst} the summary of the regression results can be seen, the model is significant, with an $F$ value of \Sexpr{round(opt.reg.sum[["fstatistic"]],3)}  and an $R^2$ of \Sexpr{round(opt.reg.sum[["adj.r.squared"]],3)}.  
+
+
+%% Below, in Table \ref{tab:optregfinal} can be seen the final model,
+%% including all significant predictor variables.
+
+<<optregfinal, echo=FALSE, results=hide, cache=TRUE>>=
+opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
+optfolds <- TrainTestSets(opt.part, hom1)
+opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
+opt.reg.fin.stand <- standardize(opt.reg.final)
+opt.fin.sum <- summary(opt.reg.final)
+opt.fin.xtab <- xtable(opt.fin.sum, label="tab:optregfinal", caption="Final Regression Model for Optimism")
+print(opt.fin.xtab , table.placement="ht")
+@
+
+
+%% The model was significant, F(15, 528) = \Sexpr{round(opt.fin.sum[["fstatistic"]], 3)}, and the adjusted $R^2$ was equal to \Sexpr{round(opt.fin.sum[["adj.r.squared"]],3)}
+%% The model seems to show that the only important predictors of Optimism in the dataset are General Health, Mindfulness, Emotional Well Being and Age.  This corroborates the plots that were shown above for these variables. The strongest predictor was emotional well being, with age and general health being of similiar magnitude. 
+
+%% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
+
+As has been shown above, the  model showed that emotional well being and general health were important, and general health was not removed from the model, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as unbiased by the search process. 
+
+
+
+
+\subsection{Mindfulness Regressions}
+
+A similiar procedure as described above for optimism was employed
+in the midfulness regressions.  The results are shown below.
+
+<<mindsetup, echo=FALSE, results=hide, cache=TRUE>>=
+mind.ind <- with(hom1.full, createDataPartition(mindfulness, p=0.8, times=1, list=FALSE))
+hom1.mind.train <- hom1.full[mind.ind, ]
+hom1.mind.test <- hom1.full[-mind.ind,]
+mind.train <- with(hom1.mind.train, mindfulness)
+mind.pred.train <- hom1.mind.train[,c(4,67:73,75)]
+mind.test <- with(hom1.mind.test, mindfulness)
+mind.pred.test <- hom1.mind.test[,c(4,67:73,75)]
+@ 
+
+<<maasregfirst, echo=FALSE, results=hide, cache=TRUE>>=
+maas.reg.first <- lm(mindfulness~ generalhealth + optimism + pain+ socialfunctioning+physfun+rolelim+rolelimem+emwellbeing+energyfat+Age, data=hom1.mind.train)
+mind.step <- stepAIC(maas.reg.first, data=hom1.mind.train, direction="both", k=3)
+mind.step.test <- lm(mindfulness~rolelim+rolelimem+emwellbeing+energyfat, data=hom1.mind.test)
+
+mind.step.pred <- predict(mind.step, hom1.mind.test, type="response")
+mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optimism"]])
+@
+
+<<mindstepprint, echo=false, results=tex>>=
+print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue, even though only emotional well-being remained significant. This model would seem to suggest that mindfulness is related to health through emotional well-being. This is interesting, in that in terms of face validity this would not be expected, although it is reported to be a relatively common outcome of MBSR. 
+
+
+
+
+<<mindlasso, echo=FALSE, results=hide>>=
+mind.lasso <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=1, type="coefficients")
+mind.lasso.xtab <- xtable(as.matrix(mind.lasso), caption="Coefficients on Unseen Data, Mindfulness Regression (lasso penalisation)", label="tab:hom1mindlasso")
+digits(mind.lasso.xtab) <- 4
+print(mind.lasso.xtab)
+mind.lasso.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=1, type="response")
+@ 
+
+%% As shown in Table \ref{tab:hom1mindlasso}, the largest coefficient on mindfulness was optimism, and in line with the correlations seen above, it is negative. Energy Fatigue and Emotional Well being appear to be important in this particular model. 
+
+%% Next, a ridge regression model was fit to this data. 
+
+<<mindridge, echo=FALSE, results=hide>>=
+mind.ridge <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), alpha=0, type="coefficients")
+mind.ridge.xtab <- xtable(as.matrix(mind.ridge), caption="Coefficients on Unseen Data, Mindfulness Regression (ridge penalisation)", label="tab:hom1mindridge")
+digits(mind.ridge.xtab) <- 4
+print(mind.ridge.xtab)
+mind.ridge.pred <- penalisedRegression(x=mind.pred.train, y=mind.train,  testdata=as.matrix(mind.pred.test), newy=mind.test, alpha=0, type="response")
+@ 
+
+%% Table \ref{tab:hom1mindridge} shows the coefficients for the ridge regression, and they are almost identical to those of the lasso (at reasonable levels of precision). Note that in both penalised regression models, the coefficient for optimism was much higher than that for any other variable, suggesting that optimism scores were the most influential variable included in the model (c.f. Section \ref{sec:model-relat-betw} and Chapters \ref{cha:primary-research}). Next, a stepwise selection model procedure was employed on the dataset. 
+
+
+
+
+
+
+
+
+\subsection{Health Regressions}
+
+<<healthsetup, echo=FALSE, results=hide, cache=TRUE>>=
+hom1.health.train.ind <- with(hom1.full, createDataPartition(generalhealth, p=0.75, list=FALSE))
+hom1.health.train <- hom1.full[hom1.health.train.ind,]
+hom1.health.test <- hom1.full[-hom1.health.train.ind,]
+healthpred.train <- hom1.health.train[,c(4, 66:72, 74:75)]
+health.train <- with(hom1.health.train, generalhealth)
+healthpred.test <- hom1.health.test[,c(4, 66:72, 74:75)]
+health.test <- with(hom1.health.test, generalhealth)
+@ 
+
+
+<<healthregfirst, echo=FALSE, results=hide, cache=TRUE>>=
+health.mod1<-lm(generalhealth~mindfulness+physfun+optimism+energyfat+emwellbeing+Age+pain+Status+socialfunctioning+rolelim+rolelimem, na.action="na.omit", data=hom1.health.train)
+health.step <- stepAIC(health.mod1, direction="both", k=3)
+health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.health.test)
+
+@
+
+<<healthregfirstprint, echo=FALSE, results=tex>>=
+print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
+@ 
+As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of optimism.
+
+%% Next, a lasso regression model was fit to the same dataset. 
+
+
+<<healthlasso, echo=FALSE, results=hide>>=
+health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
+health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="response")
+print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
+@ 
+
+%% As can be seen from Table \ref{tab:hom1healthlasso}, optimism appears to be the best predictor in this case, along with energy fatigue and role limitations, supporting the set of predictors chosen by stepwise selection above. 
+
+<<healthridge, echo=FALSE, results=hide>>=
+health.ridge <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="coefficients")
+health.ridge.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=0, type="response")
+print(xtable(as.matrix(health.ridge), caption="Coefficients for Ridge Regression on General Health on unseen data", label="tab:hom1healthridge"))
+@ 
+
+%% As can be seen from Table \ref{tab:hom1healthridge}, thee model for ridge regression is quite similiar, save that many of the coefficients are not shrunk nearly as much using this methodolody. Nonetheless, the overall magnitudes and relationships between the sizes of coefficients are quite similiar. Note the small coefficient for emotional well-being, which would not appear to agree with the raw correlations (see \ref{fig:pairsplot}). This can be explained as a artefact of the procedures used in the penalised regression, as when two predictors are extremely correlated, the lasso and ridge procedure will tend to assign all of the weight to one of them \cite{friedman2009elements}. 
+
+\subsection{Regression Model Predictions}
+\label{sec:regr-model-pred}
+
+<<optsetup2a, echo=FALSE, results=hide, cache=TRUE>>=
+scales2a.full <- na.omit(scales2a)
+scales2a.full2 <- scales2a.full[,-11]
+opt.test2a <- with(scales2a.full, optimism)
+opt.train.ind <- with(scales2a.full, createDataPartition(optimism, p=0.75, list=FALSE))
+scales2a.opt.train <- scales2a.full[opt.train.ind,]
+scales2a.opt.test <- scales2a.full[-opt.train.ind,]
+opt.train2a <- with(scales2a.opt.train, optimism)
+opt.pred.train2a <- scales2a.opt.train[,-11]
+## opt.test2a <- with(scales2a.opt.test, optimism)
+opt.pred.test2a <- scales2a.opt.test[,-11]
+@ 
+
+<<optlassotest, echo=FALSE, results=hide>>=
+opt.lasso.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="coefficients")
+opt.lasso.test2a.pred <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
+print(xtable(as.matrix(opt.lasso.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptlasso2a"))
+opt.lasso.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=1, nfolds=10, type="response")
+@ 
+
+%% As can be seen from Table \ref{tab:homoptlasso2a}, the general trend for coefficients was similar across the two samples. 
+
+%% Next, the accuracy of the predictions was assessed using a RMSEA approach. For the optimism lasso data. The error in the estimation was equal to 0.755, suggesting that the predictions were approximately 25\% accurate. This can be seen more clearly in Figure \ref{fig:plotoptlassopred} below. As can be seen there is no real systematic error in the predictions, they are just inaccurate.
+
+
+%% \begin{figure}
+<<plotlassopredobs, echo=FALSE, results=hide>>=
+print (ggplot (opt.lasso.test2a.resp, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
+@   
+%%  ~\caption{Predicted versus observed values of Optimism in second sample, Split A, lasso regression}
+%%   \label{fig:plotoptlassopred}
+%% \end{figure}
+
+
+%% Next, the ridge regression model was applied to the new data. 
+
+<<optridge2a, echo=FALSE, results=hide>>=
+opt.ridge.test2a <- penalisedRegression(x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="coefficients")
+print(xtable(as.matrix(opt.ridge.test2a), caption="Coefficients for Optimism Regression from Study One on Sample Two (Split A)", label="tab:homoptridge2a"))
+opt.ridge.test2a.resp <- penalisedRegression (x=trainpred, y=trainopt,  testdata=scales2a.full2, newy=opt.test2a, alpha=0, nfolds=10, type="response")
+rmsea.ridge.opt2a <- rmsea (opt.ridge.test2a.resp)
+@ 
+
+%% As can be seen from Table \ref{tab:homoptridge2a} mindfulness again appears to be the most useful predictor of optimism, and in general the coefficients are quite similar to those from Study One. The RMSEA approach showed that the ridge regression model had an error of 0.749, which is extremely similar to that of the lasso model. 
+
+%% \begin{figure}
+<<optridgeplot2a, echo=FALSE, results=hide>>=
+print (ggplot (opt.ridge.test2a.resp, aes (x=pred, y=obs))+geom_point()+geom_smooth())
+@   
+%%  ~\caption{Ridge Regression Predictions, Optimism, Split 2A}
+%%   \label{fig:ridgepredplot2a}
+%% \end{figure}
+
+
+%% As can be seen from Figure~\ref{fig:ridgepredplot2a}, again the errors do not appear to be systematically biased, but rather spread both evenly above and below the line of perfect prediction. 
+
+The model developed by stepwise selection was applied to the new data. 
+
+<<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
+opt.step.test2a <- lm(optimism~generalhealth+energyfat+emwellbeing, data=scales2a.full)
+opt.step.pred.resp <- predict (opt.step.test, newdata=scales2a.full, type="response")
+opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
+rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
+@ 
+<<optstep2aprint, echo=FALSE, results=tex>>=
+print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
+@ 
+
+\begin{figure}
+<<optsteppredplot, echo=FALSE, fig=TRUE>>=
+print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
+@   
+ ~\caption{Stepwise Regression Predictions, Optimism Split 2A}
+  \label{fig:optstepredplot}
+\end{figure}
+
+
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a non significant coefficient for general health and energy fatigue. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. Figure \ref{fig:optstepredplot} shows this in more detail. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
+
+
 
 
 \section{Discussion}
