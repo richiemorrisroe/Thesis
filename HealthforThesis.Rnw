@@ -208,9 +208,9 @@ The major hypotheses of this part of the thesis were as follows:
 
 The major types of analysis carried out are described below. 
 
-The response rate for Sample One (N=392) (paper) was approximately
-90\% of those asked, while the response rate for Sample Two (N=1501) (Online)
-was 10\%. Note that pseudo-random sampling was used for Sample One, while simple random sampling was used for Sample Two. 
+The response rate for Sample One  (paper) was approximately
+90\% of those asked (N=392), while the response rate for Sample Two  (Online)
+was 10\% (N=1501). Note that pseudo-random sampling was used for Sample One, while simple random sampling was used for Sample Two. 
 
 \section{Methods}
 \label{sec:methods}
@@ -221,9 +221,10 @@ The methods used for this part of the thesis were primarily psychometric. Cross-
 \label{sec:participants}
 
 <<demo, echo=FALSE, results=tex>>=
-hom.demo <- count(hom, vars=c("Gender", "CollectMeth"))
-hom.demo2 <- na.omit(hom.demo)
-print(xtable(hom.demo2, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"))
+hom.gend.meth <- count(hom, vars=c("Gender", "CollectMeth"))
+hom.gend.meth2 <- na.omit(hom.gend.meth)
+hom.gend.meth.tab <- recast(hom.gend.meth2, Gender~CollectMeth)
+print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"))
 @ 
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
@@ -265,11 +266,13 @@ hom2 <- hom[hom$CollectMeth=="Online",]
 hom.tot <- hom1[,66:75]
 hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
 tot.sum2 <- apademotables(hom.tot)
-tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism")
+longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+tot.sum2[,1] <- longnames
+tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample One")
 print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
 @
 
-To begin the analysis, frequencies, means and ranges were calculated
+In advance of the analysis, frequencies, means and ranges were calculated
 for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
 be seen in Table \ref{tab:sumstatscales}, below.
 
@@ -287,13 +290,14 @@ print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
 @
 
 
-The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the first sample (N=392) was female (N=286), and undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was female (N=798), while the mean age was 22.3 (SD=6.8). 
+The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the first sample (N=392) was female (N=286), undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was female (N=798), undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
 
 <<scalesalpha, echo=FALSE, results=hide>>=
-physicalfunctioning <- hom[,physfun]
 
-rolelimitations <- hom[,rolelim]
-emotionalrolelimitations <- hom[,emrolelim]
+physicalfunctioning <- with(hom,  hom[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom))])
+
+rolelimitations <- with(hom, hom[,grep("RANDQ[1][3456]$", x=names(hom))])
+emotionalrolelimitations <- with(hom, hom[,grep("RANDQ[1][789]$",x=names(hom))])
 energyfatigue <- hom[,with(hom, grep("RANDQ[2][379]$|RANDQ31$", x=names(hom)))]
 emotionalwellbeing <- hom[,with(hom, grep("RANDQ[2][4568]$|RANDQ30$", x=names(hom)))]
 socialfunctioning <- hom[,with(hom, grep("RANDQ20|RANDQ32", x=names(hom)))]
@@ -498,6 +502,19 @@ maas.grep <- grep("^MAASQ", x=names(hom1))
 maasitems <- hom1[,maas.grep]
 lotr.grep <- grep("^LOTRQ", x=names(hom1))
 lotritems <- hom1[,lotr.grep]
+@
+
+
+
+<<hom2scales, echo=FALSE, results=hide, cache=TRUE>>=
+maas <- "MAASQ"
+lotr <- "LOTRQ"
+randitems.paste <- paste(rand, c(1:36), sep="")
+randitems2 <- hom2[,randitems.paste]
+maasitems.paste <- paste(maas, c(1:15), sep="")
+maasitems2 <- hom2[,maasitems.paste]
+lotritems.paste <- paste(lotr, c(1,3,4,7,9,10), sep="")
+lotritems2 <- hom2[,lotritems.paste]
 @
 
 <<calcalpha, echo=FALSE, results=hide>>=
@@ -968,6 +985,30 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.3[["RMSEA"]][1],3 )},with conf
 \subsection{CFA for MAAS}
 \label{sec:cfa-maas}
 
+
+
+
+
+
+<<maas1fit, echo=FALSE, results=hide, cache=TRUE>>=
+maas <- "MAASQ"
+maasitems.cols <- paste(maas, 1:15, sep="")
+manifests <- maasitems.cols
+latents <- c("Unawareness")
+unawareness <- paste(maas, c(1:15), sep="")
+Maas1model <- mxModel(name="MAAS1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Unawareness", to=unawareness),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=364)
+                      )
+maas1fit <- mxRun(Maas1model)
+maas1summ <- summary(maas1fit)
+@
+
 <<maas3sem, echo=FALSE, results=hide, cache=TRUE>>=
 maas <- "MAASQ"
 maasitems.cols <- paste(maas, 1:15, sep="")
@@ -991,28 +1032,6 @@ Maas3model <- mxModel(name="MAAS3",
                       )
 maas3fit <- mxRun(Maas3model)
 maas3summ <- summary(maas3fit)
-@
-
-
-
-
-<<maas1fit, echo=FALSE, results=hide, cache=TRUE>>=
-maas <- "MAASQ"
-maasitems.cols <- paste(maas, 1:15, sep="")
-manifests <- maasitems.cols
-latents <- c("Unawareness")
-unawareness <- paste(maas, c(1:15), sep="")
-Maas1model <- mxModel(name="MAAS1",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Unawareness", to=unawareness),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(maasitems)), type="cov", numObs=364)
-                      )
-maas1fit <- mxRun(Maas1model)
-maas1summ <- summary(maas1fit)
 @
 
 <<maassemcompare, echo=FALSE, results=tex>>=
@@ -1745,14 +1764,7 @@ print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficie
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
 
 
-<<hom2scales, echo=FALSE, results=hide, cache=TRUE>>=
-randitems.paste <- paste(rand, c(1:36), sep="")
-randitems2 <- hom2[,randitems.paste]
-maasitems.paste <- paste(maas, c(1:15), sep="")
-maasitems2 <- hom2[,maasitems.paste]
-lotritems.paste <- paste(lotr, c(1,3,4,7,9,10), sep="")
-lotritems2 <- hom2[,lotritems.paste]
-@
+
 
 
 
