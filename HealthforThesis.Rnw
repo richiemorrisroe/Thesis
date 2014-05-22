@@ -746,7 +746,7 @@ print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Fact
 
 The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
-<<randhigherord, echo=FALSE, results=hide>>=
+<<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
 scales.hom1 <- hom1[,66:73]
 scales2 <- scales[,2:9]
 rand.higher.fa
