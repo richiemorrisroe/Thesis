@@ -5,4 +5,12 @@
 * Results
 [[file:HealthforThesis.Rnw::print(tot.xtab,%20include.rownames%3DFALSE)%20#include%20packing%20rotating%20if%20fails][Maybe put sample one and two scale totals at this point?]]
 Fix FA tables so either low results are supressed, or high loading ones are bold. 
+[[https://stat.ethz.ch/pipermail/r-help/2011-June/279822.html][This shows an example using xtable]]
+[[file:HealthforThesis.Rnw::scales.hom1%20<-%20hom1%5B,66:73%5D][Higher order structure not particular clear when using scale totals for sample one, better for sample two]]
+- Test if the generated factor structures provide a better fit.
+- Maybe look at irtoys package to plot test functions in ggplot
+[[http://blog.lib.umn.edu/moor0554/canoemoore/2011/07/irtoys_plyr_ggplot2_test_development.html][Useful blog post]]
 
+* Discussion
+
+[[file:HealthforThesis.Rnw::This%20factor%20explained%2035\%25%20of%20the%20variance][Discuss why the MAAS model only explained 35% of the variance in the sample]]
