@@ -951,3 +951,8 @@ irtAverageFactorScores <- function (scores=list) {
     names(ab.average) <- "AbilityEst"
     return(ab.average)
 }
+provide <- function(name, ...) {
+    if(!(require(name))) {
+        install.packages(name, ...)
+    }
+    }
