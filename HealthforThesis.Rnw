@@ -746,7 +746,11 @@ print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Fact
 
 The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
-
+<<randhigherord, echo=FALSE, results=hide>>=
+scales.hom1 <- hom1[,66:73]
+scales2 <- scales[,2:9]
+rand.higher.fa
+@ 
 
 
 \paragraph{CFA for RAND MOS}
@@ -1135,12 +1139,8 @@ Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provid
 \subsection{IRT Analyses - MAAS}
 \label{sec:irt-analyses-maas}
 
-\subsection{MAAS}
-\label{sec:maas}
 
-
-
-The first instrument examined was the MAAS.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
+The MAAS was then considered from a IRT perspective.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
 <<maasassumptioncheck, echo=FALSE, results=hide>>=
 maas.scales <- aisp(na.omit(maasitems))
@@ -1241,10 +1241,7 @@ anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
 The three models were subjected to ANOVA comparison and the 1 parameter model was significantly ($p\le0.001$) better than the Rasch model, and the two parameter model was significantly better than the one parameter model ($p\le0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
 
 
-\subsection{MAAS Predictions - IRT}
-\label{sec:maas-predictions-irt}
 
-Firstly, the performance of the MAAS models are assessed on unseen data. 
 
 <<hom1maasgrmtest, echo=FALSE, results=tex>>=
 maas.irt2a <- maasitems2a[,paste(maas, c(1,3:5,7:15), sep="")]
@@ -1255,13 +1252,10 @@ rownames(hom1.maas.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1maasgrmtest"))
 @ 
 
-As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data. 
+As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. 
 
-\subsection{Sample Two}
+\section{Sample Two}
 \label{sec:sample-two}
-
-\subsection{MAAS}
-\label{sec:maas-samp-two}
 
 \subsection{Factor Analyses}
 \label{sec:fact-maas}
@@ -1302,7 +1296,7 @@ print(xtable(maas.fact1.av, label="tab:maasfact1average", caption="One Factor So
 @ 
 
 
-Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Splits B and C. In this split, the same solution only explained 36\% of the variance in the item loadings, which is in line with Split B, though much lower than the original published research in which the MAAS was developed. 
+Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Splits B and C. The solution only explained 36\% of the variance in the item loadings, which is in line with the first sample, though much lower than the original published research in which the MAAS was developed. 
 
 
 
@@ -1312,15 +1306,15 @@ print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "Lack
 @
 This five factor solution (not shown) explained 54\% of the variance in the sample.
 
-PA1: "MAASQ5",  "MAASQ6",  "MAASQ7",  "MAASQ8",  "MAASQ9",  "MAASQ10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
+PA1: "Q5",  "Q6",  "Q7",  "Q8",  "Q9",  "Q10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
-PA2: "MAASQ1", "MAASQ2", "MAASQ3".  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
+PA2: "Q1", "Q2", "Q3".  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
 
-PA3: "MAASQ4", "MAASQ5".  This factor is again termed lack of somatic awareness.
+PA3: "Q4", "Q5".  This factor is again termed lack of somatic awareness.
 
-PA4: "MAASQ13", "MAASQ14".  This factor can best be termed as lack of attention.
+PA4: "Q13", "Q14".  This factor can best be termed as lack of attention.
 
-PA5: "MAASQ10", "MAASQ11", "MAASQ12", "MAASQ14", "MAASQ15".  This factor again can be termed distractability.
+PA5: "Q10", "Q11", "Q12", "Q14", "Q15".  This factor again can be termed distractability.
 
 <<maas2cfact5, echo=FALSE, results=hide>>=
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
@@ -1328,7 +1322,7 @@ print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAt
 @
 The five factor solution for split C (not shown) broke down as follows:
 
-PA1: "MAASQ7"  "MAASQ8"  "MAASQ9"  "MAASQ10" "MAASQ11" "MAASQ12" "MAASQ14"
+PA1: "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12" "Q14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
 
 PA2: "MAASQ9"  "MAASQ13"
@@ -1508,7 +1502,7 @@ print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two P
 
 The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
 
-Finally, we examine the performance of these models on unseen data.
+Next, we examine the performance of these models on unseen data.
 
 <<maas2bgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt.notb <- maasitems.notb[,paste(maas, c(1:4, 7:15), sep="")]
@@ -1596,9 +1590,9 @@ lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
 print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
 @
 The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
-PA2: ''LOTRQ1'',  ``LOTRQ4'',  ``LOTRQ10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
+PA2: ''Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1: ``LOTRQ3'', ``LOTRQ7'', ``LOTRQ9'', ``LOTRQ10'' This factor consist of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
+PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
 
 
 \subsection{CFA for LOTR}
@@ -1813,30 +1807,7 @@ print(lotrcomp.xtab2)
 
 Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
 
-The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
-\subsection{Confirmatory IRT Analyses}
-\label{sec:conf-irt-analys}
-
-
-
-
-Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
-
-<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
-lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
-hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
-rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
-
-\section{Sample Two}
-\label{sec:lotr-1}
 
 
 
@@ -2001,6 +1972,34 @@ Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance 
 
 
 
+The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
+
+
+\subsection{Confirmatory IRT Analyses}
+\label{sec:conf-irt-analys}
+
+
+
+
+Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
+
+<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
+lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
+hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
+rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
+
+\section{Sample Two}
+\label{sec:lotr-1}
+
+
+
 Next, we examine the LOT-R using IRT approaches. 
 
 <<lotr2bcheck, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2101,6 +2100,26 @@ print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and 
 @ 
 
 As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
+
+\subsection{Demographic Statistics}
+\label{sec:demogr-stat}
+
+Firstly, the demographics of the sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
+
+<<hom2demo, echo=FALSE, results=tex>>=
+hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
+hom2.sum <- apademotables(hom2.tot)
+names(hom2.sum)[1] <- "Scale"
+longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+hom2.sum$Scale <- longnames
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
+@ 
+
+The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
+
+
+The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
+
 
 \section{Modeling the relationship between health, optimism and mindfulness}
 \label{sec:model-relat-betw}
@@ -2332,24 +2351,6 @@ The aims for the second sample collected were as follows:
 \item To improve the models for the MAAS and the LOT-R to aid in the prediction of placebo in the experimental portion of the research. 
 \end{itemize}
 
-\subsection{Demographic Statistics}
-\label{sec:demogr-stat}
-
-Firstly, the demographics of the sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
-
-<<hom2demo, echo=FALSE, results=tex>>=
-hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
-hom2.sum <- apademotables(hom2.tot)
-names(hom2.sum)[1] <- "Scale"
-longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
-hom2.sum$Scale <- longnames
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
-@ 
-
-The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
-
-
-The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
 
 %% \begin{figure}
 <<pairsplot2, echo=FALSE, results=hide>>=
