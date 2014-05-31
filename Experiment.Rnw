@@ -306,6 +306,7 @@ expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
 
 <<loadpackages, echo=FALSE, results=hide>>=
 require (randomForest)
+require(GGally)
 require (cacheSweave)
 require (gridExtra)
 require(psych)
@@ -326,6 +327,7 @@ source("func.R")
 require(zoo)
 require(forecast)
 require(semPlot)
+require(doMC)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -600,7 +602,7 @@ tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correl
 tcqiat.mean.m <- melt(tcqiat.mean.resp, id.vars=c("Participant", "Block"))
 tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
 names(tcq.iat.c) <- c("Participant", "variable", "TCQBlock1", "TCQBlock2", "TCQBlock3", "TCQBlock4", "TCQBlock5")
-tcq.block.corr.pl <- plotmatrix(tcq.iat.c[,3:length(tcq.iat.c)])
+tcq.block.corr.pl <- ggpairs(tcq.iat.c[,3:length(tcq.iat.c)])
 print(tcq.block.corr.pl)
 @    
  %%   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
@@ -618,14 +620,14 @@ print(xtable(cormat, label="tab:tcqcormat", caption="Correlations between the bl
 
 Next, the same process is repeated for the Optimism IAT. 
 %% \begin{figure}
-<<tcqmeanresp, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+<<optmeanresp, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 optiat.mean.resp <- ddply(optiatsorted, .(Block, Participant), summarise, Correlations=mean(BlockTime, na.rm=TRUE))
 ## optmeanresp.pl <- ggplot(optiat.mean.resp, aes(x=MeanResponseTime))+geom_histogram+facet_grid(.~Block)
 ## print(optmeanresp.pl)
 optiat.mean.m <- melt(optiat.mean.resp, id.vars=c("Participant", "Block"))
 opt.iat.c <- dcast(optiat.mean.m, Participant+...~Block)
-opt.block.corr.pl <- plotmatrix(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
-print(opt.block.corr.pl)
+## opt.block.corr.pl <- ggpairs(opt.iat.c[,3:length(opt.iat.c)])+geom_smooth(method="lm")
+## print(opt.block.corr.pl)
 @    
  %%   \caption{Correlations between Block Scores for Optimism IAT with linear regression smooth line}
  %%   \label{fig:optblockcorr}
@@ -658,7 +660,7 @@ iat.block.merge2 <- iat.block.merge[, -1*c(2, 5,7,8,11,13)]
 
 %% \begin{figure}
 <<corriattcqopt, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
-corr.iat.tcq.opt.pl <- plotmatrix(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
+corr.iat.tcq.opt.pl <- ggpairs(iat.block.merge2[,2:length(iat.block.merge2)])+geom_smooth(method="lm")+geom_smooth(method="lm")
 print(corr.iat.tcq.opt.pl)
 @   
 %%   \caption{Correlations between Non Critical Blocks of Optimism and Treatment Credibility IAT}
@@ -990,7 +992,7 @@ print(plac.prime.pl)
 <<pairsplot, echo=FALSE, eval=FALSE>>=
 iatexp2 <- iatexp
 names(iatexp2)[9:10] <- c("TCQIAT", "OptIAT")
-print(plotmatrix(iatexp2)+geom_smooth(method="lm")+geom_jitter())
+print((iatexp2)+geom_smooth(method="lm")+geom_jitter())
 @   
 %%   \caption{Scatterplots and Density Plots for Self Report and Implicit Measures}
 %%   \label{fig:pairsplotimpexp}
@@ -999,6 +1001,19 @@ print(plotmatrix(iatexp2)+geom_smooth(method="lm")+geom_jitter())
 In Figure \ref{fig:pairsimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with themselves, as noted above).  
 
 There was a difference in the mean cream credibility scores by whether or not a participant responded to placebo, but the difference was not significant ($t=-0.9545, df=53.766, p=0.3441$). 
+
+<<paints, echo=FALSE, results=hide>>=
+painratings <- vasscores2[,c(1,2,8:53)]
+painratings.temp <- painratings[,2:length(painratings)]
+painratings.trans <- t(painratings.temp)
+colnames(painratings.trans) <- as.character(t(painratings[,1]))
+painratings.trans <- as.data.frame(painratings.trans)
+painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
+pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
+pain.cond.m <- melt(pain.cond, id.vars="Condition")
+pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
+## pain.cond.rs <- dcast(pain.cond.m2, ...~Condition)
+@ 
 
 \begin{figure}
 <<ggplotplacyesno, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1161,17 +1176,6 @@ print(placmod.xtab)
 
 
 
-<<paints, echo=FALSE, results=hide>>=
-painratings <- vasscores2[,c(1,2,8:53)]
-painratings.temp <- painratings[,2:length(painratings)]
-painratings.trans <- t(painratings.temp)
-colnames(painratings.trans) <- as.character(t(painratings[,1]))
-painratings.trans <- as.data.frame(painratings.trans)
-painratings.trans[,"Time"] <- 1:nrow(painratings.trans)
-pain.cond <- ddply(painratings, .(Condition), summarise, PainRatings=apply(painratings[,4:48], 2, mean, na.rm=TRUE))
-pain.cond.m <- melt(pain.cond, id.vars="Condition")
-pain.cond.m2 <- pain.cond.m[,c("Condition", "value")]
-## pain.cond.rs <- dcast(pain.cond.m2, ...~Condition)
 @ 
 
 
@@ -1362,7 +1366,7 @@ Before the analysis of GSR data was conducted, the mean GSR per group were scale
 
 
 
-<<ecgimport, echo=FALSE, results=hide>>=
+<<ecgimport, echo=FALSE, results=hide, eval=FALSE>>=
 ecg <- read.csv("ECGdataDownSample.csv")
 ecg[,"time"] <- 1:nrow(ecg)
 ecg.m <- melt(ecg, id.vars="time")
@@ -1811,76 +1815,6 @@ The three models were as follows:
 \item A two factor model where the covariances between implicit and explicit measures were moderated by mindfulness. 
 \end{enumerate}
 
-<<impexpmod, echo=FALSE, results=hide>>=
-expimp1.mod <- lavaanify(expimpdirect)
-twofac.impexp.mod <- lavaanify(expimptwofac)
-expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
-twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
-@ 
-
-<<impexpmodels, echo=FALSE, results=hide>>=
-expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
-expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
-## expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
-@ 
-
-<<expimpfit, echo=FALSE, results=tex>>=
-expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimpall <- rbind(expimp1.fit.meas, expimpmoderated.fit.meas)
-rownames(expimpall) <- c("One Factor", "Moderated")
-print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
-@ 
-
-The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
-
-\subsection{Theoretical Models of the Relationship between Placebo Response and Implicit and Explicit Measures}
-\label{sec:theor-models-relat}
-
-
-
-The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:theoretical-models}. 
-
-
-
-
-<<mod1sem, echo=FALSE, results=hide, eval=FALSE>>=
-pred <- c("Gender", "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp")
-resp <- "PlacResp"
-variables <- c(pred, resp)
-plac.mod.direct <- mxModel(name="PlacModDirect",
-                           type="RAM",
-                           mxData(observed=na.omit(exp.sem),
-                                  type="raw",
-                                  means=NA,
-                                  numObs=NA),
-                           manifestVars=variables,
-                           mxPath(from=variables, arrows=2, free=FALSE, values=1),
-          
-                           mxPath(from="Gender", to=c( "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
-                           mxPath(from="LOTR", to=c( "Gender", "OptIATMean", "TCQIATMean", "convaltcomp" ), connect="unique.pairs", arrows=2),
-                           mxPath(from="OptIATMean", to=c("Gender", "LOTR", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
-                           mxPath(from="TCQIATMean", to=c( "Gender", "LOTR", "OptIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
-                           mxPath(from="convaltcomp", to=c( "Gender", "LOTR", "OptIATMean"), connect="unique.pairs", arrows=2),
-                           mxPath(from="one", to=variables, arrows=1, free=FALSE, values=1),
-                           ## mxPath(from="Age", to="PlacResp", arrows=1),
-                           mxPath(from="Gender", to="PlacResp", arrows=1),
-                           mxPath(from="LOTR", to="PlacResp", arrows=1),
-                           mxPath(from="OptIATMean", to="PlacResp", arrows=1),
-                           mxPath(from="TCQIATMean", to="PlacResp", arrows=1),
-
-                           mxPath(from="convaltcomp", to="PlacResp", arrows=1)
-                           )
-                                  
-@ 
-
-<<placmod1semrun, echo=FALSE, results=hide, eval=FALSE>>=
-placmod1.fit <- mxRun(plac.mod.direct)
-@
-
 <<lavaanmod, echo=FALSE, results=hide>>=
 placmod.cov <- '
 PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR
@@ -2011,6 +1945,80 @@ meanalt~~meanalt'
 <<impexpdata, echo=FALSE, results=hide>>=
 impexpdata <- Iatandexpmeasures.t[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt", "LOTR")]
 @ 
+
+<<impexpmod, echo=FALSE, results=hide>>=
+expimp1.mod <- lavaanify(expimpdirect)
+twofac.impexp.mod <- lavaanify(expimptwofac)
+expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
+twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
+@ 
+
+<<impexpmodels, echo=FALSE, results=hide>>=
+expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
+expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
+## expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
+@ 
+
+<<expimpfit, echo=FALSE, results=tex>>=
+expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+expimpall <- rbind(expimp1.fit.meas, expimpmoderated.fit.meas)
+rownames(expimpall) <- c("One Factor", "Moderated")
+print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
+@ 
+
+The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
+
+\subsection{Theoretical Models of the Relationship between Placebo Response and Implicit and Explicit Measures}
+\label{sec:theor-models-relat}
+
+
+
+The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:theoretical-models}. 
+
+
+
+
+<<mod1sem, echo=FALSE, results=hide, eval=FALSE>>=
+pred <- c("Gender", "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp")
+resp <- "PlacResp"
+variables <- c(pred, resp)
+plac.mod.direct <- mxModel(name="PlacModDirect",
+                           type="RAM",
+                           mxData(observed=na.omit(exp.sem),
+                                  type="raw",
+                                  means=NA,
+                                  numObs=NA),
+                           manifestVars=variables,
+                           mxPath(from=variables, arrows=2, free=FALSE, values=1),
+          
+                           mxPath(from="Gender", to=c( "LOTR", "OptIATMean", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="LOTR", to=c( "Gender", "OptIATMean", "TCQIATMean", "convaltcomp" ), connect="unique.pairs", arrows=2),
+                           mxPath(from="OptIATMean", to=c("Gender", "LOTR", "TCQIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="TCQIATMean", to=c( "Gender", "LOTR", "OptIATMean", "convaltcomp"), connect="unique.pairs", arrows=2),
+                           mxPath(from="convaltcomp", to=c( "Gender", "LOTR", "OptIATMean"), connect="unique.pairs", arrows=2),
+                           mxPath(from="one", to=variables, arrows=1, free=FALSE, values=1),
+                           ## mxPath(from="Age", to="PlacResp", arrows=1),
+                           mxPath(from="Gender", to="PlacResp", arrows=1),
+                           mxPath(from="LOTR", to="PlacResp", arrows=1),
+                           mxPath(from="OptIATMean", to="PlacResp", arrows=1),
+                           mxPath(from="TCQIATMean", to="PlacResp", arrows=1),
+
+                           mxPath(from="convaltcomp", to="PlacResp", arrows=1)
+                           )
+                                  
+@ 
+
+<<placmod1semrun, echo=FALSE, results=hide, eval=FALSE>>=
+placmod1.fit <- mxRun(plac.mod.direct)
+@
+
+
+
+
 
 <<modimpexp, echo=FALSE, results=hide, eval=FALSE>>=
 
