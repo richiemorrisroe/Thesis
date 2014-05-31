@@ -952,7 +952,7 @@ randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2)
 print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
 @
 
-As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. 
+As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
 
 
 
@@ -1206,7 +1206,7 @@ print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial C
 @ 
 
 %% Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data.
-Three Partial Credit Models were fitted but are not reported as they did not provide a good fit to the data.  
+
 The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
 <<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1905,6 +1905,27 @@ print(lotrcomp.xtab2)
 
 Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
 
+\subsection{Confirmatory IRT Analyses}
+\label{sec:conf-irt-analys}
+
+
+
+
+Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
+
+<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
+lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
+hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
+rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
+
+
 
 \subsection{Sample Two}
 \label{sec:sample-two-1}
@@ -2077,25 +2098,6 @@ Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance 
 The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
 
-\subsection{Confirmatory IRT Analyses}
-\label{sec:conf-irt-analys}
-
-
-
-
-Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
-
-<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
-lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
-hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
-rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
 
 \section{IRT Analyses}
 \label{sec:lotr-1}
@@ -2164,8 +2166,6 @@ An examination of the item ordering assumption showed that Q1 did not fit this m
 
 
 
-All Partial Credit Models suffered from non-monotonically increasing parameter estimates, and so are not analysed further here. 
-
 Next, one and two parameter Graded Response Models were fit to the scale.
 
 <<lotr2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2208,7 +2208,7 @@ As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provi
 
 
 
-This process was begun with the CFA model for the LOT-R. Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the backtesting process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
+Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the backtesting process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
 <<lotrbacktestsem1full, echo=FALSE, results=hide, cache=TRUE>>=
 optimism <- paste(lotr, c(1, 3, 4, 7, 9, 10), sep="")
@@ -2285,7 +2285,7 @@ print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Hea
 The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
 
 
-The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent (see  Figure \ref{fig:pairsplot2}). 
+The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent. 
 
 \section{Inferential Statistics}
 
@@ -2294,13 +2294,13 @@ be addressed.
 
 
 
-\begin{figure}
-<<pairsplot, echo=FALSE, fig=TRUE, pdf=TRUE>>=
+%% \begin{figure}
+<<pairsplot, echo=FALSE, eva=FALSE, pdf=TRUE>>=
 pairs.panels(na.omit(hom.tot))
 @
-\caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
-\label{fig:pairsplot}
-\end{figure}
+%% \caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
+%% \label{fig:pairsplot}
+%% \end{figure}
 
 
 
@@ -2532,13 +2532,13 @@ rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
 @ 
 
-\begin{figure}
-<<optsteppredplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<optsteppredplot, echo=FALSE, eval=FALSE, fig=TRUE>>=
 print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
 @   
- ~\caption{Stepwise Regression Predictions, Optimism Split 2A}
-  \label{fig:optstepredplot}
-\end{figure}
+%%  ~\caption{Stepwise Regression Predictions, Optimism Split 2A}
+%%   \label{fig:optstepredplot}
+%% \end{figure}
 
 
 As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a non significant coefficient for general health and energy fatigue. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. Figure \ref{fig:optstepredplot} shows this in more detail. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
@@ -2570,7 +2570,7 @@ print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regr
 In the training sample, the stepwise selected models kept three predictors.
 The results of the selected predictors on the test sample are shown in Table \ref{tab:hom1stepopttest}.
 General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
-For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section \ref{sec:discussion}. 
+For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section~\ref{sec:discussion}. 
 
 <<optridge, echo=FALSE, results=hide>>=
 opt.ridge <- penalisedRegression(x=trainpred, y=trainopt, newy=testopt, testdata=testpred, alpha=0, nfolds=10, type="coefficients")
@@ -2727,7 +2727,7 @@ The models used in this section were as follows:
 %% \item Each of these models was fit both to the summary scores and the latent factors.
 \end{itemize}
 
-The lasso model suggested that Age, Energy/Fatigue, Emotional Well Being, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
+The regression model suggested that Age, Energy/Fatigue, Emotional Well Being, General Health and Mindfulness were associated with optimism, so these variables are included in the model. 
 
 <<lotrranddirect, echo=FALSE, results=hide>>=
 hom1.opt.sem <- hom1[,c("Age", "energyfat", "emwellbeing", "mindfulness", "generalhealth", "optimism")]
@@ -2927,7 +2927,7 @@ pairs.panels(scales2)
 <<scalecorr, echo=FALSE, results=tex>>=
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ), scalebox=0.7)
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ), scalebox=0.5)
 @ 
 
 
@@ -3013,8 +3013,6 @@ As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is on
 
 \section{Discussion}
 \label{sec:discussion}
-\section{Sample One}
-\label{sec:discussion-samp-one}
 
 A number of interesting findings, some expected and others not have arisen from this study. Firstly, in contrast to published research, optimism and health were negatively associated. This relationship appears to be mediated through Emotional Well Being, which may point to some earlier work suggesting that the optimism-health connection was mediated through negative affect. This result would seem to contribute some new information to this debate. 
 
