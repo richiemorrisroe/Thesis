@@ -1,18 +1,2 @@
 
-* Introduction
-[[The%20methods%20used%20for%20this%20part%20of%20the%20thesis%20were%20primarily%20psychometric.][And yet the introduction does not talk very much about psychometrics]]
-- Fix this, make introduction more relevant and results more appropriate to it.
-[[file:HealthforThesis.tex::The%20study%20formed%20an%20opportunity%20to%20collect%20background%20data%20for%20the%20population%20of%20interest,%20to%20assess%20if%20the%20participants%20in%20the%20experiment%20were%20systematically%20different%20from%20those%20who%20had%20responded%20to%20a%20survey%20invitation.%20This%20is%20critical%20if%20the%20results%20from%20the%20experimental%20portion%20of%20the%20research%20are%20to%20generalise%20to%20any%20further%20samples,%20given%20that%20inferences%20cannot%20be%20made%20about%20the%20experimental%20sample%20if%20it%20is%20not%20understood%20how%20they%20stand%20in%20relation%20to%20other%20samples%20from%20the%20overall%20population%20which%20was%20used%20throughout%20the%20research.%20This%20process%20should%20allow%20for%20more%20accurate%20predictions%20of%20participant%20responses,%20assuming%20that%20the%20models%20generalise%20to%20the%20new%20sample.][Background data point - discuss how the models did in Experimental chapter]]
-- Not particularly well, as I remember it. 
-* Results
-[[file:HealthforThesis.Rnw::print(tot.xtab,%20include.rownames%3DFALSE)%20#include%20packing%20rotating%20if%20fails][Maybe put sample one and two scale totals at this point?]]
-Fix FA tables so either low results are supressed, or high loading ones are bold. 
-[[https://stat.ethz.ch/pipermail/r-help/2011-June/279822.html][This shows an example using xtable]]
-[[file:HealthforThesis.Rnw::scales.hom1%20<-%20hom1%5B,66:73%5D][Higher order structure not particular clear when using scale totals for sample one, better for sample two]]
-- Test if the generated factor structures provide a better fit.
-- Maybe look at irtoys package to plot test functions in ggplot
-[[http://blog.lib.umn.edu/moor0554/canoemoore/2011/07/irtoys_plyr_ggplot2_test_development.html][Useful blog post]]
 
-* Discussion
-
-[[file:HealthforThesis.Rnw::This%20factor%20explained%2035\%25%20of%20the%20variance][Discuss why the MAAS model only explained 35% of the variance in the sample]]
