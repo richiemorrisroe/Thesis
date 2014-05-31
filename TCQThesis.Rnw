@@ -41,9 +41,9 @@ Additionally, in another study investigating the impact of acupuncture analgesia
 \label{sec:links-theory}
 
 There are a number of theoretical perspectives around how expectancies relate to placebo effects. The most prevalent in the field is the response expectancy perspective of Kirsch \cite{Kirsch1985,Kirsch1997} which argues that expectancies are directly responsible for observed placebo responses, and that all other variables are mediated by them. Kirsch's theory draws from some of Albert Bandura's work on self-efficacy \cite{Bandura1977}, but is quite distinct in that response expectancies are regarded as a seperate type.
-Crow~{\it et al} take a somewhat different approach to expectancies, breaking them down into specific kinds of process expectancy (those expectancies developed by patients themselves) and positive and negative outcome expectancies which are either created or enhanced by the health provider. 
+Crow~{\it et al}~\cite{Crow1999} take a somewhat different approach to expectancies, breaking them down into specific kinds of process expectancy (those expectancies developed by patients themselves) and positive and negative outcome expectancies which are either created or enhanced by the health provider. 
 
-For the purposes of this thesis, and in line with the theory around placebo discussed in Chapter \ref{cha:methodology}, especially Section \ref{sec:towards-an-embodied}, treatment expectancies are regarded as outcome expectancies formed around particular sets of treatments which are then either enhanced or denigrated by subsequent learning. Essentially, expectancies are valid for a particular point in time, and are more reflective of state, and are amenable to change through either manipulations \cite{kirsch1988double} or through experience \cite{Stewart-Williams2004a}. Indeed, this perspective is entirely compatible with the position of Stewart-Williams that conditioning is a means of creating new expectancies. Crucially, for my theory, expectancies are regarded as having physiological impact which shapes the experience of a given treatment, which then impacts further response to a particular treatment or treatments in general. 
+For the purposes of this thesis, and in line with the theory around placebo discussed in Chapter \ref{cha:methodology}, especially Section \ref{sec:towards-an-embodied}, treatment expectancies are regarded as outcome expectancies formed around particular sets of treatments which are then either enhanced or denigrated by subsequent learning. Essentially, expectancies are valid for a particular point in time, and are more reflective of state, and are amenable to change through either manipulations \cite{kirsch1988double} or through experience \cite{Stewart-Williams2004a}. Indeed, this perspective is entirely compatible with the position of Stewart-Williams that conditioning is a means of creating new expectancies. Crucially, for this theory, expectancies are regarded as having physiological impact which shapes the experience of a given treatment, which then impacts further response to a particular treatment or treatments in general. 
 
 \subsection{Pain Treatments}
 \label{sec:pain-treatments}
@@ -98,7 +98,7 @@ The sampling for the Treatment Credibility Questionnaire was conducted in two ro
 \subsection{Participants}
 \label{sec:participant}
 
-The mean age of the participants in Study 1 was  22.61, the median Age was 21 and the range of reported ages was 10-56, which suggests some data entry errors on the part of the participants. The sample was 68.8\% female, and 83.4\% consisted of undergraduate students. 
+The mean age of the participants in Study 1 was  22.61 (SD=6.5), the median age was 21  and the range of reported ages was 10-56, which suggests some data entry errors on the part of the participants. The sample was 68.8\% female, and 83.4\% consisted of undergraduate students. 
 
 The sample size collected for Study Two was 1329, however, only 566 completed all questions in the two scales. The analysis was carried out on those participants who had provided data for all questions, with each random split being inclusive of the missing values.  Of the participants who filled out all questions, 71.5\% were female (n=396), 82.4\% were undergraduates, and the mean age was 22.96 (SD=6.3). 
 
@@ -281,7 +281,7 @@ print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for t
 
 
 
-\section{Factor Analysis}
+\subsection{Factor Analysis}
 
 
 There were two aims of this factor analysis on Study One. The first was to examine if the predicted factor structure from the development of the scale held. This was that there would be three expectancy and three credibility questions. This analysis was carried out on all four methods of treatment individually. The next step, following this analysis, was to examine the intra-treatment factor structure. 
@@ -844,7 +844,7 @@ As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit
 
 The first step in examining the predictive power of the IRT models is to score the current subsample of the Study Two data (Split A) using the prior models. Then, the same model can be fit on this data alone, and the error of estimation between the two processes can be calculated. Essentially, the root mean square error of approximation (RMSEA) was used to assess the usefulness of each of the models. 
 
-The Conventional TCQ was assessed, first.
+The Conventional TCQ items were assessed first.
 
 <<tcqconvpcmraschtest, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2a.conv <- tcq2.1[,c(1,3:18)]
@@ -916,7 +916,7 @@ It is important to consider what may be the reasons for the difference. One pote
 
 With regards to the overall psychometric structure ,the measure appears to show a strong pattern of one factor per treatment modality, but a six factor model fitted the training and test data better, suggesting that there are some higher-order correlations between some of the factors, which could probably be better accounted for using a hierarchical factor model.  
 
-Secondly, an item response theory analysis has suggested that while the Pills, Cream and Injection questions can be conceptualised with one latent trait, this does not appear to work for acupuncture. This would seem to suggest that ratings of complementary and western medicine are somewhat independent. The second version of this survey added two more sections on complementary therapies, Homeopathy and Reiki, in order to both balance the kinds of treatments, and to examine whether the assumption of bi-dimensionality would hold in another student and UCC staff sample. 
+Secondly, an item response theory analysis has suggested that while the Pills, Cream and Injection questions can be conceptualised with one latent trait, this does not appear to work for acupuncture. This would seem to suggest that ratings of complementary and western medicine are somewhat independent. The second version of this survey added two more sections on complementary therapies, Homeopathy and Reiki, in order to both balance the kinds of treatments, and to examine whether the assumption of bi-dimensionality would hold in another student and staff sample. 
 
  Very few demographic variables were collected in this survey. This limited what could be done with the ability estimates, and their relation to other factors. Therefore, for the second sample, more demographics were added.  A question on experience with each of the treatments involved would seem like a useful check on what percentage of the respondents have experiential knowledge of these methods would prove useful. Given the cost of CAM and its unavailability to those of lower incomes, a question on income was also added in line with the results of prior research noted in the Introduction. 
 
@@ -964,7 +964,7 @@ stargazer(tcq2.demo3, summary=TRUE, title="TCQ2 Summary Statistics", label="tab:
 
 
 
-Many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22, which shows that most of the sample was made up of students.
+Many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22 (SD=11.4), which shows that most of the sample was made up of students.
 
 The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
 The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
@@ -1848,7 +1848,7 @@ rownames(tcq2d.conv.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 <<irterrorapproxconv, echo=FALSE, results=tex>>=
 tcq2.conv.averror <- (tcq2b.conv.grm.modcomp[,1]+tcq2c.conv.grm.modcomp[,1]+tcq2d.conv.grm.modcomp[,1])/3
 names(tcq2.conv.averror) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(data.frame(AverageError=tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+print(xtable(data.frame(AverageError=tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's on the Conventional TCQ Across Splits B, C and D"))
 @ 
 
 Table \ref{tab:tcq2grmaverrorconv} shows the average error across the three splits for one and two parameter GRM's for the conventional items. It can be seen that the one parameter model is clearly superior to the two parameter model, a pattern which which was found across each individual split also. 
@@ -1880,7 +1880,7 @@ rownames(tcq2d.alt.grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 <<irterrorapproxconv, echo=FALSE, results=tex>>=
 tcq2.alt.averror <- (tcq2b.alt.grm.modcomp[,1]+tcq2c.alt.grm.modcomp[,1]+tcq2d.alt.grm.modcomp[,1])/3
 names(tcq2.alt.averror) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(data.frame(AverageError=tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's Across Splits B, C and D"))
+print(xtable(data.frame(AverageError=tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's on the TCQ Alternative items Across Splits B, C and D"))
 @ 
 
 Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
@@ -2459,7 +2459,7 @@ Interestingly, it appears that the experience with a particular form of treatmen
 
 \subsection{Discussion}
 \label{sec:discussion}
-This chatper has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
+This chapter has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
 
 Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maxiumum use to be made of the limited data collected in the experimental research, and is an approach which is not often employed within the field. 
 
@@ -2469,6 +2469,8 @@ Thirdly, all the major hypotheses (from Study 2) have been confirmed. The measur
 
 
 Interestingly enough, the hypothesis that experience with a particular treatment would correlate with experience of a particular treatment was only borne out for the alternative treatments. This data cannot be used to establish causality in this case, as both an experience to credibility and a credibility to experience causal chain are equally plausible. 
+
+The measure developed here was primarily aimed to be used in the experimental portion of the research, however given its design and its focus on expectancies, it may prove useful to researchers who are studying expectancies related to pain, or who wish to control for pre-existing expectancies in clinical or non-clinical research. 
 
 That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogenous groups is warranted before extensive use of the instrument takes place. 
 
