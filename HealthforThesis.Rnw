@@ -502,7 +502,7 @@ scalenames <- c("genhealth", "physfun", "rolelim", "rolelimem", "emwellbeing", "
 maas.alpha <- alpha(maasitems)$total$std.alpha
 lotr.alpha <- alpha(lotritems)$total$std.alpha
 alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, emwb.alpha, sf.alpha, pain.alpha, ef.alpha, maas.alpha, lotr.alpha)
-alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
+## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
 @ 
