@@ -1946,7 +1946,7 @@ meanalt~~meanalt'
 impexpdata <- Iatandexpmeasures.t[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt", "LOTR")]
 @ 
 
-<<impexpmod, echo=FALSE, results=hide>>=
+<<impexpmod, echo=FALSE, results=hide>>=H
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
 expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
