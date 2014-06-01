@@ -177,13 +177,11 @@ with higher levels of mindfulness are also psychologically healthier.
  MBSR programs have also been associated with higher levels of optimism
 ~\cite{Carson2004}, but mindfulness and optmism have not tended to be researched together. 
  Only one study where mindfulness levels were correlated positively 
-with self reported health~\cite{Hansen2009} was identified as part of this research. Hansen, using a cross-sectional design, 
+with self reported health~\cite{hansen2009measuring} was identified as part of this research. Hansen, using a cross-sectional design, 
 found that MAAS scores correlated with a five point one item measure of health,   
 a very crude measure of health status. In a recent meta-analysis of 29 studies, 
 Giluk explored the relationship between mindfulness, Big Five personality and affect~\cite{giluk2009mindfulness}.
-She found that mindfulness was strongly correlated with Neuroticism and negative affect,
- though its not obvious whether being mindful lowers Neuroticism or 
- whether Neuroticism interferes with mindfulness. 
+These authors found found that mindfulness was strongly correlated with Neuroticism and negative affect, though its not obvious whether being mindful lowers Neuroticism or whether Neuroticism interferes with mindfulness. 
 
 
 \section{Aims of the Research}
@@ -213,7 +211,7 @@ The major types of analysis carried out are described below.
 
 The response rate for Sample One  (paper) was approximately
 90\% of those asked (N=392), while the response rate for Sample Two  (Online)
-was 10\% (N=1501). Note that pseudo-random sampling was used for Sample One, while simple random sampling was used for Sample Two. 
+was 10\% (N=1501). %% Note that pseudo-random sampling was used for Sample One, while simple random sampling was used for Sample Two. 
 
 \section{Methods}
 \label{sec:methods}
@@ -231,6 +229,8 @@ print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown o
 @ 
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
+
+The majority of the first sample (N=392) was undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
 
 <<scorescalestransform, echo=FALSE, results=hide>>=
 grep.rand <- grep("^RANDQ", x=names(hom))
@@ -274,10 +274,9 @@ There were three measures used for this part of the research.
 \item \textit{RAND-MOS}: The RAND Medical Outcomes Survey produced the most widely used instrument of HRQoL (Health Related Quality of Life) worldwide~\cite{hays1993rand}. The instrument was later revised and the number of response categories standardised across scales and renamed the SF-36. The older version was used for this research, as they are extremely similar and the newer version is under copyright and expensive to use, even for non-commercial research. The RAND-MOS has 36 questions, and is divided into 8 sub-scales, General Health (GH),
 Physical Functioning (PF), Role Limitations (RL), Emotional Role Limitations
 (RLE), Pain (PN), Energy (EN), Emotional Well Being (EMWB) and Social
-Functioning (SF). All sub-scales showed acceptable reliability
-(>.7) in this and in other studies over the years\cite{Lam2007, Ferreira2000}.
-The instrument has 8 first order factors and two higher order factors
-\cite{Hann2008}. The scale involves dichotomous, trichotomous and
+Functioning (SF). All sub-scales have shown acceptable reliability
+(>.7) in in other studies in the literature~\cite{Lam2007,Ferreira2000}.
+The instrument has 8 first order factors and two higher order factors~\cite{Hann2008}. The scale involves dichotomous, trichotomous and
 five and six point scales for various items, so all questions are
 transformed to a 100 point scale before analysis, where higher scores
 represent better functioning.
@@ -445,9 +444,9 @@ homlist <- lapply(homfiles, read.csv)
 
 
 
-\section{Psychometric Analyses}
 
-<<sumstats, echo=FALSE,results=tex>>=
+
+<<sumstats, echo=FALSE,results=hide>>=
 hom.tot <- hom1[,66:75]
 hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
 tot.sum2 <- apademotables(hom.tot)
@@ -458,9 +457,14 @@ tot.sum2[,1] <- longnames
  here
 @
 
+\section{Descriptive Statistics}
+\label{sec:descr-stat}
+
+
+
 In advance of the analysis, frequencies, means and ranges were calculated
 for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
-be seen in Table \ref{tab:sumstatscales}. 
+be seen in Table~\ref{tab:sumstatscales}. 
 
 
 
@@ -476,9 +480,18 @@ print(hom.demo.xtab, scalebox=0.6, include.rownames=FALSE)
 @
 
 
-The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. The majority of the first sample (N=392) was female (N=286), undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was female (N=798), undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
+The mean level of mindfulness in the sample was higher than the mid-point of the scale, while optimism levels were at the mid-point point of the scale. The average level of self-reported health  tended to be well above the mid-point for all of the subscales, which makes sense given the non-clinical sample involved in this research. 
 
-<<scalesalpha, echo=FALSE, results=hide>>=
+<<scaleitems, echo=FALSE, results=hide, cache=TRUE>>=
+## rand.grep <- grep("^RAND", x=names(hom1))
+## randitems <- hom1[,rand.grep]
+maas.grep <- grep("^MAASQ", x=names(hom1))
+maasitems <- hom1[,maas.grep]
+lotr.grep <- grep("^LOTRQ", x=names(hom1))
+lotritems <- hom1[,lotr.grep]
+@
+
+<<scalesalpha, echo=FALSE, results=tex>>=
 
 physicalfunctioning <- with(hom,  hom[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom))])
 
@@ -507,14 +520,7 @@ tot.sum2[,"alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
 @ 
 
-<<scaleitems, echo=FALSE, results=hide, cache=TRUE>>=
-## rand.grep <- grep("^RAND", x=names(hom1))
-## randitems <- hom1[,rand.grep]
-maas.grep <- grep("^MAASQ", x=names(hom1))
-maasitems <- hom1[,maas.grep]
-lotr.grep <- grep("^LOTRQ", x=names(hom1))
-lotritems <- hom1[,lotr.grep]
-@
+
 
 
 
@@ -534,8 +540,26 @@ maas.alpha <- alpha(maasitems)
 lotr.alpha <- alpha(lotritems)
 @ 
 
+\subsection{Summary Statistics}
+\label{sec:demogr-stat}
 
-Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
+Firstly, the demographics of the second sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
+
+<<hom2demo, echo=FALSE, results=tex>>=
+hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
+hom2.sum <- apademotables(hom2.tot)
+names(hom2.sum)[1] <- "Scale"
+longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+hom2.sum$Scale <- longnames
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
+@ 
+
+The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
+
+
+\section{Psychometric Analyses}
+
+%% Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
 
 %% \subsection{Number of Factors to retain}
 
@@ -673,11 +697,9 @@ rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 The results of the two factor solution (not shown) were as follows:
-PA1: "Q1",  "Q14", "Q16" ,"Q17" ,"Q18" ,"Q19" ,"Q20" ,"Q21" ,"Q22" ,"Q23" ,"Q24" ,"Q25" ,"Q26" ,"Q27","Q28" ,"Q29" ,"Q30" ,"Q31" ,"Q32" ,"Q33" ,"Q34"
-,"Q35" ,"Q36". 
 Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
 
-PA2:"Q3"  "Q4"  "Q5"  "Q6"  "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12". This factor maps exactly to the Physical Functioning Scale, and so retains that name.
+The second factor maps exactly to the Physical Functioning Scale, and so retains that name.
 
 
 
@@ -690,7 +712,7 @@ This factor solution does not appear to be useful, as it has extremely low fit i
 print(xtable(rand.fact.2$r.scores, label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Two Factor Solution, Sample One"))
 @
 
-The factor correlations were quite low for this solution, at 0.17. This suggests that an orthogonal rotation might be more appropriate, but attempting this did not change any of the loadings. 
+The factor correlations were quite low for this solution, at 0.17. This suggests that an orthogonal rotation might be more appropriate, but attempting this did not change any of the loadings. It seems that this factor structure is not theoretically or conceptually useful, which is an important feature of any proposed psychometric model. 
 
 
 
@@ -721,7 +743,7 @@ print(FactorXtab(rand.fact.4, names=c("PhysFunc", "SocEmFunc", "PhysLim", "GenHe
 print(xtable(rand.fact.4[["r.scores"]], label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Four Factor Solution, Sample One"))
 @
 
-The factor correlations are quite low in this solution also, though they are all high enough to retain the oblique rotations.
+%% The factor correlations are quite low in this solution also, though they are all high enough to retain the oblique rotations.
 
 
 
@@ -735,7 +757,7 @@ print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRo
 Table \ref{tab:tcq1rand8fact} shows the loadings and has the named factors. 
 PhysFun:  the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
-SocEmWB: This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the energy faitigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
+SocEmWB: This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the Energy/Fatigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
 
 GenHealth: These items map exactly to the General Health scale. Item 35 also loads on this scale, and as its loading was 0.29 while the cutoff was 0.30, it can be best characterised as part of that scale. Therefore, this factor can be best termed as General Health.
 
@@ -859,11 +881,8 @@ print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for
 As can be seen from Table~\ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
 
 
-\subsection{Predictions for RAND-MOS}
-\label{sec:predictions-rand-mos}
 
-
-\subsubsection{Confirmatary Factor Analysis}
+\subsubsection{Confirmatary Factor Analysis, Second Sample}
 \label{sec:rand-mos-cfa}
 
 
@@ -952,7 +971,7 @@ randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2)
 print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
 @
 
-As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data, similarly to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
+As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data (Split A of the second Sample), similarly to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
 
 
 
@@ -1068,10 +1087,7 @@ From Table \ref{tab:maassemcomp} it can be seen that the best model is the one f
 The factor structure is not reported here as all factors loaded on the first factor.  This factor explained 35\% of the variance
 in the sample, which is low.  Possible explanations for this are discussed below. 
 
-\subsection{Predictions for MAAS}
-\label{sec:predictions-maas}
-
-\subsubsection{Confirmatory Factor Analysis}
+\subsubsection{Confirmatory Factor Analysis, Sample Two}
 \label{sec:maas-cfa-sample}
 
 <<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1153,128 +1169,7 @@ print(maascomp.xtab2, scalebox=0.8)
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($n=313$) used to test the model.
 
-\subsection{IRT Analyses - MAAS}
-\label{sec:irt-analyses-maas}
-
-
-The MAAS was then considered from a IRT perspective.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
-
-<<maasassumptioncheck, echo=FALSE, results=hide>>=
-maas.scales <- aisp(na.omit(maasitems))
-print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
-@
-
-The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
-
-<<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
-maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
-maas.irt <- maasitems[,maas.irt]
-@
-
-
-<<maasitemord, echo=FALSE, results=hide, cache=TRUE>>=
-maas.iio <- check.iio(na.omit(maas.irt))
-print(xtable(maas.iio[["violations"]],label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
-@
-
-
-<<maasmonotonicity, echo=FALSE, results=hide, cache=TRUE>>=
-maas.mono <- check.monotonicity(na.omit(maas.irt))
-print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
-@
-
-<<maasitemspcm, echo=FALSE, results=hide, cache=TRUE>>=
-maas.pcm.rasch <- gpcm(na.omit(maas.irt), constraint="rasch")
-maas.pcm.1pl <- gpcm(na.omit(maas.irt), constraint="1PL")
-maas.pcm.2pl <- gpcm(na.omit(maas.irt), constraint="gpcm")
-@
-
-<<maasirtraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.pcm.rasch), label="tab:maaspcmrasch", caption="MAAS Partial Credit Model Coefficients, Rasch"))
-@ 
-
-%% As can be seen from Table \ref{tab:maaspcmrasch}, the Rasch partial credit model is not a good fit to the data. There are numerous violations of the increasing ability scores assumption. Next, a one parameter model (with discrimination estimated from the data) was fitted to the maas items. 
-
-<<maasirtraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.pcm.1pl), label="tab:maaspcm1pl", caption="MAAS Partial Credit Model Coefficients, One Parameter Model"))
-@ 
-
-%% The estimated one parameter model is shown in Table \ref{tab:maaspcm1pl}, and it can clearly be seen that it suffers from the same problems as the rasch model fitted above. Finally, a two parameter partial credit model was fitted to these items. 
-
-<<maasirtraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
-@ 
-
-%% Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data.
-
-The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
-
-<<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
-maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
-maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
-@
-
-%% \begin{figure}
-<<maasgrm1plplot, echo=FALSE, results=hide>>=
-maasp <- ggplotGRM(maas.grm.1pl)
-print(maasp)
-@   
-%%  ~\caption{MAAS Graded Response Model (One Parameter) Ability Thresholds}
-%%   \label{fig:maasgrm1plplot}
-%% \end{figure}
-
-There were no obvious scaling violations for this scale. 
-
-<<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
-@ 
-
-Table \ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
-
-Next, a two parameter Graded Response Model was examined for the same scale. 
-
-%% \begin{figure}
-<<maasgrm2plot, echo=FALSE, results=hide>>=
-maas2plp <- ggplotGRM(maas.grm.1pl)
-print(maas2plp)
-@   
-%%  ~\caption{MAAS Graded Response Model (Two parameter) Item Ability Thresholds}
-%%   \label{fig:maasgrm2plplot}
-%% \end{figure}
-
-<<maasgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
-@ 
-
-
-Table \ref{tab:maasgrm2pl} shows the estimated coefficients for a two parameter Graded Response Model. It can be seen that Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
-
-<<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
-anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
-anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
-anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
-@
-
-The three models were subjected to ANOVA comparison and the 1 parameter model was significantly ($p\le0.001$) better than the Rasch model, and the two parameter model was significantly better than the one parameter model ($p\le0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
-
-
-
-
-<<hom1maasgrmtest, echo=FALSE, results=tex>>=
-maas.irt2a <- maasitems2a[,paste(maas, c(1,3:5,7:15), sep="")]
-hom1.maas.grm.1pl.test <- testIRTModels(maas.grm.1pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE) 
-hom1.maas.grm.2pl.test <- testIRTModels(maas.grm.2pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE) 
-hom1.maas.grm.all <- rbind(hom1.maas.grm.1pl.test, hom1.maas.grm.2pl.test)
-rownames(hom1.maas.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1maasgrmtest"))
-@ 
-
-As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. 
-
-\section{Sample Two}
-\label{sec:sample-two}
-
-\subsection{Factor Analyses}
+\subsection{Factor Analyses, Sample Two}
 \label{sec:fact-maas}
 
 <<maas2bparallel, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
@@ -1342,19 +1237,19 @@ The five factor solution for split C (not shown) broke down as follows:
 PA1: "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12" "Q14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
 
-PA2: "MAASQ9"  "MAASQ13"
+PA2: "Q9"  "Q13"
 Q9 loads on both PA1 and PA2, and as PA2 has really only Q13 loading to any major extent on it, no interpretation of this factor was performed. It was named lack of present awareness. 
 
-PA4: "MAASQ2"  "MAASQ3"  "MAASQ14"
+PA4: "Q2"  "Q3"  "Q14"
 This factor can probably best be termed lack of attention. 
 
-PA5: "MAASQ1" "MAASQ4" "MAASQ5"
+PA5: "Q1" "Q4" "Q5"
 Most of these items relate to lack of bodily attention, and this can probably best be termed lack of somatic awareness. 
 
-PA3: "MAASQ4" "MAASQ6" "MAASQ7" "MAASQ8"
+PA3: "Q4" "Q6" "Q7" "Q8"
 Note that MAASQ4 loads slightly on both PA3 and PA5, and is not considered in the interpretation here. These items can probably best be termed lack of awareness. 
 
-The factor solution for Split C (not shown) differed a little in the loadings from that of Split B, but not in any major way. 
+
 
 
 <<maas2bsemon2c, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1468,7 +1363,126 @@ print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of
 
 As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was again superior to the five factor model in Split C. 
 
-\subsubsection{IRT Analyses}
+
+\subsection{IRT Analyses - MAAS}
+\label{sec:irt-analyses-maas}
+
+
+The MAAS was then considered from a IRT perspective.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
+
+<<maasassumptioncheck, echo=FALSE, results=hide>>=
+maas.scales <- aisp(na.omit(maasitems))
+print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
+@
+
+The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
+
+<<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
+maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
+maas.irt <- maasitems[,maas.irt]
+@
+
+
+<<maasitemord, echo=FALSE, results=hide, cache=TRUE>>=
+maas.iio <- check.iio(na.omit(maas.irt))
+print(xtable(maas.iio[["violations"]],label="tab:maasitemord", caption="Invariant Item Ordering Check Results for MAAS"))
+@
+
+
+<<maasmonotonicity, echo=FALSE, results=hide, cache=TRUE>>=
+maas.mono <- check.monotonicity(na.omit(maas.irt))
+print(xtable(summary(maas.mono),label="tab:maasmono", caption="Monotonicity Check Results for MAAS"))
+@
+
+<<maasitemspcm, echo=FALSE, results=hide, cache=TRUE>>=
+maas.pcm.rasch <- gpcm(na.omit(maas.irt), constraint="rasch")
+maas.pcm.1pl <- gpcm(na.omit(maas.irt), constraint="1PL")
+maas.pcm.2pl <- gpcm(na.omit(maas.irt), constraint="gpcm")
+@
+
+<<maasirtraschprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.pcm.rasch), label="tab:maaspcmrasch", caption="MAAS Partial Credit Model Coefficients, Rasch"))
+@ 
+
+%% As can be seen from Table \ref{tab:maaspcmrasch}, the Rasch partial credit model is not a good fit to the data. There are numerous violations of the increasing ability scores assumption. Next, a one parameter model (with discrimination estimated from the data) was fitted to the maas items. 
+
+<<maasirtraschprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.pcm.1pl), label="tab:maaspcm1pl", caption="MAAS Partial Credit Model Coefficients, One Parameter Model"))
+@ 
+
+%% The estimated one parameter model is shown in Table \ref{tab:maaspcm1pl}, and it can clearly be seen that it suffers from the same problems as the rasch model fitted above. Finally, a two parameter partial credit model was fitted to these items. 
+
+<<maasirtraschprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial Credit Model Coefficients, Two Parameter Model"))
+@ 
+
+%% Table \ref{tab:maaspcm2pl} clearly shows that even the two parameter model does not provide a good fit to the data.
+
+The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
+
+<<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
+maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
+maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
+@
+
+%% \begin{figure}
+<<maasgrm1plplot, echo=FALSE, results=hide>>=
+maasp <- ggplotGRM(maas.grm.1pl)
+print(maasp)
+@   
+%%  ~\caption{MAAS Graded Response Model (One Parameter) Ability Thresholds}
+%%   \label{fig:maasgrm1plplot}
+%% \end{figure}
+
+There were no obvious scaling violations for this scale. 
+
+<<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
+print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
+@ 
+
+Table \ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
+
+Next, a two parameter Graded Response Model was examined for the same scale. 
+
+%% \begin{figure}
+<<maasgrm2plot, echo=FALSE, results=hide>>=
+maas2plp <- ggplotGRM(maas.grm.1pl)
+print(maas2plp)
+@   
+%%  ~\caption{MAAS Graded Response Model (Two parameter) Item Ability Thresholds}
+%%   \label{fig:maasgrm2plplot}
+%% \end{figure}
+
+<<maasgrm2plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+@ 
+
+
+The two parameter Graded Response Model (not shown) had the following featurs. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+
+<<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
+anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
+anova.1pl.maas.2pl <- anova.gpcm(maas.pcm.1pl, maas.pcm.2pl)
+anova.rasch.maas.2pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.2pl)
+@
+
+%% The three models were subjected to ANOVA comparison and the 1 parameter model was significantly ($p\le0.001$) better than the Rasch model, and the two parameter model was significantly better than the one parameter model ($p\le0.001$). However, the ultimate test is the ability of the model to predict out-of-sample data. 
+
+
+
+
+<<hom1maasgrmtest, echo=FALSE, results=tex>>=
+maas.irt2a <- maasitems2a[,paste(maas, c(1,3:5,7:15), sep="")]
+hom1.maas.grm.1pl.test <- testIRTModels(maas.grm.1pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE) 
+hom1.maas.grm.2pl.test <- testIRTModels(maas.grm.2pl, maas.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE) 
+hom1.maas.grm.all <- rbind(hom1.maas.grm.1pl.test, hom1.maas.grm.2pl.test)
+rownames(hom1.maas.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1maasgrmtest"))
+@ 
+
+As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. 
+
+\subsubsection{IRT Analyses, Sample Two}
 \label{sec:irt-analyses}
 
 
@@ -1638,8 +1652,6 @@ As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model wi
 
 
 
-\subsection{IRT Backtesting - MAAS}
-\label{sec:irt-backtesting-maas}
 
 The next step in the backtesting procedure was to test the IRT models on Sample One. 
 
@@ -1747,191 +1759,8 @@ print(lotrcomp.xtab)
 
 As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provided the best fit to the data.  Therefore, this solution will be tested on the second sample.
 
-\subsection{IRT}
-\label{sec:lotr-irt}
-
-
-Firstly, the scale analysis was conducted to determine which items fit best together.
-
-<<lotrscales, echo=FALSE, results=hide>>=
-lotr.scales <- aisp(na.omit(lotritems))
-print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
-@
-
-All of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
-
-<<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.iio <- check.iio(na.omit(lotritems))
-print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
-@
-
-
-Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
-
-<<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.mono <- check.monotonicity(na.omit(lotritems))
-print(xtable(summary(lotr.mono),label="tab:lotrmono"))
-@
-
-
-<<lotrreduced, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
-lotr.irt <- lotritems[,lotr.paste]
-@
-
-After this process of model checking, a five item scale remained for further analysis. 
-
-<<lotrmodelsirt, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.pcm.rasch <- gpcm(na.omit(lotr.irt), constraint="rasch")
-lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
-lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
-@
-
-<<lotrpcmraschprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.rasch), label="tab:lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% As shown in Table \ref{tab:lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
-
-<<lotrpcm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.1pl), label="tab:lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% As can be seen in Table \ref{tab:lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
-
-<<lotrpcm1plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
-@ 
-
-%% The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
-
-<<lotranovacomp, echo=FALSE, results=hide, cache=TRUE>>=
-anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
-anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
-anova.rasch.lotr.2pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.2pl)
-@
-
-%% The results of the model comparison showed that the rasch model was not significantly different from the one parameter model ($p=0.862$), but that the two parameter model provided a significantly better fit to the data ($p \le 0.001$), even with a penalty for the extra parameters.
-
-%% However, the difference in likelihoods was extremely small between the Rasch and two parameter models (20.15), and the BIC suggested that the Rasch model was a better fit.  One issue for the BIC is that it presumes that a true model exists amongst the candidate models, which is almost certainly not the case in this (or indeed any other psychological research) case.
-The next stage in the analysis of the LOT-R was the fitting of one and two parameter Graded Response Models. 
-
-<<lotrgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
-lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
-lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
-@ 
-%% \begin{figure}
-<<lotrgrm1plplot, echo=FALSE, results=hide>>=
-lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
-print(lotr1plgrm)
-@   
-%%  ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
-%%   \label{fig:lotr1plgrm}
-%% \end{figure}
-
-An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
-
-%% \begin{figure}
-<<lotr2plgrmplot, echo=FALSE, results=hide>>=
-lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
-print(lotr2plgrm)
-@   
-%%  ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
-%%   \label{fig:lotr2plgrm}
-%% \end{figure}
-
-
-The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
-
-<<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
-anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
-@ 
-
-The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
-
-<<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
-@
-
-The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
-
-
-
-
-
-
-
-
-\subsubsection{LOTR CFA}
-\label{sec:lotr-cfa-sample}
-
-
-
-<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism")
-optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
-Lotr1model2 <- mxModel(name="LOTR1",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
-                      )
-lotr1fit2 <- mxRun(Lotr1model2)
-lotr1summ2 <- summary(lotr1fit2)
-@
-
-
-<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
-Lotr2model2 <- mxModel(Lotr2model, 
-                       name="LOTR2Model2",
-                      mxData(
-                          observed=cov(na.omit(lotritems2a)), 
-                          type="cov", numObs=313))
-lotr2fit2 <- mxRun(Lotr2model2)
-lotr2summ2 <- summary(lotr2fit2)
-@
-
-<<lotrcompare2, echo=FALSE, results=tex>>=
-lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
-lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
-print(lotrcomp.xtab2)
-@
-
-Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
-
-\subsection{Confirmatory IRT Analyses}
-\label{sec:conf-irt-analys}
-
-
-
-
-Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
-
-<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
-lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
-hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
-hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
-hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
-rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
-print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
-@ 
-
-
-As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
-
-
-
-\subsection{Sample Two}
+\subsection{Factor Analyses, Sample Two}
 \label{sec:sample-two-1}
-
-
-
 
 
 <<lotr2bparallel, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2094,6 +1923,183 @@ print(lotrcomp.xtab2c)
 Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, while the two factor solution had a lower negative log likelihood, when controlling for parameters the one factor solution performed much better. 
 
 
+\subsection{IRT Analyses, LOT-R}
+\label{sec:lotr-irt}
+
+
+Firstly, the scale analysis was conducted to determine which items fit best together.
+
+<<lotrscales, echo=FALSE, results=hide>>=
+lotr.scales <- aisp(na.omit(lotritems))
+print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
+@
+
+All of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
+
+<<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.iio <- check.iio(na.omit(lotritems))
+print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
+@
+
+
+Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
+
+<<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.mono <- check.monotonicity(na.omit(lotritems))
+print(xtable(summary(lotr.mono),label="tab:lotrmono"))
+@
+
+
+<<lotrreduced, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.paste <- paste(lotr, c(3,4,7,9,10), sep="")
+lotr.irt <- lotritems[,lotr.paste]
+@
+
+After this process of model checking, a five item scale remained for further analysis. 
+
+<<lotrmodelsirt, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.pcm.rasch <- gpcm(na.omit(lotr.irt), constraint="rasch")
+lotr.pcm.1pl <- gpcm(na.omit(lotr.irt), constraint="1PL")
+lotr.pcm.2pl <- gpcm(na.omit(lotr.irt), constraint="gpcm")
+@
+
+<<lotrpcmraschprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.rasch), label="tab:lotrpcmrasch", caption="Rasch Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% As shown in Table \ref{tab:lotrpcmrasch}, the model does not provide a good fit to the data. There are numerous violations of the ordering assumptions of the model. Next, a one parameter model was fit to the data. 
+
+<<lotrpcm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.1pl), label="tab:lotrpcm1pl", caption="One parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% As can be seen in Table \ref{tab:lotrpcm1pl}, there are again some violations of the ability ordering assumption (LOTR4, category 3). Next, a two parameter PCM was fitted to the LOTR items. 
+
+<<lotrpcm1plprint, echo=FALSE, results=hide>>=
+print(xtable(coef(lotr.pcm.2pl), label="tab:lotrpcmgpcm", caption="Two Parameter Partial Credit Model for Life Orientation Test, Revised"))
+@ 
+
+%% The coefficients in Table \ref{tab:lotrpcmgpcm} show that again, LOTR4 ensures that the model does not fit correctly. 
+
+<<lotranovacomp, echo=FALSE, results=hide, cache=TRUE>>=
+anova.rasch.lotr.1pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.1pl)
+anova.1pl.lotr.2pl <- anova.gpcm(lotr.pcm.1pl, lotr.pcm.2pl)
+anova.rasch.lotr.2pl <- anova.gpcm(lotr.pcm.rasch, lotr.pcm.2pl)
+@
+
+%% The results of the model comparison showed that the rasch model was not significantly different from the one parameter model ($p=0.862$), but that the two parameter model provided a significantly better fit to the data ($p \le 0.001$), even with a penalty for the extra parameters.
+
+%% However, the difference in likelihoods was extremely small between the Rasch and two parameter models (20.15), and the BIC suggested that the Rasch model was a better fit.  One issue for the BIC is that it presumes that a true model exists amongst the candidate models, which is almost certainly not the case in this (or indeed any other psychological research) case.
+The next stage in the analysis of the LOT-R was the fitting of one and two parameter Graded Response Models. 
+
+<<lotrgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
+lotr.grm.1pl <- grm(lotr.irt, constrained=TRUE)
+lotr.grm.2pl <- grm(lotr.irt, constrained=FALSE)
+@ 
+%% \begin{figure}
+<<lotrgrm1plplot, echo=FALSE, results=hide>>=
+lotr1plgrm <- ggplotGRM(lotr.grm.1pl)
+print(lotr1plgrm)
+@   
+%%  ~\caption{One Parameter Graded Response Model for LOTR Item Ability Thresholds}
+%%   \label{fig:lotr1plgrm}
+%% \end{figure}
+
+An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
+
+%% \begin{figure}
+<<lotr2plgrmplot, echo=FALSE, results=hide>>=
+lotr2plgrm <- ggplotGRM(lotr.grm.2pl)
+print(lotr2plgrm)
+@   
+%%  ~\caption{Two Parameter Graded Response Model Item Ability Threshold Plot}
+%%   \label{fig:lotr2plgrm}
+%% \end{figure}
+
+
+The next step was to assess which of the models provided the best fit to the data using a likelihood ratio test.
+
+<<anovagrmlotr, echo=FALSE, results=hide, cache=TRUE>>=
+anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
+@ 
+
+The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
+
+<<lotr2plestimates, echo=FALSE, results=tex>>=
+print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
+@
+
+The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
+
+
+
+
+
+
+
+
+\subsubsection{Confirmatory Analyses, Sample Two}
+\label{sec:lotr-cfa-sample}
+
+
+
+<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism")
+optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
+Lotr1model2 <- mxModel(name="LOTR1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
+                      )
+lotr1fit2 <- mxRun(Lotr1model2)
+lotr1summ2 <- summary(lotr1fit2)
+@
+
+
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
+Lotr2model2 <- mxModel(Lotr2model, 
+                       name="LOTR2Model2",
+                      mxData(
+                          observed=cov(na.omit(lotritems2a)), 
+                          type="cov", numObs=313))
+lotr2fit2 <- mxRun(Lotr2model2)
+lotr2summ2 <- summary(lotr2fit2)
+@
+
+<<lotrcompare2, echo=FALSE, results=tex>>=
+lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
+lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
+print(lotrcomp.xtab2)
+@
+
+Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
+
+
+Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
+
+<<hom1lotrgrmtest, echo=FALSE, results=tex>>=
+lotr.irt2a <- lotritems2a[,paste(lotr, c(3,4,7,9,10), sep="")]
+hom1.lotr.grm.1pl.test <- testIRTModels(lotr.grm.1pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=TRUE)
+hom1.lotr.grm.2pl.test <- testIRTModels(lotr.grm.2pl, lotr.irt2a, gpcmconstraint=NULL, grmconstraint=FALSE)
+hom1.lotr.grm.all <- rbind(hom1.lotr.grm.1pl.test, hom1.lotr.grm.2pl.test)
+rownames(hom1.lotr.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
+print(xtable(hom1.lotr.grm.all, caption="Performance of LOTR One and Two Parameter GRM\'s on Unseen Data (Sample Two, Split A)", label="tab:hom1lotrgrmtest"))
+@ 
+
+
+As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model provided a better fit to the unseen data.
+
+
+
+
+
 
 The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
@@ -2124,7 +2130,7 @@ lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
 
 
 <<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Esitmates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
+print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
 @ 
 
 Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
@@ -2166,7 +2172,7 @@ An examination of the item ordering assumption showed that Q1 did not fit this m
 
 
 
-Next, one and two parameter Graded Response Models were fit to the scale.
+One and two parameter Graded Response Models were then fit to the items.
 
 <<lotr2cgrm, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.grm.1pl <- grm(lotr2c.s, constrained=TRUE)
@@ -2268,21 +2274,6 @@ print(xtable(lotrbt.test.all, caption="Performance of LOT-R Split C One and Two 
 As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split C with only five items fit the data from Sample One better than did the full model. This further shows both the utility of this approach, and its usefulness in selection of models for the experimental portion of the research. 
 
 
-\subsection{Summary Statistics}
-\label{sec:demogr-stat}
-
-Firstly, the demographics of the second sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
-
-<<hom2demo, echo=FALSE, results=tex>>=
-hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
-hom2.sum <- apademotables(hom2.tot)
-names(hom2.sum)[1] <- "Scale"
-longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
-hom2.sum$Scale <- longnames
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
-@ 
-
-The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
 
 
 The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent. 
