@@ -196,15 +196,17 @@ A secondary aim of this part of thesis was both to replicate the optimism-health
 
 The major hypotheses of this part of the thesis were as follows:
 \begin{itemize}
-\item Optimism and mindfulness would be positively associated with health.
-
-\item Optimism and mindfulness would be positively associated with one another. 
-
-\item The RAND MOS would have 8 first order factors
+  \item The RAND MOS would have 8 first order factors
 
 \item The MAAS would have one factor
 
 \item The LOT-R would have one factor.
+  
+\item Optimism and mindfulness would be positively associated with health.
+
+\item Optimism and mindfulness would be positively associated with one another. 
+
+
 \end{itemize}
 
 The major types of analysis carried out are described below. 
@@ -275,7 +277,7 @@ There were three measures used for this part of the research.
 Physical Functioning (PF), Role Limitations (RL), Emotional Role Limitations
 (RLE), Pain (PN), Energy (EN), Emotional Well Being (EMWB) and Social
 Functioning (SF). All sub-scales have shown acceptable reliability
-(>.7) in in other studies in the literature~\cite{Lam2007,Ferreira2000}.
+(>.7) in other studies in the literature~\cite{Lam2007,Ferreira2000}.
 The instrument has 8 first order factors and two higher order factors~\cite{Hann2008}. The scale involves dichotomous, trichotomous and
 five and six point scales for various items, so all questions are
 transformed to a 100 point scale before analysis, where higher scores
@@ -493,15 +495,15 @@ lotritems <- hom1[,lotr.grep]
 
 <<scalesalpha, echo=FALSE, results=tex>>=
 
-physicalfunctioning <- with(hom,  hom[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom))])
+physicalfunctioning <- with(hom1,  hom1[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom1))])
 
-rolelimitations <- with(hom, hom[,grep("RANDQ[1][3456]$", x=names(hom))])
-emotionalrolelimitations <- with(hom, hom[,grep("RANDQ[1][789]$",x=names(hom))])
-energyfatigue <- hom[,with(hom, grep("RANDQ[2][379]$|RANDQ31$", x=names(hom)))]
-emotionalwellbeing <- hom[,with(hom, grep("RANDQ[2][4568]$|RANDQ30$", x=names(hom)))]
-socialfunctioning <- hom[,with(hom, grep("RANDQ20|RANDQ32", x=names(hom)))]
-pain <- hom[,with(hom, grep("RANDQ[2][12]$", x=names(hom)))]
-generalhealth <- hom[,with(hom, grep("RANDQ1$|RANDQ[3][3456]$", x=names(hom)))]
+rolelimitations <- with(hom1, hom1[,grep("RANDQ[1][3456]$", x=names(hom1))])
+emotionalrolelimitations <- with(hom1, hom1[,grep("RANDQ[1][789]$",x=names(hom1))])
+energyfatigue <- hom1[,with(hom1, grep("RANDQ[2][379]$|RANDQ31$", x=names(hom1)))]
+emotionalwellbeing <- hom1[,with(hom1, grep("RANDQ[2][4568]$|RANDQ30$", x=names(hom1)))]
+socialfunctioning <- hom1[,with(hom1, grep("RANDQ20|RANDQ32", x=names(hom1)))]
+pain <- hom1[,with(hom1, grep("RANDQ[2][12]$", x=names(hom1)))]
+generalhealth <- hom1[,with(hom1, grep("RANDQ1$|RANDQ[3][3456]$", x=names(hom1)))]
 gh.alpha <- alpha(generalhealth)$total$std.alpha
 pf.alpha <- alpha(physicalfunctioning)$total$std.alpha
 rl.alpha <- alpha(rolelimitations)$total$std.alpha
@@ -518,6 +520,7 @@ alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, emwb.alpha, sf.alpha, pain.
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
+print(tot.xtab)
 @ 
 
 
@@ -540,15 +543,35 @@ maas.alpha <- alpha(maasitems)
 lotr.alpha <- alpha(lotritems)
 @ 
 
-\subsection{Summary Statistics}
-\label{sec:demogr-stat}
 
-Firstly, the demographics of the second sample (N=1107) were examined. Again, the majority of the sample was female (N=798), and composed of undergraduate students (N=937). The mean age was 22.33 (SD=6.08). 
+Nex, the summary statistics for the second sample (N=1107) were examined and reported. 
 
 <<hom2demo, echo=FALSE, results=tex>>=
-hom2.tot <- hom2[,c("physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "generalhealth", "mindfulness", "optimism")]
+physicalfunctioning <- with(hom2,  hom2[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom2))])
+
+rolelimitations <- with(hom2, hom2[,grep("RANDQ[1][3456]$", x=names(hom2))])
+emotionalrolelimitations <- with(hom2, hom2[,grep("RANDQ[1][789]$",x=names(hom2))])
+energyfatigue <- hom2[,with(hom2, grep("RANDQ[2][379]$|RANDQ31$", x=names(hom2)))]
+emotionalwellbeing <- hom2[,with(hom2, grep("RANDQ[2][4568]$|RANDQ30$", x=names(hom2)))]
+socialfunctioning <- hom2[,with(hom2, grep("RANDQ20|RANDQ32", x=names(hom2)))]
+pain <- hom2[,with(hom2, grep("RANDQ[2][12]$", x=names(hom2)))]
+generalhealth <- hom2[,with(hom2, grep("RANDQ1$|RANDQ[3][3456]$", x=names(hom2)))]
+gh2.alpha <- alpha(generalhealth)$total$std.alpha
+pf2.alpha <- alpha(physicalfunctioning)$total$std.alpha
+rl2.alpha <- alpha(rolelimitations)$total$std.alpha
+erl2.alpha <- alpha(emotionalrolelimitations)$total$std.alpha
+emwb2.alpha <- alpha(emotionalwellbeing)$total$std.alpha
+sf2.alpha <- alpha(socialfunctioning)$total$std.alpha
+pain2.alpha <- alpha(pain)$total$std.alpha
+ef2.alpha <- alpha(energyfatigue)$total$std.alpha
+maas2.alpha <- alpha(maasitems2)$total$std.alpha
+lotr2.alpha <- alpha(lotritems2)$total$std.alpha
+alphas2 <- c(gh2.alpha, pf2.alpha, rl2.alpha, erl2.alpha, emwb2.alpha, sf2.alpha, pain2.alpha, ef2.alpha, maas2.alpha, lotr2.alpha)
+scalenames <- c("genhealth", "physfun", "rolelim", "rolelimem", "emwellbeing", "socialfunctioning", "pain", "energyfatigue")
+hom2.tot <- hom2[,c("generalhealth", "physfun",  "rolelim", "rolelimem",  "emwellbeing", "socialfunctioning", "pain", "energyfat", "mindfulness", "optimism")]
 hom2.sum <- apademotables(hom2.tot)
 names(hom2.sum)[1] <- "Scale"
+hom2.sum[,"Alpha"] <- alphas2
 longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
 hom2.sum$Scale <- longnames
 print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
@@ -697,7 +720,7 @@ rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
 The results of the two factor solution (not shown) were as follows:
-Essentially this factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
+The first factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
 
 The second factor maps exactly to the Physical Functioning Scale, and so retains that name.
 
@@ -755,6 +778,7 @@ rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
 print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One"), scalebox=0.7)
 @
 Table \ref{tab:tcq1rand8fact} shows the loadings and has the named factors. 
+
 PhysFun:  the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
 SocEmWB: This scale maps to the Social Functioning, and the Emotional Well Being Scale. There are some items taken from the Energy/Fatigue scale, and as these are the positively worded items, this scale can probably best be termed as Social and Emotional Well Being. 
@@ -786,7 +810,7 @@ print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Fact
 The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
 <<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
-scales.hom1 <- hom1[,66:73]
+scales.hom <- hom[,66:73]
 scales2 <- scales[,2:9]
 rand.higher.fa
 @ 
@@ -1087,8 +1111,6 @@ From Table \ref{tab:maassemcomp} it can be seen that the best model is the one f
 The factor structure is not reported here as all factors loaded on the first factor.  This factor explained 35\% of the variance
 in the sample, which is low.  Possible explanations for this are discussed below. 
 
-\subsubsection{Confirmatory Factor Analysis, Sample Two}
-\label{sec:maas-cfa-sample}
 
 <<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
 set.seed(17)
@@ -1562,7 +1584,7 @@ print(xtable(coef(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One P
 @ 
 
 
-As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.048, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindlessness. 
+As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.05, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindlessness. 
 
 Next, a two parameter model is fit to this data. 
 
@@ -1759,6 +1781,49 @@ print(lotrcomp.xtab)
 
 As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provided the best fit to the data.  Therefore, this solution will be tested on the second sample.
 
+\subsubsection{Confirmatory Analyses, Sample Two}
+\label{sec:lotr-cfa-sample}
+
+
+
+<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
+lotr <- "LOTRQ"
+lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
+manifests <- lotritems.cols
+latents <- c("Optimism")
+optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
+Lotr1model2 <- mxModel(name="LOTR1",
+                      type="RAM",
+                      manifestVars=manifests,
+                      latentVars=latents,
+                      mxPath(from="Optimism", to=optimism),
+                      mxPath(from=manifests, arrows=2),
+                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
+                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
+                      )
+lotr1fit2 <- mxRun(Lotr1model2)
+lotr1summ2 <- summary(lotr1fit2)
+@
+
+
+<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
+Lotr2model2 <- mxModel(Lotr2model, 
+                       name="LOTR2Model2",
+                      mxData(
+                          observed=cov(na.omit(lotritems2a)), 
+                          type="cov", numObs=313))
+lotr2fit2 <- mxRun(Lotr2model2)
+lotr2summ2 <- summary(lotr2fit2)
+@
+
+<<lotrcompare2, echo=FALSE, results=tex>>=
+lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
+lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
+print(lotrcomp.xtab2)
+@
+
+Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
+
 \subsection{Factor Analyses, Sample Two}
 \label{sec:sample-two-1}
 
@@ -1923,6 +1988,9 @@ print(lotrcomp.xtab2c)
 Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, while the two factor solution had a lower negative log likelihood, when controlling for parameters the one factor solution performed much better. 
 
 
+
+
+
 \subsection{IRT Analyses, LOT-R}
 \label{sec:lotr-irt}
 
@@ -2038,48 +2106,6 @@ The estimates for the two parameter model can be seen in Table \ref{tab:lotr2ple
 
 
 
-\subsubsection{Confirmatory Analyses, Sample Two}
-\label{sec:lotr-cfa-sample}
-
-
-
-<<lotr1sem2, echo=FALSE, results=hide, cache=TRUE>>=
-lotr <- "LOTRQ"
-lotritems.cols <- paste(lotr, c(1,3,4,7,9,10), sep="")
-manifests <- lotritems.cols
-latents <- c("Optimism")
-optimism <- paste(lotr, c(1,3,4,7,9,10), sep="")
-Lotr1model2 <- mxModel(name="LOTR1",
-                      type="RAM",
-                      manifestVars=manifests,
-                      latentVars=latents,
-                      mxPath(from="Optimism", to=optimism),
-                      mxPath(from=manifests, arrows=2),
-                      mxPath(from=latents, arrows=2, free=FALSE, values=0.5),
-                      mxData(observed=cov(na.omit(lotritems2a)), type="cov", numObs=313)
-                      )
-lotr1fit2 <- mxRun(Lotr1model2)
-lotr1summ2 <- summary(lotr1fit2)
-@
-
-
-<<lotr3sem, echo=FALSE, results=hide, cache=TRUE>>=
-Lotr2model2 <- mxModel(Lotr2model, 
-                       name="LOTR2Model2",
-                      mxData(
-                          observed=cov(na.omit(lotritems2a)), 
-                          type="cov", numObs=313))
-lotr2fit2 <- mxRun(Lotr2model2)
-lotr2summ2 <- summary(lotr2fit2)
-@
-
-<<lotrcompare2, echo=FALSE, results=tex>>=
-lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
-lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
-print(lotrcomp.xtab2)
-@
-
-Table \ref{tab:lotrcompare2}, shows that the one factor model provides the best fit to the subsample of data used to examine the models performance on new data.
 
 
 Finally, the performance of the one and two parameter IRT models for the LOT-R were assessed. 
@@ -2180,7 +2206,7 @@ lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
 
 <<lotr2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Esitmates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
+print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
 @ 
 
 Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters for the one parameter Graded Response Model. It can be seen that the discrimination parameter is quite high, and that the most difficult question is Q10 which is ``Overall, I expect more good things to happen to me than bad''. The ``easiest'' question is Q7, which is one of the negatively phrased questions, suggesting that the two of these questions would be enough to garner a rough estimate of ability from participants. 
@@ -2283,102 +2309,36 @@ The relationship between optimism and health is even clearer in sample 2, with t
 Following these preliminary analyses, the main hypotheses can now
 be addressed.
 
-
-
-%% \begin{figure}
-<<pairsplot, echo=FALSE, eva=FALSE, pdf=TRUE>>=
-pairs.panels(na.omit(hom.tot))
-@
-%% \caption{Pairs plot for Scale totals of Health, Optimism and Mindfulness Data.  Top triangle has correlations scaled by their size, bottom triangle has scatterplots with locally weighted regression lines, diagonal has histograms with density estimation. All correlations significant at p<=0.001.}
-%% \label{fig:pairsplot}
-%% \end{figure}
+<<scalecorr, echo=FALSE, results=tex>>=
+scale.cor <- corr.test(scales2, use="complete", method="spearman")
+cors <- scale.cor$r
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals across both Samples" ), scalebox=0.5)
+@ 
 
 
 
-
-
-As can be seen from Figure \ref{fig:pairsplot}, the optimism hypothesis
+As can be seen from Table~\ref{tab:hom2scalecor}, the optimism hypothesis
 was not supported.  Contrary to predictions, optimism was negatively
-correlated with health.
-In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter \ref{cha:primary-research} and Chapter \ref{cha:general-discussion}. 
-
-%% \begin{figure}
-<<optplot1, echo=FALSE, eval=FALSE>>=
-optplot1 <- ggplot(hom1, aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")
-print(optplot1)
-@  
-%%  ~\caption{Plot of General Health against optimism with a linear regression smooth line. Dark areas on plot represent the confidence intervals (95\%)}
-%%   \label{fig:optplot1}
-%% \end{figure}
-
-
-
-%% \begin{figure}
-<<optplotgend, echo=FALSE, eval=FALSE>>=
-optplotgend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=optimism))+layer(geom="smooth", method="lm")+facet_grid(.~Gender)
-print(optplotgend)
-@  
-%%  ~\caption{Plot of General Health against Optimism stratified by Gender using a linear regression smooth. Dark edges represent errors of estimation}
-%%   \label{fig:optplotgend}
-%% \end{figure}
+correlated with health (using Spearman's correlation coefficient). 
+In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter~\ref{cha:primary-research} and Chapter~\ref{cha:general-discussion}. 
 
 
 Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
 
 
 
-%% \begin{figure}
-<<healthmaassamp, echo=FALSE, eval=FALSE>>=
-healthmaas.samp <- ggplot(na.omit(hom), aes(x=generalhealth, y=mindfulness, colour=CollectMeth))+layer(geom="smooth", method="lm")
-print(healthmaas.samp)
-@  
-%%  ~\caption{General Health against Mindfulness, Stratified by Method of Collection, linear regression smooth, dark areas on plots represent confidence intervals}
-%%   \label{fig:healthmaasmethplot}
-%% \end{figure}
 
-
-It can be seen from Figure \ref{fig:pairsplot} that the relationship between health and mindfulness was positive, and of the same magnitude at that observed between health and optimism. 
-%% \begin{figure}
-<<healthmaasgend, echo=FALSE, eval=FALSE>>=
-healthmaas.gend <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=Gender))+layer(geom="smooth", method="lm")
-print(healthmaas.gend)
-@  
-%%  ~\caption{General Health against Mindfulness Stratified by Gender using a linear regression smooth. Dark areas represent errors of estimation}
-%%   \label{fig:healthmaasgend}
-%% \end{figure}
+It can be seen from Table~\ref{tab:hom2scalecor} that the relationship between health and mindfulness was positive, and of the same magnitude at that observed between health and optimism. 
 
 
 Gender did not appear to have a substantial effect on mindfulness totals, although it is interesting to note that the range of health scores reported was much greater in the female participants.
-%% \begin{figure}
-<<healthmaas, echo=FALSE, eval=FALSE>>=
-healthmaas1 <- ggplot(na.omit(hom1), aes(x=generalhealth, y=mindfulness, colour=College))+layer(geom="smooth", method="lm")
-print(healthmaas1)
-@  
-%%  ~\caption{General Health against Mindfulness stratified by College using a linear regression smooth}
-%%   \label{fig:healthmaascoll}
-%% \end{figure}
-
-
-%% As can be seen from Figure \ref{fig:healthmaascoll} the relationship between general health and mindfulness levels is positive, and constant across the different groups of students.
-
-%% \begin{figure}
-<<maasage, echo=FALSE, eval=FALSE>>=
-maas.age <- ggplot(na.omit(hom1), aes(x=Age, y=mindfulness, ))+layer(geom="smooth", method="lm")
-print(maas.age)
-@  
-%%  ~\caption{Age against Mindfulness Scores using a linear regression smooth}
-%%   \label{fig:maasage}
-%% \end{figure}
-
-
-MAAS scores were associated with greater health as expected, as can be seen from Figure \ref{fig:pairsplot}. 
 
 
 
+MAAS scores were associated with greater health as expected, as can be seen from Table~\ref{tab:hom2scalecor}
 
 
-
-\subsection{Health Regressions}
+\subsection{Regression Analyses, Sample One}
 
 <<cvsetup, echo=FALSE, results=hide, cache=TRUE>>=
 hom1.full <- na.omit(hom1)
@@ -2407,9 +2367,9 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 @
 
 <<healthregfirstprint, echo=FALSE, results=tex>>=
-print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data", label="tab:hom1healthsteptest"))
+print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"))
 @ 
-As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of optimism.
+As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue. 
 
 %% Next, a lasso regression model was fit to the same dataset. 
 
@@ -2523,31 +2483,18 @@ rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
 @ 
 
-%% \begin{figure}
-<<optsteppredplot, echo=FALSE, eval=FALSE, fig=TRUE>>=
-print (ggplot (opt.step.pred.obs, aes (x=pred, y=obs))+geom_point ()+geom_smooth (method="lm"))
-@   
-%%  ~\caption{Stepwise Regression Predictions, Optimism Split 2A}
-%%   \label{fig:optstepredplot}
-%% \end{figure}
 
 
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and a non significant coefficient for general health and energy fatigue. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. Figure \ref{fig:optstepredplot} shows this in more detail. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being and general health, and non-significant coefficients for  energy fatigue, pain and mindfulness. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
 
 
 
 
-\section{Regression Analyses}
+\section{Regression Analyses, Sample Two}
 
-Given the correlation matrix reported shown above in Figure \ref{fig:pairsplot},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
+Given the correlation matrix reported shown above in Table~ref{tab:hom2scalecor},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
 
 \subsection{Optimism}
-
-
-
-
-
-
 
 
 <<optstepprint, echo=FALSE, results=hide>>=
@@ -2908,18 +2855,14 @@ The different models for how optimism is related to the other variables (directl
 
 %% \begin{figure}
 <<pairsplot2, echo=FALSE, results=hide>>=
-scales2 <- hom2[,66:75]
+scales2 <- hom[,66:75]
 pairs.panels(scales2)
 @   
 %%   \caption{Correlations between Scale Totals, Sample Two}
 %%   \label{fig:pairsplot2}
 %% \end{figure}
 
-<<scalecorr, echo=FALSE, results=tex>>=
-scale.cor <- corr.test(scales2, use="complete", method="spearman")
-cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals, Sample Two" ), scalebox=0.5)
-@ 
+
 
 
 %% \section{Regression Analyses}
@@ -2974,7 +2917,7 @@ print(xtable(as.matrix(opt.ridge.test2b), caption="Coefficients for Ridge Regres
 \
 
 
-\section{Relationships between Health, Optimism and Mindfulness}
+\section{Sample Two Structural Equation Models}
 \label{sec:relat-betw-health}
 
 <<lavaanmods, echo=FALSE, results=hide>>=
@@ -3016,7 +2959,7 @@ Secondly, the factor structures for the RAND-MOS, the MAAS and the LOT-R were mo
 
 
 
-The most striking is the large negative correlation between
+The most striking finding is the large negative correlation between
 optimism and self reported health.  The sample in this study is quite
 large, so the result is unlikely to be a statistical fluke.  That being
 said, the result is problematic to explain, given the large amount
@@ -3103,7 +3046,7 @@ assessments of the future, and decrease optimism as measured by the Life Orienta
 
 This study also confirms the proposed one factor structure for the MAAS, in line with previous research.
 This sample also appears to show that the LOT-R can be modelled without loss of information with
-just one factor.  We also demonstrated a replicable and parsimonous 8 factor structure for the RAND MOS,
+just one factor.  A   replicable and parsimonous 8 factor structure for the RAND MOS was demonstrated, 
 and our results cast further doubt on the notion that these factors are uncorrelated.
 
 It is worth noting that in all cases, parallel analysis did not provide a good measure of
