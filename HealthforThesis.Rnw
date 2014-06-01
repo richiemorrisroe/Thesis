@@ -106,7 +106,7 @@ cross-sectional study of individuals at risk for cardio-vascular disease
 A meta-analysis
 has also confirmed this link between optimism and better coping styles,
 as well as a strong negative relationship between optimism and negative
-affect~\cite{andersson1996benefits,Segerstrom2006}. Higher levels
+affect~\cite{andersson1996benefits,nes2006dispositional}. Higher levels
 of optimism have also been associated with quicker recovery from surgery,
 insulin therapy and chemotherapy~\cite{Allison2000}. A prospective
 study looking at outcomes from a group of head and neck cancer patients
@@ -186,7 +186,7 @@ These authors found found that mindfulness was strongly correlated with Neurotic
 
 \section{Aims of the Research}
 
-As discussed above, optimism is well known as a predictor of health, both self reported and objectively assessed and mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
+As discussed above, optimism is well known as a predictor of health, both self reported and objectively assessed. Mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
 
 The primary aim of this study was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research, therefore both factor analytic and item response models were fit to the optimism and mindfulness scales. 
 
@@ -205,8 +205,6 @@ The major hypotheses of this part of the thesis were as follows:
 \item Optimism and mindfulness would be positively associated with health.
 
 \item Optimism and mindfulness would be positively associated with one another. 
-
-
 \end{itemize}
 
 The major types of analysis carried out are described below. 
@@ -465,8 +463,7 @@ tot.sum2[,1] <- longnames
 
 
 In advance of the analysis, frequencies, means and ranges were calculated
-for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being).  The results of this analysis can
-be seen in Table~\ref{tab:sumstatscales}. 
+for the major variables of interest (General Health, Mindfulness, Optimism and Emotional Well Being) for the first sample.  The results of this analysis can be seen in Table~\ref{tab:sumstatscales}. 
 
 
 
@@ -572,7 +569,7 @@ hom2.tot <- hom2[,c("generalhealth", "physfun",  "rolelim", "rolelimem",  "emwel
 hom2.sum <- apademotables(hom2.tot)
 names(hom2.sum)[1] <- "Scale"
 hom2.sum[,"Alpha"] <- alphas2
-longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+longnames <- c("General Health","Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Emotional Well Being", "Social Functioning", "Pain","Energy Fatigue" , "Mindfulness (MAAS)", "Optimism (LOT-R)")
 hom2.sum$Scale <- longnames
 print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
 @ 
@@ -807,7 +804,7 @@ This factor structure definitely makes sense, and the fit indices are relatively
 print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
+The factor correlations are moderate (r=0.1-0.5) and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
 <<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
 scales.hom <- hom[,66:73]
@@ -1238,7 +1235,7 @@ Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Spl
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8)
 @
-This five factor solution (not shown) explained 54\% of the variance in the sample.
+This five factor solution for Split B (not shown) explained 54\% of the variance in the sample.
 
 PA1: "Q5",  "Q6",  "Q7",  "Q8",  "Q9",  "Q10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
@@ -1389,6 +1386,10 @@ As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was a
 \subsection{IRT Analyses - MAAS}
 \label{sec:irt-analyses-maas}
 
+\subsubsection{Sample One}
+\label{sec:sample-one}
+
+
 
 The MAAS was then considered from a IRT perspective.  Firstly, the instrument was examined using Mokken analysis to check if it could be considered one scale, and whether or not there were violation of monotonicity.
 
@@ -1456,7 +1457,6 @@ print(maasp)
 %%   \label{fig:maasgrm1plplot}
 %% \end{figure}
 
-There were no obvious scaling violations for this scale. 
 
 <<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
 print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
@@ -1480,7 +1480,7 @@ print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Par
 @ 
 
 
-The two parameter Graded Response Model (not shown) had the following featurs. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+The two parameter Graded Response Model (not shown) had the following features. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
 <<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1504,7 +1504,7 @@ print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Paramet
 
 As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. 
 
-\subsubsection{IRT Analyses, Sample Two}
+\subsubsection{Sample Two}
 \label{sec:irt-analyses}
 
 
@@ -1567,7 +1567,7 @@ rownames(maas2b.grm.test.all) <- c("One Parameter", "Two Parameter")
 @ 
 
 <<maasgrmcompprint, echo=FALSE, results=tex>>=
-print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models for MAAS on Unseen Data", label="tab:maas2bgrmtest"))
+print(xtable(maas2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models for MAAS on Unseen Data (Splits A and C)", label="tab:maas2bgrmtest"))
 @ 
 
 As can be seen from Table \ref{tab:maas2bgrmtest}, the one parameter model provided the best fit to the unseen data. 
@@ -1614,7 +1614,7 @@ As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provi
 \subsection{Backtesting}
 \label{sec:maas-bt}
 
-Finally, a back testing procedure was applied, where the best fitting models from the Second Sample were refit on Sample One data. Both splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
+Finally, a back testing procedure was applied, where the best fitting models from the second sample were refit on Sample One data. Both splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
 
 <<maasbacktestsem1full, echo=FALSE, results=hide>>=
 manifests.maas <- paste0(maas, 1:15)
@@ -1994,6 +1994,10 @@ Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance 
 \subsection{IRT Analyses, LOT-R}
 \label{sec:lotr-irt}
 
+\subsubsection{Sample One}
+\label{sec:sample-one-1}
+
+
 
 Firstly, the scale analysis was conducted to determine which items fit best together.
 
@@ -2131,12 +2135,12 @@ The next part of the analyses was examining the predictive ability of the IRT mo
 
 
 
-\section{IRT Analyses}
-\label{sec:lotr-1}
+\subsubsection{Sample Two}
+\label{sec:sample-two-2}
 
 
 
-Next, we examine the LOT-R using IRT approaches. 
+Next, a similar procedure was followed for the second sample. 
 
 <<lotr2bcheck, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2b.iio <- check.iio(na.omit(lotritems2b))
@@ -2305,9 +2309,10 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 The relationship between optimism and health is even clearer in sample 2, with the same strange negative relationship being apparent. 
 
 \section{Inferential Statistics}
+\label{sec:infer-stat}
 
-Following these preliminary analyses, the main hypotheses can now
-be addressed.
+Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
+
 
 <<scalecorr, echo=FALSE, results=tex>>=
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
@@ -2369,7 +2374,7 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 <<healthregfirstprint, echo=FALSE, results=tex>>=
 print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"))
 @ 
-As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue. 
+As can be seen from Table \ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue and role limitations. 
 
 %% Next, a lasso regression model was fit to the same dataset. 
 
@@ -2480,7 +2485,7 @@ opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
 rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 @ 
 <<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data", label="tab:homstepopttest2a"))
+print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"))
 @ 
 
 
@@ -2490,9 +2495,9 @@ As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an 
 
 
 
-\section{Regression Analyses, Sample Two}
+\subsection{Regression Analyses, Sample Two}
 
-Given the correlation matrix reported shown above in Table~ref{tab:hom2scalecor},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
+Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor},  regression analyses were run on the three major variables (General Health, Mindfulness and Optimism) to determine which other variables were involved in the effect.
 
 \subsection{Optimism}
 
@@ -2506,7 +2511,7 @@ print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regr
 
 
 In the training sample, the stepwise selected models kept three predictors.
-The results of the selected predictors on the test sample are shown in Table \ref{tab:hom1stepopttest}.
+The results of the selected predictors on the test sample are shown in Table~\ref{tab:hom1stepopttest}.
 General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
 For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section~\ref{sec:discussion}. 
 
