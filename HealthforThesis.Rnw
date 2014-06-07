@@ -188,7 +188,7 @@ These authors found found that mindfulness was strongly correlated with Neurotic
 
 As discussed above, optimism is well known as a predictor of health, both self reported and objectively assessed. Mindfulness, while a much newer construct, has also been associated with health in a number of studies.  In addition, optimism has been associated with the placebo response in some research, while mindfulness has been proposed as a mediator of the relationship between explicit and implicit measures.
 
-The primary aim of this study was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research, therefore both factor analytic and item response models were fit to the optimism and mindfulness scales. 
+The primary aim of this study was to develop and test psychometric models that could be used to predict scores according to IRT and factor analysis criteria in the experimental part of the research. In order to do so, both factor analytic and item response models were fit to the optimism and mindfulness scales, as well as the health scales for Sample One. 
 
 A secondary aim of this part of thesis was both to replicate the optimism-health link reported in previous studies and to examine the relationships between health, mindfulness and optimism.
 
@@ -230,7 +230,7 @@ print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown o
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
 
-The majority of the first sample (N=392) was undergraduate students (N=304), and the mean Age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) was undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
+The majority of the first sample (N=392) were undergraduate students (N=304), and the mean age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) were undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
 
 <<scorescalestransform, echo=FALSE, results=hide>>=
 grep.rand <- grep("^RANDQ", x=names(hom))
@@ -260,7 +260,7 @@ randsortpaste <- paste(rand, c(1:36), sep="")
 randitems.unscored <- hom[,grep.rand]
 randitems.scored <- randrecoding.df[,randsortpaste]
 hom[,grep.rand] <- randitems.scored
-hom <- createSumScores(hom) 
+hom <- createSumScores(na.omit(hom))
 hom1 <- hom[hom$CollectMeth=="Paper",]
 hom2 <- hom[hom$CollectMeth=="Online",]
 @
@@ -515,7 +515,7 @@ maas.alpha <- alpha(maasitems)$total$std.alpha
 lotr.alpha <- alpha(lotritems)$total$std.alpha
 alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, emwb.alpha, sf.alpha, pain.alpha, ef.alpha, maas.alpha, lotr.alpha)
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
-tot.sum2[,"alpha"] <- alphas
+tot.sum2[,"Alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
 print(tot.xtab)
 @ 
@@ -582,6 +582,10 @@ The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}.
 %% Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
 
 %% \subsection{Number of Factors to retain}
+
+The primary aim of this chapter was to develop psychometric models for the mindfulness and optimism measures that could be used to supplement the data collected as part of the experimental research. Each scale, across both samples was taken as one unit, and factor analytic, item response methods, and structural equation models were used to develop and test combinations of items which seemed to provide useful explanatory power. Additionally, the use of multiple methods here allows for the actual impact of the different models to be assessed against one another, and those built on different sub-samples, to ensure that these models are reproducible. 
+
+This section covers the RAND-MOS data for Sample One (this was not repeated for Sample Two, as this instrument was not used in the experimental portion of the research). Next, the MAAS is investigated over both samples using all of these methods, followed by an examination of the LOT-R. The most successful models from this process were then tested against Sample One data (backtesting). 
 
 
 <<retainfactors, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
@@ -792,12 +796,16 @@ Pain: These items map exactly to the Pain scale, and so retain that name.
 
 Energy: The loadings on this factor are all below .4, which argues against its unproblematic interpretation. In addition, Q2 loads on this factor, when it is not typically associated with any factor. The other two items are the positively worded items from the  Energy/Fatigue scales, and so this factor can best be termed Energy. 
 
-
-
 The non-normed fit index was equal to \Sexpr{round(rand.fact.8[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(rand.fact.8[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.8[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.8[["RMSEA"]][3],3 )}.
 
-This factor structure definitely makes sense, and the fit indices are relatively acceptable, although the RMSEA is a little higher than would be wanted. In addition, the items map quite well to the subscales, which further reinforces our confidence in this solution.
+This factor structure definitely makes sense, and the fit indices are relatively acceptable, although the RMSEA is a little higher than would be wanted. %% In addition, the items map quite well to the subscales, which further reinforces our confidence in this solution.
+
+This factor structure seems appropriate for the data, and matches the number of factors proposed for this instrument. However, the interesting part is how it is different from the published sub-scales. To start, Social Functioning and Emotional Well Being have been merged. This makes sense, as the Social Functioning scale is quite small, and there may not have been enough data available to precisely segment them. However, it appears that Energy and Fatigue are perceived differently by this sub-population. The discrepancies here may have arisen from the age of the sample - while the instrument was developed on a sample from the general population, the sample here was predominantly young, and such differences from the scale could represent this fact. Additionally, the sample was that of university students, which may also have affected the responses. 
+
+
+
+
 
 
 <<rand8corr, echo=FALSE, results=hide, eval=FALSE>>=
@@ -813,7 +821,7 @@ rand.higher.fa
 @ 
 
 
-\paragraph{CFA for RAND MOS}
+%% \paragraph{CFA for RAND MOS}
 
 
 <<rand2sem, echo=FALSE, results=hide, cache=TRUE>>=
