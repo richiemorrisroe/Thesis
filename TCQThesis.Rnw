@@ -1,4 +1,4 @@
-
+#
 \section{Introduction}
 
 Expectancies are considered to be at the core of the placebo response~\cite{Montgomery1997}. However, currently they are assessed using very simple methods which fail to capture the multidimensional nature and changes over time in these important constructs~\cite{Stone2005}. The most typical method of measuring treatment-related expectancies involves a one item measure ``How much better do you expect to feel after this treatment'', which is answered on an eleven point scale~\cite{morton2009reproducibility,martin2011implicit}.  These expectancy measures normally have a correlation with placebo response of approximately 0.3,  which equates to only 10\% of the variance in response to placebo~\cite{Whalley2008}.
@@ -17,7 +17,7 @@ Additionally, the CEQ was found to have both cognitive and emotional factors by 
 
 The CEQ was altered for this study, as this cross-sectional study did not administer any treatments to the sample of participants. Instead, participants were asked to imagine that they had been suffering from pain, and that a doctor had recommended a particular treatment and were then asked to rate the credibility of a number of different methods for reducing their pain (described further in Section \ref{sec:measures-1}). 
 
-In this sense, what was measured were the self-reported treatment expectancies of the sample(s). These expectancies are relevant both because they may relate to the placebo response to treatments, and additionally because they may shape the choice of treatment~\cite{Bausell2005,Benedetti2005} (cf Section \ref{sec:beli-about-treatm}).  
+In this sense, what was measured were the self-reported treatment expectancies of the sample(s). These expectancies are relevant both because they may relate to the placebo response to treatments, and additionally because they may shape the choice of treatment~\cite{Bausell2005,Benedetti2005} (c.f. Section~\ref{sec:beli-about-treatm}).  
 
 Finally, as this thesis aimed to develop and test an implicit measure to assist in the prediction of placebo, the use of an adequate self-report scale was important in that it allows for the incremental validity of any implicit measure to be assessed. The CEQ was used as a base as this set of questions has been shown to have validity in related areas, and this meant that it was a less risky process to follow when testing a new measure. 
 
@@ -56,7 +56,7 @@ Complementary and alternative methodologies are sometimes used to treat pain. In
 For these reasons, both conventional and alternative treatments were used in this study. Additionally, it was thought that there might be some useful information conveyed by the relative ordering of conventional and alternative treatment expectancies, both within and between participants. 
 
 \subsection{Aims and Objectives}
-\label{sec:aims-objectives}
+\label{sec:aims-objectives-tcq}
 
 The overall aim of this study was to develop and test a measure of treatment expectancies in a pain context which could then be used in the experimental study. To this end, the following was done:
 
@@ -142,7 +142,7 @@ Data for Sample Two was split into four parts of approximately 300 observations 
 Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. %% Next, the data was tested for normality using a Shapiro-Wilks test. 
 Following this, a correlation matrix for the data was calculated and analysed.
 
-Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives}. 
+Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. 
 
 
 
@@ -356,8 +356,8 @@ names(fittcq1.m)[1] <- "Fit Index"
 print(xtable(fittcq1.m, caption="Fit Indices, TCQ 1", label="tab:tcq1modelcomp"), scalebox=0.75)
 @ 
 
-\section{Confirmatory Factor Analyses}
-\label{sec:conf-fact-analys}
+%% \section{Confirmatory Factor Analyses}
+%% \label{sec:conf-fact-analys}
 
 <<tcq4sem, echo=FALSE, results=hide>>=
 Pill <- "Pill"
@@ -561,7 +561,7 @@ tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
 print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
 @ 
-The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is quite low, and the parameter estimates are  closely distributed around zero.
+The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is reasonably high (reflecting that these items were endorsed less by many of the participants), and the parameter estimates are  closely distributed around zero.
 
 <<tcqaltgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqalt.grm2 <- grm(tcqalt)
@@ -683,8 +683,8 @@ tcqfull.a <- as.data.frame(cbind(Pillall.a, Creamall.a, Injall.a,
 
 As in previous analyses (see Chapter \ref{cha:health-for-thesis}), the second sample was much larger than the first, and therefore was split into a number of equal parts. In this case, the second sample (consisting of student and staff responses) was split into four equal sub-samples(A-D). The first of these (hereafter denoted as A), was then  used as a test sample for the models developed on the data from Sample 1. 
 
-\section{Confirmatory Factor Analysis}
-\label{sec:conf-fact-analys-1}
+%% \section{Confirmatory Factor Analysis}
+%% \label{sec:conf-fact-analys-1}
 
 <<tcq4sem2a, echo=FALSE, results=hide>>=
 Pill <- "Pill"
@@ -838,8 +838,8 @@ As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit
 
 %% Table \ref{tab:acutotlm2a} shows that the model for Acupuncture credibility is quite different on the Study Two data. Firstly, the coefficient for Injection is positive, unlike in the previous data, and the coefficients for College and Gender are significant. This would seem to suggest that the representation of the acupuncture credibility questions were quite different between the two samples, with a stronger effect of demographic questions in sample two. 
 
-\subsection{Confirmatory IRT Analyses}
-\label{sec:conf-irt-analys}
+%% \subsection{Confirmatory IRT Analyses}
+%% \label{sec:conf-irt-analys}
 
 
 The first step in examining the predictive power of the IRT models is to score the current subsample of the Study Two data (Split A) using the prior models. Then, the same model can be fit on this data alone, and the error of estimation between the two processes can be calculated. Essentially, the root mean square error of approximation (RMSEA) was used to assess the usefulness of each of the models. 
@@ -914,7 +914,7 @@ With respect to the factor structure, the results of Horne \cite{Horne1999} have
 It is important to consider what may be the reasons for the difference. One potential explanation is that this factor structure was obtained because of greater experience with painkilling treatments in pill form. If this is the case, then greater levels of experience with a painkilling treatment should correlate with the presence of this factor structure. Another possibility is that this simply due to chance, in which case this finding should not replicate in the next study. 
 
 
-With regards to the overall psychometric structure ,the measure appears to show a strong pattern of one factor per treatment modality, but a six factor model fitted the training and test data better, suggesting that there are some higher-order correlations between some of the factors, which could probably be better accounted for using a hierarchical factor model.  
+With regards to the overall psychometric structure, the measure appears to show a strong pattern of one factor per treatment modality, but a six factor model fitted the training and test data better, suggesting that there are some higher-order correlations between some of the factors, which could probably be better accounted for using a hierarchical factor model.  
 
 Secondly, an item response theory analysis has suggested that while the Pills, Cream and Injection questions can be conceptualised with one latent trait, this does not appear to work for acupuncture. This would seem to suggest that ratings of complementary and western medicine are somewhat independent. The second version of this survey added two more sections on complementary therapies, Homeopathy and Reiki, in order to both balance the kinds of treatments, and to examine whether the assumption of bi-dimensionality would hold in another student and staff sample. 
 
@@ -2461,7 +2461,7 @@ Interestingly, it appears that the experience with a particular form of treatmen
 \label{sec:discussion}
 This chapter has demonstrated a number of matters with regards to this new instrument. Firstly, it appears to have the predicted factor structure, especially the reduced structure, with the cross-loading items removed.  
 
-Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maxiumum use to be made of the limited data collected in the experimental research, and is an approach which is not often employed within the field. 
+Additionally, this factor structure has been validated by the use of unseen data to test and compare all models. This allows for maximum use to be made of the limited data collected in the experimental research, and is an approach which is not often employed within the field. 
 
 Secondly, this factor structure has been replicated over two independent samples. This is important as one sample may have been biased in some random direction, but two samples are much less likely to have been.  
 
