@@ -812,7 +812,7 @@ This factor structure seems appropriate for the data, and matches the number of 
 print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate (r=0.1-0.5) and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
+The factor correlations are moderate ($r=0.1-0.5$) and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
 
 <<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
 scales.hom <- hom[,66:73]
@@ -911,8 +911,8 @@ As can be seen from Table~\ref{tab:randsemcompare}, the 8 factor solution appear
 
 
 
-\subsubsection{Confirmatary Factor Analysis, Second Sample}
-\label{sec:rand-mos-cfa}
+%% \subsubsection{Confirmatary Factor Analysis, Second Sample}
+%% \label{sec:rand-mos-cfa}
 
 
 
@@ -1006,7 +1006,7 @@ As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the
 
 \section{Mindfulness Attention Awareness Scale}
 
-For the MAAS, parallel analysis, MAP, VSS, Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
+For the MAAS, parallel analysis, the MAP, VSS and Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
 
 %% \subsection{MAAS One Factor Solution}
 %% \label{sec:maas-one-factor}
@@ -1043,6 +1043,8 @@ These mostly relate to sensations of physical unawareness, and so this factor ca
 
 PA2: "Q1"  "Q2"  "Q3"  "Q14". This factor can perhaps best be termed as lack of present attention.
 
+While the amount of variance explained increased with the number of factors, this model does not seem to be particularly useful, in that it does not shed new light on the construct. 
+
 
 
 The non-normed fit index was equal to \Sexpr{round(maas.fact.3[["TLI"]], 3)}
@@ -1051,8 +1053,8 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.3[["RMSEA"]][1],3 )},with conf
 
 
 
-\subsection{CFA for MAAS}
-\label{sec:cfa-maas}
+%% \subsection{CFA for MAAS}
+%% \label{sec:cfa-maas}
 
 
 
@@ -1112,9 +1114,9 @@ print(maascomp.xtab)
 
 Factor solutions for one and three factors were extracted, and the results were subjected to CFA.
 
-From Table \ref{tab:maassemcomp} it can be seen that the best model is the one factor model, which is in line with previous research.
+From Table~\ref{tab:maassemcomp} it can be seen that the best model is the one factor model, which is in line with previous research.
 The factor structure is not reported here as all factors loaded on the first factor.  This factor explained 35\% of the variance
-in the sample, which is low.  Possible explanations for this are discussed below. 
+in the sample, which is low.
 
 
 <<splitsample, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1204,7 +1206,7 @@ maas2b.parallel <- fa.parallel(na.omit(maasitems2b))
 vss.maas.2b <- VSS(na.omit(maasitems2b))
 @
 
-The parallel analysis procedure for Split B suggests that this sample of the responses to the MAAS has five factors, while the MAP criterion suggests that it has only one.  Following our previous approach, each of these factor solutions will be examined and interpreted before a CFA is applied on the remainder of the dataset.
+The parallel analysis procedure for Split B suggested that this sample of the responses to the MAAS has five factors, while the MAP criterion suggests that it has only one.  Following our previous approach, each of these factor solutions will be examined and interpreted before a CFA is applied on the remainder of the dataset.
 
 For split C, the same procedure was carried out, and the various methods both suggested five and one factors, respectively. 
 
@@ -1254,6 +1256,8 @@ PA3: "Q4", "Q5".  This factor is again termed lack of somatic awareness.
 PA4: "Q13", "Q14".  This factor can best be termed as lack of attention.
 
 PA5: "Q10", "Q11", "Q12", "Q14", "Q15".  This factor again can be termed distractability.
+
+Although there is significanly more variance explained by this solution, again it does not lend any more conceptual clarity to the instrument, suggesting that it is not worth the extra parameters estimated. Note that Q1-3 clustered together in previous multi-factor solutions, so there may be a different construct underlying these questions, but this is not clearly replicable across the entire sample. 
 
 <<maas2cfact5, echo=FALSE, results=hide>>=
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
@@ -1377,7 +1381,7 @@ maas5summ2c <- summary(maas5fit2c)
 
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
 maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c( maas5fit2b))
-print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split C"), scalebox=0.9)
+print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split B"), scalebox=0.9)
 @
 
 As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.
@@ -1406,7 +1410,9 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
+The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 1 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
+
+There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
 
 <<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
@@ -1510,7 +1516,7 @@ rownames(hom1.maas.grm.all) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(hom1.maas.grm.all, caption="Performance of MAAS One and Two Parameter GRM's on Unseen Data (Sample Two, Split A)", label="tab:hom1maasgrmtest"))
 @ 
 
-As can be seen from Table \ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. 
+As can be seen from Table~\ref{tab:hom1maasgrmtest}, the one parameter GRM provided a better fit to the unseen  data, in contrast to the likelihood-based method. This suggests again that a simpler model for the MAAS, in line with previous research, appears to be a better model for the items. 
 
 \subsubsection{Sample Two}
 \label{sec:irt-analyses}
@@ -1529,7 +1535,7 @@ print(xtable(maas2b.iio[["violations"]], caption="Item Ordering Assumption Check
 maas2b.s <- maasitems2b[,paste(maas, c(1:4, 7:15), sep="")]
 @ 
 
-Questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. The reduced scale had no violations of the monotonicity assumption. 
+Questions 5 and 6 failed the item ordering assumptions for Split B and so are removed from the scale before further analysis. Note that Q6 was problematic in the factor analytical solutions too, although Q5 was in line with retained items in the factor analysis. The reduced scale had no violations of the monotonicity assumption. 
 
 <<maas2ccheck, echo=FALSE, results=hide, cache=TRUE>>=
 maas2c.iio <- check.iio(na.omit(maasitems2c))
@@ -1617,12 +1623,12 @@ rownames(maas2c.grm.test.all) <- c("One Parameter", "Two Parameter")
 print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Parameter Graded Response Models on Unseen Data (Splits A and B)", label="tab:maas2cgrmtest"))
 @ 
 
-As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good).
+As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). To finalise the examination of the MAAS, in all cases a one factor FA model and one parameter GRM provided the best fit to the data. Additionally, Q6 was removed by all of the IRT models, suggesting that the responses to this question were not consistent with the responses to all of the other questions, and which questions this item's inclusion in the instrument (at least for this particular population). 
 
 \subsection{Backtesting}
 \label{sec:maas-bt}
 
-Finally, a back testing procedure was applied, where the best fitting models from the second sample were refit on Sample One data. Both splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
+Finally, a back testing procedure was applied, where the best fitting models from the second sample were refit on data from the first sample. Both splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
 
 <<maasbacktestsem1full, echo=FALSE, results=hide>>=
 manifests.maas <- paste0(maas, 1:15)
@@ -1715,7 +1721,7 @@ lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
 print(FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One"))
 @
 
-Table \ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. 
+Table~\ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. As can be seen below, the two factor solution increases the communalities, but at the cost of potentially unwarranted complexity. 
 
 
 The non-normed fit index was equal to \Sexpr{round(lotr.fact.1[["TLI"]], 3)}
@@ -1732,13 +1738,13 @@ lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
 print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
 @
 The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
-PA2: ''Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
+PA2: ``Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. 
+PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. Additionally, item 4 has a small cross-loading on the optimism factor, and the communalities are quite low, suggesting that 
 
 
-\subsection{CFA for LOTR}
-\label{sec:cfa-lotr}
+%% \subsection{CFA for LOTR}
+%% \label{sec:cfa-lotr}
 
 <<lotr1sem, echo=FALSE, results=hide, cache=TRUE>>=
 lotr <- "LOTRQ"
@@ -1789,8 +1795,8 @@ print(lotrcomp.xtab)
 
 As can be seen from Table \ref{tab:semlotrcomp}, the one factor solution provided the best fit to the data.  Therefore, this solution will be tested on the second sample.
 
-\subsubsection{Confirmatory Analyses, Sample Two}
-\label{sec:lotr-cfa-sample}
+%% \subsubsection{Confirmatory Analyses, Sample Two}
+%% \label{sec:lotr-cfa-sample}
 
 
 
@@ -1877,7 +1883,7 @@ lotr.fact1.av <- FactorAverage(sols=list(lotr2b.fact1, lotr2c.fact1), mynames=c(
 print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One Factor Solution for LOT-R Across Splits B and C"))
 @ 
 
-Table~\ref{tab:lotrfact1average} show the averaged coefficients across both splits. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. The averaging produces a solution which appears much more stable. 
+Table~\ref{tab:lotrfact1average} show the averaged coefficients across both splits. Note that the communalities are, on average, much higher than those observed in the first sample. This may be due to the larger sample size or potentially due to the pseudo-random sampling method used in the pen and paper sample. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. The averaging produces a solution which appears much more stable. 
 
 
 <<lotr2bfact2, echo=FALSE, results=hide>>=
@@ -2022,7 +2028,7 @@ print(xtable(lotr.iio[["violations"]],label="tab:lotritemord"))
 @
 
 
-Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption). There were no violations of monotonicity in the sample.
+Q1 was removed from the scale in order to meet the assumptions of the model (the IIO assumption).Note that this item had quite a low communality in the FA analyses also.  There were no violations of monotonicity in the sample.
 
 <<lotrmono, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.mono <- check.monotonicity(na.omit(lotritems))
@@ -2109,7 +2115,7 @@ The two parameter model was significantly better than the one parameter model ($
 print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
 @
 
-The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}.
+The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
 
 
 
@@ -2139,7 +2145,7 @@ As can be seen from Table \ref{tab:hom1lotrgrmtest}, the one parameter model pro
 
 
 
-The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
+%% The next part of the analyses was examining the predictive ability of the IRT models developed on sample one.
 
 
 
@@ -2155,7 +2161,7 @@ lotr2b.iio <- check.iio(na.omit(lotritems2b))
 lotr2b.mono <- check.monotonicity(na.omit(lotritems2b))
 @ 
 
-The LOT-R for Split B had no problems with either item ordering or monotonicity. 
+The LOT-R for Split B had no problems with either item ordering or monotonicity, suggesting that some of the problems observed earlier may have been due to variability from the particular sample. 
 
 
 
@@ -2206,7 +2212,7 @@ lotr2c.mono <- check.monotonicity(na.omit(lotritems2c))
 lotr2c.s <- lotritems2c[,paste(lotr, c(3,4,7,9,10), sep="")]
 @ 
 
-An examination of the item ordering assumption showed that Q1 did not fit this model, and so was removed from the scale. There were no failures of the monotonicity assumption, and thus the modelling could commence. 
+An examination of the item ordering assumption showed that Q1 did not fit this model for Split C, and so was removed from the scale. This seems to suggest that the issues with Q1 are common across both samples, and that variability was the cause of the lack of this issue, in Split B.   There were no failures of the monotonicity assumption, and thus the modelling could commence. 
 
 
 
@@ -2235,7 +2241,7 @@ participants.
 print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
 @ 
 
-When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q1 and Q10 (which refer to hopes around the future and indeed are very similar questions). 
+When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
 
 Finally, the performance of these two models is tested against unseen data. 
 
@@ -2332,7 +2338,7 @@ Following the investigation of the scales from a psychometric point of view, the
 <<scalecorr, echo=FALSE, results=tex>>=
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", caption="Spearman Correlations between Scale Totals across both Samples" ), scalebox=0.5)
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", environment="longtable",  caption="Spearman Correlations between Scale Totals across both Samples" ), scalebox=0.5)
 @ 
 
 
@@ -2968,7 +2974,7 @@ As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is on
 \section{Discussion}
 \label{sec:discussion}
 
-A number of interesting findings, some expected and others not have arisen from this study. Firstly, in contrast to published research, optimism and health were negatively associated. This relationship appears to be mediated through Emotional Well Being, which may point to some earlier work suggesting that the optimism-health connection was mediated through negative affect. This result would seem to contribute some new information to this debate. 
+A number of interesting findings, some expected and others not, have arisen from this study. Firstly, in contrast to published research, optimism and health were negatively associated. This relationship appears to be mediated through Emotional Well Being, which may point to some earlier work suggesting that the optimism-health connection was mediated through negative affect. This result would seem to contribute some new information to this debate. 
 
 Secondly, the factor structures for the RAND-MOS, the MAAS and the LOT-R were more or less confirmed, and more importantly from the perspective of this thesis, reduced versions of these scales were developed which were more predictive on new data. 
 
@@ -3077,7 +3083,7 @@ variables.  We would argue that the use of multiple decision criteria on a regul
 in factor analytic research would help us to understand which method suits a particular
 application best.
 
-Additionally, this study found that a combination of IRT analyses and CTT analyses provided the best fitting models for both the MAAS and the LOT-R. In both cases, a model fitted using the scales developed from the use of Mokken analysis and IRT fit indices provided better performance on unseen data than did the models developed exclusively through factor analysis. 
+Additionally, this study found that a combination of IRT analyses and factor analytic analyses provided the best fitting models for both the MAAS and the LOT-R. In both cases, a model fitted using the scales developed from the use of Mokken analysis and IRT fit indices provided better performance on unseen data than did the models developed exclusively through factor analysis. 
 
 This provides evidence that the combination of these two methods is more useful than either of them alone, and it has allowed for the building of a useful model tailored to the population under study in this thesis which can be used in the experimental portion of the research. The success of these models is discussed further in Chapter \ref{cha:primary-research}.
 
