@@ -260,7 +260,8 @@ randsortpaste <- paste(rand, c(1:36), sep="")
 randitems.unscored <- hom[,grep.rand]
 randitems.scored <- randrecoding.df[,randsortpaste]
 hom[,grep.rand] <- randitems.scored
-hom <- createSumScores(na.omit(hom))
+hom <- createSumScores(hom)
+hom.scores <- createSumScores(na.omit(hom))
 hom1 <- hom[hom$CollectMeth=="Paper",]
 hom2 <- hom[hom$CollectMeth=="Online",]
 @
@@ -2336,6 +2337,7 @@ Following the investigation of the scales from a psychometric point of view, the
 
 
 <<scalecorr, echo=FALSE, results=tex>>=
+scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 print(xtable(as.data.frame(cors), label="tab:hom2scalecor", environment="longtable",  caption="Spearman Correlations between Scale Totals across both Samples" ), scalebox=0.5)
