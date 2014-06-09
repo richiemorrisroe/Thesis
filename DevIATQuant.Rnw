@@ -55,7 +55,7 @@ require(xtable)
 @ 
 
 <<data, echo=FALSE, results=hide>>=
-qual <- read.csv("RepGridPeople.csv", stringsAsFactors=FALSE, na.strings="")
+qual <- read.csv("RepGridPeople2.csv", stringsAsFactors=FALSE, na.strings="")
 qual.m <- melt(qual, id.vars=NULL)
 qual.m[,"value"] <- with(qual.m, tolower(value))
 qual.m2 <- qual.m[with(qual.m, gsub("s$", "", x=value)),]
@@ -65,7 +65,8 @@ qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
 
 \begin{figure}
 <<plotfreq, echo=FALSE, fig=TRUE>>=
-freq.pl<-ggplot(qual.tab.sort[1:20,], aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))
+qual.tab.top <- qual.tab.sort[1:20,]
+freq.pl<-ggplot(qual.tab.top, aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))+xlab("Stimulus")+ylab("Count")
 print(freq.pl)
 @   
   \caption{Histogram of Frequency of People or Qualities}
@@ -73,6 +74,7 @@ print(freq.pl)
 \end{figure}
 
 <<freqtab, echo=FALSE, results=tex>>=
+names(qual.tab.sort)[1] <- "Stimulus"
 print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"))
 @ 
 
@@ -155,7 +157,7 @@ The first step was to look at the composition of the sample. The sample was elev
 The ages of the sample ranged from 19 to 27, with a mean age of 21.27 and a median age of 20. In this respect, the sample was quite typical of students in the psychology department. 
 Students were asked had they heard of an IAT, to which all included in the sample replied no. 
 
-The mean Optimism IAT score was 0.5833, and the distribution can be seen in Figure \ref{fig:optiatpilot}. As can be seen the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
+The mean Optimism IAT score (using the D algorithm, described in Chapter~\ref{cha:primary-research}) was 0.5833, and the distribution can be seen in Figure \ref{fig:optiatpilot}. As can be seen the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
 
 \begin{figure}
 <<optiatpl, echo=FALSE, fig=TRUE>>=
@@ -215,6 +217,7 @@ require(xtable)
 <<gender, echo=FALSE, results=tex>>=
 gend.sum <- as.data.frame(with(iepilot, summary(Gender)))
 names(gend.sum) <- "Gender"
+rownames(gend.sum)[3] <- "Not Supplied"
 print(xtable(gend.sum, label="tab:gendpilot", caption="Gender of Pilot Participants"))   
 @
 
@@ -235,7 +238,7 @@ realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate",
 
 %% \begin{figure}
 <<realfakeplot, echo=FALSE, results=hide, eval=FALSE>>=
-pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"))
+pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"), method="kendall")
 @  
 %%   \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
 %%   \label{fig:realfakeplot}
@@ -248,7 +251,7 @@ convaltwords<-tcqiat[, c("Pills", "Cream", "Injections", "Surgery", "Homeopathy"
 
 %% \begin{figure}
 <<convaltplot, echo=FALSE, results=hide>>=
-pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"))
+pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"), method="kendall")
 @  
 %%   \caption{Conventional and Alternative Treatment Words, Pilot Sample}
 %%   \label{fig:convaltplot}
@@ -263,7 +266,7 @@ optpesswords<-iepilot[,c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Su
 
 \begin{figure}
 <<plotscales, echo=FALSE, fig=TRUE>>=
-pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"))
+pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), method="kendall")
 @  
   \caption{Pairs Plot of Explicit Variables, Pilot Study}
   \label{fig:pairspilot1}
@@ -274,7 +277,7 @@ Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit
 
 %% \begin{figure}
 <<plotoptpess, echo=FALSE, eval=FALSE>>=
-pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"))
+pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"), method="kendall")
 @  
 %%   \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
 %%   \label{fig:optpesswordsplot}
@@ -325,7 +328,7 @@ iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR")]
 
 %% \begin{figure}
 <<iatsrplot, echo=FALSE, results=hide>>=
-pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR"))
+pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR"), method="kendall")
 @  
 %%   \caption{Pairs Plot of Relationship Between Explicit and Implicit Measures}
 %%   \label{fig:impexplot}
