@@ -18,7 +18,7 @@ In order to make use of psychometric modelling, large samples of the self report
 
 Physiological (GSR or skin conductance) recordings were also collected in order to examine the physiological characteristics of placebo and to increase the validity of the study in the minds of the participants.
 
-The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural equation models) to be examined to separate out the effects of the various predictor types. 
+The collection of these various forms of data, along with a behavioural criterion (the observed placebo response) allowed for psychometric models (Structural Equation Models or SEM) to be examined to separate out the effects of the various predictor types. 
 
 In essence, this thesis (and more specifically this chapter) seeks to marry the strengths of psychology in psychometric modelling to its complementary strengths in experimental design, with the aim of establishing these methods and measures relative usefulness in the prediction of placebo. 
 
@@ -112,7 +112,7 @@ However, this study did not include a deceptive placebo condition, and so is not
 
 A number of issues are apparent in the current research around treatment-related expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the development of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. 
 
-The measure developed in Chapter~\ref{cha:tcq-thesis} attempts to address the first problem, while the IAT's developed in Chapter~\ref{devel-of-iat} address the second. 
+The measure developed in Chapter~\ref{cha:tcq-thesis} attempts to address the first problem, while the IAT's developed in Chapter~\ref{devel-impl-meas} address the second. 
 The measure adapted in Chapter~\ref{cha:tcq-thesis} had six questions for each of the six different treatment modalities, which included conventional (Pills, Creams, Injections) and Alternative (Acupuncture, Homeopathy, Reiki) treatments. Three of the questions related to expectancy, while three related to credibility (factors found in the original development of the instrument). These 36 questions were reduced to 18 using factor analytic and IAT measures, to allow for easier administration (c.f. Section \ref{sec:reducing-size-tcq}).
 
 Additionally, this experiment also investigates the relationship between expectancies and optimism, given that optimism is often defined as ``generalised outcome expectancies'' there would seem to be a relationship, but whether both of these constructs capture different facets of the response or merely co-vary with one another is not clear, and this was investigated using regression and structural equation models. The relationship between these two variables is discussed further in the section on theoretical models in Chapter \ref{cha:methodology}. 
@@ -185,23 +185,26 @@ load("healthforthesislatest.rda")
 load("tcqthesislatest.rda")
 @ 
 
-\subsubsection{Recruitment for the Experimental Procedure}
-
+\subsubsection{Recruitment}
+\label{sec:recruitment}
 
 Recruitment for participants primarily took place via email. In total, six emails were sent to random sub-sets of the student mailing list from the period January 2nd until April 11th. 
-Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research. The experiment ran from January 17th until April 14th inclusive.
+Given that the experiment took place in the Applied Psychology department, somewhat off campus and that the experiment involved suffering painful stimuli, an inducement of a smartphone was offered to one participant who completed the procedure on the basis of a draw following the completion of the research. The experiment ran from January 17th until April 14th 2011 inclusive.
 
-\subsubsection{Measures used in the Experiment}
+\subsubsection{Measures}
 \label{sec:meas-used-exper}
 
-The following measures were used in this experiment. Firstly, age, gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as reported in Section~\ref{sec:iat-stimuli}, Chapter~\ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
+The following measures were used in this experiment. Firstly, age, gender and course of study were collected for each participant. The MAAS and LOTR were also administered to each participant, as was a shortened version of the treatment credibility questionnaire (described in Chapter \ref{cha:tcq-thesis}, Section \ref{sec:reducing-size-tcq}). Following the completion of the explicit measures, participants completed a Treatment Credibility IAT and an Optimism IAT. The stimuli used in each of the IAT's were as reported in Section~\ref{sec:iat-stimuli-2}, Chapter~\ref{cha:devel-impl-meas}, where the piloting of this instrument is described.
 
 
 %% Further details of the development and piloting of each IAT are in Chapter \ref{cha:devel-impl-meas}. 
 In addition, participants gave verbal reports of their pain levels to the experimenter at one minute intervals, and these were recorded (along with condition and exact time of application of bandage and when the squeezing stopped) on a sheet of paper, along with the participants identification number. 
 
+%% The method used for scoring of the IAT's was the D-algorithm introduced by Greenwald~\cite{Greenwald2003}. The algorithm takes the mean differences observed in Blocks 3 and 5, and standardises them by dividing by the pooled standard deviation across both of these blocks. This controls for inter-individual variability, and also reduces method variance caused by task-switching~\cite{Mierke2003}. 
 
-\subsubsection{Experimental Procedure}
+
+\subsubsection{Procedure}
+\label{sec:procedure}
 
 All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
 
@@ -479,7 +482,7 @@ Next, we examine the difference between the mean and median scores for the TCQ I
 There was little difference between the two measures of central tendency ($r=0.89$). 
 
 
-The next question is whether or not the IATs have been contaminated by method variance. This can be assessed by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was \Sepxr{round(with(Iatandexpmeasures,cor(TCQIAT.Median, OptIAT.Median)),3)}, thus showing that method variance does not appear to have contaminated the results. 
+The next question is whether or not the IATs have been contaminated by method variance. This can be assessed by examining the correlations between the Treatment Credibility and Optimism IAT. The correlation between the two mean scored IAT measures was ($r=0.003$), while the correlation between the two median scored IAT measures was $r=0.1$, thus showing that method variance does not appear to have contaminated the results. 
 
 
 
@@ -697,8 +700,15 @@ print(arrangeGrob(optiatgender,tcqiatgender))
 
 
 
-There were no significant differences ($t=-0.4973, p=0.6211$) between men and women in  the sample with regards to their scores on the Treatment Credibility Questionnaire. However, the variance was much higher for men, which was a pattern replicated in previous research into Treatment Credibility (using a self report instrument described in Chapter \ref{cha:tcq-thesis}).
-The same pattern was repeated for the Optimism IAT, in that there were no significant differences ($t=-0.8234, df=49.761, p=0.4142$) between males and females in this sample. 
+There were no significant differences ($t=-0.4973, p=0.6211$) between
+men and women in the sample with regards to their scores on the
+Treatment Credibility Questionnaire. However, the variance was much
+higher for men, which was a pattern replicated in previous research
+into Treatment Credibility (using a self report instrument described
+in Chapter \ref{cha:tcq-thesis}). The same pattern was repeated for
+the Optimism IAT, in that there were no significant differences
+($t=-0.8234, df=49.761, p=0.4142$) between males and females in this
+sample.
 
 <<ordtestiatprep, echo=FALSE, results=hide>>=
 part.opt <- unique(optiat[,"Participant"])
@@ -941,7 +951,7 @@ pairs.panels(Iatandexpmeasures[,14:25])
 \end{figure}
 
 
-It can be seen from Figure \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IAT's and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
+It can be seen from Figure \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IATs and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
 . Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion, and some theories were discussed in Chapter~\ref{cha:health-for-thesis}. 
 
 
@@ -1181,7 +1191,7 @@ print(placmod.xtab)
 
 
 
-\subsection{Analysis of Pain Ratings}
+
 
 <<painmetadata, echo=FALSE, results=hide>>=
 pain.metadata <- read.csv("PainScoresMetaData.csv")
@@ -1435,8 +1445,10 @@ gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
 @ 
 \begin{figure}
 <<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-gend.gsr.pl <- ggplot(na.omit(gsr.gend.m), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time")
-placresp.gsr.pl <- ggplot(gsr.placresp.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()
+gsr.gend.m2 <- gsr.gend.m[with(gsr.gend.m, index<=2000),]
+gend.gsr.pl <- ggplot(na.omit(gsr.gend.m2), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time")
+gsr.placresp.m2 <- gsr.placresp.m[with(gsr.placresp.m, index<=2000),]
+placresp.gsr.pl <- ggplot(gsr.placresp.m2, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()
 print(arrangeGrob(gend.gsr.pl, placresp.gsr.pl))
 @   
   \caption{GSR over Time by Response to Placebo}
@@ -1462,7 +1474,8 @@ gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
 @ 
 \begin{figure}
 <<gsrplotcond, echo=FALSE, fig=TRUE>>=
-print(ggplot(gsr.conditions.m, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
+gsr.conditions.m2 <- gsr.conditions.m[with(gsr.conditions.m, index<=2000),]
+print(ggplot(gsr.conditions.m2, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
 @   
   \caption{GSR by Condition over Time}
   \label{fig:gsrcondplot}
@@ -1472,7 +1485,8 @@ An examination the GSR levels by condition over time (Figure \ref{fig:gsrcondplo
 
 \begin{figure}
 <<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-ggplot(cond.m, aes(x=index, y=value, colour=variable))+geom_line()
+cond.m2 <- cond.m[with(cond.m, index<=2000),]
+print(ggplot(cond.m2, aes(x=index, y=value, colour=variable))+geom_line())
 @   
   \caption{Mean GSR Levels by Condition over Time}
   \label{fig:meangsr}
@@ -1490,7 +1504,7 @@ exp.sem <- Iatandexpmeasures.t[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIA
 
 @ 
 %% \begin{figure}
-<<gsrpainplt, echo=FALSE, eps=TRUE, png=TRUE, pdf=TRUE, jpg=TRUE, fig=TRUE>>=
+<<gsrpainplt, echo=FALSE, eps=TRUE, png=TRUE, pdf=TRUE, jpg=TRUE, eval=FALSE>>=
 print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 @ 
 %% \caption{GSR versus Pain Ratings over Time by Condition}
@@ -2210,11 +2224,11 @@ However, one difference here is that a model with implicit and explicit measures
 
 However, the best-fitting model used these as inputs to a generalised expectancy factor, which would suggest that the model of Kirsch remains valid. Additionally, the results here would seem to suggest that the variance captured by optimism is a subset of the variance explained by expectancies, at least in this experiment. Given the known situational impact of different constructs on placebo response, this is not surprising, but the relationships between expectancies and optimism had not been investigated in a placebo analgesia study before, so at least this finding has been replicated. 
 
-To recap the predictions from earlier, it appears that there is a relationship between placebo response and physiological parameters (see Section~\ref{phys-analys}), but the exact nature of that response, and its directionality remains to be determined. There was some weak evidence for a relationship between implicit and explicit measures and placebo, but this would require independent replication to be verified. Mindfulness was not related to the placebo response, but did moderate the relationship between explicit and implicit measures. 
+To recap the predictions from earlier, it appears that there is a relationship between placebo response and physiological parameters (see Section~\ref{sec:phys-analysis}), but the exact nature of that response, and its directionality remains to be determined. There was some weak evidence for a relationship between implicit and explicit measures and placebo, but this would require independent replication to be verified. Mindfulness was not related to the placebo response, but did moderate the relationship between explicit and implicit measures. 
 
 
 \subsection{Physiological Analyses}
-\label{sec:phys-analys}
+\label{sec:phys-analysis}
 
 This section was perhaps the most interesting, in that some observations were made that do not appear to have been reported frequently in the literature, with the exception of some older research of Kirsch~\cite{kirsch1988double}.
 
@@ -2266,7 +2280,7 @@ Next, the relationship between implicit and explicit expectancies was assessed. 
 
 %% The use of machine learning models to predict the placebo response threw up some interesting results. It appears from this sample that it is easier for a learning algorithm to predict the lack of placebo response relatively accurately, but predicting a positive response is much harder. This could have occurred in this sample either because either it represents a veridical fact regarding the response to placebo, or because there were more examples of negative placebo response in the sample, and thus with more data, the procedure predicted better. 
 
-Additionally, there was an interesting relationship noted between skin conductance and experimental condition, as well as Gender. While the groups were comparable at baseline, both the Deceptive and Open Placebo groups showed significant changes in GSR after administration of the treatment. Given that the treatment was the same in both cases, this would appear to suggest that skin conductance was affected by the suggestions given as part of the experiment. The fact that these changes were in opposite directions may indicate that either GSR was tracking pain responses, or the effect of certain and uncertain expectancies. This would seem to be a prime area for future research on the placebo. 
+Additionally, there was an interesting relationship noted between skin conductance and experimental condition, as well as gender. While the groups were comparable at baseline, both the Deceptive and Open Placebo groups showed significant changes in GSR after administration of the treatment. Given that the treatment was the same in both cases, this would appear to suggest that skin conductance was affected by the suggestions given as part of the experiment. The fact that these changes were in opposite directions may indicate that either GSR was tracking pain responses, or the effect of certain and uncertain expectancies. This would seem to be a prime area for future research on the placebo. 
 
 <<save, echo=FALSE, results=hide>>=
 save.image("experimentlatest.rda")
