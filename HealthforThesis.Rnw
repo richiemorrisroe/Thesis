@@ -56,11 +56,11 @@ Some authors claim that the search is fruitless \cite{Shapiro1997} while others 
 However, in recent years optimism~\cite{Geers2005,morton2009reproducibility} has been shown to be associated with the placebo response. More specifically, the Life Orientation Test, Revised (LOT-R) has been shown in a number of studies to be associated with the response to placebo. 
 %% Interestingly enough, the Morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism is discussed in more detail in Section \ref{sec:optimism} below. 
 
-Mindfulness is a construct that has both been associated with health~\cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures~\cite{Levesque2007}, and as such provided a construct which had been associated with the IAT in previous work (c.f. Chapter ~\ref{cha:literature-review}) and could plausibly be associated with health. Some more in-depth discussions of this potential relationship were outlined in Chapter \ref{cha:methodology}, in Section \ref{sec:embod-cogn-plac}. 
+Mindfulness is a construct that has both been associated with health~\cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures~\cite{Levesque2007}. As such, it is a construct which had been associated with the IAT in previous work (c.f. Chapter ~\ref{cha:literature-review}) and could plausibly be associated with health. Some more in-depth discussions of this potential relationship were outlined in Chapter~\ref{cha:methodology}, in Section~\ref{sec:embod-cogn-plac}. 
 
 Health (in the form of the RAND-MOS) was included in this piece of research both to replicate the optimism-health link and examine the relationship between  optimism and mindfulness. 
 
-Additionally, the relationship between these three variables (health, optimism and mindfulness) can give us some insight into health cognitions, which are linked to those cognitions around placebo. This follows as if the placebo effect is the result of expectancies, then there should be some shared variance between the response to placebo and other health-related cognitions. 
+Additionally, the relationship between these three variables (health, optimism and mindfulness) can provide some insight into health cognitions, which are theoretically linked to placebo-related cognitions. This follows as if the placebo effect is the result of expectancies, then there should be some shared variance between the response to placebo and other health-related cognitions. 
 
 The primary aim of this study was to investigate the relationships between optimism and mindfulness in the population under study, and to provide a basis for the building of psychometric models which could be used to predict the relationship of these variables to the placebo response in the experimental study. 
 
@@ -96,8 +96,7 @@ Hyland suggests that the optimism effects on placebo response are mediated throu
 The relationship between optimism and health is well known. 
 Optimism was recently reviewed in relation to its 
 effect on physical health and well-being~\cite{Carver2010}, 
-optimism has been used as a predictor for many years in the area of Psychoneuroimmunology (PNI)
-and appears to be usually associated with better health outcomes than
+optimism has been used as a predictor for many years in the area of Psychoneuroimmunology (PNI) and appears to be  associated with better health outcomes than
 is pessimism~\cite{Baker2007,Conway2008}. Optimism has also
 been associated with lower mortality risk in a large longitudinal
 cross-sectional study of individuals at risk for cardio-vascular disease
@@ -542,7 +541,7 @@ lotr.alpha <- alpha(lotritems)
 @ 
 
 
-Nex, the summary statistics for the second sample (N=1107) were examined and reported. 
+Next, the summary statistics for the second sample (N=1107) were examined and reported. 
 
 <<hom2demo, echo=FALSE, results=tex>>=
 physicalfunctioning <- with(hom2,  hom2[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom2))])
@@ -724,11 +723,7 @@ print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab
 The results of the two factor solution (not shown) were as follows:
 The first factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. We can best term this factor as General and Emotional Health.
 
-The second factor maps exactly to the Physical Functioning Scale, and so retains that name.
-
-
-
-The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
+The second factor maps exactly to the Physical Functioning Scale, and so retains that name. The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(rand.fact.2[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(rand.fact.2[["RMSEA"]][2],3 )} to \Sexpr{round(rand.fact.2[["RMSEA"]][3],3 )}.
 
 This factor solution does not appear to be useful, as it has extremely low fit indices, and the breakdown of the factors is rather strange. If the factors had broken down in terms of Physical and Mental Health, then this would have made more sense. The factor loadings were invariant under a number of rotations (varimax, oblimin and promax), so it appears to be a real (if less than interpretable) factor structure. 
@@ -773,13 +768,14 @@ print(xtable(rand.fact.4[["r.scores"]], label="tab:hom1rand4corr", caption="Fact
 
 
 
-\paragraph{RAND MOS 8 Factor Solution}
 
 <<rand8fact, echo=FALSE, results=tex>>=
 rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
 print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One"), scalebox=0.7)
 @
-Table \ref{tab:tcq1rand8fact} shows the loadings and has the named factors. 
+
+
+Table~\ref{tab:tcq1rand8fact} on page \pageref{tab:tcq1randfact8} shows the loadings and has the named factors for the eight factor solution. 
 
 PhysFun:  the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
@@ -813,7 +809,7 @@ This factor structure seems appropriate for the data, and matches the number of 
 print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate ($r=0.1-0.5$) and in line with expectations. The correlations are definitely too high to use an orthogonal rotation. 
+The factor correlations are moderate ($r=0.1-0.5$) and in line with expectations. 
 
 <<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
 scales.hom <- hom[,66:73]
@@ -1001,7 +997,7 @@ randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2)
 print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
 @
 
-As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data (Split A of the second Sample), similarly to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
+As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data (Split A of the second Sample), which is  similar to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
 
 
 
@@ -1041,13 +1037,13 @@ print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAtten
 @
 
 
-PA1: "Q8"  "Q10" "Q11" "Q12" "Q13" "Q14" "Q15"
+PA1: ``Q8''  ``Q10'' ``Q11'' ``Q12'' ``Q13'' ``Q14'' ``Q15''
 All of these questions relate to lack of awareness, and so this factor can best be termed this. 
 
-PA3: "Q4" "Q5" "Q6" "Q7" "Q8" "Q9"
+PA3: ``Q4'' ``Q5'' ``Q6'' ``Q7'' ``Q8'' ``Q9''
 These mostly relate to sensations of physical unawareness, and so this factor can best be termed physical unawareness. 
 
-PA2: "Q1"  "Q2"  "Q3"  "Q14". This factor can perhaps best be termed as lack of present attention.
+PA2: ``Q1''  ``Q2''  ``Q3''  ``Q14''. This factor can perhaps best be termed as lack of present attention.
 
 While the amount of variance explained increased with the number of factors, this model does not seem to be particularly useful, in that it does not shed new light on the construct. 
 
@@ -1253,17 +1249,17 @@ print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "Lack
 @
 This five factor solution for Split B (not shown) explained 54\% of the variance in the sample.
 
-PA1: "Q5",  "Q6",  "Q7",  "Q8",  "Q9",  "Q10".  This factor has come through in most of the previous solutions, and can again be termed distractability.
+PA1: ``Q5'',  ``Q6'',  ``Q7'',  ``Q8'',  ``Q9'',  ``Q10''.  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
-PA2: "Q1", "Q2", "Q3".  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
+PA2: ``Q1'', ``Q2'', ``Q3''.  Again, these items have clustered together previously, and this factor is again termed lack of present awareness.
 
-PA3: "Q4", "Q5".  This factor is again termed lack of somatic awareness.
+PA3: ``Q4'', ``Q5''.  This factor is again termed lack of somatic awareness.
 
-PA4: "Q13", "Q14".  This factor can best be termed as lack of attention.
+PA4: ``Q13'', ``Q14''.  This factor can best be termed as lack of attention.
 
-PA5: "Q10", "Q11", "Q12", "Q14", "Q15".  This factor again can be termed distractability.
+PA5: ``Q10'', ``Q11'', ``Q12'', ``Q14'', ``Q15''.  This factor again can be termed distractability.
 
-Although there is significanly more variance explained by this solution, again it does not lend any more conceptual clarity to the instrument, suggesting that it is not worth the extra parameters estimated. Note that Q1-3 clustered together in previous multi-factor solutions, so there may be a different construct underlying these questions, but this is not clearly replicable across the entire sample. 
+Although there is significantly more variance explained by this solution, again it does not lend any more conceptual clarity to the instrument, suggesting that it is not worth the extra parameters estimated. Note that Q1-3 clustered together in previous multi-factor solutions, so there may be a different construct underlying these questions, but this is not clearly replicable across the entire sample. 
 
 <<maas2cfact5, echo=FALSE, results=hide>>=
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
@@ -1752,7 +1748,7 @@ print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1l
 The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
 PA2: ``Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. Additionally, item 4 has a small cross-loading on the optimism factor, and the communalities are quite low, suggesting that 
+PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. Additionally, item 4 has a small cross-loading on the optimism factor, and the communalities are quite low, suggesting that this model is not particularly well-fitting for this sample. 
 
 
 %% \subsection{CFA for LOTR}
@@ -1801,7 +1797,7 @@ lotr2summ <- summary(lotr2fit)
 
 <<lotrcompare, echo=FALSE, results=tex>>=
 lotrcomp <- mxCompare(base=lotr1fit, comparison=lotr2fit)
-lotrcomp.xtab <- xtable(lotrcomp,label="tab:semlotrcomp", caption="Comparison of CFA for the LOT-R")
+lotrcomp.xtab <- xtable(lotrcomp,label="tab:semlotrcomp", caption="Comparison of CFA for the LOT-R Sample One Models on Sample One")
 print(lotrcomp.xtab)
 @
 
@@ -2011,7 +2007,7 @@ lotrcomp.xtab2c <- xtable(lotrcomp2c,label="tab:hom2clotrcomp", caption="Compari
 print(lotrcomp.xtab2c)
 @ 
 
-Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, while the two factor solution had a lower negative log likelihood, when controlling for parameters the one factor solution performed much better. 
+Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, the one factor solution performed better. 
 
 
 
@@ -3068,7 +3064,7 @@ Another fascinating finding in this research is the strong negative correlation
 between mindfulness and optimism.  This study appears to have been the first to assess
 these constructs using self-report measures, and this finding was not expected to occur.
 MBSR programs have been found to increase optimism in a number of studies~\cite{Carson2004},
-but our results seem to show that mindfulness and optimism may be inversely related - but see Discussion above. 
+but our results seem to show that mindfulness and optimism may be inversely related - but see discussion above for a counterpoint.
 
 
 There are a number of reasons why this could be so.  Optimism is defined as generalised positive outcome expectancies about the future,
