@@ -18,10 +18,10 @@ The use of repertory grids in this research was as a bridge between the qualitat
 Repertory grids were developed by George Kelly as an aid to therapy~\cite{kelly2003psychology} although they have been used in many diverse situations in the ensuing years. 
 Repertory grids were developed out of Kelly's theory of cognitive consistency, an active area of research which fell out of favour following the discovery of cognitive dissonance by Festinger in 1947~\cite{greenwald2002}.
 
-The premise of the technique is simple. Firstly, participants are supplied with a list of important people in their life, such as their mother, an older sibling and a teacher whom they liked or disliked. They write down the names they have chosen for each person, and then they compare the people in groups of 3. For each group (or sort), they are asked to describe how two of them are similar and also how one of them is different in a word or short phrase. These words or phrases can then be analysed both quantitively or qualitatively.
+The premise of the technique is simple. Firstly, participants are supplied with a list of important people in their life, such as their mother, an older sibling and a teacher whom they liked or disliked. They write down the names they have chosen for each person, and then they compare the people in groups of 3. For each group (or sort), they are asked to describe how two of them are similar and also how one of them is different in a word or short phrase. These words or phrases can then be analysed both quantitatively or qualitatively.
 
 
-The approach taken in this project was as follows. In one of the surveys carried out on the UCC population (TCQ version 1) participants were asked to rank the most important people in their life who were related to healthcare. 
+The approach taken in this project was as follows. In one of the surveys carried out on the UCC population (TCQ version 1) participants were asked to rank the most important people in their life who were related to health-care. 
 This data was then sorted and ranked, and a list of the most common people used was compiled into a health related repertory grid. 
 This was then administered to a small sample (N=17) to test the instrument. 
  The results of this testing are described in  Section~\ref{sec:development-iat}.
@@ -175,7 +175,7 @@ optiat.corr <- data.frame(Participant=optuniq$PP.No, Age=optuniq$Age, Gender=opt
 <<optiatcorrplot, echo=FALSE, fig=TRUE>>=
 print(ggplot(optiat.corr, aes(x=LOTR, y=OptIAT))+geom_point()+geom_smooth(method="lm"))
 @   
-  \caption{Scatterplot of Correlations between LOTR and Optimism IAT}
+  \caption{Scatter-plot of Correlations between LOTR and Optimism IAT}
   \label{fig:optiatcorrplot}
 \end{figure}
 
@@ -358,7 +358,7 @@ names(vas.c)[1] <- "PP.No"
 names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
 print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
 @  
-  \caption{Particpant pain responses over time}
+  \caption{Participant pain responses over time}
   \label{fig:pppainplot}
 \end{figure}
 

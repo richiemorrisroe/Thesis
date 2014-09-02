@@ -90,7 +90,7 @@ These problems (discussed at length in Chapter \ref{cha:literature-review}, Sect
 
 This research addresses these problems in the following manner. Firstly, the low test-retest reliability is an issue, and it is also possible that any effect would be contaminated by attitude-behaviour consistency. 
 
-However, the one counterpoint may be that IATs are more useful in predicting over short time scales, as could be argued from the findings that they predict spontaneous behaviour better than explicit measures \cite{Richetin2007,Steffens2006,Steffens2008}) 
+However, the one counterpoint may be that IATs' are more useful in predicting over short time scales, as could be argued from the findings that they predict spontaneous behaviour better than explicit measures \cite{Richetin2007,Steffens2006,Steffens2008}) 
 
 The method variance problem was moderated by the use of the D measure from Greenwald \cite{Greenwald2003}, as demonstrated by Mierke \cite{Klauer2005}. The impact of these potential confounders was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
 
@@ -210,7 +210,7 @@ All participants were met at the entrance to the building by the primary researc
 
 Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. This method is known as the sub-maximal torniquet method   One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 0 to 10.
 
-If the participant was in the Deceptive or Open Placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. EDA recordings were taken one thousand times per second second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of moisturiser in a pharmacuetical container, and was unlabelled.
+If the participant was in the Deceptive or Open Placebo group, then when they rated their pain as 7 or higher, the placebo cream was applied. The experiment continued until the participant either decided to withdraw, their pain rating reached 10 or 45 minutes elapsed  from when the bandage was applied. EDA recordings were taken one thousand times per second second using the Biopac equipment and VAS ratings were recorded on paper by the experimenter. The placebo cream consisted of moisturiser in a pharmaceutical container, and was unlabelled.
 
 Participants in the treatment group were told that \textit{the cream was a potent painkiller, recently approved and proven to reduce pain, which would take effect almost immediately}. Participants in the placebo group were told that \textit{they were receiving a placebo and that placebos have been clinically proven to reduce pain, and that it would take effect almost immediately}.
 
@@ -273,7 +273,7 @@ Finally, the relationships between physiological responses and the psychological
 \subsubsection{Structural Equation Models}
 \label{sec:struct-equat-models}
 
-Finally, the models described in Chapter \ref{cha:methodology} and in Section \ref{sec:introduction-1} were fit to the data. These models allowed for the principled comparision of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
+Finally, the models described in Chapter \ref{cha:methodology} and in Section \ref{sec:introduction-1} were fit to the data. These models allowed for the principled comparison of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
 
 
 \section{Results}
@@ -568,7 +568,7 @@ print(arrangeGrob(stimreal3.pl, stimreal5.pl))
 %% \end{figure}
 
 The same pattern emerged for the optimism IAT in that the Block 5 scores were much more variable and overall participants responded slower to this block, suggesting that this did occur as a result of fatigue. 
-The pattern of Block 5 responses tending to be slower was repeated in the mean response latencies for the positive and negative words in the Optimism IAT.  Note that disimproving appears to be the word with the highest mean latency, which is not surprising given its relatively unfamiliarity (compared to the other words, at least). 
+The pattern of Block 5 responses tending to be slower was repeated in the mean response latencies for the positive and negative words in the Optimism IAT.  Note that Disimproving appears to be the word with the highest mean latency, which is not surprising given its relatively unfamiliarity (compared to the other words, at least). 
 
 
 
@@ -814,7 +814,7 @@ print(arrangeGrob(surv.exp.opt.pl,surv.exp.mind.pl))
 
 From Figure~\ref{fig:compmind} (top panel) it  can be seen that the two distributions are extremely different, with a much higher average optimism score in the experimental sample. To some extent, this is not unexpected given that the study was described as an investigation of painkilling drugs and there was an opportunity to win a smart-phone, so perhaps students with higher levels of optimism were more likely to agree to participate. 
 
-As can be seen from Figure~\ref{fig:compmind} (bottom panel), the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitiation(s) to take part in the study, while an online study might not have suffered from the same problem. 
+As can be seen from Figure~\ref{fig:compmind} (bottom panel), the pattern was quite different for mindfulness levels (as measured by the MAAS) as the levels of mindfulness were less long-tailed and more concentrated around a central peak in the survey sample. Again, this may be due to the association of mindfulness with introversion, as introverts may have been less likely to respond to the email invitation(s) to take part in the study, while an online study might not have suffered from the same problem. 
 
 
 Finally, the treatment credibility questionnaire scores were examined to assess the differences between the survey and experimental samples. 
@@ -946,7 +946,7 @@ pairs.panels(Iatandexpmeasures[,14:25])
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
 @   
-  \caption{Scatterplot and Correlelagram for Implicit and Explicit Measures}
+  \caption{Scatter-plot and Correlelagram for Implicit and Explicit Measures}
   \label{fig:pairsimpexp}
 \end{figure}
 
@@ -1037,7 +1037,7 @@ placres.melt <- melt(placresyesnopain, id="Time")
 placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")
 print(placresplot)
 @   
-  \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a loess smoother, the jagged line represents the actual pain levels}
+  \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a Loess smoother, the jagged line represents the actual pain levels}
   \label{fig:placyesno}
 \end{figure}
 

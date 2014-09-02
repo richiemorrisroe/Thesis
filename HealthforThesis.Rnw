@@ -99,7 +99,7 @@ effect on physical health and well-being~\cite{Carver2010},
 optimism has been used as a predictor for many years in the area of Psychoneuroimmunology (PNI) and appears to be  associated with better health outcomes than
 is pessimism~\cite{Baker2007,Conway2008}. Optimism has also
 been associated with lower mortality risk in a large longitudinal
-cross-sectional study of individuals at risk for cardio-vascular disease
+cross-sectional study of individuals at risk for cardiovascular disease
 (the Women's Health Initiative)~\cite{Tindle2009}. 
 
 A meta-analysis
@@ -174,7 +174,7 @@ So while various rigorous reviews of clinical trials have found MBSR programmes 
  reducing stress~\cite{Chiesa2009,Praissman2008} , it is still unclear whether individuals 
 with higher levels of mindfulness are also psychologically healthier.
  MBSR programs have also been associated with higher levels of optimism
-~\cite{Carson2004}, but mindfulness and optmism have not tended to be researched together. 
+~\cite{Carson2004}, but mindfulness and optimism have not tended to be researched together. 
  Only one study where mindfulness levels were correlated positively 
 with self reported health~\cite{hansen2009measuring} was identified as part of this research. Hansen, using a cross-sectional design, 
 found that MAAS scores correlated with a five point one item measure of health,   
@@ -1412,7 +1412,7 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 1 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
+The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 1 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
 
 There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
 
@@ -1569,7 +1569,7 @@ It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems wit
 print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
 @ 
 
-The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual tradeoff between discrimination and ability estimate parameters. 
+The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual trade off between discrimination and ability estimate parameters. 
 
 Next, we examine the performance of these models on unseen data.
 
@@ -1627,7 +1627,7 @@ print(xtable(maas2c.grm.test.all, caption="Performance of MAAS One and Two Param
 
 As can be seen from Table \ref{tab:maas2cgrmtest}, the one parameter model provided a better fit to the unseen data (though neither model was particularly good). To finalise the examination of the MAAS, in all cases a one factor FA model and one parameter GRM provided the best fit to the data. Additionally, Q6 was removed by all of the IRT models, suggesting that the responses to this question were not consistent with the responses to all of the other questions, and which questions this item's inclusion in the instrument (at least for this particular population). 
 
-\subsection{Backtesting}
+\subsection{Back testing}
 \label{sec:maas-bt}
 
 Finally, a back testing procedure was applied, where the best fitting models from the second sample were refit on data from the first sample. Both splits showed that a one factor solution and a one parameter Graded Response Model provided the best performance on unseen data. 
@@ -1691,7 +1691,7 @@ As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model wi
 
 
 
-The next step in the backtesting procedure was to test the IRT models on Sample One. 
+The next step in the back testing procedure was to test the IRT models on Sample One. 
 
 
 <<maasbacktestirt, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2028,7 +2028,7 @@ lotr.scales <- aisp(na.omit(lotritems))
 print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
 @
 
-All of the items meet the assumptions of a unidimensional scale.  Next, the item orderings were examined.
+All of the items meet the assumptions of a uni-dimensional scale.  Next, the item orderings were examined.
 
 <<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.iio <- check.iio(na.omit(lotritems))
@@ -2249,7 +2249,7 @@ participants.
 print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
 @ 
 
-When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for seperating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
+When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for separating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
 
 Finally, the performance of these two models is tested against unseen data. 
 
@@ -2268,12 +2268,12 @@ print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and 
 
 As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
 
-\subsection{Backtesting - LOTR}
+\subsection{Back testing - LOTR}
 \label{sec:backtesting-lotr}
 
 
 
-Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the backtesting process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
+Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the back testing process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
 <<lotrbacktestsem1full, echo=FALSE, results=hide, cache=TRUE>>=
 optimism <- paste(lotr, c(1, 3, 4, 7, 9, 10), sep="")
@@ -2358,7 +2358,7 @@ correlated with health (using Spearman's correlation coefficient).
 In fact, optimism correlated negatively with all of the other totals, suggesting that something unusual happened in the sample. This finding is discussed further throughout this chapter, Chapter~\ref{cha:primary-research} and Chapter~\ref{cha:general-discussion}. 
 
 
-Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of abberant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
+Participants of both genders showed the relationship in the same direction, with participants reporting greater health reporting less optimism. The result is a general trend across all subgroups divided by college, suggesting that it is the result of a general pattern across the sample rather than being driven by some small number of aberrant observations. Indeed, when participants were stratified by College of study, the same trend was apparent suggesting that the relationship was consistent across all sub-groups. 
 
 
 
@@ -3004,7 +3004,7 @@ However, there have been some findings where higher optimism
 has not has been associated with health outcomes.  There are two major
 explanations for the curious and unexpected phenomenon,given the links
 established by a recent meta-analysis~\cite{rasmussen2009optimism}.
-The first centers on the dimensionality of the optimism construct.
+The first centres on the dimensionality of the optimism construct.
 Many believe that these results are caused by optimism self report
 measures being reflections of two interlinked constructs, optimism
 and pessimism~\cite{Herzberg2006} as established in a factor analytic
@@ -3068,9 +3068,9 @@ but our results seem to show that mindfulness and optimism may be inversely rela
 
 
 There are a number of reasons why this could be so.  Optimism is defined as generalised positive outcome expectancies about the future,
-while mindfulness is defined as non-judgmental awareness of the content of thoughts.
+while mindfulness is defined as non-judgemental awareness of the content of thoughts.
 It seems plausible that increased mindfulness could lead persons to become less optimistic,
- as their newfound awareness of their own thought patterns and behaviours makes them aware
+ as their new-found awareness of their own thought patterns and behaviours makes them aware
 that events have not always worked out well.  This increased awareness could temper future
 assessments of the future, and decrease optimism as measured by the Life Orientation Test Revised. However, work in the experimental sample casts new light on this theory, and is discussed further in Chapter \ref{cha:primary-research}. 
 
@@ -3081,7 +3081,7 @@ assessments of the future, and decrease optimism as measured by the Life Orienta
 
 This study also confirms the proposed one factor structure for the MAAS, in line with previous research.
 This sample also appears to show that the LOT-R can be modelled without loss of information with
-just one factor.  A   replicable and parsimonous 8 factor structure for the RAND MOS was demonstrated, 
+just one factor.  A   replicable and parsimonious 8 factor structure for the RAND MOS was demonstrated, 
 and our results cast further doubt on the notion that these factors are uncorrelated.
 
 It is worth noting that in all cases, parallel analysis did not provide a good measure of
