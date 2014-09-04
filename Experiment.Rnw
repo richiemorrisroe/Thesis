@@ -112,7 +112,7 @@ However, this study did not include a deceptive placebo condition, and so is not
 
 A number of issues are apparent in the current research around treatment-related expectancies. The first issue is that expectancies are typically measured with a simple one question scale. One of the aims of this thesis was to apply psychometric methods to the development of a more sophisticated measure of treatment credibility and expectancies (see Chapter \ref{cha:tcq-thesis}). The other problem is that expectancies are assumed to be conscious, even though they appear to have far more in common with unconscious responses than they do with controlled processes. 
 
-The measure developed in Chapter~\ref{cha:tcq-thesis} attempts to address the first problem, while the IAT's developed in Chapter~\ref{devel-impl-meas} address the second. 
+The measure developed in Chapter~\ref{cha:tcq-thesis} attempts to address the first problem, while the IAT's developed in Chapter~\ref{cha:devel-impl-meas} address the second. 
 The measure adapted in Chapter~\ref{cha:tcq-thesis} had six questions for each of the six different treatment modalities, which included conventional (Pills, Creams, Injections) and Alternative (Acupuncture, Homeopathy, Reiki) treatments. Three of the questions related to expectancy, while three related to credibility (factors found in the original development of the instrument). These 36 questions were reduced to 18 using factor analytic and IAT measures, to allow for easier administration (c.f. Section \ref{sec:reducing-size-tcq}).
 
 Additionally, this experiment also investigates the relationship between expectancies and optimism, given that optimism is often defined as ``generalised outcome expectancies'' there would seem to be a relationship, but whether both of these constructs capture different facets of the response or merely co-vary with one another is not clear, and this was investigated using regression and structural equation models. The relationship between these two variables is discussed further in the section on theoretical models in Chapter \ref{cha:methodology}. 
@@ -428,7 +428,7 @@ As can be seen from Table \ref{tab:tcqiatcheck} and Table \ref{tab:optiatcheck} 
 The results of a chi-square test showed that the gender of participants in each condition were equivalent, (p=\Sexpr{round (chisq.gend[["p.value"]], 3)}).
 In addition, the priming manipulation was not significantly different across groups.
 
-However, there was a difference in the mean (and median) GSR scores at baseline. Baseline measurements were taken for the first one hundred seconds of the experiment, and can be seen in Table \ref{tab:gsrstartcond} broken down by condition, though from an examination of the standard deviations, these differences do not appear to be significant.  The reasons for this difference are unclear, given that no participant was informed of their condition allocation until after the bandage had been applied.  
+However, there was a difference in the mean (and median) GSR scores at baseline. Baseline measurements were taken for the first one hundred seconds of the experiment, and can be seen in Table \ref{tab:gsrstartcond} broken down by condition, though from an examination of the standard deviations, these differences do not appear to be significant.  The reasons for this difference are unclear, given that no participant was informed of their condition allocation until after their self-reported pain levels reached seven.  
 
 <<gsrimport, echo=FALSE, results=hide>>=
 gsr <- read.csv("GSRdataDownSample.csv")
@@ -568,7 +568,7 @@ print(arrangeGrob(stimreal3.pl, stimreal5.pl))
 %% \end{figure}
 
 The same pattern emerged for the optimism IAT in that the Block 5 scores were much more variable and overall participants responded slower to this block, suggesting that this did occur as a result of fatigue. 
-The pattern of Block 5 responses tending to be slower was repeated in the mean response latencies for the positive and negative words in the Optimism IAT.  Note that Disimproving appears to be the word with the highest mean latency, which is not surprising given its relatively unfamiliarity (compared to the other words, at least). 
+The pattern of Block 5 responses tending to be slower was repeated in the mean response latencies for the positive and negative words in the Optimism IAT.  Note that Disimproving appears to be the word with the highest mean latency, which is not surprising given its relative unfamiliarity (compared to the other words, at least). 
 
 
 
@@ -641,7 +641,7 @@ Table \ref{tab:optcormat} shows that the correlations are a little higher than f
 
 <<cormatrixtcqiat, echo=FALSE, results=tex>>=
 opt.cormat <- corr.test(opt.iat.c[,3:length(tcq.iat.c)], method="kendall")[["r"]]
-print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls tau. All correlations are significant at the p<  0.001 level"))
+print(xtable(opt.cormat, label="tab:optcormat", caption="Correlations between the blocks of the Optimism IAT (Kendalls tau). All correlations are significant at the p<  0.001 level"))
 @ 
 
 %% The next question with regard to the IAT's is whether or not the non-critical blocks (that is, Blocks 1, 2 and 4) will be correlated. Given that these were administered in counterbalanced order and there was a small gap between them one would expect there to be much lower correlations between these blocks of the IAT's. These correlations (if present) should provide an index of general processing speed, and may be useful as predictor variables for some of the other measures. 
@@ -1048,7 +1048,7 @@ A number of findings are apparent from the plot in Figure \ref{fig:placyesno} on
 \label{sec:logist-regr-plac}
 
 
-In order to examine whether or not the IAT and or explicit measures scores were usefully predictive of placebo response, a logistic regression model was used. The intention was to use a train and test set to ensure that valid inferences could be made after selection of the items, but unlike in previous chapters, this work used a 60\% train and 40\% test set, to allow complicated models to be tested. 
+In order to examine whether or not the IAT and or explicit measures scores were usefully predictive of placebo response, a logistic regression model was used. The intention was to use a train and test set to ensure that valid inferences could be made after selection of the items, but unlike in previous chapters, this work used a 60\% train and 40\% test set, to allow more complex models to be tested. 
 
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
@@ -1089,7 +1089,7 @@ print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coeffi
 
 @
 
-Table \ref{tab:placmodsteptest} shows the results of the stepwise selected model on the test data. It can be seen that none of the variables are significant, which is not surprising given the sample size. The odds ratios are a little more infomative. These are shown in  Table~\ref{tab:placmodstepodds}. As can be seen, there were no significant differences from zero in this sample, suggesting that if there is an effect here, the sample is not large enough to uncover it, and as such the effect must be a small one (as this experiment was powered to uncover only medium or large effects). 
+Table \ref{tab:placmodsteptest} shows the results of the stepwise selected model on the test data. It can be seen that none of the variables are significant, which is not surprising given the sample size. The odds ratios are a little more informative. These are shown in  Table~\ref{tab:placmodstepodds}. As can be seen, there were no significant differences from zero in this sample, suggesting that if there is an effect here, the sample is not large enough to uncover it, and as such the effect must be a small one (as this experiment was powered to uncover only medium or large effects). 
 
 
 
@@ -1257,7 +1257,7 @@ print(tspainplot)
 
 
 
-As can be seen from Figure \ref{fig:tsmeanpainplot}, the Deceptive Placebo group appeared to report lower pain ratings than the Open Placebo group, but from a cursory investigation of the plot, did not appear to be significantly different to the No Treatment group.  The curves shown in the figure used a locally weighted smoother (loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
+As can be seen from Figure \ref{fig:tsmeanpainplot}, the Deceptive Placebo group appeared to report lower pain ratings than the Open Placebo group, but from a cursory investigation of the plot, did not appear to be significantly different to the No Treatment group.  The curves shown in the figure used a locally weighted smoother (Loess, span=0.2) to create the lines, given the substantial non linearity of the results. However, this plot does show that there was a significant difference between the placebo group and the two other conditions. 
 
 \begin{figure}
 <<medtspainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
@@ -1271,7 +1271,7 @@ print(medtspainplot)
 
 
 As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show a somewhat different pattern, in that the drop in the pain ratings for the Deceptive Condition is much less apparent, suggesting that the majority of the decrease in pain ratings was driven by a small number of extreme ratings in this group.
-Again, a locally weighted smoother (loess, span=0.5) was used to fit the curves. 
+Again, a locally weighted smoother (Loess, span=0.5) was used to fit the curves. 
 
 
 %% \begin{figure}
@@ -1513,7 +1513,7 @@ print(arrangeGrob(gsr.decept.pl, gsr.open.pl, gsr.notreat.pl))
 
 
 %% There was a  sizeable difference by condition when the cross-correlations between GSR ratings and pain ratings were examined (in Figure \ref{fig:gsrpainplot}).
-For the Deceptive Placebo Condition, the mean correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
+For the Deceptive Placebo Condition, the mean cross-correlation was 0.63, for the Open Placebo condition it was -0.53, and for the No Treatment Condition it was -0.22. As can be seen the magnitudes for the two active conditions were similar, though the directions were reversed, while for the no treatment group, the correlations were much smaller, suggesting that there was less relationship between the physiological measures and the pain ratings in this condition. This subject is interesting, and is explored more below and in the Discussion. 
 
 <<gsrmodel, echo=FALSE, results=tex>>=
 
@@ -1984,9 +1984,9 @@ rownames(expimpall) <- c("One Factor", "Moderated")
 print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
 @ 
 
-The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on seperate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
+The next step in the use of SEM models was to examine whether a two factor or one factor model best fitted the relationship between implicit and explicit models. Comparing a model where both implicit and explicit measures loaded on one factor to a model in which they loaded on separate factors showed that the two factor solution provided a better fit to the data. Given the lack of data for a test sample in this portion of research, these results should be regarded as provisional until replicated. 
 
-\subsection{Theoretical Models of the Relationship between Placebo Response and Implicit and Explicit Measures}
+\subsection{Theoretical Models}
 \label{sec:theor-models-relat}
 
 
@@ -2201,7 +2201,7 @@ From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would 
 \label{sec:relat-betw-impl}
 
 
-Some evidence did suggest that the IAT measures were related to placebo response. The step-wise selected model was significant on the training data, however this was not replicated on the test data. Its worth noting that the z-values were relatively large here, however, and the lack of significance may be an artifact of sample size. It has been established that given this study, a much larger (N=150 in each group) would be needed to have 80\% power to detect a difference of this size. 
+Some evidence did suggest that the IAT measures were related to placebo response. The step-wise selected model was significant on the training data, however this was not replicated on the test data. Its worth noting that the z-values were relatively large here, however, and the lack of significance may be an artefact of sample size. It has been established that given this study, a much larger (N=150 in each group) would be needed to have 80\% power to detect a difference of this size. 
 
 The interaction between the LOT-R and the TCQ IAT is of interest, but given the relatively small sample size here, this could be mere statistical variability. 
 
@@ -2236,7 +2236,7 @@ Firstly, the GSR responses appeared to vary systematically as a result of Condit
 
 Given that the only difference in the experimental conditions was the suggestions, this would seem to suggest that the suggestion can affect the physiological responses of the participants. More interesting was that the two suggestions appeared to have directionally different influences, in that GSR appeared to go down in the Open Placebo condition, while it increased in the Deceptive Placebo condition. However, this finding must be qualified by the finding that GSR levels were different between the groups at baseline and so it is possible that the results here are affected by participant variability. 
 
-Finally, it appeared that participants who responded to placebo had a qualitively different GSR responses to those who did not. Again, this is something which has not been reported in the literature before, and as such deserves further investigation. 
+Finally, it appeared that participants who responded to placebo had a qualitatively different GSR responses to those who did not. Again, this is something which has not been reported in the literature before, and as such deserves further investigation. 
 
 Linking this back to the theoretical perspective advanced in Chapter \ref{cha:methodology}, it would seem to support part of the theory, in that the physiological responses differed across conditions. However, the lack of a lagged effect would suggest that either there is no feedback loop between physiological sensations or expectancies, or that the data collected in this experiment was not precise enough to estimate this correctly. 
 
