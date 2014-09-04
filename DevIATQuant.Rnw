@@ -75,7 +75,7 @@ print(freq.pl)
 
 <<freqtab, echo=FALSE, results=tex>>=
 names(qual.tab.sort)[1] <- "Stimulus"
-print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"))
+print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"), row.names=FALSE)
 @ 
 
 As can be seen from Figure \ref{fig:freplot}, and Table \ref{tab:freqrep} the most popular exemplar for health was (unsurprisingly) doctor, followed by nurse, pharmacist and dentist. Additionally, a rep grid requires adjectives describing the exemplars, and these were taken from the standard repertory grid developed by Kelly.
@@ -408,7 +408,7 @@ VASdata.ts<-as.ts(VASdata) #create time series object
 plot(BPdata.ts)
 @
 \begin{figure}
-<<gsrplot, echo=FALSE, results=hide>>=
+<<gsrplot, echo=FALSE, fig=TRUE>>=
 plot(GSRdata.ts)
 @  
   \caption{GSR Data by Participant Across Time}

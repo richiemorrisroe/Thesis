@@ -106,7 +106,7 @@ The sample size collected for Study Two was 1329, however, only 566 completed al
 \subsection{Measures}
 \label{sec:measures-1}
 
-The Treatment Credibility Questionnaire was adapted from Devilly and Borkovec's CEQ, as described above.This measure has six questions. The scale was developed to assess expectancies around psychological therapies. In the original form, the measure has four questions (Set I) and another set of two questions (Set II) \cite{Devilly2000}. Questions 4 and 6 were scored on an 11 point scale, while the other questions were scored on a nine point scale.    A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring and standardise it. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X;where X is one of Pills, Creams, Injections or Acupuncture in Study One, or Pills, Creams, Injections, Acupuncture, Homeopathy and Reiki in Study Two.  
+The Treatment Credibility Questionnaire was adapted from Devilly and Borkovec's CEQ, as described above.This measure has six questions. The scale was developed to assess expectancies around psychological therapies. In the original form, the measure has four questions (Set I) and another set of two questions (Set II) \cite{Devilly2000}. Questions 4 and 6 were scored on an 11 point scale, while the other questions were scored on a nine point scale.    A number of changes were made to this instrument for use in this research. Firstly, the scale was changed to a 1-5 scale, to simplify the scoring and standardise it. Secondly, the six questions in each condition were prefaced by a statement that read: You have been suffering pain for a number of days. You go to the doctor, and he/she suggests you try X; where X is one of Pills, Creams, Injections or Acupuncture in Study One, or Pills, Creams, Injections, Acupuncture, Homeopathy and Reiki in Study Two.  
 
 The questions were as follows:
 
@@ -1094,7 +1094,7 @@ bamnotD <- tcq2notd[,53:70]
 
 Splits B,C and D were used for this analysis, given the use of Split A as a testing set for the Sample One data (in Section \ref{sec:conf-analys}). 
 
-Parallel analysis and the scree plot suggest that five factors seems most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, the five,  six and seven factor solutions will be examined for interpretability and then subjected to CFA on the other splits of the data. This procedure was repeated for each of the other splits, and the coefficients of each of the models on each split were averaged and are reported below. 
+Parallel analysis and the scree plot suggest that five factors seemed most optimal for this instrument. However, the MAP criterion disagrees, suggesting that seven factors might be more appropriate. To determine which of these criteria is correct, the five,  six and seven factor solutions were examined for interpretability and then subjected to CFA on the other splits of the data. This procedure was repeated for each of the other splits, and the coefficients of each of the models on each split were averaged and are reported below. 
 
 
 
@@ -2357,7 +2357,7 @@ print(xtable(as.matrix(acu2.ridge), label="tab:tcq2aacuridge", caption="Coeffici
 
 %% Table \ref{tab:tcq2aacuridge} shows the estimated coefficients for the holdout sample. It can be seen that the major loadings are quite similar to those from the lasso fit, and no coefficients have changed sign. 
 
-Next, the same procedure was applied to the Homeopathy credibility totals. 
+Following this, the same procedure was applied to the Homeopathy credibility totals. 
 
 <<splitdata, echo=FALSE, results=hide>>=
 tcq2.full <- tcq2[complete.cases(tcq2),]
@@ -2405,7 +2405,7 @@ print(xtable(as.matrix(hom2.ridge), label="tab:tcq2ahomridge", caption="Coeffici
 
 %% Table \ref{tab:tcq2ahomridge} shows a similar pattern to the lasso fit described earlier. 
 
-Next, the selection and testing procedure was applied to the Reiki totals. 
+ The selection and testing procedure was then applied to the Reiki totals. 
 
 
 <<splitdata, echo=FALSE, results=hide>>=
