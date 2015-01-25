@@ -2369,19 +2369,20 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 
 
 
-\section{Inferential Statistics}
+\section{Health, Optimism and Mindfulness Analysis}
 \label{sec:infer-stat}
 
 Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
-
+\newpage
 
 <<scalecorr, echo=FALSE, results=tex>>=
 scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", environment="longtable",  caption="Spearman Correlations between Scale Totals across both Samples" ), scalebox=0.5)
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor", environment="longtable",  caption="Spearman Correlations between Scale Totals across both Samples" ),)
 @ 
 
+\newpage
 
 
 As can be seen from Table~\ref{tab:hom2scalecor}, the optimism hypothesis
