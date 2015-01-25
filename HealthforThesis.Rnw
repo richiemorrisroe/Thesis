@@ -1390,7 +1390,7 @@ maas5summ2c <- summary(maas5fit2c)
 @
 
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
-maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c( maas5fit2b))
+maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas5fit2b))
 print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split B"), scalebox=0.9)
 @
 
@@ -1398,8 +1398,8 @@ As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution ag
 
 
 <<maas2csemcompare, echo=FALSE, results=tex>>=
-maas2c.semcomp <- mxCompare(base=maas1fit2c, comparison=c( maas5fit2c))
-print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of Factor Structures for MAAS 2C Solutions, Tested on Split B"), scalebox=0.9)
+maas2c.semcomp <- mxCompare(base=maas1fit2c, comparison=c(maas5fit2c))
+print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of Factor Structures for MAAS 2C Solutions, Tested on Split C"), scalebox=0.9)
 @
 
 As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was again superior to the five factor model in Split C. 
@@ -1483,10 +1483,12 @@ print(maasp)
 
 
 <<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
-print(xtable(coef(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
+maas.grm.1pl.coef <- coef(maas.grm.1pl)
+
+print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
 @ 
 
-Table \ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
+Table~\ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
 
 Next, a two parameter Graded Response Model was examined for the same scale. 
 
@@ -1500,7 +1502,7 @@ print(maas2plp)
 %% \end{figure}
 
 <<maasgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+print(xtable(coefirt(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
 @ 
 
 
@@ -1567,14 +1569,14 @@ maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
 
 
 <<maas2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
+print(xtable(coefirt(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
 @ 
 
 
 It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
 
 <<maas2bgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
+print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
 @ 
 
 The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual trade off between discrimination and ability estimate parameters. 
@@ -1604,7 +1606,7 @@ maas2c.grm.2pl <- grm(maas2c.s, constrained=FALSE)
 @ 
 
 <<maas2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"))
+print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"))
 @ 
 
 
@@ -1613,7 +1615,7 @@ As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appe
 Next, a two parameter model is fit to this data. 
 
 <<maas2cgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"))
+print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"))
 @ 
 
 The two parameter model (not shown), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
@@ -1721,6 +1723,15 @@ It can be seen that the model developed from Split C (without items 5,6 and 15) 
 \section{Life Orientation Test, Revised}
 \label{sec:life-orient-test}
 
+The next step in the analysis was to investigate the structure of the LOT-R with respect to factor analysis and IRT methods. 
+
+<<lotritems, echo=FALSE, results=tex>>=
+lotrquestions <- read.csv("lotritems.csv")
+print(xtable(lotrquestions, label="tab:lotritems", caption="Life Orientation Test, Revised Item Content"))
+@ 
+
+Table~\ref{tab:lotritems} shows the content of the items.
+
 \subsection{Factor Analyses, Sample One}
 \label{sec:fact-analys-sample-1}
 
@@ -1734,7 +1745,9 @@ Parallel Analysis indicated that two factors should be extracted, while the MAP 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
 lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
-print(FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One"))
+lotr1.xtab <- FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One")
+rownames(lotr1.xtab) <- lotritems.paste
+print(lotr1.xtab)
 @
 
 Table~\ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. As can be seen below, the two factor solution increases the communalities, but at the cost of potentially unwarranted complexity. 
@@ -1751,12 +1764,14 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 
 <<lotr3fact, echo=FALSE, results=tex>>=
 lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
-print(FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One"))
+lotr2.xtab <- FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One")
+rownames(lotr2.xtab) <- lotritems.paste
+print(lotr2.xtab)
 @
-The two factor solution (Table \ref{tab:tcq1lotr2fact}) broke down as follows:
+The two factor solution (Table~\ref{tab:tcq1lotr2fact}) broke down as follows:
 PA2: ``Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
 
-PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. Additionally, item 4 has a small cross-loading on the optimism factor, and the communalities are quite low, suggesting that this model is not particularly well-fitting for this sample. 
+PA1: ``Q3'', ``Q7'', ``Q9'', ``Q10'' This factor consisted of the pessimism items, and so can best be termed Pessimism. Note that Item 10 has extremely poor loadings on both factors, which is surprising given that it can often be taken as an indicator for the entire construct. Additionally, Q7 and Q10 have a small cross-loading on the optimism factor, and the communalities are quite low, suggesting that this model is not particularly well-fitting for this sample. 
 
 
 %% \subsection{CFA for LOTR}
@@ -2128,7 +2143,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
+print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
@@ -2190,13 +2205,13 @@ lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
 
 
 <<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
+print(xtable(coefirt(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
 @ 
 
 Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
 
 <<lotr2bgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
+print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
 @ 
 
 
@@ -2240,7 +2255,7 @@ lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
 
 <<lotr2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coef(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
+print(xtable(coefirt(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
 @ 
 
 Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters
@@ -2254,7 +2269,7 @@ participants.
 
 
 <<lotr2cgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coef(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
+print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
 @ 
 
 When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for separating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
