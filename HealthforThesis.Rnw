@@ -1012,17 +1012,20 @@ As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the
 
 
 
-For the MAAS, parallel analysis, the MAP, VSS and Kaisers rule methods suggested a one factor solution, while other methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
+For the MAAS, parallel analysis, the MAP, VSS and Kaisers rule methods suggested a one factor solution, while the acceleration factor and optimal coordinates index methods suggested a three factor solution. Therefore, one and three factor solutions were extracted and the results interpreted, as shown below.
 
 %% \subsection{MAAS One Factor Solution}
 %% \label{sec:maas-one-factor}
 
 <<maas1fact, echo=FALSE, results=tex>>=
 maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
-print(FactorXtab(maas.fact.1, names=c("Mindfulness"),label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One"))
+maas.questions <- paste(maas, 1:15, sep="")
+maas1.xtab <- FactorXtab(maas.fact.1, names=c("Mindfulness"),label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One")
+rownames(maas1.xtab) <- maas.questions
+print(maas1.xtab)
 @
 
-The results of the one factor solution for the MAAS are shown in Table \ref{tab:hom1maas1fact}. 
+The results of the one factor solution for the MAAS are shown in Table~\ref{tab:hom1maas1fact}. 
 
 The non-normed fit index was equal to \Sexpr{round(maas.fact.1[["TLI"]], 3)}
 and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with confidence intervals from \Sexpr{round(maas.fact.1[["RMSEA"]][2],3 )} to \Sexpr{round(maas.fact.1[["RMSEA"]][3],3)}.
@@ -1113,7 +1116,7 @@ maas3summ <- summary(maas3fit)
 
 <<maassemcompare, echo=FALSE, results=tex>>=
 maascomp <- mxCompare(base=maas1fit, comparison= maas3fit)
-maascomp.xtab <- xtable(maascomp,label="tab:maassemcomp")
+maascomp.xtab <- xtable(maascomp,label="tab:maassemcomp", caption="Comparison of One and Three Factor Models, Sample One")
 print(maascomp.xtab)
                       
 @
@@ -1239,6 +1242,7 @@ print(FactorXtab(maas2c.fact1, names=c("Mindfulness"), label="tab:maas2cfact1", 
 maas2c.fact1.n <- FactorNames(maas2c.fact1, names=c("Mindfulness"))
 maas2b.fact1.n <- FactorNames(maas2b.fact1, names=c("Mindfulness"))
 maas.fact1.av <- FactorAverage(sols=list(maas2b.fact1.n, maas2c.fact1.n), mynames=c("Mindfulness", "Communalities"))
+rownames(maas.fact1.av) <- maas.questions
 print(xtable(maas.fact1.av, label="tab:maasfact1average", caption="One Factor Solution Averaged over Splits B and C, MAAS"))
 @ 
 
