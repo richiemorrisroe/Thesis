@@ -1007,6 +1007,15 @@ As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the
 
 \section{Mindfulness Attention Awareness Scale}
 
+The next step in the analyses was to examine the MAAS using factor analytic and IRT methods. 
+
+<<maasitems, echo=FALSE, results=tex>>=
+maasquestions <- read.csv("maasitems.csv")
+print(xtable(maasquestions, caption="tab:maasitems", label="MAAS Item Content"))
+@ 
+
+Table~\ref{tab:maasitems} shows the item content. 
+
 \subsection{Factor Analyses, Sample One}
 \label{sec:fact-analys-sample}
 
