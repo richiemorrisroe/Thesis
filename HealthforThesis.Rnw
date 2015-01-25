@@ -732,7 +732,7 @@ This factor solution does not appear to be useful, as it has extremely low fit i
 print(xtable(rand.fact.2$r.scores, label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Two Factor Solution, Sample One"))
 @
 
-The factor correlations were quite low for this solution, at 0.17. This suggests that an orthogonal rotation might be more appropriate, but attempting this did not change any of the loadings. It seems that this factor structure is not theoretically or conceptually useful, which is an important feature of any proposed psychometric model. 
+The factor correlations were quite low for this solution, at 0.27. This suggests that an orthogonal rotation might be more appropriate, but attempting this did not change any of the loadings. It seems that this factor structure is not theoretically or conceptually useful, which is an important feature of any proposed psychometric model. 
 
 
 
@@ -770,8 +770,12 @@ print(xtable(rand.fact.4[["r.scores"]], label="tab:hom1rand4corr", caption="Fact
 
 
 <<rand8fact, echo=FALSE, results=tex>>=
-rand.fact.8<-factor.pa(na.omit(randitems.scored), 8, rotate="oblimin")
-print(FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One"), scalebox=0.7)
+rand.fact.8<-fa(na.omit(randitems.scored), 8, rotate="oblimin", fm="pa")
+questions.rand <- paste(rand, 1:36, sep="")
+
+rand8.xtab <- FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One")
+rownames(rand8.xtab) <- questions.rand
+print(rand8.xtab, scalebox=0.7)
 @
 
 
@@ -805,11 +809,11 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 
 
-<<rand8corr, echo=FALSE, results=hide, eval=FALSE>>=
+<<rand8corr, echo=FALSE, results=tex>>=
 print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
 @
 
-The factor correlations are moderate ($r=0.1-0.5$) and in line with expectations. 
+The factor correlations are shown in Table~\ref{tab:hom1rand8corr} and were moderate ($r=0.1-0.5$), and in line with expectations. 
 
 <<randhigherord, echo=FALSE, results=hide, eval=FALSE>>=
 scales.hom <- hom[,66:73]
