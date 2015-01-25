@@ -998,7 +998,7 @@ rand8summ2 <- summary(rand8fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
-print(xtable(randsemcomp,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
+print(xtable(randsemcomp.hom2,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data (Split A of the second Sample), which is  similar to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
