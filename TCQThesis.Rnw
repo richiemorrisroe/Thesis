@@ -487,7 +487,7 @@ tcqcoef <- coef(tcqconv.pcm.rasch)
 
 The next step was to fit a series of graded response models. 
 
-<<tcqconvgrmconstrained, echo=FALSE, results=hide, cache=TRUE>>=
+<<tcqconvgrmconstrained, echo=FALSE, results=hide>>=
 tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
 tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 
@@ -496,7 +496,7 @@ tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 @ 
 
 <<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(tcqconv.grm1.coef, label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
+print(xtable(coefirt(tcqconv.grm.1pl), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
 @ 
 Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, coefficients not shown), and assess whether or not this represents a useful improvement over the model above.
 
@@ -506,7 +506,7 @@ tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
 
 @ 
 <<tcqconvgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(tcqconv.grm2.coef, label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
+print(xtable(coefirt(tcqconv.grm.2pl), label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional One Parameter Graded Response Model"))
 @ 
 <<tcqgrmcomp, echo=FALSE, results=hide, cache=TRUE>>=
 grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
@@ -559,7 +559,7 @@ tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 @ 
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(tcqalt.grm1.coef, label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
+print(xtable(coefirt(tcqalt.grm.constrained), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
 @ 
 The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is reasonably high (reflecting that these items were endorsed less by many of the participants), and the parameter estimates are  closely distributed around zero.
 
@@ -571,7 +571,7 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 ## tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(tcqalt.grm2.coef, label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
+print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
 @ 
 The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
 
@@ -636,6 +636,7 @@ Homall <- tcq2[,grep("Hom[1-6]", x=names(tcq2))]
 Reiall <- tcq2[,grep("Rei[1-6]", x=names(tcq2))]
 Bamall <- tcq2[,grep("BAM[1-18]", x=names(tcq2))]
 Bamgeneral <- tcq2[,c("BAM3", "BAM4", "BAM6", "BAM8", "BAM10", "BAM13", "BAM14", "BAM17")]
+
 tcq2[,"Pilltot"] <- apply(Pillall, 1, mean, na.rm=TRUE)
 tcq2[,"Creamtot"] <- apply(Creamall, 1, mean, na.rm=TRUE)
 tcq2[,"Injtot"] <- apply(Injall, 1, mean, na.rm=TRUE)
@@ -978,7 +979,7 @@ The next step in the analysis was visualisation of data using scatter-plot matri
 	\centering
 <<tcq2pairs, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 sink("tmp.txt")
-pairs.panels(tcqtotals)
+pairs.panels(tcqtotals, method="kendall")
 sink(NULL)
 @ 
 	\caption{Scatter-plot Matrix, TCQ 2}
@@ -1770,17 +1771,17 @@ tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(tcq2.conv.grm.1pl.av, label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"))
 @ 
 
 
-Table \ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
+Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
-print(xtable(tcq2.conv.grm.2pl.av, label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"))
 @ 
 
-Table \ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
+Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
 
 
 
@@ -1806,14 +1807,14 @@ tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
 
 <<tcq2altgrm1plaverage, echo=FALSE, results=tex>>=
 tcq2.alt.grm.1pl.av <- irtAverage(sols=list(tcq2b.alt.grm.1pl, tcq2c.alt.grm.1pl, tcq2d.alt.grm.1pl))
-print(xtable(tcq2.alt.grm.1pl.av, label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.alt.grm.1pl.av), label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
 @ 
 
-Table \ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
+Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
 
 <<tcq2altgrm2plaverage, echo=FALSE, results=hide>>=
 tcq2.alt.grm.2pl.av <- irtAverage(sols=list(tcq2b.alt.grm.2pl, tcq2c.alt.grm.2pl, tcq2d.alt.grm.2pl))
-print(xtable(tcq2.alt.grm.2pl.av, label="tab:tcq2altgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.alt.grm.2pl.av), label="tab:tcq2altgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
 @ 
 
 The difficulty parameters for the averaged two parameter models  increased across all items while the difficulty parameters have reduced significantly for most of the items. The Reiki items appear to be the most discriminating, while the Acupuncture items, while difficult appear to change less as the participant ability thresholds increase. 
@@ -1851,7 +1852,7 @@ names(tcq2.conv.averror) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(data.frame(AverageError=tcq2.conv.averror), label="tab:tcq2grmaverrorconv", caption="Average Error of Approximation for One and Two Parameter GRM's on the Conventional TCQ Across Splits B, C and D"))
 @ 
 
-Table \ref{tab:tcq2grmaverrorconv} shows the average error across the three splits for one and two parameter GRM's for the conventional items. It can be seen that the one parameter model is clearly superior to the two parameter model, a pattern which which was found across each individual split also. 
+Table~\ref{tab:tcq2grmaverrorconv} shows the average error across the three splits for one and two parameter GRM's for the conventional items. It can be seen that the one parameter model is clearly superior to the two parameter model, a pattern which which was found across each individual split also. 
 
 <<tcq2baltgrmtest, echo=FALSE, results=tex, cache=TRUE>>=
 tcq2notb.alt.irt <- tcq2notb[,35:52]
@@ -1883,7 +1884,7 @@ names(tcq2.alt.averror) <- c("One Parameter GRM", "Two Parameter GRM")
 print(xtable(data.frame(AverageError=tcq2.alt.averror), label="tab:tcq2grmaverroralt", caption="Average Error of Approximation for One and Two Parameter GRM's on the TCQ Alternative items Across Splits B, C and D"))
 @ 
 
-Table \ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
+Table~\ref{tab:tcq2grmaverroralt} shows the results of a comparable process for the alternative items. Again, the one parameter model proves superior, a pattern which was only repeated over Splits B and D. 
 
 
 \subsection{Final Tests}
