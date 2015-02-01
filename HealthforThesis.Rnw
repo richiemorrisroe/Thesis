@@ -1015,7 +1015,7 @@ The next step in the analyses was to examine the MAAS using factor analytic and 
 
 <<maasitems, echo=FALSE, results=tex>>=
 maasquestions <- read.csv("maasitems.csv")
-print(xtable(maasquestions, caption="tab:maasitems", label="MAAS Item Content"))
+print(xtable(maasquestions, label="tab:maasitems", caption="MAAS Item Content"), include.rownames=FALSE, scalebox=0.7)
 @ 
 
 Table~\ref{tab:maasitems} shows the item content. 
@@ -2378,13 +2378,15 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 
 Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
 \newpage
-
+\begin{landscape}
 <<scalecorr, echo=FALSE, results=tex>>=
 scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor", environment="longtable",  caption="Spearman Correlations between Scale Totals across both Samples" ),)
+print(xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples" ), environment="sidewaystable", scalebox=0.9)
+
 @ 
+\end{landscape}
 
 \newpage
 
