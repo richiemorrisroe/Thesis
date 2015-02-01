@@ -1046,7 +1046,9 @@ placresnomean <- apply(placrespno[4:48], 2, mean, na.rm=TRUE)
 placresyesnopain <- as.data.frame(cbind(placresyesmean, placresnomean))
 placresyesnopain$Time <- 1:45
 placres.melt <- melt(placresyesnopain, id="Time")
-placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")+xlab("Time (mins")+ylab("Self Reported Pain")
+placres.melt[,"variable"] <- as.factor(with(placres.melt, ifelse(variable=="placresyesmean", "Yes", "No")))
+names(placres.melt)[2] <- "placebo_response"
+placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=placebo_response, colour=placebo_response))+geom_line() +geom_smooth(method="loess")+xlab("Time (mins")+ylab("Self Reported Pain")
 print(placresplot)
 @   
   \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a Loess smoother, the jagged line represents the actual pain levels}
@@ -1054,9 +1056,9 @@ print(placresplot)
 \end{figure}
 
 
-A number of findings are apparent from the plot in Figure \ref{fig:placyesno} on page \pageref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+A number of findings are apparent from the plot in Figure \ref{fig:placyesno} on page 161. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
-\subsection{Logistic Regressions on Placebo Response}
+\subsection{Predicting Placebo Response}
 \label{sec:logist-regr-plac}
 
 
@@ -1087,7 +1089,7 @@ placmod.step <- stepAIC(placmod.full)
 @ 
 
 <<placmodstepprint, echo=FALSE, results=tex>>=
-print(xtable(summary(placmod.step), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"))
+print(xtable(apareg(placmod.step, logistic=TRUE), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"))
 @ 
 
 As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has an almost significant coefficient on the TCQ IAT, one for the LOT-R,  and the two two-way interactions trended towards significance. 
@@ -1097,7 +1099,7 @@ iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "L
 iatandexpfull.test.small[,2:length(iatandexpfull.test.small)] <- scale(iatandexpfull.test.small[,2:length(iatandexpfull.test.small)])
 placmod.test <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
 
-print(xtable(summary(placmod.test), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"))
+print(xtable(apareg(placmod.test, logistic=TRUE), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"))
 
 @
 
@@ -1133,7 +1135,7 @@ Individual regressions were run for each of the variables over the training and 
 
 <<placmod2, echo=FALSE, results=hide>>=
 placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod2.xtab <- xtable(summary(placmod2), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
+placmod2.xtab <- xtable(apareg(placmod2, logistic=TRUE), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
 print(placmod2.xtab)
 @ 
 
@@ -1141,7 +1143,7 @@ print(placmod2.xtab)
 
 <<placebolotr, echo=FALSE, results=hide>>=
 placmod.lotr<- glm(PlacResp~LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod.lotr.xtab <- xtable(summary(placmod.lotr), label="tab:placebolotr", caption="Regression of LOT-R Scores on Placebo Response")
+placmod.lotr.xtab <- xtable(apareg(placmod.lotr, logistic=TRUE), label="tab:placebolotr", caption="Regression of LOT-R Scores on Placebo Response")
 print(placmod.lotr.xtab)
 @ 
 
@@ -1149,7 +1151,7 @@ print(placmod.lotr.xtab)
 
 <<placmodlotrirt, echo=FALSE, results=tex>>=
 placmod.lotr.irt <- glm(PlacResp~AbilityLOTR, data=Iatandexpmeasures.abest, family=binomial(link="logit"))
-print(xtable(summary(placmod.lotr.irt), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"))
+print(xtable(apareg(placmod.lotr.irt, logistic=TRUE), caption="Regression of Placebo Response on IRT Estimated Optimism Scores", label="tab:placmodlotrirt"))
 @ 
 
 Next, IRT estimated abilities for the LOT-R were tested against the placebo response. Note that the ability estimates were calculated from the reduced five item scale described in Section~\ref{sec:backtesting-lotr} on page \pageref{sec:backtesting-lotr}. When these ability estimates  are included in place of the sum-scores, the result does still not achieve the conventional threshold of significance. These results are shown in Table~\ref{tab:placmodlotrirt}. 
@@ -1158,7 +1160,7 @@ Next, IRT estimated abilities for the LOT-R were tested against the placebo resp
 The next variable to be tested in terms of univariate regressions are the treatment credibility scores. These were tested in both their raw forms and as estimates from the successful IRT models described in Chapter~\ref{cha:tcq-thesis}. 
 
 <<placmodconv, echo=FALSE, results=tex>>=
-print(xtable(summary(glm(PlacResp~Pill+Cream+Inj, data=Iatandexpmeasures, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodconvsumm"))
+print(xtable(apareg(glm(PlacResp~Pill+Cream+Inj, data=Iatandexpmeasures, family=binomial(link="logit")), logistic=TRUE), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodconvsumm"))
 @ 
 
 Table \ref{tab:placmodconvsumm} shows the estimated coefficients for the logistic regression of all three conventional sum scores on Placebo Response. As can be seen, the results were not significant. 
@@ -1166,14 +1168,14 @@ Table \ref{tab:placmodconvsumm} shows the estimated coefficients for the logisti
 Next, the ability estimates generated through the best fitting IRT model were used as predictor variables in a regression on the placebo response. 
 
 <<placmodirtabsest, echo=FALSE, results=tex>>=
-print(xtable(summary(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit"))), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
+print(xtable(apareg(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit")), logistic=TRUE), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
 @ 
 
 Table~\ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
 <<placmodgsr, echo=FALSE, results=tex>>=
 placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
-print(xtable(summary(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
+print(xtable(apareg(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"))
 @ 
 
 As can be seen from Table~\ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
@@ -1182,7 +1184,7 @@ As can be seen from Table~\ref{tab:placmodgsr}, the mean level of skin response 
 
 <<placeboglm, echo=FALSE, results=hide>>=
 placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
-placmod.xtab <- xtable(summary(placmod6), label="tab:placmodinter", caption="Regression of TCQIAT, OptIAT and LOT-R on Placebo Response")
+placmod.xtab <- xtable(apareg(placmod6, logistic=TRUE), label="tab:placmodinter", caption="Regression of TCQIAT, OptIAT and LOT-R on Placebo Response")
 print(placmod.xtab)
 @ 
 
@@ -1193,12 +1195,6 @@ print(placmod.xtab)
 \subsection{Pain Ratings}
 \label{sec:pain-ratings}
 
-
-
-
-
-
-@ 
 
 
 
