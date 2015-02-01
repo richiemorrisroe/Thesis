@@ -987,9 +987,12 @@ coefirt <- function(grm) {
     colnames(dat) <- allnames
     dat
 }
-apareg <- function(model) {
+apareg <- function(model, logistic=FALSE) {
     mod.sum <- summary(model)
     mod.coef <- coef(mod.sum)
     colnames(mod.coef) <- c( "B", "SE(B)", "t", "Sig.(p)")
+    if(logistic) {
+        colnames(mod.coef) <- c("B", "SE(B)", "z", "Sig.(p)")
+    }
     mod.coef
 }
