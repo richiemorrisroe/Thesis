@@ -810,7 +810,11 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 
 <<rand8corr, echo=FALSE, results=tex>>=
-print(xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One"))
+rand8corr.xtab <- xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
+rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
+names(rand8corr.xtab) <- rand8names
+rownames(rand8corr.xtab) <- rand8names
+print(rand8corr.xtab)
 @
 
 The factor correlations are shown in Table~\ref{tab:hom1rand8corr} and were moderate ($r=0.1-0.5$), and in line with expectations. 
