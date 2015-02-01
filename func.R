@@ -39,13 +39,19 @@ FactorCoeff <- function (x, names=NULL) {
 ##' @param ...
 ##' @return
 ##' @author Richard Morrisroe
-FactorCor <- function (x, ...) {
-  res <- x$score.cor
+FactorCor <- function (x, xtable=FALSE, ...) {
+  res <- x$r.scores
   #allnames <- attr(x$loadings, "dimnames")
   factnames <- colnames(x$loadings)
+  ## browser()
   res <- as.data.frame(res)
+  names(res) <- factnames
+  rownames(res) <- factnames
   #names(res) <- factnames
-  res.x <- xtable(res, ...)
+  if(xtable) {
+  res <- xtable(res, ...)
+}
+  res
 }
 ##' .. content for \description{} (no empty lines) ..
 ##'
@@ -872,19 +878,24 @@ apademotables <- function(data, FUN=mean, xtable=FALSE, ...) {
     }
     return(data.tab)
 }
-FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, ....) {
+FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, correlations=FALSE, ....) {
 
     sols.coeff.list <- list()
     
     for(i in 1:length(sols)) {
-        coeff <- as.data.frame(FactorCoeff(sols[[i]]))
+        if(correlations) {
+            coeff <- as.data.frame(FactorCor(sols[[i]], xtable=FALSE))
+        }
+         else {                          
+             coeff <- as.data.frame(FactorCoeff(sols[[i]]))
+    }
+        ## browser()
         coeff.ord <- coeff[,mynames]
         sols.coeff.list[[i]] <- coeff.ord
-        ## browser()
+        
     }
     sols.coeff.list
     sols.list <- lapply(sols.coeff.list, as.matrix)
-
     resmat <- apply(simplify2array(sols.list), c(1,2), FUN)
     ## resmat <- Reduce(`+`, sols.coeff.list)/length(sols.coeff.list)
     ## dimmat <- dim(sols.coeff.list[[1]])
