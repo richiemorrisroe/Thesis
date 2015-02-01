@@ -645,6 +645,7 @@ tcq2[,"Homtot"] <- apply(Homall, 1, mean, na.rm=TRUE)
 tcq2[,"Reitot"] <- apply(Reiall, 1, mean, na.rm=TRUE)
 tcq2[,"Bamtot"] <- apply(Bamgeneral, 1, sum, na.rm=TRUE)
 tcqtotals <- with(tcq2, as.data.frame(cbind(Pilltot, Creamtot, Injtot, Acutot, Homtot, Reitot, Bamtot)))
+names(tcqtotals)[7] <- "BMQ"
 @ 
 
 <<expconvaltcalc, echo=FALSE, results=hide, cache=TRUE>>=
@@ -974,18 +975,18 @@ The sample was 69.17\% female, with 45 respondents not specifying their gender.
 
 The next step in the analysis was visualisation of data using scatter-plot matrices and conditioning plots. Figure \ref{fig:tcq2pairs}, the correlations between the scale totals can be seen. Notable are the high correlations between each of the conventional and alternative treatment methodologies, and their moderate correlations (in opposite directions) with the BMQ. Given the sample size, all correlations were significant at the $p \le 0.001$ level. 
 @ 
-
+\newpage
 \begin{figure}
 	\centering
 <<tcq2pairs, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 sink("tmp.txt")
-pairs.panels(tcqtotals, method="kendall")
+pairs.panels(tcqtotals, method="kendall", smooth=FALSE, ellipses=FALSE)
 sink(NULL)
 @ 
-	\caption{Scatter-plot Matrix, TCQ 2}
+	\caption{Scatter-plot Matrix, TCQ 2. The upper triangle represents correlations between the variables, the lower triangle shows scatterplots between them, and the diagonal shows a histogram of the values. From top to bottom: Pilltot - Pill Credibility, Creamtot - Cream Credibility, Injtot - Injection Credibility, Acutot - Acupuncture Credibility, Homtot - Homeopathy credibility, Reitot - Reiki credibility, BMQ - BMQ Scores}
 	\label{fig:tcq2pairs}
 \end{figure}
-
+\newpage
 
 
 %% As can be seen from Figure \ref{fig:tcq2pairs}, the predicted relationship appear to be apparent. The high inter-correlations between the first three sub-scales of the TCQ and the last three are immediately apparent, and there is no evidence of nonlinearity in any of the relationships. 
