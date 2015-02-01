@@ -1011,7 +1011,8 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 %%   \label{fig:tcq2credgend}
 %% \end{figure}
 \newpage
-\begin{figure}[width=0.9\textwidth]
+\begin{figure}
+\setkeys{Gin}{height=0.9\textwidth}  
 <<collcredplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 collpill <- ggplot(tcq2, aes(x=College, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
 collCream <- ggplot(tcq2, aes(x=College, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
