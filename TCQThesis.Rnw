@@ -155,7 +155,6 @@ As described above, the aim of this Study was to ensure that the altered measure
 
 
 <<packagesanddata, echo=FALSE, results=hide>>=
-require(cacheSweave)
 require(ggplot2)
 require(plyr)
 require(reshape2)
@@ -961,7 +960,7 @@ tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,10:15]
 tcq2.sum1 <- summary(tcq2.demo1)
 
-print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats")
+print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats"))
 @ 
 
 
@@ -1011,8 +1010,8 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 %%   \caption{Credibility Scores by Gender, Sample Two}
 %%   \label{fig:tcq2credgend}
 %% \end{figure}
-
-\begin{figure}
+\newpage
+\begin{figure}[width=0.9\textwidth]
 <<collcredplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 collpill <- ggplot(tcq2, aes(x=College, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
 collCream <- ggplot(tcq2, aes(x=College, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
@@ -1025,7 +1024,7 @@ print(arrangeGrob(collpill, collCream, collInj, collAcu, collHom, collRei ))
   \caption{Credibility Scores by College}
   \label{fig:tcq2collcred}
 \end{figure}
-
+\newpage
 
 
 As can be seen from Figure~\ref{fig:tcq2collcred}, there were significant differences between the credibility totals in each college for the three conventional treatment modalities. This appears to be due to higher credibility totals amongst those respondents whose primary affiliation was with the College of Medicine and Health. %% The Beliefs about Medicine difference makes sense as the questions are quite negative towards medicines, and it would be expected that many Medicine and Health students would disagree with them, given their perspective.
