@@ -216,7 +216,7 @@ Participants in the treatment group were told that \textit{the cream was a poten
 
 \subsection{Analysis of Experimental Data}
 
-The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests. There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
+The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out using analysis of variance techniques. There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
 
 
 \subsubsection{Analysis of Reaction Time Data}
@@ -418,7 +418,7 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
  
 
 <<randcheck1, echo=FALSE, results=tex>>=
-tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of Anova of Treatment Credibility Scores by Condition")
+tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of ANOVA of Treatment Credibility Scores by Condition")
 opt.xtab <- xtable(summary(aov(OptIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
 conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
 alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
@@ -844,7 +844,7 @@ exp.pill.pl <- ggplot(Iatandexpmeasures, aes(x=Pill))+geom_density(alpha=0.5)
 surv.exp.pill.pl <- ggplot()+geom_density(data=credtotals, aes(x=Pilltot), fill="red", alpha=0.5)+geom_density(data=Iatandexpmeasures, aes(x=Pill), fill="blue", alpha=0.5)
 print(arrangeGrob(surv.exp.pill.pl, surv.exp.cream.pl))
 @   
-  \caption{Density Plot for Distribution of Pill Credibility Scores, Survey Sample (sample 2) versus experimental sample (top) and Cream Credibility Totals (bottom) sample 2 survey}
+\caption{Density Plot for Pill Credibility (top) and Cream Credibility (bottom), Survey Sample (red), and Experimental Sample (blue)}
   \label{fig:compcream}
 \end{figure}
 
