@@ -960,8 +960,11 @@ coefirt <- function(grm) {
     dat <- coef(grm)
     dims <- dim(dat)
     betas <- dims[2]-1
-    beta.names <- paste("$", "\beta",  "^", 1:betas, "$", sep="")
-    alpha.name <- "$\alpha$"
+    #just need to add an identity sanitize test function to get the alphas and betas as markup
+    ## beta.names <- paste("$", "\beta",  "^", 1:betas, "$", sep="")
+    ## alpha.name <- "$\alpha$"
+    beta.names <- paste("beta", 1:betas, sep="")
+    alpha.name <- "alpha"
     allnames <- c(beta.names, alpha.name)
     ## browser()
     colnames(dat) <- allnames
