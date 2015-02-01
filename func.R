@@ -957,7 +957,13 @@ provide <- function(name, ...) {
     }
     }
 coefirt <- function(grm) {
+    if(class(grm)=="grm") {
     dat <- coef(grm)
+}
+    else {
+        dat <- grm
+    }
+    
     dims <- dim(dat)
     betas <- dims[2]-1
     #just need to add an identity sanitize test function to get the alphas and betas as markup
