@@ -2441,7 +2441,8 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 @
 
 <<healthregfirstprint, echo=FALSE, results=tex>>=
-print(xtable(summary(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"))
+
+print(xtable(apareg(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"))
 @ 
 Stepwise regression was used for the selection of predictors. Typically, such an approach is not optimal in research, as the p-values are biased by the search process. This is also a problem when variables are manually added or removed from a model, as in standard exploratory practice. In this research, stepwise regression methods were used appropriately, as all p-values are reported on an independent test set, which means that they are unbiased. Additionally, stepwise provides a mathematical justification (in this case, the AIC) for the addition or removal of variables from the model, which was useful in this research given the surprising, non-theoretically predicted results. Another benefit of this approach (in contrast to other selection methods such as lasso and ridge regression) is that stepwise provides a p-value for each coefficient, in line with APA conventions. 
 As can be seen from Table~\ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue and role limitations. 
@@ -2545,7 +2546,7 @@ The model developed by stepwise selection was applied to the new data.
 
 <<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
 @ 
 
 <<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2555,7 +2556,7 @@ opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
 rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 @ 
 <<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(summary(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"))
+print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"))
 @ 
 
 
@@ -2573,7 +2574,7 @@ Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor
 
 
 <<optstepprint, echo=FALSE, results=hide>>=
-print(xtable(summary(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
 @ 
 
 %% As Table \ref{tab:hom1optstep} shows, 
@@ -2644,7 +2645,7 @@ opt.part <- createMultiFolds(na.omit(hom1$optimism), k=10)
 optfolds <- TrainTestSets(opt.part, hom1)
 opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom1)
 opt.reg.fin.stand <- standardize(opt.reg.final)
-opt.fin.sum <- summary(opt.reg.final)
+opt.fin.sum <- apareg(opt.reg.final)
 opt.fin.xtab <- xtable(opt.fin.sum, label="tab:optregfinal", caption="Final Regression Model for Optimism")
 print(opt.fin.xtab , table.placement="ht")
 @
@@ -2685,7 +2686,7 @@ mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optim
 @
 
 <<mindstepprint, echo=false, results=tex>>=
-print(xtable(summary(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+print(xtable(apareg(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
 @ 
 
 As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue, even though only emotional well-being remained significant. This model would seem to suggest that mindfulness is related to health through emotional well-being. This is interesting, in that in terms of face validity this would not be expected, although it is reported to be a relatively common outcome of MBSR. 
