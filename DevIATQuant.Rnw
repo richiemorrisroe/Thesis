@@ -159,11 +159,11 @@ The first step was to look at the composition of the sample. The sample was elev
 The ages of the sample ranged from 19 to 27, with a mean age of 21.27 and a median age of 20. In this respect, the sample was quite typical of students in the psychology department. 
 Students were asked had they heard of an IAT, to which all included in the sample replied no. 
 
-The mean Optimism IAT score (using the D algorithm, described in Chapter~\ref{cha:primary-research}) was 0.5833, and the distribution can be seen in Figure \ref{fig:optiatpilot}. As can be seen the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
+The mean Optimism IAT score (using the D algorithm, described in Chapter~\ref{cha:primary-research}) was 0.5833, and the distribution can be seen in Figure~\ref{fig:optiatpilot}. As can be seen from Figure~\ref{fig:optiatpilot},  the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
 
 \begin{figure}
 <<optiatpl, echo=FALSE, fig=TRUE>>=
-print(ggplot(optscores.mean, aes(x=IAT))+geom_density())
+print(ggplot(optscores.mean, aes(x=IAT))+geom_density()+xlab("Distribution of Mean IAT Scores across Participants")
 @   
   \caption{Distribution of Optimism IAT Scores}
   \label{fig:optiatpilot}
@@ -274,7 +274,7 @@ pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Ho
   \label{fig:pairspilot1}
 \end{figure}
 
-Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit measures in this study. It can be seen that the negative correlation reported on between the LOT-R and the MAAS replicated in this sample, suggesting that it was not a statistical fluke. It can also be seen that the conventional and alternative treatment credibility items correlated with one another, but not really with one another (apart from the strong negative correlation between Injection and Acupuncture credibility, which also occurred in Study One with the TCQ (Chapter \ref{cha:tcq-thesis}). However, with such a small sample size, these results should be regarded as a little suspect. 
+Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit measures in this study. It can be seen that the negative correlation reported on between the LOT-R and the MAAS replicated in this sample, suggesting that it was not a statistical fluke. It can also be seen that the conventional and alternative treatment credibility items correlated with one another, but not really between Conventional and Alternataive methods (apart from the strong negative correlation between Injection and Acupuncture credibility, which also occurred in Study One with the TCQ (Chapter \ref{cha:tcq-thesis}). However, with such a small sample size, these results should be regarded as a little suspect. 
 
 
 %% \begin{figure}
