@@ -950,17 +950,18 @@ Iatandexpmeasures.abest <- merge(Iatandexpmeasures.grmtcq, fscores.lotr.maas, by
 
 Next, the relationships between the explicit and implicit measures were examined. 
 
-
+\newpage
+%scale this to fit full page
 \begin{figure}
 <<corrtestimplexpl, echo=FALSE, fig=TRUE>>=
-pairs.panels(Iatandexpmeasures[,14:25])
+pairs.panels(Iatandexpmeasures[,14:25], method="spearman", smooth=FALSE, ellipses=FALSE)
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
 @   
-  \caption{Scatter-plot and Correlelagram for Implicit and Explicit Measures}
+  \caption{Scatterplots and Correlations for Implicit and Explicit Measures. Upper triangle shows the correlations, lower triangle shows the scatterplots, Diagonal shows the distributions}
   \label{fig:pairsimpexp}
 \end{figure}
-
+\newpage
 
 It can be seen from Figure \ref{fig:pairsimpexp} that the LOTR was only really correlated with the Acupuncture items and with the MAAS, the Conventional Treatment scales correlated within themselves, as did the Alternative treatment scales, while the two IAT measures showed no appreciable correlations with each other. The relationships between the IATs and explicit measures were small, and surprisingly in the unpredicted direction (negative) %% \footnote{in contrast to the pilot study reported in Chapter \ref{cha:devel-impl-meas}}
 . Another surprise was that the direction of the correlation between the LOT-R and the MAAS was opposite to that observed in prior research. Possible reasons for these results are considered in the Discussion, and some theories were discussed in Chapter~\ref{cha:health-for-thesis}. 
@@ -1045,7 +1046,7 @@ placresnomean <- apply(placrespno[4:48], 2, mean, na.rm=TRUE)
 placresyesnopain <- as.data.frame(cbind(placresyesmean, placresnomean))
 placresyesnopain$Time <- 1:45
 placres.melt <- melt(placresyesnopain, id="Time")
-placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")
+placresplot <- ggplot(placres.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_line() +geom_smooth(method="loess")+xlab("Time (mins")+ylab("Self Reported Pain")
 print(placresplot)
 @   
   \caption{Pain Ratings of Participants by Response to Placebo Across Time. Straight line is a Loess smoother, the jagged line represents the actual pain levels}
