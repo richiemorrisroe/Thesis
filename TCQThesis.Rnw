@@ -310,7 +310,7 @@ print(ExtractLoadings(tcq.fact.4))
 @ 
 
 
-<<factorcor4, echo=FALSE, results=hide>>=
+<<factorcor4, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.4, label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations"))
 @ 
 
@@ -337,7 +337,7 @@ print(FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Ex
 @ 
 
 
-<<tcq6cor, echo=FALSE, results=hide>>=
+<<tcq6cor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations"))
 @ 
 
@@ -1213,7 +1213,7 @@ print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Si
 As can be seen from Table \ref{tab:tcq2fact6average}, the six factor solution is relatively clean when averaged across all splits.  The structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded. The only two items for which the communalities are low are for Pill1 and Inj3, which may suggest some residual variance (see the seven factor solutions below). The three solutions explained from 79\% to 84\% of the variance. 
 
 
-<<tcq2bfactorcor, echo=FALSE, results=hide>>=
+<<tcq2bfactorcor, echo=FALSE, results=tex>>=
 print(FactorCor(tcq2b.fact.6,label="tab:tcq2b6factorcor",caption="Factor Correlations, Six Factor Solution TCQ 2B"))
 @ 
 
@@ -1229,8 +1229,12 @@ print(FactorCor(tcq2c.fact.6,label="tab:tcq2c6factorcorr",caption="Factor Correl
 print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlations, Six Factor Solution TCQ 2 (Split D)"))
 @ 
 
+<<tcq2factorcoraverage, echo=FALSE, results=tex>>=
+tcq2.6.average.cor <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), correlations=TRUE)
+print(xtable(tcq2.6.average.cor, caption="Average of Factor Correlations, Six Factor Solution, TCQ2 (B,C,D)", label="tab:tcq26factorcoraverage"))
+@ 
 
-Similarly to the results in other splits, the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. 
+Table~\ref{tab:tcq26factorcoraverage} shows that the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. 
 
 \subsection{Seven Factor Solutions}
 \label{sec:seven-fact-solut}
@@ -1257,12 +1261,21 @@ print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "P
 tcq2b.fact7.n <- FactorNames(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
 tcq2c.fact7.n <- FactorNames(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
 tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream","Inj", "Pill", "Cred"))
+
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
 print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"))
+###hmmm, not sure if this is right
+tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
 
-The seven factor solution shown in Table \ref{tab:tcq2fact7average} explained 86\% of the variance in the sample, and the items were assigned to factors as described in the Table above. In essence, this solution was extremely similar to the six factor solution above, except that some of the Pill and Injection items loaded on the Credibility factor. The loadings tended to be highest for Q1 and Q3, and this factor would seem to account for the shared variance between these items not captured in the six factor solution (as noted above when discussing the low communalities for these items.)
+The seven factor solution shown in Table~\ref{tab:tcq2fact7average} explained 86\% of the variance in the sample, and the items were assigned to factors as described in the Table above. In essence, this solution was extremely similar to the six factor solution above, except that some of the Pill and Injection items loaded on the Credibility factor. The loadings tended to be highest for Q1 and Q3, and this factor would seem to account for the shared variance between these items not captured in the six factor solution (as noted above when discussing the low communalities for these items.)
+
+<<tcq27factorcor, echo=FALSE, results=tex>>=
+print(xtable(tcq2.fact7.average.cor, label="tab:tcq27factorcoraverage", caption="Averaged Factor Correlations for the Seven Factor Solution, Sample Two"))
+@ 
+
+The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Inj factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
 
 %% PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
 
@@ -2225,7 +2238,7 @@ print(xtable(apareg(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="
 
 
 
-The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again significant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497. Pill credibility, experience  cream treatments and Acupuncture credibility remained significant, but none of the other variables remained significant on new data. 
+The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again significant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497. Pill credibility, experience  cream treatments and Acupuncture credibility remained significant, along with Experience with Cream treatments, and Pill credibility, suggesting that individuals with more faith in Pill painkilling treatments were likely to endorse Cream treatments also.  
 
 
 %% Next, lasso and ridge regression models were fit to this variable. 
