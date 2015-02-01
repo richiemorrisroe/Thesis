@@ -1109,6 +1109,7 @@ Table \ref{tab:placmodsteptest} shows the results of the stepwise selected model
 
 <<placmodor, echo=FALSE, results=tex>>=
 odds.ratios <- cbind(exp(coef(placmod.test)), confint(placmod.test))
+colnames(odds.ratios)[1] <- "Mean"
 print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for Coefficients in Test Data Model"))
 @
 
@@ -1127,7 +1128,7 @@ pvalues.sum <- apademotables(placmod.pvalues)
 print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"))
 @ 
 
-To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table \ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response, with the exception of Age (the median p-value was approximately 0.1), which is unexpected and can probably be best explained by the clustering of the majority of participants in a small range of ages. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this process does not account for the search process, it is not reported further here. 
+To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table \ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response, with the exception of Age (the median p-value was approximately 0.1), which is unexpected and can probably be best explained by the clustering of the majority of participants in a small range of ages. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this analysis does not account for the search process, it is not reported further here. 
 
 
 Individual regressions were run for each of the variables over the training and test sets, but none were significant. 
@@ -1256,7 +1257,9 @@ ets.notreat <- with(painbycond, ets(na.omit(NoTreat)))
 \begin{figure}
 <<tsmeanpainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 meanpain.melt <- melt(meangrouppainratings, id="Time")
-tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=variable, colour=variable))+geom_line()+geom_smooth(span=0.2)
+meanpain.melt[,"variable"] <- as.factor(with(meanpain.melt, ifelse(variable=="meandeceptivepain", "Deceptive", ifelse(variable=="meanplacebopain", "Open", "NoTreatment"))))
+names(meanpain.melt)[2] <- "Condition"
+tspainplot <- ggplot(meanpain.melt, aes(x=Time, y=value, label=Condition, colour=Condition))+geom_line()+geom_smooth(span=0.2)+xlab("Time (mins)")+ylab("Self Reported Pain (Means)")
 print(tspainplot)
 @   
   \caption{Plot of Pain Responses by Condition Over Time}
@@ -1270,7 +1273,9 @@ As can be seen from Figure \ref{fig:tsmeanpainplot}, the Deceptive Placebo group
 \begin{figure}
 <<medtspainplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 medpain.melt <- melt(medpainratings, id="Time")
-medtspainplot <- ggplot(medpain.melt, aes(x=Time, y=value, group=variable, colour=variable))+geom_smooth(span=0.5)
+medpain.melt[,"variable"] <- as.factor(with(medpain.melt, ifelse(variable=="meddeceptivepain", "Deceptive", ifelse(variable=="medplacebopain", "Open", "NoTreatment"))))
+names(medpain.melt)[2] <- "Condition"
+medtspainplot <- ggplot(medpain.melt, aes(x=Time, y=value, group=Condition, colour=Condition))+geom_smooth(span=0.5)+xlab("Time (mins)")+ylab("Self Reported Pain (Median)")
 print(medtspainplot)
 @   
   \caption{Median Pain Ratings Over Time by Condition}
@@ -1454,9 +1459,12 @@ gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
 \begin{figure}
 <<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 gsr.gend.m2 <- gsr.gend.m[with(gsr.gend.m, index<=2000),]
-gend.gsr.pl <- ggplot(na.omit(gsr.gend.m2), aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time")
+names(gsr.gend.m2)[2] <- "Gender"
+gend.gsr.pl <- ggplot(na.omit(gsr.gend.m2), aes(x=index, y=value, colour=Gender))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR")
 gsr.placresp.m2 <- gsr.placresp.m[with(gsr.placresp.m, index<=2000),]
-placresp.gsr.pl <- ggplot(gsr.placresp.m2, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()
+names(gsr.placresp.m2)[2] <- "PlaceboResponse"
+gsr.placresp.m2[,"PlaceboResponse"] <- as.factor(with(gsr.placresp.m2, ifelse(PlaceboResponse=="PlaceboResp", "Yes", "No")))
+placresp.gsr.pl <- ggplot(gsr.placresp.m2, aes(x=index, y=value, colour=PlaceboResponse))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR")
 print(arrangeGrob(gend.gsr.pl, placresp.gsr.pl))
 @   
   \caption{GSR over Time by Response to Placebo}
@@ -1483,18 +1491,22 @@ gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
 \begin{figure}
 <<gsrplotcond, echo=FALSE, fig=TRUE>>=
 gsr.conditions.m2 <- gsr.conditions.m[with(gsr.conditions.m, index<=2000),]
-print(ggplot(gsr.conditions.m2, aes(x=index, y=value, colour=variable))+geom_line()+geom_smooth()+xlab("Time"))
+names(gsr.conditions.m2)[2] <- "Condition"
+print(ggplot(gsr.conditions.m2, aes(x=index, y=value, colour=Condition))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR"))
 @   
   \caption{GSR by Condition over Time}
   \label{fig:gsrcondplot}
 \end{figure}
 
-An examination the GSR levels by condition over time (Figure \ref{fig:gsrcondplot}) showed that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
+An examination the GSR levels by condition over time (Figure~\ref{fig:gsrcondplot}) showed that the Deceptive Placebo Group show a large increase in skin conductance across the study, while the Open Placebo Group show a parallel decrease in GSR levels. The No Treatment group show  a steady increase from low levels. It can be seen that even when the GSR scores are scaled and centred, the groups were not comparable at baseline, which is surprising, given that the groups were balanced on all other measures. 
 
 \begin{figure}
 <<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 cond.m2 <- cond.m[with(cond.m, index<=2000),]
-print(ggplot(cond.m2, aes(x=index, y=value, colour=variable))+geom_line())
+
+names(cond.m2)[2] <- "Condition"
+cond.m2[,"Condition"] <- as.factor(with(cond.m2, gsub(pattern="NoTreat", "NoTreatment",x=Condition)))
+print(ggplot(cond.m2, aes(x=index, y=value, colour=Condition))+geom_line()+xlab("Time (secs)")+ylab("Scaled GSR"))
 @   
   \caption{Mean GSR Levels by Condition over Time}
   \label{fig:meangsr}
