@@ -32,7 +32,9 @@ This was then administered to a small sample (N=17) to test the instrument.
 The plan for the development of the IAT was to use the constructs obtained from the repertory grids to develop useful stimuli for the IAT.
 Unfortunately, this portion of the research did not lead to a successful outcome, for reasons described below.
 
-Therefore the IAT was developed from both the important figures which arose from the repertory grid, the qualitative interviews, and to match the explicit measure of treatment credibility. The optimism IAT was developed along similar lines to most other Implicit Association tests, in that the survey for this measure was used as a base.
+The Treatment Credibility IAT was developed from both the important figures which arose from the repertory grid, the qualitative interviews, and to match the explicit measure of treatment credibility. 
+
+The optimism IAT was developed along similar lines to most other Implicit Association tests, in that the survey for this measure was used as a base.
 
 \section{Development of Repertory Grid}
 \label{sec:devel-repert-grid}
@@ -75,7 +77,7 @@ print(freq.pl)
 
 <<freqtab, echo=FALSE, results=tex>>=
 names(qual.tab.sort)[1] <- "Stimulus"
-print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"), row.names=FALSE)
+print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"), include.rownames=FALSE)
 @ 
 
 As can be seen from Figure \ref{fig:freplot}, and Table \ref{tab:freqrep} the most popular exemplar for health was (unsurprisingly) doctor, followed by nurse, pharmacist and dentist. Additionally, a rep grid requires adjectives describing the exemplars, and these were taken from the standard repertory grid developed by Kelly.
