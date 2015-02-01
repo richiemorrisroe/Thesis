@@ -2583,7 +2583,7 @@ print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regre
 
 In the training sample, the stepwise selected models kept three predictors.
 The results of the selected predictors on the test sample are shown in Table~\ref{tab:hom1stepopttest}.
-General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.0001$). 
+General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.01$). 
 For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section~\ref{sec:discussion}. 
 
 <<optridge, echo=FALSE, results=hide>>=
@@ -2651,10 +2651,6 @@ print(opt.fin.xtab , table.placement="ht")
 @
 
 
-%% The model was significant, F(15, 528) = \Sexpr{round(opt.fin.sum[["fstatistic"]], 3)}, and the adjusted $R^2$ was equal to \Sexpr{round(opt.fin.sum[["adj.r.squared"]],3)}
-%% The model seems to show that the only important predictors of Optimism in the dataset are General Health, Mindfulness, Emotional Well Being and Age.  This corroborates the plots that were shown above for these variables. The strongest predictor was emotional well being, with age and general health being of similiar magnitude. 
-
-%% The residuals were homoscedastic and normally distributed, meeting the assumptions of the model.
 
 As has been shown above, the  model showed that emotional well being and general health were important, and general health was not removed from the model, though it did not have a particularly large coefficient. Note that because the p-values reported for the regressions were calculated based on a subset of the data not used for selection of the predictors, these can be regarded as unbiased by the search process. 
 
