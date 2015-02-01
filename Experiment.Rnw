@@ -206,7 +206,7 @@ In addition, participants gave verbal reports of their pain levels to the experi
 \subsubsection{Procedure}
 \label{sec:procedure}
 
-All participants were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
+All participants (N=111) were met at the entrance to the building by the primary researcher. They were given the informed consent documentation, and after they signed it, they completed three questionnaires (the MAAS, the LOT-R and the TCQ). Following this, they completed both an Optimism IAT and the Treatment Credibility IAT, where order of administration was counterbalanced across participants.
 
 Following this, the participants sat down next to the Biopac physiological monitoring data, and baseline data was recorded for five minutes.  Then, a blood pressure gauge was wrapped around the upper part of the non-dominant hand of the participant, and they were asked to squeeze a hand exerciser twenty times for two seconds each time. This method is known as the sub-maximal torniquet method   One minute after this, and every minute thereafter, participants were asked to rate their pain on a VAS from 0 to 10.
 
@@ -216,7 +216,7 @@ Participants in the treatment group were told that \textit{the cream was a poten
 
 \subsection{Analysis of Experimental Data}
 
-The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests (for numerical data) and ANOVA's (for categorical data). There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
+The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out with t-tests. There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
 
 
 \subsubsection{Analysis of Reaction Time Data}
@@ -266,7 +266,18 @@ In addition, these logistic regression models were compared against models using
 Skin conductance recordings (GSR) were taken as part of this experiment. This source provided recordings at 1000Hz for the entire procedure. %% The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals.
 %% In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
 
-Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in  Chapter \ref{cha:methodology}.
+Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in  Chapter \ref{cha:methodology}. Briefly, the models tested were as follows:
+\begin{itemize}
+  
+\item My model, whereby implicit and explicit expectancies jointly mediate all other variables
+\item A model like that of Kirsch, in which expectancies mediate all other variables
+  
+\item A model where all effects are mediated by Optimism
+  
+\item Model(s) where either implicit or explicit expectancies are solely responsible for the observed effects
+  
+\item A null model
+\end{itemize}
 
 
 
