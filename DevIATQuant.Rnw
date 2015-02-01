@@ -163,7 +163,7 @@ The mean Optimism IAT score (using the D algorithm, described in Chapter~\ref{ch
 
 \begin{figure}
 <<optiatpl, echo=FALSE, fig=TRUE>>=
-print(ggplot(optscores.mean, aes(x=IAT))+geom_density()+xlab("Distribution of Mean IAT Scores across Participants")
+print(ggplot(optscores.mean, aes(x=IAT))+geom_density()+xlab("Distribution of Mean IAT Scores across Participants"))
 @   
   \caption{Distribution of Optimism IAT Scores}
   \label{fig:optiatpilot}
@@ -192,18 +192,18 @@ Next, the Treatment Credibility Questionnaire was examined to assess its correla
 <<readdata, echo=FALSE, results=hide, eval=FALSE>>=
 tcqiat <- read.csv("ExperimentDataforR/PilotStudy/tcq prep data for IAT.csv")
 tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
-tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Truth", "Fake", "Lies", "Inaccurate", "Conventional", "Pills", "Cream", "Injections", "Nurse", "Doctor", "Pharmacist", "Medicine", "Alternative", "Acupuncture", "Reiki.Master", "Acupuncturist", "Reiki", "Flower.essence", "Homeopathy", "Homeopathist"))
+tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Actual",  "Truth", "Fake", "Lies", "Pills", "Cream", "Injections", "Alternative", "X.Acupuncture", "Reiki", "flower.essence", "Homeopathy", "Homeopathist"))
 @ 
 
-\begin{figure}
-<<tcqplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
+%% \begin{figure}
+<<tcqplot, echo=FALSE, fig=TRUE>>=
 print(ggplot(tcqscores, aes(x=IAT))+geom_density())
 @   
-  \caption{Density Plot, TCQ IAT Scores (Pilot)}
-  \label{fig:tcqpilotplot}
-\end{figure}
+%%   \caption{Density Plot, TCQ IAT Scores (Pilot)}
+%%   \label{fig:tcqpilotplot}
+%% \end{figure}
 
-As can be seen from Figure \ref{fig:tcqpilotplot}, the range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the demographics were not available for this pilot, due to data loss, and so this is not reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
+The range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the demographics were not available for this pilot, due to data loss, and so this is not reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
 
 
 \section{Piloting the Experimental Procedure}
@@ -240,7 +240,7 @@ realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate",
 
 %% \begin{figure}
 <<realfakeplot, echo=FALSE, results=hide, eval=FALSE>>=
-pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"), method="kendall")
+pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"), method="kendall", smooth=FALSE, ellipses=FALSE)
 @  
 %%   \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
 %%   \label{fig:realfakeplot}
@@ -358,7 +358,7 @@ vas.m <- melt(vastrans, id.vars="index")
 vas.c <- dcast(vas.m, formula=variable~...)
 names(vas.c)[1] <- "PP.No"
 names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
-print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line())
+print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
 @  
   \caption{Participant pain responses over time}
   \label{fig:pppainplot}
@@ -375,12 +375,13 @@ surv.merge <- merge(surv, vas.s, by.x="PpNo", by.y="PP.No")
 @ 
 
 <<placglm, echo=FALSE, results=tex>>=
-placglm.tcq <- glm(PlacResp~DIAT.Conv, data=surv.merge, family=binomial(link="logit"))
+names(surv.merge)[14:15] <- c("TreatmentIAT", "OptimismIAT")
+placglm.tcq <- glm(PlacResp~TreatmentIAT, data=surv.merge, family=binomial(link="logit"))
 print(xtable(placglm.tcq, label="tab:tcqiatglm", caption="Predicting Placebo Response from TCQ IAT Scores"))
 @ 
 
 <<placglmopt, echo=FALSE, results=tex>>=
-placglm.opt <- glm(PlacResp~DIATOpt, data=surv.merge, family=binomial(link="logit"))
+placglm.opt <- glm(PlacResp~OptimismIAT, data=surv.merge, family=binomial(link="logit"))
 print(xtable(placglm.opt, label="tab:optiatglm", caption="Predicting Placebo Response from OPT IAT Scores"))
 @ 
 
