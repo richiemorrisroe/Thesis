@@ -960,7 +960,7 @@ tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,10:15]
 tcq2.sum1 <- summary(tcq2.demo1)
 
-stargazer(tcq2.demo3, summary=TRUE, title="TCQ2 Summary Statistics", label="tab:tcq2sumstats")
+print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats")
 @ 
 
 
