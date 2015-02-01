@@ -2164,7 +2164,7 @@ pilltot.step <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction=
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Acutot+ExpPill+ExpCream+Age, data=tcq2.pill.test)
-print(xtable(summary(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Coefficients for Pill credibility Regression on Held Out Data"))
+print(xtable(apareg(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Coefficients for Pill credibility Regression on Held Out Data"))
 @ 
 
 
@@ -2218,7 +2218,7 @@ creamtot.step <- stepAIC(object=creamtotlm1, upper=creamtotlm1,lower=~1, directi
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+ExpPill+ExpCream+Health, data=tcq2.cream.test)
-print(xtable(summary(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="Coefficients for Cream credibility Regression on Held Out Data"))
+print(xtable(apareg(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="Coefficients for Cream credibility Regression on Held Out Data"))
 @ 
 
 
@@ -2280,7 +2280,7 @@ injtot.step <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 injtotlm.holdout <- lm(Injtot~Pilltot+Acutot+Reitot+ExpPill, data=tcq2.inj.test)
-print(xtable(summary(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"))
+print(xtable(apareg(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"))
 @ 
 
 
@@ -2332,7 +2332,7 @@ acutot.step <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=tcq2.acu.test)
-print(xtable(summary(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acu credibility Regression on Held Out Data"))
+print(xtable(apareg(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acu credibility Regression on Held Out Data"))
 @ 
 
 As shown in Table \ref{tab:tcq2acuholdout}, only Creams, Homeopathy and Reiki, remained significant on the unseen data. 
@@ -2381,7 +2381,7 @@ homtot.step <- stepAIC(object=homtotlm1, upper=homtotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.hom.test)
-print(xtable(summary(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Hom credibility Regression on Held Out Data"))
+print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Hom credibility Regression on Held Out Data"))
 @ 
 
 Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, but the rest do not. The model has an $R^2$ of 0.62, which is extremely high. 
@@ -2430,7 +2430,7 @@ reitot.step <- stepAIC(object=reitotlm1, upper=reitotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 reitotlm.holdout <- lm(Reitot~Pilltot+Creamtot+Acutot+Homtot+ExpPill+ExpRei+Health, data=tcq2.rei.test)
-print(xtable(summary(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coefficients for Rei credibility Regression on Held Out Data"))
+print(xtable(apareg(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coefficients for Rei credibility Regression on Held Out Data"))
 @ 
 
 Table \ref{tab:tcq2reiholdout} shows the performance of the stepwise selected coefficients on unseen data. It can be seen that the only coefficients which maintained significance were those for Homeopathy and Acupuncture credibility, while the $R^2$ was quite low, at approximately 0.4. 
