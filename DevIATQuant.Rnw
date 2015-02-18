@@ -196,7 +196,7 @@ tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "
 @ 
 
 %% \begin{figure}
-<<tcqplot, echo=FALSE, fig=TRUE>>=
+<<tcqplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
 print(ggplot(tcqscores, aes(x=IAT))+geom_density())
 @   
 %%   \caption{Density Plot, TCQ IAT Scores (Pilot)}
@@ -268,9 +268,9 @@ optpesswords<-iepilot[,c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Su
 
 \begin{figure}
 <<plotscales, echo=FALSE, fig=TRUE>>=
-pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), method="kendall")
+pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), method="kendall", smooth=FALSE, ellipses=FALSE)
 @  
-  \caption{Pairs Plot of Explicit Variables, Pilot Study}
+  \caption{Pairs Plot of Explicit Variables, Pilot Study. LOTR: Life Orientation Test, Revised. MAAS - Mindful Attention Absorption Scale. Pill - Pill Credibility. Cream - Cream Credibility. Inj - Injection Credibility. Acu - Acupuncture Credibility. Hom - Homeopathy Credibility. Rei - Reiki Credibility}
   \label{fig:pairspilot1}
 \end{figure}
 
@@ -355,10 +355,10 @@ VASdata<-physmeasures[,c("VAS.1703", "VAS.1980", "VAS.2236", "VAS.2346", "VAS.80
 vastrans<-VASdata*-10
 vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
 vas.m <- melt(vastrans, id.vars="index")
-vas.c <- dcast(vas.m, formula=variable~...)
+names(vas.m) <- c("Time", "Participant", "Pain")
 names(vas.c)[1] <- "PP.No"
 names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
-print(ggplot(vas.m, aes(x=index, y=value, colour=variable))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
+print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
 @  
   \caption{Participant pain responses over time}
   \label{fig:pppainplot}
@@ -410,13 +410,13 @@ VASdata.ts<-as.ts(VASdata) #create time series object
 <<bpplot, echo=FALSE, results=hide>>=
 plot(BPdata.ts)
 @
-\begin{figure}
-<<gsrplot, echo=FALSE, fig=TRUE>>=
+%% \begin{figure}
+<<gsrplot, echo=FALSE, results=hide>>=
 plot(GSRdata.ts)
 @  
-  \caption{GSR Data by Participant Across Time}
-  \label{fig:gsrplot}
-\end{figure}
+%%   \caption{GSR Data by Participant Across Time}
+%%   \label{fig:gsrplot}
+%% \end{figure}
 
 
 
