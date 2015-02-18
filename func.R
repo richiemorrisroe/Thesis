@@ -968,7 +968,7 @@ provide <- function(name, ...) {
     }
     }
 coefirt <- function(grm) {
-    if(class(grm)=="grm") {
+    if(class(grm)=="grm" || class(grm)=="gpcm") {
     dat <- coef(grm)
 }
     else {
