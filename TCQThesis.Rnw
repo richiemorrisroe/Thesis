@@ -220,7 +220,7 @@ print(arrangeGrob(gendpill, gendcream, gendinj, gendacu))
 
 
 
-There were no significant differences in median Pill scores that can be attributed to the Gender of the respondents. The variability is larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
+There were no significant differences in median Pill scores that can be attributed to the gender of the respondents. The variability is larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
 
 However, the acupuncture credibility scores showed a different pattern. The mean credibility totals are very different for females and males.  A Kruskall Wallis examined whether this visual difference was backed up with a formal analysis. The results tended towards significance (p=0.09).
 The pattern of larger variability in the responses of men was apparent.   
@@ -302,7 +302,7 @@ The next step in the analysis  was an assessment of the number of factors sugges
 
 <<tcqfact4, echo=FALSE, results=tex>>=
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.4,names=c("Acupuncture", "Cream", "Inj", "Pills"), label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation"))
+print(FactorXtab(tcq.fact.4,names=c("Acupuncture", "Cream", "Inj", "Pills"), label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation"), sanitize.text.function= function (x) x)
 @ 
 
 <<factorloadings4, echo=FALSE, results=verbatim, eval=FALSE>>=
@@ -333,7 +333,7 @@ As can be seen in Table \ref{tab:tcq1fact6} the four factors from the original s
 
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp"), label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation"))
+print(FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp"), label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 
@@ -1012,7 +1012,7 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 %% \end{figure}
 \newpage
 \begin{figure}
-\setkeys{Gin}{height=0.9\textwidth}  
+\setkeys{Gin}{height=0.9\textheight}  
 <<collcredplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 collpill <- ggplot(tcq2, aes(x=College, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
 collCream <- ggplot(tcq2, aes(x=College, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=45, hjust=1))
@@ -1139,13 +1139,13 @@ tcq2d.alt <- tcqall2d[,19:36]
 
 <<tcq2afact5, echo=FALSE, results=hide>>=
 tcq2b.fact.5 <- fa(na.omit(tcqall2b), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.5, names=c("Pill&Inj", "Cream", "Rei", "Hom", "Acu"),  label="tab:tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"))
+print(FactorXtab(tcq2b.fact.5, names=c("Pill&Inj", "Cream", "Rei", "Hom", "Acu"),  label="tab:tcq2afact5",caption="Five factor Solution, TCQ 2 (Split B), Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 
 <<tcq2cfact5, echo=FALSE, results=hide>>=
 tcq2c.fact.5 <- fa(na.omit(tcqall2c), nfactors=5, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"), label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"), label="tab:tcq2cfact5",caption="Five factor Solution, TCQ 2 (Split C), Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 <<average5factsolution, echo=FALSE, results=hide>>=
@@ -1157,7 +1157,7 @@ print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor
 
 
 
-The average of the two five factor solutions (not shown) merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
+The average of the two five factor solutions (Appendix, Page~\pageref{tab:tcq2fact5av}) merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
 
 
 Pillinj:  This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
@@ -1186,18 +1186,18 @@ The next step was to fit six factor solutions over Splits B, C and D and compari
 
 <<tcq2bfact6, echo=FALSE, results=hide>>=
 tcq2b.fact.6 <- fa(na.omit(tcqall2b), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"),label="tab:tcq2bfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"))
+print(FactorXtab(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"),label="tab:tcq2bfact6",caption="Six factor Solution, TCQ 2, Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 
 <<tcq2cfact6, echo=FALSE, results=hide>>=
 tcq2c.fact.6 <- fa(na.omit(tcqall2c), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.6,names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2cfact6",caption="Six factor Solution, TCQ 2, Split C,  Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 <<tcq2dfact6, echo=FALSE, results=hide>>=
 tcq2d.fact.6 <- fa(na.omit(tcqall2d), nfactors=6, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"))
+print(FactorXtab(tcq2d.fact.6, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill"), label="tab:tcq2dfact6",caption="Six factor Solution, TCQ 2(Split D), Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 <<tcq2fact6average, echo=FALSE, results=tex>>=
@@ -1205,15 +1205,15 @@ tcq2b.fact6.n <- FactorNames(tcq2b.fact.6, names=c("Rei", "Hom", "Acu", "Cream",
 tcq2c.fact6.n <- FactorNames(tcq2c.fact.6, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill"))
 tcq2d.fact6.n <- FactorNames(tcq2d.fact.6,names=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill"))
 
-tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ))
+tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ), FUN=mean)
 rownames(tcq2.fact6.av) <- itemnames
-print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Six Factor Solutions over Splits B, C and D"))
+print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Six Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x)
 @ 
 
 As can be seen from Table \ref{tab:tcq2fact6average}, the six factor solution is relatively clean when averaged across all splits.  The structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded. The only two items for which the communalities are low are for Pill1 and Inj3, which may suggest some residual variance (see the seven factor solutions below). The three solutions explained from 79\% to 84\% of the variance. 
 
 
-<<tcq2bfactorcor, echo=FALSE, results=tex>>=
+<<tcq2bfactorcor, echo=FALSE, results=hide>>=
 print(FactorCor(tcq2b.fact.6,label="tab:tcq2b6factorcor",caption="Factor Correlations, Six Factor Solution TCQ 2B"))
 @ 
 
@@ -1231,7 +1231,7 @@ print(FactorCor(tcq2d.fact.6,label="tab:tcq2dfactorcor",caption="Factor Correlat
 
 <<tcq2factorcoraverage, echo=FALSE, results=tex>>=
 tcq2.6.average.cor <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), correlations=TRUE)
-print(xtable(tcq2.6.average.cor, caption="Average of Factor Correlations, Six Factor Solution, TCQ2 (B,C,D)", label="tab:tcq26factorcoraverage"))
+print(xtable(tcq2.6.average.cor, caption="Average of Factor Correlations, Six Factor Solution, TCQ2 (B,C,D)", label="tab:tcq26factorcoraverage"), sanitize.text.function = function (x) x)
 @ 
 
 Table~\ref{tab:tcq26factorcoraverage} shows that the three conventional treatment factors and the three alternative factors correlated with each other but tended not to correlate highly with the factors of the opposite modality. 
@@ -1243,18 +1243,18 @@ Table~\ref{tab:tcq26factorcoraverage} shows that the three conventional treatmen
 
 <<tcq2bfact7, echo=FALSE, results=hide>>=
 tcq2b.fact.7 <- fa(na.omit(tcqall2b), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"), label="tab:tcq2bfact7",caption="Seven Factor Solution, TCQ 2B, Oblimin Rotation"))
+print(FactorXtab(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"), label="tab:tcq2bfact7",caption="Seven Factor Solution, TCQ 2B, Oblimin Rotation"), sanitize.text.function= function (x) x)
 @ 
 
 
 <<tcq2cfact7, echo=FALSE, results=hide>>=
 tcq2c.fact.7 <- fa(na.omit(tcqall2c), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"))
+print(FactorXtab(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2cfact7",caption="Seven Factor Solution, TCQ 2, Split C,  Oblimin Rotation"), sanitize.text.function= function (x) x)
 @
 
 <<tcq2dfact7, echo=FALSE, results=hide>>=
 tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
-print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"))
+print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"), sanitize.text.function= function (x) x)
 @ 
 
 <<tcq2fact7average, echo=FALSE, results=tex>>=
@@ -1264,7 +1264,7 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
-print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"))
+print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x)
 ###hmmm, not sure if this is right
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
@@ -1272,7 +1272,7 @@ tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, 
 The seven factor solution shown in Table~\ref{tab:tcq2fact7average} explained 86\% of the variance in the sample, and the items were assigned to factors as described in the Table above. In essence, this solution was extremely similar to the six factor solution above, except that some of the Pill and Injection items loaded on the Credibility factor. The loadings tended to be highest for Q1 and Q3, and this factor would seem to account for the shared variance between these items not captured in the six factor solution (as noted above when discussing the low communalities for these items.)
 
 <<tcq27factorcor, echo=FALSE, results=tex>>=
-print(xtable(tcq2.fact7.average.cor, label="tab:tcq27factorcoraverage", caption="Averaged Factor Correlations for the Seven Factor Solution, Sample Two"))
+print(xtable(tcq2.fact7.average.cor, label="tab:tcq27factorcoraverage", caption="Averaged Factor Correlations for the Seven Factor Solution, Sample Two"), sanitize.text.function = function (x) x)
 @ 
 
 The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Inj factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
@@ -1553,7 +1553,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.8)
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.9)
 @ 
 
 Over all splits,  the seven factor model provided a better fit to the out of sample data than did the 5 or 6 factor model. However, the difference in likelihood was not large, and given the strong theoretical reasons for preferring the six factor model, this was chosen. 
@@ -1639,13 +1639,13 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.8)
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.9)
 @ 
 
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.8)
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.9)
 @ 
 
 <<fivefactorsem, echo=FALSE, results=tex>>=
@@ -1789,7 +1789,7 @@ print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", capti
 @ 
 
 
-Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
+Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits. The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
 print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"))
