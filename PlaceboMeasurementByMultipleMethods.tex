@@ -6,11 +6,12 @@
 \professor{Prof John McCarthy}
 \sponsor{Irish Research Council for Humanities and Social Sciences}
 \usepackage[pdftex]{lscape}% for landscaped tables
+\usepackage{pdflscape}
 \usepackage{longtable}% for 
 \usepackage{rotating}
 \usepackage{Sweave}
 \usepackage{pdflscape}
-\includeonly{TCQThesis}
+% \includeonly{Experiment}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 \makeindex
@@ -20,6 +21,8 @@
 
 
 \tableofcontents
+
+
 \begin{dedication}
 To my parents, without whom none of this would have been possible
 \end{dedication}
@@ -60,7 +63,7 @@ Finally, I'd like to thank Elizabeth Ann Doyle for putting up with a difficult e
 
 \chapter{Development of Implicit Measures}
 \label{cha:devel-impl-meas}
-% \include{DevelopmentofIAT}
+
 \include{DevIATQuant}
 
 \chapter{Measuring Placebo by Multiple Methods}
@@ -70,7 +73,14 @@ Finally, I'd like to thank Elizabeth Ann Doyle for putting up with a difficult e
 \chapter{General Discussion and Conclusions}
 \label{cha:general-discussion}
 \include{DiscussionandConclusions120211}
+\appendix
+\chapter{Appendix 1: Supporting Tables and Figures}
+\include{Appendix}
 
+\chapter{Appendix II: Qualitative Analysis}
+\label{cha:append-ii:-qual}
+
+\include{DevelopmentofIAT}
 
 \bibliography{placebo2,IAT2,statistics,healthoptmind2,probabilities2,TCQ}
 \end{document}
