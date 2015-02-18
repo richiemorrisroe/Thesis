@@ -18,6 +18,7 @@ require(semPlot)
 require(reshape2)
 require(plyr)
 load("healthforthesislatest.rda")
+load("tcqthesislatest.rda")
 @ 
 \section{Health, Optimism and Mindfulness Data Appendices}
 \label{sec:health-optim-mindf-1}
@@ -118,4 +119,19 @@ print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, 
 @ 
 
 Table~\ref{tab:lotr2cgrm2pl} shows the estimated coefficients for the Two Parameter GRM on the LOT-R, Sample Two, Split C. 
+
+\section{TCQ Thesis}
+\label{sec:tcq-thesis}
+
+\subsection{TCQ Factor Solutions}
+\label{sec:tcq-factor-solutions}
+
+<<average5factsolution, echo=FALSE, results=hide>>=
+tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), mynames=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
+print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor Solutions over Splits B and C"))
+@ 
+
+Table~\ref{tab:tcq2fact5av} shows the average of the five factor solutions across Splits B and C. 
 
