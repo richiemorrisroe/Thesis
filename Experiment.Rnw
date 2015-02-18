@@ -418,7 +418,7 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
  
 
 <<randcheck1, echo=FALSE, results=tex>>=
-tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of ANOVA of Treatment Credibility Scores by Condition")
+tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of ANOVA of Treatment Credibility IAT Scores by Condition")
 opt.xtab <- xtable(summary(aov(OptIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
 conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
 alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
@@ -953,8 +953,11 @@ Next, the relationships between the explicit and implicit measures were examined
 \newpage
 %scale this to fit full page
 \begin{figure}
+\setkeys{Gin}{height=0.9\textheight}  
 <<corrtestimplexpl, echo=FALSE, fig=TRUE>>=
-pairs.panels(Iatandexpmeasures[,14:25], method="spearman", smooth=FALSE, ellipses=FALSE)
+iatandexp.s <- Iatandexpmeasures[,c(14:22, 24)]
+names(iatandexp.s)[9:10] <- c("OptIAT", "TCQIAT")
+pairs.panels(iatandexp.s, method="spearman", smooth=FALSE, ellipses=FALSE)
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
 @   
