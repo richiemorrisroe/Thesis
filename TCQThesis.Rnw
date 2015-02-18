@@ -338,7 +338,7 @@ print(FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Ex
 
 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations"))
+print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations", names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp")))
 @ 
 
 
