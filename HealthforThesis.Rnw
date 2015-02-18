@@ -2,6 +2,7 @@
 
 <<loadpackages, echo=FALSE, results=hide>>=
 require(ggplot2)
+
 require(psych)
 require(xtable)
 require(OpenMx)
@@ -47,7 +48,7 @@ This chapter reports an investigation of the psychometric properties of three me
 
 The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was important to administer some instruments which have been shown to be associated with it in previous studies.
 
-Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Absorption Scale (MAAS), as this construct has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
+Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT's) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Absorption Scale (MAAS), as this construct has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
 
 Over the course of the study of the placebo, there have been few individual-level psychological predictors of the effect which have been reproducible. Expectancy is the most commonly measured construct within the field, and some meta-analytic evidence suggests that it is only significantly associated with the response around 60\% of the time~\cite{DiBlasi2001}.   
 
@@ -84,7 +85,7 @@ Crucially, this only occurred when the treatment was classified as spiritual. Wh
 
 This would seem to suggest that although there appear to be some dispositional predictors of the placebo response, they are moderated by the context in which the study or treatment takes place. 
 
-Alternatively, one could argue that expectancies drive these effects by mediating the impact of other contextually relevant variables. However, to take this position would require that the theory of Kirsch, that expectancies exert direct physiological effects, would need to be abandoned~\cite{Kirsch1985}, and indeed this position was tested in the experimental portion of the research (c.f. Chapter~\ref{cha:primary-research})
+Alternatively, one could argue that expectancies drive these effects by mediating the impact of other contextually relevant variables. However, to take this position would require that the theory of Kirsch, that expectancies exert direct physiological effects, would need to be abandoned~\cite{Kirsch1985}, and indeed this proposition was tested in the experimental portion of the research (c.f. Chapter~\ref{cha:primary-research})
 
 A recent study~\cite{morton2009reproducibility} in a placebo analgesia paradigm argues for a stronger interpretation of the role of optimism. This experimental study used a repeated measures design, and utilised a preconditioning method in the first session which is known to increase the size of the placebo response~\cite{Voudouris1985}. 
 
@@ -716,11 +717,11 @@ Two and eight  factor structures were examined for the RAND MOS and their perfor
 
 
 
-<<rand2fact, echo=FALSE, results=hide>>=
+<<rand2fact, echo=FALSE, results=hide, eval=FALSE>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
-The results of the two factor solution (not shown) were as follows:
+The results of the two factor solution (Appendix, Page \pageref{tab:rand2fact}) were as follows:
 The first factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. This factor can be best termed as General and Emotional Health.
 
 The second factor maps exactly to the Physical Functioning Scale, and so retains that name. The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
@@ -775,7 +776,7 @@ questions.rand <- paste(rand, 1:36, sep="")
 
 rand8.xtab <- FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One")
 rownames(rand8.xtab) <- questions.rand
-print(rand8.xtab, scalebox=0.7)
+print(rand8.xtab, scalebox=0.7, digits=2, sanitize.text.function= function (x) x)
 @
 
 
@@ -814,7 +815,7 @@ rand8corr.xtab <- xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", c
 rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
 names(rand8corr.xtab) <- rand8names
 rownames(rand8corr.xtab) <- rand8names
-print(rand8corr.xtab)
+print(rand8corr.xtab, scalebox=0.7)
 @
 
 The factor correlations are shown in Table~\ref{tab:hom1rand8corr} and were moderate ($r=0.1-0.5$), and in line with expectations. 
@@ -1035,7 +1036,7 @@ maas.fact.1<-factor.pa(na.omit(maasitems), 1, rotate="oblimin")
 maas.questions <- paste(maas, 1:15, sep="")
 maas1.xtab <- FactorXtab(maas.fact.1, names=c("Mindfulness"),label="tab:hom1maas1fact", caption="Factor Loadings, One Factor Solution, MAAS, Sample One")
 rownames(maas1.xtab) <- maas.questions
-print(maas1.xtab)
+print(maas1.xtab, sanitize.text.function=function (x) x)
 @
 
 The results of the one factor solution for the MAAS are shown in Table~\ref{tab:hom1maas1fact}. 
@@ -1045,15 +1046,13 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-%% \subsection{MAAS Three Factor Solution}
-%% \label{sec:maas-seven-factor}
 
-The next factor solution to be examined was the three factor solution (loadings not shown). 
+The next factor solution to be examined was the three factor solution (loadings shown in Appendix, \pageref{
 
 
 <<maas7fact, echo=FALSE, results=hide>>=
 maas.fact.3<-factor.pa(na.omit(maasitems), 3, rotate="oblimin")
-print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAttention"), label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"))
+print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAttention"), label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"), sanitize.text.function= function (x) x)
 @
 
 
@@ -1241,14 +1240,14 @@ vss.maas.2c <- VSS(na.omit(maasitems2c))
 
 <<maas2b1, echo=FALSE, results=hide>>=
 maas2b.fact1 <- fa(maasitems2b, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact1, names=c("Mindfulness"),label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"))
+print(FactorXtab(maas2b.fact1, names=c("Mindfulness"),label="tab:maas2bfact1", caption="MAAS One Factor Solution, Sample 2B"), sanitize.text.function= function (x) x)
 @
 
 %% The solution shown above in Table \ref{tab:maas2bfact1} shows adequate loadings of all the questions on a first factor which can be named mindfulness.  This solution explained 41\% of the variance, which is quite low for a factor solution.
 
 <<maas2c1, echo=FALSE, results=hide>>=
 maas2c.fact1 <- fa(maasitems2c, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2c.fact1, names=c("Mindfulness"), label="tab:maas2cfact1", caption="MAAS One Factor Solution, Sample 2C"))
+print(FactorXtab(maas2c.fact1, names=c("Mindfulness"), label="tab:maas2cfact1", caption="MAAS One Factor Solution, Sample 2C"), sanitize.text.function= function (x) x)
 @
 
 <<maasfact1average, echo=FALSE, results=tex>>=
@@ -1266,9 +1265,9 @@ Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Spl
 
 <<maas2bfact5, echo=FALSE, results=hide>>=
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8)
+print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
-This five factor solution for Split B (not shown) explained 54\% of the variance in the sample.
+This five factor solution for Split B (Appendix, page \pageref{tab:tcq2bmaasfact5}) explained 54\% of the variance in the sample.
 
 PA1: ``Q5'',  ``Q6'',  ``Q7'',  ``Q8'',  ``Q9'',  ``Q10''.  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
@@ -1284,7 +1283,7 @@ Although there is significantly more variance explained by this solution, again 
 
 <<maas2cfact5, echo=FALSE, results=hide>>=
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8)
+print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
 The five factor solution for split C (not shown) broke down as follows:
 
@@ -1498,7 +1497,7 @@ print(maasp)
 <<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
 maas.grm.1pl.coef <- coef(maas.grm.1pl)
 
-print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"))
+print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 Table~\ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
@@ -1515,11 +1514,11 @@ print(maas2plp)
 %% \end{figure}
 
 <<maasgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coefirt(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"))
+print(xtable(coefirt(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 
-The two parameter Graded Response Model (not shown) had the following features. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+The two parameter Graded Response Model (Appendix, Page \pageref{tab:maasgrm2pl}) had the following features. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
 
 <<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1582,14 +1581,14 @@ maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
 
 
 <<maas2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"))
+print(xtable(coefirt(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 
 It can be seen from Table \ref{tab:maas2bgrm1pl} that there were no problems with the parameter estimates for this model. 
 
 <<maas2bgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"))
+print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual trade off between discrimination and ability estimate parameters. 
@@ -1619,7 +1618,7 @@ maas2c.grm.2pl <- grm(maas2c.s, constrained=FALSE)
 @ 
 
 <<maas2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"))
+print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 
@@ -1628,10 +1627,10 @@ As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appe
 Next, a two parameter model is fit to this data. 
 
 <<maas2cgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"))
+print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
-The two parameter model (not shown), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+The two parameter model (Appendix, Page~\pageref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
 
 
 The final step in the analysis of the MAAS scale is to test the performance of the models on unseen  data. 
@@ -1758,7 +1757,7 @@ Parallel Analysis indicated that two factors should be extracted, while the MAP 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
 lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
-lotr1.xtab <- FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One")
+lotr1.xtab <- FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One", sanitize.text.function= function (x) x)
 rownames(lotr1.xtab) <- lotritems.paste
 print(lotr1.xtab)
 @
@@ -1779,7 +1778,7 @@ and the RMSEA was equal to \Sexpr{round(lotr.fact.1[["RMSEA"]][1],3 )},with conf
 lotr.fact.2<-factor.pa(na.omit(lotritems), 2, rotate="oblimin")
 lotr2.xtab <- FactorXtab(lotr.fact.2, names=c("Pessimism", "Optimism"), label="tab:tcq1lotr2fact", caption="Factor Loadings, Two Factor Solution, LOT-R, Sample One")
 rownames(lotr2.xtab) <- lotritems.paste
-print(lotr2.xtab)
+print(lotr2.xtab, sanitize.text.function= function (x) x)
 @
 The two factor solution (Table~\ref{tab:tcq1lotr2fact}) broke down as follows:
 PA2: ``Q1'',  ``Q4'',  ``Q10''. These items are all the positively framed items, and so this factor can best be termed as Optimism. 
@@ -1911,13 +1910,13 @@ Again, the parallel analysis criterion suggests two factors, while the MAP crite
 
 <<lotr2bfact1, echo=FALSE, results=hide>>=
 lotr2b.fact1 <- fa(lotritems2b, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact1, names=c("Optimism"),label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"))
+print(FactorXtab(lotr2b.fact1, names=c("Optimism"),label="tab:hom2blotr1", caption="One Factor Solution, LOT-R, Sample Two, Split B"), sanitize.text.function= function (x) x)
 @
 
 
 <<lotr2cfact1, echo=FALSE, results=hide>>=
 lotr2c.fact1 <- fa(lotritems2c, 1, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", caption="One Factor Solution, LOT-R, Sample Two, Split C"))
+print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", caption="One Factor Solution, LOT-R, Sample Two, Split C"), sanitize.text.function= function (x) x)
 @
 
 <<lotrfact1average, echo=FALSE, results=tex>>=
@@ -1932,12 +1931,12 @@ Table~\ref{tab:lotrfact1average} show the averaged coefficients across both spli
 
 <<lotr2bfact2, echo=FALSE, results=hide>>=
 lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2blotr2", caption="Two Factor Solution, LOT-R, Split B"))
+print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2blotr2", caption="Two Factor Solution, LOT-R, Split B"), sanitize.text.function= function (x) x)
 @
 
 <<lotr2cfact2, echo=FALSE, results=hide>>=
 lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
-print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"))
+print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"), sanitize.text.function= function (x) x)
 @
 
 <<lotrfact2average, echo=FALSE, results=tex>>=
@@ -2156,7 +2155,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"))
+print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"), sanitize.colnames.function=function (x) print(x))
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
@@ -2218,17 +2217,17 @@ lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
 
 
 <<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"))
+print(xtable(coefirt(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
 
 <<lotr2bgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"))
+print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 
-The two parameter GRM (not shown) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
+The two parameter GRM (Appendix, Page~\pageref{tab:lotr2bgrm2pl}) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
 
 
 Finally, we assess the performance of each of these models on unseen data. 
@@ -2268,7 +2267,7 @@ lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
 
 <<lotr2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"))
+print(xtable(coefirt(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters
@@ -2282,7 +2281,7 @@ participants.
 
 
 <<lotr2cgrm2plprint, echo=FALSE, results=hide>>=
-print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"))
+print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
 When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for separating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
@@ -2377,7 +2376,7 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 \label{sec:infer-stat}
 
 Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
-\newpage
+\clearpage
 \begin{landscape}
 <<scalecorr, echo=FALSE, results=tex>>=
 scales2 <- hom[,66:75]
@@ -2388,7 +2387,7 @@ print(xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman C
 @ 
 \end{landscape}
 
-\newpage
+
 
 
 As can be seen from Table~\ref{tab:hom2scalecor}, the optimism hypothesis
