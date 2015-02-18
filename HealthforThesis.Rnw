@@ -780,7 +780,7 @@ print(rand8.xtab, scalebox=0.7, digits=2, sanitize.text.function= function (x) x
 @
 
 
-Table~\ref{tab:tcq1rand8fact} on page~\pageref{tab:tcq1rand8fact} shows the loadings and has the named factors for the eight factor solution. 
+Table~\ref{tab:tcq1rand8fact} on Page~\pageref{tab:tcq1rand8fact} shows the loadings and has the named factors for the eight factor solution. 
 
 PhysFun:  the first factor extracted maps exactly to the Physical Functioning scale, and retains that name. 
 
@@ -1047,7 +1047,7 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-The next factor solution to be examined was the three factor solution (loadings shown in Appendix, \pageref{
+The next factor solution to be examined was the three factor solution (loadings shown in Appendix, Page~\pageref{tab:tcq1maas3fact})
 
 
 <<maas7fact, echo=FALSE, results=hide>>=
@@ -1494,10 +1494,8 @@ print(maasp)
 %% \end{figure}
 
 
-<<maasgrm1plprint, echo=FALSE, results=tex, cache=TRUE>>=
-maas.grm.1pl.coef <- coef(maas.grm.1pl)
-
-print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"), sanitize.colnames.function=function (x) print(x))
+<<maasgrm1plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"), sanitize.colnames.function=function (x) x)
 @ 
 
 Table~\ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
@@ -1581,7 +1579,7 @@ maas2b.grm.2pl <- grm(maas2b.s, constrained=FALSE)
 
 
 <<maas2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"), sanitize.colnames.function=function (x) print(x))
+print(xtable(coefirt(maas2b.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split B", label="tab:maas2bgrm1pl"), sanitize.colnames.function=function (x) x)
 @ 
 
 
@@ -1618,7 +1616,7 @@ maas2c.grm.2pl <- grm(maas2c.s, constrained=FALSE)
 @ 
 
 <<maas2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"), sanitize.colnames.function=function (x) print(x))
+print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Split C", label="tab:maas2cgrm1pl"), sanitize.colnames.function=function (x) x)
 @ 
 
 
@@ -1738,7 +1736,8 @@ It can be seen that the model developed from Split C (without items 5,6 and 15) 
 The next step in the analysis was to investigate the structure of the LOT-R with respect to factor analysis and IRT methods. 
 
 <<lotritems, echo=FALSE, results=tex>>=
-lotrquestions <- read.csv("lotritems.csv")
+lotrquestions <- read.csv("lotritems.csv", colClasses="character", header=FALSE)
+names(lotrquestions) <- c("Item", "Question")
 print(xtable(lotrquestions, label="tab:lotritems", caption="Life Orientation Test, Revised Item Content"))
 @ 
 
@@ -1757,9 +1756,9 @@ Parallel Analysis indicated that two factors should be extracted, while the MAP 
 
 <<lotr1fact, echo=FALSE, results=tex>>=
 lotr.fact.1<-factor.pa(na.omit(lotritems), 1, rotate="oblimin")
-lotr1.xtab <- FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One", sanitize.text.function= function (x) x)
+lotr1.xtab <- FactorXtab(lotr.fact.1, names=c("Optimism"),label="tab:hom1lotr1fact", caption="Factor Loadings, One Factor Solution, LOT-R, Sample One")
 rownames(lotr1.xtab) <- lotritems.paste
-print(lotr1.xtab)
+print(lotr1.xtab, sanitize.text.function= function (x) x)
 @
 
 Table~\ref{tab:hom1lotr1fact} shows the loadings for the one factor solution. The communalities are relatively low, which is a sign that perhaps this solution is not optimal. As can be seen below, the two factor solution increases the communalities, but at the cost of potentially unwarranted complexity. 
@@ -1875,7 +1874,7 @@ lotr2summ2 <- summary(lotr2fit2)
 
 <<lotrcompare2, echo=FALSE, results=tex>>=
 lotrcomp2 <- mxCompare(base=lotr1fit2, comparison=lotr2fit2)
-lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of SEM Results for Sample One LOTR Factor Models on a Subset of Sample Two (Split A)")
+lotrcomp.xtab2 <- xtable(lotrcomp2,label="tab:lotrcompare2", caption="Comparison of CFA Results for  LOTR Sample One, One and Two Factor Models on a Subset of Sample Two (Split A)")
 print(lotrcomp.xtab2)
 @
 
@@ -2155,7 +2154,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"), sanitize.colnames.function=function (x) print(x))
+print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"), sanitize.colnames.function=function (x) x)
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
@@ -2267,7 +2266,7 @@ lotr2c.grm.2pl <- grm(lotr2c.s, constrained=FALSE)
 @ 
 
 <<lotr2cgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"), sanitize.colnames.function=function (x) print(x))
+print(xtable(coefirt(lotr2c.grm.1pl), caption="Coefficient Estimates for LOT-R One Parameter Graded Response Model, Split C", label="tab:lotr2cgrm1pl"), sanitize.colnames.function=function (x) x)
 @ 
 
 Table \ref{tab:lotr2cgrm1pl} shows the estimated difficulty parameters
@@ -2344,7 +2343,7 @@ lotr.bt.small.fit <- mxRun(lotr.bt.small)
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.7)
+print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.9)
 omxGraphviz(lotr.bt.full.fit, dotFilename="lotrfullbacktest.dot")
 omxGraphviz(lotr.bt.small.fit, dotFilename="lotrsmallbacktest.dot")
 @ 
@@ -2376,14 +2375,16 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 \label{sec:infer-stat}
 
 Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
-\clearpage
+
 \begin{landscape}
+  
+
 <<scalecorr, echo=FALSE, results=tex>>=
 scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
-print(xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples" ), environment="sidewaystable", scalebox=0.9)
-
+cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
+print(cors.xtab, floating.environment="sidewaystable", scalebox=0.9, floating=FALSE, caption.placement="top")
 @ 
 \end{landscape}
 
@@ -2903,7 +2904,7 @@ omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 
 <<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.6)
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.8)
 @ 
 
 The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
@@ -3008,7 +3009,7 @@ emwb.med.fitm <- fitMeasures(emwb.med.sem, c("chisq", "df", "pvalue", "cfi", "rm
 mind.med.fitm <- fitMeasures(mind.med.sem, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 health.lav.fits.all <- rbind(direct.fitm, emwb.med.fitm, mind.med.fitm)
 rownames(health.lav.fits.all) <- c("Direct", "EmWBMediated", "MindfulnessMediated")
-print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.8)
+print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.9)
 @ 
 
 As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
