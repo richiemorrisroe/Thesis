@@ -93,6 +93,20 @@ Table~\ref{tab:maas2cgrm2pl} shows the estimated parameters for the MAAS two par
 \subsection{LOTR Psychometric Analyses}
 \label{sec:lotr-psych-analys}
 
+<<lotr2bfact2, echo=FALSE, results=hide>>=
+lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2blotr2", caption="Two Factor Solution, LOT-R, Split B"), sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:hom2blotr2} shows the loadings for the LOT-R Two factor solution, Split B. 
+
+<<lotr2cfact2, echo=FALSE, results=hide>>=
+lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"), sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:hom2clotr2} shows the estimated loadings for the LOT-R Two Factor solution, Split C. 
+
 <<lotr2bgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
