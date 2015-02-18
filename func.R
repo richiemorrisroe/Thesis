@@ -10,7 +10,7 @@ FactorXtab <-  function (x, names=NULL,  ...) {
     x.mat.df <- FactorCoeff(x, names=names)
     x.mat.df[] <- sapply(x.mat.df, function (x) round(x, digits=2))
     getfacs <- dim(x.mat.df)[2]-1
-    x.mat.df[,1:getfacs] <- sapply(x.mat.df[,1:getfacs], function (x) ifelse(x>=0.4, paste0("\\textbf{",  x, "}"), x))
+    x.mat.df[,1:getfacs] <- sapply(x.mat.df[,1:getfacs], function (x) ifelse(x>=0.3, paste0("\\textbf{",  x, "}"), x))
     
     fact.xtab <- xtable(x.mat.df,...)
 
