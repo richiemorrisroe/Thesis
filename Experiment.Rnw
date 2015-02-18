@@ -953,7 +953,7 @@ Next, the relationships between the explicit and implicit measures were examined
 \newpage
 %scale this to fit full page
 \begin{figure}
-\setkeys{Gin}{height=0.9\textheight}  
+\setkeys{Gin}{height=0.8\textheight}  
 <<corrtestimplexpl, echo=FALSE, fig=TRUE>>=
 iatandexp.s <- Iatandexpmeasures[,c(14:22, 24)]
 names(iatandexp.s)[9:10] <- c("OptIAT", "TCQIAT")
@@ -961,7 +961,7 @@ pairs.panels(iatandexp.s, method="spearman", smooth=FALSE, ellipses=FALSE)
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
 ## print(xtable(corr.imp.exp, label="tab:corrimpexp", caption="Correlations between Implicit and Explicit Measures"), scalebox=0.6)
 @   
-  \caption{Scatterplots and Correlations for Implicit and Explicit Measures. Upper triangle shows the correlations, lower triangle shows the scatterplots, Diagonal shows the distributions}
+  \caption{Scatterplots and Correlations for Implicit and Explicit Measures. Upper triangle shows the correlations, lower triangle shows the scatterplots, Diagonal shows the distributions. From left top: LOTR - Life Orientation Test, Revised. MAAS- Mindful Attention Absorption Scale. Pill - Pill Credibility. Cream - Cream Credibility. Inj - Injection Credibility. Acu -Acupuncture Credibility. Hom - Homeopathy Credibility. Rei - Reiki Credibility. OptIAT - Mean Scored D Measure, Optimism IAT. TCQIAT - Mean Scored D Measures, Treatment Credibility IAT}
   \label{fig:pairsimpexp}
 \end{figure}
 \newpage
@@ -1006,7 +1006,7 @@ This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, wh
 \begin{figure}
 <<placprimeplot, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 primedata <- Iatandexpmeasures[with(Iatandexpmeasures, grep("^Placebo|^Treatment", x=Condition)),]
-plac.prime.pl <- ggplot(primedata, aes(x=PlacResp, fill=Prime))+geom_histogram()
+plac.prime.pl <- ggplot(primedata, aes(x=PlacResp, fill=Prime))+geom_histogram(postion="dodge")
 print(plac.prime.pl)
 @   
   \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
@@ -1172,7 +1172,7 @@ Table \ref{tab:placmodconvsumm} shows the estimated coefficients for the logisti
 Next, the ability estimates generated through the best fitting IRT model were used as predictor variables in a regression on the placebo response. 
 
 <<placmodirtabsest, echo=FALSE, results=tex>>=
-print(xtable(apareg(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit")), logistic=TRUE), caption="Regression of Conventional TCQ Summary Scores on Placebo Response", label="tab:placmodirtest"))
+print(xtable(apareg(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.grmtcq, family=binomial(link="logit")), logistic=TRUE), caption="Regression of IRT Estimated Ability Scores on Placebo Response", label="tab:placmodirtest"))
 @ 
 
 Table~\ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
