@@ -902,6 +902,9 @@ FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, correlations=FAL
     sols.coeff.list
     sols.list <- lapply(sols.coeff.list, as.matrix)
     resmat <- apply(simplify2array(sols.list), c(1,2), FUN)
+    resdims <- dim(resmat)[2]-1
+    resmat[] <- sapply(resmat, round, 2)
+    resmat[,1:resdims] <- sapply(resmat[,1:resdims], function (x) ifelse(x>=0.3, paste0("\\textbf{",  x, "}"), x))
     ## resmat <- Reduce(`+`, sols.coeff.list)/length(sols.coeff.list)
     ## dimmat <- dim(sols.coeff.list[[1]])
     ## resmat <- matrix(0, nrow=dimmat[1], ncol=dimmat[2])
