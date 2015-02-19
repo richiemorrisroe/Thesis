@@ -1,8 +1,8 @@
 
 
 <<loadpackages, echo=FALSE, results=hide>>=
+require(GPArotation)
 require(ggplot2)
-
 require(psych)
 require(xtable)
 require(OpenMx)
@@ -717,11 +717,11 @@ Two and eight  factor structures were examined for the RAND MOS and their perfor
 
 
 
-<<rand2fact, echo=FALSE, results=hide, eval=FALSE>>=
+<<rand2fact, echo=FALSE, results=hide>>=
 rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
 print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"))
 @
-The results of the two factor solution (Appendix, Page \pageref{tab:rand2fact}) were as follows:
+The results of the two factor solution (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:rand2fact}, Page \pageref{tab:rand2fact}) were as follows:
 The first factor appears to contain all of the scales except for Physical Functioning, which loads on Factor 2. This factor can be best termed as General and Emotional Health.
 
 The second factor maps exactly to the Physical Functioning Scale, and so retains that name. The non-normed fit index was equal to \Sexpr{round(rand.fact.2[["TLI"]], 3)}
@@ -740,6 +740,7 @@ The factor correlations were quite low for this solution, at 0.27. This suggests
 %% \paragraph{Rand MOS 4 Factor Solution}
 
 <<rand4fact, echo=FALSE, results=hide>>=
+
 rand.fact.4<-factor.pa(na.omit(randitems.scored), 4, rotate="oblimin")
 print(FactorXtab(rand.fact.4, names=c("PhysFunc", "SocEmFunc", "PhysLim", "GenHealth"), label="tab:rand4fact", caption="Four Factor Solution, RAND MOS, Sample One (Oblimin Rotation)"))
 @
@@ -811,7 +812,9 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 
 <<rand8corr, echo=FALSE, results=tex>>=
-rand8corr.xtab <- xtable(rand.fact.8[["r.scores"]], label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
+rand8.cor <- rand.fact.8[["r.scores"]]
+rand8.cor[lower.tri(rand8.cor)] <- NA
+rand8corr.xtab <- xtable(rand8.cor, label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
 rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
 names(rand8corr.xtab) <- rand8names
 rownames(rand8corr.xtab) <- rand8names
@@ -1047,7 +1050,7 @@ and the RMSEA was equal to \Sexpr{round(maas.fact.1[["RMSEA"]][1],3 )},with conf
 
 
 
-The next factor solution to be examined was the three factor solution (loadings shown in Appendix, Page~\pageref{tab:tcq1maas3fact})
+The next factor solution to be examined was the three factor solution (loadings shown in Chapter~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq1maas3fact},  Page~\pageref{tab:tcq1maas3fact})
 
 
 <<maas7fact, echo=FALSE, results=hide>>=
@@ -1255,7 +1258,7 @@ maas2c.fact1.n <- FactorNames(maas2c.fact1, names=c("Mindfulness"))
 maas2b.fact1.n <- FactorNames(maas2b.fact1, names=c("Mindfulness"))
 maas.fact1.av <- FactorAverage(sols=list(maas2b.fact1.n, maas2c.fact1.n), mynames=c("Mindfulness", "Communalities"))
 rownames(maas.fact1.av) <- maas.questions
-print(xtable(maas.fact1.av, label="tab:maasfact1average", caption="One Factor Solution Averaged over Splits B and C, MAAS"))
+print(xtable(maas.fact1.av, label="tab:maasfact1average", caption="One Factor Solution Averaged over Splits B and C, MAAS"), sanitize.text.function= function (x) x)
 @ 
 
 
@@ -1267,7 +1270,7 @@ Table \ref{tab:maasfact1average} shows the one factor loadings averaged over Spl
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
-This five factor solution for Split B (Appendix, page \pageref{tab:tcq2bmaasfact5}) explained 54\% of the variance in the sample.
+This five factor solution for Split B (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq2bmaasfact5}, page \pageref{tab:tcq2bmaasfact5}) explained 54\% of the variance in the sample.
 
 PA1: ``Q5'',  ``Q6'',  ``Q7'',  ``Q8'',  ``Q9'',  ``Q10''.  This factor has come through in most of the previous solutions, and can again be termed distractability.
 
@@ -1285,7 +1288,7 @@ Although there is significantly more variance explained by this solution, again 
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
-The five factor solution for split C (not shown) broke down as follows:
+The five factor solution for split C (Chapter \ref{cha:append-1:-supp}, Table~\ref{tab:hom2cmaasfact5}, Page~\pageref{tab:hom2cmaasfact5})) broke down as follows:
 
 PA1: "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12" "Q14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
@@ -1432,7 +1435,7 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 1 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
+The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 2 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
 
 There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
 
@@ -1516,7 +1519,20 @@ print(xtable(coefirt(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two 
 @ 
 
 
-The two parameter Graded Response Model (Appendix, Page \pageref{tab:maasgrm2pl}) had the following features. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+The two parameter Graded Response Model (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:maasgrm2pl}, Page~\pageref{tab:maasgrm2pl}) had the following features. Q14 has the highest discriminatory power, and that Q11 has the highest ability threshold, while Q1 has the lowest. Q11 refers to listening to others while engaging in other tasks, and its ability estimates suggest that it is a good question for pinpointing the abilities of respondents high on the construct of mindfulness. 
+
+The item information curves for each item in one and two parameter models can be seen in Figure~\ref{fig:iicmaasgrm}. Note that items 7, 8, 9, 10 appear to convey far more information over the participant ability levels. However, as seen below, this model was not supported on unseen data. 
+
+\begin{figure}
+<<iicmaasgrm, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1, 2))
+plot(maas.grm.1pl, type="IIC")
+plot(maas.grm.2pl, type="IIC")
+par(mfrow=c(1, 1))
+@   
+  \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right)}
+  \label{fig:iicmaasgrm}
+\end{figure}
 
 <<maasanovacomp, echo=FALSE, results=hide, eval=FALSE>>=
 anova.rasch.maas.1pl <- anova.gpcm(maas.pcm.rasch, maas.pcm.1pl)
@@ -1703,7 +1719,7 @@ maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
 @ 
 
 <<maasbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.7)
+print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.9)
 @ 
 
 As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5, 6 and 15  provided the best fit to the unseen data. 
@@ -1922,7 +1938,7 @@ print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", captio
 lotr2b.fact1 <- FactorNames(lotr2b.fact1, names=c("Optimism"))
 lotr2c.fact1 <- FactorNames(lotr2c.fact1, names=c("Optimism"))
 lotr.fact1.av <- FactorAverage(sols=list(lotr2b.fact1, lotr2c.fact1), mynames=c("Optimism", "Communalities"))
-print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One Factor Solution for LOT-R Across Splits B and C"))
+print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One Factor Solution for LOT-R Across Splits B and C"), sanitize.text.function = function (x) x)
 @ 
 
 Table~\ref{tab:lotrfact1average} show the averaged coefficients across both splits. Note that the communalities are, on average, much higher than those observed in the first sample. This may be due to the larger sample size or potentially due to the pseudo-random sampling method used in the pen and paper sample. The two solutions are somewhat different. The communalities for Q1 are much higher in Split C than in Split B, while those for Q4 are much lower in Split C than in Split B. To some extent this probably represents sampling error, but it is quite strange that the two negatively worded items should show much of the variance across samples. The averaging produces a solution which appears much more stable. 
@@ -1942,7 +1958,7 @@ print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2
 lotr2b.fact2 <- FactorNames(lotr2b.fact2, names=c("Optimism", "Pessimism"))
 lotr2c.fact2 <- FactorNames(lotr2c.fact2, names=c("Optimism", "Pessimism"))
 lotr.fact2.av <- FactorAverage(sols=list(lotr2b.fact2, lotr2c.fact2), mynames=c("Optimism", "Pessimism", "Communalities"))
-print(xtable(lotr.fact2.av, label="tab:lotrfact2average", caption="Average Two Factor Solution for LOT-R Across Splits B and C"))
+print(xtable(lotr.fact2.av, label="tab:lotrfact2average", caption="Average Two Factor Solution for LOT-R Across Splits B and C"), sanitize.text.function = function (x) x)
 @ 
 
 Table~\ref{tab:lotrfact2average} shows the averaged solution across Splits B and C. In general, though the major outline of the structure is the same, Split B's solution is much cleaner than that of Split C. For example, in Split C it is unclear whether or not Q10 belongs to the first or second factor. Therefore, it would seem advisable to prefer the structure from Split B, but this will be tested. 
@@ -2133,7 +2149,7 @@ print(lotr1plgrm)
 %%   \label{fig:lotr1plgrm}
 %% \end{figure}
 
-An analysis of the one parameter GRM for the LOT-R showed that there are no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
+An analysis of the one parameter GRM for the LOT-R showed that there were no violations of item ordering, and that LOTR4 is the hardest item to endorse, while LOTR3 appears to be the easiest. 
 
 %% \begin{figure}
 <<lotr2plgrmplot, echo=FALSE, results=hide>>=
@@ -2216,7 +2232,7 @@ lotr2b.grm.2pl <- grm(lotritems2b, constrained=FALSE)
 
 
 <<lotr2bgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"), sanitize.colnames.function=function (x) print(x))
+print(xtable(coefirt(lotr2b.grm.1pl), caption="Coefficient Estimates for One Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm1pl"), sanitize.colnames.function=function (x) x)
 @ 
 
 Table \ref{tab:lotr2bgrm1pl} clearly shows that there were no obvious problems with this model. The parameter estimates are relatively low in comparison with other scales, suggesting that these items were easier to endorse. 
@@ -2226,7 +2242,7 @@ print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Par
 @ 
 
 
-The two parameter GRM (Appendix, Page~\pageref{tab:lotr2bgrm2pl}) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
+The two parameter GRM (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:lotr2bgrm2pl}, Page~\pageref{tab:lotr2bgrm2pl}) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
 
 
 Finally, we assess the performance of each of these models on unseen data. 
@@ -2283,7 +2299,7 @@ participants.
 print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
-When the estimates for the two parameter GRM (not shown) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for separating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
+When the estimates for the two parameter GRM (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:lotr2cgrm2pl}, Page~\pageref{tab:lotr2cgrm2pl}) were examined, it can be seen that Q7 is  the most discriminating question, while still having the lowest ability estimates, suggesting that it is a very good question for separating out optimism and pessimism. Q10 is still the most difficult, but not as discriminating as Q7. 
 
 Finally, the performance of these two models is tested against unseen data. 
 
@@ -2292,12 +2308,14 @@ lotr.irt.notc <- lotritems.notc[,paste(lotr, c(3,4,7,9,10), sep="")]
 lotr2c.grm.1pl.test <- testIRTModels(lotr2c.grm.1pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=TRUE)
 lotr2c.grm.2pl.test <- testIRTModels(lotr2c.grm.2pl, lotr.irt.notc, gpcmconstraint=NULL, grmconstraint=FALSE)
 lotr2c.grm.test.all <- rbind(lotr2c.grm.1pl.test, lotr2c.grm.2pl.test)
-rownames(lotr2c.grm.test.all) <- c("One Parameter", "Two Parameter")
+
+rownames(lotr2c.grm.test.all) <- c( "One Parameter", "Two Parameter")
 
 @ 
 
 <<lotr2cgrmcompprint, echo=FALSE, results=tex>>=
 print(xtable(lotr2c.grm.test.all, caption="Performance of LOT-R Split C One and Two Parameter Graded Response Models on Unseen Data", label="tab:lotr2cgrmtest"))
+
 @ 
 
 As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provides the best fit to the unseen data. 
@@ -2343,7 +2361,7 @@ lotr.bt.small.fit <- mxRun(lotr.bt.small)
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.9)
+print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.875)
 omxGraphviz(lotr.bt.full.fit, dotFilename="lotrfullbacktest.dot")
 omxGraphviz(lotr.bt.small.fit, dotFilename="lotrsmallbacktest.dot")
 @ 
@@ -2384,7 +2402,8 @@ scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
-print(cors.xtab, floating.environment="sidewaystable", scalebox=0.9, floating=FALSE, caption.placement="top")
+cors.xtab[lower.tri(cors.xtab, diag=FALSE)] <- NA
+print(cors.xtab, floating.environment="sidewaystable", scalebox=0.9, caption.placement="top")
 @ 
 \end{landscape}
 
@@ -2442,7 +2461,7 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 
 <<healthregfirstprint, echo=FALSE, results=tex>>=
 
-print(xtable(apareg(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"))
+print(xtable(apareg(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"), sanitize.text.function = function (x) x)
 @ 
 Stepwise regression was used for the selection of predictors. Typically, such an approach is not optimal in research, as the p-values are biased by the search process. This is also a problem when variables are manually added or removed from a model, as in standard exploratory practice. In this research, stepwise regression methods were used appropriately, as all p-values are reported on an independent test set, which means that they are unbiased. Additionally, stepwise provides a mathematical justification (in this case, the AIC) for the addition or removal of variables from the model, which was useful in this research given the surprising, non-theoretically predicted results. Another benefit of this approach (in contrast to other selection methods such as lasso and ridge regression) is that stepwise provides a p-value for each coefficient, in line with APA conventions. 
 As can be seen from Table~\ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue and role limitations. 
@@ -2546,7 +2565,7 @@ The model developed by stepwise selection was applied to the new data.
 
 <<optsteppred, echo=FALSE, results=tex>>=
 opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
-print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"))
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"), sanitize.text.function = function (x) x)
 @ 
 
 <<optstep2a, echo=FALSE, results=hide, cache=TRUE>>=
@@ -2556,7 +2575,7 @@ opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
 rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 @ 
 <<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"))
+print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"), sanitize.text.function = function (x) x)
 @ 
 
 
@@ -2574,7 +2593,7 @@ Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor
 
 
 <<optstepprint, echo=FALSE, results=hide>>=
-print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"))
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"), sanitize.text.function = function (x) x)
 @ 
 
 %% As Table \ref{tab:hom1optstep} shows, 
@@ -2647,7 +2666,7 @@ opt.reg.final <- lm(optimism~generalhealth+mindfulness+emwellbeing+Age, data=hom
 opt.reg.fin.stand <- standardize(opt.reg.final)
 opt.fin.sum <- apareg(opt.reg.final)
 opt.fin.xtab <- xtable(opt.fin.sum, label="tab:optregfinal", caption="Final Regression Model for Optimism")
-print(opt.fin.xtab , table.placement="ht")
+print(opt.fin.xtab , table.placement="ht", sanitize.text.function = function (x) x)
 @
 
 
@@ -2682,7 +2701,7 @@ mind.step.pred.obs <- data.frame(pred=mind.step.pred, obs=hom1.mind.test[["optim
 @
 
 <<mindstepprint, echo=false, results=tex>>=
-print(xtable(apareg(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"))
+print(xtable(apareg(mind.step.test), caption="Coefficients for Stepwise Selected Regression on Mindfulness", label="tab:hom1mindsteptest"), sanitize.text.function = function (x) x)
 @ 
 
 As can be seen from Table \ref{tab:hom1mindsteptest}, the stepwise selection process retained role limitation, emotional role limitations, emotional well being and energy fatigue, even though only emotional well-being remained significant. This model would seem to suggest that mindfulness is related to health through emotional well-being. This is interesting, in that in terms of face validity this would not be expected, although it is reported to be a relatively common outcome of MBSR. 
