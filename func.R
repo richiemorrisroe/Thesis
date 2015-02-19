@@ -724,7 +724,7 @@ lazyload <- function (files, names, cols) {
   outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
   for (i in 1:length(files)) {
     temp <- read.table(files[i])
-    browser()
+    ## browser()
     gsr <- temp[,cols]
     write.table(gsr, file=outfilenames2[i])
   }
@@ -988,13 +988,15 @@ coefirt <- function(grm) {
     dims <- dim(dat)
     betas <- dims[2]-1
     #just need to add an identity sanitize test function to get the alphas and betas as markup
-    ## beta.names <- paste("$", "\beta",  "^", 1:betas, "$", sep="")
-    ## alpha.name <- "$\alpha$"
-    beta.names <- paste("beta", 1:betas, sep="")
-    alpha.name <- "alpha"
+    beta.names <- paste("$", "\\beta",  "^", 1:betas, "$", sep="")
+    alpha.name <- "$\\alpha$"
+    ## beta.names <- paste("beta", 1:betas, sep="")
+    ## alpha.name <- "alpha"
     allnames <- c(beta.names, alpha.name)
     ## browser()
     colnames(dat) <- allnames
+    rownames(dat)[1] <- "Item"
+    ## browser()
     dat
 }
 apareg <- function(model, logistic=FALSE) {
@@ -1004,5 +1006,12 @@ apareg <- function(model, logistic=FALSE) {
     if(logistic) {
         colnames(mod.coef) <- c("B", "SE(B)", "z", "Sig.(p)")
     }
+    standardised <- lm.beta(model)
+    standardised2 <- c(NA, standardised)
+    ## browser()
+    mod.coef <- as.data.frame(mod.coef)
+    mod.coef["$\\beta$"] <- standardised2
+
+    mod.coef <- mod.coef[,c(1, 2, 5, 3, 4)]
     mod.coef
 }
