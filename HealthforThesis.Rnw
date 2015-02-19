@@ -2394,6 +2394,8 @@ As can be seen from Table \ref{tab:lotrbtgrmtest}, the model developed on Split 
 
 Following the investigation of the scales from a psychometric point of view, the remaining hypotheses of the study were addressed. 
 
+
+  
 \begin{landscape}
   
 
@@ -2403,7 +2405,7 @@ scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
 cors.xtab[lower.tri(cors.xtab, diag=FALSE)] <- NA
-print(cors.xtab, floating.environment="sidewaystable", scalebox=0.9, caption.placement="top")
+print(cors.xtab, scalebox=0.75)
 @ 
 \end{landscape}
 
@@ -2923,7 +2925,7 @@ omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 
 <<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.8)
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.75)
 @ 
 
 The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
