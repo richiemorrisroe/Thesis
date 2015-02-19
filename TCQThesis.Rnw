@@ -301,8 +301,15 @@ The next step in the analysis  was an assessment of the number of factors sugges
 
 
 <<tcqfact4, echo=FALSE, results=tex>>=
+pillnames <- paste(c("Pill"), 1:6, sep="")
+creamnames <- paste(c("Cream"), 1:6, sep="")
+injnames <- paste(c("Inj"), 1:6, sep="")
+acunames <- paste(c("Acu"), 1:6, sep="")
+itemnames <- c(pillnames, creamnames, injnames, acunames)
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
-print(FactorXtab(tcq.fact.4,names=c("Acupuncture", "Cream", "Inj", "Pills"), label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation"), sanitize.text.function= function (x) x)
+tcq4.fact.xtab <- FactorXtab(tcq.fact.4,names=c("Acupuncture", "Cream", "Inj", "Pills"), label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation")
+rownames(tcq4.fact.xtab) <- itemnames
+print(tcq4.fact.xtab, sanitize.text.function= function (x) x)
 @ 
 
 <<factorloadings4, echo=FALSE, results=verbatim, eval=FALSE>>=
@@ -311,7 +318,10 @@ print(ExtractLoadings(tcq.fact.4))
 
 
 <<factorcor4, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.4, label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations"))
+tcq4.cor.xtab <- xtable(FactorCor(tcq.fact.4), label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations")
+rownames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
+colnames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
+print(tcq4.cor.xtab)
 @ 
 
 
@@ -333,12 +343,15 @@ As can be seen in Table \ref{tab:tcq1fact6} the four factors from the original s
 
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
-print(FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp"), label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation"), sanitize.text.function= function (x) x)
+tcq6.fact.xtab <- FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp"), label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation")
+rownames(tcq6.fact.xtab) <- itemnames
+print(tcq6.fact.xtab, sanitize.text.function= function (x) x)
 @ 
 
 
 <<tcq6cor, echo=FALSE, results=tex>>=
-print(FactorCor(tcq.fact.6, label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations", names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp")))
+#add names argument to FactorCor
+print(xtable(FactorCor(tcq.fact.6,names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp")), label="tab:tcq1fact6cor",caption="TCQ Six Factor Solution Correlations"))
 @ 
 
 
@@ -495,9 +508,9 @@ tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 @ 
 
 <<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqconv.grm.1pl), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"))
+print(xtable(coefirt(tcqconv.grm.1pl), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"), sanitize.colnames.function = function (x) x)
 @ 
-Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, coefficients not shown), and assess whether or not this represents a useful improvement over the model above.
+Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq1convgrm2pl}, on Page~\pageref{tab:tcq1convgrm2pl}), and assess whether or not this represents a useful improvement over the model above.
 
 <<tcqconvgrm2, echo=FALSE, results=tex, cache=TRUE>>=
 tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
@@ -558,7 +571,7 @@ tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 @ 
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm.constrained), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"))
+print(xtable(coefirt(tcqalt.grm.constrained), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is reasonably high (reflecting that these items were endorsed less by many of the participants), and the parameter estimates are  closely distributed around zero.
 
@@ -570,7 +583,7 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 ## tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"))
+print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
 
@@ -1157,7 +1170,7 @@ print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor
 
 
 
-The average of the two five factor solutions (Appendix, Page~\pageref{tab:tcq2fact5av}) merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
+The average of the two five factor solutions (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq2fact5av}, Page~\pageref{tab:tcq2fact5av}) merged the Pill credibility and Injection credibility items together, and this pattern was repeated across both splits. Note that both the Cream and Homeopathy factors have slightly lower loadings than do the others, and the Pill \& Injections factor is weighted more towards Injections.  
 
 
 Pillinj:  This factor consists of the Pill and Injection items, and can therefore best be termed Pills and Injections.
@@ -1785,14 +1798,14 @@ tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
 @ 
 
 
 Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits. The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
 @ 
 
 Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
@@ -1821,7 +1834,7 @@ tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
 
 <<tcq2altgrm1plaverage, echo=FALSE, results=tex>>=
 tcq2.alt.grm.1pl.av <- irtAverage(sols=list(tcq2b.alt.grm.1pl, tcq2c.alt.grm.1pl, tcq2d.alt.grm.1pl))
-print(xtable(coefirt(tcq2.alt.grm.1pl.av), label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"))
+print(xtable(coefirt(tcq2.alt.grm.1pl.av), label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
 @ 
 
 Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
@@ -2177,7 +2190,7 @@ pilltot.step <- stepAIC(object=pilltotlm1, upper=pilltotlm1,lower=~1, direction=
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 pilltotlm.holdout <- lm(Pilltot~Creamtot+Injtot+Acutot+ExpPill+ExpCream+Age, data=tcq2.pill.test)
-print(xtable(apareg(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Coefficients for Pill credibility Regression on Held Out Data"))
+print(xtable(apareg(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Coefficients for Pill credibility Regression on Held Out Data"), sanitize.colnames.function= function (x) x)
 @ 
 
 
@@ -2231,7 +2244,7 @@ creamtot.step <- stepAIC(object=creamtotlm1, upper=creamtotlm1,lower=~1, directi
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 creamtotlm.holdout <- lm(Creamtot~Pilltot+Injtot+Acutot+ExpPill+ExpCream+Health, data=tcq2.cream.test)
-print(xtable(apareg(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="Coefficients for Cream credibility Regression on Held Out Data"))
+print(xtable(apareg(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="Coefficients for Cream credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
 
@@ -2293,7 +2306,7 @@ injtot.step <- stepAIC(object=injtotlm1, upper=injtotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 injtotlm.holdout <- lm(Injtot~Pilltot+Acutot+Reitot+ExpPill, data=tcq2.inj.test)
-print(xtable(apareg(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"))
+print(xtable(apareg(injtotlm.holdout), label="tab:tcq2injholdout", caption="Coefficients for Injection credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
 
@@ -2345,7 +2358,7 @@ acutot.step <- stepAIC(object=acutotlm1, upper=acutotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=tcq2.acu.test)
-print(xtable(apareg(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acu credibility Regression on Held Out Data"))
+print(xtable(apareg(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acupuncture credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
 As shown in Table \ref{tab:tcq2acuholdout}, only Creams, Homeopathy and Reiki, remained significant on the unseen data. 
@@ -2394,7 +2407,7 @@ homtot.step <- stepAIC(object=homtotlm1, upper=homtotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.hom.test)
-print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Hom credibility Regression on Held Out Data"))
+print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Homeopathy credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
 Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, but the rest do not. The model has an $R^2$ of 0.62, which is extremely high. 
@@ -2443,7 +2456,7 @@ reitot.step <- stepAIC(object=reitotlm1, upper=reitotlm1,lower=~1, direction="bo
 
 <<lmonheldoutdata, echo=FALSE, results=tex>>=
 reitotlm.holdout <- lm(Reitot~Pilltot+Creamtot+Acutot+Homtot+ExpPill+ExpRei+Health, data=tcq2.rei.test)
-print(xtable(apareg(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coefficients for Rei credibility Regression on Held Out Data"))
+print(xtable(apareg(reitotlm.holdout), label="tab:tcq2reiholdout", caption="Coefficients for Reiki credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
 Table \ref{tab:tcq2reiholdout} shows the performance of the stepwise selected coefficients on unseen data. It can be seen that the only coefficients which maintained significance were those for Homeopathy and Acupuncture credibility, while the $R^2$ was quite low, at approximately 0.4. 
