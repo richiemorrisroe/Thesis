@@ -133,3 +133,11 @@ print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor
 
 Table~\ref{tab:tcq2fact5av} shows the average of the five factor solutions across Splits B and C. 
 
+\subsection{TCQ IRT Analyses}
+\label{sec:tcq-irt-analyses}
+
+<<tcqconvgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(tcqconv.grm.2pl), label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+@ 
+
+Table~\ref{tab:tcq1convgrm2pl} shows the estimated coefficients for the two parameter GRM fit to the conventional items of the TCQ in Sample One. 
