@@ -10,10 +10,10 @@ FactorXtab <-  function (x, names=NULL,  ...) {
     x.mat.df <- FactorCoeff(x, names=names)
     x.mat.df[] <- sapply(x.mat.df, function (x) round(x, digits=2))
     getfacs <- dim(x.mat.df)[2]-1
-    x.mat.df[,1:getfacs] <- sapply(x.mat.df[,1:getfacs], function (x) ifelse(x>=0.3, paste0("\\textbf{",  x, "}"), x))
+    x.mat.df[,1:getfacs] <- sapply(x.mat.df[,1:getfacs], function (x) ifelse(x>=0.3, paste0("\\bftab ",  x), x))
     
     fact.xtab <- xtable(x.mat.df,...)
-
+    align(fact.xtab) <- rep("r", ncol(fact.xtab)+1)
     return(fact.xtab)
 }
 FactorCoeff <- function (x, names=NULL) {
@@ -44,10 +44,15 @@ FactorCoeff <- function (x, names=NULL) {
 ##' @param ...
 ##' @return
 ##' @author Richard Morrisroe
-FactorCor <- function (x, xtable=FALSE, ...) {
+FactorCor <- function (x, xtable=FALSE, names=NULL, ...) {
   res <- x$r.scores
   #allnames <- attr(x$loadings, "dimnames")
+  if(is.null(names)) {
   factnames <- colnames(x$loadings)
+}
+  else {
+      factnames <- names
+  }
   ## browser()
   res <- as.data.frame(res)
   names(res) <- factnames
