@@ -155,6 +155,7 @@ As described above, the aim of this Study was to ensure that the altered measure
 
 
 <<packagesanddata, echo=FALSE, results=hide>>=
+require(QuantPsyc)
 require(ggplot2)
 require(plyr)
 require(reshape2)
@@ -272,11 +273,11 @@ rel.tcq <- psych:::alpha(na.omit(tcqall))
 
 
 
-<<reltcq2, echo=FALSE, results=hide>>=
-print(xtable(rel.tcq[["item.stats"]], caption="Item reliability Statistics for the TCQ 1", label="tab:tcq1rellong"))
+<<reltcq2, echo=FALSE, results=tex>>=
+print(xtable(rel.tcq[["alpha.drop"]], caption="Item reliability Statistics for the TCQ 1. Overall alpha of the scale was 0.92, following reverse scoring of the Acupuncture Items. Reverse scored items are indicated by the minus symbol", label="tab:tcq1rellong"))
 @ 
 
-
+Table~\ref{tab:tcq1rellong} shows the $\alpha$ coefficient for each of the items, along with the Guutman Lambda 6 statistic, which measures the amount of variation in an item which can be accounted for by a linear regression of all the other items. Standardised alpha is based on the correlations rather than the covariances, and as such as typically a much more useful measure. 
 
 
 
@@ -305,10 +306,11 @@ pillnames <- paste(c("Pill"), 1:6, sep="")
 creamnames <- paste(c("Cream"), 1:6, sep="")
 injnames <- paste(c("Inj"), 1:6, sep="")
 acunames <- paste(c("Acu"), 1:6, sep="")
-itemnames <- c(pillnames, creamnames, injnames, acunames)
+itemnames1 <- c(pillnames, creamnames, injnames, acunames)
 tcq.fact.4<-fa(na.omit(tcqall), 4, rotate='oblimin', fm="pa")
 tcq4.fact.xtab <- FactorXtab(tcq.fact.4,names=c("Acupuncture", "Cream", "Inj", "Pills"), label="tab:tcq1fact4", caption="Four Factor Solution, TCQ 1 Oblimin rotation")
-rownames(tcq4.fact.xtab) <- itemnames
+
+rownames(tcq4.fact.xtab) <- itemnames1
 print(tcq4.fact.xtab, sanitize.text.function= function (x) x)
 @ 
 
@@ -344,7 +346,7 @@ As can be seen in Table \ref{tab:tcq1fact6} the four factors from the original s
 <<tcqfact6, echo=FALSE, results=tex>>=
 tcq.fact.6<-fa(na.omit(tcqall), 6, rotate='promax', fm="pa")
 tcq6.fact.xtab <- FactorXtab(tcq.fact.6,  names=c("Acu", "Cream", "Inj", "Pill", "Cred", "Exp"), label="tab:tcq1fact6", caption="Six Factor Solution, TCQ 1, Oblimin Rotation")
-rownames(tcq6.fact.xtab) <- itemnames
+rownames(tcq6.fact.xtab) <- itemnames1
 print(tcq6.fact.xtab, sanitize.text.function= function (x) x)
 @ 
 
@@ -980,7 +982,7 @@ print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", l
 
 Many respondents stopped answering questions throughout the demographic variables. The reasons for this are unknown, but are probably not related to the design in any substantial way. The median age is 22 (SD=11.4), which shows that most of the sample was made up of students.
 
-The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median. 
+The Health variable is quite skewed, as most respondents rated their health as very good as good, as can be seen from the mean and the median (Table~\ref{tab:tcq2sumstats}). 
 The mean level of experience with a particular treatment was highest for pills and steadily declined for all of the other treatments. 
 
 The sample was 69.17\% female, with 45 respondents not specifying their gender. 
@@ -1165,7 +1167,10 @@ print(FactorXtab(tcq2c.fact.5, names=c("PillInj", "Hom", "Rei", "Cream", "Acu"),
 tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
 tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), mynames=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
-print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor Solutions over Splits B and C"))
+tcq2c5.av.xtab <- xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor Solutions over Splits B and C")
+align(tcq2c5.av.xtab) <- c("l", rep("r", ncol(tcq2c5.av.xtab)))
+rownames(tcq2c5.av.xtab) <- itemnames
+print(tcq2c5.av.xtab)
 @ 
 
 
@@ -1277,7 +1282,7 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
-print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x)
+print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht")
 ###hmmm, not sure if this is right
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
