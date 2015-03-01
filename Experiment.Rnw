@@ -319,9 +319,10 @@ expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
 
 
 <<loadpackages, echo=FALSE, results=hide>>=
+require(dplyr)
+require(lubridate)
 require (randomForest)
 require(GGally)
-require (cacheSweave)
 require (gridExtra)
 require(psych)
 require(xtable)
