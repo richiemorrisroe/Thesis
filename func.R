@@ -1000,7 +1000,7 @@ coefirt <- function(grm) {
     allnames <- c(beta.names, alpha.name)
     ## browser()
     colnames(dat) <- allnames
-    rownames(dat)[1] <- "Item"
+    ## rownames(dat)[1] <- "Item"
     ## browser()
     dat
 }
