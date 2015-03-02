@@ -226,7 +226,7 @@ The methods used for this part of the thesis were primarily psychometric. Cross-
 hom.gend.meth <- count(hom, vars=c("Gender", "CollectMeth"))
 hom.gend.meth2 <- na.omit(hom.gend.meth)
 hom.gend.meth.tab <- recast(hom.gend.meth2, Gender~CollectMeth)
-print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"))
+print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"), include.rownames=FALSE)
 @ 
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
@@ -317,7 +317,7 @@ All missing data was assumed to be Missing Completely at Random (MCAR)~\cite{lit
 %% Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. 
 %% Following this, a correlation matrix for the data was calculated and %% analysed.
 
-The majority of the analytical procedures were as described in Chapter \ref{cha:methodology}. 
+The majority of the analytical procedures were as described in Chapter \ref{cha:methodology}. In brief, Factor analytic and item response theory (not Rasch) models were fit to the data, and tested on either new samples (Sample One) or on other splits of the data (Sample Two). All regression results were obtained through the use of ten-fold cross-validation on the training set, and the reported coefficients are from the test set, and thus are unbiased by the search process. In general, all correlations reported are rank-correlations, to control for the non-normality of the input variables. 
 
 
 
@@ -543,7 +543,7 @@ lotr.alpha <- alpha(lotritems)
 @ 
 
 
-Next, the summary statistics for the second sample (N=1107) were examined and reported. 
+
 
 <<hom2demo, echo=FALSE, results=tex>>=
 physicalfunctioning <- with(hom2,  hom2[,grep("RANDQ[3456789]$|RANDQ[1][012]$", x=names(hom2))])
@@ -576,7 +576,7 @@ hom2.sum$Scale <- longnames
 print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
 @ 
 
-The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were somewhat lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. 
+The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
 
 
 \section{Psychometric Analyses}
@@ -712,7 +712,7 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 \subsection{RAND MOS}
 \label{sec:rand-mos-1}
 
-The parallel analysis criterion and the kaiser criterion suggest eight factors. The acceleration factor and the optimal calibration index measures suggested two factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
+The parallel analysis criterion and the kaiser criterion suggested eight factors. The acceleration factor and the optimal calibration index measures suggested two factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
 Two and eight  factor structures were examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
 
@@ -814,7 +814,7 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 <<rand8corr, echo=FALSE, results=tex>>=
 rand8.cor <- rand.fact.8[["r.scores"]]
-rand8.cor[lower.tri(rand8.cor)] <- NA
+rand8.cor[lower.tri(rand8.cor, diag=TRUE)] <- NA
 rand8corr.xtab <- xtable(rand8.cor, label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
 rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
 names(rand8corr.xtab) <- rand8names
@@ -1006,7 +1006,7 @@ rand8summ2 <- summary(rand8fit2)
 
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
-randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand4fit2, rand8fit2))
+randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand8fit2))
 print(xtable(randsemcomp.hom2,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
 @
 
@@ -1020,6 +1020,7 @@ The next step in the analyses was to examine the MAAS using factor analytic and 
 
 <<maasitems, echo=FALSE, results=tex>>=
 maasquestions <- read.csv("maasitems.csv")
+names(maasquestions)[2] <- "Content"
 print(xtable(maasquestions, label="tab:maasitems", caption="MAAS Item Content"), include.rownames=FALSE, scalebox=0.7)
 @ 
 
@@ -1289,7 +1290,7 @@ Although there is significantly more variance explained by this solution, again 
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
-The five factor solution for split C (Chapter \ref{cha:append-1:-supp}, Table~\ref{tab:hom2cmaasfact5}, Page~\pageref{tab:hom2cmaasfact5})) broke down as follows:
+The five factor solution for split C (Chapter \ref{cha:append-1:-supp}, Table~\ref{tab:hom2cmaasfact5}, Page~\pageref{tab:hom2cmaasfact5}) broke down as follows:
 
 PA1: "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12" "Q14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
@@ -1531,7 +1532,7 @@ plot(maas.grm.1pl, type="IIC")
 plot(maas.grm.2pl, type="IIC")
 par(mfrow=c(1, 1))
 @   
-  \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right)}
+  \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample One)}
   \label{fig:iicmaasgrm}
 \end{figure}
 
@@ -1608,6 +1609,19 @@ print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Tw
 
 The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual trade off between discrimination and ability estimate parameters. 
 
+\begin{figure}
+<<iicmaasgrm, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1, 2))
+plot(maas2b.grm.1pl, type="IIC")
+plot(maas2b.grm.2pl, type="IIC")
+par(mfrow=c(1, 1))
+@   
+  \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample Two, Split B)}
+  \label{fig:iicmaasgrm2b}
+\end{figure}
+
+The item information curves for the Split B data (Figure~\ref{fig:iicmaasgrm2b}) show a similar breakdown to those from Sample One. This highlights the benefits of fitting both these models, as if the two parameter model were true then approximately similar performance could be obtained from a much smaller scale. Unfortunately for this theory, the more complex model was not supported across any of the splits. 
+
 Next, we examine the performance of these models on unseen data.
 
 <<maas2bgrmtest, echo=FALSE, results=hide, cache=TRUE>>=
@@ -1639,13 +1653,26 @@ print(xtable(coefirt(maas2c.grm.1pl), caption="Coefficient Estimates for MAAS On
 
 As can be seen from Table \ref{tab:maas2cgrm1pl}, the coefficient estimates appear reasonable. The discrimination parameter is relatively low, suggesting that this scale is good for all levels of abilities, even though the highest estimated difficulty parameter is only 2.05, for Q13 which is ``I often find myself occupied with the future or the past'', which is a relatively concise summary of the entire construct of mindlessness. 
 
-Next, a two parameter model is fit to this data. 
+Next, a two parameter model was fit to this data. 
 
 <<maas2cgrm2plprint, echo=FALSE, results=hide>>=
 print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
-The two parameter model (Appendix, Page~\pageref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+The two parameter model (Appendix, Page~\pageref{tab:maas2cgrm2pl}, Table~\ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+
+\begin{figure}
+<<iicmaasgrm, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1, 2))
+plot(maas2c.grm.1pl, type="IIC")
+plot(maas2c.grm.2pl, type="IIC")
+par(mfrow=c(1, 1))
+@   
+  \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample Two, Split C)}
+  \label{fig:iicmaasgrm2c}
+\end{figure}
+
+Again, the item information curves for the two parameter model (Figure~\ref{fig:iicmaasgrm2c}) show that items 3, 5, 6, 7, 8 and 11 appear to convey much more information across the range of the test, suggesting that a reduced scale could convey more information with fewer items. However, the out of sample tests did not support the additional parameters for this model. 
 
 
 The final step in the analysis of the MAAS scale is to test the performance of the models on unseen  data. 
@@ -1720,7 +1747,7 @@ maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
 @ 
 
 <<maasbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.9)
+print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.85)
 @ 
 
 As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5, 6 and 15  provided the best fit to the unseen data. 
@@ -1939,6 +1966,7 @@ print(FactorXtab(lotr2c.fact1,names=c("Optimism"),label="tab:hom2clotr1", captio
 lotr2b.fact1 <- FactorNames(lotr2b.fact1, names=c("Optimism"))
 lotr2c.fact1 <- FactorNames(lotr2c.fact1, names=c("Optimism"))
 lotr.fact1.av <- FactorAverage(sols=list(lotr2b.fact1, lotr2c.fact1), mynames=c("Optimism", "Communalities"))
+rownames(lotr.fact1.av) <- lotritems.paste
 print(xtable(lotr.fact1.av, label="tab:lotrfact1average", caption="Average One Factor Solution for LOT-R Across Splits B and C"), sanitize.text.function = function (x) x)
 @ 
 
@@ -1959,6 +1987,7 @@ print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2
 lotr2b.fact2 <- FactorNames(lotr2b.fact2, names=c("Optimism", "Pessimism"))
 lotr2c.fact2 <- FactorNames(lotr2c.fact2, names=c("Optimism", "Pessimism"))
 lotr.fact2.av <- FactorAverage(sols=list(lotr2b.fact2, lotr2c.fact2), mynames=c("Optimism", "Pessimism", "Communalities"))
+rownames(lotr.fact2.av) <- lotritems.paste
 print(xtable(lotr.fact2.av, label="tab:lotrfact2average", caption="Average Two Factor Solution for LOT-R Across Splits B and C"), sanitize.text.function = function (x) x)
 @ 
 
@@ -2079,7 +2108,7 @@ lotr.scales <- aisp(na.omit(lotritems))
 print(xtable(as.matrix(lotr.scales),label="tab:lotrscales"))
 @
 
-All of the items meet the assumptions of a uni-dimensional scale.  Next, the item orderings were examined.
+All of the items meet the assumptions of a uni-dimensional scale (reinforcing the superiority of a one factor model seen in the earlier analyses).  Next, the item orderings were examined.
 
 <<lotritemord, echo=FALSE, results=hide, cache=TRUE>>=
 lotr.iio <- check.iio(na.omit(lotritems))
@@ -2246,6 +2275,19 @@ print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Par
 The two parameter GRM (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:lotr2bgrm2pl}, Page~\pageref{tab:lotr2bgrm2pl}) suggested that the ability estimates have risen while the discrimination parameters have fallen for the majority of the items (except for 7). 
 
 
+\begin{figure}
+<<iiclotr1, echo=FALSE, fig=TRUE>>=
+par(mfrow=c(1, 2))
+plot(lotr2b.grm.1pl, type="IIC")
+plot(lotr2b.grm.2pl, type="IIC")
+par(mfrow=c(1, 1))
+@   
+  \caption{Item Information Curves, LOT-R, Sample Two, Split B for One Parameter GRM (left) and Two Parameter GRM (right)}
+  \label{fig:iiclotrgrm}
+\end{figure}
+
+The item information curves for Sample One suggest that Q4 (``I'm always optimistic about the future'') (Figure~\ref{fig:iiclotrgrm}) could actually stand as a reasonably good proxy for the entire scale. Again, this more complicated model was not supported on unseen data. 
+
 Finally, we assess the performance of each of these models on unseen data. 
 
 <<lotr2bgrmtest, echo=FALSE, results=tex>>=
@@ -2362,7 +2404,7 @@ lotr.bt.small.fit <- mxRun(lotr.bt.small)
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.875)
+print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.85)
 omxGraphviz(lotr.bt.full.fit, dotFilename="lotrfullbacktest.dot")
 omxGraphviz(lotr.bt.small.fit, dotFilename="lotrsmallbacktest.dot")
 @ 
@@ -2405,7 +2447,7 @@ scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
-cors.xtab[lower.tri(cors.xtab, diag=FALSE)] <- NA
+cors.xtab[lower.tri(cors.xtab, diag=TRUE)] <- NA
 print(cors.xtab, scalebox=0.75)
 @ 
 \end{landscape}
@@ -2566,7 +2608,7 @@ step.pred.obs <- data.frame(pred=opt.step.pred.resp, obs=hom1.test.opt[,"optimis
 
 The model developed by stepwise selection was applied to the new data. 
 
-<<optsteppred, echo=FALSE, results=tex>>=
+<<optsteppred, echo=FALSE, results=hide>>=
 opt.step.test <- lm(optimism~generalhealth+energyfat+emwellbeing, data=hom1.test.opt)
 print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model on Optimism", label="tab:hom1stepopttest"), sanitize.text.function = function (x) x)
 @ 
