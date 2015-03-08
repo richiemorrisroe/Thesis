@@ -1123,7 +1123,7 @@ iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "L
 iatandexpfull.test.small[,2:length(iatandexpfull.test.small)] <- scale(iatandexpfull.test.small[,2:length(iatandexpfull.test.small)])
 placmod.test <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
 
-print(xtable(apareg(placmod.test, logistic=TRUE), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"), sanitize.conames.function = function (x) x)
+print(xtable(apareg(placmod.test, logistic=TRUE), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"), sanitize.colnames.function = function (x) x)
 
 @
 
@@ -1200,7 +1200,9 @@ Table~\ref{tab:placmodirtest} shows the results of fitting the model using the I
 
 <<placmodgsr, echo=FALSE, results=tex>>=
 placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
-print(xtable(apareg(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response"), sanitize.colnames.function = function (x) x)
+placmod10.xtab <- xtable(apareg(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response")
+rownames(placmod10.xtab)[2] <- "Mean GSR"
+print(placmod10.xtab, sanitize.colnames.function = function (x) x)
 @ 
 
 As can be seen from Table~\ref{tab:placmodgsr}, the mean level of skin response was not significantly associated with the response to placebo. 
