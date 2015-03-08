@@ -1053,12 +1053,14 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 \begin{figure}
 \setkeys{Gin}{height=0.9\textheight}  
 <<collcredplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-collpill <- ggplot(tcq2, aes(x=College, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
-collCream <- ggplot(tcq2, aes(x=College, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
-collInj <- ggplot(tcq2, aes(x=College, y=Injtot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
-collAcu <- ggplot(tcq2, aes(x=College, y=Acutot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
-collHom <- ggplot(tcq2, aes(x=College, y=Homtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=90, hjust=1))
-collRei <- ggplot(tcq2, aes(x=College, y=Reitot))+geom_boxplot()+theme(axis.text.x=element_text(angle=90, hjust=1))
+college2 <- data.frame(name=c("Business and Law", "Arts", "Science", "Medicine and Health", "Central Admin"), shortname=c("Business", "Arts", "Science", "Medicine", "Admin"))
+tcq.coll <- merge(tcq2, college2, by.x="College", by.y="name")
+collpill <- ggplot(tcq.coll, aes(x=shortname, y=Pilltot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
+collCream <- ggplot(tcq.coll, aes(x=shortname, y=Creamtot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
+collInj <- ggplot(tcq.coll, aes(x=shortname, y=Injtot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
+collAcu <- ggplot(tcq.coll, aes(x=shortname, y=Acutot))+geom_boxplot()+theme(axis.text.x=element_blank(),axis.title.x=element_blank())
+collHom <- ggplot(tcq.coll, aes(x=shortname, y=Homtot))+geom_boxplot()+theme(axis.text.x=element_text(angle=90, hjust=1))+xlab("College")
+collRei <- ggplot(tcq.coll, aes(x=shortname, y=Reitot))+geom_boxplot()+theme(axis.text.x=element_text(angle=90, hjust=1))+xlab("College")
 print(arrangeGrob(collpill, collCream, collInj, collAcu, collHom, collRei ))
 @   
   \caption{Credibility Scores by College}
