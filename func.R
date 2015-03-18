@@ -701,6 +701,7 @@ penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("
   cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds, family=family)
   mod <- glmnet(x=x.mat, y=y, alpha=alpha, family=family)
   pred.coef <- predict(mod, testdata.mat, s=cvres$lambda.min, type=type)
+  ## testmod <<- list(cvres=cvres, model=mod, predictions=pred.coef)
   if(type=="response") {
   pred <- data.frame(pred=as.vector(pred.coef), obs=newy)
   return(pred)

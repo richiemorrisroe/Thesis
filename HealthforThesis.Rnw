@@ -2491,8 +2491,12 @@ hom1.health.train.ind <- with(hom1.full, createDataPartition(generalhealth, p=0.
 hom1.health.train <- hom1.full[hom1.health.train.ind,]
 hom1.health.test <- hom1.full[-hom1.health.train.ind,]
 healthpred.train <- hom1.health.train[,c(4, 66:72, 74:75)]
+healthall.train <- hom1.health.train[,c(10:40, with(hom1.health.train,grep("^MAAS|^LOTR", x=names(hom1.health.train))))]
+
 health.train <- with(hom1.health.train, generalhealth)
 healthpred.test <- hom1.health.test[,c(4, 66:72, 74:75)]
+healthall.test <- hom1.health.test[,c(10:40, with(hom1.health.train,grep("^MAAS|^LOTR", x=names(hom1.health.test))))]
+
 health.test <- with(hom1.health.test, generalhealth)
 @ 
 
@@ -2516,6 +2520,8 @@ As can be seen from Table~\ref{tab:hom1healthsteptest}, optimism, role limitatio
 
 <<healthlasso, echo=FALSE, results=hide>>=
 health.lasso <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="coefficients")
+healthall.lasso <- penalisedRegression(x=as.matrix(healthall.train), y=health.train,  testdata=healthall.test, newy=health.test, alpha=1, type="coefficients")
+
 health.lasso.pred <- penalisedRegression(x=as.matrix(healthpred.train), y=health.train,  testdata=healthpred.test, newy=health.test, alpha=1, type="response")
 print(xtable(as.matrix(health.lasso), caption="Coefficients for Lasso Regression on General Health on unseen data", label="tab:hom1healthlasso"))
 @ 
