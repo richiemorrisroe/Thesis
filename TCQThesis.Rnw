@@ -83,9 +83,9 @@ The overall aim of this study was to develop and test a measure of treatment exp
 \section{Design}
 \label{sec:design}
 
-This portion of the research was designed in the following fashion. In the first sample (N=299), the measure was tested for reliability and to ensure that the factor structure from the previous research replicated in this new setting, and with some changes made. 
+This portion of the research was designed in the following fashion. In the first study (N=299), the measure was tested for reliability and to ensure that the factor structure from the previous research replicated in this new setting, and with some changes made. 
 
-The second sample (N=1329) was conducted to validate the factor structure from the first study, and to assess convergent validity through the use of the BMQ.  This study included two more forms of alternative treatment (Homeopathy and Reiki) to assess if a common factor structure could also be found for the alternative treatments. Additionally, the second sample collected demographic statistics around income, health and familiarity with all of the painkilling treatments used in the major instrument, to assess if these would have the impacts observed in previous research. 
+The second study (N=1329) was conducted to validate the factor structure from the first study, and to assess convergent validity through the use of the BMQ.  This study included two more forms of alternative treatment (Homeopathy and Reiki) to assess if a common factor structure could also be found for the alternative treatments. Additionally, the second sample collected demographic statistics around income, health and familiarity with all of the painkilling treatments used in the major instrument, to assess if these would have the impacts observed in previous research. 
 
 This design had the advantage of both providing evidence for reliability of the instrument across Studies One and Two, and also providing independent evidence for the validity of the predicted factor structure in Study Two. The second, larger study  provided links to important potential moderators of the treatment expectancies and assessed convergent validity using the BMQ. 
 
@@ -137,12 +137,12 @@ Study One was treated as an overall training and development sample (most approp
 
 %% All data analysis was preceded by fitting a multiple imputation model where necessary, and was split into 4 parts as described above under the section Analysis for Health, Optimism and Mindfulness.
 
-Data for Sample Two was split into four parts of approximately 300 observations each, in line with the procedure described in Chapter~\ref{cha:methodology}. 
+Data for Study Two was split into four parts of approximately 300 observations each, in line with the procedure described in Chapter~\ref{cha:methodology}. 
 
 Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. %% Next, the data was tested for normality using a Shapiro-Wilks test. 
 Following this, a correlation matrix for the data was calculated and analysed.
 
-Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. 
+Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. In brief, the first study used all of the data available to fit psychometric models and tested these on a subset of Study Two data. Ten-fold cross-validation was used for all regression models. 
 
 
 
@@ -274,7 +274,7 @@ rel.tcq <- psych:::alpha(na.omit(tcqall))
 
 
 <<reltcq2, echo=FALSE, results=tex>>=
-print(xtable(rel.tcq[["alpha.drop"]], caption="Item reliability Statistics for the TCQ 1. Overall alpha of the scale was 0.92, following reverse scoring of the Acupuncture Items. Reverse scored items are indicated by the minus symbol. Raw/standard alpha (Cronbach's alpha),G6: Guttmans Lambda6 (squared multiple correlation) S/N: Signal/Noise ratio, alpha_se: Standard error of alpha estimation", label="tab:tcq1rellong"))
+print(xtable(rel.tcq[["alpha.drop"]], caption="Item reliability Statistics for the TCQ 1. Overall alpha of the scale was 0.92, following reverse scoring of the Acupuncture Items. Reverse scored items are indicated by the minus symbol. Raw/standard alpha (Cronbach's alpha),G6: Guttmans Lambda6 (squared multiple correlation) S/N: Signal/Noise ratio, alpha\\_se: Standard error of alpha estimation", label="tab:tcq1rellong"))
 @ 
 
 Table~\ref{tab:tcq1rellong} shows the $\alpha$ coefficient for each of the items, along with the Guutman Lambda 6 statistic, which measures the amount of variation in an item which can be accounted for by a linear regression of all the other items. Standardised alpha is based on the correlations rather than the covariances, and as such as typically a much more useful measure. 
@@ -606,8 +606,8 @@ The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of th
 <<tcqalticcpl, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
 devAskNewPage(ask=FALSE)
-plot(tcqconv.grm.1pl, type="IIC")
-plot(tcqconv.grm.2pl, type="IIC")  
+plot(tcqalt.grm.constrained, type="IIC")
+plot(tcqalt.grm2, type="IIC")  
 @ 
   \caption{Item Information Curves, TCQ Alternative Scale, One Parameter GRM (left) and Two Parameter GRM (right)}
   \label{fig:iictcqalt1grmpl}
@@ -1051,7 +1051,7 @@ print(arrangeGrob(gendPill, gendcream, gendInj, gendAcu, gendHom, gendRei))
 %% \end{figure}
 \newpage
 \begin{figure}
-\setkeys{Gin}{height=0.9\textheight}  
+%% \setkeys{Gin}{height=0.9\textheight}  
 <<collcredplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
 college2 <- data.frame(name=c("Business and Law", "Arts", "Science", "Medicine and Health", "Central Admin"), shortname=c("Business", "Arts", "Science", "Medicine", "Admin"))
 tcq.coll <- merge(tcq2, college2, by.x="College", by.y="name")
@@ -1078,7 +1078,7 @@ expdf <- tcq2[,c("Age", "Gender", "ExpPill", "ExpCream", "ExpInj", "ExpAcu", "Ex
 expdf.gend <- ddply(na.omit(expdf), .(Gender), summarise, Pill=mean(ExpPill, na.rm=TRUE),Cream=mean(ExpCream, na.rm=TRUE),Inj=mean(ExpInj, na.rm=TRUE),Acu=mean(ExpAcu, na.rm=TRUE),Hom=mean(ExpHom, na.rm=TRUE),Rei=mean(ExpRei, na.rm=TRUE))
 gend.m <- melt(expdf.gend)
 expdf.gend[,"Gender"] <- with(expdf.gend, as.factor(gsub("^$", "Not Reported", x=Gender)))
-print(xtable(expdf.gend, label="tab:experiencegend", caption="Experience with painkilling treatments by Gender"))
+print(xtable(expdf.gend, label="tab:experiencegend", caption="Experience with painkilling treatments by Gender"), include.rownames=FALSE)
 @
 
 As can be seen from Table \ref{tab:experiencegend} females reported a higher level of pill experience, along with lower levels of cream and injection experience, and slightly higher levels of Homeopathy and Reiki experience.
@@ -1088,7 +1088,7 @@ Next, the response to the Income and Health questions were assessed.
 <<inc, echo=FALSE, results=tex>>=
 inctab <- as.data.frame(with(tcq2, table(Income)))
 inctab[,"Income"] <- c("Less than 20K", "20K to 40K", "40K to 60K", "60 to 80K", "80K+")
-print(xtable(inctab, label="tab:incomelevels", caption="Income Levels for Study two"))
+print(xtable(inctab, label="tab:incomelevels", caption="Income Levels for Study two"), include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:incomelevels}, most participants reported earning less than 20,000 euros per year. This is unsurprising, as the majority of respondents were students. 
@@ -1098,7 +1098,7 @@ Finally, the levels of General Health reported were investigated.
 <<healthtab, echo=FALSE, results=tex>>=
 healthtab <- as.data.frame(with(tcq2, table(Health)))
 healthtab[,"Health"] <- c( "Very Poor", "Somewhat Poor", "Average", "Somewhat Good", "Very Good")
-print(xtable(healthtab, label="tab:healthlevels", caption="Self Reported Health levels, Study Two"))
+print(xtable(healthtab, label="tab:healthlevels", caption="Self Reported Health levels, Study Two"), include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:healthlevels}, the majority of participants tended to report their health as either Somewhat Good or Very Good, which is not particularly surprising, given the non-clinical nature of the sample. 
@@ -1251,7 +1251,7 @@ tcq2d.fact6.n <- FactorNames(tcq2d.fact.6,names=c("Rei", "Hom", "Acu", "Cream", 
 
 tcq2.fact6.av <- FactorAverage(sols=list(tcq2b.fact6.n, tcq2c.fact6.n, tcq2d.fact6.n), mynames=c("Hom", "Rei", "Acu", "Cream", "Inj", "Pill", "Communalities" ), FUN=mean)
 rownames(tcq2.fact6.av) <- itemnames
-print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Six Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x)
+print(xtable(tcq2.fact6.av, label="tab:tcq2fact6average",caption= "Average of Six Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x) ##this is wrong, something weird happened here
 @ 
 
 As can be seen from Table \ref{tab:tcq2fact6average}, the six factor solution is relatively clean when averaged across all splits.  The structure fits the predicted one extremely well. The six factors map exactly to the six treatment modalities. One small exception to this was that Pill1 loaded slightly onto the Reiki factor. However, in light of its strong loading on other factors, this was disregarded. The only two items for which the communalities are low are for Pill1 and Inj3, which may suggest some residual variance (see the seven factor solutions below). The three solutions explained from 79\% to 84\% of the variance. 
@@ -1308,7 +1308,7 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
-print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht")
+print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht", floating=FALSE)
 ###hmmm, not sure if this is right
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
@@ -1769,7 +1769,7 @@ tcq2c.alt.iio <- check.iio(na.omit(tcq2c.alt))
 print(xtable(tcq2c.alt.iio$violations, label="tab:tcq2caltcheckiio", caption="Item Ordering Assumption Check, TCQ2 Alternative, Split C"))
 @ 
 
-There were no violations of the invariant item ordering or monotonicity assumptions in this split for the alternative items. 
+
 
 
 <<tcq2caltcheckmono, echo=FALSE, results=hide>>=
@@ -1792,7 +1792,7 @@ print(xtable(summary(tcq2d.conv.mono), label="tab:tcq2dconvcheckmono", caption="
 @ 
 
 
-Next, the assumptions were checked for the alternative items, and there were no violations for either the IIO or monotonicity assumptions. 
+Next, the assumptions were checked for the conventional items, and there were no violations for either the IIO or monotonicity assumptions. 
 
 <<tcq2daltcheckiio, echo=FALSE, results=hide>>=
 tcq2d.alt.iio <- check.iio(na.omit(tcq2d.alt))
@@ -1858,6 +1858,7 @@ Figure~\ref{fig:iicgrmtcqconv2pl} shows that for the second sample, both the Cre
 \subsection{Alternative Items}
 \label{sec:alternative-items}
 
+There were no violations of the invariant item ordering or monotonicity assumptions in this split for the alternative items. 
 Two graded response models were fit to all three Alternative splits of the data, and the averaged results over all three splits are reported here.  
 
 <<tcq2baltgrm, echo=FALSE, results=hide, cache=TRUE>>=
