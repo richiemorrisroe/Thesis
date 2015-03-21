@@ -182,7 +182,7 @@ with self reported health~\cite{hansen2009measuring} was identified as part of t
 found that MAAS scores correlated with a five point one item measure of health,   
 a very crude measure of health status. In a recent meta-analysis of 29 studies, 
 Giluk explored the relationship between mindfulness, Big Five personality and affect~\cite{giluk2009mindfulness}.
-These authors found found that mindfulness was strongly correlated with Neuroticism and negative affect, though its not obvious whether being mindful lowers Neuroticism or whether Neuroticism interferes with mindfulness. 
+These authors found found that mindfulness was strongly correlated with Neuroticism and negative affect, though its not obvious whether being mindful lowers neuroticism or whether neuroticism interferes with mindfulness. 
 
 
 \section{Aims of the Research}
@@ -208,7 +208,7 @@ The major hypotheses of this part of the thesis were as follows:
 \item Optimism and mindfulness would be positively associated with one another. 
 \end{itemize}
 
-The major types of analysis carried out are described below. 
+%% The major types of analysis carried out are described below. 
 
 The response rate for Sample One  (paper) was approximately
 90\% of those asked (N=392), while the response rate for Sample Two  (Online)
@@ -229,7 +229,7 @@ hom.gend.meth.tab <- recast(hom.gend.meth2, Gender~CollectMeth)
 print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"), include.rownames=FALSE)
 @ 
 
-As can be seen from Table~\ref{tab:homdemo}, both samples were primarily female, in line with the general gender balance of the University from which the samples were taken. 
+As can be seen from Table~\ref{tab:homdemo}, both samples were predominantly female, in line with the general gender balance of the University from which the samples were taken. 
 
 The majority of the first sample (N=392) were undergraduate students (N=304), and the mean age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) were undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
 
@@ -317,7 +317,7 @@ All missing data was assumed to be Missing Completely at Random (MCAR)~\cite{lit
 %% Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. 
 %% Following this, a correlation matrix for the data was calculated and %% analysed.
 
-The majority of the analytical procedures were as described in Chapter \ref{cha:methodology}. In brief, Factor analytic and item response theory (not Rasch) models were fit to the data, and tested on either new samples (Sample One) or on other splits of the data (Sample Two). All regression results were obtained through the use of ten-fold cross-validation on the training set, and the reported coefficients are from the test set, and thus are unbiased by the search process. In general, all correlations reported are rank-correlations, to control for the non-normality of the input variables. 
+The majority of the analytical procedures were as described in Chapter \ref{cha:methodology}. In brief, Factor analytic and item response theory (not Rasch) models were fit to the data, and tested on either new samples (Sample One) or on other splits of the data (Sample Two). All regression results were obtained through the use of ten-fold cross-validation on the training set with a stepwise selection method, and the reported coefficients are from the test set, and thus are unbiased by the search process. Stepwise selection methods were used as they are reasonably standard within the field, and unlike other selection methods (lasso and ridge regression), these report a p-value, in line with APA standards.   In general, all correlations reported are rank-correlations, to control for the non-normality of the input variables. 
 
 
 
@@ -449,17 +449,22 @@ homlist <- lapply(homfiles, read.csv)
 
 
 <<sumstats, echo=FALSE,results=hide>>=
+sumorder <- c("generalhealth", "physfun", "rolelim", "rolelimem", "energyfat", "emwellbeing", "socialfunctioning", "pain", "mindfulness", "optimism")
 hom.tot <- hom1[,66:75]
-hom.tot2 <- hom1[,c("generalhealth", "optimism", "mindfulness", "emwellbeing")]
+hom.tot <- hom.tot[,sumorder]
 tot.sum2 <- apademotables(hom.tot)
-longnames <- c("Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain", "General Health", "Mindfulness (MAAS)", "Optimism (LOT-R)")
+longnames <- c("General Health","Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Energy Fatigue", "Emotional Well Being", "Social Functioning", "Pain",  "Mindfulness (MAAS)", "Optimism (LOT-R)")
 tot.sum2[,1] <- longnames
 
-## print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails
- here
+## print(tot.xtab, include.rownames=FALSE) #include packing rotating if fails here
 @
 
-\section{Descriptive Statistics}
+\section{Results}
+\label{sec:results}
+
+
+
+\subsection{Descriptive Statistics}
 \label{sec:descr-stat}
 
 
@@ -515,7 +520,7 @@ scalenames <- c("genhealth", "physfun", "rolelim", "rolelimem", "emwellbeing", "
 
 maas.alpha <- alpha(maasitems)$total$std.alpha
 lotr.alpha <- alpha(lotritems)$total$std.alpha
-alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, emwb.alpha, sf.alpha, pain.alpha, ef.alpha, maas.alpha, lotr.alpha)
+alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, ef.alpha, emwb.alpha, sf.alpha, pain.alpha,  maas.alpha, lotr.alpha)
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"Alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
@@ -568,6 +573,7 @@ lotr2.alpha <- alpha(lotritems2)$total$std.alpha
 alphas2 <- c(gh2.alpha, pf2.alpha, rl2.alpha, erl2.alpha, emwb2.alpha, sf2.alpha, pain2.alpha, ef2.alpha, maas2.alpha, lotr2.alpha)
 scalenames <- c("genhealth", "physfun", "rolelim", "rolelimem", "emwellbeing", "socialfunctioning", "pain", "energyfatigue")
 hom2.tot <- hom2[,c("generalhealth", "physfun",  "rolelim", "rolelimem",  "emwellbeing", "socialfunctioning", "pain", "energyfat", "mindfulness", "optimism")]
+hom2.tot <- 
 hom2.sum <- apademotables(hom2.tot)
 names(hom2.sum)[1] <- "Scale"
 hom2.sum[,"Alpha"] <- alphas2
@@ -579,7 +585,7 @@ print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Hea
 The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
 
 
-\section{Psychometric Analyses}
+\subsection{Psychometric Analyses}
 
 %% Alpha was calculated for the MAAS ($\alpha=0.88$) and for the LOT-R ($\alpha=0.78$). Alpha for all RAND subscales was above 0.7, with the exception of Social Functioning. 
 
