@@ -1030,7 +1030,7 @@ names(maasquestions)[2] <- "Content"
 print(xtable(maasquestions, label="tab:maasitems", caption="MAAS Item Content"), include.rownames=FALSE, scalebox=0.7)
 @ 
 
-Table~\ref{tab:maasitems} shows the item content. 
+Table~\ref{tab:maasitems} shows the item content for the MAAS. 
 
 \subsection{Factor Analyses, Sample One}
 \label{sec:fact-analys-sample}
@@ -1665,7 +1665,7 @@ Next, a two parameter model was fit to this data.
 print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"), sanitize.colnames.function=function (x) print(x))
 @ 
 
-The two parameter model (Appendix, Page~\pageref{tab:maas2cgrm2pl}, Table~\ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
+The two parameter model (Appendix~\ref{cha:append-1:-supp}, Page~\pageref{tab:maas2cgrm2pl}, Table~\ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
 
 \begin{figure}
 <<iicmaasgrm, echo=FALSE, fig=TRUE>>=
@@ -1791,7 +1791,7 @@ names(lotrquestions) <- c("Item", "Question")
 print(xtable(lotrquestions, label="tab:lotritems", caption="Life Orientation Test, Revised Item Content"))
 @ 
 
-Table~\ref{tab:lotritems} shows the content of the items.
+Table~\ref{tab:lotritems} shows the content of the items for the LOT-R. 
 
 \subsection{Factor Analyses, Sample One}
 \label{sec:fact-analys-sample-1}
@@ -2637,7 +2637,7 @@ print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected 
 
 
 
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being and general health, and non-significant coefficients for  energy fatigue, pain and mindfulness. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
+As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and non-significant coefficients for  energy fatigue and general health. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
 
 
 
@@ -2649,7 +2649,7 @@ Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor
 \subsection{Optimism}
 
 
-<<optstepprint, echo=FALSE, results=hide>>=
+<<optstepprint, echo=FALSE, results=tex>>=
 print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"), sanitize.text.function = function (x) x)
 @ 
 
@@ -2658,7 +2658,7 @@ print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regre
 
 
 In the training sample, the stepwise selected models kept three predictors.
-The results of the selected predictors on the test sample are shown in Table~\ref{tab:hom1stepopttest}.
+The results of the selected predictors on the test sample are shown in Table~\ref{tab:hom1stepopt}.
 General health is retained, suggesting that while it has an impact, they are moderated by the effect of emotional well being ($ p \le 0.01$). 
 For further discussion of this relationship, see Chapters \ref{cha:primary-research} and \ref{cha:general-discussion}, as well as Section~\ref{sec:discussion}. 
 
@@ -3151,7 +3151,7 @@ report methods are used~\cite{rasmussen2009optimism}.
 %% Age may alsohave been a factor, as the regression weight for this vaiable was negative, which suggests that the relationship may have been different
 %% if this research had been carried out in a sample with a broader distribution of ages.  We do not have a good explanation for this finding.
 
-A more likely explanation (especially given the results reported in Chapter~\ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindfulness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the similarity of the questions) mediated this relationship. 
+A more likely explanation (especially given the results reported in Chapter~\ref{cha:primary-research}) is that this unexpected finding was caused by the order in which the measures were administered. In the experimental study, these measures were administered in opposite order, and the correlations became positive. This would suggest that something about answering the questions of the MAAS impacted the scores on the LOT-R. Given that the MAAS is framed in terms of mindlessness, then it seems plausible that answering these questions and becoming aware of how they do not often meet these standards depressed scores on the optimism measure. This theory is additionally supported by the results of the SEM model which suggested that Emotional Well-Being (which could be regarded as a proxy for optimism, given the similarity of the questions) mediated this relationship. 
 
 %% The Structual Equation Model reported for Sample One is a good place to start in this regard. The only models which converged were those which moderated the effect of health on optimism through either Emotional Well Being and Mindfulness. Although the fit of the emotional well being  model was marginally superior, there are good reasons to believe that mindfulness is more important (c.f. the experimental portion of the research). 
 
