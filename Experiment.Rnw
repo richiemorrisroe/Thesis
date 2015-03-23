@@ -68,7 +68,7 @@ As discussed in Chapter \ref{cha:literature-review}, Section \ref{sec:rese-base-
 
 \begin{itemize}
 \item Research shows that priming can increase the size of placebo effects;
-\item The results of Kirsch (1998) showed that informed conditioning was less effective than uninformed conditioning would suggest that the effectiveness of placebos can be reduced by conscious processing;
+\item The results of Kirsch (1998) which showed that informed conditioning was less effective than uninformed conditioning would suggest that the effectiveness of placebos can be reduced by conscious processing;
 
 \item It has been suggested that the IAT captures substantial state variance (as evidenced by low test-retest reliability)~\cite{Egloff2005} and it has also been argued that response to placebo is similar~\cite{Whalley2008}, thus suggesting that there may be a link;
 
@@ -92,7 +92,7 @@ This research addresses these problems in the following manner. Firstly, the low
 
 However, the one counterpoint may be that IATs' are more useful in predicting over short time scales, as could be argued from the findings that they predict spontaneous behaviour better than explicit measures \cite{Richetin2007,Steffens2006,Steffens2008}) 
 
-The method variance problem was moderated by the use of the D measure from Greenwald \cite{Greenwald2003}, as demonstrated by Mierke \cite{Klauer2005}. The impact of these potential confounders was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were two high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
+The method variance problem was moderated by the use of the D measure from Greenwald \cite{Greenwald2003}, as demonstrated by Mierke \cite{Klauer2005}. The impact of these potential confounders was examined by assessing the correlations between the two IAT measures used in this study (Treatment Credibility and Optimism) and if these were too high ($r\ge 0.3$) then controlling for them by including both IAT's in each regression model. 
 
 The issues around the scoring of the results (connected to the use of the mean with non-symmetrical distributions~\cite{venables2002modern}) were examined by scoring the IATs using both the mean and median as measures of central tendency. 
 
@@ -251,7 +251,7 @@ Next, the relationships between the explicit measures individually, and the impl
 The cross-correlations of the pain ratings with the GSR readings were examined  as part of the placebo analgesia experiment, and the breakdown of pain and GSR by condition, placebo response and gender was examined. 
 
 
-The pain data was also used to classify participants as either placebo responders or non-responders. This was done simply by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. %% Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
+The pain data was also used to classify participants as either placebo responders or non-responders. This was operationalised by examining if their pain levels decreased following administration of placebo. If this happened, they were classified as placebo responders, and if not, they were classified as non-responders. %% Another approach taken was to examine the number of minutes spent with a pain rating of less than seven following administration of the placebo, and to model this as a Poisson variable using a generalised linear model. 
 
 The major hypotheses of this study were then tested using a ten-fold cross-validation procedure and stepwise logistic regression. Note that as discussed earlier, the use of a test-set to provide p-values allows for accurate inferences to be made. 
 
@@ -343,6 +343,7 @@ require(zoo)
 require(forecast)
 require(semPlot)
 require(doMC)
+require(QuantPsyc)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -428,16 +429,16 @@ chisq.prime <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition)))
 @ 
 
 <<counterbalancingcheck, echo=FALSE, results=hide>>=
-tcqiat.pp.time <- select(tcqiat, Participant, Date, Time)
+tcqiat.pp.time <- dplyr::select(tcqiat, Participant, Date, Time)
 names(tcqiat.pp.time)[3] <- "Time_TCQ"
 tcqiat.pp.time[,"Time_TCQ"] <- with(tcqiat.pp.time, hms(Time_TCQ))
-optiat.pp.time <- select(optiat, Participant, Date, Time)
+optiat.pp.time <- dplyr::select(optiat, Participant, Date, Time)
 names(optiat.pp.time)[3] <- "Time_OPT"
 optiat.pp.time[,"Time_OPT"] <- with(optiat.pp.time, hms(Time_OPT))
 iat.times.merged <- merge(tcqiat.pp.time, optiat.pp.time, by="Participant")
 iat.times.merged.distinct <- unique(iat.times.merged)
 iat.times.merged.distinct[,"first_IAT"] <- as.factor(with(iat.times.merged.distinct, ifelse(Time_TCQ<Time_OPT, "TCQ_first", "Opt_first")))
-iat.first.pp <- select(iat.times.merged.distinct, Participant, first_IAT)
+iat.first.pp <- dplyr::select(iat.times.merged.distinct, Participant, first_IAT)
 Iatandexpmeasures.firstiat <- merge(Iatandexpmeasures, iat.first.pp, by="Participant")
 optiat.first.aov <- summary(aov(OptIAT.Mean~first_IAT, data=Iatandexpmeasures.firstiat))
 tcqiat.first.aov <- summary(aov(TCQIAT.Mean~first_IAT, data=Iatandexpmeasures.firstiat))
@@ -486,7 +487,7 @@ gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
 <<gsrcondstart, echo=FALSE, results=tex>>=
-print(xtable(gsr.start.cond.sd, label="tab:gsrstartcond", caption="Mean and SD of GSR by Condition at baseline (first 100 seconds)"))
+print(xtable(gsr.start.cond.sd, label="tab:gsrstartcond", caption="Mean and SD of GSR by Condition at baseline (first 100 seconds)"), include.rownames=FALSE)
 @ 
 
 \subsection{Analysis of IAT data}
@@ -888,7 +889,7 @@ print(surv.exp.inj.pl)
 
 Figure~\ref{fig:compinj}  shows that the Injection credibility scores were almost identical in their distributions between the two samples. 
 
-Next, the Alternative treatment scores were examined between the two samples. Acupuncture levels in the experimental sample were a little lower than those in the survey sample. In contrast, the credibility scores for Homeopathy were slightly higher in the experimental sample than in the survey sample.  While Reiki credibility totals were quite low in both samples, they were a little lower in the survey sample. 
+Finally, the Alternative treatment scores were examined between the two samples. Acupuncture levels in the experimental sample were a little lower than those in the survey sample. In contrast, the credibility scores for Homeopathy were slightly higher in the experimental sample than in the survey sample.  While Reiki credibility totals were quite low in both samples, they were a little lower in the survey sample. 
 
 %% Figure \ref{fig:comphom} shows the levels of homeopathy credibility in both survey and experimental samples. It can be seen that
 %% Figure \ref{fig:comprei} shows the credibility totals for Reiki in the survey and experimental samples.
@@ -1030,7 +1031,7 @@ primedata <- Iatandexpmeasures[with(Iatandexpmeasures, grep("^Placebo|^Treatment
 plac.prime.pl <- ggplot(primedata, aes(x=PlacResp, fill=Prime))+geom_histogram(postion="dodge")
 print(plac.prime.pl)
 @   
-  \caption{Proportion of Placebo Response in Primed and Non-Primed Conditions}
+  \caption{Count of Placebo Response in Primed and Non-Primed Conditions}
   \label{fig:placprimeplot}
 \end{figure}
 
@@ -1116,7 +1117,7 @@ placmod.step <- stepAIC(placmod.full)
 print(xtable(apareg(placmod.step, logistic=TRUE), label="tab:placmodstep", caption="Model selected by Stepwise Selection over the training data"), sanitize.colnames.function= function (x) x)
 @ 
 
-As can be seen above in Table \ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has an almost significant coefficient on the TCQ IAT, one for the LOT-R,  and the two two-way interactions trended towards significance. 
+As can be seen from Table~\ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has an almost significant coefficient on the TCQ IAT, one for the LOT-R,  and the two two-way interactions trended towards significance. 
 
 <<placmodsteptest, echo=FALSE, results=tex>>=
 iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "LOTR", "Age", "OptIAT.Mean", "Rei")]
@@ -2021,6 +2022,7 @@ expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
 
 <<expimpfit, echo=FALSE, results=tex>>=
 expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+
 ## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
@@ -2037,7 +2039,7 @@ The next step in the use of SEM models was to examine whether a two factor or on
 
 
 
-The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section \ref{sec:theoretical-models}. 
+The final step in the analysis was to test the theoretical models which were proposed for the relationship between the Placebo Response and implicit and explicit expectancies in line with the models described earlier, in Section~\ref{sec:theoretical-models}. 
 
 
 
@@ -2222,17 +2224,32 @@ Another model was fitted with an independent effect of GSR on the placebo respon
 <<placmodfitall, echo=FALSE, results=tex>>=
 ## placmod.direct.fit.measures <- fitMeasures(placmod.direct.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 placmod.kirsch.fit.measures <- fitMeasures(placmod.kirsch.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+kirsch.more.fit <- moreFitIndices(placmod.kirsch.fit)
+placmod.kirsch.fit.all <- c(placmod.kirsch.fit.measures, kirsch.more.fit)
 placmod.cred.opt.fit.measures <- fitMeasures(placmod.cred.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+cred.opt.more.fit <- moreFitIndices(placmod.cred.opt.fit)
+placmod.cred.opt.fit.all <- c(placmod.cred.opt.fit.measures, cred.opt.more.fit)
 placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfa",  "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-placmod.opt.fit.measures <- fitMeasures(placmod.opt.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+opt.more.fit <- moreFitIndices(placmod.opt.fit)
+placmod.opt.fit.all <- c(placmod.opt.fit.measures, opt.more.fit)
 placmod.kirsch.twofac.fit.measures <- fitMeasures(placmod.kirsch.twofac.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-placmod.fit.all <- rbind( placmod.kirsch.fit.measures, placmod.cred.opt.fit.measures, placmod.opt.fit.measures, placmod.kirsch.twofac.fit.measures)
-rownames(placmod.fit.all) <- c( "Kirsch", "Optimism", "Credibility", "Kirsch Two Factor")
-print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), scalebox=0.8)
+kirsch.twofac.more.fit <- moreFitIndices(placmod.kirsch.twofac.fit)
+placmod.kirsch.twofac.fit.all <- c(placmod.kirsch.twofac.fit.measures, kirsch.twofac.more.fit)
+placmod.fit.all <- rbind( placmod.cred.opt.fit.all, placmod.opt.fit.all, placmod.kirsch.twofac.fit.all)
+rownames(placmod.fit.all) <- c( "Optimism", "Credibility", "Kirsch Two Factor")
+print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), scalebox=0.7)
 @ 
 
 From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that of Kirsch when implicit expectancies are included in the model. Implications are elaborated upon in the discussion. 
 
+The coefficients for this model are shown in Table~\ref{tab:finalmodelfit}. The t1 coefficient represents the probability of a positive placebo response. None of the coefficients were significant, in line with the previous regression analyses. 
+
+<<finalmodelcoef, echo=FALSE, results=tex>>=
+finalmod.coef <- as.data.frame(coef(placmod.cred.opt.fit))
+names(finalmod.coef) <- "Coefficients"
+finalmod.xtab <- xtable(finalmod.coef, label="tab:finalmodelfit", caption="Coefficients for Kirsch Two Factor Model")
+print(finalmod.xtab)
+@ 
 
 \section{Discussion} 
 
