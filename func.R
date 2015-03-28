@@ -896,12 +896,13 @@ FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, correlations=FAL
     for(i in 1:length(sols)) {
         if(correlations) {
             coeff <- as.data.frame(FactorCor(sols[[i]], xtable=FALSE))
+                    coeff.ord <- coeff[,]
         }
          else {                          
              coeff <- as.data.frame(FactorCoeff(sols[[i]]))
+             coeff.ord <- coeff[,mynames]
     }
         ## browser()
-        coeff.ord <- coeff[,mynames]
         sols.coeff.list[[i]] <- coeff.ord
         
     }
