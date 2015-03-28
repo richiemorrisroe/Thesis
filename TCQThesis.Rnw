@@ -1308,8 +1308,10 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
-print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht", floating=FALSE)
+print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht")
 ###hmmm, not sure if this is right
+##was able to fix this by removing the names re-arrangement
+##may have broken the coefficient averaging process though
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
 
