@@ -1668,8 +1668,8 @@ The two parameter model (Appendix~\ref{cha:append-1:-supp}, Page~\pageref{tab:ma
 \begin{figure}
 <<iicmaasgrm2c, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
-print(plot(maas2c.grm.1pl, type="IIC"))
-print(plot(maas2c.grm.2pl, type="IIC"))
+plot(maas2c.grm.1pl, type="IIC")
+plot(maas2c.grm.2pl, type="IIC")
 par(mfrow=c(1, 1))
 @   
   \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample Two, Split C)}
@@ -3084,7 +3084,7 @@ rownames(health.lav.fits.all) <- c("Direct", "EmWBMediated", "MindfulnessMediate
 print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.8)
 @ 
 
-As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
+As can be seen from Table~\ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
 
 
 
