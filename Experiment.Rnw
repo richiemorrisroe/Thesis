@@ -344,6 +344,7 @@ require(forecast)
 require(semPlot)
 require(doMC)
 require(QuantPsyc)
+require(semTools)
 @ 
 
 <<iatsort, echo=FALSE, results=hide>>=
@@ -638,7 +639,7 @@ tcqiat.mean.resp <- ddply(tcqiatsorted, .(Block, Participant), summarise, Correl
 tcqiat.mean.m <- melt(tcqiat.mean.resp, id.vars=c("Participant", "Block"))
 tcq.iat.c <- dcast(tcqiat.mean.m, Participant+...~Block)
 names(tcq.iat.c) <- c("Participant", "variable", "TCQBlock1", "TCQBlock2", "TCQBlock3", "TCQBlock4", "TCQBlock5")
-tcq.block.corr.pl <- ggpairs(tcq.iat.c[,3:length(tcq.iat.c)])
+tcq.block.corr.pl <- ggpairs(tcq.iat.c[,log(3:length(tcq.iat.c))])
 print(tcq.block.corr.pl)
 @    
  %%   \caption{Correlations between Block Scores for Treatment Credibility IAT with linear regression smooth line}
