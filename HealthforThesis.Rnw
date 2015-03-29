@@ -44,12 +44,12 @@ hom2 <- hom[with(hom, CollectMeth=="Online"),]
 \section{Introduction}
 \label{sec:introduction}
 
-This chapter reports an investigation of the psychometric properties of three measures, the RAND Medical Outcomes Survey (RAND-MOS), a measure of self reported health, the Mindful Attention Absorption Scale (MAAS), a measure of mindfulness and the Life Orientation Test, Revised (LOT-R), a measure of optimism. 
+This chapter reports an investigation of the psychometric properties of three measures, the RAND Medical Outcomes Survey (RAND-MOS), a measure of self reported health, the Mindful Attention Awareness Scale (MAAS), a measure of mindfulness and the Life Orientation Test, Revised (LOT-R), a measure of optimism. 
 
 
 The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was important to administer some instruments which have been shown to be associated with it in previous studies.
 
-Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT's) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Absorption Scale (MAAS), as this construct has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
+Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT's) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Awareness Scale (MAAS), as this construct has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
 
 Over the course of the study of the placebo, there have been few individual-level psychological predictors of the effect which have been reproducible. Expectancy is the most commonly measured construct within the field, and some meta-analytic evidence suggests that it is only significantly associated with the response around 60\% of the time~\cite{DiBlasi2001}.   
 
@@ -169,14 +169,13 @@ which was developed by the factor analysis of items from a number of different s
 
  Interestingly, while higher MAAS scores have been found to be associated with meditation experience in some 
 studies~\cite{brown2003benefits}, other research using student samples found no significant correlation between 
-MAAS scores and experience with meditative practices (assessed by self report)~\cite{MacKillop2007} . This finding which
+MAAS scores and experience with meditative practices (assessed by self report)~\cite{MacKillop2007}. This finding which
  was also replicated by Thompson and Waltz~\cite{thompson2007everyday}  who suggest that this may be due to the fact that 
 mindfulness during meditation may be a state like construct, while mindfulness in everyday life may be a trait like construct. 
-So while various rigorous reviews of clinical trials have found MBSR programmes to be effective for
+While various rigorous reviews of clinical trials have found MBSR programmes to be effective for
  reducing stress~\cite{Chiesa2009,Praissman2008} , it is still unclear whether individuals 
 with higher levels of mindfulness are also psychologically healthier.
- MBSR programs have also been associated with higher levels of optimism
-~\cite{Carson2004}, but mindfulness and optimism have not tended to be researched together. 
+ MBSR programs have also been associated with higher levels of optimism~\cite{Carson2004}, but mindfulness and optimism have not tended to be researched together. 
  Only one study where mindfulness levels were correlated positively 
 with self reported health~\cite{hansen2009measuring} was identified as part of this research. Hansen, using a cross-sectional design, 
 found that MAAS scores correlated with a five point one item measure of health,   
@@ -524,7 +523,7 @@ alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, ef.alpha, emwb.alpha, sf.al
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"Alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
-print(tot.xtab)
+print(tot.xtab, scalebox=0.9)
 @ 
 
 
@@ -579,10 +578,10 @@ names(hom2.sum)[1] <- "Scale"
 hom2.sum[,"Alpha"] <- alphas2
 longnames <- c("General Health","Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Emotional Well Being", "Social Functioning", "Pain","Energy Fatigue" , "Mindfulness (MAAS)", "Optimism (LOT-R)")
 hom2.sum$Scale <- longnames
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health subscales, Optimism and Mindfulness, Sample Two "))
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample Two "), scalebox=0.9)
 @ 
 
-The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
+The summary statistics for the Sample Two are shown in Table~\ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
 
 
 \subsection{Psychometric Analyses}
@@ -593,7 +592,7 @@ The summary statistics for the Sample Two are shown in Table \ref{tab:hom2tots}.
 
 The primary aim of this chapter was to develop psychometric models for the mindfulness and optimism measures that could be used to supplement the data collected as part of the experimental research. Each scale, across both samples was taken as one unit, and factor analytic, item response methods, and structural equation models were used to develop and test combinations of items which seemed to provide useful explanatory power. Additionally, the use of multiple methods here allows for the actual impact of the different models to be assessed against one another, and those built on different sub-samples, to ensure that these models are reproducible. 
 
-This section covers the RAND-MOS data for Sample One (this was not repeated for Sample Two, as this instrument was not used in the experimental portion of the research). Next, the MAAS is investigated over both samples using all of these methods, followed by an examination of the LOT-R. The most successful models from this process were then tested against Sample One data (back~testing). 
+This section covers the RAND-MOS data for Sample One (this was not repeated for Sample Two, as this instrument was not used in the experimental portion of the research). Next, the MAAS is investigated over both samples using all of these methods, followed by an examination of the LOT-R. The most successful models from this process were then tested against Sample One data in a back~testing process.
 
 
 <<retainfactors, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
@@ -784,7 +783,7 @@ questions.rand <- paste(rand, 1:36, sep="")
 
 rand8.xtab <- FactorXtab(rand.fact.8, names=c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy"), label="tab:tcq1rand8fact", caption="Factor Loadings Eight Factor Solution, RAND MOS, Sample One")
 rownames(rand8.xtab) <- questions.rand
-print(rand8.xtab, scalebox=0.7, digits=2, sanitize.text.function= function (x) x)
+print(rand8.xtab, scalebox=0.7, digits=2, sanitize.text.function= function (x) x, table.placement="tp")
 @
 
 
@@ -820,7 +819,7 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 <<rand8corr, echo=FALSE, results=tex>>=
 rand8.cor <- rand.fact.8[["r.scores"]]
-rand8.cor[lower.tri(rand8.cor, diag=TRUE)] <- NA
+rand8.cor[lower.tri(rand8.cor, diag=FALSE)] <- NA
 rand8corr.xtab <- xtable(rand8.cor, label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
 rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
 names(rand8corr.xtab) <- rand8names
@@ -1027,7 +1026,7 @@ The next step in the analyses was to examine the MAAS using factor analytic and 
 <<maasitems, echo=FALSE, results=tex>>=
 maasquestions <- read.csv("maasitems.csv")
 names(maasquestions)[2] <- "Content"
-print(xtable(maasquestions, label="tab:maasitems", caption="MAAS Item Content"), include.rownames=FALSE, scalebox=0.7)
+print(xtable(maasquestions, label="tab:maasitems", caption="MAAS Item Content"), include.rownames=FALSE, scalebox=0.68)
 @ 
 
 Table~\ref{tab:maasitems} shows the item content for the MAAS. 
@@ -1536,7 +1535,6 @@ The item information curves for each item in one and two parameter models can be
 par(mfrow=c(1, 2))
 plot(maas.grm.1pl, type="IIC")
 plot(maas.grm.2pl, type="IIC")
-par(mfrow=c(1, 1))
 @   
   \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample One)}
   \label{fig:iicmaasgrm}
@@ -1616,7 +1614,7 @@ print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Tw
 The two parameter GRM model (not shown)  had no problems with the coefficient estimates for this solution, and the estimates show the usual trade off between discrimination and ability estimate parameters. 
 
 \begin{figure}
-<<iicmaasgrm, echo=FALSE, fig=TRUE>>=
+<<iicmaasgrm2b, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
 plot(maas2b.grm.1pl, type="IIC")
 plot(maas2b.grm.2pl, type="IIC")
@@ -1668,10 +1666,10 @@ print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, T
 The two parameter model (Appendix~\ref{cha:append-1:-supp}, Page~\pageref{tab:maas2cgrm2pl}, Table~\ref{tab:maas2cgrm2pl}), is not that much different from the one parameter model. Of interest is that Q13 remains the most difficult question, but its discrimination parameter has come down, suggesting that it behaves similarly for participants of all ability levels. Q8 has the highest discrimination parameter of all the items and is ``I rush through activities without being really attentive to them'' and it appears that this question is the best at discrimination between those higher and lower on the construct of mindfulness. 
 
 \begin{figure}
-<<iicmaasgrm, echo=FALSE, fig=TRUE>>=
+<<iicmaasgrm2c, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
-plot(maas2c.grm.1pl, type="IIC")
-plot(maas2c.grm.2pl, type="IIC")
+print(plot(maas2c.grm.1pl, type="IIC"))
+print(plot(maas2c.grm.2pl, type="IIC"))
 par(mfrow=c(1, 1))
 @   
   \caption{Item Information Curves for MAAS One Parameter GRM (left) and Two Parameter GRM (right) (Sample Two, Split C)}
@@ -1753,7 +1751,7 @@ maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
 @ 
 
 <<maasbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.85)
+print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.8)
 @ 
 
 As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5, 6 and 15  provided the best fit to the unseen data. 
@@ -1788,7 +1786,7 @@ The next step in the analysis was to investigate the structure of the LOT-R with
 <<lotritems, echo=FALSE, results=tex>>=
 lotrquestions <- read.csv("lotritems.csv", colClasses="character", header=FALSE)
 names(lotrquestions) <- c("Item", "Question")
-print(xtable(lotrquestions, label="tab:lotritems", caption="Life Orientation Test, Revised Item Content"))
+print(xtable(lotrquestions, label="tab:lotritems", caption="Life Orientation Test, Revised Item Content"), include.rownames=FALSE)
 @ 
 
 Table~\ref{tab:lotritems} shows the content of the items for the LOT-R. 
@@ -2410,7 +2408,7 @@ lotr.bt.small.fit <- mxRun(lotr.bt.small)
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.85)
+print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.8)
 omxGraphviz(lotr.bt.full.fit, dotFilename="lotrfullbacktest.dot")
 omxGraphviz(lotr.bt.small.fit, dotFilename="lotrsmallbacktest.dot")
 @ 
@@ -2446,14 +2444,12 @@ Following the investigation of the scales from a psychometric point of view, the
 
   
 \begin{landscape}
-  
-
 <<scalecorr, echo=FALSE, results=tex>>=
 scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
-cors.xtab[lower.tri(cors.xtab, diag=TRUE)] <- NA
+cors.xtab[lower.tri(cors.xtab, diag=FALSE)] <- NA
 print(cors.xtab, scalebox=0.75)
 @ 
 \end{landscape}
@@ -2637,7 +2633,7 @@ print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected 
 
 
 
-As can be seen from Table \ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and non-significant coefficients for  energy fatigue and general health. The coefficient signs are all in line with those from study one. The RMSEA metric gave a value of 0.746. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
+As can be seen from Table~\ref{tab:homstepopttest2a}, the stepwise model has an extremely significant coefficient for emotional well being, and non-significant coefficients for  energy fatigue and general health. The coefficient signs are all in line with those from study one. This confirmation between the model fit on a subset of Sample One and that fit on a subset of Sample Two increases the confidence that we should have in this solution.  
 
 
 
@@ -2650,7 +2646,7 @@ Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor
 
 
 <<optstepprint, echo=FALSE, results=tex>>=
-print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1optstep"), sanitize.text.function = function (x) x)
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1stepopt"), sanitize.text.function = function (x) x)
 @ 
 
 %% As Table \ref{tab:hom1optstep} shows, 
@@ -2980,7 +2976,7 @@ omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 
 <<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.75)
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.7)
 @ 
 
 The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
@@ -3085,7 +3081,7 @@ emwb.med.fitm <- fitMeasures(emwb.med.sem, c("chisq", "df", "pvalue", "cfi", "rm
 mind.med.fitm <- fitMeasures(mind.med.sem, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 health.lav.fits.all <- rbind(direct.fitm, emwb.med.fitm, mind.med.fitm)
 rownames(health.lav.fits.all) <- c("Direct", "EmWBMediated", "MindfulnessMediated")
-print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.9)
+print(xtable(health.lav.fits.all, caption="Comparison of Models for Health, Sample Two", label="tab:healthsemcomp2"), scalebox=0.8)
 @ 
 
 As can be seen from Table \ref{tab:healthsemcomp2}, the best fitting model is one in which Emotional Well Being mediates the relationship between health and optimism, in line with the results shown in Sample One. 
