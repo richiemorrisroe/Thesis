@@ -19,11 +19,11 @@ The development of the implicit measures is described in Chapter \ref{cha:devel-
 
 Theories form an indispensable part of science. They represent an attempt to generalise beyond particular forms of evidence and data and to derive some kinds of overall principles which lie behind the observed events. The major theories behind the placebo and implicit measures were reviewed in  Chapter~\ref{cha:literature-review}, and in this chapter provides  an attempt to synthesise all of this information into a coherent whole. The major building blocks of this theory are as follows:
 \begin{enumerate}
-\item The research base into implicit measures point towards there being at least two systems of attitude assessment and evaluation of stimuli in the human mind% ~\footnote{perhaps more, but certainly at least two}
-\item The placebo effect is typically conceptualised as a conscious phenomenon, in spite of the experimental evidence
-\item There appear to be feedback loops between bodily sensations and conscious perception i.e. embodied cognition
-\item These feedback loops are evidence against an additive model of drug-placebo interactions
-\item Despite the centrality of such conceptions to the placebo effect, no theory has as yet incorporated these findings into their theories
+\item The research base into implicit measures point towards there being at least two systems of attitude assessment and evaluation of stimuli in the human mind;% ~\footnote{perhaps more, but certainly at least two}
+\item The placebo effect is typically conceptualised as a conscious phenomenon, in spite of the experimental evidence;
+\item There appear to be feedback loops between bodily sensations and conscious perception i.e. embodied cognition;
+\item These feedback loops are evidence against an additive model of drug-placebo interactions;
+\item Despite the centrality of such conceptions to the placebo effect, no theory has as yet incorporated these findings into their theories.
 \end{enumerate}
 
 This section will briefly review the evidence in favour of the above propositions, then will elucidate how these could be combined into our theories of placebo and implicit measures, and will provide some testable hypotheses regarding the theory, in the spirit of Popperian falsification.
@@ -165,7 +165,7 @@ Therefore the IAT was developed from both the important figures which arose from
 \section{Quantitative Research Methodology}
 \label{sec:quant-rese-meth}
 This section  will describe the methods employed for each part of the thesis and provide a rationale for why these methods were used in the thesis.
-A mostly quantitative approach was taken for the following reasons. Firstly, the placebo  is a very noisy phenomenon~\cite{Singer2005}, subject to many sources of error and bias (c.f. Section~\ref{sec:concept-placebo}). Secondly, in order to predict the placebo effect, there needs to be some kind of measure, and these are typically metered in numerical terms. 
+A mostly quantitative approach was taken for the following reasons. Firstly, the placebo  is a very noisy phenomenon~\cite{Singer2005}, subject to many sources of error and bias (c.f. Section~\ref{sec:concept-placebo}). Secondly, in order to predict the placebo effect, there needs to be some kind of measure, and these are most appropriately conceptualised in numerical terms
 
 This thesis consisted of three main parts. Firstly, following a thorough literature review, the major constructs associated with the placebo effect and implicit measures were identified. These constructs were then administered to large samples of the population from which the experimental participants were drawn. This procedure was carried out for two reasons. In the first case, this was so that the population means could be estimated more precisely and thus the experimental sample compared on these measures.  
 
@@ -200,7 +200,7 @@ Indeed, many fit indices penalise complex models over simple models. This suffic
 
 \subsubsection{Cross-Validation}
 
-The solution proposed by those machine learning researchers is at once simple and elegant, while also extremely practical. The technique is known as cross-validation, and its application routine in commercial and scientific data-mining settings. However, it does not appear to have found much favour within psychology as of yet (with some notable exceptions ~\cite{dawes1979robust}).
+The solution proposed by those machine learning researchers is at once simple and elegant, while also extremely practical. The technique is known as cross-validation, and its application routine in commercial and scientific data-mining settings. However, it does not appear to have found much favour within psychology as of yet.\footnote{with some notable exceptions ~\cite{dawes1979robust}}
 
 The basic premises of the techniques are:
 \begin{itemize}
@@ -319,12 +319,14 @@ In conclusion, factor analysis is an extremely useful technique which has been w
 
 \subsubsection{Item Response Theory}
 \label{sec:item-response-theory}
-Item response theory (IRT) is often called model-based measurement~\cite{fischer1995rasch}, (also referred to as Rasch modelling), is a newer approach to analysing self report data, developed both by the Danish mathematician Rasch in work for the Danish army, and also separately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's~\cite{van1997handbook}.
+Item response theory (IRT) is often called model-based measurement~\cite{fischer1995rasch} and is a newer approach to analysing self report data, developed both by the Danish mathematician Rasch in work for the Danish army, and also separately by Lord and Novick in the US, while working for the Educational Testing Service (ETS) in the 1950's and 60's~\cite{van1997handbook}.
 The fundamental premise of IRT is that the properties and scores on a psychometric test can be modelled as functions of both the items on the test and the ``ability'' of the people taking the test.
+
+Note that despite their similarity, the assumptions and methods used in Rasch modelling and IRT modelling are actually quite different. Rasch models require the sum score of the answers to the questions to be a sufficient statistic for the latent trait. This requirement allows for the decomposition of item scores from person scores, and is core to the assumptions (and fit-statistics, such as Infit and Outfit Mean Square measures). IRT (as developed by Lord \& Novick) does not assume that the sum score is a sufficient statistic for the latent trait. This means that different items can have different contributions to the latent trait, and means that easy separability of person and item parameters is much more difficult, and additionally that fit statistics are more difficult to interpret and justify. 
 
 The IRT approach suggests that conditional on both the ability of the person and the difficulty of the test, the responses of each participant can be predicted probabilistically. As the latent ability of the participant rises, they tend to choose alternative responses which are more reflective of this latent ability. One example of this might be an item for extraversion ``I am always the life and soul of the party``, those respondents who had a higher latent score on the extraversion construct would tend to choose the agree or strongly agree options (on a typical five point scale). 
 
-For instance, if one was modelling extraversion using a set of ten items, the participants who scored highest in extraversion would be most likely to respond strongly agree to the items.  IRT also assumes a property called local independence, which states that conditional on the ability measured by the test, the scores of each participant are independent of one another. This assumption was checked throughout the analysis in the following chapters. Additionally, another assumption of these models is monotonicity, in that if a participant responds Neutral to a particular item, then a participant who responds Slightly Agree should have a greater latent trait than does the first. Again, this assumption was checked throughout the analysis. 
+For instance, if one was modelling extraversion using a set of ten items, the participants who scored highest in extraversion would be most likely to respond strongly agree to the items.  IRT also assumes a property called local independence, which states that conditional on the ability measured by the test, the scores of each participant are independent of one another. This assumption was checked throughout the analysis in the following chapters. Additionally, another assumption of these models is (latent) monotonicity, in that if a participant responds Neutral to a particular item, then a participant who responds Slightly Agree should have a greater latent trait than does the first. Again, this assumption was checked throughout the analysis. 
 
 There are a number of different approaches taken to IRT~\cite{van1997handbook,fischer1995rasch}. The  Rasch models are the simplest, and have a number of extremely appealing mathematical properties. These models assume that only one trait is measured by the items, that all items are equally predictive of the trait, and that there is no guessing~\cite{van1997handbook}.
 
@@ -340,49 +342,49 @@ IRT was developed in the context of ability tests, and this leads to much of the
 
 % Below, all of the models will be described in terms of their original use in ability testing, and the section concludes with a discussion of polytomous IRT, which is the methodology exclusively relied upon in this research as this research focused on personality  rather than ability testing.
 
-It is important to note that the names of the models are slightly deceiving, while they are called 1, 2 \& 3 parameter models, they actually involve the estimation of 1,2, or 3 parameters for each item. This normally means that a test of ${1,2,3\ldots, n}$ items will require the estimation of either ${n, 2n, 3n}$ parameters. The parameters are estimated by an iterative maximum likelihood approach, and so issues of optimisation and ensuring that a global maximum has been found are often important in practical applications~\cite{gill2002bayesian}.
+It is important to note that the names of the models are slightly deceiving, while they are called 1, 2 \& 3 parameter models, they actually involve the estimation of 1,2, or 3 parameters for each item. This normally means that a test of ${1,2,3\ldots, n}$ items will require the estimation of either ${n, 2n, 3n}$ parameters. % The parameters are estimated by an iterative maximum likelihood approach, and so issues of optimisation and ensuring that a global maximum has been found are often important in practical applications~\cite{gill2002bayesian}.
 
 
-\subsubsection{Structural Equation Modelling}
+\subsubsection{structural equation modelling}
 \label{sec:struct-equat-model}
 
-Structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions~\cite{fabrigar1999evaluating}. However, it is actually a set of far more general techniques to test the relationships between both manifest and latent variables, and even to establish causality in some cases~\cite{pearl1998graphs}. The factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiencies.
+structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions~\cite{fabrigar1999evaluating}. however, it is actually a set of far more general techniques to test the relationships between both manifest and latent variables, and even to establish causality in some cases~\cite{pearl1998graphs}. the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter sem) is an attempt to compensate for some of these deficiencies.
 
-SEM was developed by Joreskog in the 1970's~\cite{joreskog1978structural}. It provides a means of testing hypothesised relationships between latent and manifest variables. In practice, the result of a factor analysis is regarded as a measurement model of the data.
+sem was developed by joreskog in the 1970's~\cite{joreskog1978structural}. it provides a means of testing hypothesised relationships between latent and manifest variables. in practice, the result of a factor analysis is regarded as a measurement model of the data.
 
-This is combined with a structural model (which describes how the latent variables relate to one another and to the manifest variables). The two of these models are then used to construct a covariance matrix which is then compared with the observed data, and a number of indices of model misfit are calculated. Foremost among these is the $\chi^2$, which estimates the degree of model misfit. The desired result is a p-value of greater than 0.05, which shows that the two matrices are not significantly different.
+this is combined with a structural model (which describes how the latent variables relate to one another and to the manifest variables). the two of these models are then used to construct a covariance matrix which is then compared with the observed data, and a number of indices of model misfit are calculated. foremost among these is the $\chi^2$, which estimates the degree of model misfit. the desired result is a p-value of greater than 0.05, which shows that the two matrices are not significantly different.
 
-However, the $\chi^2$ is extremely sensitive to sample size, and tends to be rejected in almost every case~\cite{henson2006use}, given that the sample sizes needed for accurate factor analysis and structural equation modelling tend to be quite large. As a result of this, many other fit indices have been developed. Foremost amongst these are the Non Normed Fit Index (NNFI), which is also known as the Tucker Lewis Index~\cite{bentler1990comparative}, the Root Mean Square Error of Approximation (RMSEA)~\cite{rigdon1996cfi} and the Bayesian Information Criterion (BIC)~\cite{schwarz1978estimating} and An Information Criterion (AIC)~\cite{akaike1974new}. These all have different strengths and weaknesses and are typically used in a complementary way. All of these fit indices incorporate explicit penalisation, which aids in avoiding overly-complex models. The $\chi^2$ it also has some penalisation (based on degrees of freedom) but it is typically not strong enough to prevent over-fitting. Some authors argue that this focus on other fit measures apart from $\chi^2$ is a way to avoid rejecting favoured models, but such a view is controversial in the field at present~\cite{barrett2007structural}.
+however, the $\chi^2$ is extremely sensitive to sample size, and tends to be rejected in almost every case~\cite{henson2006use}, given that the sample sizes needed for accurate factor analysis and structural equation modelling tend to be quite large. as a result of this, many other fit indices have been developed. foremost amongst these are the non normed fit index (nnfi), which is also known as the tucker lewis index~\cite{bentler1990comparative}, the root mean square error of approximation (rmsea)~\cite{rigdon1996cfi} and the bayesian information criterion (bic)~\cite{schwarz1978estimating} and an information criterion (aic)~\cite{akaike1974new}. these all have different strengths and weaknesses and are typically used in a complementary way. all of these fit indices incorporate explicit penalisation, which aids in avoiding overly-complex models. the $\chi^2$ it also has some penalisation (based on degrees of freedom) but it is typically not strong enough to prevent over-fitting. some authors argue that this focus on other fit measures apart from $\chi^2$ is a way to avoid rejecting favoured models, but such a view is controversial in the field at present~\cite{barrett2007structural}.
 
-% There are also some requirements for SEM models which are typically not met for much psychological and psychometric data. These are as follows:
+% there are also some requirements for sem models which are typically not met for much psychological and psychometric data. these are as follows:
 % \begin{itemize}
-% \item The distribution must be approximated well by the first and second order moments.
-% \item Sample size is required to be large (>300)
-% \item The covariance matrix must be strictly positive definite across the entire parameter space.
+% \item the distribution must be approximated well by the first and second order moments.
+% \item sample size is required to be large (>300)
+% \item the covariance matrix must be strictly positive definite across the entire parameter space.
 % \end{itemize}
 
-The multivariate normality assumption made by the procedure is often difficult to meet in practice. However, there are a number of distribution free methods in SEM, of which the most common is a Weighted Least Squares approach. This proceeds similarly to a Weighted Least Squares approach in linear regression, where points are assigned weights depending on how closely they meet the assumptions of the model. Sample size, by contrast, is typically easy to increase (at least for non-clinical populations).
+the multivariate normality assumption made by the procedure is often difficult to meet in practice. however, there are a number of distribution free methods in sem, of which the most common is a weighted least squares approach. this proceeds similarly to a weighted least squares approach in linear regression, where points are assigned weights depending on how closely they meet the assumptions of the model. sample size, by contrast, is typically easy to increase (at least for non-clinical populations).
 
-Identification of the model is one issue in practice, though as Joreskog notes, this can often be achieved by fixing a number of parameters to 0 or 1 (the inter-factor variances are often scaled in this fashion)~\cite{joreskog1978structural}.
+identification of the model is one issue in practice, though as joreskog notes, this can often be achieved by fixing a number of parameters to 0 or 1 (the inter-factor variances are often scaled in this fashion)~\cite{joreskog1978structural}.
 
-Another, more theoretical issue is that no set of data is uniquely determined by an SEM model. This is known as the problem of rotation in factor analysis~\cite{maccallum2000applications}. Given a covariance matrix $W$, and a set of data $D$, there are many solutions which provide the same fit indices of the model to the data. This can lead to a similar problem as occurs to factor analysis, where the researcher must make a choice between models which are quantitatively identical. One approach for resolving this problem was discussed above, in Section~\ref{sec:probl-sample-infer}.
+another, more theoretical issue is that no set of data is uniquely determined by an sem model. this is known as the problem of rotation in factor analysis~\cite{maccallum2000applications}. given a covariance matrix $w$, and a set of data $d$, there are many solutions which provide the same fit indices of the model to the data. this can lead to a similar problem as occurs to factor analysis, where the researcher must make a choice between models which are quantitatively identical. one approach for resolving this problem was discussed above, in section~\ref{sec:probl-sample-infer}.
 
-In this thesis, SEM was applied extensively to test the theorised relationships between variables, and the experimental chapter includes a number of tests of theoretically derived models (c.f. Chapter~\ref{cha:primary-research}).
+in this thesis, sem was applied extensively to test the theorised relationships between variables, and the experimental chapter includes a number of tests of theoretically derived models (c.f. chapter~\ref{cha:primary-research}).
 
-\subsection{General Analytical Approach}
+\subsection{general analytical approach}
 \label{sec:gener-analyt-appr}
 
 
-Factor solutions were extracted using principal axis methods.
+Factor solutions were extracted using principal axis methods from the psych R package~\ref{psych2015}.
 
-Primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied where these failed to converge. In general, promax will attempt to find the rotations which maximise simple structure~\cite{hendrickson1964promax}. 
+primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied where these failed to converge. In general, promax will attempt to find the rotations which maximise simple structure. 
 
-After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions. %% Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
+After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions\footnote{Communalities are important as they represent the common variance actually included in the model, in contrast to PCA which uses all variance in the matrix}. %% Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
 
-Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx and lavaan packages for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions, and these solutions were then evaluated in terms of their performance on unseen data. 
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx~\ref{openmx2012} and lavaan~\ref{lavaan2012} packages for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions, and these solutions were then evaluated in terms of their performance on unseen data. 
 
 
-Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory. Firstly, Mokken analyses were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory (using functions from the ltm package~\ref{ltm2006}). Firstly, Mokken analyses (from the Mokken package~\ref{vanderark2012}) were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
 
 Following this, three successively more complicated IRT models were fitted to each sub-scale (Rasch, one parameter and two parameter). Graded Response Models were used for IRT estimation as these are appropriate for ordinal data. Additionally, the most successful IRT models were used as the basis for other models analysed using SEM. 
 
