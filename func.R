@@ -1022,3 +1022,27 @@ apareg <- function(model, logistic=FALSE) {
     mod.coef <- mod.coef[,c(1, 2, 5, 3, 4)]
     mod.coef
 }
+extract_information <- function(grm) {
+    sink("temp.txt")
+    info <- print(plot(grm, type="IIC"))
+    sink(NULL)
+    info2 <- info[,-1]
+    info2 <- melt(info2, id.vars=names(info2))
+    return(info2)}
+arrange_questions <- function(df) {
+    df[,"q"] <- with(df, gsub("([0-9])", "-\\1", x=Var2))
+    splits <- with(df, strsplit(as.character(q), split="-"))
+    df[,"Var"] <- sapply(splits, "[", 1)
+    df[,"Q"] <- sapply(splits, "[", 2)
+    names(df)[c(2,3, 5, 6)] <- c("Item", "Information", "Treatment", "Question")
+    df}
+ggplot_inf<- function(grm, type="IIC") {
+    ## stop(type!="IIC", "Other methods not implemented\n")
+    ## info <- extract_information(grm)
+    quest <- arrange_questions(grm)
+    gg <- ggplot(quest, aes(x=Var1, y=Information,
+                            group=Item, colour=Item))
+    gg2 <- gg+geom_line()
+    gg2+scale_x_continuous(breaks=seq(0, 100, length.out=5),
+                        labels=seq(-4, 4, length.out=5))+xlab("")
+}
