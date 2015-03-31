@@ -155,7 +155,9 @@ As described above, the aim of this Study was to ensure that the altered measure
 
 
 <<packagesanddata, echo=FALSE, results=hide>>=
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 require(QuantPsyc)
+require(gridExtra)
 require(ggplot2)
 require(plyr)
 require(reshape2)
@@ -171,7 +173,7 @@ require(MASS)
 require(reshape2)
 require(glmnet)
 source("func.R")
-require(gridExtra)
+
 require(stargazer)
 require(caret)
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
@@ -527,14 +529,20 @@ grm.comp <- anova(tcqconv.grm.1pl, tcqconv.grm.2pl)
 @ 
 The result of this model comparison exercise showed that the 1 parameter model was a significantly better fit than the 2 parameter model ($p\le 0.001$).
 The item information curves are perhaps more illuminating (Figure~\ref{fig:iictcqconv1grmpl}), as they show that the Injection items convey a large proportion of the information across the range when we allow separate discrimination parameters for individual items. 
-\begin{figure}
-<<iccgrmtcqconv, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(1, 2))
-devAskNewPage(ask=FALSE)
-plot(tcqconv.grm.1pl, type="IIC")
-plot(tcqconv.grm.2pl, type="IIC")
+<<iicggplotgen, echo=FALSE, results=hide>>=
+tcqconv.grm.1pl.info <- extract_information(tcqconv.grm.1pl)
+tcqconv.grm.2pl. <- extract_information(tcqconv.grm.2pl)
 @   
-  \caption{Item Information Curves, TCQ Conventional Scale, One Parameter GRM (left) and Two Parameter GRM (right)}
+
+
+\begin{figure}
+\setkeys{Gin}{height=0.8\textheight}  
+<<iccgrmtcqconv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
+tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
+print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl))
+@   
+  \caption{Item Information Curves, TCQ Conventional Scale, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iictcqconv1grmpl}
 \end{figure}
 
@@ -601,11 +609,11 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
-
+<<tcqaltgrminfo, echo=FALSE, results=hide>>=
+@ 
 \begin{figure}
 <<tcqalticcpl, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
-devAskNewPage(ask=FALSE)
 plot(tcqalt.grm.constrained, type="IIC")
 plot(tcqalt.grm2, type="IIC")  
 @ 
@@ -825,7 +833,7 @@ tcq6summ2 <- summary(tcq6fit2)
 
 <<tcq2testsemcomp, echo=FALSE, results=tex>>=
 tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq6fit2))
-print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"))
+print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"), include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section \ref{sec:study-1}).
@@ -1846,7 +1854,6 @@ Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters 
 \begin{figure}
 <<iictcqconv2grmpl, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(1, 2))
-devAskNewPage(ask=FALSE)
 plot(tcq2d.conv.grm.1pl, type="IIC")
 plot(tcq2d.conv.grm.2pl, type="IIC")
 @   
@@ -2174,7 +2181,6 @@ One interesting part of the factor analytical results reported above was that a 
 \begin{figure}
 <<inffig1and3, echo=FALSE, fig=TRUE>>=
 par(mfrow=c(2, 3))
-devAskNewPage(ask=FALSE)
 plot(tcq2b.conv.grm.1pl, items=c(1, 3, 7, 9, 13, 15), main=NULL)
 @   
   \caption{Information Curves for Items One and Three for TCQ-Conventional, Split A}
