@@ -2,7 +2,7 @@
 \section{Introduction}
 \label{sec:introduction-2}
 
-The next stage in the research was to develop two IAT measures, one for treatment credibility and the other for optimism. The original approach taken in this study was as follows. Firstly, a number of interviews with doctors, complementary health practitioners and the general public (students) were carried out to assess the constructs associated with health. Due to space limitations, the results of these analyses are not included in this thesis. 
+The next stage in the research was to develop two IAT measures, one for treatment credibility and the other for optimism. The original approach taken in this study was as follows. Firstly, a number of interviews with doctors, complementary health practitioners and the general public (students) were carried out to assess the constructs associated with health. The results of this analysis are reported in Appendix~\ref{cha:append-ii:-qual}.
 
 Following on from this, a repertory grid approach was employed to develop individualised stimuli for each IAT (described below in Section~\ref{sec:repertory-grids}). This chapter describes that process, and then reports on the piloting of the IAT measures in a small sample, along with the piloting of the experimental research. 
 
@@ -68,7 +68,7 @@ qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
 \begin{figure}
 <<plotfreq, echo=FALSE, fig=TRUE>>=
 qual.tab.top <- qual.tab.sort[1:20,]
-freq.pl<-ggplot(qual.tab.top, aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-45))+xlab("Stimulus")+ylab("Count")
+freq.pl<-ggplot(qual.tab.top, aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-90))+xlab("Stimulus")+ylab("Count")
 print(freq.pl)
 @   
   \caption{Histogram of Frequency of People or Qualities}
@@ -270,7 +270,7 @@ optpesswords<-iepilot[,c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Su
 <<plotscales, echo=FALSE, fig=TRUE>>=
 pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), method="kendall", smooth=FALSE, ellipses=FALSE)
 @  
-  \caption{Pairs Plot of Explicit Variables, Pilot Study. LOTR: Life Orientation Test, Revised. MAAS - Mindful Attention Absorption Scale. Pill - Pill Credibility. Cream - Cream Credibility. Inj - Injection Credibility. Acu - Acupuncture Credibility. Hom - Homeopathy Credibility. Rei - Reiki Credibility}
+  \caption{Pairs Plot of Explicit Variables, Pilot Study. LOTR: Life Orientation Test, Revised. MAAS - Mindful Attention Awareness Scale. Pill - Pill Credibility. Cream - Cream Credibility. Inj - Injection Credibility. Acu - Acupuncture Credibility. Hom - Homeopathy Credibility. Rei - Reiki Credibility}
   \label{fig:pairspilot1}
 \end{figure}
 
@@ -356,8 +356,8 @@ vastrans<-VASdata*-10
 vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
 vas.m <- melt(vastrans, id.vars="index")
 names(vas.m) <- c("Time", "Participant", "Pain")
-names(vas.c)[1] <- "PP.No"
-names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
+## names(vas.c)[1] <- "PP.No"
+## names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
 print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
 @  
   \caption{Participant pain responses over time}
