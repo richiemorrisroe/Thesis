@@ -216,7 +216,7 @@ Participants in the treatment group were told that \textit{the cream was a poten
 
 \subsection{Analysis of Experimental Data}
 
-The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out using analysis of variance techniques. There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. 
+The first step in the analysis of experimental data was to examine the comparability of each of the different groups. This procedure was carried out using analysis of variance techniques. There were no differences in pre-treatment levels except for GSR levels, which were different at baseline between the Deceptive and Open Placebo groups. This difference was not significant, though it was visible. 
 
 
 \subsubsection{Analysis of Reaction Time Data}
@@ -266,6 +266,9 @@ In addition, these logistic regression models were compared against models using
 Skin conductance recordings (GSR) were taken as part of this experiment. This source provided recordings at 1000Hz for the entire procedure. %% The ECG data was analysed to extract heart rate, heart variability  and QT and RR intervals.
 %% In addition, both of these time series were examined using event history analysis (see Section \ref{sec:event-hist-analys}), which modelled the time series in three intervals (before administration of gauge, before administration of placebo, after administration till end) for the Deceptive and Open Placebo Groups and two series (before administration of gauge and afterwards) for the No Treatment group.
 
+\subsubsection{Structural Equation Models}
+\label{sec:struct-equat-models}
+
 Finally, the relationships between physiological responses and the psychological (both implicit and explicit) variables collected, were examined. More details on the hypotheses regarding this can be found in  Chapter \ref{cha:methodology}. Briefly, the models tested were as follows:
 \begin{itemize}
   
@@ -279,12 +282,7 @@ Finally, the relationships between physiological responses and the psychological
 \item A null model
 \end{itemize}
 
-
-
-\subsubsection{Structural Equation Models}
-\label{sec:struct-equat-models}
-
-Finally, the models described in Chapter \ref{cha:methodology} and in Section \ref{sec:introduction-1} were fit to the data. These models allowed for the principled comparison of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
+Finally, the models briefly above, and in more detail in Chapter~\ref{cha:methodology} were fit to the data. These models allowed for the principled comparison of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
 
 
 \section{Results}
@@ -1046,7 +1044,7 @@ print((iatexp2)+geom_smooth(method="lm")+geom_jitter())
 %%   \label{fig:pairsplotimpexp}
 %% \end{figure}
 
-In Figure \ref{fig:pairsimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with themselves, as noted above).  
+In Figure~\ref{fig:pairsimpexp} the relationships between the self report and implicit measures are shown. It can be seen that the credibility scores break into conventional and alternative groups, while the LOT-R and MAAS do not correlate hugely with any of the other measures (but do correlate quite well with each other, as noted above).  
 
 There was a difference in the mean cream credibility scores by whether or not a participant responded to placebo, but the difference was not significant ($t=-0.9545, df=53.766, p=0.3441$). 
 
@@ -1154,7 +1152,7 @@ pvalues.sum <- apademotables(placmod.pvalues)
 print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"))
 @ 
 
-To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table \ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response, with the exception of Age (the median p-value was approximately 0.1), which is unexpected and can probably be best explained by the clustering of the majority of participants in a small range of ages. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this analysis does not account for the search process, it is not reported further here. 
+To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table~\ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this analysis does not account for the search process, it is not reported further here. 
 
 
 Individual regressions were run for each of the variables over the training and test sets, but none were significant. 
@@ -2238,7 +2236,7 @@ kirsch.twofac.more.fit <- moreFitIndices(placmod.kirsch.twofac.fit)
 placmod.kirsch.twofac.fit.all <- c(placmod.kirsch.twofac.fit.measures, kirsch.twofac.more.fit)
 placmod.fit.all <- rbind( placmod.cred.opt.fit.all, placmod.opt.fit.all, placmod.kirsch.twofac.fit.all)
 rownames(placmod.fit.all) <- c( "Optimism", "Credibility", "Kirsch Two Factor")
-print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), scalebox=0.7)
+print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), scalebox=0.6)
 @ 
 
 From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that of Kirsch when implicit expectancies are included in the model. Implications are elaborated upon in the discussion. 
