@@ -531,7 +531,7 @@ The result of this model comparison exercise showed that the 1 parameter model w
 The item information curves are perhaps more illuminating (Figure~\ref{fig:iictcqconv1grmpl}), as they show that the Injection items convey a large proportion of the information across the range when we allow separate discrimination parameters for individual items. 
 <<iicggplotgen, echo=FALSE, results=hide>>=
 tcqconv.grm.1pl.info <- extract_information(tcqconv.grm.1pl)
-tcqconv.grm.2pl. <- extract_information(tcqconv.grm.2pl)
+tcqconv.grm.2pl.info <- extract_information(tcqconv.grm.2pl)
 @   
 
 
