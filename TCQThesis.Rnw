@@ -540,7 +540,7 @@ tcqconv.grm.2pl.info <- extract_information(tcqconv.grm.2pl)
 <<iccgrmtcqconv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
 tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
-print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl))
+print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl+theme(legend.position=c(1,1))))
 @   
   \caption{Item Information Curves, TCQ Conventional Scale, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iictcqconv1grmpl}
@@ -609,15 +609,21 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
-<<tcqaltgrminfo, echo=FALSE, results=hide>>=
+
+<<tcqaltiicggplotgen, echo=FALSE, results=hide>>=
+tcqalt.grm.1pl.info <- extract_information(tcqalt.grm.constrained)
+tcqalt.grm.2pl.info <- extract_information(tcqalt.grm2)
 @ 
 \begin{figure}
-<<tcqalticcpl, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(1, 2))
-plot(tcqalt.grm.constrained, type="IIC")
-plot(tcqalt.grm2, type="IIC")  
+  \setkeys{Gin}{height=0.9\textheight}  
+<<iccgrmtcqalt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+tcq1.1plalt.pl <- ggplot_inf(tcqalt.grm.1pl.info)
+tcq1.2plalt.pl <- ggplot_inf(tcqalt.grm.2pl.info)
+print(arrangeGrob(tcq1.1plalt.pl+theme(legend.position="none"),tcq1.2plalt.pl))
 @ 
-  \caption{Item Information Curves, TCQ Alternative Scale, One Parameter GRM (left) and Two Parameter GRM (right)}
+
+@ 
+  \caption{Item Information Curves, TCQ Alternative Scale, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iictcqalt1grmpl}
 \end{figure}
 
@@ -1850,14 +1856,19 @@ print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", c
 @ 
 
 Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
-
+<<tcqaltiicggplotgen2, echo=FALSE, results=hide>>=
+tcqconv2d.grm.1pl.info <- extract_information(tcq2d.conv.grm.1pl)
+tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
+@ 
 \begin{figure}
-<<iictcqconv2grmpl, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(1, 2))
-plot(tcq2d.conv.grm.1pl, type="IIC")
-plot(tcq2d.conv.grm.2pl, type="IIC")
-@   
-  \caption{Item Information Curves, TCQ Conventional, Split 2, One Parameter GRM (left) and Two Parameter GRM (right)}
+  \setkeys{Gin}{height=0.9\textheight}  
+<<iccgrmtcqconv2d, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+tcq2.1plconv.pl <- ggplot_inf(tcqconv2d.grm.1pl.info)
+tcq2.2plconv.pl <- ggplot_inf(tcqconv2d.grm.2pl.info)
+print(arrangeGrob(tcq2.1plconv.pl+theme(legend.position="none"),tcq2.2plconv.pl+theme(legend.position=c(1,1))))
+@
+
+  \caption{Item Information Curves, TCQ Conventional, Split 2, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iicgrmtcqconv2pl}
 \end{figure}
 
@@ -1970,7 +1981,7 @@ Table~\ref{tab:tcq2grmaverroralt} shows the results of a comparable process for 
 \subsection{Final Tests}
 \label{sec:backtesting}
 
-The next stage in the analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample~\footnote{due to the changes in the scale in Sample Two, a back testing strategy was not possible in this case}. 
+The next stage in the analysis is to take the best of these models from each split and test them on the entire dataset. While this is, in a sense, analysing the data twice, it is the most practicable way in which to determine the best model for the entire sample\footnote{due to the changes in the scale in Sample Two, a back testing strategy was not possible in this case}. 
 
 The best fitting models on the out of sample data were as follows:
 \begin{itemize}
@@ -2247,7 +2258,7 @@ print(xtable(apareg(pilltotlm.holdout), label="tab:tcq2pillholdout", caption="Co
 @ 
 
 
-From  the model on the held out data, it can be seen that the results (Table~\ref{tab:tcq2pillholdout}) were highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.51, which equates to approximately 25\% of the variance in Pill Credibility explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience variables did not pass the traditional significance filter. Age was significant with a negative coefficient, suggesting that credibility for these treatments were lower as age increased. 
+From  the model on the held out data, it can be seen that the results (Table~\ref{tab:tcq2pillholdout}) were highly significant F(10,129)=54.76, $p\le 0.001$. The model had an adjusted $R^2$ of 0.51, which equates to approximately 25\% of the variance in Pill Credibility explained. The Cream and Injection variables were highly significant, while the Acupuncture and Experience with Pills variables did not pass the traditional significance filter. Experience with creams did pass this filter however, which may be a function of increasing experience with multiple painkilling problems increasing their credibility.  
 
 
 
@@ -2304,7 +2315,7 @@ print(xtable(apareg(creamtotlm.holdout), label="tab:tcq2creamholdout", caption="
 
 
 
-The results for the held out data are shown in Table \ref{tab:tcq2creamholdout}. The model was again significant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497. Pill credibility, experience  cream treatments and Acupuncture credibility remained significant, along with Experience with Cream treatments, and Pill credibility, suggesting that individuals with more faith in Pill painkilling treatments were likely to endorse Cream treatments also.  
+The results for the held out data are shown in Table~\ref{tab:tcq2creamholdout}. The model was again significant, with an $F(6,144)=20.61$, and a p-value of $p\le 0.001$. The adjusted $R^2$ for the model was equal to 0.4497. Pill credibility, experience with  cream treatments, Injection and Acupuncture credibility remained significant,
 
 
 %% Next, lasso and ridge regression models were fit to this variable. 
@@ -2463,7 +2474,7 @@ homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.ho
 print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Homeopathy credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table \ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, but the rest do not. The model has an $R^2$ of 0.62, which is extremely high. 
+Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relative experience variables for each form of credibility. The model has an $R^2$ of 0.62, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
