@@ -1,0 +1,57 @@
+
+%% \paragraph{Practical Model Building Strategy}
+
+%% The following are general steps towards building an ARIMA model.
+
+%% \begin{itemize}
+%% \item Inspect the plots both of the series and the autocorrelations
+%% \item Examine autocorrelations, differencing if necessary
+%% \item Estimate parameters, ensuring that they are significantly different from zero, and within the bounds of invertibility
+%% \item Examine residuals, if they are not white noise, repeat steps 1-4 until they are.
+%% \end{itemize}
+
+%% \paragraph{Event History Analysis}
+%% \label{sec:event-hist-analys}
+%% In this research, a particular form of time series analysis was used, which is known as event history analysis \cite{mccleary1980applied}. This type of analysis partitions the time series into two or more parts, based on whether or not a particular event has occurred. In the case of this research, there were either two or three parts to the analysis. In the Deceptive and Open Placebo groups (see Chapter \ref{cha:primary-research}), the first time series occcurred until the painful stimulus was applied, the second was the time from this point until the placebo was applied, and the third was this time point until the end. In the No Treatment group, there were two time series, one for the period before the pain was applied, and one after.
+
+%% A major advantage of this method is that it allows us to examine changes in the parameters of the time series as a function of experimental stage and condition. This allowed us to estimate more precisely what changes occurred over time as a result of experimental procedure. The basic procedure is as above, except that parameters are estimated on a subset of the data, and cross-correlation functions are used to examine the changes between them.
+
+%% Because of the autocorrelation inherent in the pain ratings, general linear models were not entirely appropriate for this data. Therefore, the autocorrelation structure was determined for the pain ratings, and a generalised linear mixed model was fitted to the data using the IAT, explicit and physiological data as predictors. These models were carried out using stepwise, lasso, ridge and least angle regression methods, and validated using ten-fold cross validation. 
+
+%% Classic work in examining the distributions of reaction time data was carried out by Ratcliff\cite{ratcliff1979group,ratcliff1993methods}. In the 1979 paper he suggested that a quantile based approach should be used for individual reaction time scores. This involves ranking each of the latencies for each individual participant, and using certain percentages of these as quantiles, which can then be used to estimate group distributions. This approach will be utilised in this research, and four quantiles will be used, as given that some conditions (Blocks one, two and four) have only twelve observations, and quartiles divide each of the block sizes (12 and 36) equally. These quartiles were then used to estimate group, block and condition level distributions for the reaction time data. 
+
+%% There are a number of problems with this approach. Firstly, the approach throws away much information, more than once. In the first case, information regarding extreme responses is censored, in an unsystematic and theoretically unjustified manner. The breakpoints of 300 and 3000 milliseconds appear to have been chosen to allow for the use of the mean as a group value rather than for any principled reasons. 
+
+%% It is arguable as to whether or not this censoring represents a good strategy, but certainly it is something which should have been examined in a principled fashion, which does not appear to have happened. The second issue relates again to the calculation of a mean.
+
+%% The choice of log transform (while slightly more justifiable) is decidedly inferior to a more data driven approach. Again, the issue here is not that such choices in analysis were made, but rather that they have been made once and repeated many times in the later literature. Even those who have criticised the IAT \cite{Klauer2005,Mierke2003,Blanton2006} on methodological grounds appear to have ignored this issue. 
+
+
+<<optiatboot, echo=FALSE, results=hide, cache=TRUE>>=
+
+
+optcritblocks <- merge(optstimblock3, optstimblock5, by="part.opt")
+Iatcalcopt <- function (data, indices=rep(0.00885, 113)) {
+  d <- data[sample(indices, replace=TRUE),]
+  b3mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b3sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
+  b5mean <- apply(d[,2:length(optcritblocks)], 1, mean, na.rm=TRUE)
+  b5sd <- apply(d[,2:length(optcritblocks)], 1, sd, na.rm=TRUE)
+  ovsd <- (b3sd+b5sd)/2
+  Iatscore <- (b5mean-b3mean)/ovsd
+}
+optboot <- boot(data=optcritblocks, statistic=Iatcalcopt, R=1000)
+## optci <- boot.ci(optboot)
+## optmeanconf <- as.data.frame(optci[["normal"]])
+## names(optmeanconf) <- c("confidence level", "lower quantile", "upper quantile")
+@ 
+
+\begin{figure}
+<<tcqstimblock3, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
+tcqstimblock3.m <- melt(tcqstimblock3, id.vars="part.tcq")
+tcqstimblock3.m[,"part.tcq"] <- with(tcqstimblock3.m, as.factor(part.tcq))
+print(ggplot(tcqstimblock3.m, aes(x=log(value), colour=as.factor(part.tcq)))+geom_density()+theme(legend.position="none"))
+@  
+  \caption{TCQ IAT Stimuli Response Times in Block 3. Each density plot represents the distribution of each participants' response times. Plot is on log scale }
+  \label{fig:tcqstimblock3}
+\end{figure}

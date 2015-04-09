@@ -1,25 +1,50 @@
-\documentclass[apsych, phd]{uccthesis}
+\documentclass[apsych,phd]{uccthesis}
 \title{The Placebo Effect: Measurement by Multiple Methods}
-\author{Morrisroe, Richard Patrick BA (Hons)}
-\supervisors{ Dr Z. Di Blasi}
-%\professor{Prof J.A. Groeger}
-\sponsor{Irish Research Council for Humanities and Social Sciences}
+\author[99473437]{Richard Patrick Morrisroe}
+\qualifications{BA (Hons)}
 \usepackage[pdftex]{lscape}% for landscaped tables
+\usepackage{booktabs}
 \usepackage{longtable}% for 
 \usepackage{rotating}
 \usepackage{Sweave}
-\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+% \includeonly{TCQThesis}
+% \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
+\newcommand{\bftab}{\fontseries{b}\selectfont}
 \makeindex
-\includeonly{HealthforThesis}
 \begin{document}
+\supervisors{Dr Z. Di Blasi \\ Dr Sean Hammond}
+\professor{Prof John McCarthy}
+\sponsor{Irish Research Council for Humanities and Social Sciences}
+
 \setkeys{Gin}{width=0.9\textwidth}
+
 \maketitle
 
 
-\tableofcontents
 
-\chapter{Introduction to the Research}
+
+
+\begin{dedication}
+To my parents, without whom none of this would have been possible
+\end{dedication}
+
+\begin{abstract}
+  This thesis investigated the relationship of explicit (self-report), implicit (IAT) and physiological variables to the placebo effect. The thesis consisted of three main parts. The first collected background data and developed models for two constructs (Optimism and Mindfulness) associated with the placebo effect and implicit attitudes, respectively. The second part of the thesis consisted of the development of an explicit measure of treatment expectancies, and the development of two IATs, one for Optimism and the other for Treatment Credibility. The final portion of the thesis was an experimental study (N=111) which tested these new measures in a sample of healthy volunteers. The primary hypothesis of the thesis, that there would be a relationship between the placebo effect and implicit measures, was not supported. Major findings include an effect of semantic priming on placebo response mediated by condition (Deceptive versus Open Placebo), an unexpected negative relationship between Optimism and self-reported Health, and a physiological relationship between pain ratings and GSR data, which was also mediated by Condition in the experiment. 
+\end{abstract}
+
+\begin{acknowledgements}
+  Firstly, I'd like to thank all of the people who supervised me over the course of this rather long journey. These are Dr Zelda Di Blasi, Dr Dylan Evans, Dr Jurek Kirakowski, Prof John Groeger and Dr Sean Hammond. All of you have helped immeasurably in making this thesis better, and for that I thank you. 
+
+Next, I'd like to thank all of my friends who stuck with me throughout this long and winding road, covering three cities, four jobs and two relationships. On that note, I'd like to thank Nicola Ziedler for being there for the first four years. 
+
+Additionally, I'd like to thank all of the people who contributed to the open source software that helped make this thesis. 
+
+Finally, I'd like to thank Elizabeth Ann Doyle for putting up with a difficult ending to a really long process. 
+\end{acknowledgements}
+
+% \chapter{Introduction to the Research}
 \label{cha:intr-rese}
 \include{Introduction}
 
@@ -27,16 +52,9 @@
 \label{cha:literature-review}
 \include{LiteratureReview}
 
-\chapter{Methodology}
+\chapter{Theory \& Methodology}
 \label{cha:methodology}
 \include{Methodology}
-
-
-\chapter{Notes Towards a Theory of Placebo}
-\label{cha:notes-towards-theory}
-\include{TheoryPlacebo}
-
-
 
 \chapter{Health Optimism and Mindfulness Data}
 \label{cha:health-for-thesis}
@@ -46,21 +64,35 @@
 \label{cha:tcq-thesis}
 \include{TCQThesis}
 
-o% \chapter{Development of Implicit Measures}
-% \label{cha:devel-impl-meas}
-% \include{DevelopmentofIAT}
+\chapter{Development of Implicit Measures}
+\label{cha:devel-impl-meas}
 
-\chapter{Primary Research}
+\include{DevIATQuant}
+
+\chapter{Measuring Placebo by Multiple Methods}
 \label{cha:primary-research}
 \include{Experiment}
 
 \chapter{General Discussion and Conclusions}
 \label{cha:general-discussion}
+\include{DiscussionandConclusions120211}
+\appendix
+\chapter{Appendix 1: Supporting Tables and Figures}
+\label{cha:append-1:-supp}
+\include{Appendix}
 
+\chapter{Appendix II:\ Qualitative Analysis}
+\label{cha:append-ii:-qual}
 
+\include{DevelopmentofIAT}
 
 \bibliography{placebo2,IAT2,statistics,healthoptmind2,probabilities2,TCQ}
 \end{document}
 
 
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "PlaceboMeasurementByMultipleMethods"
+%%% End:

@@ -1,0 +1,126 @@
+* DONE Refer back to Theory section in overall Discussion
+[[file:Methodology.tex::\begin{itemize}][Here are the predictions]] (apparently not :()
+* TODO Fix references which give initials for first authors
+* TODO Add reference to section 2 on treatment preference in TCQ chapter
+* TODO Fix DiBlasi references
+- these really should not have a hyphen
+* DONE Need to add test of lagged physiological theory, or else remove this from the thesis
+* TODO Maybe look at impact of high Opt & High Pess 
+- Have removed the paragraph that talks about it, as its not critical
+* DONE Fix MAAS IRT cross-validation
+[[file:HealthforThesis.Rnw::<<hom1maasgrmtest,%20echo%3DFALSE,%20results%3Dtex>>%3D][Here is where the code fails]]
+* DONE Add description of D algorithm for IAT scoring
+* TODO Fix headings for FA sections in Health and TCQ chapters
+
+* DONE Use predicted vs observed graphs and RMSEA to compare fitted regression models, rather than p-values (which are not available for lasso and ridge).
+  CLOSED: [2014-02-15 Sat 19:21]
+Didn't do this, instead I removed the lasso and ridge regressions
+* DONE Do SEM for scales for sample two in HOM chapter, also use backtesting
+  CLOSED: [2014-02-24 Mon 18:34]
+This is SEM for the relationships between health, optimism, emwellbeing and mindfulness
+* DONE Do backtesting/scales work in TCQ chapter
+  CLOSED: [2014-02-24 Mon 15:46]
+* DONE Put more scoring stuff into Experimental chapter
+  CLOSED: [2014-02-25 Tue 10:51]
+Probably need to report the averaged factor score predictions.
+Done for the TCQ measures
+Done for the LOTR & MAAS - need to include these in the regressions
+Ideally would weight them, but this is potentially too much work.
+* DONE Add explanation of how IRT cross-validation was done in Methodology
+  CLOSED: [2014-02-24 Mon 16:56]
+* DONE figure out how to reference stargazer tables
+  CLOSED: [2014-02-15 Sat 19:21]
+* DONE Add good descriptions of IIO and monotonicity assumptions to methodology section, under IRT part.
+  CLOSED: [2014-02-24 Mon 16:59]
+* DONE Note problems that arose because of reflexivity (DevelopmentOfIAT)
+  CLOSED: [2014-02-24 Mon 15:51]
+Just removed qualitative part
+* DONE Decide whether or not its worth including the qualitative research in as much detail.
+Decided to remove this section
+  CLOSED: [2014-02-15 Sat 19:21]
+* DONE Indent participant/interview comments appropriately, so it is easy to read.
+  CLOSED: [2014-02-15 Sat 19:22]
+* Add survivial analysis using proper time lengths from phys data
+Is this really necessary?
+* fit ARIMA models to pain data, estimate their accuracy.
+Necessary?
+* DONE Account for differences in GSR at baseline
+  CLOSED: [2014-02-25 Tue 11:20]
+* TODO fix GSR cross-correlations chart
+I just took it out
+* DONE examine why Kirsch two factor model shows such weird fit indices
+  CLOSED: [2014-01-09 Thu 20:10]
+* Find N and more details of Kirsch & Wiexel coffee study
+#+BEGIN_SRC R
+pwr.t.test(n=33, d=0.7) ##power for experiment approx 0.8
+pwr.t.test(n=33, d=1.23) ##power for ischemic pain effects
+#+END_SRC
+* DONE Add stepwise optimism models to HOM chapter
+  CLOSED: [2014-02-15 Sat 19:22]
+* DONE Add reduced LOTR and MAAS models to experimental chapter
+  CLOSED: [2014-02-25 Tue 12:11]
+Need to average the respective factor scores solutions. Other approaches would take more time and be a little dodgy. 
+
+* DONE justify physiological expectancies theory in experimental chapter - explain how you have justified it
+  CLOSED: [2014-02-25 Tue 12:10]
+* DONE Use BMQ factors from original research to assess convergent validity (this factor has been associated with adherence)
+  CLOSED: [2014-02-24 Mon 18:11]
+Need to get surveymonkey data to match up all questions asked to what is in the completed general scale. 
+BAM General Q's
+BAM3
+BAM4
+BAM6
+BAM8
+BAM10
+BAM13
+BAM14
+BAM17
+* DONE put in details of BMQ sub-scales in Methodology section
+  CLOSED: [2014-02-24 Mon 15:33]
+* include abstract for all data chapters
+* DONE Fix up experimental and IAT Pilot chapter
+  CLOSED: [2014-02-25 Tue 15:27]
+Add TCQIAT data, make it clearer, relate it to the experiment (include power calculations)
+* DONE talk about relationship between expectancies and optimism in experimental chapter and discussion
+  CLOSED: [2014-02-25 Tue 12:06]
+* DONE justify why the TCQ isn't a relative measure, in light of increasing correlation (hint, I've already written the answer)
+  CLOSED: [2014-02-25 Tue 14:37]
+
+* DONE Write conclusions and further research
+  CLOSED: [2014-02-25 Tue 16:17]
+* TODO Write overall abstract
+* TODO Make sure figures and tables are in the best places in text
+* DONE Match up backtesting with factor averaging in HOM chapter
+  CLOSED: [2014-02-25 Tue 14:30]
+This doesn't match, solutions are averaged, but backtesting is not done on the averaged solutions. 
+The reason this was done was because the models are incomparable, given that there were only five items in the Split C results.
+* TODO Make sure that there is no lagged effect of the physiological variables in experimental chapter (or remove the prediction). 
+* TODO link physiological findings to embodied theory
+* Note similarity between experiment and Kirsch and Weixel finding
+[[file:LiteratureReview.tex::Additionally,%20the%20physiological%20parameters%20measured%20showed%20effects%20in%20the%20opposite%20direction%20between%20these%20two%20conditions.][Kirsch & Wiexel finding physiological parameters]]
+*  Put in hypothesis around physiological changes in active conditions
+[[file:LiteratureReview.tex::One%20extremely%20interesting%20study%20claimed%20that%20pain%20ratings%20could%20be%20derived%20from%20the%20measurement%20of%20skin%20conductance,%20and%20that%20active%20drugs%20changed%20the%20response%20patterns,%20while%20placebo%20administration%20did%20not~\cite{Fujita2000}%20(and%20c.f.%20Chapter~\ref{cha:primary-research}).][Reference here]]
+* Note reference to mindfulness in experimental chapter
+[[file:Methodology.tex::\subsection{Embodied%20Cognition%20and%20Placebo}][Embodied cognition section]]
+* Methodology
+- Put in description of how IAT effect was calculated
+- Choice and rationale for metric chosen
+* Health Chapter
+** Introduction
+[[The%20methods%20used%20for%20this%20part%20of%20the%20thesis%20were%20primarily%20psychometric.][And yet the introduction does not talk very much about psychometrics]]
+- Fix this, make introduction more relevant and results more appropriate to it.
+[[file:HealthforThesis.tex::The%20study%20formed%20an%20opportunity%20to%20collect%20background%20data%20for%20the%20population%20of%20interest,%20to%20assess%20if%20the%20participants%20in%20the%20experiment%20were%20systematically%20different%20from%20those%20who%20had%20responded%20to%20a%20survey%20invitation.%20This%20is%20critical%20if%20the%20results%20from%20the%20experimental%20portion%20of%20the%20research%20are%20to%20generalise%20to%20any%20further%20samples,%20given%20that%20inferences%20cannot%20be%20made%20about%20the%20experimental%20sample%20if%20it%20is%20not%20understood%20how%20they%20stand%20in%20relation%20to%20other%20samples%20from%20the%20overall%20population%20which%20was%20used%20throughout%20the%20research.%20This%20process%20should%20allow%20for%20more%20accurate%20predictions%20of%20participant%20responses,%20assuming%20that%20the%20models%20generalise%20to%20the%20new%20sample.][Background data point - discuss how the models did in Experimental chapter]]
+- Not particularly well, as I remember it. 
+** Results
+[[file:HealthforThesis.Rnw::print(tot.xtab,%20include.rownames%3DFALSE)%20#include%20packing%20rotating%20if%20fails][Maybe put sample one and two scale totals at this point?]]
+Fix FA tables so either low results are supressed, or high loading ones are bold. 
+[[https://stat.ethz.ch/pipermail/r-help/2011-June/279822.html][This shows an example using xtable]]
+[[file:HealthforThesis.Rnw::scales.hom1%20<-%20hom1%5B,66:73%5D][Higher order structure not particular clear when using scale totals for sample one, better for sample two]]
+- Test if the generated factor structures provide a better fit.
+- Maybe look at irtoys package to plot test functions in ggplot
+[[http://blog.lib.umn.edu/moor0554/canoemoore/2011/07/irtoys_plyr_ggplot2_test_development.html][Useful blog post]]
+
+** Discussion
+
+[[file:HealthforThesis.Rnw::This%20factor%20explained%2035\%25%20of%20the%20variance][Discuss why the MAAS model only explained 35% of the variance in the sample]]
+

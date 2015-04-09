@@ -1,0 +1,454 @@
+
+\section{Introduction}
+\label{sec:introduction-2}
+
+The next stage in the research was to develop two IAT measures, one for treatment credibility and the other for optimism. The original approach taken in this study was as follows. Firstly, a number of interviews with doctors, complementary health practitioners and the general public (students) were carried out to assess the constructs associated with health. The results of this analysis are reported in Appendix~\ref{cha:append-ii:-qual}.
+
+Following on from this, a repertory grid approach was employed to develop individualised stimuli for each IAT (described below in Section~\ref{sec:repertory-grids}). This chapter describes that process, and then reports on the piloting of the IAT measures in a small sample, along with the piloting of the experimental research. 
+
+\section{Methodology}
+\label{sec:methodology-1}
+
+
+
+\subsection{Repertory Grids}
+\label{sec:repertory-grids}
+The use of repertory grids in this research was as a bridge between the qualitative analysis carried out and the quantitative side of the research. 
+
+Repertory grids were developed by George Kelly as an aid to therapy~\cite{kelly2003psychology} although they have been used in many diverse situations in the ensuing years. 
+Repertory grids were developed out of Kelly's theory of cognitive consistency, an active area of research which fell out of favour following the discovery of cognitive dissonance by Festinger in 1947~\cite{greenwald2002}.
+
+The premise of the technique is simple. Firstly, participants are supplied with a list of important people in their life, such as their mother, an older sibling and a teacher whom they liked or disliked. They write down the names they have chosen for each person, and then they compare the people in groups of 3. For each group (or sort), they are asked to describe how two of them are similar and also how one of them is different in a word or short phrase. These words or phrases can then be analysed both quantitatively or qualitatively.
+
+
+The approach taken in this project was as follows. In one of the surveys carried out on the UCC population (TCQ version 1) participants were asked to rank the most important people in their life who were related to health-care. 
+This data was then sorted and ranked, and a list of the most common people used was compiled into a health related repertory grid. 
+This was then administered to a small sample (N=17) to test the instrument. 
+ The results of this testing are described in  Section~\ref{sec:development-iat}.
+
+\subsection{Development of IAT}
+\label{sec:development-iat}
+
+The plan for the development of the IAT was to use the constructs obtained from the repertory grids to develop useful stimuli for the IAT.
+Unfortunately, this portion of the research did not lead to a successful outcome, for reasons described below.
+
+The Treatment Credibility IAT was developed from both the important figures which arose from the repertory grid, the qualitative interviews, and to match the explicit measure of treatment credibility. 
+
+The optimism IAT was developed along similar lines to most other Implicit Association tests, in that the survey for this measure was used as a base.
+
+\section{Development of Repertory Grid}
+\label{sec:devel-repert-grid}
+
+The repertory grid approach was taken for the following reasons. Firstly, conventional methods of developing IAT measures use the published self-report scale as a base, but for placebo treatment expectancies, there is no real validated self report measure (the development of which was an aim of this study, reported in Chapter~\ref{cha:tcq-thesis}). 
+
+The first step was the development of stimuli for the repertory grid. This process was carried out along with the first administration of the TCQ, and utilised the same sample. Following the completion of the instrument, participants were asked the following:
+
+\begin{quotation}
+  Please rank, in order of importance, any people or qualities you believe are associated with health (use titles not names e.g. doctor, not doctor Murphy)
+
+\end{quotation}
+
+<<packages, echo=FALSE, results=hide>>=
+
+require(ggplot2)
+require(reshape2)
+require(plyr)
+require(xtable)
+@ 
+
+<<data, echo=FALSE, results=hide>>=
+qual <- read.csv("RepGridPeople2.csv", stringsAsFactors=FALSE, na.strings="")
+qual.m <- melt(qual, id.vars=NULL)
+qual.m[,"value"] <- with(qual.m, tolower(value))
+qual.m2 <- qual.m[with(qual.m, gsub("s$", "", x=value)),]
+qual.tab <- as.data.frame(with(qual.m, table(value)))
+qual.tab.sort <- qual.tab[with(qual.tab, order(Freq, decreasing=TRUE)),]
+@ 
+
+\begin{figure}
+<<plotfreq, echo=FALSE, fig=TRUE>>=
+qual.tab.top <- qual.tab.sort[1:20,]
+freq.pl<-ggplot(qual.tab.top, aes(x=value, y=Freq))+geom_bar(stat="identity")+theme(axis.text.x=element_text(angle=-90))+xlab("Stimulus")+ylab("Count")
+print(freq.pl)
+@   
+  \caption{Histogram of Frequency of People or Qualities}
+  \label{fig:freplot}
+\end{figure}
+
+<<freqtab, echo=FALSE, results=tex>>=
+names(qual.tab.sort)[1] <- "Stimulus"
+print(xtable(qual.tab.sort[1:10,], caption="Frequency of Exemplars, Rep Grid Study", label="tab:freqrep"), include.rownames=FALSE)
+@ 
+
+As can be seen from Figure \ref{fig:freplot}, and Table \ref{tab:freqrep} the most popular exemplar for health was (unsurprisingly) doctor, followed by nurse, pharmacist and dentist. Additionally, a rep grid requires adjectives describing the exemplars, and these were taken from the standard repertory grid developed by Kelly.
+
+\subsection{Piloting of the Repertory Grid}
+\label{sec:pilot-repert-grid}
+
+This repertory grid (see Appendix) was then piloted with a convenience sample. Unfortunately, it became clear that participants in this sample did not have enough examples of medical professionals in order to be able to accurately fill out the grid. The original pilot was carried out online (N=17) and not one respondent was able to complete the process. This was then followed with an attempt at card-sorting (N=3) where it again became clear that participants simply did not have enough experience with particular medical practitioners and environments, and so this attempt was abandoned. 
+
+\section{Development of IAT}
+\label{sec:development-iat}
+
+Therefore, the next step was to develop an IAT without the use of the repertory grid which had been part of the original plan. The approach taken here was two-fold, given the aims of the project. The first step was to use the interviews to establish a common set of themes, and then to match these to the explicit measure, in  order to assure comparability. In the case of the Optimism IAT, this process was simple enough as there existed a self-report measure. However, in the case of the TCQ-IAT this approach presented some problems, as noted previously in this thesis. 
+
+The eventual approach taken was to use forms of treatments for the stimuli, given that these were the closest to the explicit measure, and additionally because they had relatively high face-validity. The positive/negative stimuli were taken to be either words representing truth or falsity. This was done as it was believed that these words would be the most useful. The literature is relatively silent on the structured development of IAT measures. In general, self-report measures are used as a base, and the comparison dimension is typically self/other for many psychological constructs. The true/false distinction is novel in the literature, but makes sense for the purposes of this research.
+
+The next step in this process was the piloting of the IAT and the examination of their associations with explicit measures of the construct, to ensure that they were measuring related areas. 
+
+\subsection{IAT Stimuli}
+\label{sec:iat-stimuli-2}
+
+
+
+The stimuli used for each IAT were as follows:
+
+\paragraph{Treatment Credibility IAT:}
+\begin{itemize}
+\item Conventional: Creams, Pills, Surgery, Injections 
+
+\item Alternative: Homeopathy, Acupuncture, Reiki, Flower Essence
+
+\item Real: Real, Accurate, True
+
+\item Fake: Fake, Inaccurate, False
+\end{itemize}
+
+
+
+\paragraph{Optimism IAT}
+\begin{itemize}
+\item Optimism: Optimism, Happy, Improving, Succeeding
+
+\item Pessimism: Pessimism, Unhappy, Disimproving, Failing
+
+\item Self: Me, Mine, Myself
+
+\item Other: You, Yours, Yourselves. 
+\end{itemize}
+
+\section{Piloting the IAT Measures}
+\label{sec:pilot-iat-meas}
+
+The IAT measures were piloted on 11 students from the psychology department. Each of these students were administered either the LOT-R and the optimism IAT or the TCQ and the TCQ-IAT. 
+
+\subsection{Optimism IAT Pilot}
+\label{sec:optimism-iat-pilot}
+ 
+
+
+<<readdata, echo=FALSE, results=hide>>=
+source("func.R")
+optiat <-read.table("ExperimentDataforR/PilotStudy/Opt IAT Pilot data 191110 FINISHED.csv", header=TRUE, sep="\t" )
+names(optiat)[c(3,9)] <- c("Them", "Disapproving")
+optiat.s <-optiat[,1:16]
+optiat.s[,"Block"] <- with(optiat.s, paste("Block", Block, sep=" "))
+optscores.mean <-calcIatScores(optiat.s, Code="PP.No", method="mean", words=c("Them", "Theirs", "Themselves", "Me", "Myself", "Mine", "Disapproving", "Sad", "Failing", "Worse", "Succeeding", "Happy", "Improving", "Better"))
+
+@ 
+
+<<optuniq, echo=FALSE, results=hide>>=
+optpp<- with(optiat, unique(PP.No))
+optuniq <- optiat[with(optiat, which(!duplicated(PP.No))),]
+optgend <- optiat[with(optiat, !is.na(Gender)),]
+optuniq <- optgend[with(optgend, !duplicated(PP.No)),]
+optgend.sum <- with(optuniq, summary(Gender))
+@ 
+
+The first step was to look at the composition of the sample. The sample was eleven students (N=11) of which ten (N=10) were female. 
+The ages of the sample ranged from 19 to 27, with a mean age of 21.27 and a median age of 20. In this respect, the sample was quite typical of students in the psychology department. 
+Students were asked had they heard of an IAT, to which all included in the sample replied no. 
+
+The mean Optimism IAT score (using the D algorithm, described in Chapter~\ref{cha:primary-research}) was 0.5833, and the distribution can be seen in Figure~\ref{fig:optiatpilot}. As can be seen from Figure~\ref{fig:optiatpilot},  the majority of participants had a positive IAT score, representing their ability to respond quicker in the congruent rather than incongruent condition. 
+
+\begin{figure}
+<<optiatpl, echo=FALSE, fig=TRUE>>=
+print(ggplot(optscores.mean, aes(x=IAT))+geom_density()+xlab("Distribution of Mean IAT Scores across Participants"))
+@   
+  \caption{Distribution of Optimism IAT Scores}
+  \label{fig:optiatpilot}
+\end{figure}
+
+<<optiatcorr, echo=FALSE, results=hide>>=
+optiat.corr <- data.frame(Participant=optuniq$PP.No, Age=optuniq$Age, Gender=optuniq$Gender, LOTR=optuniq$LOTR.Total, OptIAT=optscores.mean$IAT) #$
+@ 
+
+\begin{figure}
+<<optiatcorrplot, echo=FALSE, fig=TRUE>>=
+print(ggplot(optiat.corr, aes(x=LOTR, y=OptIAT))+geom_point()+geom_smooth(method="lm"))
+@   
+  \caption{Scatter-plot of Correlations between LOTR and Optimism IAT}
+  \label{fig:optiatcorrplot}
+\end{figure}
+
+
+As can be seen in Figure \ref{fig:optiatcorrplot}, the correlation was not particularly strong, but there was a relationship there. Statistical examination of the correlation suggested that the relationship was equal to 0.15. 
+
+\subsection{TCQ IAT}
+\label{sec:tcq-iat}
+
+Next, the Treatment Credibility Questionnaire was examined to assess its correlations with the self report measure, in preparation for the pilot. 
+
+<<readdata, echo=FALSE, results=hide, eval=FALSE>>=
+tcqiat <- read.csv("ExperimentDataforR/PilotStudy/tcq prep data for IAT.csv")
+tcqiat[,"Block"] <- with(tcqiat, paste("Block", Block, sep=" "))
+tcqscores <-calcIatScores(tcqiat, Code="Pp.No", method="mean", words=c("Real", "Accurate", "Actual",  "Truth", "Fake", "Lies", "Pills", "Cream", "Injections", "Alternative", "X.Acupuncture", "Reiki", "flower.essence", "Homeopathy", "Homeopathist"))
+@ 
+
+%% \begin{figure}
+<<tcqplot, echo=FALSE, fig=TRUE, eval=FALSE>>=
+print(ggplot(tcqscores, aes(x=IAT))+geom_density())
+@   
+%%   \caption{Density Plot, TCQ IAT Scores (Pilot)}
+%%   \label{fig:tcqpilotplot}
+%% \end{figure}
+
+The range is greater for the TCQ IAT, potentially because of the less familiar nature of the stimuli. Unfortunately, the demographics were not available for this pilot, due to data loss, and so this is not reported on explicitly. However, from a report prepared at the time, the correlation was equal to 0.20, which is in line with that for the optimism IAT. 
+
+
+\section{Piloting the Experimental Procedure}
+\label{sec:pilot-exper-proc}
+
+
+<<fileimport, echo=FALSE, results=hide>>=
+iepilot<-read.csv("ExperimentDataforR/PilotStudy/I and E for Pilot.csv")
+require(psych)
+require(xtable)
+@
+
+<<gender, echo=FALSE, results=tex>>=
+gend.sum <- as.data.frame(with(iepilot, summary(Gender)))
+names(gend.sum) <- "Gender"
+rownames(gend.sum)[3] <- "Not Supplied"
+print(xtable(gend.sum, label="tab:gendpilot", caption="Gender of Pilot Participants"))   
+@
+
+The participants in the pilot study (N=7), consisted of five men, one woman and one participant who did not report gender. The mean age of the participants was 25.3 (SD=4.13). 
+
+<<age, echo=FALSE, results=hide>>=
+age.xtab <-xtable(as.data.frame(with(iepilot, table(Age))))
+@
+
+
+<<tcqiat, echo=FALSE, results=hide>>=
+tcqiat<-read.csv("ExperimentDataforR/PilotStudy/TCQ IAT pilot data for R2712.csv")
+@
+
+<<realfakewords, echo=FALSE, results=hide>>=
+realfakewords<-tcqiat[, c("Real", "Accurate", "Truth", "Actual", "X.Inaccurate", "Fake", "Illusory", "Lies")]
+@
+
+%% \begin{figure}
+<<realfakeplot, echo=FALSE, results=hide, eval=FALSE>>=
+pairs.panels(realfakewords, labels=c("Real", "Accurate", "True", "Inaccurate", "Fake", "False"), method="kendall", smooth=FALSE, ellipses=FALSE)
+@  
+%%   \caption{Real and Fake Word Correlations and Histograms, Pilot Sample}
+%%   \label{fig:realfakeplot}
+%% \end{figure}
+
+
+<<convaltwords, echo=FALSE, results=hide>>=
+convaltwords<-tcqiat[, c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "X.Acupuncture", "flower.essence", "Reiki")]
+@
+
+%% \begin{figure}
+<<convaltplot, echo=FALSE, results=hide>>=
+pairs.panels(convaltwords, labels=c("Pills", "Cream", "Injections", "Surgery", "Homeopathy", "Acupuncture", "Flower Essence", "Reiki"), method="kendall")
+@  
+%%   \caption{Conventional and Alternative Treatment Words, Pilot Sample}
+%%   \label{fig:convaltplot}
+%% \end{figure}
+
+
+
+<<scalecreation, echo=FALSE, results=hide>>=
+scales<-iepilot[,c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei")]
+optpesswords<-iepilot[,c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving")]
+@
+
+\begin{figure}
+<<plotscales, echo=FALSE, fig=TRUE>>=
+pairs.panels(scales, labels=c("LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei"), method="kendall", smooth=FALSE, ellipses=FALSE)
+@  
+  \caption{Pairs Plot of Explicit Variables, Pilot Study. LOTR: Life Orientation Test, Revised. MAAS - Mindful Attention Awareness Scale. Pill - Pill Credibility. Cream - Cream Credibility. Inj - Injection Credibility. Acu - Acupuncture Credibility. Hom - Homeopathy Credibility. Rei - Reiki Credibility}
+  \label{fig:pairspilot1}
+\end{figure}
+
+Figure~\ref{fig:pairspilot1} shows the correlations between the various explicit measures in this study. It can be seen that the negative correlation reported on between the LOT-R and the MAAS replicated in this sample, suggesting that it was not a statistical fluke. It can also be seen that the conventional and alternative treatment credibility items correlated with one another, but not really between Conventional and Alternataive methods (apart from the strong negative correlation between Injection and Acupuncture credibility, which also occurred in Study One with the TCQ (Chapter \ref{cha:tcq-thesis}). However, with such a small sample size, these results should be regarded as a little suspect. 
+
+
+%% \begin{figure}
+<<plotoptpess, echo=FALSE, eval=FALSE>>=
+pairs.panels(optpesswords, labels=c("Disimproving", "Worse", "Sad", "Failing", "Happy", "Succeeding", "Better", "Improving"), method="kendall")
+@  
+%%   \caption{Pairs Plots of Optimism \& Pessimism Words, Pilot Study}
+%%   \label{fig:optpesswordsplot}
+%% \end{figure}
+
+
+
+
+%% As can be seen from Figure \ref{fig:optpesswordsplot}, the pessimism items correlate quite well, but this is not true for the optimism words. This is a little worrying, but given that the sample size was extremely small, this may not replicate in a larger sample. 
+
+A Kruskal test on the differences between blocks and total time gave a Chi Square of 23.59, with an associated p value of less than 0.0001 with degrees of freedom equal to 4. 
+This result is somewhat obvious, as blocks three and five are combined tasks, and would be expected to show a different pattern. This is in line with expectations before this experiment. 
+
+%%put in this plot!!!
+
+%% From Figure \ref{fig:convaltplot} it can be seen that the stimuli for conventional treatments hardly correlate at all, but the correlations for the alternative stimuli are much higher. This is a similiar pattern to what was seen in the optimism and pessimism stimuli, so there may be some process driving this effect. There is a limit, however, to how much data can be extracted from such a small sample and determining the nature of this process (if any) may be beyond this limit. 
+
+<<iatscores, echo=FALSE, results=tex>>=
+IAT<-cbind(iepilot$DIAT.Conv, iepilot$DiatOPt)
+iatcorr<-with(iepilot, cor.test(DIAT.Conv, DIATOpt, use="complete.obs", method="spearman"))
+@
+
+The first step was examining the correlation between the two explicit measures. This was found to be 0.62, using Spearman's $\rho$. This is somewhat higher than would be hoped for, but still only represents 36\% of the variance in common between the two measures. It is possible that this is due to the small sample, and as the previous piloting studies did not show this pattern, this explanation seems to be the most likely. 
+
+<<maascorr, echo=FALSE, results=tex>>=
+iatcorr.maas.tcq<-with(iepilot, cor.test(DIAT.Conv, MAAS, use="complete.obs", method="spearman"))
+iatcorr.maas.opt<-with(iepilot, cor.test(DIATOpt, MAAS, use="complete.obs", method="spearman"))
+@
+
+The Spearman correlations with the MAAS were 0.37 (for the Treatment Credibility IAT) and 0.08 (for the Optimism IAT). 
+
+<<srcorr, echo=FALSE, results=tex>>=
+impexp.corr.opt<-with(iepilot, cor.test(DIATOpt, LOTR, use="complete.obs", method="spearman"))
+@
+
+Surprisingly (based on the results of the pilot described above), the correlation between the optimism IAT and the LOT-R was negative, but was of the same magnitude as was seen in the previous study ($\rho=-0.26$). 
+
+<<corrtcq, echo=FALSE, results=hide>>=
+iepilot[,"meancred"]<-with(iepilot, mean(c(Pill, Cream, Inj, Acu, Hom, Rei), na.rm=TRUE))
+
+@ 
+
+
+<<iatandsrcorr, echo=FALSE, results=hide>>=
+iat.and.sr<-iepilot[, c("DIAT.Conv", "DIATOpt", "MAAS", "LOTR")]
+@ 
+
+
+%% \begin{figure}
+<<iatsrplot, echo=FALSE, results=hide>>=
+pairs.panels(iat.and.sr, labels=c("IAT Conv", "IAT Opt", "MAAS", "LOTR"), method="kendall")
+@  
+%%   \caption{Pairs Plot of Relationship Between Explicit and Implicit Measures}
+%%   \label{fig:impexplot}
+%% \end{figure}
+
+
+%% As can be seen from Figure \ref{fig:impexplot}, it appears that the TCQ explicit and implicit measures correlate reasonably well together, arguing that this measure is acceptable to be used in the larger study. 
+
+<<physdata, echo=FALSE, results=hide>>=
+physmeasures<-read.csv("ExperimentDataforR/PilotStudy/Physmeasures for Pilot.csv")
+@
+
+
+<<physbind, echo=FALSE, results=hide>>=
+BPdata<-physmeasures[,c("BP.1703", "BP.1980", "BP.2236", "BP.2346", "BP.8023", "BP.1032", "BP.5185")] #create data.frame for BP data analysis
+GSRdata<-physmeasures[, c("GSR.1703", "GSR.1980", "GSR.2236", "GSR.2346", "GSR.8023", "GSR.1032", "GSR.5185")]
+VASdata<-physmeasures[,c("VAS.1703", "VAS.1980", "VAS.2236", "VAS.2346", "VAS.8023", "VAS.1032", "VAS.5185")] # create data frame for VAS analysis.
+@
+
+\begin{figure}
+<<vastrans,echo=FALSE, fig=TRUE>>=
+vastrans<-VASdata*-10
+vastrans[,"index"] <- with(vastrans, 1:nrow(VASdata))
+vas.m <- melt(vastrans, id.vars="index")
+names(vas.m) <- c("Time", "Participant", "Pain")
+## names(vas.c)[1] <- "PP.No"
+## names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
+print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
+@  
+  \caption{Participant pain responses over time}
+  \label{fig:pppainplot}
+\end{figure}
+
+Figure \ref{fig:pppainplot} shows the pain ratings of all participants over time. There is definitely a upwards trend in the pain measurements, as would be expected given the design of the experiment, where pain scores increase over time. There is substantial variability in the responses, as can be seen from the wildly different lengths of the series. Two participants in the no treatment condition went for longer than 40 minutes, while none of the participants in the treatment condition did so. This is obviously a problem, given the goal of the experiment, and the results are illustrated graphically in the preceding figure. 
+
+<<vaswithplacresp, echo=FALSE, results=hide>>=
+vas.with.plac <- read.csv("ExperimentDataforR/PilotStudy/vaspilot.csv", header=TRUE, sep="\t")
+vas.with.plac[,"PP.No"] <- with(vas.with.plac, gsub("VAS.", "", x=PP.No))
+surv <- read.csv("ExperimentDataforR/PilotStudy/Survdatapilot.csv")
+vas.s <- vas.with.plac[,c("PP.No", "PlacResp")]
+surv.merge <- merge(surv, vas.s, by.x="PpNo", by.y="PP.No")
+@ 
+
+<<placglm, echo=FALSE, results=tex>>=
+names(surv.merge)[14:15] <- c("TreatmentIAT", "OptimismIAT")
+placglm.tcq <- glm(PlacResp~TreatmentIAT, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.tcq, label="tab:tcqiatglm", caption="Predicting Placebo Response from TCQ IAT Scores"))
+@ 
+
+<<placglmopt, echo=FALSE, results=tex>>=
+placglm.opt <- glm(PlacResp~OptimismIAT, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.opt, label="tab:optiatglm", caption="Predicting Placebo Response from OPT IAT Scores"))
+@ 
+
+<<placglmconv, echo=FALSE, results=hide>>=
+placglm.conv <- glm(PlacResp~ConvAltRatio, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.conv, label="tab:convglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
+@ 
+
+<<placglmlotr, echo=FALSE, results=tex>>=
+placglm.lotr <- glm(PlacResp~LOTR, data=surv.merge, family=binomial(link="logit"))
+print(xtable(placglm.lotr, label="tab:lotrglm", caption="Predicting Placebo Response from Explicit Credibility Scores"))
+@ 
+
+As can be seen from Table~\ref{tab:tcqiatglm} and \ref{tab:optiatglm} the relationship between the outcome variables did not appear to be large, though they were all (with the exception of the Treatment Credibility IAT) in the correct direction. Note that the generalised linear model for the ConvAltRatio did not converge, and the coefficients are not reported. Additionally, only 3 of the seven participants responded to placebo, suggesting that a larger sample size would be required to show a significant effect. This problem was worked around by using a scrambled sentence task on the majority of placebo participants, along the lines of Geers~\cite{Geers2005}. 
+
+
+<<physts,echo=FALSE, results=hide>>=
+BPdata.ts<-as.ts(BPdata) #create BP time series object
+GSRdata.ts<-as.ts(GSRdata) #create GSR time series object
+VASdata.ts<-as.ts(VASdata) #create time series object
+@
+
+
+
+
+<<bpplot, echo=FALSE, results=hide>>=
+plot(BPdata.ts)
+@
+%% \begin{figure}
+<<gsrplot, echo=FALSE, results=hide>>=
+plot(GSRdata.ts)
+@  
+%%   \caption{GSR Data by Participant Across Time}
+%%   \label{fig:gsrplot}
+%% \end{figure}
+
+
+
+%% \begin{figure}
+<<vasplot, echo=FALSE, results=hide>>=
+plot(VASdata.ts)
+@  
+%%   \caption{BP Readings over Time}
+%%   \label{fig:vasplot}
+%% \end{figure}
+
+
+
+%% As can be seen from Figure \ref{fig:vasplot} the trend is downwards over time. The recording device tracks between 0 and -1 so as the line goes lower, this represents increasing pain. 
+
+\section{Discussion}
+\label{sec:discussion}
+
+This chapter consisted of three smaller parts. Firstly, the results of the repertory grid approach to development of the IAT's was reported, and unfortunately this approach did not prove successful. It may be that this method may prove useful for different IAT's, but it did not prove useful here. 
+
+Secondly, the IAT measures were developed and piloted in small samples. This process found that each measure correlated moderately with the appropriate explicit measure, which is reassuring for the goal of the experiment. 
+
+Finally, the experimental procedure was piloted to assess what the appropriate sample size should be, and if further changes should be made to the setup.
+
+A number of issues became clear as a result of this process. The first is that the effect sizes achieved from placebo suggestions were quite small. The solution to this in the larger study was to include a priming manipulation (the scrambled sentence task) for the majority of participants, a small group not being primed to ensure that the effect of this manipulation could be tested. 
+
+Most importantly, there appears to be a (small) relationship between the explicit and implicit measures, which would seem to indicate that these measures can be effectively used in the experimental setup. 
+
+Additionally, the use of the priming manipulation allows for the major hypotheses of the study (the relationship between placebo response, explicit and implicit measures) to be tested more effectively. 
+
+Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. This also enabled the larger experimental study to assess the impact of both strong (Deceptive Administration) and weak (Placebo) suggestions, which is important if either of these types of suggestions are predicted by different sets of explicit and implicit measures. 
+
+%%% Local Variables: 
+%%% TeX-master: "PlaceboMeasurementByMultipleMethods"
+%%% End: 

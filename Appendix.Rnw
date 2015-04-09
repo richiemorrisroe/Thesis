@@ -1,0 +1,143 @@
+<<loaddata, echo=FALSE, results=hide>>=
+require(ggplot2)
+
+require(psych)
+require(xtable)
+require(OpenMx)
+require(car)
+require(arm)
+require(caret)
+require(nFactors)
+require(bcv)
+require(glmnet)
+require(mokken)
+require(eRm)
+require(ltm)
+require(lavaan)
+require(semPlot)
+require(reshape2)
+require(plyr)
+load("healthforthesislatest.rda")
+load("tcqthesislatest.rda")
+@ 
+\section{Health, Optimism and Mindfulness Data Appendices}
+\label{sec:health-optim-mindf-1}
+
+\subsection{RAND MOS Psychometric Analyses}
+\label{sec:rand-mos-psych}
+
+
+
+
+
+<<rand2fact, echo=FALSE, results=tex>>=
+rand.fact.2<-fa(na.omit(randitems.scored), 2,fm="ml", rotate="promax")
+print(FactorXtab(rand.fact.2, names=c("PhysEmHealth", "PhysicalFunc"),label="tab:rand2fact", caption="Factor Loadings, RAND MOS Two Factor Solution, Sample One"), sanitize.text.function = function (x) x)
+@
+
+Table~\ref{tab:rand2fact} shows the results of the two factor solution for the RAND-MOS from Chapter~\ref{cha:health-for-thesis}. 
+
+<<rand2corr, echo=FALSE, results=tex>>=
+print(xtable(rand.fact.2$r.scores, label="tab:hom1rand4corr", caption="Factor Correlations, RAND MOS Two Factor Solution, Sample One"), sanitize.text.function = function (x) x)
+@
+
+\subsection{MAAS Psychometric Analyses}
+\label{sec:maas-psych-analys}
+
+\subsubsection{MAAS Three Factor Solution}
+\label{sec:maas-seven-factor}
+<<maas7fact, echo=FALSE, results=tex>>=
+maas.fact.3<-factor.pa(na.omit(maasitems), 3, rotate="oblimin")
+print(FactorXtab(maas.fact.3, names=c("LackAware", "PhysUnaware", "LackPresAttention"), label="tab:tcq1maas3fact", caption="Factor Loadings, Three Factor Solution, MAAS, Sample One"), sanitize.text.function= function (x) x)
+@ 
+
+<<maas3corr, echo=FALSE, results=tex>>=
+print(xtable(maas.fact.3$r.scores, label="tab:hom1maas3corr", caption="Factor Correlations, MAAS Three Factor Solution, Sample One"))
+@ 
+
+
+<<maas2bfact5, echo=FALSE, results=tex>>=
+maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
+print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8, sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:tcq2bmaasfact5} shows the five factor solution for the MAAS for Split B. 
+
+<<maas2cfact5, echo=FALSE, results=tex>>=
+maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
+print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8, sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:hom2cmaasfact5} shows the five factor solution for Split C. 
+
+<<maasgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(maas.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model", label="tab:maasgrm2pl"), sanitize.colnames.function=function (x) x, sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:maasgrm2pl} shows the two paramater GRM for the MAAS scale, Sample One. 
+
+<<maas2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(maas2b.grm.2pl), caption="Coefficient Estimates for MAAS Two Parameter Graded Response Model, Split B", label="tab:maas2bgrm2pl"), sanitize.colnames.function=function (x) x)
+@ 
+
+Table~\ref{tab:maas2bgrm2pl} shows the estimated parameters for the MAAS two parameter GRM for Split B. 
+
+<<maas2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(maas2c.grm.2pl), caption="Coefficient Estimates for MAAS, Two Parameter Graded Response Model, Split C", label="tab:maas2cgrm2pl"), sanitize.colnames.function=function (x) x)
+@ 
+
+Table~\ref{tab:maas2cgrm2pl} shows the estimated parameters for the MAAS two parameter GRM for Split C.
+
+
+\subsection{LOTR Psychometric Analyses}
+\label{sec:lotr-psych-analys}
+
+<<lotr2bfact2, echo=FALSE, results=tex>>=
+lotr2b.fact2 <- fa(lotritems2b, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2b.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2blotr2", caption="Two Factor Solution, LOT-R, Split B"), sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:hom2blotr2} shows the loadings for the LOT-R Two factor solution, Split B. 
+
+<<lotr2cfact2, echo=FALSE, results=tex>>=
+lotr2c.fact2 <- fa(lotritems2c, 2, rotate="oblimin", fm="pa")
+print(FactorXtab(lotr2c.fact2, names=c("Pessimism", "Optimism"), label="tab:hom2clotr2", caption="Two Factor Solution, LOT-R, Split C"), sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:hom2clotr2} shows the estimated loadings for the LOT-R Two Factor solution, Split C. 
+
+<<lotr2bgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(lotr2b.grm.2pl), caption="Coefficient Estimates for Two Parameter Graded Response Model, LOT-R, Split B", label="tab:lotr2bgrm2pl"), sanitize.colnames.function=function (x) x)
+@ 
+
+Table~\ref{tab:lotr2bgrm2pl} shows the estimated coefficients for the Two Parameter GRM on the LOT-R for Sample Two, Split B. 
+
+<<lotr2cgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(lotr2c.grm.2pl), caption="Coefficient Estimates for LOT-R, Two Parameter Graded Response Model", label="tab:lotr2cgrm2pl"), sanitize.colnames.function=function (x) x)
+@ 
+
+Table~\ref{tab:lotr2cgrm2pl} shows the estimated coefficients for the Two Parameter GRM on the LOT-R, Sample Two, Split C. 
+
+\section{TCQ Thesis}
+\label{sec:tcq-thesis}
+
+\subsection{TCQ Factor Solutions}
+\label{sec:tcq-factor-solutions}
+
+<<average5factsolution, echo=FALSE, results=tex>>=
+tcq2b.fact5.named <- FactorNames(tcq2b.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c.fact5.named <- FactorNames(tcq2c.fact.5, names=c("Pillinj", "Hom", "Rei", "Cream", "Acu"))
+tcq2c5.av <- FactorAverage(sols=list(tcq2b.fact5.named, tcq2c.fact5.named), mynames=c("Pillinj", "Hom", "Rei", "Cream", "Acu", "Communalities"))
+print(xtable(tcq2c5.av, label="tab:tcq2fact5av", caption="Average of Five Factor Solutions over Splits B and C"), sanitize.text.function= function (x) x)
+@ 
+
+Table~\ref{tab:tcq2fact5av} shows the average of the five factor solutions across Splits B and C. 
+
+\subsection{TCQ IRT Analyses}
+\label{sec:tcq-irt-analyses}
+
+<<tcqconvgrm2plprint, echo=FALSE, results=tex>>=
+print(xtable(coefirt(tcqconv.grm.2pl), label="tab:tcq1convgrm2pl", caption="Coefficients for TCQ 1 Conventional Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+@ 
+
+Table~\ref{tab:tcq1convgrm2pl} shows the estimated coefficients for the two parameter GRM fit to the conventional items of the TCQ in Sample One. 

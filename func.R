@@ -1,23 +1,40 @@
 ##' .. content for \description{} (no empty lines) ..
 ##'
 ##' .. content for \details{} ..
-##' @title
+##' @title 
 ##' @param x
 ##' @param ...
 ##' @return
 ##' @author Richard Morrisroe
-FactorXtab <-  function (x, ...) {
-  x.load<-x$loadings
-x.comm<-x$communality
-x.names <- colnames(x.load)
-len <- length(colnames(x.load))
-x.names[len+1] <- "Communalities"
-x.comm.load<-cbind(x.load, x.comm)
-x.mat.df<-as.matrix.data.frame(x.comm.load)
-colnames(x.mat.df) <- x.names
-#colnames(x.mat.df)[length(x.mat.df)] <- "Communalities"
-fact.xtab <- xtable(x.mat.df, ...)
-fact.xtab
+FactorXtab <-  function (x, names=NULL,  ...) {
+    x.mat.df <- FactorCoeff(x, names=names)
+    x.mat.df[] <- sapply(x.mat.df, function (x) round(x, digits=2))
+    getfacs <- dim(x.mat.df)[2]-1
+    x.mat.df[,1:getfacs] <- sapply(x.mat.df[,1:getfacs], function (x) ifelse(x>=0.3, paste0("\\bftab ",  x), x))
+    
+    fact.xtab <- xtable(x.mat.df,...)
+    align(fact.xtab) <- rep("r", ncol(fact.xtab)+1)
+    return(fact.xtab)
+}
+FactorCoeff <- function (x, names=NULL) {
+   x.load<-x$loadings
+    x.comm<-x$communality
+    x.names <- colnames(x.load)
+    len <- length(colnames(x.load))
+   
+    x.comm.load<-cbind(x.load, x.comm)
+
+   x.mat.df<-as.matrix.data.frame(x.comm.load)
+   if(!is.null(names)) {
+       names2 <- c(names, "Communalites")
+       colnames(x.mat.df) <- names2
+   }
+   else {
+       x.names[len+1] <- "Communalities"
+       colnames(x.mat.df) <- x.names
+
+   }
+   return(x.mat.df)
 }
 ##' .. content for \description{} (no empty lines) ..
 ##'
@@ -27,13 +44,24 @@ fact.xtab
 ##' @param ...
 ##' @return
 ##' @author Richard Morrisroe
-FactorCor <- function (x, ...) {
-  res <- x$score.cor
+FactorCor <- function (x, xtable=FALSE, names=NULL, ...) {
+  res <- x$r.scores
   #allnames <- attr(x$loadings, "dimnames")
+  if(is.null(names)) {
   factnames <- colnames(x$loadings)
+}
+  else {
+      factnames <- names
+  }
+  ## browser()
   res <- as.data.frame(res)
+  names(res) <- factnames
+  rownames(res) <- factnames
   #names(res) <- factnames
-  res.x <- xtable(res, ...)
+  if(xtable) {
+  res <- xtable(res, ...)
+}
+  res
 }
 ##' .. content for \description{} (no empty lines) ..
 ##'
@@ -109,10 +137,11 @@ coefreshape <-  function (x) {
 ##' @param x
 ##' @return
 ##' @author Richard Morrisroe
-FitIndices <- function (x) {
+FitIndices <- function (x, labels=NULL) {
   tli <- x$TLI
   bic <- x$BIC
   rmsea <- x$RMSEA
+  labels <-
   rmsnames <- attr(x$RMSEA, "names")
   res <- as.data.frame(cbind(tli, bic, rmsea[1], rmsea[2], rmsea[3]))
   print(length(res))
@@ -233,8 +262,8 @@ ggplotGRM <- function (grm, ...) {
   x.t$response <- response
   x.tm <- melt(x.t, id="response")
   names(x.tm) <- c("threshold", "item", "ability")
-  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=as.factor(threshold)), ...)
-  plot2 <- plot1+layer(geom="point")
+  plot1 <- ggplot(x.tm, aes(x=ability, y=item, shape=as.factor(threshold), colour=as.factor(threshold)), ...)
+  plot2 <- plot1+geom_point()+geom_rug()
   plot2
   }
 ##' .. content for \description{} (no empty lines) ..
@@ -458,7 +487,7 @@ calcprob <- function (x) {
            p1 <- na.omit(length((y==y[j])))/ length(totscores)
            p2 <- length(y==y[j])/length(na.omit(totscores))
            p3 <- na.omit(length(y[j]))/length(na.omit(y))
-           browser()
+           ## browser()
            p4 <- p1*p2
            p5 <- p4/p3
            probcal[[i]] <- p5
@@ -526,11 +555,13 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
     warning("not all participants have complete responses")
 
   partlen <- with(data, tapply(Block, Code,length))
+    
   droppart <- partlen[partlen!=5]
   drop <- which(data$Code==names(droppart))
   data <- data[-(drop),]
   }
   if(method=="mean") {
+    
     func <- method[1]
   }
   else {
@@ -538,6 +569,7 @@ calcIatScores <- function(data, Code, method=c("mean", "median"), words) {
   }
 
   data2 <- data[,c(Code, words)]
+  
   block3 <- data2[data$Block=="Block 3",]
   block5 <- data2[data$Block=="Block 5",]
   block1 <- data2[data$Block=="Block 1",]
@@ -644,12 +676,6 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
      else {
        constraint <- grmconstraint
      }
-  richiecool <- FALSE
-  if(richiecool) {
-    funlist <- as.list(parse(oldmodel$call))
-    funlist2 <- substitute(newdata)
-    #more awesome metaprogramming stuff that I haven't figured out how to do yet....
-  }
 
   comp.para <- length(unique(as.vector(coef(oldmodel))))
   predscores <- getIRTestimates(factor.scores(oldmodel, resp.patterns=newdata))
@@ -668,13 +694,14 @@ testIRTModels <- function(oldmodel, newdata, gpcmconstraint=c("rasch", "1PL", "g
 }
 
 
-penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), ...) {
+penalisedRegression <- function(x, y,  testdata, newy, alpha, nfolds=10,type=c("coefficients", "response"), family="gaussian") {
   x.mat <- as.matrix(x)
   testdata.mat <- as.matrix(testdata)
   ## browser()
-  cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds)
-  mod <- glmnet(x=x.mat, y=y, alpha=alpha)
+  cvres <- cv.glmnet(x=x.mat, y=y, nfolds=nfolds, family=family)
+  mod <- glmnet(x=x.mat, y=y, alpha=alpha, family=family)
   pred.coef <- predict(mod, testdata.mat, s=cvres$lambda.min, type=type)
+  ## testmod <<- list(cvres=cvres, model=mod, predictions=pred.coef)
   if(type=="response") {
   pred <- data.frame(pred=as.vector(pred.coef), obs=newy)
   return(pred)
@@ -697,15 +724,18 @@ tuneLoess <- function(formula, data, newdata, tuneLength, ...) {
           }
     fitlist
 }
-lazyload <- function (files) {
-  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
+lazyload <- function (files, names, cols) {
+  filetype <- paste(names, "-", sep="")
+  outfilenames <- gsub("Richi[e]?-",filetype, x=files)
   outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
   for (i in 1:length(files)) {
     temp <- read.table(files[i])
-    gsr <- temp[,1]
-    write.table(gsr, file=outfilenames[i])
+    ## browser()
+    gsr <- temp[,cols]
+    write.table(gsr, file=outfilenames2[i])
   }
 }
+
 rmsea <- function(data) {
     erro <- with(data, pred-obs)
     err.sq <- erro^2
@@ -730,21 +760,17 @@ lazylength <- function(files) {
     lengthmat
 }
 
->>>>>>> 792dd32875a42604f37e7912293e3533e855dd15
-lazyload <- function (files) {
-  outfilenames <- gsub("Richi[e]?-", "GSR-", x=files)
-  outfilenames2 <- gsub(".*/Richieoutput/", "", x=outfilenames)
-  for (i in 1:length(files)) {
-    temp <- read.table(files[i])
-    gsr <- temp[,1]
-    write.table(gsr, file=outfilenames[i])
-  }
-}
-lazylength <- function(files) {
+
+
+getPPNo <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
     pp <- lapply(tp.split, "[", 3)
     pp <- gsub(".txt", "", x=pp)
+    pp
+}
+lazylength <- function(files) {
+    pp <- getPPNo(files)
     ## browser()
     lengthmat <- matrix(NA, 114, ncol=2)
     for (i in 1:length(files)) {
@@ -756,4 +782,266 @@ lazylength <- function(files) {
     }
     lengthmat
 }
+lazymean <- function( path, pattern, ...) {
+    lsfiles <- list.files(path, pattern, ...)
+    pp <- getPPNo(lsfiles)
+    meanmat <- matrix(NA, length(lsfiles), ncol=2)
+    for(i in 1:length(lsfiles)) {
+        temp <- read.table(lsfiles[i])
+        mu <- mean(temp[,1])
+        meanmat[i,] <- c(pp[i], mu)
+}
+    meanmat
+}
 
+lazydownsample <- function(path, pattern, aggregate=1000, FUN=mean, ...) {
+  stopifnot(is.numeric(aggregate))
+    lsfiles <- list.files(path, pattern, full.names=TRUE)
+    pp <- getPPNo(lsfiles)
+    mymat <- matrix(NA, 3200, ncol=length(lsfiles))
+    for(i in 1:length(lsfiles)) {
+
+        temp <- read.table(lsfiles[i])
+        dim <- dim(temp)[1]
+        dimsec <- ceiling(dim/aggregate)
+        myrep <- sort(rep(1:dimsec, length.out=dim))
+                temp[,"myrep"] <- as.factor(myrep)
+        ds <- as.data.frame(with(temp, tapply(x, myrep, FUN, ...)))
+        print(i)
+        dimds <- dim(ds)[1]
+        mymat[1:dimds,i] <- ds[,1]
+    }
+    colnames(mymat) <- pp
+    mymat
+}
+        
+difffunc <- function(data) {
+  max <- which.max(data)
+  min <- which.min(data)
+  time <- abs(max-min)
+  return(time)
+}
+interpolate.pain <- function(pain, padding) {
+    max.padding <- with(padding, max(FirstPainRating, na.rm=TRUE))
+    pain.sec <- 45*60 #hack, as the experiment was 45 mins max following pain induction
+    max.len <- pain.sec+max.padding+1 #for participant column
+    row.nums <- with(pain, length(unique(Participant)))
+    res.mat <- matrix(NA, nrow=row.nums, ncol=max.len)
+    pain.merge <- merge(pain, padding, by.y="PPNo.", by.x="Participant")
+    partno <- with(padding, PPNo.)
+    part.pain.sec <- apply(pain[,with(pain,
+                                      grep("^X", x=names(pain)))],
+                           c(1,2), function (x) rep(x, times=60))
+    
+    for(i in seq_along(partno)) {
+        print(partno[i])
+        nowpart <- partno[i]
+        ## browser()
+        len.part <- padding[with(padding, PPNo.==nowpart),]
+        start.time <- len.part[,3]
+        if(is.na(start.time)) {
+            next}
+        mypadding <- vector(mode="numeric", length=start.time)
+        full.dat <- c(mypadding, part.pain.sec[,i,])
+        ## browser()
+        res.mat[i,1:length(full.dat)+1] <- full.dat
+        res.mat
+        ## browser()
+    }
+        res.mat
+    
+    }
+
+interpolate2 <- function(painscores, painmetadata) {
+    pain.ratings.min <- with(painmetadata, floor((SqueezStop+60)/60))
+    pain.ratings.min <- as.data.frame(pain.ratings.min)
+    pain.ratings.min[,"Participant"] <- painmetadata$PPNo.
+    names(pain.ratings.min)[1] <- "padding"
+    resmat <- matrix(0, nrow=nrow(pain.ratings.min), ncol=45+with(pain.ratings.min, max(padding, na.rm=TRUE)))
+    partno <- pain.ratings.min$Participant
+    painscores.real <- grep("^X", x=names(painscores))
+    for (i in seq_along(partno)) {
+        print(i)
+        partpad <- pain.ratings.min[with(pain.ratings.min,Participant==partno[i]),1]
+        if(is.na(partpad)) {
+            next}
+        
+        painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
+        if(i==27) {
+        ## browser()
+        }
+        padding <- rep(0, times=partpad)
+        padpluspain <- c(padding, painratings)
+        
+        resmat[i,1:length(padpluspain)] <- padpluspain
+        resmat}
+    resmat
+}
+apademotables <- function(data, FUN=mean, xtable=FALSE, ...) {
+    fun <- match.call(FUN)
+    ## browser()
+    data.m <- melt(data)
+    data.tab <- ddply(data.m, .(variable), summarise, Mean=mean(value, na.rm=TRUE), SD=sd(value, na.rm=TRUE), Median=median(value, na.rm=TRUE),  Min=min(value, na.rm=TRUE), Max=max(value, na.rm=TRUE))
+    names(data.tab)[1] <- ""
+    if(xtable==TRUE) {
+        data.tab <- xtable(data.tab)
+    }
+    return(data.tab)
+}
+FactorAverage <- function (sols=list(), mynames=NULL, FUN=mean, correlations=FALSE, ....) {
+
+    sols.coeff.list <- list()
+    
+    for(i in 1:length(sols)) {
+        if(correlations) {
+            coeff <- as.data.frame(FactorCor(sols[[i]], xtable=FALSE))
+                    coeff.ord <- coeff[,]
+        }
+         else {                          
+             coeff <- as.data.frame(FactorCoeff(sols[[i]]))
+             coeff.ord <- coeff[,mynames]
+    }
+        ## browser()
+        sols.coeff.list[[i]] <- coeff.ord
+        
+    }
+    sols.coeff.list
+    sols.list <- lapply(sols.coeff.list, as.matrix)
+    resmat <- apply(simplify2array(sols.list), c(1,2), FUN)
+    resdims <- dim(resmat)[2]-1
+    resmat[] <- sapply(resmat, round, 2)
+    if(!correlations) {
+    resmat[,1:resdims] <- sapply(resmat[,1:resdims], function (x) ifelse(x>=0.3, paste0("\\textbf{",  x, "}"), x))
+}
+    ## resmat <- Reduce(`+`, sols.coeff.list)/length(sols.coeff.list)
+    ## dimmat <- dim(sols.coeff.list[[1]])
+    ## resmat <- matrix(0, nrow=dimmat[1], ncol=dimmat[2])
+    ## colnames(resmat) <- names
+    ## for (i in 1:length(sols.coeff.list)) {
+    ##     ## if(i==3)        browser()
+    
+    ##     resmat <- (resmat+sols.coeff.list[[i]])/2
+    ## }
+    return(resmat)
+}
+FactorNames <- function(fac, names=NULL) {
+    if(is.null(names)) {
+        stop("Calling a function based on factor names with no names seems like a bad idea, don't you think?")
+    }
+    
+    colnames(fac$loadings) <- names
+    return(fac)
+}
+getMxFitFunctions <- function(mx, label=NULL) {
+    summ <- summary(mx)
+    bic <- summ$BIC.Mx
+    aic <- summ$AIC.Mx
+    obs <- summ$numObs
+    param <- summ$estimatedParameters
+
+    res <- data.frame( bic, aic, obs, param)
+    if(!is.null(label)) {
+        rownames(res) <- label
+    }
+    return(res)
+}
+irtAverage <- function(sols=list()) {
+    coef <- lapply(sols, coef)
+    res <- Reduce(`+`, x=coef)/length(coef)
+    return(res)
+}
+            
+smoothAIC <- function(model) {
+    if(class(model) %in% c("MxRAMModel", "MxModel")) {
+        res <- summary(model)$AIC.Mx
+    }
+    else {
+        res <- AIC(model)
+    }
+    return(res)
+}
+smoothedAIC <- function (models) {
+    information <- lapply(models, smoothAIC)
+    exp.info <- lapply(information, function(x) exp(-0.5*x))
+    info <- Reduce(`+`, exp.info)
+    weights <- vector(mode="numeric", length=length(information))
+    for (i in 1:length(information)) {
+        weights[i] <- exp(-0.5*information[[i]])/info
+        ## browser()
+    }
+    return(weights)
+}
+        
+irtAverageFactorScores <- function (scores=list) {
+    abilities <- sapply(scores, `[`, 1)
+    ab.average <- Reduce(`+`, abilities)/length(abilities)
+    names(ab.average) <- "AbilityEst"
+    return(ab.average)
+}
+provide <- function(name, ...) {
+    if(!(require(name))) {
+        install.packages(name, ...)
+    }
+    }
+coefirt <- function(grm) {
+    if(class(grm)=="grm" || class(grm)=="gpcm") {
+    dat <- coef(grm)
+}
+    else {
+        dat <- grm
+    }
+    
+    dims <- dim(dat)
+    betas <- dims[2]-1
+    #just need to add an identity sanitize test function to get the alphas and betas as markup
+    beta.names <- paste("$", "\\beta",  "^", 1:betas, "$", sep="")
+    alpha.name <- "$\\alpha$"
+    ## beta.names <- paste("beta", 1:betas, sep="")
+    ## alpha.name <- "alpha"
+    allnames <- c(beta.names, alpha.name)
+    ## browser()
+    colnames(dat) <- allnames
+    ## rownames(dat)[1] <- "Item"
+    ## browser()
+    dat
+}
+apareg <- function(model, logistic=FALSE) {
+    mod.sum <- summary(model)
+    mod.coef <- coef(mod.sum)
+    colnames(mod.coef) <- c( "B", "SE(B)", "t", "Sig.(p)")
+    if(logistic) {
+        colnames(mod.coef) <- c("B", "SE(B)", "z", "Sig.(p)")
+    }
+    standardised <- lm.beta(model)
+    standardised2 <- c(NA, standardised)
+    ## browser()
+    mod.coef <- as.data.frame(mod.coef)
+    mod.coef["$\\beta$"] <- standardised2
+
+    mod.coef <- mod.coef[,c(1, 2, 5, 3, 4)]
+    mod.coef
+}
+extract_information <- function(grm) {
+    sink("temp.txt")
+    info <- print(plot(grm, type="IIC"))
+    sink(NULL)
+    info2 <- info[,-1]
+    info2 <- melt(info2, id.vars=names(info2))
+    return(info2)}
+arrange_questions <- function(df) {
+    df[,"q"] <- with(df, gsub("([0-9])", "-\\1", x=Var2))
+    splits <- with(df, strsplit(as.character(q), split="-"))
+    df[,"Var"] <- sapply(splits, "[", 1)
+    df[,"Q"] <- sapply(splits, "[", 2)
+    names(df)[c(2,3, 5, 6)] <- c("Item", "Information", "Treatment", "Question")
+    df}
+ggplot_inf<- function(grm, type="IIC") {
+    ## stop(type!="IIC", "Other methods not implemented\n")
+    ## info <- extract_information(grm)
+    quest <- arrange_questions(grm)
+    gg <- ggplot(quest, aes(x=Var1, y=Information,
+                            group=Item, colour=Item))
+    gg2 <- gg+geom_line()
+    gg2+scale_x_continuous(breaks=seq(0, 100, length.out=5),
+                        labels=seq(-4, 4, length.out=5))+xlab("")
+}

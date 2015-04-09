@@ -1,0 +1,37 @@
+digraph "LOTRIndirectGenHealth" {
+	 node [style=filled, fontname="Arial", fontsize=16];
+ 	 /* Manifest Variables */
+ 	 { rank = max; Age; energyfat; emwellbeing; generalhealth; mindfulness; optimism }
+	 Age [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+	 energyfat [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+	 emwellbeing [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+	 generalhealth [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+	 mindfulness [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+	 optimism [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
+/* Means */
+	 one [shape=triangle];
+/* Paths */
+	 Age -> generalhealth[dir=forward];
+	 energyfat -> generalhealth[dir=forward];
+	 emwellbeing -> generalhealth[dir=forward];
+	 generalhealth -> optimism[dir=forward];
+	 mindfulness -> generalhealth[dir=forward];
+	 Age -> Age[dir=both, headport=s, tailport=s];
+	 Age -> energyfat[dir=both];
+	 Age -> emwellbeing[dir=both];
+	 Age -> mindfulness[dir=both];
+	 energyfat -> energyfat[dir=both, headport=s, tailport=s];
+	 energyfat -> emwellbeing[dir=both];
+	 energyfat -> mindfulness[dir=both];
+	 emwellbeing -> emwellbeing[dir=both, headport=s, tailport=s];
+	 emwellbeing -> mindfulness[dir=both];
+	 generalhealth -> generalhealth[dir=both, headport=s, tailport=s];
+	 mindfulness -> mindfulness[dir=both, headport=s, tailport=s];
+	 optimism -> optimism[dir=both, headport=s, tailport=s];
+	 one -> Age[dir=forward];
+	 one -> energyfat[dir=forward];
+	 one -> emwellbeing[dir=forward];
+	 one -> generalhealth[dir=forward];
+	 one -> mindfulness[dir=forward];
+	 one -> optimism[dir=forward];
+}
