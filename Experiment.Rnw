@@ -300,7 +300,8 @@ expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 lotrfull <- apply(expfull[,grep("LOTR", x=names(expfull))], 1, mean, na.rm=TRUE)
 
 lotrfull.pp <- data.frame(Participant=expfull$Participant, LOTR=lotrfull)
-pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
+pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, 
+                                      LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
 pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
 ggplot(pptest.lotr, aes(x=LOTR_orig, y=LOTR))+geom_point()
 notsamerecord <- filter(pptest.lotr, diff!=0)
