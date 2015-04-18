@@ -295,7 +295,15 @@ Finally, the models briefly above, and in more detail in Chapter~\ref{cha:method
 expmeasures <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfixed.csv")
 expmeasures[,"PpNo"] <- with(expmeasures, sprintf("%04d", PpNo))
 expfull <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfull.csv")
+expfull[,"Participant"] <- with(expfull, sprintf("%04d", Participant))
 expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
+lotrfull <- apply(expfull[,grep("LOTR", x=names(expfull))], 1, mean, na.rm=TRUE)
+
+lotrfull.pp <- data.frame(Participant=expfull$Participant, LOTR=lotrfull)
+pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
+pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
+ggplot(pptest.lotr, aes(x=LOTR_orig, y=LOTR))+geom_point()
+notsamerecord <- filter(pptest.lotr, diff!=0)
 vasscores <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv"       )
 optiat <- read.csv("ExperimentDataforR/FullStudy/optiatres.csv" )
 tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
@@ -2012,13 +2020,13 @@ expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
 twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
 @ 
 
-<<impexpmodels, echo=FALSE, results=hide>>=
+<<impexpmodels, echo=FALSE, results=hide, eval=FALSE>>=
 expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
 expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
 ## expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
 @ 
 
-<<expimpfit, echo=FALSE, results=tex>>=
+<<expimpfit, echo=FALSE, results=tex, eval=FALSE>>=
 expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 
 ## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
