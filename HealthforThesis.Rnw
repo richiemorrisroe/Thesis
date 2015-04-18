@@ -230,7 +230,7 @@ print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown o
 
 As can be seen from Table~\ref{tab:homdemo}, both samples were predominantly female, in line with the general gender balance of the University from which the samples were taken. 
 
-The majority of the first sample (N=392) were undergraduate students (N=304), and the mean age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) were undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
+The majority of the first sample (N=390) were undergraduate students (N=304), and the mean age in the sample was 23.18 (SD=7.9). The majority of the second sample (N=1107) were undergraduate students (N=937) while the mean age was 22.3 (SD=6.8). 
 
 <<scorescalestransform, echo=FALSE, results=hide>>=
 grep.rand <- grep("^RANDQ", x=names(hom))
@@ -278,7 +278,7 @@ Physical Functioning (PF), Role Limitations (RL), Emotional Role Limitations
 Functioning (SF). All sub-scales have shown acceptable reliability
 (>.7) in other studies in the literature~\cite{Lam2007,Ferreira2000}.
 The instrument has 8 first order factors and two higher order factors~\cite{Hann2008}. The scale involves dichotomous, trichotomous and
-five and six point scales for various items, so all questions are
+five and six point scales for various items, so all questions were
 transformed to a 100 point scale before analysis, where higher scores
 represent better functioning.
 \item The \textit{Mindful Attention Awareness Scale (MAAS)}
@@ -522,7 +522,7 @@ lotr.alpha <- alpha(lotritems)$total$std.alpha
 alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, ef.alpha, emwb.alpha, sf.alpha, pain.alpha,  maas.alpha, lotr.alpha)
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"Alpha"] <- alphas
-tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics and Alphas for Health Scales, Mindfulness and Optimism, Sample One")
+tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample One")
 print(tot.xtab, scalebox=0.9)
 @ 
 
@@ -717,7 +717,7 @@ MAP.lotr<-VSS(na.omit(lotritems),rotate="promax", fm="gls", plot=FALSE )
 \subsection{RAND MOS}
 \label{sec:rand-mos-1}
 
-The parallel analysis criterion and the kaiser criterion suggested eight factors. The acceleration factor and the optimal calibration index measures suggested two factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
+The parallel analysis criterion and the Kaiser criterion suggested eight factors. The acceleration factor and the optimal calibration index measures suggested two factors. These two measures may be picking up on the higher order factor structure of the items, as the RAND is typically modelled as having two higher order factors (physical and mental health).
 
 Two and eight  factor structures were examined for the RAND MOS and their performance assessed on unseen data (from sample 2) to determine which of these provides the best fit. 
 
@@ -1224,7 +1224,7 @@ maas1summ2 <- summary(maas1fit2)
 <<maassemcompare2, echo=FALSE, results=tex>>=
 maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
 maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
-print(maascomp.xtab2, scalebox=0.8)
+print(maascomp.xtab2, scalebox=0.9)
 @
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($N=313$) used to test the model.
@@ -1295,7 +1295,7 @@ Although there is significantly more variance explained by this solution, again 
 maas2c.fact5 <- fa(maasitems2c, 5, rotate="oblimin", fm="pa")
 print(FactorXtab(maas2c.fact5, names=c("LackPresFocus", "LackPresAware", "LackAtt", "LackSomAware", "LackAware"), label="tab:hom2cmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split C"), scalebox=0.8, sanitize.text.function= function (x) x)
 @
-The five factor solution for split C (Chapter \ref{cha:append-1:-supp}, Table~\ref{tab:hom2cmaasfact5}, Page~\pageref{tab:hom2cmaasfact5}) broke down as follows:
+The five factor solution for split C (Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:hom2cmaasfact5}, Page~\pageref{tab:hom2cmaasfact5}) broke down as follows:
 
 PA1: "Q7"  "Q8"  "Q9"  "Q10" "Q11" "Q12" "Q14"
 All of the items in this factor relate to a lack of attention to the present, and it can probably be best termed lack of present focus. 
