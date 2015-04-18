@@ -358,7 +358,7 @@ vas.m <- melt(vastrans, id.vars="index")
 names(vas.m) <- c("Time", "Participant", "Pain")
 ## names(vas.c)[1] <- "PP.No"
 ## names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
-print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time")+ylab("Self Reported Pain"))
+print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time (mins)")+ylab("Self Reported Pain"))
 @  
   \caption{Participant pain responses over time}
   \label{fig:pppainplot}
@@ -445,7 +445,7 @@ A number of issues became clear as a result of this process. The first is that t
 
 Most importantly, there appears to be a (small) relationship between the explicit and implicit measures, which would seem to indicate that these measures can be effectively used in the experimental setup. 
 
-Additionally, the use of the priming manipulation allows for the major hypotheses of the study (the relationship between placebo response, explicit and implicit measures) to be tested more effectively. 
+Additionally, the use of the priming manipulation allows for the major hypotheses of the study (the relationship between placebo response, explicit and implicit measures) to be tested more efficiently. 
 
 Additionally, another change which was made to the study was the introduction of a placebo condition, whereby participants in this condition were told that they would receive a placebo. This change was on foot of the study by Kirsch \textit{et al} whereby such a manipulation was found to be effective in a placebo/no treatment design. Such an effect would clearly be of interest in placebo analgesia, and this would add to the usefulness of the study. This also enabled the larger experimental study to assess the impact of both strong (Deceptive Administration) and weak (Placebo) suggestions, which is important if either of these types of suggestions are predicted by different sets of explicit and implicit measures. 
 
