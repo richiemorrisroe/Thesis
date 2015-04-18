@@ -205,7 +205,7 @@ print(xtab.totals, include.rownames=FALSE)
 
 
 
-Next, the differences in credibility totals between Genders will be examined. 
+Next, the differences in credibility totals between Genders was examined. 
 <<gendercred, echo=FALSE, results=hide, cache=TRUE>>=
 gendpill <- ggplot(na.omit(tcq1), aes(y=PillTot, x=Gender))+geom_boxplot()
 gendcream <- ggplot(na.omit(tcq1), aes(y=CreamTot, x=Gender))+geom_boxplot()
@@ -2474,7 +2474,7 @@ homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.ho
 print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Homeopathy credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relative experience variables for each form of credibility. The model has an $R^2$ of 0.62, which is extremely high. 
+Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relevant experience variables for each form of credibility. The model has an $R^2$ of 0.62, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
