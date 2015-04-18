@@ -292,15 +292,14 @@ Finally, the models briefly above, and in more detail in Chapter~\ref{cha:method
 
 
 <<importdata, echo=FALSE, results=hide>>=
-setwd("./ExperimentDataforR/FullStudy/")
-expmeasures <- read.csv("explicitmeasuresfixed.csv")
+expmeasures <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfixed.csv")
 expmeasures[,"PpNo"] <- with(expmeasures, sprintf("%04d", PpNo))
-expfull <- read.csv("explicitmeasuresfull.csv")
+expfull <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfull.csv")
 expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
-vasscores <- read.csv("VASscores.csv"       )
-optiat <- read.csv("optiatres.csv" )
-tcqiat <- read.csv("tcqiatres.csv")
-setwd("../..")
+vasscores <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv"       )
+optiat <- read.csv("ExperimentDataforR/FullStudy/optiatres.csv" )
+tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
+
 @ 
 
 
@@ -1080,7 +1079,7 @@ print(placresplot)
 \end{figure}
 
 
-A number of findings are apparent from the plot in Figure \ref{fig:placyesno} on page 161. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
+A number of findings are apparent from the plot in Figure~\ref{fig:placyesno}. The placebo effect was approximately equivalent to a 15\% decrease in pain (read from the graph at the point the no response participants pain reached seven). This is a relatively large effect. In addition, the participants who responded to placebo tended to remain in the experiment for a longer period of time (which is intuitively obvious). Below, formal model testing for the major hypotheses takes place. 
 
 \subsection{Predicting Placebo Response}
 \label{sec:logist-regr-plac}
@@ -2006,7 +2005,7 @@ meanalt~~meanalt'
 impexpdata <- Iatandexpmeasures.t[,c("TCQIATMean", "OptIATMean", "MAAS", "meanconv", "meanalt", "LOTR")]
 @ 
 
-<<impexpmod, echo=FALSE, results=hide>>=H
+<<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
 expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
