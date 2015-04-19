@@ -1235,6 +1235,7 @@ pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
 pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
 pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
 pain.ip <- interpolate.pain(vasscores2, padding=pain.pad)
+##investigate survival analysis
 iatexp.surv <- merge(Iatandexpmeasures, pain.metadata, by.x="Participant", by.y="PPNo.")
 @ 
 
@@ -1312,6 +1313,12 @@ print(medtspainplot)
 As can be seen from Figure \ref{fig:medpainplot}, the results of the median pain ratings by group show a somewhat different pattern, in that the drop in the pain ratings for the Deceptive Condition is much less apparent, suggesting that the majority of the decrease in pain ratings was driven by a small number of extreme ratings in this group.
 Again, a locally weighted smoother (Loess, span=0.5) was used to fit the curves. 
 
+The length of time participants spent having physioligical readings is described in Table~\ref{tab:survlengthcondplac}. Note that this time is counted from the start of the experiment, not the application of painful stimulus. This chart explains why the plots of GSR by condition and other grouping variables are not consistent in length. 
+
+<<survtable, echo=FALSE, results=tex>>=
+survtable.cond <- iatexp.surv %>% group_by(Condition, PlacResp) %>% dplyr::summarise(surv=median(EndTime, na.rm=TRUE), max_surv=max(EndTime, na.rm=TRUE))
+print(xtable(survtable.cond, label="tab:survlengthcondplac", caption=" Median Recording Time (secs) by Condition and Placebo Response. Time is counted from the beginning of physiological monitoring (approximately 5 minutes before application of painful stimuli"))
+@ 
 
 %% \begin{figure}
 <<medianpaintscorrelationplots, echo=FALSE,pdf=TRUE, eps=TRUE, png=TRUE, results=hide>>=
@@ -1484,10 +1491,10 @@ gsr.placresp.m <- melt(gsr.placresp, id.vars="index")
 @ 
 \begin{figure}
 <<gsrplacresplot, echo=FALSE, fig=TRUE, pdf=TRUE, png=TRUE, eps=TRUE>>=
-gsr.gend.m2 <- gsr.gend.m[with(gsr.gend.m, index<=2000),]
+gsr.gend.m2 <- gsr.gend.m[with(gsr.gend.m, index<=2200),]
 names(gsr.gend.m2)[2] <- "Gender"
 gend.gsr.pl <- ggplot(na.omit(gsr.gend.m2), aes(x=index, y=value, colour=Gender))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR")
-gsr.placresp.m2 <- gsr.placresp.m[with(gsr.placresp.m, index<=2000),]
+gsr.placresp.m2 <- gsr.placresp.m[with(gsr.placresp.m, index<=2200),]
 names(gsr.placresp.m2)[2] <- "PlaceboResponse"
 gsr.placresp.m2[,"PlaceboResponse"] <- as.factor(with(gsr.placresp.m2, ifelse(PlaceboResponse=="PlaceboResp", "Yes", "No")))
 placresp.gsr.pl <- ggplot(gsr.placresp.m2, aes(x=index, y=value, colour=PlaceboResponse))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR")
@@ -1516,7 +1523,7 @@ gsr.conditions.m <- melt(gsr.conditions, id.vars="index")
 @ 
 \begin{figure}
 <<gsrplotcond, echo=FALSE, fig=TRUE>>=
-gsr.conditions.m2 <- gsr.conditions.m[with(gsr.conditions.m, index<=2000),]
+gsr.conditions.m2 <- gsr.conditions.m[with(gsr.conditions.m, index<=2250),]
 names(gsr.conditions.m2)[2] <- "Condition"
 print(ggplot(gsr.conditions.m2, aes(x=index, y=value, colour=Condition))+geom_line()+geom_smooth()+xlab("Time (secs)")+ylab("Scaled GSR"))
 @   
@@ -1528,7 +1535,7 @@ An examination the GSR levels by condition over time (Figure~\ref{fig:gsrcondplo
 
 \begin{figure}
 <<meanplotgsr, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-cond.m2 <- cond.m[with(cond.m, index<=2000),]
+cond.m2 <- cond.m[with(cond.m, index<=2200),]
 
 names(cond.m2)[2] <- "Condition"
 cond.m2[,"Condition"] <- as.factor(with(cond.m2, gsub(pattern="NoTreat", "NoTreatment",x=Condition)))
@@ -1539,7 +1546,9 @@ print(ggplot(cond.m2, aes(x=index, y=value, colour=Condition))+geom_line()+xlab(
 \end{figure}
 
 
-The Open Placebo group had the lowest GSR over time, and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach (at 30000, or 45 minutes after the pain was induced) approximately the level which it began. This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
+The Open Placebo group had the lowest GSR over time, and that the deceptive pain group seemed to have the highest GSR throughout the experiment. The No Treatment group chart is perhaps the strangest, showing a steady upward trend until about 25 minutes into the experiment, and then falling steadily from there to reach approximately the level which it began\footnote{Note that these are means by condition, which means that the later values represent less participants.}. 
+
+This may have occurred due to habituation to the experimental environment, as they had no experimental manipulation during the course of the study which might have changed their GSR. In contrast, the Open Placebo group show a low GSR starting off which then rises slowly, dips and then rises again. The course of GSR in the Deceptive Placebo group looks like what would have been expected from the No Treatment group; i.e. a slow and steady rise throughout the experiment.
 
 <<semdata, echo=FALSE, results=hide>>=
 Iatandexpmeasures.t <- Iatandexpmeasures.phys
@@ -2235,8 +2244,10 @@ placmod.kirsch.twofac.fit.measures <- fitMeasures(placmod.kirsch.twofac.fit, c("
 kirsch.twofac.more.fit <- moreFitIndices(placmod.kirsch.twofac.fit)
 placmod.kirsch.twofac.fit.all <- c(placmod.kirsch.twofac.fit.measures, kirsch.twofac.more.fit)
 placmod.fit.all <- rbind( placmod.cred.opt.fit.all, placmod.opt.fit.all, placmod.kirsch.twofac.fit.all)
-rownames(placmod.fit.all) <- c( "Optimism", "Credibility", "Kirsch Two Factor")
-print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), scalebox=0.6)
+placmod.fit.all <- as.data.frame(placmod.fit.all)
+placmod.fit.all[,"Model"] <- c( "Optimism", "Credibility", "Kirsch Two Factor")
+placmod.fit.all <- placmod.fit.all[,c(11, 2:10)]
+print(xtable(placmod.fit.all, label="tab:placmodsemfit", caption="Fit Measures for Placebo Response Structural Equation Models"), include.rownames=FALSE, scalebox=0.7)
 @ 
 
 From examining the fit measures shown in Table \ref{tab:placmodsemfit} it would appear that the best fitting model is that of Kirsch when implicit expectancies are included in the model. Implications are elaborated upon in the discussion. 
