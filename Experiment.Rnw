@@ -1235,6 +1235,7 @@ pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
 pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
 pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
 pain.ip <- interpolate.pain(vasscores2, padding=pain.pad)
+iatexp.surv <- merge(Iatandexpmeasures, pain.metadata, by.x="Participant", by.y="PPNo.")
 @ 
 
 <<meanpaingroup, echo=FALSE, results=hide>>=
