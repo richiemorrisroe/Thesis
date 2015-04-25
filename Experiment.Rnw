@@ -299,17 +299,13 @@ expfull[,"Participant"] <- with(expfull, sprintf("%04d", Participant))
 expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 lotrfull <- apply(expfull[,grep("LOTR", x=names(expfull))], 1, mean, na.rm=TRUE)
 
-lotrfull.pp <- data.frame(Participant=expfull$Participant, LOTR=lotrfull)
-pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, 
-                                      LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
-pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
-ggplot(pptest.lotr, aes(x=LOTR_orig, y=LOTR))+geom_point()
-notsamerecord <- filter(pptest.lotr, diff!=0)
+
 vasscores <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv"       )
 vasscores[,"PPNo."] <- with(vasscores, sprintf("%04d", PPNo.))
 optiat <- read.csv("ExperimentDataforR/FullStudy/optiatres.csv" )
+optiat[,"PPNo."] <- with(optiat, sprintf("%04d", Participant))
 tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
-
+tcqiat[,"PPNo."] <- with(tcqiat, sprintf("%04d", Participant))
 @ 
 
 
@@ -342,6 +338,40 @@ require(QuantPsyc)
 require(semTools)
 @ 
 
+<<duplicatestuff, echo=FALSE, results=hide>>=
+dup.ppnos <- as.data.frame(with(expmeasures, table(PpNo))) %>% arrange(desc(Freq))
+
+dup.ppnos.expfull <- as.data.frame(with(expfull, table(Participant))) %>% arrange(desc(Freq))
+dup.ppnos.vase <- as.data.frame(with(vasscores, table(PPNo.))) %>% arrange(desc(Freq))
+dup.ppnos.pain <- pain.metadata %>% with(table(PPNo.)) %>% as.data.frame() %>% arrange(desc(Freq))
+block1.opt <- filter(optiat, Block=="Block 1:")
+block1.tcq <- filter(tcqiat, Block=="Block 1:")
+dup.ppnos.optiat <- block1.opt %>% with(table(Participant)) %>% as.data.frame() %>% arrange(desc(Freq))
+dup.ppnos.tcqiat <- block1.tcq %>% with(table(Participant)) %>% as.data.frame() %>% arrange(desc(Freq))
+with(expmeasures, n_distinct(PpNo))
+vas.exp.merge <- merge(expmeasures, vasscores, by.x="PpNo", by.y="PPNo.")
+dim(vas.exp.merge)
+with(vas.exp.merge, n_distinct(PpNo))
+vas.exp.merge %>% with(table(PpNo)) %>% as.data.frame() %>% arrange(desc(Freq))
+vas.ord.pp <- vas.exp.merge %>% with(table(PpNo)) %>% as.data.frame() %>% arrange(desc(Freq))
+expfull.ord.pp <- expfull %>% with(table(Participant)) %>% as.data.frame() %>% arrange(desc(Freq))
+@ 
+
+<<testforsamepp, echo=FALSE, results=hide>>=
+lotrfull.pp <- data.frame(Participant=expfull$Participant, LOTR=lotrfull)
+pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, 
+                                      LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
+pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
+pptest.lotr[,"fixed_records"] <- with(pptest.lotr, ifelse(is.na(diff), TRUE, FALSE))
+fixed.records.lotr <- filter(pptest.lotr, fixed_records==TRUE)
+fixed.records.lotr[,"old_pp"] <- with(fixed.records.lotr, substr(as.character(Participant), 1, 4))
+notsamerecord <- filter(pptest.lotr, diff!=0)
+resolve.rec.lotr <- merge(fixed.records.lotr, notsamerecord, by.y="Participant", by.x="old_pp")
+ggplot(pptest.lotr, aes(x=LOTR_orig, y=LOTR))+geom_point()
+expfull[,"unique_PP"] <- with(expfull, paste(Participant, Age, Gender, Course, sep="-"))
+expmeasures[,"unique_PP"] <- with(expmeasures, paste(PpNo, Age, Gender, Course., sep="-"))
+@ 
+
 
 <<removeduplicates, echo=FALSE, results=hide>>=
 dup.exp.small <- expmeasures[with(expmeasures, which(duplicated(PpNo))),]
@@ -357,8 +387,9 @@ expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
 \label{sec:data-validation}
 
 
-In all, 114 responses were collected for the explicit measures. Following dropout, 113 responses were collected for the IAT measures. Following a fuller description of the experiment, but after administration of the explicit and implicit measures, 3 participants did not proceed andy further (at their own request, in line with API guidelines). 
-In part of the experimental design, participants were asked to pick a four digit code to represent their data across the the different parts of the experiment (explicit measures, implicit measures, physiological data and pain ratings). This was done to prevent the researcher from inferring participant data based on the order of administration to each participant. Unfortunately, this meant that a number of participants picked the same number. This was noticed during the data entry phase of the research and some of the problems could be corrected based on date and time information, as well as the gender of the participants. The number of participants with duplicated numbers who could be unambiguously matched across datasets was 5. All in all, another five participants with duplicated IDs could not be unambigiously reidentified, and 
+In all, 114 responses were collected for the explicit measures. Following dropout, 113 responses were collected for the IAT measures. Following a fuller description of the experiment, but after administration of the explicit and implicit measures, 3 participants did not proceed andy further (at their own request, in line with APA guidelines).Therefore there were 110 participants left for futher analysis. 
+
+However, as part of the experimental design, participants were asked to pick a four digit code to represent their data across the the different parts of the experiment (explicit measures, implicit measures, physiological data and pain ratings). This was done to prevent the researcher from inferring participant data based on the order of administration to each participant. Unfortunately, this meant that a number of participants picked the same number. This was noticed during the data entry phase of the research and some of the problems could be corrected based on date and time information. However, given that this information could not be generalised across the physioligical datasets without error, it was decided to remove all participants who had a duplicated participant number. This approach was chosen as it is the most conservative and the least likely to cause inferential error (as duplicated data will impact means and tail probabilities more than the removal of data). After this process, 103 participants remained, and this was the final sample used in all analysis below. 
 
 
 
