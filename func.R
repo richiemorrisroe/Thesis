@@ -766,13 +766,22 @@ lazylength <- function(files) {
 getPPNo <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
+
     pp <- lapply(tp.split, "[", 3)
+    ord <- sapply(tp.split, "[", 2)
+    ord <-  as.numeric(ord)
     pp <- gsub(".txt", "", x=pp)
+    pp2 <- as.numeric(pp)
+    ## browser()
+    pp.df <- data.frame(Participant=pp2, order=ord)
+    pp.df.sort <- pp.df[order(ord),]
+    pp <- pp.df.sort$Participant
+    
     pp
 }
 lazylength <- function(files) {
-    pp <- getPPNo(files)
-    ## browser()
+    pp <- as.numeric(as.character(getPPNo(files)))
+        ## browser()
     lengthmat <- matrix(NA, 114, ncol=2)
     for (i in 1:length(files)) {
         temp <- read.table(files[i])
@@ -781,7 +790,10 @@ lazylength <- function(files) {
         lengthmat[i,2] <- len
         rm(temp); gc()
     }
-    lengthmat
+    ## pp2 <- sprintf("%05d", pp)
+    length.df <- as.data.frame(lengthmat)
+    names(length.df) <- c("PPNo.", "EndTime")
+    length.df
 }
 lazymean <- function( path, pattern, ...) {
     lsfiles <- list.files(path, pattern, ...)
@@ -868,8 +880,8 @@ interpolate2 <- function(painscores, painmetadata) {
             next}
         
         painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
-        if(i==27) {
-        ## browser()
+        if(i==10) {
+        browser()
         }
         padding <- rep(0, times=partpad)
         padpluspain <- c(padding, painratings)
