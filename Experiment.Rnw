@@ -293,15 +293,13 @@ Finally, the models briefly above, and in more detail in Chapter~\ref{cha:method
 
 <<importdata, echo=FALSE, results=hide>>=
 expmeasures <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfixed.csv")
-expmeasures[,"PpNo"] <- with(expmeasures, sprintf("%04d", PpNo))
+expmeasures[,"PpNo"] <- with(expmeasures, sprintf("%05d", PpNo))
 expfull <- read.csv("ExperimentDataforR/FullStudy/explicitmeasuresfull.csv")
-expfull[,"Participant"] <- with(expfull, sprintf("%04d", Participant))
+expfull[,"Participant"] <- with(expfull, sprintf("%05d", Participant))
 expmeasures[,"LOTR"] <- with(expmeasures, LOTR/6)
 lotrfull <- apply(expfull[,grep("LOTR", x=names(expfull))], 1, mean, na.rm=TRUE)
-
-
 vasscores <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv"       )
-vasscores[,"PPNo."] <- with(vasscores, sprintf("%04d", PPNo.))
+vasscores[,"PPNo."] <- with(vasscores, sprintf("%05d", PPNo.))
 optiat <- read.csv("ExperimentDataforR/FullStudy/optiatres.csv" )
 optiat[,"PPNo."] <- with(optiat, sprintf("%04d", Participant))
 tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
@@ -373,14 +371,15 @@ expmeasures[,"unique_PP"] <- with(expmeasures, paste(PpNo, Age, Gender, Course.,
 @ 
 
 
-<<removeduplicates, echo=FALSE, results=hide>>=
+<<removeduplicates, echo=FALSE, results=hide, >>=
 dup.exp.small <- expmeasures[with(expmeasures, which(duplicated(PpNo))),]
 dup.exp.full <- expfull[with(expfull, which(duplicated(Participant))),]
 dup.all <- unique(c(dup.exp.small$PpNo, dup.exp.full$Participant))
 dup.exp.vasscores <- vasscores[with(vasscores, which(duplicated(PPNo.))),]
 vasscores2 <- vasscores[!(with(vasscores, PPNo.) %in% dup.all),]
 expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
-
+vasscores2 <- vasscores
+expmeasures2 <- expmeasures
 @ 
 
 \subsection{Data Validation}
@@ -404,7 +403,7 @@ optiatsorted <- optiat[, c("Participant", "Date", "Time", "Block", "Me", "Mine",
 optiatsorted[,"Block"] <- with(optiatsorted, gsub(":", "", x=Block))
 optiatscore.mean <- calcIatScores(optiatsorted,Code="Participant", method="mean", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
 names(optiatscore.mean)[1] <- "Participant"
-names(optiatscore.mean)[6] <- "OptIAT.Mean"
+names(optiatscore.mean)[6] <- "OptIATMean"
 optstimblock3 <- optiatscore.mean[,grep("Block3.", x=names(optiatscore.mean))]
 optstimblock5 <- optiatscore.mean[,grep("Block5.", x=names(optiatscore.mean))]
 optiatscore.median <- calcIatScores(optiatsorted,Code="Participant", method="median", words=c("Me", "Mine", "Myself", "Theirs", "Them", "Themselves", "Better", "Happy", "Improving", "Succeeding", "Disimproving", "Failing", "Sad", "Worse"))
@@ -445,7 +444,7 @@ tcqiatscore.mean <- calcIatScores(tcqiatsorted, Code="Participant", method="mean
 tcqstimblock3 <- tcqiatscore.mean[,grep("Block3.", x=names(tcqiatscore.mean))]
 tcqstimblock5 <- tcqiatscore.mean[,grep("Block5.", x=names(tcqiatscore.mean))]
 names(tcqiatscore.mean)[1] <- "Participant"
-names(tcqiatscore.mean)[6] <- "TCQIAT.Mean"
+names(tcqiatscore.mean)[6] <- "TCQIATMean"
 tcqiatscore.median <- calcIatScores(tcqiatsorted, Code="Participant", method="median", words=tcqwords)
 names(tcqiatscore.median)[1] <- "Participant"
 names(tcqiatscore.median)[6] <- "TCQIAT.Median"
@@ -454,6 +453,10 @@ part.tcq <- unique(tcqiat[,"Participant"])
 tcqstimblock3 <- as.data.frame(cbind(part.tcq, tcqstimblock3))
 tcqstimblock5 <- as.data.frame(cbind(part.tcq, tcqstimblock5))
 IATscores <- merge(optiatscore, tcqiatscore, by="Participant")
+IATscores[,"Participant"] <- with(IATscores, sprintf("%05d", Participant))
+IATscores2 <- IATscores[!(with(IATscores, Participant) %in% dup.all),] #remove duplicates once data is in one row per Participant form
+#see code following package declarations for the logic behind this
+IATscores2 <- IATscores
 @ 
 
 <<selfreportcleanup, echo=FALSE, results=hide>>=
@@ -461,7 +464,9 @@ names(vasscores2)[1] <-  "Participant"
 names(expmeasures2)[1] <- "Participant"
 vasscores2.test <- vasscores2[,1:8]
 expmeasures2comp <- merge(vasscores2.test, expmeasures2)
-Iatandexpmeasures <- merge(expmeasures2comp, IATscores, by="Participant")
+Iatandexpmeasures.full <- merge(expmeasures2comp, IATscores, by="Participant")
+multiple.pp <- Iatandexpmeasures.full %>% with(table(Participant)) %>% as.data.frame() %>% arrange(desc(Freq)) %>% filter(Freq>1) 
+Iatandexpmeasures <- Iatandexpmeasures.full[!(with(Iatandexpmeasures.full, Participant) %in% multiple.pp$Participant),]
 iatexp <- Iatandexpmeasures[,c(14:22, 24)]
 Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
 Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
@@ -471,8 +476,8 @@ Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
  
 
 <<randcheck1, echo=FALSE, results=tex>>=
-tcq.xtab <- xtable(summary(aov(TCQIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of ANOVA of Treatment Credibility IAT Scores by Condition")
-opt.xtab <- xtable(summary(aov(OptIAT.Mean~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
+tcq.xtab <- xtable(summary(aov(TCQIATMean~Condition, data=Iatandexpmeasures)), label="tab:tcqiatcheck", caption="Summary of ANOVA of Treatment Credibility IAT Scores by Condition")
+opt.xtab <- xtable(summary(aov(OptIATMean~Condition, data=Iatandexpmeasures)), label="tab:optiatcheck", caption="Summary of ANOVA of Optimism IAT scores by Condition")
 conv.xtab <- xtable(summary(aov(meanconv~Condition, data=Iatandexpmeasures)))
 alt.xtab <- xtable(summary(aov(meanalt~Condition, data=Iatandexpmeasures)))
 chisq.gend <- with(Iatandexpmeasures, chisq.test(table(Gender, Condition)))
@@ -491,8 +496,8 @@ iat.times.merged.distinct <- unique(iat.times.merged)
 iat.times.merged.distinct[,"first_IAT"] <- as.factor(with(iat.times.merged.distinct, ifelse(Time_TCQ<Time_OPT, "TCQ_first", "Opt_first")))
 iat.first.pp <- dplyr::select(iat.times.merged.distinct, Participant, first_IAT)
 Iatandexpmeasures.firstiat <- merge(Iatandexpmeasures, iat.first.pp, by="Participant")
-optiat.first.aov <- summary(aov(OptIAT.Mean~first_IAT, data=Iatandexpmeasures.firstiat))
-tcqiat.first.aov <- summary(aov(TCQIAT.Mean~first_IAT, data=Iatandexpmeasures.firstiat))
+optiat.first.aov <- summary(aov(OptIATMean~first_IAT, data=Iatandexpmeasures.firstiat))
+tcqiat.first.aov <- summary(aov(TCQIATMean~first_IAT, data=Iatandexpmeasures.firstiat))
 @
 
 
@@ -522,18 +527,29 @@ gsr.top.av <- ddply(gsr.top.m, .(variable), summarise, GSR=mean(value, na.rm=TRU
 gsr.top.av2 <- gsr.top.av
 gsr.top.av2[,"variable"] <- with(gsr.top.av, gsub("[A-Za-z.]", "", x=variable))
 names(gsr.top.av2)[1] <- "Participant"
-Iatandexpmeasures.top <- merge(Iatandexpmeasures, gsr.top.av2, by="Participant")
+gsr.top.av2[,"Participant"] <- with(gsr.top.av2, sprintf("%05d", as.numeric(Participant)))
+@ 
+
+<<fixinconsistentlabelling, echo=FALSE, results=hide>>=
+gsr.top.rm.exp <- gsr.top.av2[with(gsr.top.av2, grep("1991|1101", x=Participant, invert=TRUE)),]
+##when rationalising the physiological files, I started from 1, whereas while rationalising the explicit and implicit measures I started from 2 when labelling participants who had chosen the same four letter code. The code below fixes this problem (in a somewhat hacky way). 
+wrongrecodings <- filter(gsr.top.rm.exp, as.numeric(Participant)>10000)
+gsr.top.rm.exp[,"Participant_real"] <- with(gsr.top.rm.exp, ifelse(Participant %in% wrongrecodings$Participant, as.numeric(Participant)+1, Participant))
+gsr.pp.fixed <- dplyr::select(gsr.top.rm.exp, Participant_real, GSR)
+@ 
+<<mergeexpandphysiologicaldata, echo=FALSE, results=hide>>=
+Iatandexpmeasures.top <- merge(Iatandexpmeasures, gsr.pp.fixed, by.x="Participant", by.y="Participant_real")
 gsr.start.by.cond <- ddply(Iatandexpmeasures.top, .(Condition), summarise, MeanGSR=mean(GSR, na.rm=TRUE))
 gsr.start.cond.sd <- ddply(Iatandexpmeasures.top, .(Condition), summarise, Mean=mean(GSR, na.rm=TRUE), SD=sd(GSR, na.rm=TRUE))
 gsr[,"index"] <- 1:nrow(gsr)
 gsr.melt <- melt(gsr, id.vars="index")
 gsr.melt[,"variable"] <- with(gsr.melt, gsub("X", "", x=variable))
-gsr.mean <- ddply(gsr.melt, .(variable), summarise, gsr.mean=mean(value, na.rm=TRUE))
-names(gsr.mean)[1] <- "Participant"
-Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%04s", Participant))
-Iatandexpmeasures.phys <- merge(Iatandexpmeasures, gsr.mean, by="Participant")
+gsrmean <- ddply(gsr.melt, .(variable), summarise, gsrmean=mean(value, na.rm=TRUE))
+names(gsrmean)[1] <- "Participant"
+Iatandexpmeasures[,"Participant"] <- with(Iatandexpmeasures, sprintf("%05s", Participant))
+Iatandexpmeasures.phys <- Iatandexpmeasures.top
 ## Iatandexpmeasures.phys <- Iatandexpmeasures.phys[,1:30]
-## names(Iatandexpmeasures.phys)[30] <- "gsr.mean"
+## names(Iatandexpmeasures.phys)[30] <- "gsrmean"
 gsr.rs <- dcast(gsr.melt, variable~index+...)
 @
 
@@ -549,8 +565,8 @@ The first step in the analysis of IAT data is to examine the differential impact
 
 %% \begin{figure}
 <<meanmedtcqiat, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE, results=hide>>=
-## meanmedoptiatplot <- ggplot(optiatscore, aes(x=OptIAT.Mean, y=OptIAT.Median))+geom_point()+geom_smooth(method="lm")
-## meanmedtcqpl <- ggplot(tcqiatscore, aes(x=TCQIAT.Median, y=TCQIAT.Mean))+geom_point()+geom_smooth(method="lm")
+## meanmedoptiatplot <- ggplot(optiatscore, aes(x=OptIATMean, y=OptIAT.Median))+geom_point()+geom_smooth(method="lm")
+## meanmedtcqpl <- ggplot(tcqiatscore, aes(x=TCQIAT.Median, y=TCQIATMean))+geom_point()+geom_smooth(method="lm")
 ## print(arrangeGrob(meanmedoptiatplot,meanmedtcqpl))
 @   
 %%   \caption{Scatterplot of TCQIAT Median Scores against TCQ IAT mean scores (bottom) and Optimism IAT Mean vs Median (top) with a linear regression smooth line}
@@ -774,8 +790,8 @@ print(tcq.demo)
 
 %% \begin{figure}
 <<tcqiatgender, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE, eval=FALSE>>=
-tcqiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=TCQIAT.Mean))+geom_boxplot()
-optiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=OptIAT.Mean))+geom_boxplot()
+tcqiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=TCQIATMean))+geom_boxplot()
+optiatgender <- ggplot(na.omit(Iatandexpmeasures), aes(x=Gender, y=OptIATMean))+geom_boxplot()
 print(arrangeGrob(optiatgender,tcqiatgender))
 @   
 %%   \caption{Optimism (top) and Treatment Credibility (bottom) IAT Scores by Gender}
@@ -1028,7 +1044,7 @@ Next, the relationships between the explicit and implicit measures were examined
 \begin{figure}
 \setkeys{Gin}{height=0.8\textheight}  
 <<corrtestimplexpl, echo=FALSE, fig=TRUE>>=
-iatandexp.s <- Iatandexpmeasures[,c(14:22, 24)]
+iatandexp.s <- dplyr::select(Iatandexpmeasures, LOTR, MAAS, Pill, Cream, Inj, Acu, Hom, Rei, OptIATMean, TCQIATMean)
 names(iatandexp.s)[9:10] <- c("OptIAT", "TCQIAT")
 pairs.panels(iatandexp.s, method="spearman", smooth=FALSE, ellipses=FALSE)
 ## corr.imp.exp <- corr.test(Iatandexpmeasures[,14:25], method="kendall")[["r"]]
@@ -1143,7 +1159,7 @@ In order to examine whether or not the IAT and or explicit measures scores were 
 <<testandtrain, echo=FALSE, results=hide>>=
 require(doMC)
 registerDoMC(3)
-iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
+iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIATMean", "OptIAT.Median", "TCQIATMean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
 iatandexpfull <- na.omit(iatandexpfull)
 iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.6, list=FALSE))
 iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
@@ -1153,15 +1169,14 @@ mytrain <- trainControl(method="repeatedcv", number=10, repeats=25)
 
 
 <<rftrain, echo=FALSE, results=hide, eval=FALSE>>=
-randf.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
+randf.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="rf", trControl=mytrain, tuneGrid=data.frame(.mtry=1:10), preProcess=c("center", "scale"))
 randf.pred <- predict(randf.train, iatandexpfull.test)
 @ 
 
 
 <<placmod1, echo=FALSE, results=hide>>=
-placmod.full <- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR+Age+Gender+Prime+MAAS+Pill+Cream+Inj+Acu+Hom+Rei+convaltcomp, data=iatandexpfull.train, family=binomial(link="logit"))
+placmod.full <- glm(PlacResp~TCQIATMean*OptIATMean*LOTR+Age+Gender+Prime+MAAS+Pill+Cream+Inj+Acu+Hom+Rei+convaltcomp, data=iatandexpfull.train, family=binomial(link="logit"))
 placmod.step <- stepAIC(placmod.full)
-
 @ 
 
 <<placmodstepprint, echo=FALSE, results=tex>>=
@@ -1171,9 +1186,9 @@ print(xtable(apareg(placmod.step, logistic=TRUE), label="tab:placmodstep", capti
 As can be seen from Table~\ref{tab:placmodstep}, the model chosen by the stepwise selection procedure has an almost significant coefficient on the TCQ IAT, one for the LOT-R,  and the two two-way interactions trended towards significance. 
 
 <<placmodsteptest, echo=FALSE, results=tex>>=
-iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIAT.Mean", "LOTR", "Age", "OptIAT.Mean", "Rei")]
+iatandexpfull.test.small <- iatandexpfull.test[, c("PlacResp", "TCQIATMean", "LOTR", "Age", "OptIATMean", "Rei")]
 iatandexpfull.test.small[,2:length(iatandexpfull.test.small)] <- scale(iatandexpfull.test.small[,2:length(iatandexpfull.test.small)])
-placmod.test <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
+placmod.test <- glm(PlacResp~TCQIATMean*LOTR+Age+OptIATMean+Rei,data=iatandexpfull.test.small, family=binomial(link="logit"))
 
 print(xtable(apareg(placmod.test, logistic=TRUE), label="tab:placmodsteptest", caption="Coefficients of Stepwise Selected Predictors on Test Data"), sanitize.colnames.function = function (x) x)
 
@@ -1193,7 +1208,7 @@ print(xtable(odds.ratios, label="tab:placmodstepodds", caption="Odds Ratios for 
 <<placmodboot, echo=FALSE, results=tex>>=
 placglm <- function (data, indices) {
     d <- data[indices,]
-    mod <- glm(PlacResp~TCQIAT.Mean*LOTR+Age+OptIAT.Mean+Rei,data=d, family=binomial(link="logit"))
+    mod <- glm(PlacResp~TCQIATMean*LOTR+Age+OptIATMean+Rei,data=d, family=binomial(link="logit"))
     return(summary(mod)$coefficients[,4])
                }
 placmod.boot <- boot(iatandexpfull.test, statistic=placglm, R=1000)
@@ -1211,7 +1226,7 @@ Individual regressions were run for each of the variables over the training and 
 
 
 <<placmod2, echo=FALSE, results=hide>>=
-placmod2 <- glm(PlacResp~OptIAT.Mean, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod2 <- glm(PlacResp~OptIATMean, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod2.xtab <- xtable(apareg(placmod2, logistic=TRUE), label="tab:placmod2", caption="Regression of Optimism IAT on Placebo Response")
 print(placmod2.xtab, sanitize.colnames.function = function (x) x)
 @ 
@@ -1251,7 +1266,7 @@ print(xtable(apareg(glm(PlacResp~AbilityConv+AbilityAlt, data=Iatandexpmeasures.
 Table~\ref{tab:placmodirtest} shows the results of fitting the model using the IRT estimated abilities for the Treatment Credibility Questionnaire. As can be seen, the model is still not significant. However, the AIC was slightly lower for the model fitted using the ability estimates, which suggests that though they are not particularly good predictors, they are at least somewhat better than the raw sum-scores. 
 
 <<placmodgsr, echo=FALSE, results=tex>>=
-placmod10 <- glm(PlacResp~gsr.mean, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
+placmod10 <- glm(PlacResp~GSR, data=Iatandexpmeasures.phys, family=binomial(link="logit")) #extremely significant!
 placmod10.xtab <- xtable(apareg(placmod10), label="tab:placmodgsr", caption="Logistic Regression for the Impact of Mean GSR measurements on placebo response")
 rownames(placmod10.xtab)[2] <- "Mean GSR"
 print(placmod10.xtab, sanitize.colnames.function = function (x) x)
@@ -1262,7 +1277,7 @@ As can be seen from Table~\ref{tab:placmodgsr}, the mean level of skin response 
 
 
 <<placeboglm, echo=FALSE, results=hide>>=
-placmod6<- glm(PlacResp~TCQIAT.Mean*OptIAT.Mean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
+placmod6<- glm(PlacResp~TCQIATMean*OptIATMean*LOTR, data=Iatandexpmeasures, family=binomial(link="logit"))
 placmod.xtab <- xtable(apareg(placmod6, logistic=TRUE), label="tab:placmodinter", caption="Regression of TCQIAT, OptIAT and LOT-R on Placebo Response")
 print(placmod.xtab, sanitize.colnames.function = function (x) x)
 @ 
@@ -1282,7 +1297,7 @@ print(placmod.xtab, sanitize.colnames.function = function (x) x)
 
 <<painmetadata, echo=FALSE, results=hide>>=
 pain.metadata <- read.csv("PainScoresMetaData.csv")
-pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%04d", PPNo.))
+pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%05d", PPNo.))
 pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
 pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
 pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
@@ -1293,10 +1308,14 @@ iatexp.surv <- merge(Iatandexpmeasures, pain.metadata, by.x="Participant", by.y=
 @ 
 
 <<meanpaingroup, echo=FALSE, results=hide>>=
-pain.metadata.uniq <- pain.metadata[with(pain.metadata, !duplicated(PPNo.)),]
+metadata.labels <- as.data.frame(with(pain.metadata, as.character(PPNo.), rownames(pain.metadata)))
+pain.metadata.rmdup <- pain.metadata[with(pain.metadata, grep("1991|1101", x=PPNo., invert=TRUE)),]
 
-painratings[,"Participant"] <- with(painratings, sprintf("%04d", as.numeric(Participant)))
-pain.ip2 <- interpolate2(painratings, pain.metadata.uniq)
+pain.metadata.uniq <- pain.metadata[with(pain.metadata, !duplicated(PPNo.)),]
+#come back herre
+## painratings[,"Participant"] <- with(painratings, sprintf("%05d", as.numeric(Participant)))
+painratings2 <- painratings[with(painratings, grep("1991|1101", x=Participant, invert=TRUE)),]
+pain.ip2 <- interpolate2(painratings2, pain.metadata.uniq)
 pain.ip2 <- as.data.frame(pain.ip2)
 pain.ip2[,"Participant"] <- with(pain.metadata.uniq, PPNo.)
 pain.ip.cond <- merge(pain.ip2, painratings[,c(1:3)], by="Participant")
@@ -1484,6 +1503,7 @@ names(ecg.m)[2:3] <- c("Participant", "ibi_seconds")
 @ 
 
 <<gsrcond, echo=FALSE, results=hide>>=
+gsr.rs[,"variable"] <- with(gsr.rs, sprintf("%05d", as.numeric(variable)))
 gsrcond <- merge(gsr.rs, Iatandexpmeasures, by.x="variable", by.y="Participant")
 gsrcond.scale.ind <- with(gsrcond, grep("^[0-9]+$", x=names(gsrcond)))
 gsrcond[,gsrcond.scale.ind] <- scale(gsrcond[,gsrcond.scale.ind])
@@ -1501,12 +1521,12 @@ plac.m[,"index"] <- 1:nrow(plac.m)
 mean.nt <- apply(gsr.nt[,2:3201], 2, mean, na.rm=TRUE)
 nt.m <- melt(mean.nt)
 nt.m[,"index"] <- 1:nrow(nt.m)
-gsr.mean.cond <- Reduce(function(x, y) merge(x, y, by="index"), list(decept.m, plac.m, nt.m))
-names(gsr.mean.cond)[2:4] <- c("Deceptive", "Placebo", "NoTreat")
-cond.m <- melt(gsr.mean.cond, id.vars="index")
+gsrmean.cond <- Reduce(function(x, y) merge(x, y, by="index"), list(decept.m, plac.m, nt.m))
+names(gsrmean.cond)[2:4] <- c("Deceptive", "Placebo", "NoTreat")
+cond.m <- melt(gsrmean.cond, id.vars="index")
 ## gsrcond.m <- melt(gsrcond, id.vars=c("variable", names(gsrcond)[1:3200]))
-gsr.mean.cond2 <- zoo(gsr.mean.cond, order.by=gsr.mean.cond$index)
-gsr.pain.merge <- na.locf(merge(painbycond2, gsr.mean.cond2))
+gsrmean.cond2 <- zoo(gsrmean.cond, order.by=gsrmean.cond$index)
+gsr.pain.merge <- na.locf(merge(painbycond2, gsrmean.cond2))
 names(gsr.pain.merge) <- c("DeceptivePain", "OpenPain", "NoTreatPain", "Time", "index", "DeceptiveGSR", "OpenGSR", "NoTreatGSR")
 gsr.pain.merge.gg <- fortify(gsr.pain.merge)
 gsr.pain.merge.gg2 <- gsr.pain.merge.gg[,c(1:4, 7:9)]
@@ -1605,8 +1625,8 @@ This may have occurred due to habituation to the experimental environment, as th
 
 <<semdata, echo=FALSE, results=hide>>=
 Iatandexpmeasures.t <- Iatandexpmeasures.phys
-names(Iatandexpmeasures.t)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
-exp.sem <- Iatandexpmeasures.t[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","gsrmean" )]
+## names(Iatandexpmeasures.t)[c(22,24,29)] <- c("OptIATMean", "TCQIATMean", "gsrmean")
+exp.sem <- Iatandexpmeasures.t[, c("Age", "Gender", "LOTR", "OptIATMean", "TCQIATMean", "PlacResp", "meanconv", "meanalt", "convaltcomp", "Prime","GSR" )]
 @ 
 
 
@@ -1625,7 +1645,7 @@ For the Deceptive Placebo Condition, the mean cross-correlation was 0.63, for th
 
 <<gsrmodel, echo=FALSE, results=tex>>=
 
-gsr.cond <- lm(gsr.mean~Condition, data=Iatandexpmeasures.phys)
+gsr.cond <- lm(GSR~Condition, data=Iatandexpmeasures.phys)
 print(xtable(apareg(gsr.cond), caption="Regression of Condition on Mean GSR", label="tab:gsrcondreg"), sanitize.colnames.function = function (x) x)
 @ 
 
@@ -1652,21 +1672,21 @@ ccf.notreat <- with(gsr.pain.merge, ccf(NoTreatPain, NoTreatGSR, lag.max=600))
 @ 
 
 <<gsrts, echo=FALSE, results=hide>>=
-gsr.mean.cond[,"decept60"] <- with(gsr.mean.cond, ts(Deceptive, deltat=1/60))
-gsr.mean.cond["decept360"] <- with(gsr.mean.cond, ts(Deceptive, deltat=1/360))
-gsr.mean.cond[,"open60"] <- with(gsr.mean.cond, ts(Placebo, deltat=1/60))
-gsr.mean.cond[,"open360"] <- with(gsr.mean.cond, ts(Placebo, deltat=1/360))
-gsr.mean.cond[,"notreat60"] <- with(gsr.mean.cond, ts(NoTreat, deltat=1/60))
-gsr.mean.cond[,"notreat360"] <- with(gsr.mean.cond, ts(NoTreat, deltat=1/360))
+gsrmean.cond[,"decept60"] <- with(gsrmean.cond, ts(Deceptive, deltat=1/60))
+gsrmean.cond["decept360"] <- with(gsrmean.cond, ts(Deceptive, deltat=1/360))
+gsrmean.cond[,"open60"] <- with(gsrmean.cond, ts(Placebo, deltat=1/60))
+gsrmean.cond[,"open360"] <- with(gsrmean.cond, ts(Placebo, deltat=1/360))
+gsrmean.cond[,"notreat60"] <- with(gsrmean.cond, ts(NoTreat, deltat=1/60))
+gsrmean.cond[,"notreat360"] <- with(gsrmean.cond, ts(NoTreat, deltat=1/360))
 @ 
 
 
 %% \begin{figure}
 <<ggplothistcond, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+plac.resp.hist.pl <- ggplot(Iatandexpmeasures, aes(x=TCQIATMean))+geom_density()+facet_grid(.~PlacResp)
 print(plac.resp.hist.pl)
 @   
-%%   \caption{TCQIAT.Mean against Pain Responses Over Time}
+%%   \caption{TCQIATMean against Pain Responses Over Time}
 %%   \label{fig:histresp}
 %% \end{figure}
 
@@ -1680,7 +1700,7 @@ print(plac.resp.hist.pl)
 
 %% \begin{figure}
 <<optiatcorrsurv, echo=FALSE, eval=FALSE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIAT.Mean))+geom_density()+facet_grid(.~PlacResp)
+optiat.histcond <- ggplot(Iatandexpmeasures, aes(x=OptIATMean))+geom_density()+facet_grid(.~PlacResp)
 print(optiat.histcond)
 @   
 %%   \caption{Density Plots of Optimism IAT Scores by Condition}
@@ -1714,17 +1734,17 @@ print(cream.hist.cond)
 
 %% <<randomforestCV, echo=FALSE, results=hide, cache=TRUE>>=
 %% train.ind <- sample(1:54, 40, replace=FALSE)
-%% iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIAT.Mean", "OptIAT.Median", "TCQIAT.Mean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
+%% iatandexpfull <- Iatandexpmeasures[,c("PlacResp", "Age", "Gender", "Prime", "LOTR", "MAAS", "Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "OptIATMean", "OptIAT.Median", "TCQIATMean", "TCQIAT.Median", "meanconv", "meanalt", "convaltcomp")]
 %% iatandexpfull <- na.omit(iatandexpfull)
 %% iatandexpfull.train.ind <- with(iatandexpfull,createDataPartition(PlacResp, p=0.8, list=FALSE))
 %% iatandexpfull.train <- iatandexpfull[iatandexpfull.train.ind,]
 %% iatandexpfull.test <- iatandexpfull[-iatandexpfull.train.ind,]
-%% rf.train <- train(PlacResp~TCQIAT.Mean+meanconv+OptIAT.Mean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
+%% rf.train <- train(PlacResp~TCQIATMean+meanconv+OptIATMean+LOTR, data=iatandexpfull, method="rf", preProcess=c("center", "scale"))
 %% rf.pred <- predict(rf.train, iatandexpfull.test)
 
 %% var.used.count <- varUsed(rf.train[["finalModel"]])
 %% var.used.count <- as.data.frame(var.used.count)
-%% rownames(var.used.count) <- c("TCQIAT.Mean", "OptIAT.Mean", "meanconv", "LOTR")
+%% rownames(var.used.count) <- c("TCQIATMean", "OptIATMean", "meanconv", "LOTR")
 
 %% ## var.used.count.m[,"variable"] <- names(iatandexpfull)
 %% ## ggplot(var.used.count.m, aes(x=variable, y=value))+geom_histogram()+coord_flip()
@@ -1761,7 +1781,7 @@ print(cream.hist.cond)
 
 
 %% <<evtree, echo=FALSE, results=hide>>=
-%% ## evtree.train <- train(PlacResp~OptIAT.Mean+TCQIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
+%% ## evtree.train <- train(PlacResp~OptIATMean+TCQIATMean+meanconv, data=iatandexpfull.train, method="evtree", preProcess=c("center", "scale"))
 %% ## evtree.pred <- predict(evtree.train, iatandexpfull.test)
 %% ## evtree.confusionmat <- confusionMatrix(evtree.pred, iatandexpfull.test$PlacResp)
 %% @ 
@@ -1804,7 +1824,7 @@ print(cream.hist.cond)
 %% @ 
 
 %% <<gbmtrain, echo=FALSE, results=hide, eval=FALSE>>=
-%% gbm.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+LOTR+meanconv, data=iatandexpfull.train, method="gbm", trControl=mytrain, tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=3))
+%% gbm.train <- train(PlacResp~TCQIATMean+OptIATMean+LOTR+meanconv, data=iatandexpfull.train, method="gbm", trControl=mytrain, tuneGrid=data.frame(.shrinkage=(c(0.1, 0.01, 0.001)), .n.trees=c(50,100,150), .interaction.depth=3))
 %% @ 
 
 %% <<gamboost, echo=FALSE, results=hide>>=
@@ -1812,7 +1832,7 @@ print(cream.hist.cond)
 %% @ 
 
 %% <<glmboost, echo=FALSE, results=hide>>=
-%% glmboost.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
+%% glmboost.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="glmboost", trControl=mytrain, tuneGrid=data.frame(.mstop=1:100, .prune=1:100))
 %% @ 
 
 %% <<logitboost, echo=FALSE, results=hide, eval=FALSE>>=
@@ -1820,7 +1840,7 @@ print(cream.hist.cond)
 %% @ 
 
 %% <<glmnettrain, echo=FALSE, results=hide>>=
-%% glmnet.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
+%% glmnet.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="glmnet", trControl=mytrain, tuneGrid=data.frame(.alpha=seq(0.1, 1, by=0.1), .lambda=seq(0.1, 1.0, by=0.1)))
 %% @ 
 
 %% <<blackboost, echo=FALSE, results=hide, eval=FALSE>>=
@@ -1832,7 +1852,7 @@ print(cream.hist.cond)
 %% @ 
 
 %% <<rpart, echo=FALSE, results=hide>>=
-%% rpart.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
+%% rpart.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="rpart", trControl=mytrain, tuneGrid=data.frame(.cp=seq(0.01, 1, by=0.01)))
 %% @ 
 
 %% <<rpart2, echo=FALSE, results=hide, eval=FALSE>>=
@@ -1845,15 +1865,15 @@ print(cream.hist.cond)
 %% @ 
 
 %% <<ctree, echo=FALSE, results=hide, eval=FALSE>>=
-%% ctree2.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
+%% ctree2.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="ctree2", trControl=mytrain, tuneGrid=data.frame(.maxdepth=seq(0,10, by=1)), preProcess=c("center", "scale"))
 %% @ 
 
 %% <<evtree, echo=FALSE, eval=FALSE>>=
-%% evtree.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
+%% evtree.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="evtree", trControl=mytrain, tuneGrid=data.frame(.alpha=1:10), preProcess=c("center", "scale"))
 %% @ 
 
 %% <<cforest, echo=FALSE, results=hide>>=
-%% cforest.train <- train(PlacResp~TCQIAT.Mean+OptIAT.Mean+meanconv, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
+%% cforest.train <- train(PlacResp~TCQIATMean+OptIATMean+meanconv, data=iatandexpfull.train, method="cforest", trControl=mytrain, tuneGrid=data.frame(.mtry=seq(1, 101, by=10)))
 %% @ 
 
 %% <<rferns, echo=FALSE, results=hide>>=

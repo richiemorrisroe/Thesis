@@ -868,6 +868,7 @@ interpolate.pain <- function(pain, padding) {
 interpolate2 <- function(painscores, painmetadata) {
     pain.ratings.min <- with(painmetadata, floor((SqueezStop+60)/60))
     pain.ratings.min <- as.data.frame(pain.ratings.min)
+    ## browser()
     pain.ratings.min[,"Participant"] <- painmetadata$PPNo.
     names(pain.ratings.min)[1] <- "padding"
     resmat <- matrix(0, nrow=nrow(pain.ratings.min), ncol=45+with(pain.ratings.min, max(padding, na.rm=TRUE)))
@@ -880,8 +881,8 @@ interpolate2 <- function(painscores, painmetadata) {
             next}
         
         painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
-        if(i==10) {
-        browser()
+        if(i==28) {
+        ## browser()
         }
         padding <- rep(0, times=partpad)
         padpluspain <- c(padding, painratings)
