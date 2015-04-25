@@ -306,20 +306,9 @@ pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
 ggplot(pptest.lotr, aes(x=LOTR_orig, y=LOTR))+geom_point()
 notsamerecord <- filter(pptest.lotr, diff!=0)
 vasscores <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv"       )
+vasscores[,"PPNo."] <- with(vasscores, sprintf("%04d", PPNo.))
 optiat <- read.csv("ExperimentDataforR/FullStudy/optiatres.csv" )
 tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
-
-@ 
-
-
-
-<<removeduplicates, echo=FALSE, results=hide>>=
-dup.exp.small <- expmeasures[with(expmeasures, which(duplicated(PpNo))),]
-dup.exp.full <- expfull[with(expfull, which(duplicated(Participant))),]
-dup.all <- unique(c(dup.exp.small$PpNo, dup.exp.full$Participant))
-dup.exp.vasscores <- vasscores[with(vasscores, which(duplicated(PPNo.))),]
-vasscores2 <- vasscores[!(with(vasscores, PPNo.) %in% dup.all),]
-expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
 
 @ 
 
@@ -353,6 +342,27 @@ require(QuantPsyc)
 require(semTools)
 @ 
 
+
+<<removeduplicates, echo=FALSE, results=hide>>=
+dup.exp.small <- expmeasures[with(expmeasures, which(duplicated(PpNo))),]
+dup.exp.full <- expfull[with(expfull, which(duplicated(Participant))),]
+dup.all <- unique(c(dup.exp.small$PpNo, dup.exp.full$Participant))
+dup.exp.vasscores <- vasscores[with(vasscores, which(duplicated(PPNo.))),]
+vasscores2 <- vasscores[!(with(vasscores, PPNo.) %in% dup.all),]
+expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
+
+@ 
+
+\subsection{Data Validation}
+\label{sec:data-validation}
+
+
+In all, 114 responses were collected for the explicit measures. Following dropout, 113 responses were collected for the IAT measures. Following a fuller description of the experiment, but after administration of the explicit and implicit measures, 3 participants did not proceed andy further (at their own request, in line with API guidelines). 
+In part of the experimental design, participants were asked to pick a four digit code to represent their data across the the different parts of the experiment (explicit measures, implicit measures, physiological data and pain ratings). This was done to prevent the researcher from inferring participant data based on the order of administration to each participant. Unfortunately, this meant that a number of participants picked the same number. This was noticed during the data entry phase of the research and some of the problems could be corrected based on date and time information, as well as the gender of the participants. The number of participants with duplicated numbers who could be unambiguously matched across datasets was 5. All in all, another five participants with duplicated IDs could not be unambigiously reidentified, and 
+
+
+
+
 <<iatsort, echo=FALSE, results=hide>>=
 rotate.labels <- theme(axis.text.x=element_text(angle=-45, hjust=1))
 tcqiatsorted <- tcqiat[,c("Participant", "Date", "Time", "Block", "Accurate", "Actual", "Real", "Truth", "Fake", "Illusory", "Inaccurate", "Lies", "Cream", "Injections", "Pills", "Surgery", "Acupuncture", "FlowerEssence", "Homeopathy", "Reiki", "Correct", "BlockTime")]
@@ -375,6 +385,9 @@ part.tcq <- unique(tcqiat[,"Participant"])
 optstimblock3 <- as.data.frame(cbind(part.opt, optstimblock3))
 optstimblock5 <- as.data.frame(cbind(part.opt, optstimblock5))
 @ 
+
+
+
 
 \subsection{Randomisation Checks}
 \label{sec:randomisation-checks}
