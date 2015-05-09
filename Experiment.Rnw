@@ -179,7 +179,7 @@ The aims and objectives of this portion of the research were as follows:
 ## load("healthforthesis.rda")
 ## load("tcq2.rda")
 ## load("homdata.rda")
-## load("credtotals.rda")
+##load("credtotals.rda")
 ## load("tcqthesis.rda")
 load("healthforthesislatest.rda")
 load("tcqthesislatest.rda")
@@ -306,6 +306,16 @@ tcqiat <- read.csv("ExperimentDataforR/FullStudy/tcqiatres.csv")
 tcqiat[,"PPNo."] <- with(tcqiat, sprintf("%04d", Participant))
 @ 
 
+<<painmetadata, echo=FALSE, results=hide>>=
+pain.metadata <- read.csv("PainScoresMetaData.csv")
+pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%05d", PPNo.))
+pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
+pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
+pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
+pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
+
+@ 
+
 
 <<loadpackages, echo=FALSE, results=hide>>=
 require(dplyr)
@@ -380,6 +390,12 @@ vasscores2 <- vasscores[!(with(vasscores, PPNo.) %in% dup.all),]
 expmeasures2 <- expmeasures[!(with(expmeasures, PpNo) %in% dup.all),]
 vasscores2 <- vasscores
 expmeasures2 <- expmeasures
+@ 
+
+<<survanalysis, echo=FALSE, results=hide>>=
+
+##investigate survival analysis
+
 @ 
 
 \subsection{Data Validation}
@@ -471,6 +487,7 @@ iatexp <- Iatandexpmeasures[,c(14:22, 24)]
 Iatandexpmeasures[,"meanconv"] <- with(Iatandexpmeasures, (Pill+Cream+Inj)/3)
 Iatandexpmeasures[,"meanalt"] <- with(Iatandexpmeasures, (Acu+Hom+Rei)/3)
 Iatandexpmeasures[,"convaltcomp"] <- with(Iatandexpmeasures, meanconv -meanalt)
+
 ## Iatandexpmeasures[,"Date"] <- with(Iatandexpmeasures, dmy(Date))
 @
  
@@ -1078,8 +1095,8 @@ print(chisq2.xtab)
 
 Using a chi-square test ($\chi^2(1)=0.32, p=0.56$) there was no significant difference between the Deceptive and Open Placebo conditions on the probability of placebo response, which would suggest that the suggestion in a each condition was not successful at inducing a response reliably. This is damaging, but not devastating to the main point of the research.  
 
-<<chisqtestprimeplac, echo=FALSE, results=hide>>=
-chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp)))
+<<chisqtestprimeplac, echo=FALSE, results=hide, eval=FALSE>>=
+chisq1 <- with(Iatandexpmeasures, chisq.test(table(Prime, Condition, PlacResp))) #this broke when I upgraded to R3.2, for some reason
 chisqtest1 <- as.data.frame(cbind(chisq1[["statistic"]], chisq1[["parameter"]], chisq1[["p.value"]], chisq1[["observed"]]))
 names(chisqtest1)[1] <- "Chi Square"
 names(chisqtest1)[2] <- "df"
@@ -1088,7 +1105,7 @@ chisq1.xtab <- xtable(chisqtest1, label="tab:primeplacchi", caption="Chi Square 
 print(chisq1.xtab)
 @ 
 
-Another Chi-Square test( $\chi^2(11)=64.0, p\le 0.0001$) show that priming appears to have quite a large effect, as the Placebo Response by Condition is extremely significant given the priming manipulation.
+Another Chi-Square test( $\chi^2(11)=64.0, p\le 0.0001$) showed that priming appears to have quite a large effect, as the Placebo Response by Condition is extremely significant given the priming manipulation.
 
 This finding is much more clearly conveyed in Figure \ref{fig:placprimeplot}, where it can be seen that participants were much more likely to respond to placebo following a priming intervention. Given that priming interventions typically take place outside conscious awareness, this suggests that there is at least some part of the placebo response which is amenable to non-conscious (or implicit) influences. 
 
@@ -1295,19 +1312,11 @@ print(placmod.xtab, sanitize.colnames.function = function (x) x)
 
 
 
-<<painmetadata, echo=FALSE, results=hide>>=
-pain.metadata <- read.csv("PainScoresMetaData.csv")
-pain.metadata[,"PPNo."] <- with(pain.metadata, sprintf("%05d", PPNo.))
-pain.metadata[3:6] <- apply(pain.metadata[,3:6], c(1,2), function(x) x/1000)
-pain.pad <- pain.metadata[,c("PPNo.", "SqueezStop")]
-pain.pad[,"FirstPainRating"] <- with(pain.pad, SqueezStop+60)
-pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
-pain.ip <- interpolate.pain(vasscores2, padding=pain.pad)
-##investigate survival analysis
-iatexp.surv <- merge(Iatandexpmeasures, pain.metadata, by.x="Participant", by.y="PPNo.")
-@ 
+
 
 <<meanpaingroup, echo=FALSE, results=hide>>=
+pain.ip <- interpolate.pain(vasscores2, padding=pain.pad)
+iatexp.surv <- merge(Iatandexpmeasures, pain.metadata, by.x="Participant", by.y="PPNo.")
 metadata.labels <- as.data.frame(with(pain.metadata, as.character(PPNo.), rownames(pain.metadata)))
 pain.metadata.rmdup <- pain.metadata[with(pain.metadata, grep("1991|1101", x=PPNo., invert=TRUE)),]
 

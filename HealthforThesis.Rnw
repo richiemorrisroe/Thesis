@@ -222,7 +222,7 @@ The methods used for this part of the thesis were primarily psychometric. Cross-
 \label{sec:participants}
 
 <<demo, echo=FALSE, results=tex>>=
-hom.gend.meth <- count(hom, vars=c("Gender", "CollectMeth"))
+hom.gend.meth <- plyr::count(hom, vars=c("Gender", "CollectMeth"))
 hom.gend.meth2 <- na.omit(hom.gend.meth)
 hom.gend.meth.tab <- recast(hom.gend.meth2, Gender~CollectMeth)
 print(xtable(hom.gend.meth.tab, label="tab:homdemo", caption="Gender Breakdown of Participants by Collection Method"), include.rownames=FALSE)
@@ -2374,7 +2374,7 @@ As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provi
 
 Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the back testing process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
-<<lotrbacktestsem1full, echo=FALSE, results=hide, cache=TRUE>>=
+<<lotrbacktestsem1full, echo=FALSE, results=hide, eval=FALSE>>=
 optimism <- paste(lotr, c(1, 3, 4, 7, 9, 10), sep="")
 latents <- c("Optimism")
 manifests <- optimism

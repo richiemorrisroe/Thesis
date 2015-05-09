@@ -9,16 +9,18 @@ digraph "LOTRBackTestReduced" {
 	 LOTRQ10 [shape=square, fillcolor="#a9fab1", height=0.5, width=0.5];
 /* Latent Variables */
 	 Optimism [shape=circle, fillcolor="#f4fd78"];
+	 Pessimism [shape=circle, fillcolor="#f4fd78"];
 /* Paths */
 	 Optimism -> LOTRQ3[dir=forward];
-	 Optimism -> LOTRQ4[dir=forward];
 	 Optimism -> LOTRQ7[dir=forward];
-	 Optimism -> LOTRQ9[dir=forward];
 	 Optimism -> LOTRQ10[dir=forward];
+	 Pessimism -> LOTRQ4[dir=forward];
+	 Pessimism -> LOTRQ9[dir=forward];
 	 LOTRQ3 -> LOTRQ3[dir=both, headport=s, tailport=s];
 	 LOTRQ4 -> LOTRQ4[dir=both, headport=s, tailport=s];
 	 LOTRQ7 -> LOTRQ7[dir=both, headport=s, tailport=s];
 	 LOTRQ9 -> LOTRQ9[dir=both, headport=s, tailport=s];
 	 LOTRQ10 -> LOTRQ10[dir=both, headport=s, tailport=s];
 	 Optimism -> Optimism[dir=both, headport=n, tailport=n];
+	 Pessimism -> Pessimism[dir=both, headport=n, tailport=n];
 }
