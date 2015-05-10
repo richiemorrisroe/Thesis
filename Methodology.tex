@@ -113,7 +113,7 @@ These models will be examined using a structural equation modelling approach, wh
 
 \section{Development of the IAT}
 
-Qualitative analysis was an essential part of this project, and the details are reported in Appendix~\ref{cha:cha:append-ii:-qual}.   
+Qualitative analysis was an essential part of this project, and the details are reported in Appendix~\ref{cha:append-ii:-qual}.   
 It gave insight and data into the development of the IAT's used in the final part of the research project.
 The methods used for qualitative analysis here involved a thematic analysis~\cite{braun2006using} of the interviews conducted was carried out to develop themes both for the repertory grid and for the IAT.
 
@@ -348,7 +348,7 @@ It is important to note that the names of the models are slightly deceiving, whi
 \subsubsection{Structural equation modelling}
 \label{sec:struct-equat-model}
 
-structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions~\cite{fabrigar1999evaluating}. however, it is actually a set of far more general techniques to test the relationships between both manifest and latent variables, and even to establish causality in some cases~\cite{pearl1998graphs}. the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiencies.
+Structural equation modelling is regarded by many as an adjunct technique for evaluating the results of particular factor solutions~\cite{fabrigar1999evaluating}. however, it is actually a set of far more general techniques to test the relationships between both manifest and latent variables, and even to establish causality in some cases~\cite{pearl1998graphs}. the factor analytic procedure is full of interpretative procedures where no principled choice can be made, and structural equation modelling (hereafter SEM) is an attempt to compensate for some of these deficiencies.
 
 SEM was developed by Joreskog in the 1970's~\cite{joreskog1978structural}. it provides a means of testing hypothesised relationships between latent and manifest variables. in practice, the result of a factor analysis is regarded as a measurement model of the data.
 
@@ -375,16 +375,16 @@ In this thesis, SEM was applied extensively to test the theorised relationships 
 \label{sec:gener-analyt-appr}
 
 
-Factor solutions were extracted using principal axis methods from the psych R package~\ref{psych2015}.
+Factor solutions were extracted using principal axis methods from the psych R package~\cite{psych2015}}.
 
 primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied where these failed to converge. In general, promax will attempt to find the rotations which maximise simple structure. 
 
 After the various factor structures were obtained, they were plotted and analysed for interpretability. Communalities and uniquenesses were assessed to ensure that there was no over or under factoring in the solutions\footnote{Communalities are important as they represent the common variance actually included in the model, in contrast to PCA which uses all variance in the matrix}. %% Communalities were then graphed against the number of factors extracted and the methods of extraction to provide a simple graphical guide to the usefulness of each solution.
 
-Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx~\ref{openmx2012} and lavaan~\ref{lavaan2012} packages for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions, and these solutions were then evaluated in terms of their performance on unseen data. 
+Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx~\cite{Bokerinpress} and lavaan~\cite{lavaan2012} packages for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions, and these solutions were then evaluated in terms of their performance on unseen data. 
 
 
-Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory (using functions from the ltm package~\ref{ltm2006}). Firstly, Mokken analyses (from the Mokken package~\ref{vanderark2012}) were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory (using functions from the ltm package~\cite{ltm2006}). Firstly, Mokken analyses (from the Mokken package~\cite{vanderark2012}) were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
 
 Following this, two successively more complicated IRT models were fitted to each sub-scale ( one parameter with a single $\alpha$ for all items and two parameter, with a separately estimated $\alpha$ for each item). Graded Response Models were used for IRT estimation as these are appropriate for ordinal data. Additionally, the most successful IRT models were used as the basis for other models analysed using SEM. 
 
