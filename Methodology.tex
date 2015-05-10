@@ -375,7 +375,7 @@ In this thesis, SEM was applied extensively to test the theorised relationships 
 \label{sec:gener-analyt-appr}
 
 
-Factor solutions were extracted using principal axis methods from the psych R package~\cite{psych2015}}.
+Factor solutions were extracted using principal axis methods from the psych R package~\cite{psych2015}.
 
 primarily, direct oblimin methods of rotations were utilised, but promax rotations were also applied where these failed to converge. In general, promax will attempt to find the rotations which maximise simple structure. 
 
@@ -384,7 +384,7 @@ After the various factor structures were obtained, they were plotted and analyse
 Following this procedure of extraction and interpretation, Structural Equation Modelling was applied to each of the proposed factor solutions using the OpenMx~\cite{Bokerinpress} and lavaan~\cite{lavaan2012} packages for R. The optimal factor solution was chosen using the AIC of each fitted model, along with the RMSEA of the proposed solutions, and these solutions were then evaluated in terms of their performance on unseen data. 
 
 
-Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory (using functions from the ltm package~\cite{ltm2006}). Firstly, Mokken analyses (from the Mokken package~\cite{vanderark2012}) were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
+Following the investigation of structure with the methods of classical test theory, the scales were analysed using Rasch models and item response theory (using functions from the ltm package~\cite{Rizopoulos2006}). Firstly, Mokken analyses (from the Mokken package~\cite{van2007mokken}) were run, in order to check the assumptions of monotonicity, local independence and to assess how many sub-scales the analysis should be carried out on. 
 
 Following this, two successively more complicated IRT models were fitted to each sub-scale ( one parameter with a single $\alpha$ for all items and two parameter, with a separately estimated $\alpha$ for each item). Graded Response Models were used for IRT estimation as these are appropriate for ordinal data. Additionally, the most successful IRT models were used as the basis for other models analysed using SEM. 
 
