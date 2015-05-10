@@ -842,7 +842,7 @@ tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq6fit2))
 print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"), include.rownames=FALSE)
 @ 
 
-As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section \ref{sec:study-1}).
+As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section~\ref{sec:study-1}).
 
 
 
@@ -1315,6 +1315,15 @@ tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"), sanitize.text.function= function (x) x)
 @ 
 
+<<tcqomegas, echo=FALSE, results=hide>>=
+tcq2b6.omega <- omega(tcq2b.fact.6$r.scores, nfactors=2)
+tcq2b7.omega <- omega(tcq2b.fact.7$r.scores, nfactors=2)
+tcq2c6.omega <- omega(tcq2c.fact.6$r.scores, nfactors=2)
+tcq2c7.omega <- omega(tcq2c.fact.7$r.scores, nfactors=2)
+tcq2d6.omega <- omega(tcq2d.fact.6$r.scores, nfactors=2)
+tcq2d7.omega <- omega(tcq2d.fact.7$r.scores, nfactors=2)
+@ 
+
 <<tcq2fact7average, echo=FALSE, results=tex>>=
 tcq2b.fact7.n <- FactorNames(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
 tcq2c.fact7.n <- FactorNames(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
@@ -1323,9 +1332,6 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
 print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht")
-###hmmm, not sure if this is right
-##was able to fix this by removing the names re-arrangement
-##may have broken the coefficient averaging process though
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
 
@@ -1371,6 +1377,17 @@ tcq2bfit.m <- melt(tcq2bfit)
 names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
 @ 
+
+\begin{figure}
+<<omegagraph, echo=FALSE, fig=TRUE>>=
+print(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
+@   
+  \caption{Hierarchical Factor Structure (Omega) for TCQ Data}
+  \label{fig:tcqomega}
+\end{figure}
+
+Figure~\ref{fig:tcqomega} shows that the hierarchical solution breaks down into a conventional and alternative structure (both factors constrained to be equal). This suggests that modelling the data with two higher-order structures might be useful. However, this failed to provide a parameter-adjusted decrease in log-likelihood, and so was not pursued further. 
+
 
 \subsection{Confirmatory Factor Analyses}
 \label{sec:cfa}
