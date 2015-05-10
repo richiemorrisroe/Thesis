@@ -786,6 +786,7 @@ rownames(rand8.xtab) <- questions.rand
 print(rand8.xtab, scalebox=0.7, digits=2, sanitize.text.function= function (x) x, table.placement="tp")
 @
 
+\newpage
 
 Table~\ref{tab:tcq1rand8fact} on Page~\pageref{tab:tcq1rand8fact} shows the loadings and has the named factors for the eight factor solution. 
 
@@ -919,7 +920,7 @@ rand8summ <- summary(rand8fit)
 
 <<randsemcompare, echo=FALSE, results=tex>>=
 randsemcomp <- mxCompare(base=rand2fit, comparison=c(rand8fit), all=TRUE)
-print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8, table.placement="ht")
+print(xtable(randsemcomp,label="tab:randsemcompare", caption="SEM Comparison for RAND MOS Factor Solutions, Sample One"), scalebox=0.8, table.placement="ht", include.rownames=FALSE)
 @
 
 As can be seen from Table~\ref{tab:randsemcompare}, the 8 factor solution appears to fit better (lower AIC), so on the basis of this analysis, this is the solution which should be retained.
@@ -1012,7 +1013,7 @@ rand8summ2 <- summary(rand8fit2)
 
 <<randsemcomparehom2, echo=FALSE, results=tex>>=
 randsemcomp.hom2 <- mxCompare(base=rand2fit2, comparison=c(rand8fit2))
-print(xtable(randsemcomp.hom2,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8)
+print(xtable(randsemcomp.hom2,label="tab:randsemcomparehom2", caption="Model Comparison for RAND MOS data using Models from Sample 1 on Sample 2" ), scalebox=0.8, include.rownames=FALSE)
 @
 
 As Table \ref{tab:randsemcomparehom2} shows, the eight factor model provided the best fit to this unseen data (Split A of the second Sample), which is  similar to the data on which the model was created. This supports the hypothesis proposed in the introduction, and is in line with previous research. 
@@ -1139,7 +1140,7 @@ maas3summ <- summary(maas3fit)
 <<maassemcompare, echo=FALSE, results=tex>>=
 maascomp <- mxCompare(base=maas1fit, comparison= maas3fit)
 maascomp.xtab <- xtable(maascomp,label="tab:maassemcomp", caption="Comparison of One and Three Factor Models, Sample One")
-print(maascomp.xtab)
+print(maascomp.xtab, scalebox=0.9, include.rownames=FALSE)
                       
 @
 
@@ -1224,7 +1225,7 @@ maas1summ2 <- summary(maas1fit2)
 <<maassemcompare2, echo=FALSE, results=tex>>=
 maascomp2 <- mxCompare(base=maas1fit2, comparison=maas3fit2)
 maascomp.xtab2 <- xtable(maascomp2,label="tab:maassemcompare2", caption="Comparison of Sample One MAAS Factor Models on a subset of Sample Two Data (Split A)")
-print(maascomp.xtab2, scalebox=0.9)
+print(maascomp.xtab2, scalebox=0.9, include.rownames=FALSE)
 @
 
 Table \ref{tab:maassemcompare2} demonstrates that the MAAS 1 factor model provided the best fit to the subsample of data ($N=313$) used to test the model.
@@ -1413,7 +1414,7 @@ maas5summ2c <- summary(maas5fit2c)
 
 <<maas2bsemcompare, echo=FALSE, results=tex>>=
 maas2b.semcomp <- mxCompare(base=maas1fit2b, comparison=c(maas5fit2b))
-print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split B"), scalebox=0.9)
+print(xtable(maas2b.semcomp,label="tab:maas2bsemcompare", caption="Comparison of Factor Structures for MAAS 2B Solutions, Tested on Split B"), scalebox=0.9, include.rownames=FALSE)
 @
 
 As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution again performs best, further increasing our confidence in its adequacy.
@@ -1421,7 +1422,7 @@ As can be seen from Table \ref{tab:maas2bsemcompare}, the one factor solution ag
 
 <<maas2csemcompare, echo=FALSE, results=tex>>=
 maas2c.semcomp <- mxCompare(base=maas1fit2c, comparison=c(maas5fit2c))
-print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of Factor Structures for MAAS 2C Solutions, Tested on Split C"), scalebox=0.9)
+print(xtable(maas2c.semcomp,label="tab:maas2csemcompare", caption="Comparison of Factor Structures for MAAS 2C Solutions, Tested on Split C"), scalebox=0.9, include.rownames=FALSE)
 @
 
 As can be seen from Table \ref{tab:maas2csemcompare}, the one factor model was again superior to the five factor model in Split C. 
@@ -1442,9 +1443,9 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6. This leaves a thirteen item scale for further analysis. Note that items 2 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
+The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6\footnote{because they do not appear to be part of the scale}~\cite{van2007mokken}. This leaves a thirteen item scale for further analysis. Note that items 2 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
 
-There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. An item ordering analysis suggested that Q2 and Q6 should be removed from the scale before analysis was carried out, and this was done.
+There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
 <<maasreduced, echo=FALSE, results=hide, cache=TRUE>>=
 maas.irt <- paste(maas, c(1,3:5,7:15), sep="")
@@ -1751,7 +1752,7 @@ maas.bt.reduced2.fit <- mxRun(maas.bt.reduced2)
 @ 
 
 <<maasbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.8)
+print(xtable(mxCompare(base=maas.bt.full.fit, comp=c(maas.bt.red1.fit, maas.bt.reduced2.fit)), label="tab:maasbacktestsemcompare", caption="Full and Reduced Models for MAAS Tested on Sample One Data"), scalebox=0.8, include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:maasbacktestsemcompare}, the reduced model without questions 5, 6 and 15  provided the best fit to the unseen data. 
@@ -2408,7 +2409,7 @@ lotr.bt.small.fit <- mxRun(lotr.bt.small)
 @ 
 
 <<lotrbacktestsemcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.8)
+print(xtable(mxCompare(lotr.bt.small.fit, lotr.bt.full.fit), label="tab:lotrbtsemcompare", caption="Performance of Full and Reduced Model for LOT-R on Sample One Data"), scalebox=0.8, include.rownames=FALSE)
 omxGraphviz(lotr.bt.full.fit, dotFilename="lotrfullbacktest.dot")
 omxGraphviz(lotr.bt.small.fit, dotFilename="lotrsmallbacktest.dot")
 @ 
