@@ -358,7 +358,7 @@ vas.m <- melt(vastrans, id.vars="index")
 names(vas.m) <- c("Time", "Participant", "Pain")
 ## names(vas.c)[1] <- "PP.No"
 ## names(vas.c)[2:47] <- with(vas.c, paste("Min", names(vas.c)[2:47], sep=""))
-print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time (mins)")+ylab("Self Reported Pain")+theme(legend.position="none")
+print(ggplot(vas.m, aes(x=Time, y=Pain, colour=Participant))+geom_line()+xlab("Time (mins)")+ylab("Self Reported Pain")+theme(legend.position="none"))
 @  
   \caption{Participant individual pain responses over time}
   \label{fig:pppainplot}
