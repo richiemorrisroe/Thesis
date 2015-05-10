@@ -1013,7 +1013,7 @@ tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,10:15]
 tcq2.sum1 <- summary(tcq2.demo1)
 
-print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats"))
+print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats"), include.rownames=FALSE)
 @ 
 
 
@@ -1613,7 +1613,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.9)
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 Over all splits,  the seven factor model provided a better fit to the out of sample data than did the 5 or 6 factor model. However, the difference in likelihood was not large, and given the strong theoretical reasons for preferring the six factor model, this was chosen. 
@@ -1699,13 +1699,13 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.9)
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.9)
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 <<fivefactorsem, echo=FALSE, results=tex>>=
@@ -1865,7 +1865,7 @@ tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
 <<iccgrmtcqconv2d, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 tcq2.1plconv.pl <- ggplot_inf(tcqconv2d.grm.1pl.info)
 tcq2.2plconv.pl <- ggplot_inf(tcqconv2d.grm.2pl.info)
-print(arrangeGrob(tcq2.1plconv.pl+theme(legend.position="none"),tcq2.2plconv.pl+theme(legend.position=c(1,1))))
+print(arrangeGrob(tcq2.1plconv.pl+theme(legend.position="none"),tcq2.2plconv.pl+theme(legend.position=c(0.8,1))))
 @
 
   \caption{Item Information Curves, TCQ Conventional, Split 2, One Parameter GRM (top) and Two Parameter GRM (bottom)}
@@ -2174,7 +2174,7 @@ tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
-print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset"), scalebox=0.8)
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset"), scalebox=0.8, include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
