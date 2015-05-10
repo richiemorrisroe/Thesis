@@ -2205,7 +2205,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Paramter Graded Response Model"), sanitize.colnames.function=function (x) x)
+print(xtable(coefirt(lotr.pcm.2pl),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Parameter Graded Response Model"), sanitize.colnames.function=function (x) x)
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
@@ -2629,7 +2629,7 @@ opt.step.pred.obs <- data.frame (pred=opt.step.pred.resp, obs=opt.test2a)
 rmsea.opt.step2a <- rmsea (opt.step.pred.obs)
 @ 
 <<optstep2aprint, echo=FALSE, results=tex>>=
-print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health", label="tab:homstepopttest2a"), sanitize.text.function = function (x) x)
+print(xtable(apareg(opt.step.test), caption="Coefficients for Stepwise Selected Model on Test Data, General Health (Sample 2A)", label="tab:homstepopttest2a"), sanitize.text.function = function (x) x)
 @ 
 
 
@@ -2647,7 +2647,7 @@ Given the correlation matrix reported shown above in Table~\ref{tab:hom2scalecor
 
 
 <<optstepprint, echo=FALSE, results=tex>>=
-print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model (using AIC(k=3)), forward and backward selection from a full model", label="tab:hom1stepopt"), sanitize.text.function = function (x) x)
+print(xtable(apareg(opt.step), caption="Coefficients for Stepwise Selected Regression Model for Optimism", label="tab:hom1stepopt"), sanitize.text.function = function (x) x)
 @ 
 
 %% As Table \ref{tab:hom1optstep} shows, 
