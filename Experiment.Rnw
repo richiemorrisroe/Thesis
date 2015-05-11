@@ -2061,8 +2061,6 @@ meanalt~~meanalt
 expimptwofac <- '
 ImpExp=~TCQIATMean+OptIATMean
 ExpExp=~meanconv+meanalt+MAAS
-ImpExp~~ImpExp
-ImpExp~~ExpExp
 TCQIATMean~~TCQIATMean
 OptIATMean~~OptIATMean
 MAAS~~MAAS
@@ -2081,7 +2079,11 @@ OptIATMean~~OptIATMean
 MAAS~~MAAS
 meanconv~~meanconv
 meanalt~~meanalt'
-
+expimp.moderated2 <- '
+ImpExp=~TCQIATMean+OptIATMean
+ExpExp=~meanconv+meanalt
+ImpExp~~MAAS
+ExpExp~~MAAS'
 expimpsep <- '
 Optimism=~OptIATMean+LOTR
 Credibility=~TCQIATMean+meanconv+meanalt
@@ -2100,25 +2102,27 @@ impexpdata <- Iatandexpmeasures.t[,c("TCQIATMean", "OptIATMean", "MAAS", "meanco
 <<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
-expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata))
-twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata))
+expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata), se="bootstrap")
+twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata), se="bootstrap")
 @ 
 
 <<impexpmodels, echo=FALSE, results=hide, eval=FALSE>>=
+impexpdata.full <- na.omit(impexpdata)
 expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
+expimp.moderated.lavaan <- lavaanify(expimp.moderated)
 expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
-## expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
+expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
 @ 
 
-<<expimpfit, echo=FALSE, results=tex, eval=FALSE>>=
+<<expimpfit, echo=FALSE, results=tex>>=
 expimp1.fit.meas <- fitMeasures(expimp1.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 
-## twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+twofac.fit.meas <- fitMeasures(twofac.impexp.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimpsep.fit.meas <- fitMeasures(expimpsep.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
+## expimpmoderated.fit.meas <- fitMeasures(expimp.moderated.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
 ## expimp.nocorr.fit.meas <- fitMeasures(expimp.nocorr.fit, c("chisq", "df", "pvalue", "cfi", "rmsea", "rmsea.ci.lower", "rmsea.ci.upper"))
-expimpall <- rbind(expimp1.fit.meas, expimpmoderated.fit.meas)
-rownames(expimpall) <- c("One Factor", "Moderated")
+expimpall <- rbind(expimp1.fit.meas, twofac.fit.meas)
+rownames(expimpall) <- c("One Factor", "Two Factor")
 print(xtable(expimpall, label="tab:expimplavaanfit", caption="Fit Statistics for the SEM Models on the Relationship between Implicit and Explicit Expectancies"), scalebox=0.9)
 @ 
 
