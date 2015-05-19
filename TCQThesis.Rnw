@@ -176,6 +176,7 @@ source("func.R")
 
 require(stargazer)
 require(caret)
+require(Rgraphviz)
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
 

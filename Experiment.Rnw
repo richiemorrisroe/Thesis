@@ -1966,6 +1966,8 @@ The three models were as follows:
 \item A two factor model where the covariances between implicit and explicit measures were moderated by mindfulness. 
 \end{enumerate}
 
+Unfortunately, none of these models converged, suggesting that either there was not enough data to estimate them, or that they are not useful models. 
+
 <<lavaanmod, echo=FALSE, results=hide>>=
 placmod.cov <- '
 PlacResp~TCQIATMean+OptIATMean+convaltcomp+LOTR
@@ -2059,8 +2061,10 @@ meanalt~~meanalt
 
 
 expimptwofac <- '
+ImpExp~~ImpExp
+ExpExp~~ExpExp
 ImpExp=~TCQIATMean+OptIATMean
-ExpExp=~meanconv+meanalt+MAAS
+ExpExp=~meanconv+meanalt
 TCQIATMean~~TCQIATMean
 OptIATMean~~OptIATMean
 MAAS~~MAAS
@@ -2070,15 +2074,15 @@ meanalt~~meanalt'
 expimp.moderated <- '
 ImpExp=~TCQIATMean+OptIATMean
 ExpExp=~meanconv+meanalt
-ImpExp~~MAAS
-ExpExp~~MAAS
+MAAS~ImpExp
+MAAS~~ExpExp
 ImpExp~~ImpExp
-ImpExp~~ExpExp
 TCQIATMean~~TCQIATMean
 OptIATMean~~OptIATMean
-MAAS~~MAAS
 meanconv~~meanconv
-meanalt~~meanalt'
+meanalt~~meanalt
+ExpExp~~ExpExp
+'
 expimp.moderated2 <- '
 ImpExp=~TCQIATMean+OptIATMean
 ExpExp=~meanconv+meanalt
@@ -2087,6 +2091,7 @@ ExpExp~~MAAS'
 expimpsep <- '
 Optimism=~OptIATMean+LOTR
 Credibility=~TCQIATMean+meanconv+meanalt
+Optimism~~Credibility
 TCQIATMean~~TCQIATMean
 OptIATMean~~OptIATMean
 MAAS~~MAAS
@@ -2102,16 +2107,16 @@ impexpdata <- Iatandexpmeasures.t[,c("TCQIATMean", "OptIATMean", "MAAS", "meanco
 <<impexpmod, echo=FALSE, results=hide>>=
 expimp1.mod <- lavaanify(expimpdirect)
 twofac.impexp.mod <- lavaanify(expimptwofac)
-expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata), se="bootstrap")
-twofac.impexp.fit <- sem(twofac.impexp.mod, data=na.omit(impexpdata), se="bootstrap")
+expimp1.fit <- sem(expimp1.mod, data=na.omit(impexpdata), std.lv=TRUE, orthogonal=TRUE)
+twofac.impexp.fit <- sem(twofac.impexp.mod, data=impexpdata)
 @ 
 
 <<impexpmodels, echo=FALSE, results=hide, eval=FALSE>>=
 impexpdata.full <- na.omit(impexpdata)
-expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata))
+expimpsep.fit <- sem(expimpsep, data=na.omit(impexpdata), orthogonal=TRUE, std.lv=TRUE) ##no converge
 expimp.moderated.lavaan <- lavaanify(expimp.moderated)
-expimp.moderated.fit <- sem(expimp.moderated, data=na.omit(impexpdata))
-expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE)
+expimp.moderated.fit <- sem(expimp.moderated, data=impexpdata, estimator="WLSMV") ##could not compute standard errors
+expimp.nocorr.fit <- sem(expimptwofac, data=na.omit(impexpdata), orthogonal=TRUE, std.lv=TRUE) #didnt converge
 @ 
 
 <<expimpfit, echo=FALSE, results=tex>>=
