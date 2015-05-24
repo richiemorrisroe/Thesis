@@ -997,26 +997,33 @@ provide <- function(name, ...) {
         install.packages(name, ...)
     }
     }
-coefirt <- function(grm) {
+coefirt <- function(grm, se=FALSE) {
     if(class(grm)=="grm" || class(grm)=="gpcm") {
-    dat <- coef(grm)
+        dat <- coef(grm)
+        itemnames <- rownames(coef(grm))
 }
     else {
+        
         dat <- grm
     }
-    
+    if(se) {
+        standard.errors <- sapply(coef(summary(grm)), '[[', "std.err")
+        standerr <- round(standard.errors, 3)
+    }
+    ## browser()
     dims <- dim(dat)
     betas <- dims[2]-1
+    if(se) {
+        dat.se <- matrix(paste(dat, " (", standerr, ")", sep=""), nrow=dims[1], ncol=dims[2])
+        rownames(dat.se) <- itemnames
+        dat <- dat.se
+    }
+    ## browser()
     #just need to add an identity sanitize test function to get the alphas and betas as markup
-    beta.names <- paste("$", "\\beta",  "^", 1:betas, "$", sep="")
+    beta.names <- paste("$", "\\beta",  "^", 1:betas, " (se) ", "$", sep="")
     alpha.name <- "$\\alpha$"
-    ## beta.names <- paste("beta", 1:betas, sep="")
-    ## alpha.name <- "alpha"
     allnames <- c(beta.names, alpha.name)
-    ## browser()
     colnames(dat) <- allnames
-    ## rownames(dat)[1] <- "Item"
-    ## browser()
     dat
 }
 apareg <- function(model, logistic=FALSE) {
