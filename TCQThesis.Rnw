@@ -447,7 +447,7 @@ tcq6summ <- summary(tcq6fit)
 
 
 <<tcq1semcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=tcq4fit, comp=c(tcq6fit)), label="tab:tcq1modelcomp", caption="CFA on TCQ Models, Sample One"))
+print(xtable(mxCompare(base=tcq4fit, comp=c(tcq6fit)), label="tab:tcq1modelcomp", caption="CFA on TCQ Models, Sample One"), include.rownames=FALSE)
 @ 
 
 
@@ -537,7 +537,6 @@ tcqconv.grm.2pl.info <- extract_information(tcqconv.grm.2pl)
 
 
 \begin{figure}
-\setkeys{Gin}{height=0.8\textheight}  
 <<iccgrmtcqconv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 par(mfrow=c(1, 2))
 plot(tcqconv.grm.1pl, type="IIC")
@@ -619,7 +618,7 @@ tcqalt.grm.1pl.info <- extract_information(tcqalt.grm.constrained)
 tcqalt.grm.2pl.info <- extract_information(tcqalt.grm2)
 @ 
 \begin{figure}
-  \setkeys{Gin}{height=0.9\textheight}  
+
 <<iccgrmtcqalt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 par(mfrow=c(1, 2))
 plot(tcqalt.grm.constrained, type="IIC")
@@ -1380,11 +1379,15 @@ tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
 tcq2bfit.m <- melt(tcq2bfit)
 names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
+
+@ 
+<<tcqomega, echo=FALSE, results=hide>>=
+tcqomega <- invisible(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
 @ 
 
 \begin{figure}
 <<omegagraph, echo=FALSE, fig=TRUE>>=
-print(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
+print(invisible(tcqomega))
 @   
   \caption{Hierarchical Factor Structure (Omega) for TCQ Data}
   \label{fig:tcqomega}
@@ -1882,10 +1885,10 @@ tcqconv2d.grm.1pl.info <- extract_information(tcq2d.conv.grm.1pl)
 tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
 @ 
 \begin{figure}
-  \setkeys{Gin}{height=0.9\textheight}  
+
 <<iccgrmtcqconv2d, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
 par(mfrow=c(1, 2))
-plot(tcq2d.conv.grm.1pl type="IIC")
+plot(tcq2d.conv.grm.1pl, type="IIC")
 plot(tcq2d.conv.grm.2pl, type="IIC")
 @
 
