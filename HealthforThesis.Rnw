@@ -523,7 +523,7 @@ alphas <- c(gh.alpha, pf.alpha, rl.alpha, erl.alpha, ef.alpha, emwb.alpha, sf.al
 ## alpha.df <- data.frame(Scale=scalenames, Alpha=alphas)
 tot.sum2[,"Alpha"] <- alphas
 tot.xtab <- xtable(tot.sum2, label="tab:sumstatscales", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample One")
-print(tot.xtab, scalebox=0.9)
+print(tot.xtab, scalebox=0.9, include.rownames=FALSE)
 @ 
 
 
@@ -578,7 +578,7 @@ names(hom2.sum)[1] <- "Scale"
 hom2.sum[,"Alpha"] <- alphas2
 longnames <- c("General Health","Physical Functioning (RAND)", "Role Limitations (RAND)", "Emotional Role Limitations", "Emotional Well Being", "Social Functioning", "Pain","Energy Fatigue" , "Mindfulness (MAAS)", "Optimism (LOT-R)")
 hom2.sum$Scale <- longnames
-print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample Two "), scalebox=0.9)
+print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample Two "), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 The summary statistics for the Sample Two are shown in Table~\ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
@@ -2082,14 +2082,14 @@ lotr2summ2c <- summary(lotr2fit2c)
 <<lotrcompare2b, echo=FALSE, results=tex>>=
 lotrcomp2b <- mxCompare(base=lotr1fit2b, comparison=lotr2fit2b)
 lotrcomp.xtab2b <- xtable(lotrcomp2b,label="tab:hom2blotrcomp", caption="Comparison of LOT-R Split B Factor Solutions, Tested on Split C")
-print(lotrcomp.xtab2b)
+print(lotrcomp.xtab2b, include.rownames=FALSE)
 @
 
 
 <<lotrcompare2c, echo=FALSE, results=tex>>=
 lotrcomp2c <- mxCompare(base=lotr1fit2c, comparison=lotr2fit2c)
 lotrcomp.xtab2c <- xtable(lotrcomp2c,label="tab:hom2clotrcomp", caption="Comparison of LOT-R Split C Factor Solutions, Tested on Split B")
-print(lotrcomp.xtab2c)
+print(lotrcomp.xtab2c, include.rownames=FALSE)
 @ 
 
 Tables \ref{tab:hom2blotrcomp} and \ref{tab:hom2clotrcomp} show the performance of the one and two factor solutions on the respective splits. In both solutions, the one factor solution performed better. 
@@ -2375,7 +2375,7 @@ As can be seen from Table \ref{tab:lotr2cgrmtest}, the one parameter model provi
 
 Each of the splits showed that a one factor solution provided the best fit to the data, but the IRT approach from Split B showed that Q1 did not provide a good fit to the scale. Therefore, for the back testing process the two models examined were both one factor models, but the second one had Q1 removed from the scale.
 
-<<lotrbacktestsem1full, echo=FALSE, results=hide, eval=FALSE>>=
+<<lotrbacktestsem1full, echo=FALSE, results=hide>>=
 optimism <- paste(lotr, c(1, 3, 4, 7, 9, 10), sep="")
 latents <- c("Optimism")
 manifests <- optimism
@@ -2977,7 +2977,7 @@ omxGraphviz(lotr.health.med.fit, dotFilename="lotrindirectmindfulness.dot")
 
 <<lotrmodcomp, echo=FALSE, results=tex>>=
 lotr.comp <- mxCompare(base=opt.direct.fit, comp=c(rand.lotr.indirect.maas.fit,lotr.indirect.emwellbeing, lotr.indirect.energyfat.fit, lotr.indirect.genhealth.fit, lotr.health.med.fit))
-print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.7)
+print(xtable(lotr.comp, label="tab:lotrmodcomp1", caption="Comparison of Different Models between Optimism and Other Variables, Sample One"), scalebox=0.7, include.rownames=FALSE)
 @ 
 
 The different models for how optimism is related to the other variables (directly versus mediated) were compared and the results are shown in Table \ref{tab:lotrmodcomp1}. As can be seen from this table, the best fitting model was that where Emotional Well Being mediated the relationship between optimism and health. Note that all of these models fitted quite poorly, so this finding needs to be tested on the second sample. 
