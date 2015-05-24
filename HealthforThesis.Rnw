@@ -1491,7 +1491,7 @@ print(xtable(coef(maas.pcm.2pl), label="tab:maaspcm2pl", caption="MAAS Partial C
 The next stage of analysis for the Mindfulness scale was to fit one and two parameter Graded Response Models to the data. 
 
 <<maasgrmfit, echo=FALSE, results=hide, cache=TRUE>>=
-maas.grm.1pl <- grm(maas.irt, constrained=TRUE)
+maas.grm.1pl <- grm(maas.irt, constrained=TRUE, Hessian=TRUE)
 maas.grm.2pl <- grm(maas.irt, constrained=FALSE)
 @
 
@@ -1506,7 +1506,19 @@ print(maasp)
 
 
 <<maasgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(maas.grm.1pl), caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"), sanitize.colnames.function=function (x) x)
+maasq <- paste("MAASQ", 1:15, sep="")
+maasquestions[,"item"] <- maasq
+maascoef <- coefirt(maas.grm.1pl, se=TRUE)
+items <- rownames(maascoef)
+maascoef2 <- as.data.frame(maascoef)
+maascoef2[,"items"] <- with(maascoef2, items)
+
+maascoef.items <- merge(maasquestions, maascoef2, by.x="item", by.y="items")
+items.split <- with(maascoef.items, strsplit(as.character(Item), split="Q"))
+qs <- sapply(items.split, "[[", 2)
+maascoef.items[,"qs"] <- as.numeric(as.character(qs))
+maascoef.items2 <- maascoef.items[,2:8]
+print(xtable(maascoef, caption="Coefficient Estimates for MAAS One Parameter Graded Response Model, Sample One", label="tab:maasgrm1pl"), sanitize.colnames.function=function (x) x, scalebox=0.7)
 @ 
 
 Table~\ref{tab:maasgrm1pl} shows the estimated ability thresholds and discrimination parameter for the one parameter Graded Response Model on the MAAS. The discrimination parameter is moderate, as are the ability estimates, suggesting that this scale may not be suitable for respondents particularly high in mindfulness. 
