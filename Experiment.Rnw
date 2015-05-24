@@ -1233,7 +1233,7 @@ placmod.pvalues <- as.data.frame(placmod.boot$t)
 names(placmod.pvalues) <- names(coef(placmod.test))
 ## placmod.boot.full <- boot(iatandexpfull, statistic=placglm, R=1000)
 pvalues.sum <- apademotables(placmod.pvalues)
-print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"))
+print(xtable(pvalues.sum, label="tab:placmodbootpvalues", caption="Summary statistics for the bootstrapped p-values"), include.rownames=FALSE)
 @ 
 
 To investigate the variability of the estimates, a bootstrapping process was performed over the test data to calculate p-values for each of the coefficients chosen on the training set. The means and standard errors are shown in Table~\ref{tab:placmodbootpvalues}, and suggest that there is little to no significant relationship between the variables and the placebo response. A bootstrapping procedure over the entire dataset produced results much more supportive of the major hypotheses, but as this analysis does not account for the search process, it is not reported further here. 
@@ -1398,7 +1398,7 @@ The length of time participants spent having physioligical readings is described
 
 <<survtable, echo=FALSE, results=tex>>=
 survtable.cond <- iatexp.surv %>% group_by(Condition, PlacResp) %>% dplyr::summarise(surv=median(EndTime, na.rm=TRUE), max_surv=max(EndTime, na.rm=TRUE))
-print(xtable(survtable.cond, label="tab:survlengthcondplac", caption=" Median Recording Time (secs) by Condition and Placebo Response. Time is counted from the beginning of physiological monitoring (approximately 5 minutes before application of painful stimuli"))
+print(xtable(survtable.cond, label="tab:survlengthcondplac", caption=" Median Recording Time (secs) by Condition and Placebo Response. Time is counted from the beginning of physiological monitoring (approximately 5 minutes before application of painful stimuli"), include.rownames=FALSE)
 @ 
 
 %% \begin{figure}
