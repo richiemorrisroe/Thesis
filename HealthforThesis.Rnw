@@ -2217,7 +2217,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr.pcm.2pl,se=TRUE),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Parameter Graded Response Model"), sanitize.colnames.function=function (x) x,scalebox=0.7)
+print(xtable(coefirt(lotr.grm.2pl,se=TRUE),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Parameter Graded Response Model"), sanitize.colnames.function=function (x) x,scalebox=0.7)
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
