@@ -539,9 +539,12 @@ tcqconv.grm.2pl.info <- extract_information(tcqconv.grm.2pl)
 \begin{figure}
 \setkeys{Gin}{height=0.8\textheight}  
 <<iccgrmtcqconv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
-tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
-print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl+theme(legend.position=c(1,1))))
+par(mfrow=c(1, 2))
+plot(tcqconv.grm.1pl, type="IIC")
+plot(tcqconv.grm.2pl, type="IIC")
+## tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
+## tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
+## print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl+theme(legend.position=c(1,1))))
 @   
   \caption{Item Information Curves, TCQ Conventional Scale, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iictcqconv1grmpl}
@@ -618,9 +621,9 @@ tcqalt.grm.2pl.info <- extract_information(tcqalt.grm2)
 \begin{figure}
   \setkeys{Gin}{height=0.9\textheight}  
 <<iccgrmtcqalt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq1.1plalt.pl <- ggplot_inf(tcqalt.grm.1pl.info)
-tcq1.2plalt.pl <- ggplot_inf(tcqalt.grm.2pl.info)
-print(arrangeGrob(tcq1.1plalt.pl+theme(legend.position="none"),tcq1.2plalt.pl))
+par(mfrow=c(1, 2))
+plot(tcqalt.grm.constrained, type="IIC")
+plot(tcqalt.grm2, type="IIC")
 @ 
 
 @ 
@@ -1881,9 +1884,9 @@ tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
 \begin{figure}
   \setkeys{Gin}{height=0.9\textheight}  
 <<iccgrmtcqconv2d, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq2.1plconv.pl <- ggplot_inf(tcqconv2d.grm.1pl.info)
-tcq2.2plconv.pl <- ggplot_inf(tcqconv2d.grm.2pl.info)
-print(arrangeGrob(tcq2.1plconv.pl+theme(legend.position="none"),tcq2.2plconv.pl+theme(legend.position=c(0.8,1))))
+par(mfrow=c(1, 2))
+plot(tcq2d.conv.grm.1pl type="IIC")
+plot(tcq2d.conv.grm.2pl, type="IIC")
 @
 
   \caption{Item Information Curves, TCQ Conventional, Split 2, One Parameter GRM (top) and Two Parameter GRM (bottom)}
