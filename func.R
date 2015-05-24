@@ -959,9 +959,21 @@ getMxFitFunctions <- function(mx, label=NULL) {
     }
     return(res)
 }
-irtAverage <- function(sols=list()) {
+irtAverage <- function(sols=list(), se=FALSE) {
     coef <- lapply(sols, coef)
     res <- Reduce(`+`, x=coef)/length(coef)
+    if(se) {
+        allcoef <- lapply(sols, function (x) coef(summary(x)))
+        stdlist <- list()
+        for (i in 1:length(allcoef)) {
+            stderr <- lapply(allcoef[[i]], "[[", "std.err")
+            stdlist[[i]] <- lapply(stderr, as.matrix)
+        }
+        browser()
+        stdlist2 <- lapply(stdlist, function (x) matrix(x, nrow=dim(coef[[1]])[1], ncol=dim(coef[[1]])[2]))
+                           seres <- Reduce(`+`, x=stdlist2)
+          #this just does not work, need to moment of revelation and am too tired                 
+    }
     return(res)
 }
             

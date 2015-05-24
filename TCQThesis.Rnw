@@ -1849,17 +1849,17 @@ print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Mo
 
 
 <<tcq2bconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE)
-tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE)
+tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE, Hessian=TRUE)
+tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2cconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE)
+tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE, Hessian=TRUE)
 tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
 @ 
 
 <<tcq2dconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE)
+tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE, Hessian=TRUE)
 tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE)
 @ 
 
