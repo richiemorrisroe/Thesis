@@ -1030,11 +1030,17 @@ coefirt <- function(grm, se=FALSE, averaged=FALSE) {
         dat <- grm
     }
     if(averaged) {
-        dat <- grm$coef
+        if(se) {
+            dat <- grm$coef
+        } else {
+            dat <- grm
+        }
         dat <- round(dat, 2)
         itemnames <- rownames(dat)
+        if(se) {
         standerr <- t(grm$se)
         standerr <- round(standerr, 2)
+    }
     }
 
 
