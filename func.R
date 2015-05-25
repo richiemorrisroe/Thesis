@@ -967,14 +967,26 @@ irtAverage <- function(sols=list(), se=FALSE) {
         stdlist <- list()
         for (i in 1:length(allcoef)) {
             stderr <- lapply(allcoef[[i]], "[[", "std.err")
-            stdlist[[i]] <- lapply(stderr, as.matrix)
+            ##matrix conversion does not work by default, so taking a perf hit and using dataframes
+            stdlist[[i]] <- as.data.frame(stderr)
+
         }
-        browser()
-        stdlist2 <- lapply(stdlist, function (x) matrix(x, nrow=dim(coef[[1]])[1], ncol=dim(coef[[1]])[2]))
-                           seres <- Reduce(`+`, x=stdlist2)
+        ## browser()
+        seres <- Reduce(`+`, x=stdlist)/length(stdlist)
           #this just does not work, need to moment of revelation and am too tired                 
     }
-    return(res)
+    if(se) {
+        res <- list(coef=as.data.frame(res), se=seres)
+        class(res) <-  "averaged"
+        return(res)
+    } else
+        {
+            res <- as.data.frame(res)
+            class(res) <- append(class(res),  "averaged")
+            return(res)
+    }
+        
+    
 }
             
 smoothAIC <- function(model) {
@@ -1009,24 +1021,34 @@ provide <- function(name, ...) {
         install.packages(name, ...)
     }
     }
-coefirt <- function(grm, se=FALSE) {
+coefirt <- function(grm, se=FALSE, averaged=FALSE) {
     if(class(grm)=="grm" || class(grm)=="gpcm") {
         dat <- coef(grm)
         itemnames <- rownames(coef(grm))
-}
+    }
     else {
-        
         dat <- grm
     }
-    if(se) {
-        standard.errors <- sapply(coef(summary(grm)), '[[', "std.err")
-        standerr <- round(standard.errors, 3)
+    if(averaged) {
+        dat <- grm$coef
+        dat <- round(dat, 2)
+        itemnames <- rownames(dat)
+        standerr <- t(grm$se)
+        standerr <- round(standerr, 2)
     }
-    ## browser()
+
+
+    if(se & !averaged ) {
+        standard.errors <- sapply(coef(summary(grm)), '[[', "std.err")
+        standerr <- round(standard.errors, 2)
+    }
     dims <- dim(dat)
     betas <- dims[2]-1
     if(se) {
+        ## browser()
+        dat <- as.matrix(dat)
         dat.se <- matrix(paste(dat, " (", standerr, ")", sep=""), nrow=dims[1], ncol=dims[2])
+
         rownames(dat.se) <- itemnames
         dat <- dat.se
     }
