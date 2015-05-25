@@ -505,7 +505,7 @@ tcqcoef <- coef(tcqconv.pcm.rasch)
 The next step was to fit a series of graded response models. 
 
 <<tcqconvgrmconstrained, echo=FALSE, results=hide>>=
-tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
+tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE, Hessian=TRUE)
 tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 
 ## tcqconv.grm.fscores.1pl <- factor.scores(tcqconv.grm.1pl)
@@ -513,12 +513,12 @@ tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 @ 
 
 <<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqconv.grm.1pl), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"), sanitize.colnames.function = function (x) x)
+print(xtable(coefirt(tcqconv.grm.1pl, se=TRUE), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"), sanitize.colnames.function = function (x) x, scalebox=0.8)
 @ 
 Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq1convgrm2pl}, on Page~\pageref{tab:tcq1convgrm2pl}), and assess whether or not this represents a useful improvement over the model above.
 
 <<tcqconvgrm2, echo=FALSE, results=tex, cache=TRUE>>=
-tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
+tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE, Hessian=TRUE)
 tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
 
 @ 
@@ -593,25 +593,25 @@ print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients f
 
 
 <<tcqaltgrm1, echo=FALSE, results=tex>>=
-tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
+tcqalt.grm.constrained <- grm(na.omit(tcqalt), constrained=TRUE, Hessian=TRUE, start.val="random")
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 @ 
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm.constrained), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcqalt.grm.constrained, se=FALSE), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is reasonably high (reflecting that these items were endorsed less by many of the participants), and the parameter estimates are  closely distributed around zero.
 
 <<tcqaltgrm2, echo=FALSE, results=tex, cache=TRUE>>=
-tcqalt.grm2 <- grm(tcqalt)
+tcqalt.grm2 <- grm(tcqalt, Hessian=TRUE, start.val="random")
 tcqalt.grm2.coef <- coef(tcqalt.grm2)
 
 ## tcqalt.grm2.fscores <- factor.scores(tcqalt.grm2)
 ## tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcqalt.grm2, se=FALSE), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x, scalebox=0.7)
 @ 
-The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
+The model shown in Table~\ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
 
 <<tcqaltiicggplotgen, echo=FALSE, results=hide>>=
 tcqalt.grm.1pl.info <- extract_information(tcqalt.grm.constrained)
@@ -1381,13 +1381,11 @@ names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
 
 @ 
-<<tcqomega, echo=FALSE, results=hide>>=
-tcqomega <- invisible(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
-@ 
+
 
 \begin{figure}
-<<omegagraph, echo=FALSE, fig=TRUE>>=
-print(invisible(tcqomega))
+<<omegagraph, echo=FALSE, fig=TRUE, pdf=TRUE>>=
+print(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
 @   
   \caption{Hierarchical Factor Structure (Omega) for TCQ Data}
   \label{fig:tcqomega}
@@ -1855,28 +1853,28 @@ tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE, Hessian=TRUE)
 
 <<tcq2cconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
 tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE, Hessian=TRUE)
-tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
+tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
-<<tcq2dconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
+<<tcq2dconvgrm, echo=FALSE, results=hide>>=
 tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE, Hessian=TRUE)
-tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE)
+tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcqgrm1plaverage, echo=FALSE, results=hide>>=
-tcq2.conv.grm.1pl.av <- irtAverage(sols=list(tcq2b.conv.grm.1pl, tcq2c.conv.grm.1pl, tcq2d.conv.grm.1pl))
-tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.2pl, tcq2d.conv.grm.2pl))
+tcq2.conv.grm.1pl.av <- irtAverage(sols=list(tcq2b.conv.grm.1pl, tcq2c.conv.grm.1pl, tcq2d.conv.grm.1pl), se=TRUE)
+tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.2pl, tcq2d.conv.grm.2pl), se=FALSE) #hessian matrix not positive definite
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcq2.conv.grm.1pl.av, se=TRUE, averaged=TRUE), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x, scalebox=0.9)
 @ 
 
 
 Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits. The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
+print(xtable(coefirt(tcq2.conv.grm.2pl.av, averaged=TRUE), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
 @ 
 
 Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
@@ -1906,18 +1904,18 @@ There were no violations of the invariant item ordering or monotonicity assumpti
 Two graded response models were fit to all three Alternative splits of the data, and the averaged results over all three splits are reported here.  
 
 <<tcq2baltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
-tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE)
+tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE, Hessian=TRUE)
+tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2caltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
-tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
+tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE, Hessian=TRUE)
+tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2daltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
-tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
+tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE, Hessian=TRUE)
+tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2altgrm1plaverage, echo=FALSE, results=tex>>=
@@ -2236,12 +2234,12 @@ tcq2c.alt.s <- tcq2c.s[,grep("Ac|Ho|Re", x=names(tcq2c.s))]
 tcq2d.s <- tcqall2d[,grep("[246]$", x=names(tcqall2d))]
 tcq2d.conv.s <- tcq2d.s[,grep("Pi|Cr|In", x=names(tcq2d.s))]
 tcq2d.alt.s <- tcq2d.s[,grep("Ac|Ho|Re", x=names(tcq2d.s))]
-tcq2b.conv.grm.1pl.s <- grm(tcq2b.conv.s, constrained=TRUE)
-tcq2c.conv.grm.1pl.s <- grm(tcq2c.conv.s, constrained=TRUE)
-tcq2d.conv.grm.1pl.s <- grm(tcq2d.conv.s, constrained=TRUE)
-tcq2b.alt.grm.1pl.s <- grm(tcq2b.alt.s, constrained=TRUE)
-tcq2c.alt.grm.1pl.s <- grm(tcq2c.alt.s, constrained=TRUE)
-tcq2d.alt.grm.1pl.s <- grm(tcq2d.alt.s, constrained=TRUE)
+tcq2b.conv.grm.1pl.s <- grm(tcq2b.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2c.conv.grm.1pl.s <- grm(tcq2c.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2d.conv.grm.1pl.s <- grm(tcq2d.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2b.alt.grm.1pl.s <- grm(tcq2b.alt.s, constrained=TRUE, Hessian=TRUE)
+tcq2c.alt.grm.1pl.s <- grm(tcq2c.alt.s, constrained=TRUE, Hessian=TRUE)
+tcq2d.alt.grm.1pl.s <- grm(tcq2d.alt.s, constrained=TRUE, Hessian=TRUE)
 tcq2.conv.av.s <- irtAverage(sols=list(tcq2b.conv.grm.1pl.s, tcq2c.conv.grm.1pl.s, tcq2d.conv.grm.1pl.s))
 tcq2.alt.av.s <- irtAverage(sols=list(tcq2b.alt.grm.1pl.s, tcq2c.alt.grm.1pl.s, tcq2d.alt.grm.1pl.s))
 @ 
