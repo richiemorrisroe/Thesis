@@ -282,7 +282,7 @@ Finally, the relationships between physiological responses and the psychological
 \item A null model
 \end{itemize}
 
-Finally, the models briefly above, and in more detail in Chapter~\ref{cha:methodology} were fit to the data. These models allowed for the principled comparison of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
+These models allowed for the principled comparison of a number of different theoretical models on the relationship between expectancies, optimism and physiological variables on the placebo response. 
 
 
 \section{Results}
@@ -1398,7 +1398,7 @@ The length of time participants spent having physioligical readings is described
 
 <<survtable, echo=FALSE, results=tex>>=
 survtable.cond <- iatexp.surv %>% group_by(Condition, PlacResp) %>% dplyr::summarise(surv=median(EndTime, na.rm=TRUE), max_surv=max(EndTime, na.rm=TRUE))
-print(xtable(survtable.cond, label="tab:survlengthcondplac", caption=" Median Recording Time (secs) by Condition and Placebo Response. Time is counted from the beginning of physiological monitoring (approximately 5 minutes before application of painful stimuli"), include.rownames=FALSE)
+print(xtable(survtable.cond, label="tab:survlengthcondplac", caption=" Median Recording Time (secs) by Condition and Placebo Response. Time is counted from the beginning of physiological monitoring (approximately 5 minutes before application of painful stimuli)"), include.rownames=FALSE)
 @ 
 
 %% \begin{figure}
