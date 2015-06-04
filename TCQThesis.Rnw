@@ -69,7 +69,7 @@ The overall aim of this study was to develop and test a measure of treatment exp
 
 \item The remainder of the data from Study 2 was then examined to assess if an exploratory analysis provided different results from Study 1;
 
-\item The convergent validity of the new measure was assessed using the BMQ (Study Two);
+\item The convergent validity of the new measure was assessed using the BMQ (Study 2);
 
 \item The impact of demographic (age, gender, self-reported health, income and experience with the treatments concerned) variables on the newly developed measure (Study 2) was assessed.
 
@@ -140,9 +140,9 @@ Study One was treated as an overall training and development sample (most approp
 Data for Study Two was split into four parts of approximately 300 observations each, in line with the procedure described in Chapter~\ref{cha:methodology}. 
 
 Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. %% Next, the data was tested for normality using a Shapiro-Wilks test. 
-Following this, a correlation matrix for the data was calculated and analysed.
+Following this, a rank-order correlation matrix for the data was calculated and analysed.
 
-Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. In brief, the first study used all of the data available to fit psychometric models and tested these on a subset of Study Two data. Ten-fold cross-validation was used for all regression models. 
+Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. In brief, the first study used all of the data available to fit psychometric models and tested these on a subset of Study Two data. Ten-fold cross-validation was used for all regression models, and all p-values reported are from the test set. 
 
 
 
@@ -224,9 +224,9 @@ print(arrangeGrob(gendpill, gendcream, gendinj, gendacu))
 
 
 
-There were no significant differences in median Pill scores that can be attributed to the gender of the respondents. The variability is larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
+There were no significant differences in median Pill scores that can be attributed to the gender of the respondents. The variability was larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
 
-However, the acupuncture credibility scores showed a different pattern. The mean credibility totals are very different for females and males.  A Kruskall Wallis examined whether this visual difference was backed up with a formal analysis. The results tended towards significance (p=0.09).
+However, the acupuncture credibility scores showed a different pattern. The mean credibility totals were very different for females and males.  A Kruskall Wallis examined whether this visual difference was backed up with a formal analysis. The results tended towards significance (p=0.09).
 The pattern of larger variability in the responses of men was apparent.   
 
 
@@ -324,8 +324,8 @@ print(ExtractLoadings(tcq.fact.4))
 
 <<factorcor4, echo=FALSE, results=tex>>=
 tcq4.cor.xtab <- xtable(FactorCor(tcq.fact.4), label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations")
-rownames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
-colnames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
+rownames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Injections", "Pills")
+colnames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Injections", "Pills")
 print(tcq4.cor.xtab)
 @ 
 
@@ -611,7 +611,7 @@ tcqalt.grm2.coef <- coef(tcqalt.grm2)
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
 print(xtable(coefirt(tcqalt.grm2, se=FALSE), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x, scalebox=0.7)
 @ 
-The model shown in Table~\ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
+The model shown in Table~\ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. Note that the one parameter GRM did not converge properly, and so standard errors are not reported.  
 
 <<tcqaltiicggplotgen, echo=FALSE, results=hide>>=
 tcqalt.grm.1pl.info <- extract_information(tcqalt.grm.constrained)
@@ -942,17 +942,17 @@ rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 
 @ 
 <<grmmodcompprint, echo=FALSE, results=tex>>=
-grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
+grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, TCQ Conv, Split 2A", label="tab:grmmodcomp")
 print(grm.modcomp.xtab)
 @ 
 As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). The same pattern was apparent when the alternative scale was examined. 
 
 <<grmtest, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
-grm1plalt.done <- testIRTModels(tcqalt.grm.1pl, tcq2a.alt, grmconstraint=TRUE)
-rm2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
+grm1plalt.done <- testIRTModels(tcqalt.grm.constrained, tcq2a.alt, grmconstraint=TRUE)r
+m2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
 rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
-
+print(xtable(grm.modcomp)) 
 @ 
 
 
@@ -1344,7 +1344,7 @@ The seven factor solution shown in Table~\ref{tab:tcq2fact7average} explained 86
 print(xtable(tcq2.fact7.average.cor, label="tab:tcq27factorcoraverage", caption="Averaged Factor Correlations for the Seven Factor Solution, Sample Two"), sanitize.text.function = function (x) x)
 @ 
 
-The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Inj factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
+The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Injection factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
 
 %% PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
 
@@ -1874,10 +1874,10 @@ print(xtable(coefirt(tcq2.conv.grm.1pl.av, se=TRUE, averaged=TRUE), label="tab:t
 Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits. The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.2pl.av, averaged=TRUE), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
+print(xtable(coefirt(tcq2.conv.grm.2pl.av, averaged=TRUE), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, TCQ Conv, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
+Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. Standard errors are not shown as the models did not converge for Splits B and D. 
 <<tcqaltiicggplotgen2, echo=FALSE, results=hide>>=
 tcqconv2d.grm.1pl.info <- extract_information(tcq2d.conv.grm.1pl)
 tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
@@ -1923,7 +1923,7 @@ tcq2.alt.grm.1pl.av <- irtAverage(sols=list(tcq2b.alt.grm.1pl, tcq2c.alt.grm.1pl
 print(xtable(coefirt(tcq2.alt.grm.1pl.av), label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
 @ 
 
-Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
+Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the one parameter alternative item GRM. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
 
 <<tcq2altgrm2plaverage, echo=FALSE, results=hide>>=
 tcq2.alt.grm.2pl.av <- irtAverage(sols=list(tcq2b.alt.grm.2pl, tcq2c.alt.grm.2pl, tcq2d.alt.grm.2pl))
@@ -2447,7 +2447,7 @@ acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=
 print(xtable(apareg(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acupuncture credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-As shown in Table \ref{tab:tcq2acuholdout}, only Creams, Homeopathy and Reiki, remained significant on the unseen data. 
+As shown in Table \ref{tab:tcq2acuholdout}, only Homeopathy and Reiki, remained significant on the unseen data. 
 
 <<acu2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 acu.test <- with(na.omit(tcq2a), Acutot)
@@ -2496,7 +2496,7 @@ homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.ho
 print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Homeopathy credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relevant experience variables for each form of credibility. The model has an $R^2$ of 0.62, which is extremely high. 
+Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relevant experience variables for each form of alternative credibility. The model has an $R^2$ of 0.62, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
@@ -2588,7 +2588,7 @@ The measure developed here was primarily aimed to be used in the experimental po
 
 Further development of this instrument could profitably examine the impact of a different person framing the health treatment. It would be interesting to examine the mean credibility levels of the same treatment when introduced as being a recommendation from family, friends or the media. Additionally, this adaptation of the CEQ seems psychometrically sound, and as such could easily be used by other researchers investigating different therapies. As such, one contribution of this instrument is to provide a more consistent and psychometrically validated framework of expectancy questions which other researchers can build upon. Such an instrument is important given the large differences in expectancy measurement described in previous research. Such an approach would rely on the instrument being validated using different constructs and samples, however. 
 
-That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogeneous groups is warranted before extensive use of the instrument takes place. 
+That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although this study sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogeneous groups is warranted before extensive use of the instrument takes place. 
 
 
 The major aim of this work was to develop and test an instrument which would capture more of the key factors surrounding treatment related expectancies. This aim has been achieved, in that the measure appears to be stable, and to correlate in the expected fashion with similar instruments. It does appear, from this work, that the conception of conventional treatments and alternative treatments appears to differ, and do not appear to form one general treatment credibility factor, but rather to have two distinct factors. This finding was used to inform the development of the IAT (see Chapter \ref{cha:devel-impl-meas}). 
