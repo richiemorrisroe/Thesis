@@ -948,7 +948,7 @@ print(grm.modcomp.xtab)
 As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). The same pattern was apparent when the alternative scale was examined. 
 
 <<grmtest, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
-grm1plalt.done <- testIRTModels(tcqalt.grm.constrained, tcq2a.alt, grmconstraint=TRUE)r
+grm1plalt.done <- testIRTModels(tcqalt.grm.constrained, tcq2a.alt, grmconstraint=TRUE)
 m2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
 rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
