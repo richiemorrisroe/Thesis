@@ -49,7 +49,7 @@ This chapter reports an investigation of the psychometric properties of three me
 
 The major experimental work of this thesis involved the placebo effect, and as the research considered the utility of a new measure to predict this response, it was important to administer some instruments which have been shown to be associated with it in previous studies.
 
-Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT's) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Awareness Scale (MAAS), as this construct has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
+Additionally, as the new method proposed to predict the placebo response in healthy volunteers involved the use of implicit measures (two IAT's) (c.f.  Chapter~\ref{cha:literature-review}) it was also necessary to collect data on the construct of mindfulness as operationalised using the Mindful Attention Awareness Scale (MAAS), as it has been shown to mediate the relationship between explicit and implicit measures~\cite{Levesque2007}. 
 
 Over the course of the study of the placebo, there have been few individual-level psychological predictors of the effect which have been reproducible. Expectancy is the most commonly measured construct within the field, and some meta-analytic evidence suggests that it is only significantly associated with the response around 60\% of the time~\cite{DiBlasi2001}.   
 
@@ -58,7 +58,7 @@ Some authors claim that the search is fruitless \cite{Shapiro1997} while others 
 However, in recent years optimism~\cite{Geers2005,morton2009reproducibility} has been shown to be associated with the placebo response. More specifically, the Life Orientation Test, Revised (LOT-R) has been shown in a number of studies to be associated with the response to placebo. 
 %% Interestingly enough, the Morton study referenced above showed an effect for optimism only in a repeated measures design, but the Geers \textit{et al} study showed a significant relationship in a between-subjects design. The relationship between placebo effect and optimism is discussed in more detail in Section \ref{sec:optimism} below. 
 
-Mindfulness is a construct that has both been associated with health~\cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures~\cite{Levesque2007}. As such, it is a construct which had been associated with the IAT in previous work (c.f. Chapter ~\ref{cha:literature-review}) and could plausibly be associated with health. Some more in-depth discussions of this potential relationship were outlined in Chapter~\ref{cha:methodology}, in Section~\ref{sec:embod-cogn-plac}. 
+Mindfulness is a construct that has both been associated with health~\cite{Carmody2008} and moderation  of the relationship between explicit and implicit measures~\cite{Levesque2007}. As such, it is a construct which has been associated with the IAT in previous work (c.f. Chapter ~\ref{cha:literature-review}) and could plausibly be associated with health. Some more in-depth discussions of this potential relationship were outlined in Chapter~\ref{cha:methodology}, in Section~\ref{sec:embod-cogn-plac}. 
 
 Health (in the form of the RAND-MOS) was included in this piece of research both to replicate the optimism-health link and examine the relationship between  optimism and mindfulness. 
 
@@ -581,7 +581,7 @@ hom2.sum$Scale <- longnames
 print(xtable(hom2.sum, label="tab:hom2tots", caption="Summary Statistics for Health Scales, Mindfulness and Optimism, Sample Two "), scalebox=0.9, include.rownames=FALSE)
 @ 
 
-The summary statistics for the Sample Two are shown in Table~\ref{tab:hom2tots}. It can be seen that general health levels were much lower than in Sample One. This may perhaps be the result of more precise estimation due to a larger sample size, or potentially the impact of the online administration. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
+The summary statistics for the Sample Two are shown in Table~\ref{tab:hom2tots}. Emotional Role Limitations is lower in Sample Two. Note that zeros in some of the totals were due to some respondents only completing a subset of questions. 
 
 
 \subsection{Psychometric Analyses}
@@ -820,7 +820,6 @@ This factor structure seems appropriate for the data, and matches the number of 
 
 <<rand8corr, echo=FALSE, results=tex>>=
 rand8.cor <- rand.fact.8[["r.scores"]]
-rand8.cor[lower.tri(rand8.cor, diag=FALSE)] <- NA
 rand8corr.xtab <- xtable(rand8.cor, label="tab:hom1rand8corr", caption="Factor Correlations, Eight Factor Solution RAND MOS, Sample One")
 rand8names <- c( "PhysFunc", "SocEmWB", "GenHealth", "EmRoleLim", "RoleLim", "Fatigue","Pain", "Energy")
 names(rand8corr.xtab) <- rand8names
@@ -1443,7 +1442,7 @@ maas.scales <- aisp(na.omit(maasitems))
 print(xtable(as.matrix(maas.scales),label="tab:maasassumptioncheck", caption="Item Attribution to Scales, MAAS, Sample One"))
 @
 
-The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6\footnote{because they do not appear to be part of the scale}~\cite{van2007mokken}. This leaves a thirteen item scale for further analysis. Note that items 2 and 6 has extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
+The Mokken analysis suggests that two items should be dropped from the scale, items 2 and 6\footnote{because they do not appear to be part of the scale}~\cite{van2007mokken}. This leaves a thirteen item scale for further analysis. Note that items 2 and 6 had extremely low communalities in Table~\ref{tab:maasfact1average}, which reinforces the decision to remove these items from the scale. 
 
 There were no violations of the monotonicity assumption for the reduced scale. The item coefficients (ItemH) are quite low, many of them hang around 0.30, which is the minimum allowed. 
 
@@ -2217,7 +2216,7 @@ anova.grm.lotr <- anova(lotr.grm.1pl, lotr.grm.2pl)
 The two parameter model was significantly better than the one parameter model ($p=0.001$), but the AIC suggested that the one parameter model provided a better overall fit to the data. 
 
 <<lotr2plestimates, echo=FALSE, results=tex>>=
-print(xtable(coefirt(lotr.grm.2pl,se=TRUE),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Parameter Graded Response Model"), sanitize.colnames.function=function (x) x,scalebox=0.7)
+print(xtable(coefirt(lotr.grm.2pl,se=TRUE),label="tab:lotr2plestimates", caption="Coefficient Estimates for LOTR Two Parameter Graded Response Model"), sanitize.colnames.function=function (x) x,scalebox=0.9)
 @
 
 The estimates for the two parameter model can be seen in Table \ref{tab:lotr2plestimates}. Note that there are problematic estimates for Q4 at the third response point, suggesting that this model is not particularly useful. Again note how the FA analyses showed some problems with these questions, increasing our confidence in this analysis (for this particular sample, at least). 
@@ -2303,7 +2302,7 @@ par(mfrow=c(1, 1))
   \label{fig:iiclotrgrm}
 \end{figure}
 
-The item information curves for Sample One suggest that Q4 (``I'm always optimistic about the future'') (Figure~\ref{fig:iiclotrgrm}) could actually stand as a reasonably good proxy for the entire scale. Again, this more complicated model was not supported on unseen data. 
+The item information curves for Sample One suggest that Q4 (``I'm always optimistic about the future'') (Figure~\ref{fig:iiclotrgrm}) could actually stand as a reasonably good proxy for the entire scale. 
 
 Finally, we assess the performance of each of these models on unseen data. 
 
@@ -2318,7 +2317,7 @@ rownames(lotr2b.grm.test.all) <- c("One Parameter", "Two Parameter")
 print(xtable(lotr2b.grm.test.all, caption="Performance of One and Two Parameter Graded Response Models on Unseen Data (Splits A and C)", label="tab:lotr2bgrmtest"))
 @ 
 
-As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data. 
+As can be seen from Table \ref{tab:lotr2bgrmtest}, the one parameter model performed best on the unseen data, suggesting that the two factor model could not be used to reduce the scale. 
 
 <<lotr2caisp, echo=FALSE, results=hide, cache=TRUE>>=
 lotr2c.aisp <- aisp(na.omit(lotritems2c))
@@ -2462,7 +2461,6 @@ scales2 <- hom[,66:75]
 scale.cor <- corr.test(scales2, use="complete", method="spearman")
 cors <- scale.cor$r
 cors.xtab <- xtable(as.data.frame(cors), label="tab:hom2scalecor",  caption="Spearman Correlations between Scale Totals across both Samples")
-cors.xtab[lower.tri(cors.xtab, diag=FALSE)] <- NA
 print(cors.xtab, scalebox=0.75)
 @ 
 \end{landscape}
@@ -2528,7 +2526,7 @@ health.step.test <- lm(generalhealth~optimism+energyfat+pain+rolelim, data=hom1.
 print(xtable(apareg(health.step.test), caption="Coefficients for General Health Regression Model with predictors chosen by Stepwise Selection on unseen data, Sample One", label="tab:hom1healthsteptest"), sanitize.text.function = function (x) x)
 @ 
 Stepwise regression was used for the selection of predictors. Typically, such an approach is not optimal in research, as the p-values are biased by the search process. This is also a problem when variables are manually added or removed from a model, as in standard exploratory practice. In this research, stepwise regression methods were used appropriately, as all p-values are reported on an independent test set, which means that they are unbiased. Additionally, stepwise provides a mathematical justification (in this case, the AIC) for the addition or removal of variables from the model, which was useful in this research given the surprising, non-theoretically predicted results. Another benefit of this approach (in contrast to other selection methods such as lasso and ridge regression) is that stepwise provides a p-value for each coefficient, in line with APA conventions. 
-As can be seen from Table~\ref{tab:hom1healthsteptest}, optimism, role limitations and energy fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue and role limitations. 
+As can be seen from Table~\ref{tab:hom1healthsteptest}, optimism, role limitations, pain and energy/fatigue were retained as predictors in the model. None of the variables were significant, with the exception of energy/fatigue and role limitations. 
 
 %% Next, a lasso regression model was fit to the same dataset. 
 
