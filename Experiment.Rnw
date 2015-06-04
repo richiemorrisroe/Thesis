@@ -318,7 +318,7 @@ pain.pad <- pain.pad[with(pain.pad, !duplicated(PPNo.)),]
 
 
 <<loadpackages, echo=FALSE, results=hide>>=
-require(dplyr)
+
 require(lubridate)
 require (randomForest)
 require(GGally)
@@ -344,6 +344,7 @@ require(semPlot)
 require(doMC)
 require(QuantPsyc)
 require(semTools)
+require(dplyr)
 @ 
 
 <<duplicatestuff, echo=FALSE, results=hide>>=
@@ -368,7 +369,7 @@ expfull.ord.pp <- expfull %>% with(table(Participant)) %>% as.data.frame() %>% a
 <<testforsamepp, echo=FALSE, results=hide>>=
 lotrfull.pp <- data.frame(Participant=expfull$Participant, LOTR=lotrfull)
 pptest.lotr <- expmeasures %>% mutate(Participant=PpNo, 
-                                      LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% join(lotrfull.pp, by="Participant")
+                                      LOTR_orig=LOTR) %>% dplyr::select(Participant, LOTR_orig) %>% plyr::join(lotrfull.pp, by="Participant")
 pptest.lotr[,"diff"] <- with(pptest.lotr, LOTR_orig-LOTR)
 pptest.lotr[,"fixed_records"] <- with(pptest.lotr, ifelse(is.na(diff), TRUE, FALSE))
 fixed.records.lotr <- filter(pptest.lotr, fixed_records==TRUE)
