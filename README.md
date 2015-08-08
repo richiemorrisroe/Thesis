@@ -1,4 +1,4 @@
-#The Placebo Effect: Implicit and Explicit Expectancies
+#The Placebo Effect: Measurement By Multiple Methods
 
 This is my thesis, titled as above.
 
@@ -14,9 +14,11 @@ As you can probably tell, I didn't really know what I was doing with respect to 
 
 Nonetheless, this repository contains my additions, deletions and changes for a pretty substantial amount of work (check out all the code I commented out, or put in `eval=FALSE` blocks).
 
-I hope that this can prove useful to someone, somewhere. I hope to tidy up and generalise much of the R Code (here: **fix this**), and you're welcome to follow along.
+I hope that this can prove useful to someone, somewhere. I hope to tidy up and generalise much of the R Code (here: https://github.com/richiemorrisroe/thesisR), and you're welcome to follow along.
 
-I'll probably grab some of this code and text for future projects, and I'd appreciate if you could treat my text under a Creative-Commons Attribution License, and my code under the GPL-V3).
+I'll probably grab some of this code and text for future projects, and I'd appreciate if you could treat my text under a Creative-Commons Attribution License, and my code under the GPL-V3). Mostly, though, this repository is done, along with the thesis.
+
+If anyone finds errors or omissions in this, please send a pull request. 
 
 #A note on building
 
