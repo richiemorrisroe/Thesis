@@ -69,7 +69,7 @@ The overall aim of this study was to develop and test a measure of treatment exp
 
 \item The remainder of the data from Study 2 was then examined to assess if an exploratory analysis provided different results from Study 1;
 
-\item The convergent validity of the new measure was assessed using the BMQ (Study Two);
+\item The convergent validity of the new measure was assessed using the BMQ (Study 2);
 
 \item The impact of demographic (age, gender, self-reported health, income and experience with the treatments concerned) variables on the newly developed measure (Study 2) was assessed.
 
@@ -140,9 +140,9 @@ Study One was treated as an overall training and development sample (most approp
 Data for Study Two was split into four parts of approximately 300 observations each, in line with the procedure described in Chapter~\ref{cha:methodology}. 
 
 Firstly, the data was checked for errors in entry or recording using summary functions and plots. Following this, the question responses were recoded according to the instructions for use. Following this, the summary scores were calculated. Next, summary statistics and characteristics of the data were reported. %% Next, the data was tested for normality using a Shapiro-Wilks test. 
-Following this, a correlation matrix for the data was calculated and analysed.
+Following this, a rank-order correlation matrix for the data was calculated and analysed.
 
-Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. In brief, the first study used all of the data available to fit psychometric models and tested these on a subset of Study Two data. Ten-fold cross-validation was used for all regression models. 
+Simple reliability analyses were carried out on the scales themselves. Following this, parallel analysis, the MAP criterion and the scree plot were used to estimate the number of factors which could be extracted from the data. Further analyses were carried out in line with the methods described in Chapter \ref{cha:methodology}, Sections \ref{sec:regress-models} and \ref{sec:psych-analys-meth}, in line with the aims and objectives laid out in Section \ref{sec:aims-objectives-tcq}. In brief, the first study used all of the data available to fit psychometric models and tested these on a subset of Study Two data. Ten-fold cross-validation was used for all regression models, and all p-values reported are from the test set. 
 
 
 
@@ -176,6 +176,7 @@ source("func.R")
 
 require(stargazer)
 require(caret)
+require(Rgraphviz)
 tcq1<-read.csv("CSV TCQ030410updatedJan11.csv")
 @ 
 
@@ -205,7 +206,7 @@ print(xtab.totals, include.rownames=FALSE)
 
 
 
-Next, the differences in credibility totals between Genders will be examined. 
+Next, the differences in credibility totals between Genders was examined. 
 <<gendercred, echo=FALSE, results=hide, cache=TRUE>>=
 gendpill <- ggplot(na.omit(tcq1), aes(y=PillTot, x=Gender))+geom_boxplot()
 gendcream <- ggplot(na.omit(tcq1), aes(y=CreamTot, x=Gender))+geom_boxplot()
@@ -223,9 +224,9 @@ print(arrangeGrob(gendpill, gendcream, gendinj, gendacu))
 
 
 
-There were no significant differences in median Pill scores that can be attributed to the gender of the respondents. The variability is larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
+There were no significant differences in median Pill scores that can be attributed to the gender of the respondents. The variability was larger within the male responses, a pattern which was repeated for Cream and Injection credibility totals also. 
 
-However, the acupuncture credibility scores showed a different pattern. The mean credibility totals are very different for females and males.  A Kruskall Wallis examined whether this visual difference was backed up with a formal analysis. The results tended towards significance (p=0.09).
+However, the acupuncture credibility scores showed a different pattern. The mean credibility totals were very different for females and males.  A Kruskall Wallis examined whether this visual difference was backed up with a formal analysis. The results tended towards significance (p=0.09).
 The pattern of larger variability in the responses of men was apparent.   
 
 
@@ -323,8 +324,8 @@ print(ExtractLoadings(tcq.fact.4))
 
 <<factorcor4, echo=FALSE, results=tex>>=
 tcq4.cor.xtab <- xtable(FactorCor(tcq.fact.4), label="tab:tcq1fact4cor", caption="Four Factor TCQ correlations")
-rownames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
-colnames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Inj", "Pills")
+rownames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Injections", "Pills")
+colnames(tcq4.cor.xtab) <- c("Acupuncture", "Cream", "Injections", "Pills")
 print(tcq4.cor.xtab)
 @ 
 
@@ -446,7 +447,7 @@ tcq6summ <- summary(tcq6fit)
 
 
 <<tcq1semcompare, echo=FALSE, results=tex>>=
-print(xtable(mxCompare(base=tcq4fit, comp=c(tcq6fit)), label="tab:tcq1modelcomp", caption="CFA on TCQ Models, Sample One"))
+print(xtable(mxCompare(base=tcq4fit, comp=c(tcq6fit)), label="tab:tcq1modelcomp", caption="CFA on TCQ Models, Sample One"), include.rownames=FALSE)
 @ 
 
 
@@ -504,7 +505,7 @@ tcqcoef <- coef(tcqconv.pcm.rasch)
 The next step was to fit a series of graded response models. 
 
 <<tcqconvgrmconstrained, echo=FALSE, results=hide>>=
-tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE)
+tcqconv.grm.1pl <- grm(convtcq, constrained=TRUE, Hessian=TRUE)
 tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 
 ## tcqconv.grm.fscores.1pl <- factor.scores(tcqconv.grm.1pl)
@@ -512,12 +513,12 @@ tcqconv.grm1.coef <- coef(tcqconv.grm.1pl)
 @ 
 
 <<tcqconvgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqconv.grm.1pl), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"), sanitize.colnames.function = function (x) x)
+print(xtable(coefirt(tcqconv.grm.1pl, se=TRUE), label="tab:tcq1convgrm1pl", caption="Coefficients for the TCQ 1 Conventional Scale, One Parameter Graded Response Model"), sanitize.colnames.function = function (x) x, scalebox=0.8)
 @ 
 Table \ref{tab:tcq1convgrm1pl}  shows the fit of the one parameter GRM. Note that the Cream credibility items are the most difficult, which fits with the lower mean credibility score on this variable observed in Table~\ref{tab:tcq1sumtotals}. The next step taken is to examine the fit of a more flexible model (a two parameter GRM, Appendix~\ref{cha:append-1:-supp}, Table~\ref{tab:tcq1convgrm2pl}, on Page~\pageref{tab:tcq1convgrm2pl}), and assess whether or not this represents a useful improvement over the model above.
 
 <<tcqconvgrm2, echo=FALSE, results=tex, cache=TRUE>>=
-tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE)
+tcqconv.grm.2pl <- grm(convtcq, constrained=FALSE, Hessian=TRUE)
 tcqconv.grm2.coef <- coef(tcqconv.grm.2pl)
 
 @ 
@@ -536,11 +537,13 @@ tcqconv.grm.2pl.info <- extract_information(tcqconv.grm.2pl)
 
 
 \begin{figure}
-\setkeys{Gin}{height=0.8\textheight}  
 <<iccgrmtcqconv, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
-tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
-print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl+theme(legend.position=c(1,1))))
+par(mfrow=c(1, 2))
+plot(tcqconv.grm.1pl, type="IIC")
+plot(tcqconv.grm.2pl, type="IIC")
+## tcq1.1pl.pl <- ggplot_inf(tcqconv.grm.1pl.info)
+## tcq1.2pl.pl <- ggplot_inf(tcqconv.grm.2pl.info)
+## print(arrangeGrob(tcq1.1pl.pl+theme(legend.position="none"),tcq1.2pl.pl+theme(legend.position=c(1,1))))
 @   
   \caption{Item Information Curves, TCQ Conventional Scale, One Parameter GRM (top) and Two Parameter GRM (bottom)}
   \label{fig:iictcqconv1grmpl}
@@ -590,36 +593,36 @@ print(xtable(tcqaltcoef.2pl, label="tab:tcq1altgpcm2pl", caption="Coefficients f
 
 
 <<tcqaltgrm1, echo=FALSE, results=tex>>=
-tcqalt.grm.constrained <- grm(tcqalt, constrained=TRUE)
+tcqalt.grm.constrained <- grm(na.omit(tcqalt), constrained=TRUE, Hessian=TRUE, start.val="random")
 tcqalt.grm1.coef <- coef(tcqalt.grm.constrained)
 @ 
 <<tcaltgrm1plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm.constrained), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcqalt.grm.constrained, se=FALSE), label="tab:tcq1altgrm1pl", caption="Coefficients for TCQ 1 Alternative Scale, One parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
 @ 
 The model described in Table \ref{tab:tcq1altgrm1pl} has the following features. The discrimination parameter is reasonably high (reflecting that these items were endorsed less by many of the participants), and the parameter estimates are  closely distributed around zero.
 
 <<tcqaltgrm2, echo=FALSE, results=tex, cache=TRUE>>=
-tcqalt.grm2 <- grm(tcqalt)
+tcqalt.grm2 <- grm(tcqalt, Hessian=TRUE, start.val="random")
 tcqalt.grm2.coef <- coef(tcqalt.grm2)
 
 ## tcqalt.grm2.fscores <- factor.scores(tcqalt.grm2)
 ## tcqalt.grm2.absest <- getIRTestimates(tcqalt.grm2.fscores)
 @ 
 <<tcqaltgrm2plprint, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcqalt.grm2), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcqalt.grm2, se=FALSE), label="tab:tcq1altgrm2pl", caption="Coefficient Estimates for TCQ 1 Alternative Scale, Two Parameter Graded Response Model"), sanitize.colnames.function= function (x) x, scalebox=0.7)
 @ 
-The model shown in Table \ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. 
+The model shown in Table~\ref{tab:tcq1altgrm2pl} has a much lower estimate of the discrimination of the individual items, counterbalanced by higher ability estimates for all of the item difficulty parameters. Note that the one parameter GRM did not converge properly, and so standard errors are not reported.  
 
 <<tcqaltiicggplotgen, echo=FALSE, results=hide>>=
 tcqalt.grm.1pl.info <- extract_information(tcqalt.grm.constrained)
 tcqalt.grm.2pl.info <- extract_information(tcqalt.grm2)
 @ 
 \begin{figure}
-  \setkeys{Gin}{height=0.9\textheight}  
+
 <<iccgrmtcqalt, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq1.1plalt.pl <- ggplot_inf(tcqalt.grm.1pl.info)
-tcq1.2plalt.pl <- ggplot_inf(tcqalt.grm.2pl.info)
-print(arrangeGrob(tcq1.1plalt.pl+theme(legend.position="none"),tcq1.2plalt.pl))
+par(mfrow=c(1, 2))
+plot(tcqalt.grm.constrained, type="IIC")
+plot(tcqalt.grm2, type="IIC")
 @ 
 
 @ 
@@ -842,7 +845,7 @@ tcq2.1.comp <- mxCompare(tcq4fit2, comparison=c(tcq6fit2))
 print(xtable(tcq2.1.comp, caption="Comparison of Four and Six Factor Models for the TCQ1 on Sample Two", label="tab:tcq2testsemcomp"), include.rownames=FALSE)
 @ 
 
-As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section \ref{sec:study-1}).
+As can be seen from Table \ref{tab:tcq2testsemcomp} the six model appears to fit the data best, even on this unseen data-set. This is somewhat unexpected, especially given the compelling reasons to believe in a four factor model. Further explanations are given in the Conclusion for Study One (Section~\ref{sec:study-1}).
 
 
 
@@ -939,17 +942,17 @@ rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
 
 @ 
 <<grmmodcompprint, echo=FALSE, results=tex>>=
-grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, Split 2A", label="tab:grmmodcomp")
+grm.modcomp.xtab <- xtable(grm.modcomp, caption="Comparison of One and Two Parameter Graded Response Models, TCQ Conv, Split 2A", label="tab:grmmodcomp")
 print(grm.modcomp.xtab)
 @ 
 As shown in Table \ref{tab:grmmodcomp}, the one parameter model performed better on the unseen data than did the two parameter model (unlike the analysis using likelihoods which picked the more complicated model). The same pattern was apparent when the alternative scale was examined. 
 
 <<grmtest, echo=FALSE, results=tex, cache=TRUE, eval=FALSE>>=
-grm1plalt.done <- testIRTModels(tcqalt.grm.1pl, tcq2a.alt, grmconstraint=TRUE)
-rm2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
+grm1plalt.done <- testIRTModels(tcqalt.grm.constrained, tcq2a.alt, grmconstraint=TRUE)
+m2plalt.done <- testIRTModels(tcqalt.grm.2pl, tcq2a.alt, grmconstraint=FALSE)
 grm.modcomp <- rbind(grm1pl.done, grm2pl.done)
 rownames(grm.modcomp) <- c("One Parameter GRM", "Two Parameter GRM")
-
+print(xtable(grm.modcomp)) 
 @ 
 
 
@@ -1013,7 +1016,7 @@ tcq2.demo2 <- tcq2.demo[,6:10]
 tcq2.demo3 <- tcq2.demo[,10:15]
 tcq2.sum1 <- summary(tcq2.demo1)
 
-print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats"))
+print(xtable(apademotables(tcq2.demo.full), caption="TCQ2 Summary Statistics", label="tab:tcq2sumstats"), include.rownames=FALSE)
 @ 
 
 
@@ -1315,6 +1318,15 @@ tcq2d.fact.7 <- fa(na.omit(tcqall2d), nfactors=7, rotate="oblimin", fm="pa")
 print(FactorXtab(tcq2d.fact.7, names=c("Reiki", "Hom", "Acu", "Cream", "Inj", "Pill", "Cred"), label="tab:tcq2dfact7",caption="Seven Factor Solution, TCQ 2, Oblimin Rotation (Split D)"), sanitize.text.function= function (x) x)
 @ 
 
+<<tcqomegas, echo=FALSE, results=hide>>=
+tcq2b6.omega <- omega(tcq2b.fact.6$r.scores, nfactors=2)
+tcq2b7.omega <- omega(tcq2b.fact.7$r.scores, nfactors=2)
+tcq2c6.omega <- omega(tcq2c.fact.6$r.scores, nfactors=2)
+tcq2c7.omega <- omega(tcq2c.fact.7$r.scores, nfactors=2)
+tcq2d6.omega <- omega(tcq2d.fact.6$r.scores, nfactors=2)
+tcq2d7.omega <- omega(tcq2d.fact.7$r.scores, nfactors=2)
+@ 
+
 <<tcq2fact7average, echo=FALSE, results=tex>>=
 tcq2b.fact7.n <- FactorNames(tcq2b.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
 tcq2c.fact7.n <- FactorNames(tcq2c.fact.7, names=c("Hom", "Rei", "Acu", "Cream","Inj", "Pill", "Cred"))
@@ -1323,9 +1335,6 @@ tcq2d.fact7.n <- FactorNames(tcq2d.fact.7, names=c("Rei", "Hom", "Acu", "Cream",
 tcq2.fact7.av <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred", "Communalities"))
 rownames(tcq2.fact7.av) <- itemnames
 print(xtable(tcq2.fact7.av, label="tab:tcq2fact7average", caption="Average of Seven Factor Solutions over Splits B, C and D"), sanitize.text.function = function (x) x, table.placement="ht")
-###hmmm, not sure if this is right
-##was able to fix this by removing the names re-arrangement
-##may have broken the coefficient averaging process though
 tcq2.fact7.average.cor <- FactorAverage(sols=list(tcq2b.fact7.n, tcq2c.fact7.n, tcq2d.fact7.n), mynames=c("Pill", "Cream", "Inj", "Acu", "Hom", "Rei", "Cred"), correlations=TRUE)
 @ 
 
@@ -1335,7 +1344,7 @@ The seven factor solution shown in Table~\ref{tab:tcq2fact7average} explained 86
 print(xtable(tcq2.fact7.average.cor, label="tab:tcq27factorcoraverage", caption="Averaged Factor Correlations for the Seven Factor Solution, Sample Two"), sanitize.text.function = function (x) x)
 @ 
 
-The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Inj factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
+The factor correlations are shown in Table~\ref{tab:tcq27factorcoraverage}, and follow a similar pattern to the six factor correlations. Note that the Pill and Injection factors correlate much more highly with the Credibility factor, which is a point that will be revisited below. 
 
 %% PA1: ``Hom1'', ``Hom2'', ``Hom3'', ``Hom4'', ``Hom5'', ``Hom6''. This factor clearly maps to the Homeopathy questions, and is therefore termed as Homeoapathy.
 
@@ -1370,7 +1379,20 @@ tcq2bfit <- as.data.frame(cbind(tcq2bFit5, tcq2bFit6, tcq2bFit7))
 tcq2bfit.m <- melt(tcq2bfit)
 names(tcq2bfit.m) <- "Fit Index"
 print(xtable(tcq2bfit,caption="Fit Indices, TCQ 2 (Split B)", label="tab:tcq2bfit"))
+
 @ 
+
+
+\begin{figure}
+<<omegagraph, echo=FALSE, fig=TRUE, pdf=TRUE>>=
+print(omega.graph(tcq2b6.omega, labels=c("Rei", "Hom", "Acu", "Cream", "Inj", "Pill")))
+@   
+  \caption{Hierarchical Factor Structure (Omega) for TCQ Data}
+  \label{fig:tcqomega}
+\end{figure}
+
+Figure~\ref{fig:tcqomega} shows that the hierarchical solution breaks down into a conventional and alternative structure (both factors constrained to be equal). This suggests that modelling the data with two higher-order structures might be useful. However, this failed to provide a parameter-adjusted decrease in log-likelihood, and so was not pursued further. 
+
 
 \subsection{Confirmatory Factor Analyses}
 \label{sec:cfa}
@@ -1613,7 +1635,7 @@ tcq7summ.notC <- summary(tcq7fit.notC)
 
 <<tcq2notCsemcompare, echo=FALSE, results=tex>>=
 tcq2.notC.semcompare <- mxCompare(tcq5fit.notC,c(tcq6fit.notC, tcq7fit.notC))
-print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.9)
+print(xtable(tcq2.notC.semcompare, label="tab:tcq2notCsemcompare", caption="TCQ Models from Split C tested against Splits A, B and D"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 Over all splits,  the seven factor model provided a better fit to the out of sample data than did the 5 or 6 factor model. However, the difference in likelihood was not large, and given the strong theoretical reasons for preferring the six factor model, this was chosen. 
@@ -1699,13 +1721,13 @@ tcq7summ.notD <- summary(tcq7fit.notD)
 
 <<tcq2notDsemcompare, echo=FALSE, results=tex>>=
 tcq2.notD.semcompare <- mxCompare(tcq6fit.notD, tcq7fit.notD)
-print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.9)
+print(xtable(tcq2.notD.semcompare, label="tab:tcq2notDsemcompare", caption="TCQ 2 Models built on Split D, tested against Splits A, B and C"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 
 <<tcq2notBsemcompare, echo=FALSE, results=tex>>=
 tcq2.notB.semcompare <- mxCompare(tcq5fit.notB,c(tcq6fit.notB, tcq7fit.notB))
-print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.9)
+print(xtable(tcq2.notB.semcompare, label="tab:tcq2notBsemcompare", caption="TCQ 2 Factor Solutions From Split B, Tested Against Splits A, C and D"), scalebox=0.9, include.rownames=FALSE)
 @ 
 
 <<fivefactorsem, echo=FALSE, results=tex>>=
@@ -1825,47 +1847,47 @@ print(xtable(summary(tcq2d.alt.mono), label="tab:tcq2daltcheckmono", caption="Mo
 
 
 <<tcq2bconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE)
-tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE)
+tcq2b.conv.grm.1pl <- grm(tcq2b.conv, constrained=TRUE, Hessian=TRUE)
+tcq2b.conv.grm.2pl <- grm(tcq2b.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2cconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE)
-tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE)
+tcq2c.conv.grm.1pl <- grm(tcq2c.conv, constrained=TRUE, Hessian=TRUE)
+tcq2c.conv.grm.2pl <- grm(tcq2c.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
-<<tcq2dconvgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE)
-tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE)
+<<tcq2dconvgrm, echo=FALSE, results=hide>>=
+tcq2d.conv.grm.1pl <- grm(tcq2d.conv, constrained=TRUE, Hessian=TRUE)
+tcq2d.conv.grm.2pl <- grm(tcq2d.conv, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcqgrm1plaverage, echo=FALSE, results=hide>>=
-tcq2.conv.grm.1pl.av <- irtAverage(sols=list(tcq2b.conv.grm.1pl, tcq2c.conv.grm.1pl, tcq2d.conv.grm.1pl))
-tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.2pl, tcq2d.conv.grm.2pl))
+tcq2.conv.grm.1pl.av <- irtAverage(sols=list(tcq2b.conv.grm.1pl, tcq2c.conv.grm.1pl, tcq2d.conv.grm.1pl), se=TRUE)
+tcq2.conv.grm.2pl.av <- irtAverage(sols=list(tcq2b.conv.grm.2pl, tcq2c.conv.grm.2pl, tcq2d.conv.grm.2pl), se=FALSE) #hessian matrix not positive definite
 @ 
 
 <<tcqconvgrm1plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.1pl.av), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
+print(xtable(coefirt(tcq2.conv.grm.1pl.av, se=TRUE, averaged=TRUE), label="tab:tcq2grm1plaverage", caption="Item Difficulty Thresholds for TCQ Conventional items averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x, scalebox=0.9)
 @ 
 
 
 Table~\ref{tab:tcq2grm1plaverage} shows that the cream items were the least endorsed, especially the highest response category across all three splits. The averaged discrimination parameter is also quite high, at 2.12. This is probably due to a number of difficult items (the cream items) dragging up the estimated discrimination parameter. 
 
 <<tcq2convgrm2plaverage, echo=FALSE, results=tex>>=
-print(xtable(coefirt(tcq2.conv.grm.2pl.av), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
+print(xtable(coefirt(tcq2.conv.grm.2pl.av, averaged=TRUE), label="tab:tcq2convgrm2plaverage", caption="Item Difficulty Thresholds for Two Parameter GRM, TCQ Conv, Averaged over Splits B, C and D"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. 
+Table~\ref{tab:tcq2convgrm2plaverage} shows the estimated difficulty parameters for the two parameter GRM averaged across Splits B, C and D. Note that with this model, the cream credibility items have increased in difficulty, but the injection items have the highest discrimination, suggesting that these items are the best for distinguishing between high and low ``ability'' respondents. Standard errors are not shown as the models did not converge for Splits B and D. 
 <<tcqaltiicggplotgen2, echo=FALSE, results=hide>>=
 tcqconv2d.grm.1pl.info <- extract_information(tcq2d.conv.grm.1pl)
 tcqconv2d.grm.2pl.info <- extract_information(tcq2d.conv.grm.2pl)
 @ 
 \begin{figure}
-  \setkeys{Gin}{height=0.9\textheight}  
+
 <<iccgrmtcqconv2d, echo=FALSE, fig=TRUE,pdf=TRUE, eps=TRUE, png=TRUE>>=
-tcq2.1plconv.pl <- ggplot_inf(tcqconv2d.grm.1pl.info)
-tcq2.2plconv.pl <- ggplot_inf(tcqconv2d.grm.2pl.info)
-print(arrangeGrob(tcq2.1plconv.pl+theme(legend.position="none"),tcq2.2plconv.pl+theme(legend.position=c(1,1))))
+par(mfrow=c(1, 2))
+plot(tcq2d.conv.grm.1pl, type="IIC")
+plot(tcq2d.conv.grm.2pl, type="IIC")
 @
 
   \caption{Item Information Curves, TCQ Conventional, Split 2, One Parameter GRM (top) and Two Parameter GRM (bottom)}
@@ -1882,18 +1904,18 @@ There were no violations of the invariant item ordering or monotonicity assumpti
 Two graded response models were fit to all three Alternative splits of the data, and the averaged results over all three splits are reported here.  
 
 <<tcq2baltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE)
-tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE)
+tcq2b.alt.grm.1pl <- grm(tcq2b.alt, constrained=TRUE, Hessian=TRUE)
+tcq2b.alt.grm.2pl <- grm(tcq2b.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2caltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE)
-tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE)
+tcq2c.alt.grm.1pl <- grm(tcq2c.alt, constrained=TRUE, Hessian=TRUE)
+tcq2c.alt.grm.2pl <- grm(tcq2c.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2daltgrm, echo=FALSE, results=hide, cache=TRUE>>=
-tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE)
-tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE)
+tcq2d.alt.grm.1pl <- grm(tcq2d.alt, constrained=TRUE, Hessian=TRUE)
+tcq2d.alt.grm.2pl <- grm(tcq2d.alt, constrained=FALSE, Hessian=TRUE)
 @ 
 
 <<tcq2altgrm1plaverage, echo=FALSE, results=tex>>=
@@ -1901,7 +1923,7 @@ tcq2.alt.grm.1pl.av <- irtAverage(sols=list(tcq2b.alt.grm.1pl, tcq2c.alt.grm.1pl
 print(xtable(coefirt(tcq2.alt.grm.1pl.av), label="tab:tcq2altgrm1plaverage", caption="Item Difficulty Thresholds for One Parameter GRM on the Alternative Items, averaged over Splits B, C and D"), sanitize.colnames.function= function (x) x)
 @ 
 
-Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the alternative items. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
+Table~\ref{tab:tcq2altgrm1plaverage} shows the averaged coefficients for the one parameter alternative item GRM. It can be seen that the Acupuncture items had the lowest difficulty thresholds, but all items had extremely high discrimination parameters. 
 
 <<tcq2altgrm2plaverage, echo=FALSE, results=hide>>=
 tcq2.alt.grm.2pl.av <- irtAverage(sols=list(tcq2b.alt.grm.2pl, tcq2c.alt.grm.2pl, tcq2d.alt.grm.2pl))
@@ -2174,7 +2196,7 @@ tcq7summ.notD.all <- summary(tcq7fit.notD.all)
 
 <<tcqall2semcompare, echo=FALSE, results=tex>>=
 tcqall2.semcompare <- mxCompare(tcq7fit.notA.all, c(tcq7fit.notB.all, tcq7fit.notC.all, tcq7fit.notD.all))
-print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset"), scalebox=0.8)
+print(xtable(tcqall2.semcompare, label="tab:tcqall2semcompare", caption="TCQ2 Models from each split tested against the full dataset"), scalebox=0.8, include.rownames=FALSE)
 @ 
 
 As can be seen from Table \ref{tab:tcqall2semcompare}, models B, C and D were identical and they appear to provide the best fit on all of the data. 
@@ -2212,12 +2234,12 @@ tcq2c.alt.s <- tcq2c.s[,grep("Ac|Ho|Re", x=names(tcq2c.s))]
 tcq2d.s <- tcqall2d[,grep("[246]$", x=names(tcqall2d))]
 tcq2d.conv.s <- tcq2d.s[,grep("Pi|Cr|In", x=names(tcq2d.s))]
 tcq2d.alt.s <- tcq2d.s[,grep("Ac|Ho|Re", x=names(tcq2d.s))]
-tcq2b.conv.grm.1pl.s <- grm(tcq2b.conv.s, constrained=TRUE)
-tcq2c.conv.grm.1pl.s <- grm(tcq2c.conv.s, constrained=TRUE)
-tcq2d.conv.grm.1pl.s <- grm(tcq2d.conv.s, constrained=TRUE)
-tcq2b.alt.grm.1pl.s <- grm(tcq2b.alt.s, constrained=TRUE)
-tcq2c.alt.grm.1pl.s <- grm(tcq2c.alt.s, constrained=TRUE)
-tcq2d.alt.grm.1pl.s <- grm(tcq2d.alt.s, constrained=TRUE)
+tcq2b.conv.grm.1pl.s <- grm(tcq2b.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2c.conv.grm.1pl.s <- grm(tcq2c.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2d.conv.grm.1pl.s <- grm(tcq2d.conv.s, constrained=TRUE, Hessian=TRUE)
+tcq2b.alt.grm.1pl.s <- grm(tcq2b.alt.s, constrained=TRUE, Hessian=TRUE)
+tcq2c.alt.grm.1pl.s <- grm(tcq2c.alt.s, constrained=TRUE, Hessian=TRUE)
+tcq2d.alt.grm.1pl.s <- grm(tcq2d.alt.s, constrained=TRUE, Hessian=TRUE)
 tcq2.conv.av.s <- irtAverage(sols=list(tcq2b.conv.grm.1pl.s, tcq2c.conv.grm.1pl.s, tcq2d.conv.grm.1pl.s))
 tcq2.alt.av.s <- irtAverage(sols=list(tcq2b.alt.grm.1pl.s, tcq2c.alt.grm.1pl.s, tcq2d.alt.grm.1pl.s))
 @ 
@@ -2425,7 +2447,7 @@ acutotlm.holdout <- lm(Acutot~Creamtot+Injtot+Homtot+Reitot+ExpAcu+ExpHom, data=
 print(xtable(apareg(acutotlm.holdout), label="tab:tcq2acuholdout", caption="Coefficients for Acupuncture credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-As shown in Table \ref{tab:tcq2acuholdout}, only Creams, Homeopathy and Reiki, remained significant on the unseen data. 
+As shown in Table \ref{tab:tcq2acuholdout}, only Homeopathy and Reiki, remained significant on the unseen data. 
 
 <<acu2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 acu.test <- with(na.omit(tcq2a), Acutot)
@@ -2474,7 +2496,7 @@ homtotlm.holdout <- lm(Homtot~Acutot+Reitot+ExpAcu+ExpHom+ExpCream, data=tcq2.ho
 print(xtable(apareg(homtotlm.holdout), label="tab:tcq2homholdout", caption="Coefficients for Homeopathy credibility Regression on Held Out Data"), sanitize.colnames.function = function (x) x)
 @ 
 
-Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relative experience variables for each form of credibility. The model has an $R^2$ of 0.62, which is extremely high. 
+Table~\ref{tab:tcq2homholdout} shows the estimated coefficients from the stepwise selected model on unseen data. It can be seen that Acupuncture and Reiki credibility remain significant, along with the relevant experience variables for each form of alternative credibility. The model has an $R^2$ of 0.62, which is extremely high. 
 
 <<hom2lasso, echo=FALSE, results=hide, cache=TRUE, eval=FALSE>>=
 hom.test <- with(na.omit(tcq2a), Homtot)
@@ -2566,7 +2588,7 @@ The measure developed here was primarily aimed to be used in the experimental po
 
 Further development of this instrument could profitably examine the impact of a different person framing the health treatment. It would be interesting to examine the mean credibility levels of the same treatment when introduced as being a recommendation from family, friends or the media. Additionally, this adaptation of the CEQ seems psychometrically sound, and as such could easily be used by other researchers investigating different therapies. As such, one contribution of this instrument is to provide a more consistent and psychometrically validated framework of expectancy questions which other researchers can build upon. Such an instrument is important given the large differences in expectancy measurement described in previous research. Such an approach would rely on the instrument being validated using different constructs and samples, however. 
 
-That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although we sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogeneous groups is warranted before extensive use of the instrument takes place. 
+That being said, there are some important limitations to the study. Firstly, there was no behavioural or observational outcome to benchmark the test against. Secondly, although this study sampled twice from the student population and once from the staff population, this test still relies entirely on the responses of staff and students at one particular university. Further replication of the factor structure in heterogeneous groups is warranted before extensive use of the instrument takes place. 
 
 
 The major aim of this work was to develop and test an instrument which would capture more of the key factors surrounding treatment related expectancies. This aim has been achieved, in that the measure appears to be stable, and to correlate in the expected fashion with similar instruments. It does appear, from this work, that the conception of conventional treatments and alternative treatments appears to differ, and do not appear to form one general treatment credibility factor, but rather to have two distinct factors. This finding was used to inform the development of the IAT (see Chapter \ref{cha:devel-impl-meas}). 

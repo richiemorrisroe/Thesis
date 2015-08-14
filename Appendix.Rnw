@@ -2,6 +2,7 @@
 require(ggplot2)
 
 require(psych)
+require(GPArotation)
 require(xtable)
 require(OpenMx)
 require(car)
@@ -58,7 +59,7 @@ print(xtable(maas.fact.3$r.scores, label="tab:hom1maas3corr", caption="Factor Co
 
 <<maas2bfact5, echo=FALSE, results=tex>>=
 maas2b.fact5 <- fa(maasitems2b, 5, rotate="oblimin", fm="pa")
-print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.8, sanitize.text.function= function (x) x)
+print(FactorXtab(maas2b.fact5, names=c("Distractability", "LackPresAware", "LackSomaticAware", "Inattention", "LackPresFocus"),  label="tab:tcq2bmaasfact5", caption="Factor Loadings, MAAS Five Factor Solution, Sample Two, Split B"), scalebox=0.75, sanitize.text.function= function (x) x)
 @ 
 
 Table~\ref{tab:tcq2bmaasfact5} shows the five factor solution for the MAAS for Split B. 

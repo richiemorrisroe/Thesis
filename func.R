@@ -735,7 +735,11 @@ lazyload <- function (files, names, cols) {
     write.table(gsr, file=outfilenames2[i])
   }
 }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 87adf01368b7f059a21764a6736e2d0659b2a2fa
 rmsea <- function(data) {
     erro <- with(data, pred-obs)
     err.sq <- erro^2
@@ -743,6 +747,10 @@ rmsea <- function(data) {
     return(root.err)
 }
         
+<<<<<<< HEAD
+=======
+
+>>>>>>> 87adf01368b7f059a21764a6736e2d0659b2a2fa
 lazylength <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
@@ -765,13 +773,22 @@ lazylength <- function(files) {
 getPPNo <- function(files) {
     tp <- gsub(".*/", "", x=files)
     tp.split <- strsplit(as.character(tp), "-")
+
     pp <- lapply(tp.split, "[", 3)
+    ord <- sapply(tp.split, "[", 2)
+    ord <-  as.numeric(ord)
     pp <- gsub(".txt", "", x=pp)
+    pp2 <- as.numeric(pp)
+    ## browser()
+    pp.df <- data.frame(Participant=pp2, order=ord)
+    pp.df.sort <- pp.df[order(ord),]
+    pp <- pp.df.sort$Participant
+    
     pp
 }
 lazylength <- function(files) {
-    pp <- getPPNo(files)
-    ## browser()
+    pp <- as.numeric(as.character(getPPNo(files)))
+        ## browser()
     lengthmat <- matrix(NA, 114, ncol=2)
     for (i in 1:length(files)) {
         temp <- read.table(files[i])
@@ -780,7 +797,10 @@ lazylength <- function(files) {
         lengthmat[i,2] <- len
         rm(temp); gc()
     }
-    lengthmat
+    ## pp2 <- sprintf("%05d", pp)
+    length.df <- as.data.frame(lengthmat)
+    names(length.df) <- c("PPNo.", "EndTime")
+    length.df
 }
 lazymean <- function( path, pattern, ...) {
     lsfiles <- list.files(path, pattern, ...)
@@ -855,6 +875,7 @@ interpolate.pain <- function(pain, padding) {
 interpolate2 <- function(painscores, painmetadata) {
     pain.ratings.min <- with(painmetadata, floor((SqueezStop+60)/60))
     pain.ratings.min <- as.data.frame(pain.ratings.min)
+    ## browser()
     pain.ratings.min[,"Participant"] <- painmetadata$PPNo.
     names(pain.ratings.min)[1] <- "padding"
     resmat <- matrix(0, nrow=nrow(pain.ratings.min), ncol=45+with(pain.ratings.min, max(padding, na.rm=TRUE)))
@@ -867,7 +888,7 @@ interpolate2 <- function(painscores, painmetadata) {
             next}
         
         painratings <- as.numeric(painscores[with(painscores, Participant==partno[i]),painscores.real])
-        if(i==27) {
+        if(i==28) {
         ## browser()
         }
         padding <- rep(0, times=partpad)
@@ -945,10 +966,34 @@ getMxFitFunctions <- function(mx, label=NULL) {
     }
     return(res)
 }
-irtAverage <- function(sols=list()) {
+irtAverage <- function(sols=list(), se=FALSE) {
     coef <- lapply(sols, coef)
     res <- Reduce(`+`, x=coef)/length(coef)
-    return(res)
+    if(se) {
+        allcoef <- lapply(sols, function (x) coef(summary(x)))
+        stdlist <- list()
+        for (i in 1:length(allcoef)) {
+            stderr <- lapply(allcoef[[i]], "[[", "std.err")
+            ##matrix conversion does not work by default, so taking a perf hit and using dataframes
+            stdlist[[i]] <- as.data.frame(stderr)
+
+        }
+        ## browser()
+        seres <- Reduce(`+`, x=stdlist)/length(stdlist)
+          #this just does not work, need to moment of revelation and am too tired                 
+    }
+    if(se) {
+        res <- list(coef=as.data.frame(res), se=seres)
+        class(res) <-  "averaged"
+        return(res)
+    } else
+        {
+            res <- as.data.frame(res)
+            class(res) <- append(class(res),  "averaged")
+            return(res)
+    }
+        
+    
 }
             
 smoothAIC <- function(model) {
@@ -983,26 +1028,49 @@ provide <- function(name, ...) {
         install.packages(name, ...)
     }
     }
-coefirt <- function(grm) {
+coefirt <- function(grm, se=FALSE, averaged=FALSE) {
     if(class(grm)=="grm" || class(grm)=="gpcm") {
-    dat <- coef(grm)
-}
+        dat <- coef(grm)
+        itemnames <- rownames(coef(grm))
+    }
     else {
         dat <- grm
     }
-    
+    if(averaged) {
+        if(se) {
+            dat <- grm$coef
+        } else {
+            dat <- grm
+        }
+        dat <- round(dat, 2)
+        itemnames <- rownames(dat)
+        if(se) {
+        standerr <- t(grm$se)
+        standerr <- round(standerr, 2)
+    }
+    }
+
+
+    if(se & !averaged ) {
+        standard.errors <- sapply(coef(summary(grm)), '[[', "std.err")
+        standerr <- round(standard.errors, 2)
+    }
     dims <- dim(dat)
     betas <- dims[2]-1
+    if(se) {
+        ## browser()
+        dat <- as.matrix(dat)
+        dat.se <- matrix(paste(dat, " (", standerr, ")", sep=""), nrow=dims[1], ncol=dims[2])
+
+        rownames(dat.se) <- itemnames
+        dat <- dat.se
+    }
+    ## browser()
     #just need to add an identity sanitize test function to get the alphas and betas as markup
-    beta.names <- paste("$", "\\beta",  "^", 1:betas, "$", sep="")
+    beta.names <- paste("$", "\\beta",  "^", 1:betas, " (se) ", "$", sep="")
     alpha.name <- "$\\alpha$"
-    ## beta.names <- paste("beta", 1:betas, sep="")
-    ## alpha.name <- "alpha"
     allnames <- c(beta.names, alpha.name)
-    ## browser()
     colnames(dat) <- allnames
-    ## rownames(dat)[1] <- "Item"
-    ## browser()
     dat
 }
 apareg <- function(model, logistic=FALSE) {

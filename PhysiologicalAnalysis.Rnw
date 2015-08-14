@@ -39,8 +39,9 @@ lazyload(physfiles, names="ECG", cols=2)
 
 <<readvasscores, echo=FALSE, results=hide>>=
 vas <- read.csv("ExperimentDataforR/FullStudy/VASscores.csv")
-vas.imp <- vas[,c("PPNo.", "BandageOn", "SqueezStop")]
-vas.plac <- apply(vas[,9:53], 1, function(x) which(x>=7))
+vas2 <- vas[with(vas, grep("1101|1991", x=PPNo., invert=TRUE)),]
+vas.imp <- vas2[,c("PPNo.", "BandageOn", "SqueezStop")]
+vas.plac <- apply(vas2[,9:53], 1, function(x) which(x>=7))
 vas.plac2 <- lapply(vas.plac, "[", 1)
 vas.plac3 <- lapply(vas.plac2, names)
 vas.plac4 <- unlist(vas.plac3)
@@ -51,15 +52,19 @@ vas.imp[,"PlacTime"] <- with(vas.imp, PlacTime*60)
 vas.imp[,"PlacTimeReal"] <- with(vas.imp, PlacTime+SqueezStop)
 vas.imp2 <- vas.imp[,c("PPNo.", "BandageOn", "SqueezStop", "PlacTimeReal")]
 vas.imp2[,2:4] <- apply(vas.imp2[,2:4], c(1,2), function(x) x*1000)
-vas.imp2[,"PPNo."] <- with(vas.imp2, ifelse(nchar(PPNo.)==3, sprintf("%04d", PPNo.), PPNo.))
+vas.imp2[,"PPNo."] <- with(vas.imp2, sprintf("%05d", as.numeric(PPNo.)))
 @
 
 <<lazylength, echo=FALSE, results=hide>>=
-gsrfiles <- list.files("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern="^GSR-", full.names=TRUE)
+gsrfiles <- list.files( pattern="^GSR-", full.names=TRUE)
 lengthmat <- lazylength(gsrfiles)
 lengthmat <- as.data.frame(lengthmat)
+lengthmat <- na.omit(lengthmat)
+
 names(lengthmat) <- c("PPNo.", "EndTime")
+lengthmat[,"PPNo."] <- with(lengthmat, sprintf("%05d", PPNo.))
 lengthmat[,"EndTime"] <- with(lengthmat, as.numeric(as.character(EndTime)))
+lengthmat2 <- lengthmat[with(lengthmat, grep("1101|1991", x=PPNo., invert=TRUE)),]
 vas.imp3 <- merge(vas.imp2, lengthmat, by="PPNo.")
 write.csv(vas.imp3, file="PainScoresMetaData.csv")
 @
