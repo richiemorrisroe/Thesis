@@ -10,8 +10,8 @@ source("func.R")
 <<tsimport, echo=FALSE, results=hide, eval=FALSE>>=
 
 
-physfiles <- fileImport("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
-gsr.mat <- listToDf(physfiles, 1)
+physfiles <- file_import("ExperimentDataforR/FullStudy/PhysMeasures/Richieoutput", pattern=".txt$")
+gsr.mat <- list_to_df(physfiles, 1)
 
 ecg.mat <- listToDf(physfiles, 2)
 gsrnames <- colnames(gsr.mat)
